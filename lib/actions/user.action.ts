@@ -1,6 +1,5 @@
 'use server';
 // Imports
-import bcrypt from 'bcryptjs';
 import User from '../models/User.model';
 import {connectToDb} from '../mongoose';
 
