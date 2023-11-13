@@ -2,9 +2,9 @@
 // Import
 import {useState} from 'react';
 import Image from 'next/image';
+import {SignIn} from '@clerk/nextjs';
 import {Chrome, X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-import {SignIn, currentUser} from '@clerk/nextjs';
 
 
 

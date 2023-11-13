@@ -31,7 +31,7 @@ export default async function RootLayout({children}:{children:React.ReactNode}) 
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-dark-1`}>
+      <body className={`${inter.className}`}>
           <ClerkProvider>
             <div className='w-full flex items-center justify-center min-h-screen'>
               {children}

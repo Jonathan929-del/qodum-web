@@ -13,6 +13,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        "lg":"992px",
         "md": "768px",
         "sm": "540px"
       },
@@ -52,6 +53,13 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        // Custom colors
+        'main-color':'#4b9cd4',
+        'hash-color':'#6C6A70',
+
+        // Custom gradients
+        // 'main-button-gradient':
       },
       borderRadius: {
         lg: "var(--radius)",
