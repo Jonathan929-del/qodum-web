@@ -55,7 +55,7 @@ module.exports = {
         },
 
         // Custom colors
-        'main-color':'#4b9cd4',
+        'main-color':'#ffbd2e',
         'hash-color':'#6C6A70',
 
         // Custom gradients
@@ -80,6 +80,9 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily:{
+        Poppins: ['Poppins', 'sans-serif'],
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

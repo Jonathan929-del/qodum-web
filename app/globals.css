@@ -1,3 +1,10 @@
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap');
+
+
+
+
+
 /* Tailwind */
 @tailwind base;
 @tailwind components;
@@ -24,11 +31,32 @@
     }
     
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background:#4b9cd4;
+        background:#ffbd2e;
         border-radius:50px;
     }
     
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background:#7878a3;
+    }
+
+
+    /* Sidebar scrollbar */
+    .custom-sidebar-scrollbar::-webkit-scrollbar {
+        width:2px;
+        height:3px;
+        border-radius:2px;
+    }
+    
+    .custom-sidebar-scrollbar::-webkit-scrollbar-track {
+        background:#F1F1F4;
+    }
+    
+    .custom-sidebar-scrollbar::-webkit-scrollbar-thumb {
+        background:#ffbd2e;
+        border-radius:50px;
+    }
+    
+    .custom-sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
         background:#7878a3;
     }
 }

@@ -1,3 +1,6 @@
+// Imports
+import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar} from 'lucide-react';
+
 
 
 
@@ -7,6 +10,7 @@ const modules = [
     // Accounts
     {
         moduleName:'Accounts',
+        icon:FileStack,
         pages:[
             // Global Masters
             {
@@ -182,6 +186,7 @@ const modules = [
     // Fees
     {
         moduleName:'Fees',
+        icon:CircleDollarSignIcon,
         pages:[
             // Global Masters
             {
@@ -641,6 +646,7 @@ const modules = [
     // Admission
     {
         moduleName:'Admission',
+        icon:GraduationCap,
         pages:[
             // Global Master
             {
@@ -871,6 +877,7 @@ const modules = [
     // Payroll
     {
         moduleName:'Payroll',
+        icon:Wallet,
         pages:[
             // Global Masters
             {
@@ -1186,6 +1193,7 @@ const modules = [
     // Stocks
     {
         moduleName:'Stocks',
+        icon:Box,
         pages:[
             // Global Masters
             {
@@ -1349,6 +1357,7 @@ const modules = [
     // Users
     {
         moduleName:'Users',
+        icon:Users,
         pages:[
             // Global Master
             {
@@ -1409,6 +1418,7 @@ const modules = [
     // Attendance
     {
         moduleName:'Attendance',
+        icon:Megaphone,
         pages:[
             // Global Masters
             {
@@ -1556,6 +1566,7 @@ const modules = [
     // Time Table
     {
         moduleName:'Time Table',
+        icon:Calendar,
         pages:[
             // Global Masters
             {
