@@ -55,7 +55,7 @@ module.exports = {
         },
 
         // Custom colors
-        'main-color':'#ffbd2e',
+        'main-color':'#3e67b1',
         'hash-color':'#6C6A70',
 
         // Custom gradients

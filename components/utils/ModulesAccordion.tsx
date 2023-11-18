@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import modules from '@/constants/modules';
 import {usePathname} from 'next/navigation';
-import {ChevronDown, MoveRight} from 'lucide-react';
+import {MoveRight, Minus, Plus} from 'lucide-react';
 import {createElement, useEffect, useState} from 'react';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 
@@ -76,9 +76,9 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                     >
                         <AccordionTrigger
                             onClick={() => setIsSidebarOpened(true)}
-                            className={`w-full flex flex-row justify-between px-4 border-l-2 border-b-2 border-b-[#ccc] ${selectedModule === module.moduleName ? 'border-l-main-color border-b-0 bg-[#F6F6F6]' : 'border-l-white hover:bg-[#F6F6F6]'}`}
+                            className={`w-full flex flex-row justify-between px-4 border-l-2 border-b-[0.5px] border-b-[#ccc] ${selectedModule === module.moduleName ? 'border-l-main-color border-b-0 bg-[#F6F6F6]' : 'border-l-white hover:bg-[#F6F6F6]'}`}
                         >
-                            <div className='flex flex-row items-center gap-1'>
+                            <div className='flex flex-row items-center gap-2'>
                                 <div
                                     className='text-main-color bg-white text-[10px] p-2 rounded-[8px]'
                                 >
@@ -90,7 +90,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                     {module.moduleName}
                                 </p>
                             </div>
-                            <ChevronDown className={`${isSidebarOpened ? 'block' : 'hidden'} h-4 w-4 shrink-0 transition-transform duration-200 ml-10 text-hash-color`}/>
+                            <Plus className={`h-4 w-4 ml-12 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=open]:hidden ${isSidebarOpened ? 'block' : 'hidden'}`}/>
+                            <Minus className={`h-4 w-4 ml-12 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=closed]:hidden ${isSidebarOpened ? 'block' : 'hidden'}`}/>
                         </AccordionTrigger>
                         <AccordionContent
                             className={`${isSidebarOpened ? 'block' : 'hidden'} bg-[#F6F6F6]`}
@@ -106,10 +107,11 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                             <AccordionItem value={page.pageName}>
                                                 <AccordionTrigger
                                                     onClick={() => setSelectedPage(page.pageName)}
-                                                    className={`flex flex-row justify-between py-2 mx-4 px-2 border-l-2 transition hover:bg-white ${selectedPage === page.pageName && 'border-l-main-color'}`}
+                                                    className={`flex flex-row justify-between py-2 mx-2 ml-7 pl-4 border-l-2 transition hover:bg-white ${selectedPage === page.pageName && 'border-l-main-color'}`}
                                                 >
                                                     {page.pageName}
-                                                    <ChevronDown className={`h-4 w-4 shrink-0 transition-transform duration-200 text-hash-color`}/>
+                                                    <Plus className="h-4 w-4 ml-4 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=open]:hidden"/>
+                                                    <Minus className="h-4 w-4 ml-4 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=closed]:hidden"/>
                                                 </AccordionTrigger>
                                                 <AccordionContent>
                                                     {
@@ -123,17 +125,15 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                                                         >
                                                                             <AccordionItem value='name'>
                                                                                 <AccordionTrigger
-                                                                                    className='flex flex-row items-center justify-start ml-4 py-1 pr-2 border-l-2 transition border-main-color hover:bg-white'
+                                                                                    className='flex flex-row items-center justify-start ml-12 py-1 pr-2 border-l-2 transition border-main-color hover:bg-white'
                                                                                 >
                                                                                     <p
                                                                                         className='text-[12px] ml-2'
                                                                                     >
                                                                                         {subPage.subPageName}
                                                                                     </p>
-                                                                                    <ChevronDown
-                                                                                        size={18}
-                                                                                        className='text-hash-color ml-2'
-                                                                                    />
+                                                                                    <Plus className="h-[12px] w-[12px] ml-5 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=open]:hidden"/>
+                                                                                    <Minus className="h-[12px] w-[12px] ml-5 shrink-0 text-hash-color transition-transform duration-200 group-data-[state=closed]:hidden"/>
                                                                                 </AccordionTrigger>
                                                                                 <AccordionContent>
                                                                                     {
@@ -143,9 +143,9 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                                                                                     linkClick();
                                                                                                     setSelectedThread(thread);
                                                                                                 }}
-                                                                                                href={`/${selectedModule.toLowerCase()}/${thread.toLowerCase().replace(/\s+/g,"-")}`}
+                                                                                                href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${thread.toLowerCase().replace(/\s+/g,"-")}`}
                                                                                             >
-                                                                                                <div className='group flex flex-row items-center ml-8 py-1 pr-2 transition hover:bg-white'>
+                                                                                                <div className='group flex flex-row items-center ml-16 py-1 pr-2 transition hover:bg-white'>
                                                                                                     <p
                                                                                                         className={`text-[12px] transition ${selectedThread === thread && 'text-main-color'}`}
                                                                                                     >
@@ -170,9 +170,9 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                                                                 linkClick();
                                                                                 setSelectedThread(subPage.subPageName);
                                                                             }}
-                                                                            href={`/${selectedModule.toLowerCase()}/${subPage?.subPageName?.toLowerCase().replace(/\s+/g,"-")}`}
+                                                                            href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${subPage?.subPageName?.toLowerCase().replace(/\s+/g,"-")}`}
                                                                         >
-                                                                            <div className='group flex flex-row items-center ml-4 py-1 pr-2 border-l-2 transition border-main-color hover:bg-white'>
+                                                                            <div className='group flex flex-row items-center ml-12 py-1 pr-2 border-l-2 transition border-main-color hover:bg-white'>
                                                                                 <p
                                                                                     className={`text-[12px] ml-2 ${selectedThread === subPage.subPageName && 'text-main-color'}`}
                                                                                 >

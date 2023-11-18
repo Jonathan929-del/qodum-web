@@ -31,7 +31,7 @@
     }
     
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background:#ffbd2e;
+        background:#3e67b1;
         border-radius:50px;
     }
     
@@ -52,7 +52,7 @@
     }
     
     .custom-sidebar-scrollbar::-webkit-scrollbar-thumb {
-        background:#ffbd2e;
+        background:#3e67b1;
         border-radius:50px;
     }
     

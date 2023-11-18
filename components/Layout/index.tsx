@@ -2,6 +2,7 @@
 // Imports
 import Topbar from './Topbar';
 import Sidebar from './Sidebar';
+import ConfigBar from './ConfigBar';
 import React, {useState} from 'react';
 
 
@@ -28,6 +29,7 @@ const index = ({children}:any) => {
                     setIsSidebarOpened={setIsSidebarOpened}
                 />
                 <div className='flex-1 overflow-scroll custom-scrollbar'>
+                    <ConfigBar />
                     {children}
                 </div>
                 {/* <Footer /> */}
