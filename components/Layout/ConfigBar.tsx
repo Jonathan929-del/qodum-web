@@ -22,7 +22,7 @@ const ConfigBar = () => {
 
         // Use Effect
         useEffect(() => {
-            const page = pathname === '/' ? 'Home' : `${pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)} / ${pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ')}`;
+            const page = pathname === '/' ? 'Home' : `${pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)} ${pathname.split('/')[2] ? '/' : ''} ${pathname.split('/')[2] ? pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ') : ''}`;
             switch (pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)) {
                 case 'Time-table':
                     setIcon(<Calendar className='text-hash-color p-1'/>);
@@ -58,7 +58,7 @@ const ConfigBar = () => {
 
     return (
         <div
-            className='w-full bg-white flex flex-row items-center py-3 px-5'
+            className='w-full bg-white flex flex-row items-center py-3 pl-0 justify-center md:pl-[260px] md:justify-start'
         >
             <div
                 className='rounded-[8px] border-2 border-main-color'

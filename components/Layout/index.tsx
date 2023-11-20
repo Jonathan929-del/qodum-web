@@ -23,13 +23,13 @@ const index = ({children}:any) => {
                 isSidebarOpened={isSidebarOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
             />
+            <ConfigBar />
             <div className='relative flex flex-row flex-1 overflow-hidden'>
                 <Sidebar
                     isSidebarOpened={isSidebarOpened}
                     setIsSidebarOpened={setIsSidebarOpened}
                 />
                 <div className='flex-1 overflow-scroll custom-scrollbar'>
-                    <ConfigBar />
                     {children}
                 </div>
                 {/* <Footer /> */}
