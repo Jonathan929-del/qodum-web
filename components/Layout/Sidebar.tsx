@@ -97,7 +97,7 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
             {/* Accordion */}
             <Accordion type="single" collapsible
-                className='w-full h-full mt-10 overflow-scroll custom-sidebar-scrollbar'
+                className='w-full h-full mt-2 overflow-scroll custom-sidebar-scrollbar'
             >
 
                 {/* Home Link */}
@@ -114,7 +114,7 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                     >
                         <AccordionTrigger
                             onClick={() => setIsSidebarOpened(true)}
-                            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-4 transition hover:bg-[#195382] ${selectedModule === 'Home' && 'bg-[#195382]'}`}
+                            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-2 transition hover:bg-[#195382] ${selectedModule === 'Home' && 'bg-[#195382]'}`}
                         >
                             <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'Home' ? 'text-white' : 'text-black'}`}>
                                 <div className={`${!isSidebarOpened && 'px-10'}`}>
