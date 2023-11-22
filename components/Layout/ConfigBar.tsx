@@ -25,31 +25,31 @@ const ConfigBar = () => {
             const page = pathname === '/' ? 'Home' : `${pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)} ${pathname.split('/')[2] ? '/' : ''} ${pathname.split('/')[2] ? pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ') : ''}`;
             switch (pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)) {
                 case 'Time-table':
-                    setIcon(<Calendar className='text-hash-color p-1'/>);
+                    setIcon(<Calendar className='text-white p-1'/>);
                     break;
                 case 'Accounts':
-                    setIcon(<FileStack className='text-hash-color p-1'/>);
+                    setIcon(<FileStack className='text-white p-1'/>);
                     break;
                 case 'Fees':
-                    setIcon(<CircleDollarSignIcon className='text-hash-color p-1'/>);
+                    setIcon(<CircleDollarSignIcon className='text-white p-1'/>);
                     break;
                 case 'Admission':
-                    setIcon(<GraduationCap className='text-hash-color p-1'/>);
+                    setIcon(<GraduationCap className='text-white p-1'/>);
                     break;
                 case 'Payroll':
-                    setIcon(<Wallet className='text-hash-color p-1'/>);
+                    setIcon(<Wallet className='text-white p-1'/>);
                     break;
                 case 'Stocks':
-                    setIcon(<Box className='text-hash-color p-1'/>);
+                    setIcon(<Box className='text-white p-1'/>);
                     break;
                 case 'Users':
-                    setIcon(<Users className='text-hash-color p-1'/>);
+                    setIcon(<Users className='text-white p-1'/>);
                     break;
                 case 'Attendance':
-                    setIcon(<Megaphone className='text-hash-color p-1'/>);
+                    setIcon(<Megaphone className='text-white p-1'/>);
                     break;
                 default:
-                    setIcon(<Home className='text-hash-color p-1'/>);
+                    setIcon(<Home className='text-white p-1'/>);
                     break;
             }
             setPageName(page);
@@ -58,15 +58,15 @@ const ConfigBar = () => {
 
     return (
         <div
-            className='w-full bg-white flex flex-row items-center py-3 pl-0 justify-center md:pl-[260px] md:justify-start'
+            className='w-full bg-[#3179b4] flex flex-row items-center py-3 pl-0 justify-center md:pl-[260px] md:justify-start'
         >
             <div
-                className='rounded-[8px] border-2 border-main-color'
+                className='rounded-[8px] border-2 border-white'
             >
                 {icon}
             </div>
             <h2
-                className='text-md sm:text-lg text-hash-color ml-2'
+                className='text-md sm:text-lg text-white ml-2'
             >
                 {
                     pageName.split(' / ')[0] !== 'Time-table' ? pageName :

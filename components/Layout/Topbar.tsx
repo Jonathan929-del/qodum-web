@@ -11,7 +11,7 @@ import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell} from 'luci
 // Main function
 const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     return (
-        <nav className='flex flex-col items-center justify-between bg-white w-full border-b-[0.5px] border-[#ccc] px-4 py-2 md:flex-row md:py-0'>
+        <nav className='flex flex-col items-center justify-between bg-[#17375e] w-full border-b-[0.5px] border-[#ccc] px-4 py-2 md:flex-row'>
             <div
                 className='flex w-full flex-row justify-between items-center gap-3 border-b-[0.5px] border-[#ccc] md:w-auto md:border-b-0'
             >
@@ -22,11 +22,12 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                     height={125}
                     alt='Qodum logo'
                     src='/assets/logo.png'
+                    className='bg-white p-[2px] rounded-[5px]'
                 />
 
                 {/* Icons */}
                 <div className='flex flex-row justify-between gap-3'>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'
+                    <div className='flex justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'
                         onClick={() => setIsSidebarOpened(!isSidebarOpened)}
                     >
                         <Menu
@@ -34,13 +35,13 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                             className='text-hash-color'
                         />
                     </div>
-                    <div className='hidden justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform md:flex'>
+                    <div className='hidden justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform md:flex'>
                         <Scan
                             size={18}
                             className='text-hash-color'
                         />
                     </div>
-                    <div className='hidden justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform md:flex'>
+                    <div className='hidden justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform md:flex'>
                         <Grid3X3
                             size={18}
                             className='text-hash-color'
@@ -54,11 +55,11 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                 >
                     <Input
                         placeholder='Search'
-                        className='rounded-[5px] border-[#ccc] text-xs text-hash-color w-[250px]'
+                        className='rounded-[5px] border-[#ccc] bg-white text-xs text-hash-color w-[250px]'
                     />
                     <Search
                         size={20}
-                        className='absolute right-2 top-[25%] text-hash-color cursor-pointer'
+                        className='absolute right-2 top-[25%] text-white cursor-pointer'
                     />
                 </div>
 
@@ -71,25 +72,25 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
                 {/* Icons */}
                 <div className='flex flex-row justify-between gap-3'>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
+                    <div className='flex justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
                         <Globe
                             size={18}
                             className='text-hash-color'
                         />
                     </div>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
+                    <div className='flex justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
                         <CalendarDays
                             size={18}
                             className='text-hash-color'
                         />
                     </div>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
+                    <div className='flex justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
                         <Flag
                             size={18}
                             className='text-hash-color'
                         />
                     </div>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
+                    <div className='flex justify-center items-center border-2 border-[#ccc] bg-white w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
                         <Bell
                             size={18}
                             className='text-hash-color'
