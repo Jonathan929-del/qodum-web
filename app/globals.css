@@ -42,21 +42,6 @@
 
     /* Sidebar scrollbar */
     .custom-sidebar-scrollbar::-webkit-scrollbar {
-        width:2px;
-        height:3px;
-        border-radius:2px;
-    }
-    
-    .custom-sidebar-scrollbar::-webkit-scrollbar-track {
-        background:#F1F1F4;
-    }
-    
-    .custom-sidebar-scrollbar::-webkit-scrollbar-thumb {
-        background:#3e67b1;
-        border-radius:50px;
-    }
-    
-    .custom-sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
-        background:#7878a3;
+        width:0px;
     }
 }
