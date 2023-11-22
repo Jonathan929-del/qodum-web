@@ -13,8 +13,12 @@ const TodayVouchers = () => {
                 <h3 className='text-sm'>TODAY'S VOUCHERS / RECEIPT SUMMARY</h3>
                 <p className='text-xs text-hash-color'>30 - Mars - 2023</p>
             </div>
-            <div>
-
+            <div className='flex flex-col'>
+                <div className='flex-row'>
+                    <div className='flex flex-row'>
+                        
+                    </div>
+                </div>
             </div>
             <div></div>
             <div></div>
