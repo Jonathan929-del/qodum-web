@@ -19,17 +19,17 @@ const index = ({children}:any) => {
 
 
     return (
-        <main className='w-full h-screen flex flex-col bg-[#ecedf0] font-Poppins'>
-            <Topbar
+        <main className='w-full h-screen flex flex-row bg-[#ecedf0] font-Poppins'>
+            <Sidebar
                 isSidebarOpened={isSidebarOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
             />
-            <ConfigBar />
-            <div className='relative flex flex-row flex-1 overflow-hidden'>
-                <Sidebar
+            <div className='relative flex flex-col flex-1 overflow-hidden'>
+                <Topbar
                     isSidebarOpened={isSidebarOpened}
                     setIsSidebarOpened={setIsSidebarOpened}
                 />
+                <ConfigBar />
                 <div className='flex-1 flex flex-col justify-between gap-6 overflow-scroll custom-scrollbar'>
                     {children}
                     <Footer />

@@ -57,7 +57,7 @@ const LineCom = () => {
 
 
     return (
-        <div className='flex flex-col w-[60%] bg-white rounded-[8px] p-2'>
+        <div className='flex-1 flex flex-col bg-white rounded-[8px] p-2'>
             <div className='w-full flex flex-row items-center justify-between mb-2'>
                 <div className='flex flex-row items-center justify-center text-sm'>
                     <p className='font-bold'>Income and Expenditure</p>

@@ -2,10 +2,11 @@
 // Imports
 // Imports
 import Link from 'next/link';
+import Image from 'next/image';
 import modules from '@/constants/modules';
 import {usePathname} from 'next/navigation';
-import {MoveRight, ChevronDown, Home} from 'lucide-react';
 import {createElement, useEffect, useState} from 'react';
+import {MoveRight, ChevronDown, Home, X} from 'lucide-react';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 
 
@@ -63,17 +64,40 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
             setIsSidebarOpened(false);
         }
         return () => window.removeEventListener('resize', updateDimensions);
-    }, []);
+    }, [pathname]);
 
 
     return (
         <aside
-            className={`flex flex-col bg-[#FAFAFA] items-center pt-10 pb-20 transition overflow-scroll custom-sidebar-scrollbar px-4
+            className={`flex flex-col bg-[#FAFAFA] items-center pt-10 pb-20 transition overflow-scroll custom-sidebar-scrollbar px-4 z-10
                         absolute h-[100%] w-full md:left-0 ${isSidebarOpened ? 'left-0' : 'left-[-100%]'} md:relative md:w-auto`}
         >
+
+
+            {/* Logo */}
+            <div className='w-full flex flex-row items-center justify-between border-b-[0.5px] border-[#ccc] md:justify-center'>
+                <Image
+                    width={125}
+                    height={125}
+                    alt='Qodum logo'
+                    src='/assets/logo.png'
+                    className='p-[2px] rounded-[5px]'
+                />
+                <div
+                    className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition md:hidden'
+                    onClick={() => setIsSidebarOpened(false)}
+                >
+                    <X
+                        size={18}
+                        className='text-hash-color'
+                    />
+                </div>
+            </div>
+
+
             {/* Accordion */}
             <Accordion type="single" collapsible
-                className='w-full'
+                className='w-full mt-10'
             >
 
                 <Link
@@ -92,7 +116,9 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                             className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-4 transition hover:bg-[#195382] ${selectedModule === 'Home' && 'bg-[#195382]'}`}
                         >
                             <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'Home' ? 'text-white' : 'text-black'}`}>
-                                <Home />
+                                <div className={`${!isSidebarOpened && 'px-10'}`}>
+                                    <Home />
+                                </div>
                                 <p
                                     className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
                                 >
@@ -116,7 +142,9 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                 className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mt-2 transition hover:bg-[#195382] ${selectedModule === module.moduleName && 'bg-[#195382]'}`}
                             >
                                 <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === module.moduleName ? 'text-white' : 'text-black'}`}>
-                                    {createElement(module.icon)}
+                                    <div className={`${!isSidebarOpened && 'px-10'}`}>
+                                        {createElement(module.icon)}
+                                    </div>
                                     <p
                                         className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
                                     >
