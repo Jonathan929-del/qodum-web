@@ -1,9 +1,10 @@
 'use client';
 // Imports
 import Topbar from './Topbar';
+import Footer from './Footer';
+import {useState} from 'react';
 import Sidebar from './Sidebar';
 import ConfigBar from './ConfigBar';
-import React, {useState} from 'react';
 
 
 
@@ -29,10 +30,10 @@ const index = ({children}:any) => {
                     isSidebarOpened={isSidebarOpened}
                     setIsSidebarOpened={setIsSidebarOpened}
                 />
-                <div className='flex-1 overflow-scroll custom-scrollbar'>
+                <div className='flex-1 flex flex-col justify-between gap-6 overflow-scroll custom-scrollbar'>
                     {children}
+                    <Footer />
                 </div>
-                {/* <Footer /> */}
             </div>
         </main>
     );
