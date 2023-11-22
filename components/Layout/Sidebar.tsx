@@ -75,7 +75,7 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
             {/* Logo */}
-            <div className='w-full flex flex-row items-center justify-between py-10 border-b-[0.5px] border-[#ccc] md:justify-center'>
+            <div className='w-full flex flex-row items-center justify-between py-6 border-b-[0.5px] border-[#ccc] md:justify-center'>
                 <Image
                     width={125}
                     height={125}
