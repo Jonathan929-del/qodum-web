@@ -6,7 +6,7 @@ import Image from 'next/image';
 import modules from '@/constants/modules';
 import {usePathname} from 'next/navigation';
 import {createElement, useEffect, useState} from 'react';
-import {MoveRight, ChevronDown, Home, X} from 'lucide-react';
+import {MoveRight, ChevronDown, Home, X, Flag, LibraryBig} from 'lucide-react';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 
 
@@ -69,13 +69,13 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
     return (
         <aside
-            className={`flex flex-col bg-[#FAFAFA] items-center pt-10 pb-20 transition overflow-scroll custom-sidebar-scrollbar px-4 z-10
+            className={`flex flex-col bg-[#FAFAFA] items-center transition px-4 z-10
                         absolute h-[100%] w-full md:left-0 ${isSidebarOpened ? 'left-0' : 'left-[-100%]'} md:relative md:w-auto`}
         >
 
 
             {/* Logo */}
-            <div className='w-full flex flex-row items-center justify-between border-b-[0.5px] border-[#ccc] md:justify-center'>
+            <div className='w-full flex flex-row items-center justify-between py-10 border-b-[0.5px] border-[#ccc] md:justify-center'>
                 <Image
                     width={125}
                     height={125}
@@ -97,9 +97,10 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
             {/* Accordion */}
             <Accordion type="single" collapsible
-                className='w-full mt-10'
+                className='w-full h-full mt-10 overflow-scroll custom-sidebar-scrollbar'
             >
 
+                {/* Home Link */}
                 <Link
                     onClick={() => {
                         linkClick();
@@ -156,12 +157,30 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                             <AccordionContent
                                 className={`${isSidebarOpened ? 'block' : 'hidden'} bg-[#F6F6F6] mt-2`}
                             >
-                                
+    
+
                                 {/* Module Pages Links */}
                                 <Accordion
                                     type="single"
                                     collapsible
                                 >
+                                    {/* LINK */}
+                                    <Link
+                                        onClick={() => {
+                                            linkClick();
+                                            setSelectedPage('Dashboard');
+                                        }}
+                                        href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}`}
+                                    >
+                                        <AccordionItem value='Dashboard'>
+                                            <AccordionTrigger
+                                                onClick={() => setSelectedPage('Dashboard')}
+                                                className={`flex flex-row justify-between px-4 py-2 mt-[5px] border-l-2 transition rounded-[8px] bg-white hover:bg-[#e7f0f7] hover:border-main-color hover:text-main-color ${selectedPage === 'Dashboard' ? 'border-main-color bg-[#e7f0f7] text-main-color' : 'border-white'}`}
+                                            >
+                                                Dashboard
+                                            </AccordionTrigger>
+                                        </AccordionItem>
+                                    </Link>
                                     {
                                         module.pages.map(page => (
                                                 <AccordionItem value={page.pageName}>
@@ -255,6 +274,100 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                         </AccordionItem>
                     ))
                 }
+
+
+                {/* Report Card Link */}
+                <Link
+                    onClick={() => {
+                        linkClick();
+                        setSelectedPage('');
+                    }}
+                    href='/report-card'
+                >
+                    <AccordionItem
+                        value='Report Card'
+                        onClick={() => setSelectedModule('Report Card')}
+                    >
+                        <AccordionTrigger
+                            onClick={() => setIsSidebarOpened(true)}
+                            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] my-4 transition hover:bg-[#195382] ${selectedModule === 'Report Card' && 'bg-[#195382]'}`}
+                        >
+                            <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'Report Card' ? 'text-white' : 'text-black'}`}>
+                                <div className={`${!isSidebarOpened && 'px-10'}`}>
+                                    <Flag />
+                                </div>
+                                <p
+                                    className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
+                                >
+                                    Report Card
+                                </p>
+                            </div>
+                        </AccordionTrigger>
+                    </AccordionItem>
+                </Link>
+
+
+                {/* Library Link */}
+                <Link
+                    onClick={() => {
+                        linkClick();
+                        setSelectedPage('');
+                    }}
+                    href='/library'
+                >
+                    <AccordionItem
+                        value='Library'
+                        onClick={() => setSelectedModule('Library')}
+                    >
+                        <AccordionTrigger
+                            onClick={() => setIsSidebarOpened(true)}
+                            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-4 transition hover:bg-[#195382] ${selectedModule === 'Library' && 'bg-[#195382]'}`}
+                        >
+                            <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'Library' ? 'text-white' : 'text-black'}`}>
+                                <div className={`${!isSidebarOpened && 'px-10'}`}>
+                                    <LibraryBig />
+                                </div>
+                                <p
+                                    className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
+                                >
+                                    Library
+                                </p>
+                            </div>
+                        </AccordionTrigger>
+                    </AccordionItem>
+                </Link>
+
+
+                {/* Report Card Link */}
+                <Link
+                    onClick={() => {
+                        linkClick();
+                        setSelectedPage('');
+                    }}
+                    href='/cbse'
+                >
+                    <AccordionItem
+                        value='CBSE'
+                        onClick={() => setSelectedModule('CBSE')}
+                    >
+                        <AccordionTrigger
+                            onClick={() => setIsSidebarOpened(true)}
+                            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-4 transition hover:bg-[#195382] ${selectedModule === 'CBSE' && 'bg-[#195382]'}`}
+                        >
+                            <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'CBSE' ? 'text-white' : 'text-black'}`}>
+                                <div className={`${!isSidebarOpened && 'px-10'}`}>
+                                    <Flag />
+                                </div>
+                                <p
+                                    className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
+                                >
+                                    CBSE/DIOS
+                                </p>
+                            </div>
+                        </AccordionTrigger>
+                    </AccordionItem>
+                </Link>
+
 
             </Accordion>
         </aside>

@@ -31,9 +31,9 @@ const AccountCards = () => {
                                 <Progress value={94.32} indicatorColor='bg-[#FFD700]'/>
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col justify-center items-center text-sm'>
+                        <div className='flex-1 flex flex-col justify-center items-center text-sm xl:flex-row'>
                             <p>₹ 14,56,25,255.23</p>
-                            <span className='text-hash-color text-xs mt-[1px]'>(94.32%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(94.32%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -43,9 +43,9 @@ const AccountCards = () => {
                                 <Progress value={5.68} indicatorColor='bg-[#168118]'/>
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col justify-center items-center text-sm'>
+                        <div className='flex-1 flex flex-col justify-center items-center text-sm xl:flex-row'>
                             <p>₹ 87,32,850</p>
-                            <span className='text-hash-color text-xs mt-[1px]'>(5.68%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(5.68%)</span>
                         </div>
                     </div>
                 </div>
@@ -70,9 +70,9 @@ const AccountCards = () => {
                                 <Progress value={94.32} indicatorColor='bg-[#FFD700]'/>
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col justify-center items-center text-sm'>
+                        <div className='flex-1 flex flex-col justify-center items-center text-sm xl:flex-row'>
                             <p>₹ 14,56,25,255.23</p>
-                            <span className='text-hash-color text-xs mt-[1px]'>(94.32%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(94.32%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -82,9 +82,9 @@ const AccountCards = () => {
                                 <Progress value={5.68} indicatorColor='bg-[#168118]'/>
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col justify-center items-center text-sm'>
+                        <div className='flex-1 flex flex-col justify-center items-center text-sm xl:flex-row'>
                             <p>₹ 87,32,850</p>
-                            <span className='text-hash-color text-xs mt-[1px]'>(5.68%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(5.68%)</span>
                         </div>
                     </div>
                 </div>
@@ -105,26 +105,24 @@ const AccountCards = () => {
                     <div className='flex flex-row items-center justify-between'>
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Landmark color='#FFD700'/>
-                            <div className='flex-1 ml-2 text-hash-color text-[10px]'>
+                            <div className='flex-1 ml-2 text-hash-color text-sm lg:text-xs 2xl:text-md'>
                                 Bank (Collection/Payment)
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col items-end text-sm'>
-                            <p>₹ 14,56,25,255.23</p>
-                            <span className='text-hash-color text-xs ml-[1px]'>(94.32%)</span>
-                        </div>
+                        <p className='flex-1 flex flex-col items-end text-sm lg:text-xs xl:text-sm'>
+                            ₹ 15,65,110 / ₹ 10,500
+                        </p>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Banknote color='#168118'/>
-                            <div className='flex-1 ml-2 text-hash-color text-[10px]'>
+                            <div className='flex-1 ml-2 text-hash-color text-sm lg:text-xs 2xl:text-md'>
                                 Cash (Collection/Payment)
                             </div>
                         </div>
-                        <div className='flex-1 flex flex-col items-end text-sm'>
-                            <p>₹ 87,32,850</p>
-                            <span className='text-hash-color text-xs ml-[1px]'>(5.68%)</span>
-                        </div>
+                        <p className='flex-1 flex flex-col items-end text-sm lg:text-xs xl:text-sm'>
+                            ₹ 50,700 / ₹ 5,530
+                        </p>
                     </div>
                 </div>
             </div>
