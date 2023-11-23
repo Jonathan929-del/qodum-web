@@ -1,5 +1,5 @@
 // Imports
-import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar} from 'lucide-react';
+import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar, Flag, LibraryBig} from 'lucide-react';
 
 
 
@@ -87,6 +87,39 @@ const modules:any = [
     {
         icon:Calendar,
         title:'Timetable',
+        numberOfSections:7,
+        sections:[
+            'Teacher Setting',
+            'Define Resource',
+            'Auto Generate Timetable',
+            'Class Timetable Details',
+        ]
+    },
+    {
+        icon:Flag,
+        title:'Report Card',
+        numberOfSections:7,
+        sections:[
+            'Teacher Setting',
+            'Define Resource',
+            'Auto Generate Timetable',
+            'Class Timetable Details',
+        ]
+    },
+    {
+        icon:LibraryBig,
+        title:'Library',
+        numberOfSections:7,
+        sections:[
+            'Teacher Setting',
+            'Define Resource',
+            'Auto Generate Timetable',
+            'Class Timetable Details',
+        ]
+    },
+    {
+        icon:Flag,
+        title:'CBSE/DIOS',
         numberOfSections:7,
         sections:[
             'Teacher Setting',

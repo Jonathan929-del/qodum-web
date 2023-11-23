@@ -37,7 +37,6 @@ const LineCom = () => {
     };
 
       const options = {
-        responsive:true,
         plugins:{
             legend:{
                 display:false

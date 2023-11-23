@@ -1,5 +1,5 @@
 // Imports
-import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar} from 'lucide-react';
+import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar, Flag, LibraryBig} from 'lucide-react';
 
 
 
@@ -1768,7 +1768,22 @@ const modules = [
                 ]
             }
         ]
-    }
+    },
+    {
+        moduleName:'Report Card',
+        icon:Flag,
+        pages:[]
+    },
+    {
+        moduleName:'Library',
+        icon:LibraryBig,
+        pages:[]
+    },
+    {
+        moduleName:'CBSE/DIOS',
+        icon:Flag,
+        pages:[]
+    },
 ];
 
 

@@ -1,9 +1,9 @@
 // Imports
-import Image from 'next/image';
 import {Input} from '../ui/input';
 import {UserButton} from '@clerk/nextjs';
-import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell} from 'lucide-react';
-
+import DropdownMenuCom from '../utils/DropdownMenuCom';
+import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft} from 'lucide-react';
+  
 
 
 
@@ -12,21 +12,22 @@ import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell} from 'luci
 const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     return (
         <nav className='flex flex-col items-center justify-between bg-white w-full border-b-[0.5px] border-[#ccc] px-4 py-2 lg:flex-row'>
+
+
             <div
                 className='hidden flex-row justify-between items-center gap-3 border-[#ccc] lg:w-auto lg:border-b-0 lg:flex'
             >
-
-
-                {/* Icons */}
                 <div className='flex flex-row justify-between gap-3'>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'
+                    <div
+                        className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'
                         onClick={() => setIsSidebarOpened(!isSidebarOpened)}
                     >
-                        <Menu
+                        <ArrowLeft
                             size={18}
-                            className='text-hash-color'
+                            className={`text-hash-color ${!isSidebarOpened && 'rotate-180 transition'}`}
                         />
                     </div>
+                    <DropdownMenuCom />
                     <div className='hidden justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform lg:flex'>
                         <Scan
                             size={18}
@@ -40,8 +41,6 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                         />
                     </div>
                 </div>
-
-                {/* Input */}
                 <div
                     className='relative hidden lg:block'
                 >
@@ -54,28 +53,24 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                         className='absolute right-2 top-[25%] text-white cursor-pointer'
                     />
                 </div>
-
             </div>
 
 
             <div
                 className='flex flex-row w-full justify-between items-center gap-4 mt-2 lg:gap-10 lg:w-auto lg:mt-0'
             >
-
-
-                {/* Icon */}
-                <div
-                    className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform lg:hidden'
-                    onClick={() => setIsSidebarOpened(!isSidebarOpened)}
-                >
-                    <Menu
-                        size={18}
-                        className='text-hash-color'
-                    />
+                <div className='flex flex-row items-center gap-2'>
+                    <div
+                        className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform lg:hidden'
+                        onClick={() => setIsSidebarOpened(!isSidebarOpened)}
+                    >
+                        <ArrowLeft
+                            size={18}
+                            className={`text-hash-color ${!isSidebarOpened && 'rotate-180 transition'}`}
+                        />
+                    </div>
+                    <DropdownMenuCom />
                 </div>
-
-
-                {/* Icons */}
                 <div className='flex flex-row justify-between gap-3'>
                     <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
                         <Globe
@@ -102,9 +97,6 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                         />
                     </div>
                 </div>
-
-
-                {/* User Button */}
                 <UserButton
                     appearance={{
                         elements:{
@@ -112,9 +104,9 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                         }
                     }}
                 />
-
-
             </div>
+
+
         </nav>
     );
 };
