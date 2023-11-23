@@ -152,7 +152,10 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                     ))
                 :
                     <AccordionItem
-                        value={currentModule?.moduleName}
+                        value={
+                            // @ts-ignore
+                            currentModule?.moduleName
+                        }
                     >
                         {/* Layer 1 */}
                         <Link
@@ -169,7 +172,10 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                     <p
                                         className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
                                     >
-                                        {currentModule?.moduleName}
+                                        {
+                                            // @ts-ignore
+                                            currentModule?.moduleName
+                                        }
                                     </p>
                                 </div>
                                 <ChevronDown className={`h-4 w-4 ml-12 shrink-0 text-white transition-transform duration-200  ${isSidebarOpened ? 'block' : 'hidden'}`}/>
@@ -186,6 +192,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                 collapsible
                             >
                                 {
+                                    // @ts-ignore
                                     currentModule?.pages?.map(page => (
                                             <AccordionItem value={page.pageName}>
                                                 {/* Layer 2 */}
