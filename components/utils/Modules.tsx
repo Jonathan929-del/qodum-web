@@ -40,6 +40,7 @@ const Modules = () => {
 
                         <Link
                             href={`/${module.title.toLowerCase()}`}
+                            target='_blank'
                         >
                             <Button
                                 className='text-white group opacity-100 bg-gradient-to-r from-[#3e67b1] to-[#4da7db] w-[100%] mt-4 rounded-[8px] transition-opacity hover:opacity-90'
@@ -49,20 +50,6 @@ const Modules = () => {
                         </Link>
 
                     </div>
-
-
-
-                    // <Link
-                    //     href={`/${module.title.toLowerCase()}`}
-                    //     target='_blank'
-                    // >
-                    //     <div className='flex flex-col items-center justify-center h-32 bg-[#FAFAFA] rounded-xl border-2 border-main-color' key={module.title}>
-                    //         <div className='text-hash-color'>
-                    //             {React.createElement(module.icon)}
-                    //         </div>
-                    //         <h4 className='text-xl font-semibold'>{module.title}</h4>
-                    //     </div>
-                    // </Link>
                 ))
             }
         </section>

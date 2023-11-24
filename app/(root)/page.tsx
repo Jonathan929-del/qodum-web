@@ -6,7 +6,7 @@ import Modules from '@/components/utils/Modules';
 
 
 // Main function
-const Home = async () => {
+const Home = () => {
   return (
     <>
       <Modules />

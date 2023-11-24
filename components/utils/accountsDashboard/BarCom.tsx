@@ -52,7 +52,6 @@ const BarCom = () => {
     };
   
 
-
     return (
         <div className='w-full flex flex-col bg-white rounded-[8px] p-2 lg:py-10 lg:px-20'>
             <div className='w-full flex flex-row items-center justify-between mb-2'>

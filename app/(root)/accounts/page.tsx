@@ -22,8 +22,7 @@ const page = () => {
 
 
             {/* Income and Expenditure */}
-            <div className='flex-1 flex flex-col justify-between mx-4 gap-4 lg:flex-row'>
-                {/*Chart*/}
+            <div className='flex flex-col justify-between mx-4 gap-4 lg:flex-row'>
                 <LineCom />
                 <TodayVouchers />
             </div>

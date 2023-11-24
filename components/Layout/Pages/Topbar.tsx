@@ -1,7 +1,7 @@
 // Imports
-import {Input} from '../ui/input';
+import {Input} from '../../ui/input';
 import {UserButton} from '@clerk/nextjs';
-import DropdownMenuCom from '../utils/DropdownMenuCom';
+import DropdownMenuCom from '../../utils/DropdownMenuCom';
 import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft} from 'lucide-react';
   
 
@@ -69,7 +69,9 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                             className={`text-hash-color ${!isSidebarOpened && 'rotate-180 transition'}`}
                         />
                     </div>
-                    <DropdownMenuCom />
+                    <div className='block lg:hidden'>
+                        <DropdownMenuCom />
+                    </div>
                 </div>
                 <div className='flex flex-row justify-between gap-3'>
                     <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>

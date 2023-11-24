@@ -55,9 +55,8 @@ const LineCom = () => {
     };
   
 
-
     return (
-        <div className='w-full flex flex-col bg-white rounded-[8px] p-2'>
+        <div className='w-full flex flex-col justify-center bg-white rounded-[8px] p-2 lg:w-[calc(100%-400px)]'>
             <div className='w-full flex flex-row items-center justify-between mb-2'>
                 <div className='flex flex-row items-center justify-center text-sm'>
                     <p className='font-bold'>Income and Expenditure</p>
@@ -77,8 +76,6 @@ const LineCom = () => {
             <Line
                 data={data}
                 options={options}
-                width='auto'
-                height='auto'
             />
         </div>
     );

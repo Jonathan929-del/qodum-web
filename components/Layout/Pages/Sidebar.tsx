@@ -2,6 +2,8 @@
 // Imports
 import Image from 'next/image';
 import {X} from 'lucide-react';
+import {usePathname} from 'next/navigation';
+import HomeSidebar from '../Home/HomeSidebar';
 import ModulesAccordion from './ModulesAccordion';
 
 
@@ -10,6 +12,12 @@ import ModulesAccordion from './ModulesAccordion';
 
 // Main function
 const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
+
+
+    // Pathname
+    const pathname = usePathname();
+
+
     return (
         <aside
             className={`flex flex-col bg-[#FAFAFA] items-center transition z-10
@@ -37,11 +45,17 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
             </div>
 
 
-            {/* Accordion */}
-            <ModulesAccordion
-                isSidebarOpened={isSidebarOpened}
-                setIsSidebarOpened={setIsSidebarOpened}
-            />
+            {
+                pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1) === ''
+                ? (
+                    <HomeSidebar />
+                ) : (
+                    <ModulesAccordion
+                        isSidebarOpened={isSidebarOpened}
+                        setIsSidebarOpened={setIsSidebarOpened}
+                    />
+                )
+            }
             
         </aside>
     );
