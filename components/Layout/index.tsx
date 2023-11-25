@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import {useState} from 'react';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
-import Footer from './Pages/Footer';
-import Sidebar from './Pages/Sidebar';
 import ConfigBar from './Pages/ConfigBar';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';

@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import {X} from 'lucide-react';
 import {usePathname} from 'next/navigation';
-import HomeSidebar from '../Home/HomeSidebar';
-import ModulesAccordion from './ModulesAccordion';
+import HomeSidebar from './Home/HomeSidebar';
+import ModulesAccordion from './Pages/ModulesAccordion';
 
 
 

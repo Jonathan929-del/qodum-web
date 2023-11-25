@@ -11,12 +11,12 @@ import Image from 'next/image';
 // Main function
 const Footer = () => {
     return (
-        <footer className='flex flex-col items-center justify-between w-full bg-[#3a3a3a] text-white px-4 py-2 lg:flex-row lg:py-[2px]'>
+        <footer className='flex flex-col items-center justify-between w-full bg-[#F3F8FB] px-4 py-2 lg:flex-row lg:py-[2px]'>
 
 
             <Link
                 href='/'
-                className='flex flex-row w-full items-start lg:w-auto'
+                className='flex flex-row w-full items-start text-[#2A78B8] lg:w-auto'
             >
                 <Globe
                     size={20}

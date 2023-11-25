@@ -22,7 +22,7 @@ const HomeTopbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
         <nav className='flex flex-row justify-between items-center bg-white rounded-[8px] mt-4 mx-4 py-2 px-6'>
             <div className='flex flex-col items-center'>
                 <p className='text-[#5392C6] text-sm mb-2'>{today}</p>
-                <Clock format={'HH:mm:ss'} ticking={true} timezone={'US/Pacific'} className='text-4xl'/>
+                <Clock format={'HH:mm:ss'} ticking={true} className='text-4xl'/>
             </div>
             <div className='hidden md:block'>
                 <UserButton />
