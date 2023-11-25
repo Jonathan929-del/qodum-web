@@ -2,6 +2,7 @@
 // Imports
 import {Doughnut} from 'react-chartjs-2';
 import {Chart as ChartJs, ArcElement, Tooltip, Legend} from 'chart.js';
+import { useEffect } from 'react';
 
 
 
@@ -38,7 +39,6 @@ const DoughnutCom = ({data, text}:any) => {
             ctx.fillText(text, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
         }
     };
-    console.log(data.labels.polls[0].color);
 
 
     return (
@@ -50,9 +50,9 @@ const DoughnutCom = ({data, text}:any) => {
                 </div>
                 <div className={`grid gap-2 ${data.labels.polls.length > 4 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                     {   
-                        data?.labels?.polls?.map((poll:any) => (
+                        data.labels.polls.map((poll:any) => (
                             <div className='flex flex-row items-center text-hash-color text-xs'>
-                                <span className={`w-2 h-2 bg-[${poll.color}]`}/>
+                                <span className={`w-2 h-2 ${poll.color}`}/>
                                 <p className='pl-[2px]'>{poll.name}</p>
                             </div>
                         ))

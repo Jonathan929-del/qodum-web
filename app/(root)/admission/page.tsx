@@ -89,11 +89,11 @@ const page = () => {
             polls:[
                 {
                     name:'Boys',
-                    color:'#15ABDE'
+                    color:'bg-[#15ABDE]'
                 },
                 {
                     name:'Girls',
-                    color:'#FF7779'
+                    color:'bg-[#FF7779]'
                 }
             ]
         },
@@ -119,15 +119,15 @@ const page = () => {
             polls:[
                 {
                     name:'TC Taken',
-                    color:'#15ABDE'
+                    color:'bg-[#15ABDE]'
                 },
                 {
                     name:'New Admission',
-                    color:'#FEC133'
+                    color:'bg-[#FEC133]'
                 },
                 {
                     name:'Old',
-                    color:'#FE8125'
+                    color:'bg-[#FE8125]'
                 }
             ]
         },
@@ -153,15 +153,15 @@ const page = () => {
             polls:[
                 {
                     name:'Drafted',
-                    color:'#0C7EFA'
+                    color:'bg-[#0C7EFA]'
                 },
                 {
                     name:'Generated',
-                    color:'#FF7779'
+                    color:'bg-[#FF7779]'
                 },
                 {
                     name:'Canceled',
-                    color:'#FEC133'
+                    color:'bg-[#FEC133]'
                 }
             ]
         },
@@ -187,15 +187,15 @@ const page = () => {
             polls:[
                 {
                     name:'General',
-                    color:'#0C7EFA'
+                    color:'bg-[#0C7EFA]'
                 },
                 {
                     name:'OBC',
-                    color:'#FF7779'
+                    color:'bg-[#FF7779]'
                 },
                 {
                     name:'SC/ST',
-                    color:'#FEC133'
+                    color:'bg-[#FEC133]'
                 }
             ]
         },
@@ -221,19 +221,19 @@ const page = () => {
             polls:[
                 {
                     name:'Hinduism',
-                    color:'#FE8125'
+                    color:'bg-[#FE8125]'
                 },
                 {
                     name:'Islam',
-                    color:'#009D24'
+                    color:'bg-[#009D24]'
                 },
                 {
                     name:'Christianity',
-                    color:'#0C7EFA'
+                    color:'bg-[#0C7EFA]'
                 },
                 {
                     name:'Judaism',
-                    color:'#7F5CB0'
+                    color:'bg-[#7F5CB0]'
                 },
             ]
         },

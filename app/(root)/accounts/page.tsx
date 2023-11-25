@@ -1,3 +1,4 @@
+'use client';
 // Imports
 import BarCom from '@/components/dashboards/shared/BarCom';
 import DoughnutCom from '@/components/dashboards/shared/DoughnutCom';
@@ -56,15 +57,15 @@ const page = () => {
             polls:[
                 {
                     name:'Bank',
-                    color:'#FBBA6B'
+                    color:'bg-[#FBBA6B]'
                 },
                 {
                     name:'General',
-                    color:'#EE706B'
+                    color:'bg-[#EE706B]'
                 },
                 {
                     name:'Party',
-                    color:'#64B475'
+                    color:'bg-[#64B475]'
                 },
             ]
         },
@@ -90,27 +91,27 @@ const page = () => {
             polls:[
                 {
                     name:'CASHR',
-                    color:'#FBBA6B'
+                    color:'bg-[#FBBA6B]'
                 },
                 {
                     name:'JVENT',
-                    color:'#EE706B'
+                    color:'bg-[#EE706B]'
                 },
                 {
                     name:'ADENT',
-                    color:'#59A1CF'
+                    color:'bg-[#59A1CF]'
                 },
                 {
                     name:'BANKR',
-                    color:'#4C4A53'
+                    color:'bg-[#4C4A53]'
                 },
                 {
                     name:'FEEDB',
-                    color:'#4CB5B3'
+                    color:'bg-[#4CB5B3]'
                 },
                 {
                     name:'BANKP',
-                    color:'#444587'
+                    color:'bg-[#444587]'
                 },
             ]
         },
