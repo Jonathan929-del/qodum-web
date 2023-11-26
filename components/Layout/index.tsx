@@ -49,10 +49,10 @@ const index = ({children}:any) => {
                         </>
                     )
                 }
-                <div className='flex-1 flex flex-col justify-between gap-6 overflow-scroll custom-scrollbar'>
+                <div className='flex-1 flex flex-col justify-between gap-6 pb-4 overflow-scroll custom-scrollbar'>
                     {children}
-                    <Footer />
                 </div>
+                <Footer />
             </div>
         </main>
     );

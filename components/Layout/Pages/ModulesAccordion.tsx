@@ -1,9 +1,10 @@
+'use client';
 // Imports
 import Link from 'next/link';
 import modules from '@/constants/modules';
+import {useEffect, useState} from 'react';
 import {usePathname} from 'next/navigation';
 import {MoveRight, ChevronDown} from 'lucide-react';
-import {useEffect, useState, createElement} from 'react';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar} from 'lucide-react';
 
@@ -15,7 +16,7 @@ import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Mega
 const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
-    // Pathname
+    // Router
     const pathname = usePathname();
 
 
@@ -55,8 +56,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     const linkClick = () => {
         width < 768 && setIsSidebarOpened(false);
     };
-    
-    
+
+
     // Use Effect
     useEffect(() => {
 
@@ -117,9 +118,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
     return (
         <Accordion
-            defaultValue={pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}
-            type='single'
-            collapsible
+            defaultValue={modules.map(module => module.moduleName)}
+            type='multiple'
             className='w-full h-full mt-2 overflow-scroll custom-sidebar-scrollbar'
         >
             <AccordionItem
