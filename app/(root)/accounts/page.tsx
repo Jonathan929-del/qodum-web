@@ -2,10 +2,10 @@
 // Imports
 import BarCom from '@/components/dashboards/shared/BarCom';
 import DoughnutCom from '@/components/dashboards/shared/DoughnutCom';
-import LineCom from '@/components/dashboards/accountsDashboard/LineCom';
+import LineCom from '@/components/dashboards/shared/LineCom';
 import AccountCards from '@/components/dashboards/accountsDashboard/AccountCards';
 import TodayVouchers from '@/components/dashboards/accountsDashboard/TodayVouchers';
-import {fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData} from '@/constants/charts/accountsCharts';
+import {incomeAndExpenditureLineData, fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData} from '@/constants/charts/accountsCharts';
 
 
 
@@ -14,10 +14,6 @@ import {fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData} from '@/co
 
 // Main function
 const page = () => {
-
-
-
-
     return (
         <section className='flex flex-col w-full gap-4'>
 
@@ -28,7 +24,9 @@ const page = () => {
 
             {/* Income and Expenditure */}
             <div className='flex flex-col justify-between mx-4 gap-4 lg:flex-row'>
-                <LineCom />
+                <div className='lg:w-[calc(100%-400px)]'>
+                    <LineCom lineData={incomeAndExpenditureLineData}/>
+                </div>
                 <TodayVouchers />
             </div>
 

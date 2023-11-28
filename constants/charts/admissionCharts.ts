@@ -7,11 +7,11 @@ const studentStrengthBarData = {
     categories:[
         {
             name:'Total Students',
-            color:'#C4CDDE'
+            color:'bg-[#C4CDDE]'
         },
         {
             name:'New Admission',
-            color:'#15ABDE'
+            color:'bg-[#15ABDE]'
         },
     ],
     data:{
@@ -44,11 +44,11 @@ const studentComparisionBarData = {
     categories:[
         {
             name:'2017 - 18',
-            color:'#C4CDDE'
+            color:'bg-[#C4CDDE]'
         },
         {
             name:'2018 - 19',
-            color:'#FF9494'
+            color:'bg-[#FF9494]'
         },
     ],
     data:{

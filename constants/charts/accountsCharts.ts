@@ -1,3 +1,41 @@
+// Income and Expenditure Line Data
+const incomeAndExpenditureLineData = {
+    title:'Income and Expenditure',
+    subTitle:'(YTD)',
+    categories:[
+        {
+            name:'Income',
+            color:'bg-[#4BB543]'
+        },
+        {
+            name:'Expenditure',
+            color:'bg-[#FF9494]'
+        }
+    ],
+    data:{
+        labels:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label:'Income',
+                data:[2, 6, 3, 4, 5, 1, 5, 4, 1, 3, 4, 2],
+                borderWidth:2,
+                borderColor:'#4BB543',
+                backgroundColor:'#4BB543'
+            },
+            {
+                label:'Expenditure',
+                data:[4, 6, 4, 3, 1, 1, 5, 2, 4, 6, 5, 3],
+                borderWidth:2,
+                borderColor:'#FF9494',
+                backgroundColor:'#FF9494',
+            }
+        ]
+    }
+}
+
+
+
+
 // Bar data
 const fundFlowBarData = {
     title:{
@@ -7,11 +45,11 @@ const fundFlowBarData = {
     categories:[
         {
             name:'Debit',
-            color:'#ccc'
+            color:'bg-[#ccc]'
         },
         {
             name:'Credit',
-            color:'#FF9494'
+            color:'bg-[#FF9494]'
         },
     ],
     data:{
@@ -122,4 +160,4 @@ const entryTypeDoughnutData = {
 
 
 // Export
-export {fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData};
+export {incomeAndExpenditureLineData, fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData};
