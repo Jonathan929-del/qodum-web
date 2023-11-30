@@ -1,3 +1,4 @@
+'use client';
 // Imports
 import BarCom from '@/components/dashboards/shared/BarCom';
 import DoughnutCom from '@/components/dashboards/shared/DoughnutCom';
@@ -27,10 +28,10 @@ const page = () => {
 
             {/* Student Comparision Bar Data */}
             <div className='flex flex-col gap-4 xl:flex-row'>
-                <div className='w-full xl:w-2/3'>
+                <div className='w-full xl:w-3/5'>
                     <BarCom barData={studentComparisionBarData}/>
                 </div>
-                <div className='w-full xl:w-1/3'>
+                <div className='w-full xl:w-2/5'>
                     <DoughnutCom data={newAdmissionDoughnutData} text='40'/>
                 </div>
             </div>

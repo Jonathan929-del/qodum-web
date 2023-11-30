@@ -1,7 +1,8 @@
 'use client';
 // Imports
+import TabsCom from './TabsCom';
 import {Bar} from 'react-chartjs-2';
-import {Tabs, TabsList, TabsTrigger} from '@/components/ui/tabs';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';  
 import {Chart as ChartJs, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 
@@ -14,7 +15,7 @@ const BarCom = ({barData}:any) => {
 
 
     // Registering
-    ChartJs.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+    ChartJs.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 
     // Options
@@ -23,18 +24,17 @@ const BarCom = ({barData}:any) => {
         plugins:{
             legend:{
                 display:false
+            },
+            datalabels: {
+                display:true
+            },
+        },
+        layout: {
+            padding:{
+                top:30,
+                bottom:0,
             }
         },
-        elements:{
-            line:{
-                tension:0.4
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-            }
-        }
     };
   
 
@@ -60,17 +60,9 @@ const BarCom = ({barData}:any) => {
                     </div>
 
 
-                    {barData?.tabs?.length > 0 ? (
-                        <Tabs
-                            defaultValue={barData.tabs[0]}
-                        >
-                            <TabsList>
-                                {barData.tabs.map((tab:any) => (
-                                    <TabsTrigger value={tab}>{tab}</TabsTrigger>
-                                ))}
-                            </TabsList>
-                        </Tabs>
-                    ) : <div />}
+                    {barData?.tabs?.length > 0 && (
+                        <TabsCom tabs={barData.tabs}/>
+                    )}
 
 
                     {barData?.select?.length > 0 && (

@@ -1,8 +1,9 @@
 'use client';
 // Imports
 import {Doughnut} from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Chart as ChartJs, ArcElement, Tooltip, Legend} from 'chart.js';
-import { useEffect } from 'react';
+import TabsCom from './TabsCom';
 
 
 
@@ -13,21 +14,30 @@ const DoughnutCom = ({data, text}:any) => {
 
 
     // Registering
-    ChartJs.register(ArcElement, Tooltip, Legend);
+    ChartJs.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 
     // Options
     const options = {
         responsive:true,
-        plugins:{
-            legend: {
-                display: false
+        plugins: {
+            legend:{display:false},
+            datalabels: {
+                display:true
             },
         },
-    }
+        layout: {
+            padding:{
+                top:0,
+                bottom:0,
+                left:100,
+                right:100
+            }
+        },
+    };
 
 
-    // Center Text
+    // Outlabels
     const textCenter = {
         id:'textCenter',
         beforeDatasetsDraw:(chart:any, args:any, pluginOptions:any) => {
@@ -59,7 +69,10 @@ const DoughnutCom = ({data, text}:any) => {
                     }
                 </div>
             </div>
-            <div className='flex-1 flex items-center justify-center h-[75%] w-[75%] p-2'>
+            {data.labels?.tabs?.length > 0 &&(
+                <TabsCom tabs={data.labels.tabs}/>
+            )}
+            <div className='flex-1 flex items-center justify-center h-[95%] w-[95%]'>
                 <Doughnut
                     data={data.doughnutData}
                     options={options}

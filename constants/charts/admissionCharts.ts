@@ -77,6 +77,7 @@ const newAdmissionDoughnutData = {
     labels:{
         title:'New Admissions In',
         subTitle:'',
+        tabs:['Last 7 Days', 'Last 15 Days', 'Last 30 Days'],
         polls:[
             {
                 name:'Boys',
@@ -89,13 +90,32 @@ const newAdmissionDoughnutData = {
         ]
     },
     doughnutData:{
-        labels:['Boys', 'Girls'],
+        labels:[24, 16],
         datasets: [
             {
-                label:'Poll',
-                data:[6, 4],
+                label:'%',
+                data:[60, 40],
                 backgroundColor:['#15ABDE', '#FF7779'],
-                borderColor:['#15ABDE', '#FF7779']
+                borderColor:['#15ABDE', '#FF7779'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                },
             }
         ]
     }
@@ -126,87 +146,32 @@ const standardStatisticsDoughnutData = {
         ]
     },
     doughnutData:{
-        labels:['TC Taken', 'New Admission', 'Old'],
+        labels:[74, 36, 186],
         datasets: [
             {
-                label:'Poll',
+                label:'%',
                 data:[25, 12, 63],
                 backgroundColor:['#15ABDE', '#FEC133', '#FE8125'],
-                borderColor:['#15ABDE', '#FEC133', '#FE8125']
-            }
-        ]
-    }
-};
-
-
-
-
-
-// Transfer Statistics Statistics Doughnut Data
-const transferDoughnutData = {
-    labels:{
-        title:'Transfer Certificate Statistics',
-        subTitle:'',
-        polls:[
-            {
-                name:'Drafted',
-                color:'bg-[#0C7EFA]'
-            },
-            {
-                name:'Generated',
-                color:'bg-[#FF7779]'
-            },
-            {
-                name:'Canceled',
-                color:'bg-[#FEC133]'
-            }
-        ]
-    },
-    doughnutData:{
-        labels:['Drafted', 'Generated', 'Canceled'],
-        datasets: [
-            {
-                label:'Poll',
-                data:[480, 290, 140],
-                backgroundColor:['#0C7EFA', '#FF7779', '#FEC133'],
-                borderColor:['#0C7EFA', '#FF7779', '#FEC133']
-            }
-        ]
-    }
-};
-
-
-
-
-
-// Category Statistics Doughnut Data
-const categoryDoughnutData = {
-    labels:{
-        title:'Category Wise Student Statistics',
-        subTitle:'',
-        polls:[
-            {
-                name:'General',
-                color:'bg-[#0C7EFA]'
-            },
-            {
-                name:'OBC',
-                color:'bg-[#FF7779]'
-            },
-            {
-                name:'SC/ST',
-                color:'bg-[#FEC133]'
-            }
-        ]
-    },
-    doughnutData:{
-        labels:['General', 'OBC', 'SC/ST'],
-        datasets: [
-            {
-                label:'Poll',
-                data:[72, 18, 10],
-                backgroundColor:['#0C7EFA', '#FF7779', '#FEC133'],
-                borderColor:['#0C7EFA', '#FF7779', '#FEC133']
+                borderColor:['#15ABDE', '#FEC133', '#FE8125'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                }
             }
         ]
     }
@@ -241,13 +206,144 @@ const religionDoughnutData = {
         ]
     },
     doughnutData:{
-        labels:['Hinduism', 'Islam', 'Christianity', 'Judaism'],
+        labels:[2445, 462, 578, 375],
         datasets: [
             {
-                label:'Poll',
+                label:'%',
                 data:[63.5, 12, 15, 9.5],
                 backgroundColor:['#FE8125', '#009D24', '#0C7EFA', '#7F5CB0'],
-                borderColor:['#FE8125', '#009D24', '#0C7EFA', '#7F5CB0']
+                borderColor:['#FE8125', '#009D24', '#0C7EFA', '#7F5CB0'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                }
+            }
+        ]
+    }
+};
+
+
+
+
+
+// Transfer Statistics Statistics Doughnut Data
+const transferDoughnutData = {
+    labels:{
+        title:'Transfer Certificate Statistics',
+        subTitle:'',
+        polls:[
+            {
+                name:'Drafted',
+                color:'bg-[#0C7EFA]'
+            },
+            {
+                name:'Generated',
+                color:'bg-[#FF7779]'
+            },
+            {
+                name:'Canceled',
+                color:'bg-[#FEC133]'
+            }
+        ]
+    },
+    doughnutData:{
+        labels:[480, 290, 140],
+        datasets: [
+            {
+                label:'%',
+                data:[70, 20, 10],
+                backgroundColor:['#0C7EFA', '#FF7779', '#FEC133'],
+                borderColor:['#0C7EFA', '#FF7779', '#FEC133'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                }
+            }
+        ]
+    }
+};
+
+
+
+
+
+// Category Statistics Doughnut Data
+const categoryDoughnutData = {
+    labels:{
+        title:'Category Wise Student Statistics',
+        subTitle:'',
+        polls:[
+            {
+                name:'General',
+                color:'bg-[#0C7EFA]'
+            },
+            {
+                name:'OBC',
+                color:'bg-[#FF7779]'
+            },
+            {
+                name:'SC/ST',
+                color:'bg-[#FEC133]'
+            }
+        ]
+    },
+    doughnutData:{
+        labels:[2772, 693, 385],
+        datasets: [
+            {
+                label:'%',
+                data:[72, 18, 10],
+                backgroundColor:['#0C7EFA', '#FF7779', '#FEC133'],
+                borderColor:['#0C7EFA', '#FF7779', '#FEC133'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                }
             }
         ]
     }

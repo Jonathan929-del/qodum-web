@@ -20,7 +20,14 @@ const incomeAndExpenditureLineData = {
                 data:[2, 6, 3, 4, 5, 1, 5, 4, 1, 3, 4, 2],
                 borderWidth:2,
                 borderColor:'#4BB543',
-                backgroundColor:'#4BB543'
+                backgroundColor:'#4BB543',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            formatter:() => ''
+                        }
+                    },
+                }
             },
             {
                 label:'Expenditure',
@@ -28,6 +35,13 @@ const incomeAndExpenditureLineData = {
                 borderWidth:2,
                 borderColor:'#FF9494',
                 backgroundColor:'#FF9494',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            formatter:() => ''
+                        }
+                    },
+                }
             }
         ]
     }
@@ -45,7 +59,7 @@ const fundFlowBarData = {
     categories:[
         {
             name:'Debit',
-            color:'bg-[#ccc]'
+            color:'bg-[#B5C1D7]'
         },
         {
             name:'Credit',
@@ -58,12 +72,32 @@ const fundFlowBarData = {
             {
                 data:[2, 6, 3, 4, 5, 1, 5, 4, 1, 3, 4, 2],
                 borderWidth:2,
-                backgroundColor:'#ccc'
+                backgroundColor:'#B5C1D7',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]} CR`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
             {
                 data:[4, 6, 4, 3, 1, 1, 5, 2, 4, 6, 5, 3],
                 borderWidth:2,
                 backgroundColor:'#FF9494',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[1].data[ctx.dataIndex]} CR`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }
@@ -94,13 +128,32 @@ const categoryDoughnutData = {
         ]
     },
     doughnutData:{
-        labels:['Bank', 'General', 'Party'],
+        labels:['₹ 29,47,23,103', '₹ 47,19,91,453.41', '₹ 4,93,00,395'],
         datasets: [
             {
-                label:'Poll',
-                data:[3, 6, 8],
+                label:'%',
+                data:[36.11, 57.84, 6.04],
                 backgroundColor:['#FBBA6B', '#EE706B', '#64B475'],
-                borderColor:['#FBBA6B', '#EE706B', '#64B475']
+                borderColor:['#FBBA6B', '#EE706B', '#64B475'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                },
             }
         ]
     }
@@ -110,7 +163,7 @@ const categoryDoughnutData = {
 
 
 
-// Category Doughnut Data
+// Entry Type Doughnut Data
 const entryTypeDoughnutData = {
     labels:{
         title:'Voucher Statistics',
@@ -143,13 +196,33 @@ const entryTypeDoughnutData = {
         ]
     },
     doughnutData:{
-        labels:['CASHR', 'JVENT', 'ADENT', 'BANKR', 'FEEDB', 'BANKP'],
+        labels:['₹ 84,34,527', '₹ 15,98,66,105', '₹ 60,14,600', '₹ 5,11,32,282', '₹ 31,24,32,173', '₹ 27,80,94,278'],
         datasets: [
             {
-                label:'Poll',
-                data:[3, 6, 8, 1, 7, 9],
+                label:'%',
+                data:[1.04, 19.79, 0.74, 6.32, 38, 34],
+                // vouchers:['Vouchers-322', 'Vouchers-702', 'Vouchers-204', 'Vouchers-407', 'Vouchers-10,235', 'Vouchers-1,423'],
                 backgroundColor:['#FBBA6B', '#EE706B', '#59A1CF', '#4C4A53', '#4CB5B3', '#444587'],
-                borderColor:['#FBBA6B', '#EE706B', '#59A1CF', '#4C4A53', '#4CB5B3', '#444587']
+                borderColor:['#FBBA6B', '#EE706B', '#59A1CF', '#4C4A53', '#4CB5B3', '#444587'],
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#000',
+                            font:{size:14},
+                            backgroudColor:'#ccc',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        },
+                        percentage:{
+                            color:'#fff',
+                            font:{size:12},
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
+                            align:'center',
+                            anchor:'center',
+                        },
+                    },
+                },
             }
         ]
     }

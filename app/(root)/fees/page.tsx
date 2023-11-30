@@ -1,3 +1,4 @@
+'use client';
 // Imports
 import BarCom from '@/components/dashboards/shared/BarCom';
 import LineCom from '@/components/dashboards/shared/LineCom';

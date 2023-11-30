@@ -12,7 +12,17 @@ const transactionHistoryLineData = {
                 data:[61, 45, 40, 66, 44, 69, 42, 36, 28, 35, 97, 27, 28, 38, 98, 24],
                 borderWidth:2,
                 borderColor:'#2AA9EF',
-                backgroundColor:'#3babc540'
+                backgroundColor:'#3babc540',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }
@@ -52,17 +62,47 @@ const estimatedCollectionBarData = {
             {
                 data:[126.81, 109.95, 109.62, 109.52],
                 borderWidth:2,
-                backgroundColor:'#31C0C9'
+                backgroundColor:'#31C0C9',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]} L`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
             {
                 data:[83.5, 4.04, 0.51, 0.42],
                 borderWidth:2,
                 backgroundColor:'#956ED5',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[1].data[ctx.dataIndex]} L`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
             {
                 data:[43.18, 105.91, 105.91, 109],
                 borderWidth:2,
                 backgroundColor:'#FFBD1D',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[2].data[ctx.dataIndex]} L`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
         ]
     }
@@ -82,11 +122,7 @@ const collectionSummaryBarData = {
         name:'Total: ',
         subName:'₹ 2,66,365'
     },
-    tabs:[
-        "Today's",
-        'Last 7 Days',
-        'Last 30 Days'
-    ],
+    tabs:["Today's", 'Last 7 Days', 'Last 30 Days'],
     select:[
         {
             name:'School Fees',
@@ -112,7 +148,17 @@ const collectionSummaryBarData = {
             {
                 data:[250, 210, 300, 240, 400, 100, 170, 250, 170, 320, 290, 500, 100, 300],
                 borderWidth:2,
-                backgroundColor:'#2EABE5'
+                backgroundColor:'#2EABE5',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]} K`,
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }
@@ -148,7 +194,17 @@ const feeDefaultersBarData = {
             {
                 data:[250, 210, 300, 240, 400, 100, 170, 250, 170, 320, 290, 500, 100, 300],
                 borderWidth:2,
-                backgroundColor:'#53CC89'
+                backgroundColor:'#53CC89',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.datasets[0].data[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }

@@ -18,18 +18,12 @@ const LineCom = ({lineData}:any) => {
     // Options
     const options = {
         plugins:{
-            legend:{
-                display:false
-            }
+            legend:{display:false},
+            datalabels:{display:true}
         },
         elements:{
             line:{
                 tension:0.4
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true
             }
         }
     };

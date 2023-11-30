@@ -39,8 +39,8 @@ const page = () => {
 
             {/* Doughnuts */}
             <div className='flex-1 flex flex-col mx-4 gap-4 lg:flex-row'>
-                <DoughnutCom data={categoryDoughnutData} text='81.60'/>
-                <DoughnutCom data={entryTypeDoughnutData} text='81.60'/>
+                <DoughnutCom data={categoryDoughnutData} text='81.60 CR'/>
+                <DoughnutCom data={entryTypeDoughnutData} text='81.60 CR'/>
             </div>
 
 
