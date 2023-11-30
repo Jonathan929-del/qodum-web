@@ -45,15 +45,15 @@ const estimatedCollectionBarData = {
     categories:[
         {
             name:'Estimated',
-            color:'bg-[#31C0C9]'
+            color:'#31C0C9'
         },
         {
             name:'Received',
-            color:'bg-[#956ED5]'
+            color:'#956ED5'
         },
         {
             name:'Due',
-            color:'bg-[#FFBD1D]'
+            color:'#FFBD1D'
         },
     ],
     data:{

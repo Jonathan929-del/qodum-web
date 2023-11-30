@@ -5,11 +5,11 @@ const incomeAndExpenditureLineData = {
     categories:[
         {
             name:'Income',
-            color:'bg-[#4BB543]'
+            color:'#4BB543'
         },
         {
             name:'Expenditure',
-            color:'bg-[#FF9494]'
+            color:'#FF9494'
         }
     ],
     data:{
@@ -59,11 +59,11 @@ const fundFlowBarData = {
     categories:[
         {
             name:'Debit',
-            color:'bg-[#B5C1D7]'
+            color:'#B5C1D7'
         },
         {
             name:'Credit',
-            color:'bg-[#FF9494]'
+            color:'#FF9494'
         },
     ],
     data:{
@@ -115,15 +115,15 @@ const categoryDoughnutData = {
         polls:[
             {
                 name:'Bank',
-                color:'bg-[#FBBA6B]'
+                color:'#FBBA6B'
             },
             {
                 name:'General',
-                color:'bg-[#EE706B]'
+                color:'#EE706B'
             },
             {
                 name:'Party',
-                color:'bg-[#64B475]'
+                color:'#64B475'
             },
         ]
     },
@@ -133,6 +133,7 @@ const categoryDoughnutData = {
             {
                 label:'%',
                 data:[36.11, 57.84, 6.04],
+                vouchers:['Vouchers-10679', 'Vouchers-3005', 'Vouchers-538'],
                 backgroundColor:['#FBBA6B', '#EE706B', '#64B475'],
                 borderColor:['#FBBA6B', '#EE706B', '#64B475'],
                 datalabels:{
@@ -141,7 +142,7 @@ const categoryDoughnutData = {
                             color:'#000',
                             font:{size:14},
                             backgroudColor:'#ccc',
-                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
                             align:'end',
                             anchor:'end',
                         },
@@ -171,27 +172,27 @@ const entryTypeDoughnutData = {
         polls:[
             {
                 name:'CASHR',
-                color:'bg-[#FBBA6B]'
+                color:'#FBBA6B'
             },
             {
                 name:'JVENT',
-                color:'bg-[#EE706B]'
+                color:'#EE706B'
             },
             {
                 name:'ADENT',
-                color:'bg-[#59A1CF]'
+                color:'#59A1CF'
             },
             {
                 name:'BANKR',
-                color:'bg-[#4C4A53]'
+                color:'#4C4A53'
             },
             {
                 name:'FEEDB',
-                color:'bg-[#4CB5B3]'
+                color:'#4CB5B3'
             },
             {
                 name:'BANKP',
-                color:'bg-[#444587]'
+                color:'#444587'
             },
         ]
     },
@@ -201,7 +202,7 @@ const entryTypeDoughnutData = {
             {
                 label:'%',
                 data:[1.04, 19.79, 0.74, 6.32, 38, 34],
-                // vouchers:['Vouchers-322', 'Vouchers-702', 'Vouchers-204', 'Vouchers-407', 'Vouchers-10,235', 'Vouchers-1,423'],
+                vouchers:['Vouchers-322', 'Vouchers-702', 'Vouchers-204', 'Vouchers-407', 'Vouchers-10,235', 'Vouchers-1,423'],
                 backgroundColor:['#FBBA6B', '#EE706B', '#59A1CF', '#4C4A53', '#4CB5B3', '#444587'],
                 borderColor:['#FBBA6B', '#EE706B', '#59A1CF', '#4C4A53', '#4CB5B3', '#444587'],
                 datalabels:{
@@ -210,7 +211,7 @@ const entryTypeDoughnutData = {
                             color:'#000',
                             font:{size:14},
                             backgroudColor:'#ccc',
-                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
+                            formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
                             align:'end',
                             anchor:'end',
                         },

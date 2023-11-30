@@ -4,6 +4,7 @@ import {useState} from 'react';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
+import PagesList from './Pages/PagesList';
 import ConfigBar from './Pages/ConfigBar';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
@@ -20,6 +21,11 @@ const index = ({children}:any) => {
     const [isSidebarOpened, setIsSidebarOpened] = useState(true);
 
 
+    // Opened Pages
+    const [openedPages, setOpenedPages] = useState([]);
+    const [selectedPage, setSelectedPage] = useState('');
+
+
     // Pathname
     const pathname = usePathname();
 
@@ -29,6 +35,9 @@ const index = ({children}:any) => {
             <Sidebar
                 isSidebarOpened={isSidebarOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
+                openedPages={openedPages}
+                setOpenedPages={setOpenedPages}
+                setSelectedPage={setSelectedPage}
             />
             <div className='relative flex flex-col flex-1 overflow-hidden'>
                 {
@@ -46,6 +55,14 @@ const index = ({children}:any) => {
                                 setIsSidebarOpened={setIsSidebarOpened}
                             />    
                             <ConfigBar />
+                            {pathname.split('/')[2] && (
+                                <PagesList
+                                    openedPages={openedPages}
+                                    selectedPage={selectedPage}
+                                    setOpenedPages={setOpenedPages}
+                                    setSelectedPage={setSelectedPage}
+                                />
+                            )}
                         </>
                     )
                 }

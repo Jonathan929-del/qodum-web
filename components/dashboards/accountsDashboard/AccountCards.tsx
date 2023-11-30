@@ -28,6 +28,7 @@ const AccountCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Landmark color='#FFD700'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Bank</p>
                                 <Progress value={94.32} indicatorColor='bg-[#FFD700]'/>
                             </div>
                         </div>
@@ -40,6 +41,7 @@ const AccountCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Banknote color='#168118'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Cash</p>
                                 <Progress value={5.68} indicatorColor='bg-[#168118]'/>
                             </div>
                         </div>
@@ -67,6 +69,7 @@ const AccountCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Landmark color='#FFD700'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Bank</p>
                                 <Progress value={94.32} indicatorColor='bg-[#FFD700]'/>
                             </div>
                         </div>
@@ -79,6 +82,7 @@ const AccountCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Banknote color='#168118'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Cash</p>
                                 <Progress value={5.68} indicatorColor='bg-[#168118]'/>
                             </div>
                         </div>

@@ -29,6 +29,7 @@ const AdmissionCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <PersonStanding color='#959595'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Boys</p>
                                 <Progress value={60} indicatorColor='bg-[#959595]'/>
                             </div>
                         </div>
@@ -46,6 +47,7 @@ const AdmissionCards = () => {
                                 src='/assets/girl.png'
                             />
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Girls</p>
                                 <Progress value={40} indicatorColor='bg-[#dd288f]'/>
                             </div>
                         </div>
@@ -73,6 +75,7 @@ const AdmissionCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Landmark color='#EC8428'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Reg. At School</p>
                                 <Progress value={70} indicatorColor='bg-[#EC8428]'/>
                             </div>
                         </div>
@@ -85,6 +88,7 @@ const AdmissionCards = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <Globe color='#12A6C5'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Online Reg.</p>
                                 <Progress value={30} indicatorColor='bg-[#12A6C5]'/>
                             </div>
                         </div>
@@ -108,7 +112,7 @@ const AdmissionCards = () => {
                         <div className='flex-1'/>
                         <div className='flex-1 flex flex-row items-center'>
                             <PersonStanding color='#959595'/>
-                            <p>Boys</p>
+                            <p className='text-xs'>Boys</p>
                         </div>
                         <div className='flex-1 flex flex-row items-center'>
                             <Image
@@ -117,7 +121,7 @@ const AdmissionCards = () => {
                                 alt='Girl icon'
                                 src='/assets/girl.png'
                             />
-                            <p>Girls</p>
+                            <p className='text-xs'>Girls</p>
                         </div>
                     </div>
                     <div className='flex-1 flex flex-col items-center'>
@@ -145,7 +149,7 @@ const AdmissionCards = () => {
                         <div className='flex-1'/>
                         <div className='flex-1 flex flex-row items-center'>
                             <PersonStanding color='#959595'/>
-                            <p>Boys</p>
+                            <p className='text-xs'>Boys</p>
                         </div>
                         <div className='flex-1 flex flex-row items-center'>
                             <Image
@@ -154,7 +158,7 @@ const AdmissionCards = () => {
                                 alt='Girl icon'
                                 src='/assets/girl.png'
                             />
-                            <p>Girls</p>
+                            <p className='text-xs'>Girls</p>
                         </div>
                     </div>
                     <div className='h-full flex-1 flex flex-col items-center justify-between'>

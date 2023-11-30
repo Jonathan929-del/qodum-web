@@ -29,6 +29,7 @@ const FeesCardsOne = () => {
                         <div className='flex-1 flex flex-row items-center justify-start'>
                             <PersonStanding color='#959595'/>
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Boys</p>
                                 <Progress value={61.1} indicatorColor='bg-[#959595]'/>
                             </div>
                         </div>
@@ -46,6 +47,7 @@ const FeesCardsOne = () => {
                                 src='/assets/girl.png'
                             />
                             <div className='ml-2 flex-1'>
+                                <p className='text-xs mb-[2px]'>Girls</p>
                                 <Progress value={38.9} indicatorColor='bg-[#dd288f]'/>
                             </div>
                         </div>
@@ -73,6 +75,7 @@ const FeesCardsOne = () => {
                             <div className='flex-1 flex flex-row items-center justify-start'>
                                 <Hourglass color='#FE7565'/>
                                 <div className='ml-2 flex-1'>
+                                    <p className='text-xs mb-[2px]'>Outstanding Revenue</p>
                                     <Progress value={80.69} indicatorColor='bg-[#FE7565]'/>
                                 </div>
                             </div>
@@ -85,6 +88,7 @@ const FeesCardsOne = () => {
                             <div className='flex-1 flex flex-row items-center justify-start'>
                                 <Briefcase color='#31BE8B'/>
                                 <div className='ml-2 flex-1'>
+                                    <p className='text-xs mb-[2px]'>Total Received (YTD)</p>
                                     <Progress value={19.31} indicatorColor='bg-[#31BE8B]'/>
                                 </div>
                             </div>

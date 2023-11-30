@@ -7,11 +7,11 @@ const studentStrengthBarData = {
     categories:[
         {
             name:'Total Students',
-            color:'bg-[#C4CDDE]'
+            color:'#C4CDDE'
         },
         {
             name:'New Admission',
-            color:'bg-[#15ABDE]'
+            color:'#15ABDE'
         },
     ],
     data:{
@@ -20,12 +20,32 @@ const studentStrengthBarData = {
             {
                 data:[250, 210, 300, 240, 400, 100, 170, 250, 170, 320, 290, 500, 100, 300],
                 borderWidth:2,
-                backgroundColor:'#C4CDDE'
+                backgroundColor:'#C4CDDE',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.datasets[0].data[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
             {
                 data:[250, 0, 0, 240, 0, 100, 0, 250, 0, 320, 0, 500, 0, 0],
                 borderWidth:2,
                 backgroundColor:'#15ABDE',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.datasets[1].data[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }
@@ -44,11 +64,11 @@ const studentComparisionBarData = {
     categories:[
         {
             name:'2017 - 18',
-            color:'bg-[#C4CDDE]'
+            color:'#C4CDDE'
         },
         {
             name:'2018 - 19',
-            color:'bg-[#FF9494]'
+            color:'#FF9494'
         },
     ],
     data:{
@@ -57,12 +77,32 @@ const studentComparisionBarData = {
             {
                 data:[3510, 2100, 1460, 280, 128, 46],
                 borderWidth:2,
-                backgroundColor:'#C4CDDE'
+                backgroundColor:'#C4CDDE',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.datasets[0].data[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             },
             {
                 data:[3850, 2310, 1540, 240, 290, 145, 53],
                 borderWidth:2,
                 backgroundColor:'#FF9494',
+                datalabels:{
+                    labels:{
+                        labels:{
+                            color:'#a3a3a3',
+                            formatter:(val:any, ctx:any) => ctx.chart.data.datasets[1].data[ctx.dataIndex],
+                            align:'end',
+                            anchor:'end',
+                        }
+                    },
+                },
             }
         ]
     }
@@ -81,11 +121,11 @@ const newAdmissionDoughnutData = {
         polls:[
             {
                 name:'Boys',
-                color:'bg-[#15ABDE]'
+                color:'#15ABDE'
             },
             {
                 name:'Girls',
-                color:'bg-[#FF7779]'
+                color:'#FF7779'
             }
         ]
     },
@@ -133,15 +173,15 @@ const standardStatisticsDoughnutData = {
         polls:[
             {
                 name:'TC Taken',
-                color:'bg-[#15ABDE]'
+                color:'#15ABDE'
             },
             {
                 name:'New Admission',
-                color:'bg-[#FEC133]'
+                color:'#FEC133'
             },
             {
                 name:'Old',
-                color:'bg-[#FE8125]'
+                color:'#FE8125'
             }
         ]
     },
@@ -189,19 +229,19 @@ const religionDoughnutData = {
         polls:[
             {
                 name:'Hinduism',
-                color:'bg-[#FE8125]'
+                color:'#FE8125'
             },
             {
                 name:'Islam',
-                color:'bg-[#009D24]'
+                color:'#009D24'
             },
             {
                 name:'Christianity',
-                color:'bg-[#0C7EFA]'
+                color:'#0C7EFA'
             },
             {
                 name:'Judaism',
-                color:'bg-[#7F5CB0]'
+                color:'#7F5CB0'
             },
         ]
     },
@@ -249,15 +289,15 @@ const transferDoughnutData = {
         polls:[
             {
                 name:'Drafted',
-                color:'bg-[#0C7EFA]'
+                color:'#0C7EFA'
             },
             {
                 name:'Generated',
-                color:'bg-[#FF7779]'
+                color:'#FF7779'
             },
             {
                 name:'Canceled',
-                color:'bg-[#FEC133]'
+                color:'#FEC133'
             }
         ]
     },
@@ -305,15 +345,15 @@ const categoryDoughnutData = {
         polls:[
             {
                 name:'General',
-                color:'bg-[#0C7EFA]'
+                color:'#0C7EFA'
             },
             {
                 name:'OBC',
-                color:'bg-[#FF7779]'
+                color:'#FF7779'
             },
             {
                 name:'SC/ST',
-                color:'bg-[#FEC133]'
+                color:'#FEC133'
             }
         ]
     },

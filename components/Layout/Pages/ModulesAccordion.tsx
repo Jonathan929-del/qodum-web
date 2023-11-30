@@ -13,7 +13,7 @@ import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Mega
 
 
 // Main function
-const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
+const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPages, setSelectedPage}:any) => {
 
 
     // Router
@@ -33,7 +33,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Selected Page
-    const [selectedPage, setSelectedPage] = useState('');
+    const [selectedSubPage, setSelectedSubPage] = useState('');
 
 
     // Selected thread
@@ -168,8 +168,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                     <AccordionItem value={page.pageName}>
                                         {/* Layer 2 */}
                                         <AccordionTrigger
-                                            onClick={() => setSelectedPage(page.pageName)}
-                                            className={`flex flex-row justify-between px-4 py-2 mt-[5px] border-l-2 transition rounded-[8px] bg-white hover:bg-[#e7f0f7] hover:border-main-color hover:text-main-color ${selectedPage === page.pageName ? 'border-main-color bg-[#e7f0f7] text-main-color' : 'border-white'}`}
+                                            onClick={() => setSelectedSubPage(page.pageName)}
+                                            className={`flex flex-row justify-between px-4 py-2 mt-[5px] border-l-2 transition rounded-[8px] bg-white hover:bg-[#e7f0f7] hover:border-main-color hover:text-main-color ${selectedSubPage === page.pageName ? 'border-main-color bg-[#e7f0f7] text-main-color' : 'border-white'}`}
                                         >
                                             {page.pageName}
                                             <ChevronDown className={`h-4 w-4 ml-2 shrink-0 transition-transform duration-200 ${isSidebarOpened ? 'block' : 'hidden'}`}/>
@@ -203,6 +203,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                                                                         onClick={() => {
                                                                                             linkClick();
                                                                                             setSelectedThread(thread);
+                                                                                            setOpenedPages([...openedPages, thread]);
+                                                                                            setSelectedPage(thread);
                                                                                         }}
                                                                                         href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${thread.toLowerCase().replace(/\s+/g,"-")}`}
                                                                                     >
@@ -231,14 +233,14 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                                                                     onClick={() => {
                                                                         linkClick();
                                                                         setSelectedThread(subPage.subPageName);
+                                                                        setOpenedPages([...openedPages, subPage.subPageName]);
+                                                                        setSelectedPage(subPage.subPageName);
                                                                     }}
                                                                     href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${subPage?.subPageName?.toLowerCase().replace(/\s+/g,"-")}`}
                                                                 >
                                                                     {/* Layer 3 */}
                                                                     <div className='group flex flex-row items-center ml-2 py-1 pr-2 transition hover:bg-white'>
-                                                                        <p
-                                                                            className={`text-[12px] ml-2 ${selectedThread === subPage.subPageName && 'text-main-color'}`}
-                                                                        >
+                                                                        <p className={`text-[12px] ml-2 ${selectedThread === subPage.subPageName && 'text-main-color'}`}>
                                                                             {subPage.subPageName}
                                                                         </p>
                                                                         <MoveRight

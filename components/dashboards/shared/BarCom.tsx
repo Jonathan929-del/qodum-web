@@ -92,7 +92,7 @@ const BarCom = ({barData}:any) => {
                             {
                                 barData.categories.map((category:any) => (
                                     <div className='flex flex-row items-center text-xs ml-2'>
-                                        <span className={`w-2 h-2 ${category.color}`}/>
+                                        <span className='w-2 h-2' style={{backgroundColor:category.color}}/>
                                         <p className='pl-[2px] text-hash-color'>{category.name}</p>
                                     </div>
                                 ))

@@ -39,7 +39,7 @@ const LineCom = ({lineData}:any) => {
                 <div className='flex flex-row gap-2 ml-8'>
                     {lineData.categories.map((category:any) => (
                         <div className='flex flex-row items-center text-hash-color text-xs'>
-                            <span className={`w-2 h-2 ${category.color}`}/>
+                            <span className='w-2 h-2' style={{backgroundColor:category.color}}/>
                             <p className='pl-[2px]'>{category.name}</p>
                         </div>
                     ))}

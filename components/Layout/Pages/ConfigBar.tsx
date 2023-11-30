@@ -58,7 +58,7 @@ const ConfigBar = () => {
 
     return (
         <div
-            className='w-full bg-white flex flex-row items-center pl-4 py-3 justify-center border-b-[0.5px] border-[#ccc] md:justify-start'
+            className='w-full bg-white flex flex-row items-center pl-4 py-3 justify-center md:justify-start'
         >
             <div
                 className='rounded-[8px] border-2 border-main-color'

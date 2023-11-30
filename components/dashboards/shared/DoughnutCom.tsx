@@ -62,7 +62,7 @@ const DoughnutCom = ({data, text}:any) => {
                     {   
                         data.labels.polls.map((poll:any) => (
                             <div className='flex flex-row items-center text-hash-color text-xs'>
-                                <span className={`w-2 h-2 ${poll.color}`}/>
+                                <span className='w-2 h-2' style={{backgroundColor:poll.color}}/>
                                 <p className='pl-[2px]'>{poll.name}</p>
                             </div>
                         ))
