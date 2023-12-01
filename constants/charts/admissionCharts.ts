@@ -3,6 +3,8 @@ const studentStrengthBarData = {
     title:{
         name:'Student Strength Standard Wise',
         subName:'',
+        sideLabel:'No. of students',
+        bottomLabel:'Standard'
     },
     categories:[
         {
@@ -60,6 +62,8 @@ const studentComparisionBarData = {
     title:{
         name:'Student Statistics Comparison With Prev. Year',
         subName:'',
+        sideLabel:'No. of students',
+        bottomLabel:'Comparison values'
     },
     categories:[
         {
@@ -141,7 +145,7 @@ const newAdmissionDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:800},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
                             align:'end',
@@ -170,6 +174,19 @@ const standardStatisticsDoughnutData = {
     labels:{
         title:'Standard Wise Statistics',
         subTitle:'',
+        class:{
+            name:'Class X',
+            items:[
+                {
+                    label:'Boys',
+                    number:'190'
+                },
+                {
+                    label:'Girls',
+                    number:'106'
+                }
+            ]
+        },
         polls:[
             {
                 name:'TC Taken',
@@ -197,7 +214,7 @@ const standardStatisticsDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:800},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
                             align:'end',
@@ -257,7 +274,7 @@ const religionDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:800},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
                             align:'end',
@@ -313,7 +330,7 @@ const transferDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:800},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
                             align:'end',
@@ -369,7 +386,7 @@ const categoryDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:800},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
                             align:'end',

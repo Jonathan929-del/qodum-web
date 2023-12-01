@@ -1,6 +1,6 @@
 // Imports
 import React from 'react'
-import {Banknote, CreditCard, Globe, Landmark, Newspaper, PenBox} from 'lucide-react';
+import {Banknote, CreditCard, Globe, Landmark, Newspaper, PenBox, QrCode} from 'lucide-react';
 
 
 
@@ -10,13 +10,20 @@ const PaymodeSummaryCard = () => {
     return (
         <div className='flex flex-col gap-6 items-start bg-[white] rounded-[8px] px-4 py-4'>
             <h3 className='text-lg font-semibold'>Today's Paymode Summary</h3>
-            <div className='w-full grid grid-cols-2 grid-rows-3 justify-between gap-2 md:grid-cols-3 md:grid-rows-2 xl:grid-cols-6 xl:grid-rows-1'>
+            <div className='w-full grid grid-cols-2 grid-rows-3 justify-between gap-2 md:grid-cols-3 md:grid-rows-2 xl:grid-cols-7 xl:grid-rows-1'>
                 <div className='flex-1 flex flex-col items-center border-r-[0.5px] border-[#ccc]'>
                     <div className='flex flex-row items-center'>
                         <Banknote color='#32B2E6'/>
                         <p className='ml-2 text-sm'>Cash</p>
                     </div>
                     <p className='text-[#32B2E6]'>₹ 2,15,875</p>
+                </div>
+                <div className='flex-1 flex flex-col items-center border-r-[0.5px] border-[#ccc]'>
+                    <div className='flex flex-row items-center'>
+                        <QrCode color='#FFA500'/>
+                        <p className='ml-2 text-sm'>QR/UPI</p>
+                    </div>
+                    <p className='text-[#FFA500]'>₹ 00</p>
                 </div>
                 <div className='flex-1 flex flex-col items-center border-r-[0.5px] border-[#ccc]'>
                     <div className='flex flex-row items-center'>

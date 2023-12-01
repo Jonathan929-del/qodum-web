@@ -27,7 +27,7 @@ const page = () => {
 
 
             {/* Transactions History */}
-            <div className='w-full xl:px-20 xl:py-10'>
+            <div>
                 <LineCom lineData={transactionHistoryLineData}/>
             </div>
 

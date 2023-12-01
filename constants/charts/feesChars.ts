@@ -2,6 +2,8 @@
 const transactionHistoryLineData = {
     title:'Transaction History of The Last 30 Days',
     subTitle:'',
+    sideLabel:'Collection',
+    bottomLabel:'Tranaactions Date',
     categories:[],
     data:{
         labels:['1-Jan', '2-Jan', '3-Jan', '4-Jan', '5-Jan', '6-Jan', '7-Jan', '8-Jan', '9-Jan', '10-Jan', '11-Jan', '12-Jan', '13-Jan', '14-Jan', '15-Jan', '16-Jan',],
@@ -37,6 +39,9 @@ const estimatedCollectionBarData = {
     title:{
         name:'Estimated Collection',
         subName:'(Installment Wise) (2018 - 2019)',
+        sideLabel:'⟨₹⟩ Amount',
+        bottomLabel:'Installement',
+        bottomNote:'*L denotes value in Lacs'
     },
     titleTwo:{
         name:'Total: ',
@@ -117,6 +122,9 @@ const collectionSummaryBarData = {
     title:{
         name:'Collection Summary',
         subName:'',
+        sideLabel:'⟨₹⟩ Amount',
+        bottomLabel:'Standard',
+        bottomNote:'*K denotes value in thousand'
     },
     titleTwo:{
         name:'Total: ',
@@ -173,6 +181,9 @@ const feeDefaultersBarData = {
     title:{
         name:'Fee Defaulter Statistics',
         subName:'(Year To Date)',
+        sideLabel:'No. of defaulter',
+        bottomLabel:'Standard',
+        bottomNote:''
     },
     titleTwo:{
         name:'Total: ',

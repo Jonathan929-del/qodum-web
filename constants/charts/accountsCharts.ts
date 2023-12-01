@@ -2,6 +2,9 @@
 const incomeAndExpenditureLineData = {
     title:'Income and Expenditure',
     subTitle:'(YTD)',
+    sideLabel:'Amount ⟨₹⟩',
+    bottomLabel:'Month',
+    bottomNote:'*CR denotes value in Crore',
     categories:[
         {
             name:'Income',
@@ -55,6 +58,9 @@ const fundFlowBarData = {
     title:{
         name:'Fund Flow',
         subName:'(YTD)',
+        sideLabel:'Amount ⟨₹⟩',
+        bottomLabel:'Month',
+        bottomNote:'*CR denotes value in Crore',
     },
     categories:[
         {
@@ -109,6 +115,7 @@ const fundFlowBarData = {
 
 // Category Doughnut Data
 const categoryDoughnutData = {
+    largePadding:true,
     labels:{
         title:'Voucher Statistics',
         subTitle:'(Category Wise)',
@@ -140,7 +147,7 @@ const categoryDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:700},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
                             align:'end',
@@ -166,6 +173,7 @@ const categoryDoughnutData = {
 
 // Entry Type Doughnut Data
 const entryTypeDoughnutData = {
+    largePadding:true,
     labels:{
         title:'Voucher Statistics',
         subTitle:'(Entry Type Wise)',
@@ -209,12 +217,20 @@ const entryTypeDoughnutData = {
                     labels:{
                         labels:{
                             color:'#000',
-                            font:{size:14},
+                            font:{size:14, weight:700},
                             backgroudColor:'#ccc',
                             formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex] + '\n' + ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
                             align:'end',
                             anchor:'end',
                         },
+                        // vouchers:{
+                        //     color:'#000',
+                        //     font:{size:14},
+                        //     backgroudColor:'#ccc',
+                        //     formatter:(val:any, ctx:any) => ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
+                        //     align:'bottom',
+                        //     anchor:'end'
+                        // },
                         percentage:{
                             color:'#fff',
                             font:{size:12},

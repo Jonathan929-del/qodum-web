@@ -30,7 +30,21 @@ const LineCom = ({lineData}:any) => {
   
 
     return (
-        <div className='w-full flex flex-col justify-center bg-white rounded-[8px] p-2'>
+        <div className='relative max-w-[1800px] w-full h-full flex flex-col justify-center bg-white rounded-[8px] p-2 pl-10 pb-6 lg:pb-8 lg:pl-16'>
+
+
+            {/* Side Label */}
+            <p className='absolute top-[50%] left-0 -rotate-90 text-xs text-hash-color lg:text-sm'>{lineData.sideLabel}</p>
+
+
+            {/* Bottom Label */}
+            <p className='absolute bottom-2 left-[50%] text-xs text-hash-color lg:text-sm'>{lineData.bottomLabel}</p>
+
+
+            {/* Bottom Note */}
+            <p className='absolute bottom-2 left-6 text-xs text-hash-color lg:text-sm'>{lineData.bottomNote}</p>
+
+
             <div className='w-full flex flex-row items-center justify-between mb-2'>
                 <div className='flex flex-row items-center justify-center text-sm'>
                     <p className='font-bold'>{lineData.title}</p>

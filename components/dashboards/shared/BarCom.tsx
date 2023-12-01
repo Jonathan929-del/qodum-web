@@ -41,82 +41,99 @@ const BarCom = ({barData}:any) => {
     return (
 
 
-        <div className='w-full h-full flex flex-row items-center justify-between bg-white rounded-[8px] p-2 lg:px-20'>
-            <div className='w-full flex flex-col'>
-                <div className={`w-full flex justify-between gap-2 mb-2 ${barData?.tabs?.length > 0 ? 'flex-col lg:flex-row' : 'flex-row'}`}>
+        <div className='relative max-w-[1800px] w-full h-full flex flex-col items-center justify-center bg-white rounded-[8px] p-2 pl-10 pb-6 lg:pl-16'>
 
 
-                    <div className='flex flex-col items-start'>
-                        <div className='flex flex-row items-center justify-center text-sm'>
-                            <p className='font-bold'>{barData?.title?.name}</p>
-                            <span className='ml-[2px] text-hash-color text-xs'>{barData?.title?.subName}</span>
-                        </div>
-                        {barData.titleTwo && (
-                            <div className='flex flex-row items-center justify-center text-sm'>
-                                <p className='ml-[2px] text-hash-color text-xs'>{barData.titleTwo.name}</p>
-                                <span className='font-bold'>{barData.titleTwo.subName}</span>
-                            </div>
-                        )}
+            {/* Side Label */}
+            <p className='absolute top-[50%] left-0 -rotate-90 text-xs text-hash-color lg:text-sm'>{barData.title.sideLabel}</p>
+
+
+            {/* Bottom Label */}
+            <p className='absolute bottom-2 left-[50%] text-xs text-hash-color lg:text-sm'>{barData.title.bottomLabel}</p>
+
+
+            {/* Bottom Note */}
+            <p className='absolute bottom-2 left-6 text-xs text-hash-color lg:text-sm'>{barData.title.bottomNote}</p>
+
+
+            <div className={`w-full flex justify-between gap-2 mb-2 ${barData?.tabs?.length > 0 ? 'flex-col lg:flex-row' : 'flex-row'}`}>
+
+
+                {/* Title */}
+                <div className='flex flex-col items-start'>
+                    <div className='flex flex-row items-center justify-center text-sm'>
+                        <p className='font-bold'>{barData?.title?.name}</p>
+                        <span className='ml-[2px] text-hash-color text-xs'>{barData?.title?.subName}</span>
                     </div>
-
-
-                    {barData?.tabs?.length > 0 && (
-                        <TabsCom tabs={barData.tabs}/>
-                    )}
-
-
-                    {barData?.select?.length > 0 && (
-                        <div className=''>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder={barData.select[0].name}/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {barData.select.map((choice:any) => (
-                                        <SelectItem value={choice.name}>
-                                            <div className='flex flex-row items-center gap-4 pr-4'>
-                                                <p className='text-sm'>{choice.name}</p>
-                                                <p>{choice.amount}</p>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                      
-                    )}
-
-
-                    {barData?.categories.length > 0 && (
-                        <div className={`grid gap-2 ${barData.categories.length > 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                            {
-                                barData.categories.map((category:any) => (
-                                    <div className='flex flex-row items-center text-xs ml-2'>
-                                        <span className='w-2 h-2' style={{backgroundColor:category.color}}/>
-                                        <p className='pl-[2px] text-hash-color'>{category.name}</p>
-                                    </div>
-                                ))
-                            }
+                    {barData.titleTwo && (
+                        <div className='flex flex-row items-center justify-center text-sm'>
+                            <p className='ml-[2px] text-hash-color text-xs'>{barData.titleTwo.name}</p>
+                            <span className='font-bold'>{barData.titleTwo.subName}</span>
                         </div>
                     )}
-
-
-                    {barData?.rightText && (
-                        <div className='flex items-center'>
-                            <div className='flex flex-row items-center justify-center text-sm'>
-                                <span className='ml-[2px] text-hash-color text-xs'>{barData.rightText.main}</span>
-                                <p className='font-bold'>{barData.rightText.secondary}</p>
-                            </div>
-                        </div>
-                    )}
-
-
                 </div>
-                <Bar
-                    data={barData?.data}
-                    options={options}
-                />
+
+
+                {/* Tabs */}
+                {barData?.tabs?.length > 0 && (
+                    <TabsCom tabs={barData.tabs}/>
+                )}
+
+
+                {/* Select */}
+                {barData?.select?.length > 0 && (
+                    <div className=''>
+                        <Select>
+                            <SelectTrigger>
+                                <SelectValue placeholder={barData.select[0].name}/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {barData.select.map((choice:any) => (
+                                    <SelectItem value={choice.name}>
+                                        <div className='flex flex-row items-center gap-4 pr-4'>
+                                            <p className='text-sm'>{choice.name}</p>
+                                            <p>{choice.amount}</p>
+                                        </div>
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    
+                )}
+
+
+                {/* Categories */}
+                {barData?.categories.length > 0 && (
+                    <div className={`grid gap-2 ${barData.categories.length > 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                        {
+                            barData.categories.map((category:any) => (
+                                <div className='flex flex-row items-center text-xs ml-2'>
+                                    <span className='w-2 h-2' style={{backgroundColor:category.color}}/>
+                                    <p className='pl-[2px] text-hash-color'>{category.name}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                )}
+
+
+                {/* Right Text */}
+                {barData?.rightText && (
+                    <div className='flex items-center'>
+                        <div className='flex flex-row items-center justify-center text-sm'>
+                            <span className='ml-[2px] text-hash-color text-xs'>{barData.rightText.main}</span>
+                            <p className='font-bold'>{barData.rightText.secondary}</p>
+                        </div>
+                    </div>
+                )}
+
+
             </div>
+            <Bar
+                data={barData?.data}
+                options={options}
+            />
         </div>
     );
 };
