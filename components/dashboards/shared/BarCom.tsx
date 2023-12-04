@@ -82,9 +82,9 @@ const BarCom = ({barData}:any) => {
 
                 {/* Select */}
                 {barData?.select?.length > 0 && (
-                    <div className=''>
+                    <div>
                         <Select>
-                            <SelectTrigger>
+                            <SelectTrigger className='h-10 px-3 text-sm bg-[#F4F4F4]'>
                                 <SelectValue placeholder={barData.select[0].name}/>
                             </SelectTrigger>
                             <SelectContent>

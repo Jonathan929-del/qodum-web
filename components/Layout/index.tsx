@@ -8,6 +8,7 @@ import PagesList from './Pages/PagesList';
 import ConfigBar from './Pages/ConfigBar';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
+import { Toaster } from '../ui/toaster';
 
 
 
@@ -66,8 +67,9 @@ const index = ({children}:any) => {
                         </>
                     )
                 }
-                <div className='flex-1 flex flex-col justify-between gap-6 pb-4 overflow-scroll custom-scrollbar'>
+                <div className='flex-1 flex flex-col justify-between overflow-scroll custom-scrollbar'>
                     {children}
+                    <Toaster />
                 </div>
                 <Footer />
             </div>

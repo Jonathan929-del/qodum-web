@@ -58,6 +58,20 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
     };
 
 
+    // Thread click
+    const pageClick = (page:any) => {
+        linkClick();
+        setSelectedPage(page);
+        setSelectedThread(page);
+        if(openedPages.includes(page)){
+            return;
+        } else {
+            const uniquePagesNames = openedPages.filter((item:any, index:any) => openedPages.indexOf(item) === index);
+            setOpenedPages([...uniquePagesNames, page]);
+        };
+    };
+
+
     // Use Effect
     useEffect(() => {
 
@@ -200,12 +214,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                                             {
                                                                                 subPage?.threads?.map((thread:any) => (
                                                                                     <Link
-                                                                                        onClick={() => {
-                                                                                            linkClick();
-                                                                                            setSelectedThread(thread);
-                                                                                            setOpenedPages([...openedPages, thread]);
-                                                                                            setSelectedPage(thread);
-                                                                                        }}
+                                                                                        onClick={() => pageClick(thread)}
                                                                                         href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${thread.toLowerCase().replace(/\s+/g,"-")}`}
                                                                                     >
                                                                                         {/* Layer 4 */}
@@ -230,12 +239,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                             :
                                                             (
                                                                 <Link
-                                                                    onClick={() => {
-                                                                        linkClick();
-                                                                        setSelectedThread(subPage.subPageName);
-                                                                        setOpenedPages([...openedPages, subPage.subPageName]);
-                                                                        setSelectedPage(subPage.subPageName);
-                                                                    }}
+                                                                    onClick={() => pageClick(subPage.subPageName)}
                                                                     href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${subPage?.subPageName?.toLowerCase().replace(/\s+/g,"-")}`}
                                                                 >
                                                                     {/* Layer 3 */}

@@ -1,8 +1,8 @@
 // Imports
 import React from 'react';
 import Link from 'next/link';
-import {Globe, GraduationCap, PieChart} from 'lucide-react';
 import Image from 'next/image';
+import {Globe, GraduationCap, PieChart} from 'lucide-react';
 
 
 
@@ -15,14 +15,15 @@ const Footer = () => {
 
 
             <Link
-                href='/'
+                target='_blank'
+                href='https://qodumtech.com'
                 className='flex flex-row w-full items-start text-[#2A78B8] lg:w-auto'
             >
                 <Globe
                     size={20}
                     className='mr-1'
                 />
-                Kisanpgcollegeraksa.ac.an
+                qodumtech.com
             </Link>
 
             <div className='flex flex-col w-full items-start gap-0 mt-4 text-sm xl:flex-row xl:gap-4 lg:items-start lg:w-auto lg:gap-2 lg:mt-0'>

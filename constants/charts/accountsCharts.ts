@@ -223,14 +223,6 @@ const entryTypeDoughnutData = {
                             align:'end',
                             anchor:'end',
                         },
-                        // vouchers:{
-                        //     color:'#000',
-                        //     font:{size:14},
-                        //     backgroudColor:'#ccc',
-                        //     formatter:(val:any, ctx:any) => ctx.chart.data.datasets[0].vouchers[ctx.dataIndex],
-                        //     align:'bottom',
-                        //     anchor:'end'
-                        // },
                         percentage:{
                             color:'#fff',
                             font:{size:12},
