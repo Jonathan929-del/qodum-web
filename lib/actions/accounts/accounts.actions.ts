@@ -18,7 +18,7 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
 
     
         // Database connection
-        connectToDb();
+        connectToDb('accounts');
 
 
         // Creating new narration master
@@ -44,7 +44,7 @@ export const fetchNarrationMasters = async (pageNumber = 1, pageSize=20) => {
     try {
 
         // Db connection
-        connectToDb();
+        connectToDb('accounts');
 
 
         // Fetching
