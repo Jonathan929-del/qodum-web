@@ -49,7 +49,6 @@ export const fetchNarrationMasters = async (pageNumber = 1, pageSize=20) => {
 
         // Fetching
         const narrations = await NarrationMaster.find();
-        console.log(narrations);
         return {narrations};
 
 

@@ -31,8 +31,8 @@ const PagesList = ({openedPages, selectedPage, setOpenedPages, setSelectedPage}:
     
     // Redirection to main page
     const redirectToHome = () => {
-        const link = `/${pathname.split('/')[1]}`;
-        router.replace(link);
+        // const link = `/${pathname.split('/')[1]}`;
+        // router.replace(link);
     };
 
 

@@ -54,7 +54,7 @@ const index = ({children}:any) => {
                             <Topbar
                                 isSidebarOpened={isSidebarOpened}
                                 setIsSidebarOpened={setIsSidebarOpened}
-                            />    
+                            />
                             <ConfigBar />
                             {pathname.split('/')[2] && (
                                 <PagesList

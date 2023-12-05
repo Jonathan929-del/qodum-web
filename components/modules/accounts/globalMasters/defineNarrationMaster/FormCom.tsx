@@ -46,24 +46,27 @@ const FormCom = ({setIsViewOpened}:any) => {
 
 
     return (
-        <div className='flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8]'>
+        <div className='w-[500px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8]'>
 
-            <h2 className='w-full px-44 py-2 text-xs font-bold text-[#3a3a3a] bg-[#E8E8E8]'>Define Narration Master</h2>
+            <h2 className='w-full text-center py-2 text-xs font-bold text-[#3a3a3a] bg-[#E8E8E8]'>Define Narration Master</h2>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className='w-full px-10'
+                >
                     <FormField
                         control={form.control}
                         name='voucher_type'
                         render={({field}) => (
-                            <FormItem className='h-20 flex flex-row items-center justify-center gap-2'>
-                                <FormLabel className='text-xs text-[#726E71]'>Select voucher type</FormLabel>
+                            <FormItem className='w-full h-20 flex flex-row items-center justify-center gap-2'>
+                                <FormLabel className='basis-[30%] text-xs text-[#726E71]'>Select voucher type</FormLabel>
                                     <FormControl>
                                         <Select
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
                                         >
-                                            <SelectTrigger className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] h-8'>
+                                            <SelectTrigger className='basis-[70%] h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Cash payment voucher' className='text-xs'/>
                                             </SelectTrigger>
                                             <SelectContent>
@@ -84,9 +87,9 @@ const FormCom = ({setIsViewOpened}:any) => {
                         control={form.control}
                         name='narration'
                         render={({field}) => (
-                            <FormItem className='h-20 flex flex-row items-center justify-center gap-2'>
-                                <FormLabel className='text-xs text-[#726E71]'>Narration</FormLabel>
-                                <div className='w-full flex flex-col items-start gap-4'>
+                            <FormItem className='w-full h-20 flex flex-row items-center justify-center gap-2'>
+                                <FormLabel className='basis-[30%] text-xs text-[#726E71]'>Narration</FormLabel>
+                                <div className='basis-[70%] flex flex-col items-start gap-4'>
                                     <FormControl>
                                         <Textarea
                                             {...field}
@@ -98,7 +101,9 @@ const FormCom = ({setIsViewOpened}:any) => {
                             </FormItem>
                         )}
                     />
-                    <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened}/>
+                    <div className='px-10'>
+                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened}/>
+                    </div>
                 </form>
             </Form>
         </div>

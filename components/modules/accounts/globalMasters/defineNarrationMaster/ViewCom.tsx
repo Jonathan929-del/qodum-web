@@ -2,31 +2,14 @@
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, Search, X} from 'lucide-react';
-import {fetchNarrationMasters} from '@/lib/actions/accounts/accounts.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { useEffect, useState } from 'react';
 
 
 
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened}:any) => {
-
-
-    // Narration Masters
-    const [narrations, setNarrations] = useState<any>([]);
-
-
-    useEffect(() => {
-        const narrationsFetcher = async () => {
-            const narrationsRes = await fetchNarrationMasters();
-            setNarrations(narrationsRes.narrations);
-        };
-        narrationsFetcher();
-    }, []);
-
-
+const ViewCom = ({setIsViewOpened, narrations}:any) => {
     return (
         <div className='w-[70%] flex flex-col items-center pb-20 gap-2 rounded-[8px] border-2 border-[#ccc]'>
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#3a3a3a] bg-[#F1F1F1] rounded-t-[8px]'>
@@ -72,7 +55,11 @@ const ViewCom = ({setIsViewOpened}:any) => {
                         </li>
                     </ul>
                     {
-                        narrations.map((narration:any) => (
+                        !narrations[0]?.narration ? (
+                            <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                No narrations yet
+                            </p>
+                        ) : narrations.map((narration:any) => (
                             <ul className='w-full flex flex-row text-xs bg-[#E2E4FF] border-b-2 border-[#ccc]'>
                                 <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narrations.indexOf(narration) + 1}</li>
                                 <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
