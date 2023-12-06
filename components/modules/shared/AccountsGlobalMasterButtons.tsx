@@ -1,7 +1,6 @@
 'use client';
 // Imports
 import {Button} from '../../ui/button';
-import {useExcelDownloder} from 'react-xls'; 
 
 
 
@@ -12,7 +11,6 @@ const AccountsGlobalMasterButtons = ({setIsViewOpened, narrations}:any) => {
 
 
     // Excel downloader
-    const {ExcelDownloder} = useExcelDownloder();
     const narrationsDataArray = narrations.map((narration:any) => {
         return{
             Id:narrations.indexOf(narration),
@@ -38,13 +36,11 @@ const AccountsGlobalMasterButtons = ({setIsViewOpened, narrations}:any) => {
             >
                 View
             </span>
-            <ExcelDownloder 
-                data={data}
-                filename='Narration List'
+            <span
                 className='flex items-center px-4 h-8 bg-gradient-to-r from-[#FFC73A] to-[#FFF3AB] rounded-full transition opacity-100 hover:opacity-90 cursor-pointer'
             > 
                 Print
-            </ExcelDownloder> 
+            </span> 
             <span
                 className='flex items-center px-4 h-8 bg-gradient-to-r from-[#C7C8CA] to-[#EAEDF0] rounded-full transition opacity-100 hover:opacity-90 cursor-pointer'
             >
