@@ -18,9 +18,10 @@ const page = () => {
 
 
     // Narration Masters
-    const [narrations, setNarrations] = useState<any>([]);
+    const [narrations, setNarrations] = useState([{}]);
 
-
+    
+    // Use effect
     useEffect(() => {
         const narrationsFetcher = async () => {
             const narrationsRes = await fetchNarrationMasters();
@@ -35,11 +36,12 @@ const page = () => {
             {
                 isViewOpened ? (
                     <ViewCom
-                        setIsViewOpened={setIsViewOpened}
                         narrations={narrations}
+                        setIsViewOpened={setIsViewOpened}
                     />
                 ) : (
                     <FormCom
+                        narrations={narrations}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
                     />

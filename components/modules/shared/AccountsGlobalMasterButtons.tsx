@@ -1,30 +1,55 @@
+'use client';
 // Imports
-import React from 'react';
 import {Button} from '../../ui/button';
+import {useExcelDownloder} from 'react-xls'; 
 
 
 
 
 
 // Main Function
-const AccountsGlobalMasterButtons = ({setIsViewOpened}:any) => {
+const AccountsGlobalMasterButtons = ({setIsViewOpened, narrations}:any) => {
+
+
+    // Excel downloader
+    const {ExcelDownloder} = useExcelDownloder();
+    const narrationsDataArray = narrations.map((narration:any) => {
+        return{
+            Id:narrations.indexOf(narration),
+            Narrations:narration.narration,
+            VoucherType:narration.voucher_type
+        };
+    });
+
+    
+    const data = {
+        narrations:narrationsDataArray
+    };
+
+
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2'>
-            <Button type='submit' className='px-4 h-8 text-white bg-[#00CC55] font-semibold transition opacity-100 border-[0.5px] border-white hover:opacity-90 hover:text-[#00CC55] hover:border-[#00CC55]'>
+            <Button type='submit' className='px-4 h-8 text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] rounded-full transition opacity-100 hover:opacity-90'>
                 Save
             </Button>
             <span
                 onClick={() => setIsViewOpened(true)}
-                className='flex flex-row items-center px-4 h-8 text-white bg-[#1C6FB5] font-semibold transition opacity-100 cursor-pointer border-[0.5px] border-white hover:opacity-90 hover:text-[#1C6FB5] hover:border-[#1C6FB5] hover:bg-white'
+                className='flex items-center px-4 h-8 text-white bg-gradient-to-r from-[#51B272] to-[#94E7B1] rounded-full transition opacity-100 hover:opacity-90 cursor-pointer'
             >
                 View
             </span>
-            <Button className='px-4 h-8 text-white bg-[#CB9C1D] font-semibold transition opacity-100 border-[0.5px] border-white hover:opacity-90 hover:text-[#CB9C1D] hover:border-[#CB9C1D]'>
+            <ExcelDownloder 
+                data={data}
+                filename='Narration List'
+                className='flex items-center px-4 h-8 bg-gradient-to-r from-[#FFC73A] to-[#FFF3AB] rounded-full transition opacity-100 hover:opacity-90 cursor-pointer'
+            > 
                 Print
-            </Button>
-            <Button className='px-4 h-8 text-white bg-[#E27103] font-semibold transition opacity-100 border-[0.5px] border-white hover:opacity-90 hover:text-[#E27103] hover:border-[#E27103]'>
+            </ExcelDownloder> 
+            <span
+                className='flex items-center px-4 h-8 bg-gradient-to-r from-[#C7C8CA] to-[#EAEDF0] rounded-full transition opacity-100 hover:opacity-90 cursor-pointer'
+            >
                 Cancel
-            </Button>
+            </span>
         </div>
     );
 };

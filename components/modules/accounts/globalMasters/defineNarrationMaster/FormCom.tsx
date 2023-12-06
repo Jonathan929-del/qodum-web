@@ -1,7 +1,6 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import React from 'react';
 import {useForm} from 'react-hook-form';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
@@ -17,7 +16,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const FormCom = ({setIsViewOpened}:any) => {
+const FormCom = ({setIsViewOpened, narrations}:any) => {
 
 
     // Toast
@@ -102,7 +101,7 @@ const FormCom = ({setIsViewOpened}:any) => {
                         )}
                     />
                     <div className='px-10'>
-                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened}/>
+                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened} narrations={narrations}/>
                     </div>
                 </form>
             </Form>
