@@ -47,7 +47,7 @@ const FormCom = ({setIsViewOpened, narrations}:any) => {
     return (
         <div className='w-[500px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8]'>
 
-            <h2 className='w-full text-center py-2 text-xs font-bold text-[#3a3a3a] bg-[#E8E8E8]'>Define Narration Master</h2>
+            <h2 className='w-full text-center py-2 text-xs border-b-2 border-[#E8E8E8] rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Narration Master</h2>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
