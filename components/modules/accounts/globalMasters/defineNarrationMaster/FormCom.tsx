@@ -45,7 +45,7 @@ const FormCom = ({setIsViewOpened, narrations}:any) => {
 
 
     return (
-        <div className='w-[500px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8]'>
+        <div className='w-[400px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8] sm:w-[500px]'>
 
             <h2 className='w-full text-center py-2 text-xs border-b-2 border-[#E8E8E8] rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Narration Master</h2>
             <Form {...form}>
@@ -100,7 +100,7 @@ const FormCom = ({setIsViewOpened, narrations}:any) => {
                             </FormItem>
                         )}
                     />
-                    <div className='px-10'>
+                    <div className='sm:px-10'>
                         <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened} narrations={narrations}/>
                     </div>
                 </form>
