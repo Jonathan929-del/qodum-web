@@ -69,7 +69,8 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                                             setUpdateNarration({
                                                 id:narration._id,
                                                 narration:narration.narration,
-                                                voucher_type:narration.voucher_type
+                                                voucher_type:narration.voucher_type,
+                                                isDeleteClicked:false
                                             });
                                             setIsViewOpened(false);
                                         }}

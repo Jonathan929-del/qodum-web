@@ -25,7 +25,8 @@ const page = () => {
     const [updateNarration, setUpdateNarration] = useState({
         id:'',
         narration:'',
-        voucher_type:''
+        voucher_type:'',
+        isDeleteClicked:false
     });
 
     

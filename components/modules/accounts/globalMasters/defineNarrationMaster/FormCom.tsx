@@ -8,8 +8,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {NarrationMasterValidation} from '@/lib/validations/narrationMaster';
 import AccountsGlobalMasterButtons from '@/components/modules/shared/AccountsGlobalMasterButtons';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/accounts.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/accounts.actions';
 
 
 
@@ -35,21 +35,41 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof NarrationMasterValidation>) => {
-        if(updateNarration.id === ''){
+        if(updateNarration.id === '' && values.narration !== updateNarration.narration){
+            // Create Narration
             await createNarrationMaster({
                 voucher_type:values.voucher_type,
                 narration:values.narration
             });
+            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
-        }else{
+        }else if(updateNarration.isDeleteClicked){
+            // Delete Narration
+            await deleteNarrationMaster({id:updateNarration.id});
+            setIsViewOpened(true);
+            toast({title:'Deleted Successfully!'});
+        }else if(values.narration !== updateNarration.narration){
+            // Modify Narration
             await modifyNarrationMaster({
                 id:updateNarration.id,
                 narration:values.narration,
                 voucher_type:values.voucher_type
             });
+            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
-        }
-        form.reset();
+        };
+        
+
+        setUpdateNarration({
+            id:'',
+            narration:'',
+            voucher_type:'',
+            isDeleteClicked:false
+        });
+        form.reset({
+            narration:'',
+            voucher_type:'Cash Payment Voucher'
+        });
     };
 
 
