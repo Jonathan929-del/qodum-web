@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchNarrationMasters} from '@/lib/actions/accounts/accounts.actions';
+import {fetchNarrationMasters} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
 import FormCom from '@/components/modules/accounts/globalMasters/defineNarrationMaster/FormCom';
 import ViewCom from '@/components/modules/accounts/globalMasters/defineNarrationMaster/ViewCom';
 
@@ -14,7 +14,7 @@ const page = () => {
 
 
     // Is view component opened
-    const [isViewOpened, setIsViewOpened] = useState(true);
+    const [isViewOpened, setIsViewOpened] = useState(false);
 
 
     // Narration Masters

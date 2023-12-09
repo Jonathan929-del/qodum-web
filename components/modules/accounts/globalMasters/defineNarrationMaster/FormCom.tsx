@@ -5,11 +5,11 @@ import {useForm} from 'react-hook-form';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {NarrationMasterValidation} from '@/lib/validations/narrationMaster';
+import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
 import AccountsGlobalMasterButtons from '@/components/modules/shared/AccountsGlobalMasterButtons';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/accounts.actions';
+import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
 
 
 

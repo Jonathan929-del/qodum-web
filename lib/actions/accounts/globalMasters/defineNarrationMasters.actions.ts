@@ -1,8 +1,7 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import NarrationMaster from '@/lib/models/accounts/NarrationMaster.model';
-import mongoose from 'mongoose';
+import NarrationMaster from '@/lib/models/accounts/globalMasters/NarrationMaster.model';
 
 
 
