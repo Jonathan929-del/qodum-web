@@ -2,12 +2,13 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import NarrationMaster from '@/lib/models/accounts/NarrationMaster.model';
+import mongoose from 'mongoose';
 
 
 
 
 
-// CreateNarrationMasterProps
+// Create Narration Master Props
 interface CreateNarrationMasterProps{
     voucher_type:String,
     narration:String
@@ -83,6 +84,54 @@ export const fetchNarrationMasters = async (pageNumber = 1, pageSize=20) => {
 
         
     } catch (err:any) {
-        throw new Error(`Error fetching narration masters: ${err}`);   
+        throw new Error(`Error fetching narration masters: ${err}`);
+    }
+};
+
+
+
+
+// Modify Narration Master Props
+interface ModifyNarrationMasterProps{
+    id:String;
+    narration:String;
+    voucher_type:String;
+}
+// Modify Narration Master
+export const modifyNarrationMaster = async ({id, narration, voucher_type}:ModifyNarrationMasterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Update Narration
+        const updatedNarration = await NarrationMaster.findByIdAndUpdate(id, {narration, voucher_type}, {new:true});
+        return updatedNarration;
+
+
+    } catch (err) {
+        throw new Error(`Error updating narration master: ${err}`);
+    }
+};
+
+
+
+
+// Delete Narration Master
+export const deleteNarrationMaster = async ({id}:{id:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Deleting Narration
+        await NarrationMaster.findByIdAndDelete(id);
+        console.log(id);
+        return 'Narration Master Deleted';
+
+    } catch (err) {
+        throw new Error(`Error deleting narration master: ${err}`);      
     }
 };

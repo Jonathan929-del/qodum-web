@@ -9,7 +9,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, narrations}:any) => {
+const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
     return (
         <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-2 border-[#ccc] lg:w-[70%]'>
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#3a3a3a] bg-[#F1F1F1] rounded-t-[8px]'>
@@ -63,7 +63,19 @@ const ViewCom = ({setIsViewOpened, narrations}:any) => {
                             <ul className='w-full flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs'>
                                 <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narrations.indexOf(narration) + 1}</li>
                                 <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
-                                    <Button className='h-5 my-[0.5px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1]'>Select</Button>
+                                    <Button
+                                        className='h-5 my-[0.5px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1]'
+                                        onClick={() => {
+                                            setUpdateNarration({
+                                                id:narration._id,
+                                                narration:narration.narration,
+                                                voucher_type:narration.voucher_type
+                                            });
+                                            setIsViewOpened(false);
+                                        }}
+                                    >
+                                        Select
+                                    </Button>
                                 </li>
                                 <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narration?.narration}</li>
                                 <li className='basis-[50%] flex flex-row items-center px-2'>{narration?.voucher_type}</li>

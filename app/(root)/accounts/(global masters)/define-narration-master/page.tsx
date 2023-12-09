@@ -20,6 +20,14 @@ const page = () => {
     // Narration Masters
     const [narrations, setNarrations] = useState([{}]);
 
+
+    // Update narration
+    const [updateNarration, setUpdateNarration] = useState({
+        id:'',
+        narration:'',
+        voucher_type:''
+    });
+
     
     // Use effect
     useEffect(() => {
@@ -28,7 +36,7 @@ const page = () => {
             setNarrations(narrationsRes.narrations);
         };
         narrationsFetcher();
-    }, [isViewOpened]);
+    }, [isViewOpened, updateNarration]);
 
 
     return (
@@ -38,12 +46,15 @@ const page = () => {
                     <ViewCom
                         narrations={narrations}
                         setIsViewOpened={setIsViewOpened}
+                        setUpdateNarration={setUpdateNarration}
                     />
                 ) : (
                     <FormCom
                         narrations={narrations}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
+                        updateNarration={updateNarration}
+                        setUpdateNarration={setUpdateNarration}
                     />
                 )
             }

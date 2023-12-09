@@ -6,9 +6,9 @@ import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {NarrationMasterValidation} from '@/lib/validations/narrationMaster';
-import {createNarrationMaster} from '@/lib/actions/accounts/accounts.actions';
 import AccountsGlobalMasterButtons from '@/components/modules/shared/AccountsGlobalMasterButtons';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {createNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/accounts.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 
@@ -16,7 +16,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const FormCom = ({setIsViewOpened, narrations}:any) => {
+const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration}:any) => {
 
 
     // Toast
@@ -27,28 +27,38 @@ const FormCom = ({setIsViewOpened, narrations}:any) => {
     const form = useForm({
         resolver:zodResolver(NarrationMasterValidation),
         defaultValues:{
-            voucher_type:'Cash Payment Voucher',
-            narration:''
+            narration:updateNarration.id === '' ? '' : updateNarration.narration,
+            voucher_type:updateNarration.id === '' ? 'Cash Payment Voucher' : updateNarration.voucher_type
         }
     });
 
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof NarrationMasterValidation>) => {
-        await createNarrationMaster({
-            voucher_type:values.voucher_type,
-            narration:values.narration
-        });
-        toast({title:'Added Successfully!'});
+        if(updateNarration.id === ''){
+            await createNarrationMaster({
+                voucher_type:values.voucher_type,
+                narration:values.narration
+            });
+            toast({title:'Added Successfully!'});
+        }else{
+            await modifyNarrationMaster({
+                id:updateNarration.id,
+                narration:values.narration,
+                voucher_type:values.voucher_type
+            });
+            toast({title:'Updated Successfully!'});
+        }
         form.reset();
     };
 
 
     return (
         <div className='w-[400px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8] sm:w-[500px]'>
-
             <h2 className='w-full text-center py-2 text-xs border-b-2 border-[#E8E8E8] rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Narration Master</h2>
-            <Form {...form}>
+            <Form
+                {...form}
+            >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full px-10'
@@ -101,7 +111,7 @@ const FormCom = ({setIsViewOpened, narrations}:any) => {
                         )}
                     />
                     <div className='sm:px-10'>
-                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened} narrations={narrations}/>
+                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened} narrations={narrations} updateNarration={updateNarration} setUpdateNarration={setUpdateNarration} onSubmit={onSubmit} form={form}/>
                     </div>
                 </form>
             </Form>
