@@ -10,16 +10,17 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "2rem"
+    },
+    extend: {
       screens: {
         "2xl": "1400px",
         "xl": "1280px",
         "lg":"992px",
         "md": "768px",
-        "sm": "540px"
+        "sm": "540px",
+        "xs": "350px",
       },
-    },
-    extend: {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -66,6 +67,7 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xs: "calc(var(--radius) - 6px)",
       },
       keyframes: {
         "accordion-down": {

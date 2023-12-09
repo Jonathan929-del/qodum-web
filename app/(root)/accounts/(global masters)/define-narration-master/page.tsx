@@ -14,7 +14,7 @@ const page = () => {
 
 
     // Is view component opened
-    const [isViewOpened, setIsViewOpened] = useState(false);
+    const [isViewOpened, setIsViewOpened] = useState(true);
 
 
     // Narration Masters
