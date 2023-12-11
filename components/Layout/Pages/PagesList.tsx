@@ -51,7 +51,7 @@ const PagesList = ({openedPages, selectedPage, setOpenedPages, setSelectedPage}:
             <ul className='flex flex-row bottom-0 left-0 items-center absolute z-2 px-6 gap-2'>
                 {openedPages?.map((page:any) => (
                     <li
-                        className={`group flex flex-row items-center px-2 py-[2px] rounded-t-[4px] border-[0.5px] ${page === selectedPage ? 'text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] border-[#ccc] border-b-white' : 'text-black cursor-pointer bg-[#E8E8E8] border-[#E8E8E8] border-b-[#E8E8E8]'}`}
+                        className={`group flex flex-row items-center px-2 py-[2px] rounded-t-[4px] ${page === selectedPage ? 'text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE]' : 'text-black cursor-pointer bg-[#E8E8E8]'}`}
                     >
                         <Link
                             onClick={() => setSelectedPage(page)}
