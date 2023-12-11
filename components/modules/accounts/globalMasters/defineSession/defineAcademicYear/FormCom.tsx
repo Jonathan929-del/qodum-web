@@ -186,14 +186,14 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     return (
-        <div className='w-[95%] max-w-[650px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[95%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Academic Year</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col items-center px-2 sm:px-10'
+                    className='relative w-full flex flex-col items-center px-2 sm:px-4'
                 >
 
                     {/* Year Name */}
@@ -202,12 +202,12 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                         name='year_name'
                         render={({field}) => (
                             <FormItem className='w-full h-20 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                <FormLabel className='basis-auto text-sm text-[#726E71] sm:basis-[30%]'>Academic Year</FormLabel>
+                                <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Academic Year</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            className='flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                     <div className='mt-[-10px]'>
@@ -221,7 +221,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
                     {/* Start Year */}
                     <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-sm text-[#726E71]'>Start Year</FormLabel>
+                        <FormLabel className='basis-[30%] text-xs text-[#726E71]'>Start Year</FormLabel>
                         <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
                             <FormField
                                 control={form.control}
@@ -234,8 +234,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                         value={field.value}
                                                         onValueChange={field.onChange}
                                                     >
-                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Year' className='text-sm'/>
+                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Year' className='text-xs'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -260,8 +260,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                         value={field.value}
                                                         onValueChange={field.onChange}
                                                     >
-                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Month' className='text-sm'/>
+                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Month' className='text-xs'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -286,8 +286,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     value={field.value}
                                                     onValueChange={field.onChange}
                                                 >
-                                                    <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Day' className='text-sm'/>
+                                                    <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Day' className='text-xs'/>
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {
@@ -311,7 +311,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
                     {/* End Year */}
                     <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-sm text-[#726E71]'>End Year</FormLabel>
+                        <FormLabel className='basis-[30%] text-xs text-[#726E71]'>End Year</FormLabel>
                         <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
                             <FormField
                                 control={form.control}
@@ -324,8 +324,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                         value={field.value}
                                                         onValueChange={field.onChange}
                                                     >
-                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Year' className='text-sm'/>
+                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Year' className='text-xs'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -350,8 +350,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                         value={field.value}
                                                         onValueChange={field.onChange}
                                                     >
-                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Month' className='text-sm'/>
+                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Month' className='text-xs'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -376,8 +376,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                         value={field.value}
                                                         onValueChange={field.onChange}
                                                     >
-                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Day' className='text-sm'/>
+                                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Day' className='text-xs'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -414,7 +414,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                         <div className="flex-1 flex items-center justify-end space-x-2">
                                             <label
                                                 htmlFor="terms"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                             >
                                                 Is Active
                                             </label>

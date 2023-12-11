@@ -74,29 +74,29 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
 
 
     return (
-        <div className='w-[95%] max-w-[650px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[95%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Narration Master</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full flex flex-col items-center px-2 sm:px-10'
+                    className='w-full flex flex-col items-center px-2 sm:px-4'
                 >
                     <FormField
                         control={form.control}
                         name='voucher_type'
                         render={({field}) => (
-                            <FormItem className='w-full h-20 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                <FormLabel className='basis-auto text-sm text-[#726E71] sm:basis-[30%]'>Select voucher type</FormLabel>
+                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-4'>
+                                <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Select voucher type</FormLabel>
                                 <FormControl>
                                     <Select
                                         {...field}
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
-                                            <SelectValue placeholder='Cash payment voucher' className='text-sm'/>
+                                        <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
+                                            <SelectValue placeholder='Cash payment voucher'/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value='Cash Payment Voucher'>Cash Payment Voucher</SelectItem>
@@ -116,13 +116,13 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                         control={form.control}
                         name='narration'
                         render={({field}) => (
-                            <FormItem className='w-full h-32 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                <FormLabel className='basis-auto text-sm text-[#726E71] sm:basis-[30%]'>Narration</FormLabel>
+                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Narration</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Textarea
                                             {...field}
-                                            className='flex flex-row items-center h-full text-sm pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
                                     <FormMessage />

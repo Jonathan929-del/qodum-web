@@ -9,11 +9,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
+const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) => {
     return (
         <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-2 border-[#ccc] lg:w-[70%]'>
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#3a3a3a] bg-[#F1F1F1] rounded-t-[8px]'>
-                <h2>Narration List</h2>
+                <h2>Academic Year List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] pt-2 flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
@@ -34,42 +34,64 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                 </div>
 
 
-                {/* Narration master */}
+                {/* Academic Year */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     <ul className='w-full flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Narration
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                            Year Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[50%] flex flex-row items-center justify-between px-2'>
-                            Voucher Type
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
+                            Is Active
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
+                            Start Date
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
+                            End Date
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[25%] flex flex-row items-center justify-between px-2'>
+                            Modified Date
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {
-                        !narrations[0]?.narration ? (
+                        !academicYears[0]?.year_name ? (
                             <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                No narrations yet
+                                No academic years yet
                             </p>
-                        ) : narrations.map((narration:any) => (
+                        ) : academicYears.map((year:any) => (
                             <ul className='w-full flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'>
-                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narrations.indexOf(narration) + 1}</li>
-                                <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{academicYears.indexOf(year) + 1}</li>
+                                <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                     <Button
                                         className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
                                         onClick={() => {
-                                            setUpdateNarration({
-                                                id:narration._id,
-                                                narration:narration.narration,
-                                                voucher_type:narration.voucher_type,
+                                            setUpdateAcademicYear({
+                                                id:year._id,
+                                                year_name:year.year_name,
+                                                start_date:{
+                                                    day:year.start_date.day,
+                                                    month:year.start_date.month,
+                                                    year:year.start_date.year
+                                                },
+                                                end_date:{
+                                                    day:year.end_date.day,
+                                                    month:year.end_date.month,
+                                                    year:year.end_date.year
+                                                },
+                                                id_active:year.is_active,
                                                 isDeleteClicked:false
                                             });
                                             setIsViewOpened(false);
@@ -78,8 +100,12 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                                         Select
                                     </Button>
                                 </li>
-                                <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narration?.narration}</li>
-                                <li className='basis-[50%] flex flex-row items-center px-2'>{narration?.voucher_type}</li>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{year.year_name}</li>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{year.is_active}</li>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{`${year.start_date.day}-${year.start_date.month}-${year.start_date.year}`}</li>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{`${year.end_date.day}-${year.end_date.month}-${year.end_date.year}`}</li>
+                                {/* <li className='basis-[25%] flex flex-row items-center px-2'>{year.updatedAt}</li> */}
+                                <li className='basis-[25%] flex flex-row items-center px-2'>date</li>
                             </ul>
                         ))
                     }
