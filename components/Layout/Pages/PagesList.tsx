@@ -47,7 +47,7 @@ const PagesList = ({openedPages, selectedPage, setOpenedPages, setSelectedPage}:
 
 
     return (
-        <div className='relative pt-10 bg-white border-b-[0.5px] border-[#ccc]'>
+        <div className='relative pt-14 bg-white border-b-[0.5px] border-[#ccc]'>
             <ul className='flex flex-row bottom-0 left-0 items-center absolute z-2 px-6 gap-2'>
                 {openedPages?.map((page:any) => (
                     <li

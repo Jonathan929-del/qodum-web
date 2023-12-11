@@ -55,7 +55,7 @@ const index = ({children}:any) => {
                                 isSidebarOpened={isSidebarOpened}
                                 setIsSidebarOpened={setIsSidebarOpened}
                             />
-                            <ConfigBar />
+                            {/* <ConfigBar /> */}
                             {pathname.split('/')[2] && (
                                 <PagesList
                                     openedPages={openedPages}

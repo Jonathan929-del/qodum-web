@@ -186,8 +186,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     return (
-        <div className='w-[95%] max-w-[600px] flex flex-col items-center rounded-[8px] border-2 border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm border-b-2 border-[#E8E8E8] rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Academic Year</h2>
+        <div className='w-[95%] max-w-[650px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Academic Year</h2>
             <Form
                 {...form}
             >
