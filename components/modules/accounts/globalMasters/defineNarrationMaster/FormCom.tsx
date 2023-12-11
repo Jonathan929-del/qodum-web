@@ -6,7 +6,7 @@ import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
-import AccountsGlobalMasterButtons from '@/components/modules/shared/AccountsGlobalMasterButtons';
+import Buttons from '@/components/modules/accounts/globalMasters/defineNarrationMaster/Buttons';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
@@ -58,7 +58,7 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
             setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         };
-        
+
 
         setUpdateNarration({
             id:'',
@@ -131,7 +131,7 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                         )}
                     />
                     <div className='sm:px-10'>
-                        <AccountsGlobalMasterButtons setIsViewOpened={setIsViewOpened} narrations={narrations} updateNarration={updateNarration} setUpdateNarration={setUpdateNarration} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} narrations={narrations} updateNarration={updateNarration} setUpdateNarration={setUpdateNarration} onSubmit={onSubmit} form={form}/>
                     </div>
                 </form>
             </Form>

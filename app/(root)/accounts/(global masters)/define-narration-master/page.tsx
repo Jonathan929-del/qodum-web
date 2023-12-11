@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchNarrationMasters} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
 import FormCom from '@/components/modules/accounts/globalMasters/defineNarrationMaster/FormCom';
 import ViewCom from '@/components/modules/accounts/globalMasters/defineNarrationMaster/ViewCom';
+import {fetchNarrationMasters} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
 
 
 

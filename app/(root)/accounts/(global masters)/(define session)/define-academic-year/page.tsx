@@ -1,5 +1,9 @@
+'use client';
 // Imports
-import React from 'react';
+import {useEffect, useState} from 'react';
+import FormCom from '@/components/modules/accounts/globalMasters/defineSession/defineAcademicYear/FormCom';
+import ViewCom from '@/components/modules/accounts/globalMasters/defineSession/defineAcademicYear/ViewCom';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -7,10 +11,65 @@ import React from 'react';
 
 // Main function
 const page = () => {
+
+
+    // Is view component opened
+    const [isViewOpened, setIsViewOpened] = useState(false);
+
+
+    // Academic Years
+    const [academicYears, setAcademicYears] = useState([{}]);
+
+
+    // Update academic year
+    const [updateAcademicYear, setUpdateAcademicYear] = useState({
+        year_name:'',
+        start_date:{
+            day:'',
+            month:'',
+            year:''
+        },
+        end_date:{
+            day:'',
+            month:'',
+            year:''
+        },
+        id_active:false,
+        id:'',
+        isDeleteClicked:false
+    });
+
+    
+    // Use effect
+    useEffect(() => {
+        const academicYearsFetcher = async () => {
+            const res:any = await fetchAcademicYears();
+            setAcademicYears(res);
+        };
+        academicYearsFetcher();
+    }, [isViewOpened, updateAcademicYear]);
+
+
     return (
-        <section>
-            Define Academic Year
-        </section>
+        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
+            {
+                isViewOpened ? (
+                    // <ViewCom
+                    //     academicYears={academicYears}
+                    //     setIsViewOpened={setIsViewOpened}
+                    //     setUpdateAcademicYear={setUpdateAcademicYear}
+                    // />
+                    <p></p>
+                ) : (
+                    <FormCom
+                        academicYears={academicYears}
+                        setIsViewOpened={setIsViewOpened}
+                        updateAcademicYear={updateAcademicYear}
+                        setUpdateAcademicYear={setUpdateAcademicYear}
+                    />
+                )
+            }
+        </div>
     );
 };
 

@@ -1,14 +1,14 @@
 'use client';
 // Imports
-import {useState} from 'react';
 import Footer from './Footer';
+import {useState} from 'react';
 import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
+import {Toaster} from '../ui/toaster';
 import PagesList from './Pages/PagesList';
 import ConfigBar from './Pages/ConfigBar';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
-import { Toaster } from '../ui/toaster';
 
 
 

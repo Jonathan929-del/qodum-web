@@ -127,7 +127,6 @@ export const deleteNarrationMaster = async ({id}:{id:String}) => {
 
         // Deleting Narration
         await NarrationMaster.findByIdAndDelete(id);
-        console.log(id);
         return 'Narration Master Deleted';
 
     } catch (err) {

@@ -1,6 +1,6 @@
 'use client';
 // Imports
-import {Button} from '../../ui/button';
+import {Button} from '../../../../ui/button';
 import PrintButton from './PrintButton';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const AccountsGlobalMasterButtons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration, onSubmit, form}:any) => {
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
             {
@@ -99,4 +99,4 @@ const AccountsGlobalMasterButtons = ({setIsViewOpened, narrations, updateNarrati
 
 
 // Export
-export default AccountsGlobalMasterButtons;
+export default Buttons;

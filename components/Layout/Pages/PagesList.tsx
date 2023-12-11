@@ -47,11 +47,11 @@ const PagesList = ({openedPages, selectedPage, setOpenedPages, setSelectedPage}:
 
 
     return (
-        <div className='h-[21px] relative bg-white border-b-[0.5px] border-[#ccc]'>
-            <ul className='flex flex-row items-center absolute z-2 px-6 gap-2'>
+        <div className='relative pt-10 bg-white border-b-[0.5px] border-[#ccc]'>
+            <ul className='flex flex-row bottom-0 left-0 items-center absolute z-2 px-6 gap-2'>
                 {openedPages?.map((page:any) => (
                     <li
-                        className={`group flex flex-row items-center px-2 py-[2px] rounded-[4px] border-[0.5px] text-hash-color ${page === selectedPage ? 'bg-white border-[#ccc] border-b-white' : 'cursor-pointer bg-[#E8E8E8] border-[#E8E8E8] border-b-[#E8E8E8]'}`}
+                        className={`group flex flex-row items-center px-2 py-[2px] rounded-t-[4px] border-[0.5px] ${page === selectedPage ? 'text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] border-[#ccc] border-b-white' : 'text-black cursor-pointer bg-[#E8E8E8] border-[#E8E8E8] border-b-[#E8E8E8]'}`}
                     >
                         <Link
                             onClick={() => setSelectedPage(page)}
@@ -62,8 +62,13 @@ const PagesList = ({openedPages, selectedPage, setOpenedPages, setSelectedPage}:
                         <X
                             onClick={() => removeFromList(page)}
                             size={16}
-                            className={`h-4 w-4 ml-2 rounded-[2px] cursor-pointer transition ${page === selectedPage ? 'text-[#75BEF0] hover:bg-[#ccc]' : 'text-[#75B9E7] hover:text-[#40a0e1]'}`}
+                            className={`h-4 w-4 ml-2 rounded-[2px] cursor-pointer transition ${page === selectedPage ? 'text-white hover:bg-[#3D67B0]' : 'hover:text-[#40a0e1]'}`}
                         />
+                        {/* <X
+                            onClick={() => removeFromList(page)}
+                            size={16}
+                            className={`h-4 w-4 ml-2 rounded-[2px] cursor-pointer transition ${page === selectedPage ? 'text-[#75BEF0] hover:bg-[#ccc]' : 'text-[#75B9E7] hover:text-[#40a0e1]'}`}
+                        /> */}
                     </li>
                 ))}
             </ul>

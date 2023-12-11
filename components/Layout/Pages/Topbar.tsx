@@ -2,7 +2,7 @@
 import {Input} from '../../ui/input';
 import {UserButton} from '@clerk/nextjs';
 import DropdownMenuCom from '../../utils/DropdownMenuCom';
-import {Menu, Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft} from 'lucide-react';
+import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft} from 'lucide-react';
   
 
 
