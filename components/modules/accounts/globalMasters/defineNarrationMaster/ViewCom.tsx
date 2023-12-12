@@ -11,8 +11,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 // Main Function
 const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
     return (
-        <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-2 border-[#ccc] lg:w-[70%]'>
-            <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-[#3a3a3a] bg-[#F1F1F1] rounded-t-[8px]'>
+        <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#ccc] lg:w-[70%]'>
+            <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
                 <h2>Narration List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>

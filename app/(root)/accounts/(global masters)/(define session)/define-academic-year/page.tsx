@@ -34,7 +34,7 @@ const page = () => {
             month:'',
             year:''
         },
-        id_active:false,
+        is_active:false,
         id:'',
         isDeleteClicked:false
     });

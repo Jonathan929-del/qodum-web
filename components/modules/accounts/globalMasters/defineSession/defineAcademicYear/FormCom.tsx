@@ -3,8 +3,8 @@
 import * as z from 'zod';
 import Buttons from './Buttons';
 import {useEffect, useState} from 'react';
+import {useForm, } from 'react-hook-form';
 import {Input} from '@/components/ui/input';
-import {useForm, useWatch} from 'react-hook-form';
 import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -30,30 +30,58 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     // Form
-    const form = useForm({
+    const form:any = useForm({
         resolver:zodResolver(AcademicYearValidation),
         defaultValues:{
             year_name:updateAcademicYear.id === '' ? '' : updateAcademicYear.year_name,
             start_date:{
                 day:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.day,
                 month:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.month,
-                year:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.year,
+                year:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.year
             },
             end_date:{
-                day:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.day,
-                month:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.month,
-                year:updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.year,
+                day:updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.day,
+                month:updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.month,
+                year:updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.year
             },
-            is_active:updateAcademicYear.id === '' ? false : updateAcademicYear.is_active,
+            is_active:updateAcademicYear.id === '' ? false : updateAcademicYear.is_active
         }
     });
+
+    
+    // Comparison object for updating
+    const comparisionObject = {
+        year_name:updateAcademicYear?.year_name,
+        start_date:{
+            day:updateAcademicYear?.start_date.day,
+            month:updateAcademicYear?.start_date.month,
+            year:updateAcademicYear?.start_date.year
+        },
+        end_date:{
+            day:updateAcademicYear?.end_date.day,
+            month:updateAcademicYear?.end_date.month,
+            year:updateAcademicYear?.end_date.year
+        },
+        is_active:updateAcademicYear?.is_active,
+    };
+    const deepEqual:any = (x:any, y:any) => {
+        const ok = Object.keys, tx = typeof x, ty = typeof y;
+        return x && y && tx === 'object' && tx === ty ? (
+          ok(x).length === ok(y).length &&
+            ok(x).every(key => deepEqual(x[key], y[key]))
+        ) : (x === y);
+    };
 
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AcademicYearValidation>) => {
         if(updateAcademicYear.id === '' && values.year_name !== updateAcademicYear.year_name){
             // Create Academic Year
-            const res = await createAcademicYear({
+            if(values.start_date.year > values.end_date.year){
+                toast({title:'End year cannot be earlier than start year', variant:'error'});
+                return;
+            }
+            await createAcademicYear({
                 year_name:values.year_name,
                 start_date:{
                     day:values.start_date.day,
@@ -74,8 +102,12 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             await deleteAcademicYear({id:updateAcademicYear.id});
             setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
-        }else if(values.year_name !== updateAcademicYear.year_name){
+        }else if(!deepEqual(comparisionObject, values)){
             // Modify Academic Year
+            if(values.start_date.year > values.end_date.year){
+                toast({title:'End year cannot be earlier than start year', variant:'error'});
+                return;
+            };
             await modifyAcademicYears({
                 id:updateAcademicYear.id,
                 year_name:values.year_name,
@@ -108,7 +140,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                 month:'',
                 year:''
             },
-            id_active:false,
+            is_active:false,
             id:'',
             isDeleteClicked:false
         });
@@ -140,7 +172,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     // Months Loop
-    const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December'];
+    const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 
     // Days Loop
@@ -182,7 +214,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
         }else{
             setYearsError(false);
         }
-    }, [form.formState.errors.end_date, form.formState.errors.end_date]);
+    }, [form.formState.errors.end_date, form.formState.errors.start_date]);
 
 
     return (
@@ -408,21 +440,22 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                 <>
                                     {/* Error Message */}
                                     {
-                                        yearsError && <p className='text-xs text-[#FF5939]'>Year data missing</p>
+                                        yearsError && <p className='text-xs text-[#FF5939]'>Years data missing</p>
                                     }
                                     <FormControl>
                                         <div className="flex-1 flex items-center justify-end space-x-2">
                                             <label
-                                                htmlFor="terms"
+                                                htmlFor="is_active"
                                                 className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                             >
                                                 Is Active
                                             </label>
                                             <Checkbox
-                                                id="terms"
+                                                id="is_active"
                                                 {...field}
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
+                                                checked={field.value}
                                             />
                                         </div>
                                     </FormControl>

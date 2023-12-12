@@ -3,6 +3,7 @@
 import PrintButton from './PrintButton';
 import {Button} from '../../../../../ui/button';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
+import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
 
 
 
@@ -36,12 +37,14 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>No</AlertDialogCancel>
-                                    <Button
-                                        className='border-[0.5px] border-black'
-                                        onClick={() => form.handleSubmit(onSubmit)()}
-                                    >
-                                        Yes
-                                    </Button>
+                                    <AlertDialogAction>
+                                        <Button
+                                            className='border-[0.5px] border-black'
+                                            onClick={() => form.handleSubmit(onSubmit)()}
+                                        >
+                                            Yes
+                                        </Button>
+                                    </AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
