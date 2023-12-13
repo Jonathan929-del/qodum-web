@@ -9,7 +9,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) => {
+const ViewCom = ({setIsViewOpened, financialYears, setUpdateFinancialYear}:any) => {
 
 
     // Month abbreviation converter
@@ -59,7 +59,7 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
 
     // Select handler
     const selectHandler = (year:any) => {
-        setUpdateAcademicYear({
+        setUpdateFinancialYear({
             id:year._id,
             year_name:year.year_name,
             start_date:{
@@ -87,7 +87,7 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Academic Year List</h2>
+                <h2>Financial Year List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
 
@@ -139,14 +139,14 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
                     {/* Values */}
                     <CommandList>
                         {
-                            !academicYears[0]?.year_name ? (
+                            !financialYears[0]?.year_name ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No academic years yet
+                                    No financial years yet
                                 </p>
-                            ) : academicYears.map((year:any) => (
+                            ) : financialYears.map((year:any) => (
                                 <CommandItem
                                     value={`
-                                        ${academicYears.indexOf(year) + 1}
+                                        ${financialYears.indexOf(year) + 1}
                                         select
                                         ${year.year_name}
                                         ${year.start_date.day}
@@ -160,7 +160,7 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
                                     `}
                                     className='w-full flex flex-row min-w-[700px] text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{academicYears.indexOf(year) + 1}</li>
+                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{financialYears.indexOf(year) + 1}</li>
                                     <li className='basis-[12.5%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                         <Button
                                             className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
