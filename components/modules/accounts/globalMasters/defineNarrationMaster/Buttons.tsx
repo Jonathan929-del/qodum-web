@@ -1,7 +1,7 @@
 'use client';
 // Imports
-import {Button} from '../../../../ui/button';
 import PrintButton from './PrintButton';
+import {Button} from '../../../../ui/button';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
 
@@ -10,6 +10,29 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 // Main Function
 const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration, onSubmit, form}:any) => {
+
+
+    // Cancel click
+    const cancelClick = () => {
+        // Reseting form
+        form.reset({
+            narration:'',
+            voucher_type:'Cash Payment Voucher'
+        });
+        // Reseting updte entity
+        setUpdateNarration({
+            id:'',
+            narration:'',
+            voucher_type:'',
+            isDeleteClicked:false
+        });
+    };
+
+
+    // Handle submit
+    const handleSubmit = () => form.handleSubmit(onSubmit)();
+
+
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
             {
@@ -23,6 +46,9 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                     </Button>
                 ) : (
                     <>
+
+
+                        {/* Modify button */}
                         <AlertDialog>
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
@@ -38,13 +64,16 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                     <AlertDialogCancel>No</AlertDialogCancel>
                                     <Button
                                         className='border-[0.5px] border-black'
-                                        onClick={() => form.handleSubmit(onSubmit)()}
+                                        onClick={handleSubmit}
                                     >
                                         Yes
                                     </Button>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
+
+
+                        {/* Delete button */}
                         <AlertDialog>
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
@@ -65,7 +94,7 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                     </AlertDialogCancel>
                                     <Button
                                         className='border-[0.5px] border-black'
-                                        onClick={() => form.handleSubmit(onSubmit)()}
+                                        onClick={handleSubmit}
                                     >
                                         Yes
                                     </Button>
@@ -75,6 +104,9 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                     </>
                 )
             }
+
+
+            {/* View button */}
             <span
                 onClick={() => setIsViewOpened(true)}
                 className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#51B272] to-[#94E7B1] rounded-full transition border-[1px] border-white cursor-pointer
@@ -82,11 +114,17 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
             >
                 View
             </span>
+
+
+            {/* Print button */}
             <PrintButton narrations={narrations}/>
+
+
+            {/* Cancel button */}
             <span
                 className='flex items-center px-[8px] h-8 text-xs text-black bg-gradient-to-r from-[#C7C8CA] to-[#EAEDF0] rounded-full transition border-[1px] border-white cursor-pointer
                         hover:border-[#a3a3a3] hover:from-[#c8c9cb26] hover:to-[#c8c9cb26] hover:text-hash-color sm:text-[16px] sm:px-4'
-                onClick={() => updateNarration.id !== '' && form.handleSubmit(onSubmit)()}
+                onClick={cancelClick}
             >
                 Cancel
             </span>

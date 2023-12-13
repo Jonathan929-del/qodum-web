@@ -36,7 +36,7 @@ const page = () => {
         },
         is_active:false,
         id:'',
-        isDeleteClicked:false
+        isDeleteClicked:false,
     });
 
     

@@ -2,8 +2,7 @@
 // Imports
 import PrintButton from './PrintButton';
 import {Button} from '../../../../../ui/button';
-import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
-import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
+import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogAction} from '@/components/ui/alert-dialog';
 
 
 
@@ -11,10 +10,54 @@ import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
 
 // Main Function
 const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateAcademicYear, onSubmit, form}:any) => {
+
+
+    // Cancel click
+    const cancelClick = () => {
+        // Reseting form
+        form.reset({
+            year_name:'',
+            start_date:{
+                day:'',
+                month:'',
+                year:''
+            },
+            end_date:{
+                day:'',
+                month:'',
+                year:''
+            },
+            is_active:false,
+        });
+        // Reseting update entity
+        setUpdateAcademicYear({
+            year_name:'',
+            start_date:{
+                day:'',
+                month:'',
+                year:''
+            },
+            end_date:{
+                day:'',
+                month:'',
+                year:''
+            },
+            is_active:false,
+            id:'',
+            isDeleteClicked:false
+        });
+    };
+
+
+    // Handling submit
+    const handleSubmit = () => form.handleSubmit(onSubmit)();
+
+
     return (
-        <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
+        <div className='flex flex-row items-center justify-between py-2 pb-4 gap-2 ml-0'>
             {
                 updateAcademicYear.id === '' ? (
+
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -22,8 +65,13 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                     >
                         Save
                     </Button>
+
+
                 ) : (
                     <>
+
+
+                        {/* Modify */}
                         <AlertDialog>
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
@@ -40,7 +88,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     <AlertDialogAction>
                                         <Button
                                             className='border-[0.5px] border-black'
-                                            onClick={() => form.handleSubmit(onSubmit)()}
+                                            onClick={handleSubmit}
                                         >
                                             Yes
                                         </Button>
@@ -48,6 +96,9 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
+
+
+                        {/* Delete button */}
                         <AlertDialog>
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
@@ -68,7 +119,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     </AlertDialogCancel>
                                     <Button
                                         className='border-[0.5px] border-black'
-                                        onClick={() => form.handleSubmit(onSubmit)()}
+                                        onClick={handleSubmit}
                                     >
                                         Yes
                                     </Button>
@@ -78,6 +129,9 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                     </>
                 )
             }
+
+
+            {/* View button */}
             <span
                 onClick={() => setIsViewOpened(true)}
                 className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#51B272] to-[#94E7B1] rounded-full transition border-[1px] border-white cursor-pointer
@@ -85,14 +139,22 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             >
                 View
             </span>
+
+
+            {/* Print button */}
             <PrintButton academicYears={academicYears}/>
+
+
+            {/* Cancel button */}
             <span
                 className='flex items-center px-[8px] h-8 text-xs text-black bg-gradient-to-r from-[#C7C8CA] to-[#EAEDF0] rounded-full transition border-[1px] border-white cursor-pointer
                         hover:border-[#a3a3a3] hover:from-[#c8c9cb26] hover:to-[#c8c9cb26] hover:text-hash-color sm:text-[16px] sm:px-4'
-                onClick={() => updateAcademicYear.id !== '' && form.handleSubmit(onSubmit)()}
+                onClick={cancelClick}
             >
                 Cancel
             </span>
+
+
         </div>
     );
 };

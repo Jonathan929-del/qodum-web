@@ -203,10 +203,9 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                                         <AccordionTrigger
                                                                             className='flex flex-row items-center justify-start ml-2 py-1 pr-2 transition hover:bg-white'
                                                                         >
-                                                                            <p
-                                                                                className='text-[12px] ml-2'
-                                                                            >
-                                                                                {subPage.subPageName}
+                                                                            <p className='flex flex-row items-center text-[12px] ml-2'>
+                                                                                <p className='font-bold mr-2'>{page.subPages.indexOf(subPage) + 1}.</p>
+                                                                                <p>{subPage.subPageName}</p>
                                                                             </p>
                                                                             <ChevronDown className={`h-4 w-4 ml-12 shrink-0 transition-transform duration-200 ${isSidebarOpened ? 'block' : 'hidden'}`}/>
                                                                         </AccordionTrigger>
@@ -244,9 +243,10 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                                 >
                                                                     {/* Layer 3 */}
                                                                     <div className='group flex flex-row items-center ml-2 py-1 pr-2 transition hover:bg-white'>
-                                                                        <p className={`text-[12px] ml-2 ${selectedThread === subPage.subPageName && 'text-main-color'}`}>
-                                                                            {subPage.subPageName}
-                                                                        </p>
+                                                                        <div className={`text-[12px] ml-2 flex flex-row items-center ${selectedThread === subPage.subPageName && 'text-main-color'}`}>
+                                                                            <p className='font-bold mr-2'>{page.subPages.indexOf(subPage) + 1}.</p>
+                                                                            <p>{subPage.subPageName}</p>
+                                                                        </div>
                                                                         <MoveRight
                                                                             size={18}
                                                                             className='opacity-0 text-main-color ml-2 group-hover:opacity-100 transition'

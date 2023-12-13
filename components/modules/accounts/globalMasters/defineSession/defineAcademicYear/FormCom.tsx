@@ -2,6 +2,7 @@
 // Imports
 import * as z from 'zod';
 import Buttons from './Buttons';
+import {deepEqual} from '@/lib/utils';
 import {useEffect, useState} from 'react';
 import {useForm, } from 'react-hook-form';
 import {Input} from '@/components/ui/input';
@@ -29,6 +30,55 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
     const [yearsError, setYearsError] = useState(false);
 
 
+    // Comparison object for updating
+    const comparisonObject = {
+        year_name:updateAcademicYear?.year_name,
+        start_date:{
+            day:updateAcademicYear?.start_date.day,
+            month:updateAcademicYear?.start_date.month,
+            year:updateAcademicYear?.start_date.year
+        },
+        end_date:{
+            day:updateAcademicYear?.end_date.day,
+            month:updateAcademicYear?.end_date.month,
+            year:updateAcademicYear?.end_date.year
+        },
+        is_active:updateAcademicYear?.is_active,
+    };
+
+    
+    // Years Loop
+    const yearsLoop = () => {
+        let newArr = [];
+        for (let i = 2050; i >= 1960; i--) newArr.push(i);
+        return newArr;
+    };
+
+    
+    // Months Loop
+    const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    
+    // Days Loop
+    const [startDaysInTheMonth, setStartDaysInTheMonth] = useState<any>([]);
+    const [endDaysInTheMonth, setEndDaysInTheMonth] = useState<any>([]);
+    const daysLoop = (year:string, month:string) => {
+        let newArr = [];
+        
+        // Converting month string into number ex:december => 12
+        const monthNumber = monthsLoop.indexOf(month) + 1;
+        
+        
+        // Getting number of days in a month
+        const days = new Date(JSON.parse(year), monthNumber, 0).getDate();
+        
+        
+        // Days Loop
+        for (let i = 1; i <= days; i++) newArr.push(i);
+        return newArr;
+    };
+
+
     // Form
     const form:any = useForm({
         resolver:zodResolver(AcademicYearValidation),
@@ -48,35 +98,10 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
         }
     });
 
-    
-    // Comparison object for updating
-    const comparisionObject = {
-        year_name:updateAcademicYear?.year_name,
-        start_date:{
-            day:updateAcademicYear?.start_date.day,
-            month:updateAcademicYear?.start_date.month,
-            year:updateAcademicYear?.start_date.year
-        },
-        end_date:{
-            day:updateAcademicYear?.end_date.day,
-            month:updateAcademicYear?.end_date.month,
-            year:updateAcademicYear?.end_date.year
-        },
-        is_active:updateAcademicYear?.is_active,
-    };
-    const deepEqual:any = (x:any, y:any) => {
-        const ok = Object.keys, tx = typeof x, ty = typeof y;
-        return x && y && tx === 'object' && tx === ty ? (
-          ok(x).length === ok(y).length &&
-            ok(x).every(key => deepEqual(x[key], y[key]))
-        ) : (x === y);
-    };
-
-
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AcademicYearValidation>) => {
-        if(updateAcademicYear.id === '' && values.year_name !== updateAcademicYear.year_name){
-            // Create Academic Year
+        // Create Academic Year
+        if(updateAcademicYear.id === ''){
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
                 return;
@@ -97,13 +122,9 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             });
             setIsViewOpened(true);
             toast({title:'Added Successfully!'});
-        }else if(updateAcademicYear.isDeleteClicked){
-            // Delete Academic Year
-            await deleteAcademicYear({id:updateAcademicYear.id});
-            setIsViewOpened(true);
-            toast({title:'Deleted Successfully!'});
-        }else if(!deepEqual(comparisionObject, values)){
-            // Modify Academic Year
+        }
+        // Modify Academic Year
+        else if(!deepEqual(comparisonObject, values)){
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
                 return;
@@ -125,9 +146,16 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             });
             setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
+        }
+        // Delete Academic Year
+        else if(updateAcademicYear.isDeleteClicked){
+            await deleteAcademicYear({id:updateAcademicYear.id});
+            setIsViewOpened(true);
+            toast({title:'Deleted Successfully!'});
         };
 
 
+        // Reseting update entity
         setUpdateAcademicYear({
             year_name:'',
             start_date:{
@@ -143,9 +171,8 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             is_active:false,
             id:'',
             isDeleteClicked:false
-        });
-
-        
+        });        
+        // Reseting form
         form.reset({
             year_name:'',
             start_date:{
@@ -160,38 +187,6 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             },
             is_active:false,
         });
-    };
-
-
-    // Years Loop
-    const yearsLoop = () => {
-        let newArr = [];
-        for (let i = 2050; i >= 1960; i--) newArr.push(i);
-        return newArr;
-    };
-
-
-    // Months Loop
-    const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
-    // Days Loop
-    const [startDaysInTheMonth, setStartDaysInTheMonth] = useState<any>([]);
-    const [endDaysInTheMonth, setEndDaysInTheMonth] = useState<any>([]);
-    const daysLoop = (year:string, month:string) => {
-        let newArr = [];
-
-        // Converting month string into number ex:december => 12
-        const monthNumber = monthsLoop.indexOf(month) + 1;
-
-
-        // Getting number of days in a month
-        const days = new Date(JSON.parse(year), monthNumber, 0).getDate();
-
-
-        // Days Loop
-        for (let i = 1; i <= days; i++) newArr.push(i);
-        return newArr;
     };
 
 
@@ -218,7 +213,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     return (
-        <div className='w-[95%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Academic Year</h2>
             <Form
                 {...form}
@@ -233,7 +228,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                         control={form.control}
                         name='year_name'
                         render={({field}) => (
-                            <FormItem className='w-full h-20 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                            <FormItem className='w-full h-15 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Academic Year</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
@@ -255,6 +250,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                     <div className='w-full h-10 flex flex-row items-center'>
                         <FormLabel className='basis-[30%] text-xs text-[#726E71]'>Start Year</FormLabel>
                         <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                            {/* Year */}
                             <FormField
                                 control={form.control}
                                 name='start_date.year'
@@ -281,6 +277,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     </FormItem>
                                 )}
                             />
+                            {/* Month */}
                             <FormField
                                 control={form.control}
                                 name='start_date.month'
@@ -307,6 +304,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     </FormItem>
                                 )}
                             />
+                            {/* Day */}
                             <FormField
                                 control={form.control}
                                 name='start_date.day'
@@ -345,6 +343,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                     <div className='w-full h-10 flex flex-row items-center'>
                         <FormLabel className='basis-[30%] text-xs text-[#726E71]'>End Year</FormLabel>
                         <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                            {/* Year */}
                             <FormField
                                 control={form.control}
                                 name='end_date.year'
@@ -371,6 +370,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     </FormItem>
                                 )}
                             />
+                            {/* Month */}
                             <FormField
                                 control={form.control}
                                 name='end_date.month'
@@ -397,6 +397,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     </FormItem>
                                 )}
                             />
+                            {/* Day */}
                             <FormField
                                 control={form.control}
                                 name='end_date.day'
@@ -436,7 +437,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                         control={form.control}
                         name='is_active'
                         render={({field}) => (
-                            <FormItem className='w-full flex-1 h-20 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                            <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
                                 <>
                                     {/* Error Message */}
                                     {

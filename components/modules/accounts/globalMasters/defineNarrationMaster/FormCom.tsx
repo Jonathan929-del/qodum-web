@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
@@ -23,6 +24,13 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
     const {toast} = useToast();
 
 
+    // Comparison object
+    const comparisonObject = {
+        narration:updateNarration.narration,
+        voucher_type:updateNarration.voucher_type
+    };
+
+
     // Form
     const form = useForm({
         resolver:zodResolver(NarrationMasterValidation),
@@ -35,21 +43,17 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof NarrationMasterValidation>) => {
-        if(updateNarration.id === '' && values.narration !== updateNarration.narration){
-            // Create Narration
+        // Create Narration
+        if(updateNarration.id === ''){
             await createNarrationMaster({
                 voucher_type:values.voucher_type,
                 narration:values.narration
             });
             setIsViewOpened(true);
             toast({title:'Added Successfully!'});
-        }else if(updateNarration.isDeleteClicked){
-            // Delete Narration
-            await deleteNarrationMaster({id:updateNarration.id});
-            setIsViewOpened(true);
-            toast({title:'Deleted Successfully!'});
-        }else if(values.narration !== updateNarration.narration){
-            // Modify Narration
+        }
+        // Modify Narration
+        else if(!deepEqual(comparisonObject, values)){
             await modifyNarrationMaster({
                 id:updateNarration.id,
                 narration:values.narration,
@@ -57,15 +61,23 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
             });
             setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
+        }
+        // Delete Narration
+        else if(updateNarration.isDeleteClicked){
+            await deleteNarrationMaster({id:updateNarration.id});
+            setIsViewOpened(true);
+            toast({title:'Deleted Successfully!'});
         };
 
 
+        // Reseting update entity
         setUpdateNarration({
             id:'',
             narration:'',
             voucher_type:'',
             isDeleteClicked:false
         });
+        // Reseting form
         form.reset({
             narration:'',
             voucher_type:'Cash Payment Voucher'
@@ -74,7 +86,7 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
 
 
     return (
-        <div className='w-[95%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Narration Master</h2>
             <Form
                 {...form}
@@ -83,6 +95,8 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full flex flex-col items-center px-2 sm:px-4'
                 >
+
+                    {/* Narration */}
                     <FormField
                         control={form.control}
                         name='voucher_type'
@@ -112,6 +126,9 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                             </FormItem>
                         )}
                     />
+
+
+                    {/* Voucher type */}
                     <FormField
                         control={form.control}
                         name='narration'
@@ -130,6 +147,9 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                             </FormItem>
                         )}
                     />
+
+
+                    {/* Buttons */}
                     <div className='sm:px-10'>
                         <Buttons setIsViewOpened={setIsViewOpened} narrations={narrations} updateNarration={updateNarration} setUpdateNarration={setUpdateNarration} onSubmit={onSubmit} form={form}/>
                     </div>
