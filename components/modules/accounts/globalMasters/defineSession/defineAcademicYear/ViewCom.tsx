@@ -3,6 +3,7 @@ import moment from 'moment';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, Search, X} from 'lucide-react';
+import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
 
 
 
@@ -80,7 +81,9 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
 
 
     return (
-        <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-4 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[70%]'>
+        <Command
+            className='w-[90%] max-h-[90%] flex flex-col items-center pb-4 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[70%]'
+        >
 
 
             {/* Header */}
@@ -93,16 +96,10 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
             <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
                 {/* Search input */}
                 <div className='w-full flex flex-row justify-end pr-2 py-2 border-b-2 border-[#ccc] sm:pr-4'>
-                    <div className='relative'>
-                        <Input
-                            placeholder='Search'
-                            className='h-full rounded-[5px] border-[#ccc] text-xs text-hash-color w-[250px] bg-white'
-                        />
-                        <Search
-                            size={20}
-                            className='absolute right-2 top-[25%] text-hash-color cursor-pointer'
-                        />
-                    </div>
+                    <CommandInput
+                        placeholder='Search list'
+                        className='h-full text-xs text-hash-color w-[250px] bg-white'
+                    />
                 </div>
 
 
@@ -141,35 +138,53 @@ const ViewCom = ({setIsViewOpened, academicYears, setUpdateAcademicYear}:any) =>
 
 
                     {/* Values */}
-                    {
-                        !academicYears[0]?.year_name ? (
-                            <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                No academic years yet
-                            </p>
-                        ) : academicYears.map((year:any) => (
-                            <ul className='w-full flex flex-row min-w-[700px] text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'>
-                                <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{academicYears.indexOf(year) + 1}</li>
-                                <li className='basis-[12.5%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
-                                    <Button
-                                        className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
-                                        onClick={() => selectHandler(year)}
-                                    >
-                                        Select
-                                    </Button>
-                                </li>
-                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{year.year_name}</li>
-                                <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{year.is_active ? 'True' : 'False'}</li>
-                                <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{`${year.start_date.day}-${monthConverter(year.start_date.month)}-${year.start_date.year}`}</li>
-                                <li className='basis-[17.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[20%]'>{`${year.end_date.day}-${monthConverter(year.end_date.month)}-${year.end_date.year}`}</li>
-                                <li className='basis-[15%] flex flex-row items-center px-2'>{moment(year.updatedAt).format('D-MMM-yy')}</li>
-                            </ul>
-                        ))
-                    }
+                    <CommandList>
+                        {
+                            !academicYears[0]?.year_name ? (
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                    No academic years yet
+                                </p>
+                            ) : academicYears.map((year:any) => (
+                                <CommandItem
+                                    value={`
+                                        ${academicYears.indexOf(year) + 1}
+                                        select
+                                        ${year.year_name}
+                                        ${year.start_date.day}
+                                        ${monthConverter(year.start_date.month)}
+                                        ${year.start_date.year}
+                                        ${year.is_active ? 'True' : 'False'}
+                                        ${year.end_date.day}
+                                        ${monthConverter(year.end_date.month)}
+                                        ${year.end_date.year}
+                                        ${moment(year.updatedAt).format('D-MMM-yy')}
+                                    `}
+                                    className='w-full flex flex-row min-w-[700px] text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                >
+                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{academicYears.indexOf(year) + 1}</li>
+                                    <li className='basis-[12.5%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <Button
+                                            className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
+                                            onClick={() => selectHandler(year)}
+                                        >
+                                            Select
+                                        </Button>
+                                    </li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{year.year_name}</li>
+                                    <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{year.is_active ? 'True' : 'False'}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{`${year.start_date.day}-${monthConverter(year.start_date.month)}-${year.start_date.year}`}</li>
+                                    <li className='basis-[17.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[20%]'>{`${year.end_date.day}-${monthConverter(year.end_date.month)}-${year.end_date.year}`}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2'>{moment(year.updatedAt).format('D-MMM-yy')}</li>
+                                </CommandItem>
+                            ))
+                        }
+                    </CommandList>
+                    <CommandEmpty>No results found</CommandEmpty>
                 </div>
 
 
             </div>
-        </div>
+        </Command>
     );
 };
 

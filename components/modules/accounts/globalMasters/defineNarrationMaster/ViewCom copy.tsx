@@ -1,8 +1,9 @@
 // Imports
+import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import {ChevronsUpDown, X} from 'lucide-react';
+import {ChevronsUpDown, Search, X} from 'lucide-react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
+import {Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut} from '@/components/ui/command';  
 
 
 
@@ -24,16 +25,8 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
     };
 
 
-    // Search value
-    const searchValue = `
-        
-    `
-
-
     return (
-        <Command
-            className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[70%]'
-        >
+        <div className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[70%]'>
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
@@ -45,10 +38,29 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
 
                 {/* Search input */}
                 <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
-                    <CommandInput
-                        placeholder='Search list'
-                        className='h-full text-xs text-hash-color w-[250px] bg-white'
-                    />
+                    {/* <div className='relative'>
+                        <Input
+                            placeholder='Search'
+                            className='h-full rounded-[5px] border-[#ccc] text-xs text-hash-color w-[250px] bg-white'
+                        />
+                        <Search
+                            size={20}
+                            className='absolute right-2 top-[25%] text-hash-color cursor-pointer'
+                        />
+                    </div> */}
+                    <Command>
+                        <CommandInput placeholder="Type a command or search..." />
+                        <CommandList>
+                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandItem>Calendar</CommandItem>
+                            <CommandItem>Search Emoji</CommandItem>
+                            <CommandItem>Calculator</CommandItem>
+                            <CommandItem>Profile</CommandItem>
+                            <CommandItem>Billing</CommandItem>
+                            <CommandItem>Settings</CommandItem>
+                        </CommandList>
+                    </Command>
+
                 </div>
 
 
@@ -74,33 +86,27 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                         </li>
                     </ul>
                     {/* Values */}
-                    <CommandList>
-                        {
-                            !narrations[0]?.narration ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No narrations yet
-                                </p>
-                            ) : narrations.map((narration:any) => (
-                                <CommandItem
-                                    value={`${narrations.indexOf(narration) + 1} select ${narration.narration} ${narration.voucher_type}`}
-                                    className='w-full min-w-[400px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
-                                >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
-                                    <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
-                                        <Button
-                                            className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
-                                            onClick={() => selectHandler(narration)}
-                                        >
-                                            Select
-                                        </Button>
-                                    </li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narration?.narration}</li>
-                                    <li className='basis-[45%] flex flex-row items-center px-2 sm:basis-[50%]'>{narration?.voucher_type}</li>
-                                </CommandItem>
-                            ))
-                        }
-                    </CommandList>
-                    <CommandEmpty>No results found</CommandEmpty>
+                    {
+                        !narrations[0]?.narration ? (
+                            <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                No narrations yet
+                            </p>
+                        ) : narrations.map((narration:any) => (
+                            <ul className='w-full min-w-[400px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'>
+                                <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
+                                <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <Button
+                                        className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
+                                        onClick={() => selectHandler(narration)}
+                                    >
+                                        Select
+                                    </Button>
+                                </li>
+                                <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narration?.narration}</li>
+                                <li className='basis-[45%] flex flex-row items-center px-2 sm:basis-[50%]'>{narration?.voucher_type}</li>
+                            </ul>
+                        ))
+                    }
                 </div>
 
 
@@ -133,7 +139,7 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
 
 
             </div>
-        </Command>
+        </div>
     );
 };
 

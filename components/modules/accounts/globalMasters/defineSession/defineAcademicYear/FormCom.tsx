@@ -228,7 +228,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                         control={form.control}
                         name='year_name'
                         render={({field}) => (
-                            <FormItem className='w-full h-15 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-15 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Academic Year</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>

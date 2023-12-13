@@ -17,14 +17,14 @@ const modules = [
                 pageName:'Global Masters',
                 subPages:[
                     {
-                        subPageName:'Define Narration Master'
-                    },
-                    {
                         subPageName:'Define Session',
                         threads:[
                             'Define Academic Year',
                             'Define Financial Year'
                         ]
+                    },
+                    {
+                        subPageName:'Define Narration Master'
                     }
                 ]
             },
@@ -117,12 +117,6 @@ const modules = [
                 pageName:'Reports',
                 subPages:[
                     {
-                        subPageName:'Daily Cash Status'
-                    },
-                    {
-                        subPageName:'Bank Ledger'
-                    },
-                    {
                         subPageName:'Ledger Report',
                         threads:[
                             'Ledger Report',
@@ -130,6 +124,12 @@ const modules = [
                             'Ledger Report Detail New',
                             'Ledger Report With Filter'
                         ]
+                    },
+                    {
+                        subPageName:'Daily Cash Status'
+                    },
+                    {
+                        subPageName:'Bank Ledger'
                     },
                     {
                         subPageName:'Cash/Bank Book'
@@ -200,9 +200,6 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define Remark'
-                    },
-                    {
                         subPageName:'Define Session',
                         threads:[
                             'Define Academic Year',
@@ -219,6 +216,17 @@ const modules = [
                         ]
                     },
                     {
+                        subPageName:'Define Health Master',
+                        threads:[
+                            'Health Unit Master',
+                            'Health Master',
+                            'Student Health Entry'
+                        ]
+                    },
+                    {
+                        subPageName:'Define Remark'
+                    },
+                    {
                         subPageName:'Define Category'
                     },
                     {
@@ -226,14 +234,6 @@ const modules = [
                     },
                     {
                         subPageName:'Define Caste'
-                    },
-                    {
-                        subPageName:'Define Health Master',
-                        threads:[
-                            'Health Unit Master',
-                            'Health Master',
-                            'Student Health Entry'
-                        ]
                     },
                     {
                         subPageName:'Define Bank'
@@ -302,15 +302,6 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Fee Group to Fee Head'
-                    },
-                    {
-                        subPageName:'Assign Amount Group'
-                    },
-                    {
-                        subPageName:'Assign Multiple Group to Student'
-                    },
-                    {
                         subPageName:'Define and Assign Concession',
                         threads:[
                             'Define Concession',
@@ -320,6 +311,22 @@ const modules = [
                             'Assign Concession',
                             'Assign Concession to Sigle Student',
                         ]
+                    },
+                    {
+                        subPageName:'Late Fee Settings',
+                        threads:[
+                            'Late Fee Setting',
+                            'Late Fee Setting Head Wise',
+                        ]
+                    },
+                    {
+                        subPageName:'Fee Group to Fee Head'
+                    },
+                    {
+                        subPageName:'Assign Amount Group'
+                    },
+                    {
+                        subPageName:'Assign Multiple Group to Student'
                     },
                     {
                         subPageName:'Student Fee Details'
@@ -332,13 +339,6 @@ const modules = [
                     },
                     {
                         subPageName:'Set Student Status'
-                    },
-                    {
-                        subPageName:'Late Fee Settings',
-                        threads:[
-                            'Late Fee Setting',
-                            'Late Fee Setting Head Wise',
-                        ]
                     },
                     {
                         subPageName:'Assign Computer No. to Student'
@@ -355,6 +355,13 @@ const modules = [
             {
                 pageName:'Manage Fee',
                 subPages:[
+                    {
+                        subPageName:'Amount Without Structure',
+                        threads:[
+                            'Pay Amount Without Structure',
+                            'Pay Amount Without Structure For Staff'
+                        ]
+                    },
                     {
                         subPageName:'Fee Entry'
                     },
@@ -384,13 +391,6 @@ const modules = [
                     },
                     {
                         subPageName:'Fees Upload With Deposit Bank'
-                    },
-                    {
-                        subPageName:'Amount Without Structure',
-                        threads:[
-                            'Pay Amount Without Structure',
-                            'Pay Amount Without Structure For Staff'
-                        ]
                     },
                     {
                         subPageName:'Reconsiliation Fee Receipt'
@@ -519,12 +519,6 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Student Wise Receipt Report'
-                    },
-                    {
-                        subPageName:'Uploaded Excel Details'
-                    },
-                    {
                         subPageName:'Amount Without Structure Reports',
                         threads:[
                             'Amount Without Structure Report',
@@ -537,6 +531,12 @@ const modules = [
                             'Cheque Clearing Status Report',
                             'Cheque Report Date Wise'
                         ]
+                    },
+                    {
+                        subPageName:'Student Wise Receipt Report'
+                    },
+                    {
+                        subPageName:'Uploaded Excel Details'
                     },
                     {
                         subPageName:'Advance Payment Report'
@@ -739,6 +739,14 @@ const modules = [
                 pageName:'Admission',
                 subPages:[
                     {
+                        subPageName:'Admission Entry',
+                        threads:[
+                            'Admission Fee Collection',
+                            'Adm Entry Amt Structure',
+                            'Challan Amount'
+                        ]
+                    },
+                    {
                         subPageName:'Enquiry'
                     },
                     {
@@ -775,14 +783,6 @@ const modules = [
                         subPageName:'Requests for Changes From Parents'
                     },
                     {
-                        subPageName:'Admission Entry',
-                        threads:[
-                            'Admission Fee Collection',
-                            'Adm Entry Amt Structure',
-                            'Challan Amount'
-                        ]
-                    },
-                    {
                         subPageName:'Create ID Card'
                     },
                     {
@@ -801,9 +801,6 @@ const modules = [
                 pageName:'Certificate',
                 subPages:[
                     {
-                        subPageName:'Certificates'
-                    },
-                    {
                         subPageName:'TC',
                         threads:[
                             'TC Form',
@@ -812,6 +809,9 @@ const modules = [
                             'Generate TC in Bulk',
                             'TC Report',
                         ]
+                    },
+                    {
+                        subPageName:'Certificates'
                     },
                 ]
             },
@@ -945,15 +945,6 @@ const modules = [
                 pageName:'Payroll Master',
                 subPages:[
                     {
-                        subPageName:'Define Salary Account'
-                    },
-                    {
-                        subPageName:'Define Salary Month'
-                    },
-                    {
-                        subPageName:'Assign Info Bulk'
-                    },
-                    {
                         subPageName:'Create Salary Structure',
                         threads:[
                             'Define Salary Head',
@@ -996,12 +987,29 @@ const modules = [
                             'Related Policies with Month',
                         ]
                     },
+                    {
+                        subPageName:'Define Salary Account'
+                    },
+                    {
+                        subPageName:'Define Salary Month'
+                    },
+                    {
+                        subPageName:'Assign Info Bulk'
+                    }
                 ]
             },
             // Advance
             {
                 pageName:'Advance',
                 subPages:[
+                    {
+                        subPageName:'Advance Report',
+                        threads:[
+                            'Advance Entry Report',
+                            'Advance Repayment Report',
+                            'Advance Ledger Report'
+                        ]
+                    },
                     {
                         subPageName:'Fix Advance A/C'
                     },
@@ -1011,20 +1019,19 @@ const modules = [
                     {
                         subPageName:'Advance Repayment'
                     },
-                    {
-                        subPageName:'Advance Report',
-                        threads:[
-                            'Advance Entry Report',
-                            'Advance Repayment Report',
-                            'Advance Ledger Report'
-                        ]
-                    },
                 ]
             },
             // Salary Structure
             {
                 pageName:'Salary Structure',
                 subPages:[
+                    {
+                        subPageName:'Increment',
+                        threads:[
+                            'Auto Increment',
+                            'Increment Rollback',
+                        ]
+                    },
                     {
                         subPageName:'Leave LWP Manual'
                     },
@@ -1059,13 +1066,6 @@ const modules = [
                         subPageName:'Bonus Calculations'
                     },
                     {
-                        subPageName:'Increment',
-                        threads:[
-                            'Auto Increment',
-                            'Increment Rollback',
-                        ]
-                    },
-                    {
                         subPageName:'Staff Salary Structure'
                     },
                     {
@@ -1078,18 +1078,6 @@ const modules = [
                 pageName:'Salary Reports',
                 subPages:[
                     {
-                        subPageName:'Bank Statement Report'
-                    },
-                    {
-                        subPageName:'Salary Sheet'
-                    },
-                    {
-                        subPageName:'Salary Slip'
-                    },
-                    {
-                        subPageName:'Insurance Statement Report'
-                    },
-                    {
                         subPageName:'Income Tax',
                         threads:[
                             'TDS Entry Report',
@@ -1098,12 +1086,6 @@ const modules = [
                             'Gross Form 16',
                             'Form 16'
                         ]
-                    },
-                    {
-                        subPageName:'Employee Type Wise Report'
-                    },
-                    {
-                        subPageName:'Estimated Salary Report'
                     },
                     {
                         subPageName:'Monthly Reports',
@@ -1125,6 +1107,24 @@ const modules = [
                             'Salary Statement Employee Wise',
                             'Salary Statement Report'
                         ]
+                    },
+                    {
+                        subPageName:'Bank Statement Report'
+                    },
+                    {
+                        subPageName:'Salary Sheet'
+                    },
+                    {
+                        subPageName:'Salary Slip'
+                    },
+                    {
+                        subPageName:'Insurance Statement Report'
+                    },
+                    {
+                        subPageName:'Employee Type Wise Report'
+                    },
+                    {
+                        subPageName:'Estimated Salary Report'
                     },
                 ]
             },
