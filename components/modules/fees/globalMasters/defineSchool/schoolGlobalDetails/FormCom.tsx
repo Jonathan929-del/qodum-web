@@ -43,11 +43,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         school_no:updateSchoolDetails.school_no,
         affiliation_to:updateSchoolDetails.affiliation_to,
         affiliation_no:updateSchoolDetails.affiliation_no,
+        udise_code:updateSchoolDetails.udise_code,
+        pen:updateSchoolDetails.pen,
         associates:updateSchoolDetails.associates,
         renew_up_to:updateSchoolDetails.renew_up_to,
         school_status:updateSchoolDetails.school_status,
-        city:updateSchoolDetails.city,
-        ecare_mobile_no:updateSchoolDetails.ecare_mobile_no,
         working_days:updateSchoolDetails.working_days,
         recess:updateSchoolDetails.recess,
         total_period:updateSchoolDetails.total_period,
@@ -76,11 +76,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             school_no:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_no,
             affiliation_to:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.affiliation_to,
             affiliation_no:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.affiliation_no,
+            udise_code:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.udise_code,
+            pen:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.pen,
             associates:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.associates,
             renew_up_to:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.renew_up_to,
             school_status:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_status,
-            city:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.city,
-            ecare_mobile_no:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.ecare_mobile_no,
             working_days:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.working_days,
             recess:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.recess,
             total_period:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.total_period,
@@ -111,11 +111,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 school_no:values.school_no,
                 affiliation_to:values.affiliation_to,
                 affiliation_no:values.affiliation_no,
+                udise_code:values.udise_code,
+                pen:values.pen,
                 associates:values.associates,
                 renew_up_to:values.renew_up_to,
                 school_status:values.school_status,
-                city:values.city,
-                ecare_mobile_no:values.ecare_mobile_no,
                 working_days:values.working_days,
                 recess:values.recess,
                 total_period:values.total_period,
@@ -145,11 +145,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 school_no:values.school_no,
                 affiliation_to:values.affiliation_to,
                 affiliation_no:values.affiliation_no,
+                udise_code:values.udise_code,
+                pen:values.pen,
                 associates:values.associates,
                 renew_up_to:values.renew_up_to,
                 school_status:values.school_status,
-                city:values.city,
-                ecare_mobile_no:values.ecare_mobile_no,
                 working_days:values.working_days,
                 recess:values.recess,
                 total_period:values.total_period,
@@ -186,11 +186,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             school_no:'',
             affiliation_to:'',
             affiliation_no:'',
+            udise_code:'',
+            pen:'',
             associates:'',
             renew_up_to:'',
             school_status:'',
-            city:'',
-            ecare_mobile_no:'',
             working_days:'',
             recess:'',
             total_period:'',
@@ -216,11 +216,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             school_no:'',
             affiliation_to:'',
             affiliation_no:'',
+            udise_code:'',
+            pen:'',
             associates:'',
             renew_up_to:'',
             school_status:'',
-            city:'',
-            ecare_mobile_no:'',
             working_days:'',
             recess:'',
             total_period:'',
@@ -245,11 +245,22 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
                         <div className='flex-1 flex flex-col'>
 
-                            {/* School Main */}
-                            <RadioGroup className='flex justify-end gap-[2px]' defaultValue='option-one'>
-                                <RadioGroupItem value='option-one' id='option-one' disabled/>
-                                <Label htmlFor='option-one' className='text-xs'>School Main</Label>
-                            </RadioGroup>
+
+                            {/* Radios */}
+                            <div className='flex flex-row items-center justify-between sm:justify-end'>
+                                {/* School Main */}
+                                <RadioGroup className='flex justify-end gap-[2px]' defaultValue='option-one'>
+                                    <RadioGroupItem value='option-one' id='option-one' disabled/>
+                                    <Label htmlFor='option-one' className='text-[10px] sm:text-xs'>School Main</Label>
+                                </RadioGroup>
+                                {/* School Subheads */}
+                                <RadioGroup className='flex justify-end gap-[2px] sm:hidden'>
+                                    <RadioGroupItem value='option-one' id='option-one' disabled/>
+                                    <Label htmlFor='option-one' className='text-[10px] sm:text-xs'>School Subheads</Label>
+                                </RadioGroup>
+                            </div>
+
+
 
                             {/* School Name */}
                             <FormField
@@ -495,9 +506,9 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                         <div className='flex-1 flex flex-col'>
 
                             {/* School Subheads */}
-                            <RadioGroup className='flex justify-end gap-[2px]'>
+                            <RadioGroup className='hidden justify-end gap-[2px] sm:flex'>
                                 <RadioGroupItem value='option-one' id='option-one' disabled/>
-                                <Label htmlFor='option-one' className='text-xs'>School Subheads</Label>
+                                <Label htmlFor='option-one' className='text-[10px] sm:text-xs'>School Subheads</Label>
                             </RadioGroup>
 
                             {/* School No. */}
@@ -563,6 +574,48 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                 )}
                             />
 
+                            {/* UDISE Code */}
+                            <FormField
+                                control={form.control}
+                                name='udise_code'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>UDISE Code</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* PEN */}
+                            <FormField
+                                control={form.control}
+                                name='pen'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>PEN</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
                             {/* Associates */}
                             <FormField
                                 control={form.control}
@@ -613,48 +666,6 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                     <FormItem>
                                         <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
                                             <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>School Status</FormLabel>
-                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
-                                                    />
-                                                </FormControl>
-                                            </div>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            {/* City */}
-                            <FormField
-                                control={form.control}
-                                name='city'
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
-                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>City</FormLabel>
-                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
-                                                    />
-                                                </FormControl>
-                                            </div>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
-
-                            {/* E-Care Mobile No. */}
-                            <FormField
-                                control={form.control}
-                                name='ecare_mobile_no'
-                                render={({field}) => (
-                                    <FormItem>
-                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
-                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>E-Care Mobile No.</FormLabel>
                                             <div className='basis-[70%] h-full sm:basis-[65%]'>
                                                 <FormControl>
                                                     <Input

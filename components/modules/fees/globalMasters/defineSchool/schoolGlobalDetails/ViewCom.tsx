@@ -32,11 +32,11 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
             school_no:schoolD.school_no,
             affiliation_to:schoolD.affiliation_to,
             affiliation_no:schoolD.affiliation_no,
+            udise_code:schoolD.udise_code,
+            pen:schoolD.pen,
             associates:schoolD.associates,
             renew_up_to:schoolD.renew_up_to,
             school_status:schoolD.school_status,
-            city:schoolD.city,
-            ecare_mobile_no:schoolD.ecare_mobile_no,
             working_days:schoolD.working_days,
             recess:schoolD.recess,
             total_period:schoolD.total_period,
@@ -73,20 +73,20 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
                 {/* Narration master */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[650px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[650px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs sm:min-w-[800px] md:text-md'>
                         <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[25%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc] sm:basis-[30%]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             School Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             Is Admin
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -109,10 +109,10 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
                             ) : schoolsDetails.map((schoolD:any) => (
                                 <CommandItem
                                     value={`${schoolsDetails.indexOf(schoolD) + 1} select ${schoolD.school_name} ${schoolD?.support_email_id} ${schoolD?.website}`}
-                                    className='w-full min-w-[650px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[650px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs sm:min-w-[800px] md:text-md'
                                 >
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{schoolsDetails.indexOf(schoolD) + 1}</li>
-                                    <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>
+                                    <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                         <Button
                                             className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
                                             onClick={() => selectHandler(schoolD)}
@@ -120,8 +120,8 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[25%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[30%]'>{schoolD.school_name}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>false</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{schoolD.school_name}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>false</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{schoolD?.support_email_id || '-'}</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2'>{schoolD?.website || '-'}</li>
                                 </CommandItem>
