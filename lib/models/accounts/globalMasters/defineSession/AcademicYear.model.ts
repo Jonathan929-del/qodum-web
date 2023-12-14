@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 
 
-// Narration Master Schema
+// Academic year schema
 const AcademicYearSchema = new mongoose.Schema(
         {
             year_name:{type:String, required:true},

@@ -27,31 +27,31 @@ export const connectToDb = async (dbName:String) => {
             mongo_url = process.env.MONGO_ADMISSION_URL;
             break;
         case 'fees':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_FEES_URL;
             break;
         case 'payroll':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_PAYROLL_URL;
             break;
         case 'stocks':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_STOCKS_URL;
             break;
         case 'users':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_USERS_URL;
             break;
         case 'attendance':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_ATTENDANCE_URL;
             break;
         case 'timetable':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_TIMETABLE_URL;
             break;
         case 'report':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_REPORTS_URL;
             break;
         case 'library':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_LIBRARY_URL;
             break;
         case 'cbse':
-            mongo_url = process.env.MONGO_ACCOUNTS_URL;
+            mongo_url = process.env.MONGO_CBSE_URL;
             break;
     };
 

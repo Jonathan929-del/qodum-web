@@ -32,7 +32,6 @@ export const createFinancialYear = async ({year_name, start_date, end_date, is_a
 
 
         // Creating new financial year
-        console.log(start_date.day);
         const newFinancialYear = await FinancialYear.create({
             year_name,
             start_date:{

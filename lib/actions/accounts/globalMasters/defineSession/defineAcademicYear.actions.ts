@@ -32,7 +32,6 @@ export const createAcademicYear = async ({year_name, start_date, end_date, is_ac
 
 
         // Creating new academic year
-        console.log(start_date.day);
         const newAcademicYear = await AcademicYear.create({
             year_name,
             start_date:{

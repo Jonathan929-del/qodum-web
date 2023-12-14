@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 
 
-// Narration Master Schema
+// FInancial year schema
 const FinancialYearSchema = new mongoose.Schema(
         {
             year_name:{type:String, required:true},
