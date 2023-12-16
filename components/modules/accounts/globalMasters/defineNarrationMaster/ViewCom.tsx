@@ -88,7 +88,8 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
                                     <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                         <Button
-                                            className='h-5 my-2 text-[10px] bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs lg:my-[2px] lg:text-md'
+                                            className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
                                             onClick={() => selectHandler(narration)}
                                         >
                                             Select

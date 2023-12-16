@@ -1,14 +1,14 @@
 'use client';
 // Imports
 import Footer from './Footer';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
 import {Toaster} from '../ui/toaster';
 import PagesList from './Pages/PagesList';
-import ConfigBar from './Pages/ConfigBar';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
+import { fetchAcademicYears, modifyAcademicYearWithYearName } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -29,6 +29,36 @@ const index = ({children}:any) => {
 
     // Pathname
     const pathname = usePathname();
+
+
+    // Academic Years
+    const [academicYears, setAcademicYears] = useState([{}]);
+
+
+    // Active academic year
+    const [activeAcademicYearName, setActiveAcademicYearName] = useState('');
+
+
+    // Setting active academic year
+    const settingActiveAcademicYear = async (year_name:any) => {
+        try {
+            await modifyAcademicYearWithYearName({year_name});
+            setActiveAcademicYearName(year_name);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    
+    // Use effect
+    useEffect(() => {
+        const academicYearsFetcher = async () => {
+            const res:any = await fetchAcademicYears();
+            setAcademicYears(res);
+            setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0].year_name);
+        };
+        academicYearsFetcher();
+    }, []);
 
 
     return (
@@ -54,6 +84,9 @@ const index = ({children}:any) => {
                             <Topbar
                                 isSidebarOpened={isSidebarOpened}
                                 setIsSidebarOpened={setIsSidebarOpened}
+                                academicYears={academicYears}
+                                settingActiveAcademicYear={settingActiveAcademicYear}
+                                activeAcademicYearName={activeAcademicYearName}
                             />
                             {/* <ConfigBar /> */}
                             {pathname.split('/')[2] && (
@@ -71,7 +104,9 @@ const index = ({children}:any) => {
                     {children}
                     <Toaster />
                 </div>
-                <Footer />
+                <Footer
+                    activeAcademicYearName={activeAcademicYearName}
+                />
             </div>
         </main>
     );

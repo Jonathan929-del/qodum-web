@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 // Academic year schema
 const AcademicYearSchema = new mongoose.Schema(
         {
-            year_name:{type:String, required:true},
+            year_name:{type:String, required:true, unique:true},
             start_date:{
                 day:{type:String, required:true},
                 month:{type:String, required:true},

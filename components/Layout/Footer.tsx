@@ -9,7 +9,7 @@ import {Globe, GraduationCap, PieChart} from 'lucide-react';
 
 
 // Main function
-const Footer = () => {
+const Footer = ({activeAcademicYearName}:any) => {
     return (
         <footer className='flex flex-col items-center justify-between w-full bg-[#F3F8FB] px-4 py-2 lg:flex-row lg:py-[2px]'>
 
@@ -30,13 +30,13 @@ const Footer = () => {
                 <div className='flex flex-row items-center'>
                     <GraduationCap />
                     <p className='ml-2'>
-                        Academic Year: 2023 - 2024
+                        Academic Year: {activeAcademicYearName}
                     </p>
                 </div>
                 <div className='flex flex-row items-center'>
                     <PieChart />
                     <p className='ml-2'>
-                        Financial Year: 2023 - 2024
+                        Financial Year: {activeAcademicYearName}
                     </p>
                 </div>
             </div>

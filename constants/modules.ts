@@ -195,8 +195,8 @@ const modules = [
                     {
                         subPageName:'Define School',
                         threads:[
-                            'School Global Details',
-                            'Define School Board'
+                            'Define School Board',
+                            'School Global Details'
                         ]
                     },
                     {

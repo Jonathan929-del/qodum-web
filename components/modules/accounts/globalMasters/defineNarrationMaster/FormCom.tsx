@@ -3,6 +3,7 @@
 import * as z from 'zod';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -111,6 +112,7 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                     >
                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
                                             <SelectValue placeholder='Cash payment voucher'/>
+                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value='Cash Payment Voucher'>Cash Payment Voucher</SelectItem>

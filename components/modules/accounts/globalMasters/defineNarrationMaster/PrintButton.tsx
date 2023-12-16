@@ -5,7 +5,7 @@ import {ExcelFile, ExcelSheet} from 'react-xlsx-wrapper';
 
 
 // Main Function
-const PrintButton = ({narrations}:any) => {
+const PrintButton = ({narrations, fileExtension}:any) => {
 
 
     // Narrations Array
@@ -77,6 +77,8 @@ const PrintButton = ({narrations}:any) => {
                 </span>
             }
             filename='Narration List'
+            // fileExtension={fileExtension}
+            fileExtension='txt'
         >
             <ExcelSheet
                 dataSet={data}

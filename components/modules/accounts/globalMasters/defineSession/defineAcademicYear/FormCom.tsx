@@ -3,10 +3,12 @@
 import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
+import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {useForm, } from 'react-hook-form';
+import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
-import {Checkbox} from '@/components/ui/checkbox';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -98,14 +100,20 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
         }
     });
 
+
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AcademicYearValidation>) => {
+
         // Create Academic Year
         if(updateAcademicYear.id === ''){
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
                 return;
-            }
+            };
+            if(academicYears.map((year:any) => year.year_name).includes(values.year_name)){
+                toast({title:'Academic year already exists', variant:'error'});
+                return;
+            };
             await createAcademicYear({
                 year_name:values.year_name,
                 start_date:{
@@ -127,6 +135,11 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
         else if(!deepEqual(comparisonObject, values)){
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
+                return;
+            };
+            if(comparisonObject.year_name !== values.year_name && academicYears.map((year:any) => year.year_name).includes(values.year_name)){
+                form.setValue('year_name', comparisonObject.year_name);
+                toast({title:'Academic year already exists', variant:'error'});
                 return;
             };
             await modifyAcademicYears({
@@ -237,7 +250,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                             className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
-                                    <div className='mt-[-10px]'>
+                                    <div className='mt-[-10px] text-xs'>
                                         <FormMessage />
                                     </div>
                                 </div>
@@ -264,6 +277,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Year' className='text-xs'/>
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -291,6 +305,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Month' className='text-xs'/>
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -318,6 +333,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                 >
                                                     <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Day' className='text-xs'/>
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {
@@ -357,6 +373,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Year' className='text-xs'/>
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -384,6 +401,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Month' className='text-xs'/>
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -411,6 +429,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Day' className='text-xs'/>
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -444,20 +463,21 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                         yearsError && <p className='text-xs text-[#FF5939]'>Years data missing</p>
                                     }
                                     <FormControl>
-                                        <div className="flex-1 flex items-center justify-end space-x-2">
-                                            <label
-                                                htmlFor="is_active"
-                                                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Is Active
-                                            </label>
-                                            <Checkbox
-                                                id="is_active"
+                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                            <Switch
+                                                id='is_active'
                                                 {...field}
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
+                                                disabled={updateAcademicYear.id === '' ? false : updateAcademicYear.is_active}
                                             />
+                                            <Label
+                                                htmlFor='is_active'
+                                                className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                            >
+                                                Is Active
+                                            </Label>
                                         </div>
                                     </FormControl>
                                 </>

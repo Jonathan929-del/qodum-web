@@ -6,13 +6,15 @@ import {deepEqual} from '@/lib/utils';
 import {useEffect, useState} from 'react';
 import {useForm, } from 'react-hook-form';
 import {Input} from '@/components/ui/input';
-import {Checkbox} from '@/components/ui/checkbox';
+import {Label} from '@/components/ui/label';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FinancialYearValidation} from '@/lib/validations/accounts/globalMasters/defineSession/financialYear';
 import {createFinancialYear, deleteFinancialYear, modifyFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
+import { ChevronDown } from 'lucide-react';
 
 
 
@@ -105,7 +107,11 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
                 return;
-            }
+            };
+            if(financialYears.map((year:any) => year.year_name).includes(values.year_name)){
+                toast({title:'Financial year already exists', variant:'error'});
+                return;
+            };
             await createFinancialYear({
                 year_name:values.year_name,
                 start_date:{
@@ -127,6 +133,11 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
         else if(!deepEqual(comparisonObject, values)){
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
+                return;
+            };
+            if(comparisonObject.year_name !== values.year_name && financialYears.map((year:any) => year.year_name).includes(values.year_name)){
+                form.setValue('year_name', comparisonObject.year_name);
+                toast({title:'Financial year already exists', variant:'error'});
                 return;
             };
             await modifyFinancialYears({
@@ -264,6 +275,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Year' className='text-xs'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -291,6 +303,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Month' className='text-xs'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -318,6 +331,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                 >
                                                     <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Day' className='text-xs'/>
+                                                        <ChevronDown className='h-4 w-4 opacity-50'/>
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {
@@ -357,6 +371,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Year' className='text-xs'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -384,6 +399,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Month' className='text-xs'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -411,6 +427,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                                     >
                                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Day' className='text-xs'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             {
@@ -444,20 +461,21 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                         yearsError && <p className='text-xs text-[#FF5939]'>Years data missing</p>
                                     }
                                     <FormControl>
-                                        <div className="flex-1 flex items-center justify-end space-x-2">
-                                            <label
-                                                htmlFor="is_active"
-                                                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Is Active
-                                            </label>
-                                            <Checkbox
-                                                id="is_active"
+                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                            <Switch
+                                                id='is_active'
                                                 {...field}
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
+                                                disabled={updateFinancialYear.id === '' ? false : updateFinancialYear.is_active}
                                             />
+                                            <Label
+                                                htmlFor='is_active'
+                                                className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                            >
+                                                Is Active
+                                            </Label>
                                         </div>
                                     </FormControl>
                                 </>

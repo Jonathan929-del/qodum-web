@@ -2,6 +2,7 @@
 // Imports
 import TabsCom from './TabsCom';
 import {Bar} from 'react-chartjs-2';
+import {ChevronDown} from 'lucide-react';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';  
 import {Chart as ChartJs, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
@@ -86,6 +87,7 @@ const BarCom = ({barData}:any) => {
                         <Select>
                             <SelectTrigger className='h-10 px-3 text-sm bg-[#F4F4F4]'>
                                 <SelectValue placeholder={barData.select[0].name}/>
+                                <ChevronDown className='h-4 w-4 opacity-50'/>
                             </SelectTrigger>
                             <SelectContent>
                                 {barData.select.map((choice:any) => (
