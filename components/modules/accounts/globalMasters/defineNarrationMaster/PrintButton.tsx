@@ -1,7 +1,5 @@
 // Imports
-import {jsPDF} from 'jspdf';
 import {ChevronDown, Download} from 'lucide-react';
-import {renderToStaticMarkup} from 'react-dom/server';
 import {ExcelFile, ExcelSheet} from 'react-xlsx-wrapper';
 import {Select, SelectContent, SelectTrigger} from '@/components/ui/select';
 
@@ -71,14 +69,6 @@ const PrintButton = ({narrations}:any) => {
     ];
 
 
-    // Pdf printing
-    const printPdf = () => {
-        const doc = new jsPDF();
-        doc.text("Hello world!", 10, 10);
-        doc.save("mypdf.pdf");
-    };
-
-
     return (
         <div>
             <Select>
@@ -129,7 +119,6 @@ const PrintButton = ({narrations}:any) => {
 
                         {/* Pdf printing */}
                         <span
-                            onClick={printPdf}
                             className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
                         >
                             .pdf
