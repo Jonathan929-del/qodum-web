@@ -24,12 +24,6 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
     };
 
 
-    // Search value
-    const searchValue = `
-        
-    `
-
-
     return (
         <Command
             className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[70%]'
@@ -40,11 +34,11 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                 <h2>Narration List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -55,16 +49,16 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                 {/* Narration master */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[400px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc] sm:basis-[10%]'>
+                    <ul className='w-full min-w-[400px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Narration
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -77,25 +71,25 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                     <CommandList>
                         {
                             !narrations[0]?.narration ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No narrations yet
                                 </p>
                             ) : narrations.map((narration:any) => (
                                 <CommandItem
                                     value={`${narrations.indexOf(narration) + 1} select ${narration.narration} ${narration.voucher_type}`}
-                                    className='w-full min-w-[400px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[400px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
-                                    <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
+                                    <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
-                                            className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                            className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
                                             onClick={() => selectHandler(narration)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{narration?.narration}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{narration?.narration}</li>
                                     <li className='basis-[45%] flex flex-row items-center px-2 sm:basis-[50%]'>{narration?.voucher_type}</li>
                                 </CommandItem>
                             ))
@@ -106,7 +100,7 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
 
 
                 {/* Buttons */}
-                <div className='w-full flex flex-row items-center justify-between py-4 px-2 border-t-2 border-[#ccc]'>
+                <div className='w-full flex flex-row items-center justify-between py-4 px-2 border-t-[0.5px] border-[#ccc]'>
                     {/* Items per page */}
                     <div className='text-[10px] flex flex-col items-center gap-2 sm:text-sm sm:flex-row'>
                         <p className='text-hash-color'>Items per page:</p>

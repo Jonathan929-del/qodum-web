@@ -227,6 +227,7 @@ export const modifyAcademicYearWithYearName = async ({year_name}:ModifyAcademicY
 
 
 
+
 // Delete Academic Year
 export const deleteAcademicYear = async ({id}:{id:String}) => {
     try {

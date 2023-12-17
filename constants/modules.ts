@@ -216,26 +216,6 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define Health Master',
-                        threads:[
-                            'Health Unit Master',
-                            'Health Master',
-                            'Student Health Entry'
-                        ]
-                    },
-                    {
-                        subPageName:'Define Remark'
-                    },
-                    {
-                        subPageName:'Define Category'
-                    },
-                    {
-                        subPageName:'Define Religion'
-                    },
-                    {
-                        subPageName:'Define Caste'
-                    },
-                    {
                         subPageName:'Define Bank'
                     },
                     {
@@ -665,6 +645,26 @@ const modules = [
                             'Define TC Caste',
                             'Team Master'
                         ]
+                    },
+                    {
+                        subPageName:'Define Health Master',
+                        threads:[
+                            'Health Unit Master',
+                            'Health Master',
+                            'Student Health Entry'
+                        ]
+                    },
+                    {
+                        subPageName:'Define Remark'
+                    },
+                    {
+                        subPageName:'Define Category'
+                    },
+                    {
+                        subPageName:'Define Religion'
+                    },
+                    {
+                        subPageName:'Define Caste'
                     },
                     {
                         subPageName:'Possible Siblings'

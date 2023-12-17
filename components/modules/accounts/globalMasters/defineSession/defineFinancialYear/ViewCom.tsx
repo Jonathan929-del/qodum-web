@@ -92,9 +92,9 @@ const ViewCom = ({setIsViewOpened, financialYears, setUpdateFinancialYear}:any) 
             </div>
 
 
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-2 py-2 border-b-2 border-[#ccc] sm:pr-4'>
+                <div className='w-full flex flex-row justify-end pr-2 py-2 border-b-[0.5px] border-[#ccc] sm:pr-4'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -104,28 +104,28 @@ const ViewCom = ({setIsViewOpened, financialYears, setUpdateFinancialYear}:any) 
 
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headings */}
-                    <ul className='w-full flex flex-row min-w-[700px] text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[7.5%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc] sm:basis-[10%]'>
+                    <ul className='w-full flex flex-row min-w-[700px] text-[10px] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[7.5%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Year Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>
+                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
                             Is Active
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Start Date
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[17.5%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc] sm:basis-[20%]'>
+                        <li className='basis-[17.5%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc] sm:basis-[20%]'>
                             End Date
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -140,14 +140,13 @@ const ViewCom = ({setIsViewOpened, financialYears, setUpdateFinancialYear}:any) 
                     <CommandList>
                         {
                             !financialYears[0]?.year_name ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No financial years yet
                                 </p>
                             ) : financialYears.map((year:any) => (
                                 <CommandItem
                                     value={`
                                         ${financialYears.indexOf(year) + 1}
-                                        select
                                         ${year.year_name}
                                         ${year.start_date.day}
                                         ${monthConverter(year.start_date.month)}
@@ -158,22 +157,22 @@ const ViewCom = ({setIsViewOpened, financialYears, setUpdateFinancialYear}:any) 
                                         ${year.end_date.year}
                                         ${moment(year.updatedAt).format('D-MMM-yy')}
                                     `}
-                                    className='w-full flex flex-row min-w-[700px] text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full flex flex-row min-w-[700px] text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{financialYears.indexOf(year) + 1}</li>
-                                    <li className='basis-[12.5%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{financialYears.indexOf(year) + 1}</li>
+                                    <li className='basis-[12.5%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
-                                            className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                            className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
                                             onClick={() => selectHandler(year)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{year.year_name}</li>
-                                    <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[10%]'>{year.is_active ? 'True' : 'False'}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{`${year.start_date.day}-${monthConverter(year.start_date.month)}-${year.start_date.year}`}</li>
-                                    <li className='basis-[17.5%] flex flex-row items-center px-2 border-r-2 border-[#ccc] sm:basis-[20%]'>{`${year.end_date.day}-${monthConverter(year.end_date.month)}-${year.end_date.year}`}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{year.year_name}</li>
+                                    <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{year.is_active ? 'True' : 'False'}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{`${year.start_date.day}-${monthConverter(year.start_date.month)}-${year.start_date.year}`}</li>
+                                    <li className='basis-[17.5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[20%]'>{`${year.end_date.day}-${monthConverter(year.end_date.month)}-${year.end_date.year}`}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2'>{moment(year.updatedAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))
