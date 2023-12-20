@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const NarrationMasterSchema = new mongoose.Schema(
     {
         voucher_type:{type:String, required:true},
-        narration:{type:String, required:true}
+        narration:{type:String, required:true, unique:true}
     },
     {
         timestamps:true

@@ -21,6 +21,13 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
         connectToDb('accounts');
 
 
+        // Checking if narration already exists
+        const existingNarration = await NarrationMaster.findOne({narration});
+        if(existingNarration){
+            throw new Error('Narration already exists');
+        };
+
+
         // Creating new narration master
         const newNarrationMaster = await NarrationMaster.create({
             voucher_type,
@@ -102,6 +109,12 @@ export const modifyNarrationMaster = async ({id, narration, voucher_type}:Modify
 
         // Db connection
         connectToDb('accounts');
+
+
+        // Checking if the narration already exists
+        const narrations = await NarrationMaster.find();
+        const existingNarration = await NarrationMaster.findById(id);
+        if(existingNarration.narration !== narration && narrations.map(narration => narration.narration).includes(narration)){throw new Error('Narration already exists')};
 
 
         // Update Narration
