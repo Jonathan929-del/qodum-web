@@ -249,7 +249,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                         />
                                     </FormControl>
                                     <div className='mt-[-10px]'>
-                                        <FormMessage />
+                                        <FormMessage className='text-xs'/>
                                     </div>
                                 </div>
                             </FormItem>

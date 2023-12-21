@@ -7,8 +7,8 @@ import {ChevronDown} from 'lucide-react';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
 import Buttons from '@/components/modules/accounts/globalMasters/defineNarrationMaster/Buttons';
+import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
@@ -144,7 +144,7 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className='text-xs'/>
                                 </div>
                             </FormItem>
                         )}

@@ -10,16 +10,18 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
+const ViewCom = ({setIsViewOpened, accountGroups, setUpdateAccountGroup}:any) => {
 
 
     // Select handler
-    const selectHandler = (narration:any) => {
-        setUpdateNarration({
-            id:narration._id,
-            narration:narration.narration,
-            voucher_type:narration.voucher_type,
-            isDeleteClicked:false
+    const selectHandler = (group:any) => {
+        setUpdateAccountGroup({
+            id:group._id,
+            isDeleteClicked:false,
+            group_name:group.group_name,
+            category:group.category,
+            group_type:group.group_type,
+            group_no:group.group_no
         });
         setIsViewOpened(false);
     };
@@ -32,7 +34,7 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Narration List</h2>
+                <h2>Account Groups List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
@@ -47,59 +49,69 @@ const ViewCom = ({setIsViewOpened, narrations, setUpdateNarration}:any) => {
                 </div>
 
 
-                {/* Narration master */}
+                {/* Account group */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[400px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
+                    <ul className='w-full min-w-[500px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md md:min-w-[600px]'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Narration
+                            Group Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[45%] flex flex-row items-center justify-between px-2 sm:basis-[50%]'>
-                            Voucher Type
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc] sm:basis-[20%]'>
+                            Category
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc] sm:basis-[20%]'>
+                            Group Type
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 sm:basis-[15%]'>
+                            Group No.
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            narrations.length < 0 ? (
+                            accountGroups.length < 1 ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
-                                    No narrations yet
+                                    No account groups yet
                                 </p>
-                            ): !narrations[0]?.narration ? (
+                            ):
+                            !accountGroups[0]?.group_name ? (
                                 <LoadingIcon />
-                            ) : narrations.map((narration:any) => (
+                            ) : accountGroups.map((group:any) => (
                                 <CommandItem
-                                    value={`${narrations.indexOf(narration) + 1} select ${narration.narration} ${narration.voucher_type}`}
-                                    className='w-full min-w-[400px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    value={`${accountGroups.indexOf(group) + 1} ${group.group_name} ${group.category} ${group.group_type} ${group.group_no}`}
+                                    className='w-full min-w-[500px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md md:min-w-[600px]'
                                 >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{narrations.indexOf(narration) + 1}</li>
-                                    <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{accountGroups.indexOf(group) + 1}</li>
+                                    <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                            onClick={() => selectHandler(narration)}
+                                            onClick={() => selectHandler(group)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{narration?.narration}</li>
-                                    <li className='basis-[45%] flex flex-row items-center px-2 sm:basis-[50%]'>{narration?.voucher_type}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{group.group_name}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{group.category}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{group.group_type}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2'>{group.group_no}</li>
                                 </CommandItem>
                             ))
                         }
                     </CommandList>
-
-                    {narrations.length > 0 && <CommandEmpty>No results found</CommandEmpty>}
+                    {accountGroups.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
                 </div>
 
 
