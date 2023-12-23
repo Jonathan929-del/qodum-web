@@ -6,7 +6,9 @@ import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {useEffect, useState} from 'react';
+import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
+import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
 import {Calendar} from '@/components/ui/calendar';
 import {useToast} from '@/components/ui/use-toast';
@@ -18,8 +20,6 @@ import {GeneralLedgerValidation} from '@/lib/validations/accounts/accounts/gener
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createGeneralLedger, deleteGeneralLedger, modifyGeneralLedger} from '@/lib/actions/accounts/accounts/generalLedger.actions';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 
 
 
@@ -90,7 +90,8 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                 assign_date:values.assign_date,
                 is_cash_book:values.is_cash_book,
                 is_fixed_asset:values.is_fixed_asset,
-                depreciation:values.depreciation
+                // depreciation:values.depreciation
+                depreciation:0
             });
             setIsViewOpened(true);
             toast({title:'Added Successfully!'});
