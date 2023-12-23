@@ -14,8 +14,8 @@ const GeneralLedgerSchema = new mongoose.Schema(
         opening_balance:{type:Number},
         opening_balance_type:{type:String},
         assign_date:{type:String},
-        isCashBook:{type:Boolean},
-        isFixedAsset:{type:Boolean},
+        is_cash_book:{type:Boolean},
+        is_fixed_asset:{type:Boolean},
         depreciation:{type:Number},
     },
     {

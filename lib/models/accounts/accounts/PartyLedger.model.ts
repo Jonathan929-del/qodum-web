@@ -13,14 +13,14 @@ const PartyLedgerSchema = new mongoose.Schema(
         account_type:{type:String, required:true},
         account_address:{type:String},
         account_city:{type:String},
-        pincode:{type:Number},
+        pin_code:{type:Number},
         email:{type:String},
         mobile:{type:Number},
         pan:{type:Number},
         tin:{type:Number},
         opening_balance:{type:Number},
         opening_balance_type:{type:String},
-        assign_date:{type:String},
+        assign_date:{type:Date},
     },
     {
         timestamps:true

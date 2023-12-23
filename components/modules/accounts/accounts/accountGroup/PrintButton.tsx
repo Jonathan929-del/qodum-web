@@ -51,8 +51,8 @@ const PrintButton = ({accountGroups}:any) => {
 
 
 
-    // Narrations Array
-    const excelNarrationsArray = accountGroups.map((group:any) => {
+    // Account Groups Array
+    const excelGroupsArray = accountGroups.map((group:any) => {
         return([
             {value:accountGroups.indexOf(group) + 1},
             {value:group.group_name},
@@ -92,7 +92,7 @@ const PrintButton = ({accountGroups}:any) => {
                 {title:'Group Type', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Group No.', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:excelNarrationsArray
+            data:excelGroupsArray
         }
     ];
 
@@ -117,12 +117,12 @@ const PrintButton = ({accountGroups}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Narration List'
+                            filename='Account Groups List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={excelData}
-                                name='Narrations'
+                                name='Account Groups'
                             />
                         </ExcelFile>
 
@@ -135,12 +135,12 @@ const PrintButton = ({accountGroups}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Narration List'
+                            filename='Account Groups List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={excelData}
-                                name='Narrations'
+                                name='Account Groups'
                             />
                         </ExcelFile>
 

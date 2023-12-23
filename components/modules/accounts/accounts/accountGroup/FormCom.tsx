@@ -53,32 +53,46 @@ const FormCom = ({setIsViewOpened, accountGroups, updateAccountGroup, setUpdateA
             if(accountGroups.map((group:any) => group.group_name).includes(values.group_name)){
                 toast({title:'Account group already exists', variant:'error'});
                 return;
+            }
+            else if(accountGroups.map((group:any) => group.group_no).includes(values.group_no)){
+                toast({title:'Group number already exists', variant:'error'});
+                return;
+            }
+            else{
+                await createAccountGroup({
+                    group_name:values.group_name,
+                    category:values.category,
+                    group_type:values.group_type,
+                    group_no:values.group_no
+                });
+                setIsViewOpened(true);
+                toast({title:'Added Successfully!'});
             };
-            await createAccountGroup({
-                group_name:values.group_name,
-                category:values.category,
-                group_type:values.group_type,
-                group_no:values.group_no
-            });
-            setIsViewOpened(true);
-            toast({title:'Added Successfully!'});
         }
         // Modify Account Group
         else if(!deepEqual(comparisonObject, values)){
             // Ensuring unique account group name
-            if(accountGroups.map((group:any) => group.group_name).includes(values.group_name)){
+            if(comparisonObject.group_name !== values.group_name && accountGroups.map((group:any) => group.group_name).includes(values.group_name)){
                 toast({title:'Account group already exists', variant:'error'});
                 return;
+            }
+            // Ensuring unique account group number
+            else if(comparisonObject.group_no !== values.group_no && accountGroups.map((group:any) => group.group_no).includes(values.group_no)){
+                toast({title:'Group number already exists', variant:'error'});
+                return;
+            }
+            // Update
+            else{
+                await modifyAccountGroup({
+                    id:updateAccountGroup.id,
+                    group_name:values.group_name,
+                    category:values.category,
+                    group_type:values.group_type,
+                    group_no:values.group_no
+                });
+                setIsViewOpened(true);
+                toast({title:'Updated Successfully!'});
             };
-            await modifyAccountGroup({
-                id:updateAccountGroup.id,
-                group_name:values.group_name,
-                category:values.category,
-                group_type:values.group_type,
-                group_no:values.group_no
-            });
-            setIsViewOpened(true);
-            toast({title:'Updated Successfully!'});
         }
         // Delete Account Group
         else if(updateAccountGroup.isDeleteClicked){
@@ -102,7 +116,7 @@ const FormCom = ({setIsViewOpened, accountGroups, updateAccountGroup, setUpdateA
             group_name:'',
             category:'',
             group_type:'',
-            group_no:null,
+            group_no:'',
         });
     };
 
