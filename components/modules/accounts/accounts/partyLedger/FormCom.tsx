@@ -76,7 +76,6 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             assign_date:updatePartyLedger.id === '' ? new Date() : updatePartyLedger.assign_date
         }
     });
-    console.log(form.getValues());
 
 
     // Submit handler

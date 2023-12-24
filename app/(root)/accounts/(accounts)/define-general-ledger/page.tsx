@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/accounts/accounts/generalLedger/FormCom';
 import ViewCom from '@/components/modules/accounts/accounts/generalLedger/ViewCom';
 import {fetchAccountGroups} from '@/lib/actions/accounts/accounts/accountGroup.actions';
-import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
+import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 
 
 
@@ -33,12 +33,12 @@ const page = () => {
         account_name:'',
         group:'',
         account_type:'',
-        opening_balance:null,
+        opening_balance:'',
         opening_balance_type:'Debit',
         assign_date:new Date(),
         is_cash_book:false,
         is_fixed_asset:false,
-        depreciation:null
+        depreciation:''
     });
 
     
@@ -58,12 +58,11 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
-                    // <ViewCom
-                    //     generalLedgers={generalLedgers}
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     setUpdateGeneralLedger={setUpdateGeneralLedger}
-                    // />
-                    'srgd'
+                    <ViewCom
+                        generalLedgers={generalLedgers}
+                        setIsViewOpened={setIsViewOpened}
+                        setUpdateGeneralLedger={setUpdateGeneralLedger}
+                    />
                 ) : (
                     <FormCom
                         generalLedgers={generalLedgers}

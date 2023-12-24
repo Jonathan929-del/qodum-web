@@ -133,7 +133,7 @@ const Buttons = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
 
 
             {/* Print button */}
-            <PrintButton partyLedgers={generalLedgers}/>
+            <PrintButton generalLedgers={generalLedgers}/>
 
 
             {/* Cancel button */}

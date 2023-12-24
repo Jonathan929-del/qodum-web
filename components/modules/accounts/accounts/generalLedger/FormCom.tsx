@@ -36,10 +36,6 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
     // Toast
     const {toast} = useToast();
 
-
-    // Account type
-    const [accountType, setAccountType] = useState('');
-
     
     // Comparison object
     const comparisonObject = {
@@ -62,39 +58,44 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
             account_name:updateGeneralLedger.id === '' ? '' : updateGeneralLedger.account_name,
             group:updateGeneralLedger.id === '' ? '' : updateGeneralLedger.group,
             account_type:updateGeneralLedger.id === '' ? '' : updateGeneralLedger.account_type,
-            opening_balance:updateGeneralLedger.id === '' ? null : updateGeneralLedger.opening_balance,
+            opening_balance:updateGeneralLedger.id === '' ? '' : updateGeneralLedger.opening_balance,
             opening_balance_type:updateGeneralLedger.id === '' ? 'Debit' : updateGeneralLedger.opening_balance_type,
             assign_date:updateGeneralLedger.id === '' ? new Date() : updateGeneralLedger.assign_date,
             is_cash_book:updateGeneralLedger.id === '' ? false : updateGeneralLedger.is_cash_book,
             is_fixed_asset:updateGeneralLedger.id === '' ? false : updateGeneralLedger.is_fixed_asset,
-            depreciation:updateGeneralLedger.id === '' ? null : updateGeneralLedger.depreciation,
+            depreciation:updateGeneralLedger.id === '' ? '' : updateGeneralLedger.depreciation,
         }
     });
-    console.log(form.getValues());
 
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof GeneralLedgerValidation>) => {
         // Create General Ledger
         if(updateGeneralLedger.id === ''){
+            // Ensuring unique account name
             if(generalLedgers.map((ledger:any) => ledger.account_name).includes(values.account_name)){
                 toast({title:'Account name already exists', variant:'error'});
                 return;
+            }
+            // Ensuring that depreciation is not 0 when is fixed asset is true
+            else if(values.is_fixed_asset && values.depreciation === 0){
+                form.setError('depreciation', {message:'*Depreciation is required'})
+                return;
+            }else{
+                await createGeneralLedger({
+                    account_name:values.account_name,
+                    group:values.group,
+                    account_type:values.account_type,
+                    opening_balance:values.opening_balance,
+                    opening_balance_type:values.opening_balance_type,
+                    assign_date:values.assign_date,
+                    is_cash_book:values.is_cash_book,
+                    is_fixed_asset:values.is_fixed_asset,
+                    depreciation:values.depreciation
+                });
+                setIsViewOpened(true);
+                toast({title:'Added Successfully!'});
             };
-            await createGeneralLedger({
-                account_name:values.account_name,
-                group:values.group,
-                account_type:accountType,
-                opening_balance:values.opening_balance,
-                opening_balance_type:values.opening_balance_type,
-                assign_date:values.assign_date,
-                is_cash_book:values.is_cash_book,
-                is_fixed_asset:values.is_fixed_asset,
-                // depreciation:values.depreciation
-                depreciation:0
-            });
-            setIsViewOpened(true);
-            toast({title:'Added Successfully!'});
         }
         // Modify General Ledger
         else if(!deepEqual(comparisonObject, values) || form.getValues().assign_date > comparisonObject.assign_date || form.getValues().assign_date < comparisonObject.assign_date){
@@ -102,22 +103,27 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
             if(values.account_name !== comparisonObject.account_name && generalLedgers.map((ledger:any) => ledger.account_name).includes(values.account_name)){
                 toast({title:'Account name already exists', variant:'error'});
                 return;
-            };
-            // Updating
-            await modifyGeneralLedger({
-                id:updateGeneralLedger.id,
-                account_name:values.account_name,
-                group:values.group,
-                account_type:accountType,
-                opening_balance:values.opening_balance,
-                opening_balance_type:values.opening_balance_type,
-                assign_date:values.assign_date,
-                is_cash_book:values.is_cash_book,
-                is_fixed_asset:values.is_fixed_asset,
-                depreciation:values.depreciation
-            });
-            setIsViewOpened(true);
-            toast({title:'Updated Successfully!'});
+            }
+            // Ensuring that depreciation is not 0 when is fixed asset is true
+            else if(values.is_fixed_asset && values.depreciation === 0){
+                form.setError('depreciation', {message:'*Depreciation is required'})
+                return;
+            }else{
+                await modifyGeneralLedger({
+                    id:updateGeneralLedger.id,
+                    account_name:values.account_name,
+                    group:values.group,
+                    account_type:values.account_type,
+                    opening_balance:values.opening_balance,
+                    opening_balance_type:values.opening_balance_type,
+                    assign_date:values.assign_date,
+                    is_cash_book:values.is_cash_book,
+                    is_fixed_asset:values.is_fixed_asset,
+                    depreciation:values.is_cash_book ? 0 : values.is_fixed_asset ? values.depreciation : 0
+                });
+                setIsViewOpened(true);
+                toast({title:'Updated Successfully!'});
+            }
         }
         // Delete General Ledger
         else if(updateGeneralLedger.isDeleteClicked){
@@ -153,18 +159,23 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
             is_fixed_asset:false,
             depreciation:''
         });
-        setAccountType('');
+    };
+
+
+    // Account Type Handler
+    const accountTypeHandler = () => {
+        if(form.getValues().group !== ''){
+            const text = accountGroups.filter((group:any) => group.group_name === form.getValues().group)[0].group_type;
+            form.setValue('account_type', text);
+        }else{
+            form.setValue('account_type', '');
+        }
     };
 
 
     // Use effect
     useEffect(() => {
-        if(form.getValues().group !== ''){
-            const text = accountGroups.filter((group:any) => group.group_name === form.getValues().group)[0].group_type;
-            setAccountType(text);
-        }else{
-            setAccountType('');
-        }
+        accountTypeHandler();
     }, [form.watch('group')]);
 
 
@@ -222,7 +233,7 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                                                 {accountGroups.length < 1 ? (
                                                     <p>No groups found</p>
                                                 ) : accountGroups[0]?.group_name ? accountGroups.map((group:any) => (
-                                                    <SelectItem value={group.group_name}>{group.group_name}</SelectItem>
+                                                    <SelectItem key={group.group_name} value={group.group_name}>{group.group_name}</SelectItem>
                                                 )) : (
                                                     <LoadingIcon />
                                                 )}
@@ -246,7 +257,8 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            value={accountType}
+                                            value={field.value}
+                                            onChange={accountTypeHandler}
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
@@ -311,7 +323,7 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                         control={form.control}
                         name='assign_date'
                         render={() => (
-                            <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Assign Date</FormLabel>
                                 <Popover open={isCalendarOpened} onOpenChange={setIsCalendarOpened}>
                                     <PopoverTrigger asChild>
@@ -339,7 +351,6 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                             </FormItem>
                         )}
                     />
-
 
                     {/* Checks */}
                     <div className='w-full flex flex-row justify-between items-center'>
@@ -372,8 +383,8 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                                 </FormItem>
                             )}
                         />
-
-
+                    
+                    
                         {/* Is Fixed Asset */}
                         <FormField
                             control={form.control}
@@ -404,15 +415,14 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                             )}
                         />
                     </div>
-
+                    
                     {/* Depreciation */}
                     <FormField
                         control={form.control}
-                        defaultValue={0}
                         name='depreciation'
                         render={({field}) => (
                             <FormItem className={`relative w-full flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2 ${form.getValues().is_fixed_asset ? 'flex' : 'hidden'}`}>
-                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Depreciation</FormLabel>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Depreciation (%)</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -425,6 +435,7 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                             </FormItem>
                         )}
                     />
+
 
                     {/* Buttons */}
                     <div className='sm:px-10'>
@@ -442,3 +453,14 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
 
 // Export
 export default FormCom;
+
+
+
+
+
+
+
+
+
+
+
