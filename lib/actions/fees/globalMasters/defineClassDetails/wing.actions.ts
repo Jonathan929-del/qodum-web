@@ -1,0 +1,117 @@
+'use server';
+// Imports
+import {connectToDb} from '@/lib/mongoose';
+import Wing from '@/lib/models/fees/globalMasters/defineClassDetails/Wing.model';
+
+
+
+
+
+// Create wing Props
+interface CreateWingProps{
+    wing:String,
+};
+// Create wing
+export const createWing = async ({wing}:CreateWingProps) => {
+    try {
+
+    
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Checking if the wing already exists
+        const existinWing = await Wing.findOne({wing});
+        if(existinWing){
+            throw new Error('Wing already exists');
+        };
+
+
+        // Creating new wing
+        const newWing = await Wing.create({wing});
+        newWing.save();
+
+
+        // Return
+        return newWing;
+
+        
+    } catch (err:any) {
+        console.log(`Error creating wing: ${err.message}`);
+    };
+};
+
+
+
+
+
+// Fetch wings
+export const fetchWings = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const wings = await Wing.find();
+        return wings;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching wings: ${err}`);
+    };
+};
+
+
+
+
+// Modify Wing Props
+interface ModifyWingProps{
+    id:String;
+    wing:String;
+}
+// Modify wing
+export const modifyWing = async ({id, wing}:ModifyWingProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Checking if the wing already exists
+        const wings = await Wing.find();
+        const existingWing = await Wing.findById(id);
+        if(existingWing.wing !== wing && wings.map(wing => wing.wing).includes(wing)){throw new Error('Wing already exists')};
+
+
+        // Updating wing
+        const updatedWing = await Wing.findByIdAndUpdate(id, {wing}, {new:true});
+
+
+        // Return
+        return updatedWing;
+
+    } catch (err) {
+        throw new Error(`Error updating wing: ${err}`);
+    };
+};
+
+
+
+
+// Delete wing
+export const deleteWing = async ({id}:{id:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Deleting board
+        await Wing.findByIdAndDelete(id);
+        return 'Wing Deleted';
+
+    } catch (err) {
+        throw new Error(`Error deleting wing: ${err}`);      
+    };
+};

@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import PrintButton from './PrintButton';
-import {Button} from '../../../../../ui/button';
+import {Button} from '@/components/ui/button';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogAction} from '@/components/ui/alert-dialog';
 
 
@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateAcademicYear, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdateFinancialYear, onSubmit, form}:any) => {
 
 
     // Cancel click
@@ -30,7 +30,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             is_active:false,
         });
         // Reseting update entity
-        setUpdateAcademicYear({
+        setUpdateFinancialYear({
             year_name:'',
             start_date:{
                 day:'',
@@ -56,7 +56,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
     return (
         <div className='flex flex-row items-center justify-between py-2 pb-4 gap-2 ml-0'>
             {
-                updateAcademicYear.id === '' ? (
+                updateFinancialYear.id === '' ? (
 
                     <Button
                         type='submit'
@@ -73,11 +73,11 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
                         {/* Modify */}
                         {
-                            updateAcademicYear.is_active ? (
+                            updateFinancialYear.is_active ? (
                                 <button
                                     disabled
                                     className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white cursor-not-allowed opacity-50
-                                             sm:text-[16px] sm:px-4'
+                                            sm:text-[16px] sm:px-4'
                                 >
                                     Modify
                                 </button>
@@ -112,7 +112,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
                         {/* Delete button */}
                         {
-                            updateAcademicYear.is_active ? (
+                            updateFinancialYear.is_active ? (
                                 <button
                                     disabled
                                     className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white cursor-not-allowed opacity-50
@@ -125,7 +125,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                     <AlertDialogTrigger
                                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                         hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                        onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:true})}
+                                        onClick={() => setUpdateFinancialYear({...updateFinancialYear, isDeleteClicked:true})}
                                     >
                                         Delete
                                     </AlertDialogTrigger>
@@ -135,7 +135,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                         </AlertDialogHeader>
                                         <AlertDialogFooter>
                                             <AlertDialogCancel
-                                                onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:false})}
+                                                onClick={() => setUpdateFinancialYear({...updateFinancialYear, isDeleteClicked:false})}
                                             >
                                                 No
                                             </AlertDialogCancel>
@@ -166,7 +166,7 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
             {/* Print button */}
-            <PrintButton academicYears={academicYears}/>
+            <PrintButton financialYears={financialYears}/>
 
 
             {/* Cancel button */}
