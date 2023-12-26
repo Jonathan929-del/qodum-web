@@ -10,13 +10,15 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {WingValidation} from '@/lib/validations/fees/globalMasters/defineClassDetails/wing.validation';
 import {createWing, modifyWing, deleteWing} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
+import { createClass, modifyClass } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import { ClassValidation } from '@/lib/validations/fees/globalMasters/defineClassDetails/class.validation';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
+const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpdateClass}:any) => {
 
 
     // Toast
@@ -25,56 +27,68 @@ const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
 
     // Comparison object
     const comparisonObject = {
-        wing:updateWing.wing
+        class_name:updateClass.class_name,
+        wing_name:updateClass.wing_name,
+        school:updateClass.school,
+        order:updateClass.order
     };
 
 
     // Form
     const form:any = useForm({
-        resolver:zodResolver(WingValidation),
+        resolver:zodResolver(ClassValidation),
         defaultValues:{
-            wing:updateWing.id === '' ? '' : updateWing.wing,
+            class_name:updateClass.id === '' ? '' : updateClass.class_name,
+            wing_name:updateClass.id === '' ? '' : updateClass.wing_name,
+            school:updateClass.id === '' ? '' : updateClass.school,
+            order:updateClass.id === '' ? 0 : updateClass.order
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values:z.infer<typeof WingValidation>) => {
-        // Create wing
-        if(updateWing.id === ''){
-            if(wings.map((wing:any) => wing.wing).includes(values.wing)){
-                toast({title:'Wing name already exists', variant:'error'});
+    const onSubmit = async (values:z.infer<typeof ClassValidation>) => {
+        // Create class
+        if(updateClass.id === ''){
+            if(classes.map((item:any) => item.class_name).includes(values.class_name)){
+                toast({title:'Class name already exists', variant:'error'});
                 return;
             };
-            await createWing({
-                wing:values.wing
+            await createClass({
+                class_name:values.class_name,
+                wing_name:values.wing_name,
+                school:values.school,
+                order:values.order
             });
             setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify wing
         else if(!deepEqual(comparisonObject, values)){
-            if(comparisonObject.wing !== values.wing && wings.map((wing:any) => wing.wing).includes(values.wing)){
+            if(comparisonObject.class_name !== values.class_name && classes.map((item:any) => item.class_name).includes(values.class_name)){
                 toast({title:'Wing name is already exists', variant:'error'});
                 return;
             };
-            await modifyWing({
-                id:updateWing.id,
-                wing:values.wing,
+            await modifyClass({
+                id:updateClass.id,
+                class_name:values.class_name,
+                wing_name:values.wing_name,
+                school:values.school,
+                order:values.order
             });
             setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete wing
-        else if(updateWing.isDeleteClicked){
-            await deleteWing({id:updateWing.id});
+        else if(updateClass.isDeleteClicked){
+            await deleteWing({id:updateClass.id});
             setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 
 
         // Reseting update entity
-        setUpdateWing({
+        setUpdateClass({
             id:'',
             isDeleteClicked:false,
             wing:''
@@ -123,7 +137,7 @@ const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
 
 
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} wings={wings} updateWing={updateWing} setUpdateWing={setUpdateWing} onSubmit={onSubmit} form={form}/>
+                    <Buttons setIsViewOpened={setIsViewOpened} wings={wings} updateClass={updateClass} setUpdateClass={setUpdateClass} onSubmit={onSubmit} form={form}/>
 
                     
                 </form>
