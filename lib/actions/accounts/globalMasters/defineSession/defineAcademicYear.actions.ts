@@ -61,7 +61,7 @@ export const createAcademicYear = async ({year_name, start_date, end_date, is_ac
             await AcademicYear.updateMany({'_id': {$ne:newAcademicYear._id}}, {is_active:false});
         }else{
             newAcademicYear.save();
-        }
+        };
 
 
         // Return

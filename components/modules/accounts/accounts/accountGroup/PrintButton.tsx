@@ -1,5 +1,5 @@
 // Imports
-import {ChevronDown, Download, Group} from 'lucide-react';
+import {ChevronDown, Download} from 'lucide-react';
 import {ExcelFile, ExcelSheet} from 'react-xlsx-wrapper';
 import {Select, SelectContent, SelectTrigger} from '@/components/ui/select';
 
