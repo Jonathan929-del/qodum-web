@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSchoolsNames} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
-import FormCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/FormCom';
+// import FormCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/FormCom';
 import ViewCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/ViewCom';
 
 
@@ -61,15 +61,16 @@ const page = () => {
                     // />
                     ''
                 ) : (
-                    <FormCom
-                        wings={wings}
-                        classes={classes}
-                        schools={schools}
-                        isViewOpened={isViewOpened}
-                        setIsViewOpened={setIsViewOpened}
-                        updateClass={updateClass}
-                        setUpdateClass={setUpdateClass}
-                    />
+                    // <FormCom
+                    //     wings={wings}
+                    //     classes={classes}
+                    //     schools={schools}
+                    //     isViewOpened={isViewOpened}
+                    //     setIsViewOpened={setIsViewOpened}
+                    //     updateClass={updateClass}
+                    //     setUpdateClass={setUpdateClass}
+                    // />
+                    ''
                 )
             }
         </div>
