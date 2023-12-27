@@ -11,18 +11,16 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, classes, setUpdateClass}:any) => {
+const ViewCom = ({setIsViewOpened, sections, setUpdateSection}:any) => {
 
 
     // Select handler
     const selectHandler = (item:any) => {
-        setUpdateClass({
+        setUpdateSection({
             id:item._id,
             isDeleteClicked:false,
-            class_name:item.class_name,
-            wing_name:item.wing_name,
-            school:item.school,
-            order:item.order
+            section_name:item.section_name,
+            order_no:item.order_no
         });
         setIsViewOpened(false);
     };
@@ -35,14 +33,14 @@ const ViewCom = ({setIsViewOpened, classes, setUpdateClass}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Classes List</h2>
+                <h2>Sections List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -53,65 +51,50 @@ const ViewCom = ({setIsViewOpened, classes, setUpdateClass}:any) => {
                 {/* Classes */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[800px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Class Name
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Wing Name
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[40%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             School Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[40%] flex flex-row items-center justify-between px-2'>
                             Order No.
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2'>
-                            Modify Details
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            classes.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No classes yet
+                            sections.length < 1 ? (
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                    No sections yet
                                 </p>
-                            ) : !classes[0]?.class_name ? (
+                            ) : !sections[0]?.section_name ? (
                                     <LoadingIcon />
-                                ) : classes.map((item:any) => (
+                                ) : sections.map((section:any) => (
                                     <CommandItem
-                                        value={`${classes.indexOf(item) + 1} ${item.class_name} ${item.wing_name} ${item.school} ${item.order} ${moment(item.updateAt).format('D-MMM-yy')}`}
-                                        className='w-full min-w-[800px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        value={`${sections.indexOf(section) + 1} ${section.section_name} ${section.order_no}`}
+                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{classes.indexOf(item) + 1}</li>
-                                        <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{sections.indexOf(section) + 1}</li>
+                                        <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
                                                 className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                                onClick={() => selectHandler(item)}
+                                                onClick={() => selectHandler(section)}
                                             >
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{item.class_name}</li>
-                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{item.wing_name}</li>
-                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{item.school}</li>
-                                        <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{item.order}</li>
-                                        <li className='basis-[10%] flex flex-row items-center px-2'>{moment(item.updateAt).format('D-MMM-yy')}</li>
+                                        <li className='basis-[40%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{section.section_name}</li>
+                                        <li className='basis-[40%] flex flex-row items-center px-2'>{section.order_no}</li>
                                     </CommandItem>
                                 ))
                         }

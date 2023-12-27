@@ -3,9 +3,9 @@
 import {useEffect, useState} from 'react';
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchSchoolsNames} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
-// import FormCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/FormCom';
+import FormCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/FormCom';
 import ViewCom from '@/components/modules/fees/globalMasters/defineClassDetails/defineClass/ViewCom';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -41,7 +41,7 @@ const page = () => {
         const classesFetcher = async () => {
             const classesRes = await fetchClasses();
             const wingsRes = await fetchWings();
-            const schoolsRes = await fetchSchoolsNames();
+            const schoolsRes = await fetchGlobalSchoolDetails();
             setClasses(classesRes);
             setWings(wingsRes);
             setSchools(schoolsRes);
@@ -54,23 +54,21 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
-                    // <ViewCom
-                    //     wings={wings}
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     setUpdateWing={setUpdateWing}
-                    // />
-                    ''
+                    <ViewCom
+                        classes={classes}
+                        setIsViewOpened={setIsViewOpened}
+                        setUpdateClass={setUpdateClass}
+                    />
                 ) : (
-                    // <FormCom
-                    //     wings={wings}
-                    //     classes={classes}
-                    //     schools={schools}
-                    //     isViewOpened={isViewOpened}
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     updateClass={updateClass}
-                    //     setUpdateClass={setUpdateClass}
-                    // />
-                    ''
+                    <FormCom
+                        wings={wings}
+                        classes={classes}
+                        schools={schools}
+                        isViewOpened={isViewOpened}
+                        setIsViewOpened={setIsViewOpened}
+                        updateClass={updateClass}
+                        setUpdateClass={setUpdateClass}
+                    />
                 )
             }
         </div>

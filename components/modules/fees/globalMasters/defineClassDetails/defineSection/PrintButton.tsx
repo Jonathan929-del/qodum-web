@@ -8,16 +8,14 @@ import {Select, SelectContent, SelectTrigger} from '@/components/ui/select';
 
 
 // Main Function
-const PrintButton = ({classes}:any) => {
+const PrintButton = ({sections}:any) => {
 
 
-    // Classes Array
-    const classesArray = classes.map((item:any) => {
+    // Sections Array
+    const sectionsArray = sections.map((section:any) => {
         return([
-            {value:item.class_name},
-            {value:item.wing_name},
-            {value:item.school},
-            {value:moment(item.createdAt).format('D-MMM-yy')}
+            {value:section.section_name},
+            {value:moment(section.createdAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -26,21 +24,17 @@ const PrintButton = ({classes}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
-                {title:'Classes List', width:{wpx:400}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
-                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Sections List', width:{wpx:200}, style:{font:{bold:false, sz:'14', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'Class Name', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Wing Name', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'School Name', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Section Name', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Created At', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:classesArray,
+            data:sectionsArray,
         }
     ];
 
@@ -65,12 +59,12 @@ const PrintButton = ({classes}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Classes List'
+                            filename='Sections List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Class'
+                                name='Section'
                             />
                         </ExcelFile>
 
@@ -83,12 +77,12 @@ const PrintButton = ({classes}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Classes List'
+                            filename='Sections List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Class'
+                                name='Section'
                             />
                         </ExcelFile>
 

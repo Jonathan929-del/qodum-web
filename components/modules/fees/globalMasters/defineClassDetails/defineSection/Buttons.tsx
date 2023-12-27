@@ -9,26 +9,22 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, classes, updateClass, setUpdateClass, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, sections, updateSection, setUpdateSection, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateClass({
+        setUpdateSection({
             id:'',
             isDeleteClicked:false,
-            class_name:'',
-            wing_name:'',
-            school:'',
-            order:''
+            section_name:'',
+            order_no:''
         });
         // Reseting form
         form.reset({
-            class_name:'',
-            wing_name:'',
-            school:'',
-            order:''
+            section_name:'',
+            order_no:''
         });
     };
 
@@ -40,7 +36,7 @@ const Buttons = ({setIsViewOpened, classes, updateClass, setUpdateClass, onSubmi
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateClass.id === '' ? (
+                updateSection.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -84,7 +80,7 @@ const Buttons = ({setIsViewOpened, classes, updateClass, setUpdateClass, onSubmi
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateClass({...updateClass, isDeleteClicked:true})}
+                                onClick={() => setUpdateSection({...updateSection, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -94,7 +90,7 @@ const Buttons = ({setIsViewOpened, classes, updateClass, setUpdateClass, onSubmi
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateClass({...updateClass, isDeleteClicked:false})}
+                                        onClick={() => setUpdateSection({...updateSection, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -123,7 +119,7 @@ const Buttons = ({setIsViewOpened, classes, updateClass, setUpdateClass, onSubmi
 
 
             {/* Print button */}
-            <PrintButton classes={classes}/>
+            <PrintButton sections={sections}/>
 
 
             {/* Cancel button */}
