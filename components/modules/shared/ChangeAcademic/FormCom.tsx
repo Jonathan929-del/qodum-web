@@ -7,9 +7,9 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Form, FormControl, FormField, FormItem, FormLabel} from '@/components/ui/form';
 import {changeAcademic} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 import {ChangeAcademicValidation} from '@/lib/validations/accounts/masterSettings/changeAcademic';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 
