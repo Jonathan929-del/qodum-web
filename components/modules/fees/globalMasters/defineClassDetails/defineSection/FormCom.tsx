@@ -52,7 +52,6 @@ const FormCom = ({setIsViewOpened, sections, updateSection, setUpdateSection}:an
                 section_name:values.section_name,
                 order_no:values.order_no
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify section
@@ -66,13 +65,11 @@ const FormCom = ({setIsViewOpened, sections, updateSection, setUpdateSection}:an
                 section_name:values.section_name,
                 order_no:values.order_no
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete section
         else if(updateSection.isDeleteClicked){
             await deleteSection({id:updateSection.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

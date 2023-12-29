@@ -95,7 +95,6 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify Bank Ledger
@@ -120,13 +119,11 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Bank Ledger
         else if(updateBankLedger.isDeleteClicked){
             await deleteBankLedger({id:updateBankLedger.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

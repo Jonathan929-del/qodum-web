@@ -49,7 +49,6 @@ const FormCom = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark}:any) 
             await createRemark({
                 remark:values.remark
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify remark
@@ -62,13 +61,11 @@ const FormCom = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark}:any) 
                 id:updateRemark.id,
                 remark:values.remark,
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete remark
         else if(updateRemark.isDeleteClicked){
             await deleteRemark({id:updateRemark.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

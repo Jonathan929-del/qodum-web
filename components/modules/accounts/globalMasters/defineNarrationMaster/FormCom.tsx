@@ -50,7 +50,6 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                 voucher_type:values.voucher_type,
                 narration:values.narration
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify Narration
@@ -60,13 +59,11 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                 narration:values.narration,
                 voucher_type:values.voucher_type
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Narration
         else if(updateNarration.isDeleteClicked){
             await deleteNarrationMaster({id:updateNarration.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

@@ -128,7 +128,6 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                 },
                 is_active:values.is_active,
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify Academic Year
@@ -157,13 +156,11 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                 },
                 is_active:values.is_active,
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Academic Year
         else if(updateAcademicYear.isDeleteClicked){
             await deleteAcademicYear({id:updateAcademicYear.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

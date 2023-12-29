@@ -93,7 +93,6 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                     is_fixed_asset:values.is_fixed_asset,
                     depreciation:values.depreciation
                 });
-                setIsViewOpened(true);
                 toast({title:'Added Successfully!'});
             };
         }
@@ -121,14 +120,12 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                     is_fixed_asset:values.is_fixed_asset,
                     depreciation:values.is_cash_book ? 0 : values.is_fixed_asset ? values.depreciation : 0
                 });
-                setIsViewOpened(true);
                 toast({title:'Updated Successfully!'});
             }
         }
         // Delete General Ledger
         else if(updateGeneralLedger.isDeleteClicked){
             await deleteGeneralLedger({id:updateGeneralLedger.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

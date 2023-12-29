@@ -12,13 +12,16 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {SchoolGlobalValidation} from '@/lib/validations/fees/globalMasters/defineSchool/schoolGlobalDetails';
 import {createGlobalSchoolDetails, modifyGlobalSchoolDetails, deleteGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ChevronDown } from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails}:any) => {
+const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails, boards}:any) => {
 
 
     // Toast
@@ -122,7 +125,6 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 academic_year:'',
                 financial_year:'',
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify school details
@@ -156,13 +158,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 academic_year:'',
                 financial_year:'',
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete school details
         else if(updateSchoolDetails.isDeleteClicked){
             await deleteGlobalSchoolDetails({id:updateSchoolDetails.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 
@@ -537,19 +537,35 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                 control={form.control}
                                 name='affiliation_to'
                                 render={({field}) => (
-                                    <FormItem>
-                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
-                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Affiliation To</FormLabel>
-                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
-                                                    />
-                                                </FormControl>
-                                            </div>
+                                    <FormItem className='w-full mt-[4px]'>
+                                    <div className='w-full h-6 gap-2 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Affiliation To</FormLabel>
+                                        <div className='w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field.value}
+                                                    onValueChange={field.onChange}
+                                                >
+                                                    <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                        <SelectValue placeholder='Select'/>
+                                                        <ChevronDown className='h-4 w-4 opacity-50'/>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {boards.length < 1 ? (
+                                                            <p>No boards</p>
+                                                        ) : !boards[0].board ? (
+                                                            <LoadingIcon />
+                                                        ) : boards.map((board:any) => (
+                                                            <SelectItem value={board.board} key={board._id}>{board.board}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-xs'/>
                                         </div>
-                                    </FormItem>
+                                    </div>
+                                </FormItem>
                                 )}
                             />
 

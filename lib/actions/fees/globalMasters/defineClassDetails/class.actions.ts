@@ -105,6 +105,60 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
 
 
 
+
+// Modify Class Sections Props
+interface ModifyClassSectionsProps{
+    class_name:String;
+    sections:string[];
+};
+// Modify Class Sections
+export const modifyClassSections = async ({class_name, sections}:ModifyClassSectionsProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Updating class
+        const updatedClass = await Class.findOneAndUpdate({class_name}, {sections}, {new:true});
+
+
+        // Return
+        return updatedClass;
+
+    } catch (err) {
+        throw new Error(`Error updating class sections: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch class by class name
+export const fetchClass = async ({class_name}:{class_name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching class
+        const c = await Class.findOne({class_name});
+
+
+        // Return
+        return c;
+
+    } catch (err) {
+        throw new Error(`Error updating class sections: ${err}`);
+    }
+};
+
+
+
+
+
 // Delete class
 export const deleteClass = async ({id}:{id:String}) => {
     try {

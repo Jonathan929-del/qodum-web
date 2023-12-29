@@ -32,7 +32,7 @@ const page = () => {
         class_name:'',
         wing_name:'',
         school:'',
-        order:0,
+        order:0
     });
 
     

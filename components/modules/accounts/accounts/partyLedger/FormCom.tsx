@@ -101,7 +101,6 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify Party Ledger
@@ -128,13 +127,11 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Party Ledger
         else if(updatePartyLedger.isDeleteClicked){
             await deletePartyLedger({id:updatePartyLedger.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/fees/globalMasters/defineSchool/schoolGlobalDetails/FormCom';
 import ViewCom from '@/components/modules/fees/globalMasters/defineSchool/schoolGlobalDetails/ViewCom';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 
 
 
@@ -19,6 +20,10 @@ const page = () => {
 
     // Schools Details
     const [schoolsDetails, setSchoolsDetails] = useState([{}]);
+
+
+    // Boards
+    const [boards, setBoards] = useState([{}]);
 
 
     // Update school details
@@ -57,8 +62,10 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const schoolsDetailsFetcher = async () => {
-            const res = await fetchGlobalSchoolDetails();
-            setSchoolsDetails(res);
+            const schoolRes = await fetchGlobalSchoolDetails();
+            const boardsRes = await fetchBoards();
+            setSchoolsDetails(schoolRes);
+            setBoards(boardsRes);
         };
         schoolsDetailsFetcher();
     }, [isViewOpened, updateSchoolDetails]);
@@ -75,6 +82,7 @@ const page = () => {
                     />
                 ) : (
                     <FormCom
+                        boards={boards}
                         schoolsDetails={schoolsDetails}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}

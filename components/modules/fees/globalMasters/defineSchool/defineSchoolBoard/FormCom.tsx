@@ -54,7 +54,6 @@ const FormCom = ({setIsViewOpened, boards, updateBoard, setUpdateBoard}:any) => 
                 board:values.board,
                 is_default:values.is_default
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify board
@@ -68,13 +67,11 @@ const FormCom = ({setIsViewOpened, boards, updateBoard, setUpdateBoard}:any) => 
                 board:values.board,
                 is_default:values.is_default
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete board
         else if(updateBoard.isDeleteClicked){
             await deleteBoard({id:updateBoard.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

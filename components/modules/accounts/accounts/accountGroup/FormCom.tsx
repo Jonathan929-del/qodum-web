@@ -65,7 +65,6 @@ const FormCom = ({setIsViewOpened, accountGroups, updateAccountGroup, setUpdateA
                     group_type:values.group_type,
                     group_no:values.group_no
                 });
-                setIsViewOpened(true);
                 toast({title:'Added Successfully!'});
             };
         }
@@ -90,14 +89,12 @@ const FormCom = ({setIsViewOpened, accountGroups, updateAccountGroup, setUpdateA
                     group_type:values.group_type,
                     group_no:values.group_no
                 });
-                setIsViewOpened(true);
                 toast({title:'Updated Successfully!'});
             };
         }
         // Delete Account Group
         else if(updateAccountGroup.isDeleteClicked){
             await deleteAccountGroup({id:updateAccountGroup.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

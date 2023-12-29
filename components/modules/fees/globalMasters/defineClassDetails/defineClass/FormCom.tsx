@@ -4,16 +4,15 @@ import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createWing, modifyWing, deleteWing} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
-import { createClass, deleteClass, modifyClass } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { ClassValidation } from '@/lib/validations/fees/globalMasters/defineClassDetails/class.validation';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ChevronDown } from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {ClassValidation} from '@/lib/validations/fees/globalMasters/defineClassDetails/class.validation';
+import { createClass, deleteClass, modifyClass } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 
 
 
@@ -32,7 +31,8 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
         class_name:updateClass.class_name,
         wing_name:updateClass.wing_name,
         school:updateClass.school,
-        order:updateClass.order
+        order:updateClass.order,
+        sections:['']
     };
 
 
@@ -43,7 +43,8 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
             class_name:updateClass.id === '' ? '' : updateClass.class_name,
             wing_name:updateClass.id === '' ? '' : updateClass.wing_name,
             school:updateClass.id === '' ? '' : updateClass.school,
-            order:updateClass.id === '' ? '' : updateClass.order
+            order:updateClass.id === '' ? '' : updateClass.order,
+            sections:['']
         }
     });
 
@@ -62,7 +63,6 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
                 school:values.school,
                 order:values.order
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify class
@@ -78,13 +78,11 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
                 school:values.school,
                 order:values.order
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete class
         else if(updateClass.isDeleteClicked){
             await deleteClass({id:updateClass.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

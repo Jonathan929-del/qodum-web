@@ -126,7 +126,6 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                 },
                 is_active:values.is_active,
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify Financial Year
@@ -155,13 +154,11 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                 },
                 is_active:values.is_active,
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Financial Year
         else if(updateFinancialYear.isDeleteClicked){
             await deleteFinancialYear({id:updateFinancialYear.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 

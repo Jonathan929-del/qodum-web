@@ -49,7 +49,6 @@ const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
             await createWing({
                 wing:values.wing
             });
-            setIsViewOpened(true);
             toast({title:'Added Successfully!'});
         }
         // Modify wing
@@ -62,13 +61,11 @@ const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
                 id:updateWing.id,
                 wing:values.wing,
             });
-            setIsViewOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete wing
         else if(updateWing.isDeleteClicked){
             await deleteWing({id:updateWing.id});
-            setIsViewOpened(true);
             toast({title:'Deleted Successfully!'});
         };
 
