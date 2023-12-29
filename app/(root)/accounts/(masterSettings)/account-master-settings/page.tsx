@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import FormCom from '@/components/modules/accounts/masterSettings/changeAcademic/FormCom';
+import FormCom from '@/components/modules/shared/ChangeAcademic/FormCom';
 import {fetchAcademicYearsNames, fetchFinancialYearsNames, fetchSchoolsNames} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 
 
