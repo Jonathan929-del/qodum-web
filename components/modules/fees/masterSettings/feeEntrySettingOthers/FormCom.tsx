@@ -179,7 +179,7 @@ const FormCom = () => {
                                 <FormControl>
                                     <Select
                                         {...field}
-                                        value={field.value}
+                                        value=''
                                         onValueChange={field.onChange}
                                     >
                                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
@@ -209,7 +209,7 @@ const FormCom = () => {
                                 <FormControl>
                                     <Select
                                         {...field}
-                                        value={field.value}
+                                        value=''
                                         onValueChange={field.onChange}
                                     >
                                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
@@ -239,7 +239,7 @@ const FormCom = () => {
                                 <FormControl>
                                     <Select
                                         {...field}
-                                        value={field.value}
+                                        value=''
                                         onValueChange={field.onChange}
                                     >
                                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
@@ -306,7 +306,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -331,7 +331,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -356,7 +356,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -387,7 +387,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -413,7 +413,7 @@ const FormCom = () => {
                                         <div className='flex-1 flex items-center justify-end space-x-2'>
                                             <Switch
                                                 {...field}
-                                                value={field.value}
+                                                value=''
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                             />
@@ -463,7 +463,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -494,7 +494,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -519,7 +519,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -544,7 +544,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -579,7 +579,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -604,7 +604,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -629,7 +629,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -657,7 +657,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -682,7 +682,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -707,7 +707,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -735,7 +735,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -760,7 +760,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -785,7 +785,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -813,7 +813,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -838,7 +838,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -863,7 +863,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -891,7 +891,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -916,7 +916,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -941,7 +941,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -977,7 +977,7 @@ const FormCom = () => {
                                         <div className='flex-1 flex items-center justify-end space-x-2'>
                                             <Switch
                                                 {...field}
-                                                value={field.value}
+                                                value=''
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                             />
@@ -1049,7 +1049,7 @@ const FormCom = () => {
                                         <div className='flex-1 flex items-center justify-end space-x-2'>
                                             <Switch
                                                 {...field}
-                                                value={field.value}
+                                                value=''
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                             />
@@ -1099,7 +1099,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1127,7 +1127,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1152,7 +1152,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1177,7 +1177,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1205,7 +1205,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1230,7 +1230,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1255,7 +1255,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1283,7 +1283,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1308,7 +1308,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -1333,7 +1333,7 @@ const FormCom = () => {
                                     <div className='flex-1 flex items-center justify-end space-x-2'>
                                         <Switch
                                             {...field}
-                                            value={field.value}
+                                            value=''
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
