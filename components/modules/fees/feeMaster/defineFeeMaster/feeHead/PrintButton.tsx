@@ -8,15 +8,20 @@ import { ChevronDown, Download } from 'lucide-react';
 
 
 // Main Function
-const PrintButton = ({boards}:any) => {
+const PrintButton = ({heads}:any) => {
 
+    
 
-    // Boards Array
-    const boardsArray = boards.map((board:any) => {
+    // Heads Array
+    const headsArray = heads.map((head:any) => {
         return([
-            {value:board.board},
-            {value:board.is_default},
-            {value:moment(board.createdAt).format('D-MMM-yy')}
+            {value:head.name},
+            {value:head.print_name},
+            {value:head.pay_schedule},
+            {value:head.type},
+            {value:head.show_in_certificate},
+            {value:head.fee_refundable},
+            {value:moment(head.createdAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -25,7 +30,7 @@ const PrintButton = ({boards}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'Boards List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Heads List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
@@ -33,11 +38,15 @@ const PrintButton = ({boards}:any) => {
         },
         {
             columns: [
-                {title:'School Board', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Is Default', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Name ', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Head Print Name', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Pay Schedule', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Type', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Show In Certificate', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Fee Refundable', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:boardsArray,
+            data:headsArray,
         }
     ];
 
@@ -62,12 +71,12 @@ const PrintButton = ({boards}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Boards List'
+                            filename='Heads List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Board'
+                                name='Head'
                             />
                         </ExcelFile>
 
@@ -80,12 +89,12 @@ const PrintButton = ({boards}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Boards List'
+                            filename='Heads List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Board'
+                                name='Head'
                             />
                         </ExcelFile>
 

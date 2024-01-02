@@ -9,22 +9,31 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, boards, updateBoard, setUpdateBoard, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, heads, updateHead, setUpdateHead, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateBoard({
-            id:'',
-            isDeleteClicked:false,
-            board:'',
-            is_default:false
+        setUpdateHead({
+            id: '',
+            name: '',
+            print_name: '',
+            pay_schedule: '',
+            priority_no: '',
+            type: '',
+            show_in_certificate: false,
+            fee_refundable: false
         });
         // Reseting form
         form.reset({
-            board:'',
-            is_default:false
+            name: '',
+            print_name: '',
+            pay_schedule: '',
+            priority_no: '',
+            type: '',
+            show_in_certificate: false,
+            fee_refundable: false
         });
     };
 
@@ -36,7 +45,7 @@ const Buttons = ({setIsViewOpened, boards, updateBoard, setUpdateBoard, onSubmit
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateBoard.id === '' ? (
+                updateHead.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -80,7 +89,7 @@ const Buttons = ({setIsViewOpened, boards, updateBoard, setUpdateBoard, onSubmit
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateBoard({...updateBoard, isDeleteClicked:true})}
+                                onClick={() => setUpdateHead({...updateHead, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -90,7 +99,7 @@ const Buttons = ({setIsViewOpened, boards, updateBoard, setUpdateBoard, onSubmit
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateBoard({...updateBoard, isDeleteClicked:false})}
+                                        onClick={() => setUpdateHead({...updateHead, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -119,7 +128,7 @@ const Buttons = ({setIsViewOpened, boards, updateBoard, setUpdateBoard, onSubmit
 
 
             {/* Print button */}
-            <PrintButton boards={boards}/>
+            <PrintButton heads={heads}/>
 
 
             {/* Cancel button */}

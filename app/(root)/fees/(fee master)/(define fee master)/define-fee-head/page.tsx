@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 // Imports
-import {useEffect, useState} from 'react';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import { useEffect, useState } from 'react';
+import { fetchHeads } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeHead/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeHead/ViewCom';
 
@@ -17,24 +18,31 @@ const page = () => {
     const [isViewOpened, setIsViewOpened] = useState(false);
 
 
-    // Boards
+    // Heads
     const [heads, setHeads] = useState([{}]);
 
 
-    // Update board
+    // Update head
     const [updateHead, setUpdateHead] = useState({
-        
+        id: '',
+        name: '',
+        print_name: '',
+        pay_schedule: '',
+        priority_no: 0,
+        type: '',
+        show_in_certificate: false,
+        fee_refundable: false
     });
 
-    
+
     // Use effect
     useEffect(() => {
-        const boardsFetcher = async () => {
-            const res = await fetchBoards();
-            setBoards(res);
+        const headsFetcher = async () => {
+            const res = await fetchHeads();
+            setHeads(res);
         };
-        boardsFetcher();
-    }, [isViewOpened, updateBoard]);
+        headsFetcher();
+    }, [isViewOpened, updateHead]);
 
 
     return (
@@ -42,17 +50,17 @@ const page = () => {
             {
                 isViewOpened ? (
                     <ViewCom
-                        boards={boards}
+                        heads={heads}
                         setIsViewOpened={setIsViewOpened}
-                        setUpdateBoard={setUpdateBoard}
+                        setUpdateHead={setUpdateHead}
                     />
                 ) : (
                     <FormCom
-                        boards={boards}
+                        heads={heads}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
-                        updateBoard={updateBoard}
-                        setUpdateBoard={setUpdateBoard}
+                        updateHead={updateHead}
+                        setUpdateHead={setUpdateHead}
                     />
                 )
             }
