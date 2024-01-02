@@ -14,7 +14,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {InstallmentValidation} from '@/lib/validations/fees/feeMaster/feeMaster/installment.validation';
-import {createInstallment, deleteInstallment, modifyInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/Installment.actions';
+import {createInstallment, deleteInstallment, modifyInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -29,7 +29,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
 
     // Months
-    const [selectedMonths, setSelectedMonths] = useState(['']);
+    const [selectedMonths, setSelectedMonths] = useState([]);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     console.log(selectedMonths);
 
@@ -188,7 +188,8 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                 year:''
             },
             months:[]
-        });   
+        });
+        setSelectedMonths([]);
         } catch (err:any) {
             console.log(err);
         }
@@ -534,6 +535,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                                 <SelectContent>
                                     <div className='flex flex-row'>
                                         <div
+                                            // @ts-ignore
                                             onClick={() => setSelectedMonths(months)}
                                             className='group flex flex-row items-center justify-center cursor-pointer'
                                         >
@@ -554,6 +556,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                                                 <Checkbox
                                                     className='rounded-[2px] font-semibold'
                                                     checked={selectedMonths.map((m:any) => m).includes(month)}
+                                                    // @ts-ignore
                                                     onClick={() => selectedMonths.includes(month) ? setSelectedMonths(selectedMonths.filter((m:any) => m !== month)) : setSelectedMonths([...selectedMonths, month])}
                                                 />
                                                 <p className='text-sm font-semibold'>{month}</p>

@@ -3,7 +3,7 @@
 import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/fees/feeMaster/feeMaster/installment/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/feeMaster/installment/ViewCom';
-import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/Installment.actions';
+import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 

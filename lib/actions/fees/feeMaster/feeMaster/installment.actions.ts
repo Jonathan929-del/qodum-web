@@ -22,7 +22,7 @@ interface CreateInstallmentProps{
         month:String,
         year:String
     };
-    months:String[];
+    months:string[];
 };
 // Create Installment Year
 export const createInstallment = async ({name, print_name, preference_no, due_on_date, due_date, months}:CreateInstallmentProps) => {
@@ -31,6 +31,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
     
         // Database connection
         connectToDb('accounts');
+        console.log(months);
 
 
         // Checking if the installment name already exists

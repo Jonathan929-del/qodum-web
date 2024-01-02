@@ -1,6 +1,6 @@
 'use client';
 // Imports
-import FormCom from '@/components/modules/fees/masterSettings/BusIDSetting/FormCom';
+import FormCom from '@/components/modules/fees/masterSettings/busIDSetting/FormCom';
 
 
 
