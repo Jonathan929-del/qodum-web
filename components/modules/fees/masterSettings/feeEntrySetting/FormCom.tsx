@@ -356,7 +356,7 @@ const FormCom = () => {
             {/* School Type */}
             <ul className='h-full flex flex-col text-xs'>
                 <li className='flex-1 flex items-center px-2 text-sm border-[0.5px] border-[#ccc]'>School Name</li>
-                <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>Franciscan Global School</li>
+                <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>QODUM TECH SCHOOL</li>
             </ul>
             {/* School Prefix */}
             <ul className='h-full flex flex-col text-xs'>

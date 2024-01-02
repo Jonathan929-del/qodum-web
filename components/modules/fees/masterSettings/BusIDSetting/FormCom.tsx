@@ -7,12 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useToast } from '@/components/ui/use-toast';
+import {useToast} from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronDown, ChevronsUpDown } from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import { FeeEntrySettingValidation } from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
@@ -43,10 +43,13 @@ const FormCom = () => {
 
     // Form
     const form = useForm({
+        // resolver: zodResolver(FeeEntrySettingOthersValidation),
         resolver: zodResolver(FeeEntrySettingOthersValidation),
         defaultValues: {
-
-
+            prefix:'',
+            start_from:'',
+            lead_zero:'',
+            suffix:''
         }
     });
 
@@ -60,7 +63,7 @@ const FormCom = () => {
 
             // Reseting form
             form.reset({
-
+                
             });
 
         } catch (err: any) {
@@ -87,9 +90,11 @@ const FormCom = () => {
                     className='w-full flex flex-col items-center px-2 sm:px-4'
                 >
 
-                    <div className="flex mt-2 justify-start w-full ">
+
+
+                    <div className="bus-id flex mt-2 justify-start w-full ">
                         <div className="title me-[30px] mb-[-4px] text-xs text-[#726E71] mt-1 sm:mb-0">Bus ID should be</div>
-                        <RadioGroup className="flex justify-between" defaultValue="default" aria-label="View density">
+                        <RadioGroup className="RadioGroupRoot flex justify-between " defaultValue="default" aria-label="View density">
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <RadioGroupItem className="RadioGroupItem mx-2" value="default" id="r1">
                                 </RadioGroupItem>
@@ -130,7 +135,7 @@ const FormCom = () => {
 
                     {/* Start from */}
                     <FormField
-                        control={form.control}
+                        control={form.control}s
                         name='start_from'
                         render={({ field }) => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
