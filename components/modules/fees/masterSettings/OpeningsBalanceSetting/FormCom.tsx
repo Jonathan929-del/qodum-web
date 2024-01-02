@@ -3,22 +3,14 @@
 import * as z from 'zod';
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
 import {Button} from '@/components/ui/button';
-import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-
-import {FeeEntrySettingValidation} from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
-import {fetchClass, modifyClassSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
-import { Switch } from '@/components/ui/switch';
 
 
 
@@ -49,7 +41,7 @@ const FormCom = () => {
     const form = useForm({
         resolver:zodResolver(FeeEntrySettingOthersValidation),
         defaultValues:{
-           
+           group:''
 
         }
     });

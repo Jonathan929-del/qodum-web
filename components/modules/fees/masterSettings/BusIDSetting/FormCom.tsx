@@ -87,11 +87,9 @@ const FormCom = () => {
                     className='w-full flex flex-col items-center px-2 sm:px-4'
                 >
 
-
-
-                    <div className="bus-id flex mt-2 justify-start w-full ">
+                    <div className="flex mt-2 justify-start w-full ">
                         <div className="title me-[30px] mb-[-4px] text-xs text-[#726E71] mt-1 sm:mb-0">Bus ID should be</div>
-                        <RadioGroup className="RadioGroupRoot flex justify-between " defaultValue="default" aria-label="View density">
+                        <RadioGroup className="flex justify-between" defaultValue="default" aria-label="View density">
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <RadioGroupItem className="RadioGroupItem mx-2" value="default" id="r1">
                                 </RadioGroupItem>
