@@ -34,6 +34,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
             },
             months:installment.months
         });
+        setSelectedMonths(installment.months)
         setIsViewOpened(false);
     };
 
