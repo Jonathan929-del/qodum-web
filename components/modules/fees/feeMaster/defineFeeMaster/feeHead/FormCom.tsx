@@ -55,7 +55,6 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof HeadValidation>) => {
-        console.log(values)
         // Create head
         if (updateHead.id === '') {
             if (heads.map((head: any) => head.name).includes(values.name)) {
