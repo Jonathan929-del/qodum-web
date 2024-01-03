@@ -1,8 +1,8 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import FormCom from '@/components/modules/fees/feeMaster/feeMaster/installment/FormCom';
-import ViewCom from '@/components/modules/fees/feeMaster/feeMaster/installment/ViewCom';
+import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/installment/FormCom';
+import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/installment/ViewCom';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
