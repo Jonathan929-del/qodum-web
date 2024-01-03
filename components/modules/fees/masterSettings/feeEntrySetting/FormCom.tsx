@@ -17,6 +17,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {FeeEntrySettingValidation} from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
 import {fetchClass, modifyClassSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {RelateClassValidation} from '@/lib/validations/fees/globalMasters/defineClassDetails/relateClass.validation';
+import { fetchSchoolsNames } from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 
 
 
@@ -29,6 +30,10 @@ const FormCom = () => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // School name
+    const [schoolName, setSchoolName] = useState();
 
 
     // Opened Form
@@ -351,12 +356,22 @@ const FormCom = () => {
     );
 
 
+    // Use Effect
+    useEffect(() => {
+        const schoolNameFetcher = async () => {
+            const res = await fetchSchoolsNames();
+            setSchoolName(res[0]);
+        };
+        schoolNameFetcher();
+    }, [openedFormName, selectedFormCom]);
+
+
     const two = (
         <div className='h-full flex flex-row overflow-x-scroll custom-scrollbar'>
             {/* School Type */}
             <ul className='h-full flex flex-col text-xs'>
                 <li className='flex-1 flex items-center px-2 text-sm border-[0.5px] border-[#ccc]'>School Name</li>
-                <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>QODUM TECH SCHOOL</li>
+                <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>{schoolName}</li>
             </ul>
             {/* School Prefix */}
             <ul className='h-full flex flex-col text-xs'>

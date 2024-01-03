@@ -34,7 +34,6 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
             },
             months:installment.months
         });
-        // setSelectedMonths(installment.months);
         setIsViewOpened(false);
     };
 
@@ -154,7 +153,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                                     <LoadingIcon />
                                 ) : installments.map((installment:any) => (
                                     <CommandItem
-                                        value={`${installments.indexOf(installment) + 1} ${installment.name} ${installment.print_name} ${installment.preference_no} ${installment.due_date?.day}-${monthConverter(installment.due_date?.month)}-${installment.due_date?.year} ${installment.due_on_date?.day}-${monthConverter(installment.due_on_date?.month)}-${installment.due_on_date?.year} ${moment(installment.updateAt).format('D-MMM-yy')}`}
+                                        value={`${installments.indexOf(installment) + 1} ${installment.name} ${installment.print_name} ${installment.preference_no} ${installment?.due_date?.day}-${monthConverter(installment?.due_date?.month)}-${installment?.due_date?.year} ${installment?.due_on_date?.day}-${monthConverter(installment?.due_on_date?.month)}-${installment?.due_on_date?.year} ${moment(installment.updateAt).format('D-MMM-yy')}`}
                                         className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                     >
                                         <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installments.indexOf(installment) + 1}</li>
@@ -170,8 +169,8 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                                         <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.name}</li>
                                         <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.print_name}</li>
                                         <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.preference_no}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.due_date?.day}-{monthConverter(installment.due_date?.month)}-{installment.due_date?.year}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.due_on_date?.day}-{monthConverter(installment.due_on_date?.month)}-{installment.due_on_date?.year}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment?.due_date?.day}-{monthConverter(installment?.due_date?.month)}-{installment?.due_date?.year}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment?.due_on_date?.day}-{monthConverter(installment?.due_on_date?.month)}-{installment?.due_on_date?.year}</li>
                                         <li className='basis-[22%] flex flex-row items-center px-2'>{moment(installment.updateAt).format('D-MMM-yy')}</li>
                                     </CommandItem>
                                 ))

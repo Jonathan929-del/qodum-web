@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 // Imports
-import { useEffect, useState } from 'react';
-import { fetchHeads } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {useEffect, useState} from 'react';
+import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeHead/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeHead/ViewCom';
 
