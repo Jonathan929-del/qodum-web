@@ -16,6 +16,8 @@ const Modules = () => {
             {
                 modules.map((module:any) => (
                     <div className=' flex flex-col px-2 bg-[#FAFAFA] rounded-xl border-b-4 border-main-color pl-4 pb-4 pt-4' key={module.title}>
+
+<h1>Hello from Modules</h1>
                         <div className='flex flex-row items-center pt-2'>
                             <div className='rounded-[5px] bg-[#e7f0f7] text-main-color flex justify-center items-center w-10 h-10'>
                                 {React.createElement(module.icon)}

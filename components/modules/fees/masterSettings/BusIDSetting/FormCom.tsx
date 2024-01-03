@@ -96,7 +96,6 @@ const FormCom = () => {
                                                 Manual
                                             </label>
                                         </div>
-
                                     </RadioGroup>
                                     </FormControl>
                                     <FormMessage className='absolute text-xs w-[200px] left-0 sm:left-[30%] top-[100%]' />
