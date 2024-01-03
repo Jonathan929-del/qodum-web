@@ -9,8 +9,7 @@ import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
-import { BusIdSettingValidation } from '@/lib/validations/fees/masterSettings/busIdSetting.validation';
+import {BusIdSettingValidation} from '@/lib/validations/fees/masterSettings/busIdSetting.validation';
 
 
 
