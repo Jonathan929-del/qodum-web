@@ -1,24 +1,16 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {Input} from '@/components/ui/input';
+import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ChevronDown, ChevronsUpDown } from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-import { FeeEntrySettingValidation } from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
-import { fetchClass, modifyClassSections } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { FeeEntrySettingOthersValidation } from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
-import { Switch } from '@/components/ui/switch';
+import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
+import { BusIdSettingValidation } from '@/lib/validations/fees/masterSettings/busIdSetting.validation';
 
 
 
@@ -30,22 +22,14 @@ const FormCom = () => {
 
 
     // Toast
-    const { toast } = useToast();
-
-
-    // Opened Form
-    const [openedFormName, setOpenedFormName] = useState('generate-single-receipt');
-
-
-    // Selected Form Com
-    const [selectedFormCom, setSelectedFormCom] = useState<any>();
+    const {toast} = useToast();
 
 
     // Form
     const form = useForm({
-        // resolver: zodResolver(FeeEntrySettingOthersValidation),
-        resolver: zodResolver(FeeEntrySettingOthersValidation),
-        defaultValues: {
+        resolver: zodResolver(BusIdSettingValidation),
+        defaultValues:{
+            bus_id_type:'Automatic',
             prefix:'',
             start_from:'',
             lead_zero:'',
@@ -55,7 +39,7 @@ const FormCom = () => {
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<typeof FeeEntrySettingOthersValidation>) => {
+    const onSubmit = async (values: z.infer<typeof BusIdSettingValidation>) => {
         try {
 
 
@@ -63,19 +47,17 @@ const FormCom = () => {
 
             // Reseting form
             form.reset({
-                
+                bus_id_type:'Automatic',
+                prefix:'',
+                start_from:'',
+                lead_zero:'',
+                suffix:''
             });
 
         } catch (err: any) {
             console.log(err.message);
         }
     };
-
-
-
-
-
-
 
 
     return (
@@ -90,28 +72,38 @@ const FormCom = () => {
                     className='w-full flex flex-col items-center px-2 sm:px-4'
                 >
 
+                    {/* Bus id type */}
+                    <FormField
+                        control={form.control}
+                        name='bus_id_type'
+                        render={({ field }) => (
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Bus id should be</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
+                                    <FormControl>
+                                    <RadioGroup className='flex justify-between' defaultValue="default" aria-label='View density'>
+                                        <div className='flex items-center'>
+                                            <RadioGroupItem className="RadioGroupItem mx-2" value="default" id="r1">
+                                            </RadioGroupItem>
+                                            <label className="Label" htmlFor="r1">
+                                                Automatic
+                                            </label>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <RadioGroupItem className="RadioGroupItem mx-2" value="manual" id="r1">
+                                            </RadioGroupItem>
+                                            <label className="Label" htmlFor="r1">
+                                                Manual
+                                            </label>
+                                        </div>
 
-
-                    <div className="bus-id flex mt-2 justify-start w-full">
-                        <div className="title me-[30px] mb-[-4px] text-xs text-[#726E71] mt-1 sm:mb-0">Bus ID should be</div>
-                        <RadioGroup className="RadioGroupRoot flex justify-between " defaultValue="default" aria-label='View density'>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <RadioGroupItem className="RadioGroupItem mx-2" value="default" id="r1">
-                                </RadioGroupItem>
-                                <label className="Label" htmlFor="r1">
-                                    Automatic
-                                </label>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <RadioGroupItem className="RadioGroupItem mx-2" value="manual" id="r1">
-                                </RadioGroupItem>
-                                <label className="Label" htmlFor="r1">
-                                    Manual
-                                </label>
-                            </div>
-
-                        </RadioGroup>
-                    </div>
+                                    </RadioGroup>
+                                    </FormControl>
+                                    <FormMessage className='absolute text-xs w-[200px] left-0 sm:left-[30%] top-[100%]' />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
 
                     {/* Prefix */}
                     <FormField
@@ -135,7 +127,7 @@ const FormCom = () => {
 
                     {/* Start from */}
                     <FormField
-                        control={form.control}s
+                        control={form.control}
                         name='start_from'
                         render={({ field }) => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
@@ -196,9 +188,6 @@ const FormCom = () => {
                     />
 
 
-                    
-
-
                     {/* Save button */}
                     <Button
                         type='submit'
@@ -207,6 +196,7 @@ const FormCom = () => {
                     >
                         Save
                     </Button>
+
                 </form>
             </Form>
         </div>

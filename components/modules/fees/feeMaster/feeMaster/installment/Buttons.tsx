@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, installments, updateInstallment, setUpdateInstallment, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, installments, updateInstallment, setUpdateInstallment, onSubmit, form, setSelectedMonths}:any) => {
 
 
     // Cancel click
@@ -20,6 +20,7 @@ const Buttons = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
             isDeleteClicked:false,
             name:'',
             print_name:'',
+            preference_no:0,
             due_on_date:{
                 day:'',
                 month:'',
@@ -32,10 +33,12 @@ const Buttons = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
             },
             months:[]
         });
+        setSelectedMonths([]);
         // Reseting form
         form.reset({
             name:'',
             print_name:'',
+            preference_no:0,
             due_on_date:{
                 day:'',
                 month:'',

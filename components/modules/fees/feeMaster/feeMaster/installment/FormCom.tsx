@@ -10,7 +10,6 @@ import {Checkbox} from '@/components/ui/checkbox';
 import {Check, ChevronDown, X} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {InstallmentValidation} from '@/lib/validations/fees/feeMaster/feeMaster/installment.validation';
@@ -21,7 +20,7 @@ import {createInstallment, deleteInstallment, modifyInstallment} from '@/lib/act
 
 
 // Main function
-const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateInstallment}:any) => {
+const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateInstallment, selectedMonths, setSelectedMonths}:any) => {
 
 
     // Toast
@@ -29,9 +28,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
 
     // Months
-    const [selectedMonths, setSelectedMonths] = useState([]);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    console.log(selectedMonths);
 
 
     // Years error
@@ -118,15 +115,15 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
             toast({title:'Added Successfully!'});
         }
         // Modify installment
-        else if(!deepEqual(comparisonObject, values)){
+        else if(JSON.stringify(updateInstallment.months) !== JSON.stringify(selectedMonths) || !deepEqual(comparisonObject, values)){
             // Duplicate installment name check
             if(comparisonObject.name !== values.name && installments.map((installment:any) => installment.name).includes(values.name)){
-                toast({title:'Installment name is already exists', variant:'error'});
+                toast({title:'Installment name already exists', variant:'error'});
                 return;
             };
             // Duplicate installment preference number check
             if(comparisonObject.preference_no !== values.preference_no && installments.map((installment:any) => installment.preference_no).includes(values.preference_no)){
-                toast({title:'Installment preference number is already exists', variant:'error'});
+                toast({title:'Installment preference number already exists', variant:'error'});
                 return;
             };
             await modifyInstallment({
@@ -144,7 +141,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                     month:values.due_date.month,
                     year:values.due_date.year
                 },
-                months:values.months
+                months:selectedMonths
             });
             toast({title:'Updated Successfully!'});
         }
@@ -161,6 +158,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
             isDeleteClicked:false,
             name:'',
             print_name:'',
+            preference_no:0,
             due_on_date:{
                 day:'',
                 month:'',
@@ -177,6 +175,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
         form.reset({
             name:'',
             print_name:'',
+            preference_no:0,
             due_on_date:{
                 day:'',
                 month:'',
@@ -248,6 +247,11 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
             setYearsError(false);
         }
     }, [form.formState.errors.due_date, form.formState.errors.due_on_date]);
+    useEffect(() => {
+        if(updateInstallment.id !== ''){
+            setSelectedMonths(form.getValues().months);
+        }
+    }, [updateInstallment]);
 
 
     return (
@@ -576,7 +580,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                     }
                     {/* Buttons */}
                     <div className='flex flex-col items-center'>
-                        <Buttons setIsViewOpened={setIsViewOpened} installments={installments} updateInstallment={updateInstallment} setUpdateInstallment={setUpdateInstallment} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} installments={installments} updateInstallment={updateInstallment} setUpdateInstallment={setUpdateInstallment} onSubmit={onSubmit} form={form} setSelectedMonths={setSelectedMonths}/>
                     </div>
 
                     

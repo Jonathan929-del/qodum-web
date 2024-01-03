@@ -21,7 +21,7 @@ const InstallmentSchema = new mongoose.Schema(
             month:{type:String, required:true},
             year:{type:String, required:true},
         },
-        months:[]
+        months:[{type:String, max:13}]
     },
     {
         timestamps:true

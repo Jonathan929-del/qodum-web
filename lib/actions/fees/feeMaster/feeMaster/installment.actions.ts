@@ -31,7 +31,6 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
     
         // Database connection
         connectToDb('accounts');
-        console.log(months);
 
 
         // Checking if the installment name already exists
@@ -62,16 +61,17 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
                 day:due_date.day,
                 month:due_date.month,
                 year:due_date.year
-            },
-            months
+            }
         });
-        newInstallment.save();
+        newInstallment.save().then(async () => {
+            await Installment.findOneAndUpdate({name}, {months});
+        });
 
 
         // Return
         return newInstallment;
 
-        
+
     } catch (err:any) {
         console.log(`Error Creating Installment: ${err.message}`);
     }

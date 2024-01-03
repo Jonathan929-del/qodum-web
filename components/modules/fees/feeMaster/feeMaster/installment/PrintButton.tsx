@@ -113,7 +113,7 @@ const PrintButton = ({installments}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Installments List'
+                            filename='Fee Installments List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
@@ -131,7 +131,7 @@ const PrintButton = ({installments}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Installments List'
+                            filename='Fee Installments List'
                             fileExtension='csv'
                         >
                             <ExcelSheet

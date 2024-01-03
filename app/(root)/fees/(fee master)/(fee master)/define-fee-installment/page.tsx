@@ -27,6 +27,7 @@ const page = () => {
         isDeleteClicked:false,
         name:'',
         print_name:'',
+        preference_no:'',
         due_on_date:{
             day:'',
             month:'',
@@ -39,6 +40,10 @@ const page = () => {
         },
         months:[]
     });
+
+
+    // Selected months
+    const [selectedMonths, setSelectedMonths] = useState([]);
 
 
     // Use effect
@@ -55,12 +60,12 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
-                    // <ViewCom
-                    //     classes={classes}
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     setUpdateClass={setUpdateClass}
-                    // />
-                    ''
+                    <ViewCom
+                        installments={installments}
+                        setIsViewOpened={setIsViewOpened}
+                        setUpdateInstallment={setUpdateInstallment}
+                        setSelectedMonths={setSelectedMonths}
+                        />
                 ) : (
                     <FormCom
                         installments={installments}
@@ -68,6 +73,8 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         updateInstallment={updateInstallment}
                         setUpdateInstallment={setUpdateInstallment}
+                        selectedMonths={selectedMonths}
+                        setSelectedMonths={setSelectedMonths}
                     />
                 )
             }
