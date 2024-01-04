@@ -254,13 +254,13 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Fee Installment</h2>
+            <h2 className='w-full text-center py-2 text-xs rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Fee Installment</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col gap-8 pt-4 items-center px-2 sm:px-4 sm:gap-2'
+                    className='relative w-full flex flex-col gap-6 pt-4 items-center px-2 sm:px-4 sm:gap-2'
                 >
 
 
@@ -271,7 +271,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                         render={({field}) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-[10px] text-[#726E71] sm:basis-[30%]'>Installment Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Installment Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
@@ -294,7 +294,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                         render={({field}) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-[10px] text-[#726E71] sm:basis-[30%]'>Installment Print Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Installment Print Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
@@ -317,7 +317,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                         render={({field}) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-[10px] text-[#726E71] sm:basis-[30%]'>Installment Preference No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Installment Preference No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
@@ -335,7 +335,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
                     {/* Due On date */}
                     <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-[10px] pr-2 text-end text-[#726E71]'>Due On date</FormLabel>
+                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Due On date</FormLabel>
                         <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
                             {/* Year */}
                             <FormField
@@ -431,7 +431,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
                     {/* Due  Date */}
                     <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-[10px] text-end pr-2 text-[#726E71]'>Due  Date</FormLabel>
+                        <FormLabel className='basis-[30%] text-xs text-end pr-2 text-[#726E71]'>Due  Date</FormLabel>
                         <div className='relative basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
                             {/* Year */}
                             <FormField
@@ -531,7 +531,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
                     {/* Months */}
                     <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                        <p className='basis-auto pr-2 text-[10px] text-end text-[#726E71] sm:basis-[30%]'>Select Month</p>
+                        <p className='basis-auto pr-2 text-xs text-end text-[#726E71] sm:basis-[30%]'>Select Month</p>
                         <div className='relative h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                             <Select>
                                 <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -565,7 +565,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                                                     // @ts-ignore
                                                     onClick={() => selectedMonths?.includes(month) ? setSelectedMonths(selectedMonths?.filter((m:any) => m !== month)) : setSelectedMonths([...selectedMonths, month])}
                                                 />
-                                                <p className='text-sm font-semibold'>{month}</p>
+                                                <p className='text-xs font-semibold'>{month}</p>
                                             </li>
                                         ))}
                                     </ul>
