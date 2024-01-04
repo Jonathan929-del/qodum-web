@@ -24,14 +24,14 @@ const page = () => {
 
     // Update head
     const [updateHead, setUpdateHead] = useState({
-        id: '',
-        name: '',
-        print_name: '',
-        pay_schedule: '',
-        priority_no: 0,
-        type: '',
-        show_in_certificate: false,
-        fee_refundable: false
+        id:'',
+        name:'',
+        print_name:'',
+        pay_schedule:'',
+        priority_no:0,
+        type:'',
+        show_in_certificate:false,
+        fee_refundable:false
     });
 
 
