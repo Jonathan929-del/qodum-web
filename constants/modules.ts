@@ -282,6 +282,15 @@ const modules = [
                         ]
                     },
                     {
+                        subPageName:'Assign Fee Group to Fee Head'
+                    },
+                    {
+                        subPageName:'Assign Amount Group'
+                    },
+                    {
+                        subPageName:'Assign Multiple Group to Student'
+                    },
+                    {
                         subPageName:'Define and Assign Concession',
                         threads:[
                             'Define Concession',
@@ -291,22 +300,6 @@ const modules = [
                             'Assign Concession',
                             'Assign Concession to Sigle Student',
                         ]
-                    },
-                    {
-                        subPageName:'Late Fee Settings',
-                        threads:[
-                            'Late Fee Setting',
-                            'Late Fee Setting Head Wise',
-                        ]
-                    },
-                    {
-                        subPageName:'Fee Group to Fee Head'
-                    },
-                    {
-                        subPageName:'Assign Amount Group'
-                    },
-                    {
-                        subPageName:'Assign Multiple Group to Student'
                     },
                     {
                         subPageName:'Student Fee Details'
@@ -319,6 +312,13 @@ const modules = [
                     },
                     {
                         subPageName:'Set Student Status'
+                    },
+                    {
+                        subPageName:'Late Fee Settings',
+                        threads:[
+                            'Late Fee Setting',
+                            'Late Fee Setting Head Wise',
+                        ]
                     },
                     {
                         subPageName:'Assign Computer No. to Student'
