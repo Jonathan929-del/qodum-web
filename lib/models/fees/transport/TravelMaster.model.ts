@@ -1,0 +1,26 @@
+// Import
+import mongoose from 'mongoose';
+
+
+
+
+
+// Travel Master Schema
+const TravelMasterSchema = new mongoose.Schema(
+    {
+        travel_agency_name:{type:String, required:true},
+        mobile_no:{type:String, required:true},
+        mail_id:{type:String, required:true},
+    },
+    {
+        timestamps:true
+    }
+);
+
+
+
+
+
+// Export
+const TravelMaster = mongoose.models.TravelMaster || mongoose.model('TravelMaster', TravelMasterSchema);
+export default TravelMaster;
