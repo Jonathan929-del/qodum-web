@@ -11,21 +11,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 
 // Main Function
-const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
+const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
 
 
     // Select handler
-    const selectHandler = (head: any) => {
-        setUpdateHead({
-            id: head.id,
+    const selectHandler = (type: any) => {
+        setUpdateType({
+            id: type.id,
             isDeleteClicked: false,
-            name: head.name,
-            print_name: head.print_name,
-            pay_schedule: head.pay_schedule,
-            priority_no: head.priority_no,
-            type: head.type,
-            show_in_certificate: head.show_in_certificate,
-            fee_refundable: head.fee_refundable
+            name: type.name,
+            preference_no: type.preference_no,
+            heads: type.heads
         });
         setIsViewOpened(false);
     };
@@ -38,7 +34,7 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Heads List</h2>
+                <h2>Types List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)} />
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
@@ -53,7 +49,7 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                 </div>
 
 
-                {/* Heads */}
+                {/* Types */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
@@ -65,68 +61,41 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                             Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Print Name
-                            <ChevronsUpDown size={12} />
-                        </li>
                         <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Pay Schedule
+                            Preference No
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Priority No
-                            <ChevronsUpDown size={12} />
-                        </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Type
-                            <ChevronsUpDown size={12} />
-                        </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Show In Certificate
-                            <ChevronsUpDown size={12} />
-                        </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Fee Refundable
-                            <ChevronsUpDown size={12} />
-                        </li>
-                        <li className='basis-[25%] flex flex-row items-center justify-between px-2'>
-                            Modify Details
-                            <ChevronsUpDown size={12} />
-                        </li>
+                    
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            heads.length < 1 ? (
+                            types.length < 1 ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
                                     No heads yet
                                 </p>
-                            ) : !heads[0]?.name ? (
+                            ) : !types[0]?.name ? (
                                 <LoadingIcon />
-                            ) : heads.map((head: any, index: number) => (
+                            ) : types.map((type: any, index: number) => (
                                 <CommandItem
                                     key={index}
-                                    value={`${heads.indexOf(head) + 1} ${head.name} ${head.print_name} ${head.pay_schedule} ${head.priority_no} ${head.type} ${head.show_in_certificate ? 'True' : 'False'}  ${head.fee_refundable ? 'True' : 'False'}`}
+                                    value={`${types.indexOf(type) + 1} ${type.name} ${type.preference_no} `}
                                     className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{types.indexOf(types) + 1}</li>
                                     <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                            onClick={() => selectHandler(head)}
+                                            onClick={() => selectHandler(type)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.name}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.print_name}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.pay_schedule}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.priority_no}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.type}</li>
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.show_in_certificate ? 'True' : 'False'}</li>
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.fee_refundable ? 'True' : 'False'}</li>
-                                    <li className='basis-[25%] flex flex-row items-center px-2'>{moment(head.updateAt).format('D-MMM-yy')}</li>
+                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.name}</li>
+                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.preference_no}</li>
+                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.heads.length > 0 ? `${ type.heads.map((h: any, index: any) => (<span key={index}> {h.name} </span>)  )} ` : 'No Heads' }</li>
+                                    <li className='basis-[25%] flex flex-row items-center px-2'>{moment(type.updateAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))
                         }

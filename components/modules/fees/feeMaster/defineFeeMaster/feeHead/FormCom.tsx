@@ -2,16 +2,18 @@
 // Imports
 import * as z from 'zod';
 import Buttons from './Buttons';
-import { deepEqual } from '@/lib/utils';
-import { useForm } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { createHead, deleteHead, modifyHead } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
-import { HeadValidation } from '@/lib/validations/fees/feeMaster/feeMaster/head.validation';
+import {deepEqual} from '@/lib/utils';
+import {useForm} from 'react-hook-form';
+import {Input} from '@/components/ui/input';
+import {Switch} from '@/components/ui/switch';
+import {Label} from '@/components/ui/label';
+import {useToast} from '@/components/ui/use-toast';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {createHead, deleteHead, modifyHead} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {HeadValidation} from '@/lib/validations/fees/feeMaster/feeMaster/head.validation';
+import {ChevronDown} from 'lucide-react';
 
 
 
@@ -36,7 +38,6 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
         fee_refundable: updateHead.fee_refundable
     };
 
-
     // Form
     const form: any = useForm({
         resolver: zodResolver(HeadValidation),
@@ -55,7 +56,6 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof HeadValidation>) => {
-        console.log(values)
         // Create head
         if (updateHead.id === '') {
             if (heads.map((head: any) => head.name).includes(values.name)) {
@@ -132,7 +132,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
+                    className='relative w-full flex flex-col gap-6 pt-4 items-center px-2 sm:px-4 sm:gap-2'
                 >
 
 
@@ -142,17 +142,17 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         control={form.control}
                         name='name'
                         render={({ field }) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Head Name</FormLabel>
-                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
+                            <FormItem className='w-full'>
+                                <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Head Name</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-xs' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -164,17 +164,17 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         control={form.control}
                         name='print_name'
                         render={({ field }) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Head Print Name</FormLabel>
-                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
+                            <FormItem className='w-full'>
+                                <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Head Print Name</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-xs' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -182,36 +182,108 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                     />
 
 
-                    {/* Priority Number */}
+                    {/* Head Pay Schedule */}
+                    <div className='w-full h-10 flex flex-row items-center'>
+                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Pay Schedule</FormLabel>
+                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                            <FormField
+                                control={form.control}
+                                name='pay_schedule'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field.value}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-xs' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value='annual'>Annual</SelectItem>
+                                                    <SelectItem value='installment'>Installment</SelectItem>
+                                                    <SelectItem value='lifetime'>LifeTime</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
+
+
+                    {/* Head Priority Number */}
                     <FormField
                         control={form.control}
                         name='priority_no'
                         render={({ field }) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Priority Number</FormLabel>
-                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
+                            <FormItem className='w-full'>
+                                <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Priority Nmber</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-xs' />
                                     </div>
                                 </div>
                             </FormItem>
                         )}
                     />
 
-                    <div className="flex gap-1 w-full">
 
+                    {/* Head Type  */}
+                    <div className='w-full h-10 flex flex-row items-center'>
+                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Type</FormLabel>
+                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                            <FormField
+                                control={form.control}
+                                name='type'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field.value}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-xs' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value='cheque_bounce'>Cheque Bounce</SelectItem>
+                                                    <SelectItem value='discount'>Discount</SelectItem>
+                                                    <SelectItem value='fine'>Fine</SelectItem>
+                                                    <SelectItem value='opn_bal'>Opn Bal</SelectItem>
+                                                    <SelectItem value='opn_dues'>Opn Dues</SelectItem>
+                                                    <SelectItem value='regular'>Regular</SelectItem>
+                                                    <SelectItem value='transport'>Transport</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
+                    <div className="flex gap-1 w-full">
                         {/* Show In Certificate */}
                         <FormField
                             control={form.control}
                             name='show_in_certificate'
                             render={({ field }) => (
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex  flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                <FormItem className='w-full flex-1 pt-4 flex  flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
                                     <>
                                         <FormControl>
                                             <div className='w-full flex-1 flex items-center justify-between space-x-2'>
@@ -242,7 +314,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                             control={form.control}
                             name='fee_refundable'
                             render={({ field }) => (
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                <FormItem className='w-full flex-1 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
                                     <>
                                         <FormControl>
                                             <div className='w-full flex-1 flex items-center justify-between space-x-2'>

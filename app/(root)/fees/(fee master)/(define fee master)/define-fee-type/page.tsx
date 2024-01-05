@@ -35,7 +35,7 @@ const page = () => {
     });
 
     // selected heads for fee type
-    const [selectedHeads, setSelectedHeads] = useState([{}])
+    const [selectedHeads, setSelectedHeads] = useState([])
 
     // Use effect for types
     useEffect(() => {
@@ -74,6 +74,7 @@ const page = () => {
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
                         updateType={updateType}
+                        selectedHeads={selectedHeads}
                         setUpdateType={setUpdateType}
                     />
                 )
