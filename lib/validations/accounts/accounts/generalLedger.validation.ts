@@ -18,10 +18,3 @@ export const GeneralLedgerValidation = z.object({
     is_fixed_asset:z.boolean(),
     depreciation:z.number().or(z.string()).or(z.null()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'}))
 });
-
-
-
-// .refine(data => data.is_fixed_asset === false && data.depreciation === 0 || null || '', {
-//     message:'*Depreciation is required',
-//     path:['depreciation']
-// })
