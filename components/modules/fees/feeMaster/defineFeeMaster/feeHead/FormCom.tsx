@@ -2,16 +2,16 @@
 // Imports
 import * as z from 'zod';
 import Buttons from './Buttons';
-import {deepEqual} from '@/lib/utils';
-import {useForm} from 'react-hook-form';
-import {Input} from '@/components/ui/input';
-import {Switch} from '@/components/ui/switch';
-import {Label} from '@/components/ui/label';
-import {useToast} from '@/components/ui/use-toast';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createHead, deleteHead, modifyHead} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
-import {HeadValidation} from '@/lib/validations/fees/feeMaster/feeMaster/head.validation';
+import { deepEqual } from '@/lib/utils';
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { createHead, deleteHead, modifyHead } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import { HeadValidation } from '@/lib/validations/fees/feeMaster/feeMaster/head.validation';
 
 
 
@@ -55,6 +55,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof HeadValidation>) => {
+        console.log(values)
         // Create head
         if (updateHead.id === '') {
             if (heads.map((head: any) => head.name).includes(values.name)) {
@@ -203,67 +204,70 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         )}
                     />
 
+                    <div className="flex gap-1 w-full">
 
-                    {/* Show In Certificate */}
-                    <FormField
-                        control={form.control}
-                        name='show_in_certificate'
-                        render={({ field }) => (
-                            <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                <>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2'>
-                                            <Label
-                                                htmlFor='is_default'
-                                                className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sm:basis-[30%]'
-                                            >
-                                                Show In Certificate
-                                            </Label>
-                                            <Switch
-                                                id='show_in_certificate'
-                                                {...field}
-                                                value={field.value}
-                                                onCheckedChange={field.onChange}
-                                                checked={field.value}
-                                                disabled={updateHead.id === '' ? false : updateHead.show_in_certificate}
-                                            />
-                                        </div>
-                                    </FormControl>
-                                </>
-                            </FormItem>
-                        )}
-                    />
+                        {/* Show In Certificate */}
+                        <FormField
+                            control={form.control}
+                            name='show_in_certificate'
+                            render={({ field }) => (
+                                <FormItem className='w-full flex-1 h-10 pt-4 flex  flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                    <>
+                                        <FormControl>
+                                            <div className='w-full flex-1 flex items-center justify-between space-x-2'>
+                                                <Label
+                                                    htmlFor='is_default'
+                                                    className='text-xs text-[#726E71] text-end flex-1 pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                >
+                                                    Show In Certificate
+                                                </Label>
+                                                <Switch
+                                                    id='show_in_certificate'
+                                                    {...field}
+                                                    value={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                    checked={field.value}
+                                                    disabled={updateHead.id === '' ? false : updateHead.show_in_certificate}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                    </>
+                                </FormItem>
+                            )}
+                        />
 
 
-                    {/*  Fee Refundable */}
-                    <FormField
-                        control={form.control}
-                        name='fee_refundable'
-                        render={({ field }) => (
-                            <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                <>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2'>
-                                            <Label
-                                                htmlFor='is_default'
-                                                className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sm:basis-[30%]'
-                                            >
-                                                Fee Refundable
-                                            </Label>
-                                            <Switch
-                                                id='fee_refundable'
-                                                {...field}
-                                                value={field.value}
-                                                onCheckedChange={field.onChange}
-                                                checked={field.value}
-                                                disabled={updateHead.id === '' ? false : updateHead.fee_refundable}
-                                            />
-                                        </div>
-                                    </FormControl>
-                                </>
-                            </FormItem>
-                        )}
-                    />
+                        {/*  Fee Refundable */}
+                        <FormField
+                            control={form.control}
+                            name='fee_refundable'
+                            render={({ field }) => (
+                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                    <>
+                                        <FormControl>
+                                            <div className='w-full flex-1 flex items-center justify-between space-x-2'>
+                                                <Label
+                                                    htmlFor='is_default'
+                                                    className='text-xs text-[#726E71] text-end pr-2 flex-1 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                >
+                                                    Fee Refundable
+                                                </Label>
+                                                <Switch
+                                                    id='fee_refundable'
+                                                    {...field}
+                                                    value={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                    checked={field.value}
+                                                    disabled={updateHead.id === '' ? false : updateHead.fee_refundable}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                    </>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
 
 
                     {/* Buttons */}
