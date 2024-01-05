@@ -391,34 +391,34 @@ const modules = [
                 pageName:'Transport',
                 subPages:[
                     {
-                        pageName:'Travel Agency Master'
+                        subPageName:'Travel Agency Master'
                     },
                     {
-                        pageName:'Define Vehicle Type'
+                        subPageName:'Define Vehicle Type'
                     },
                     {
-                        pageName:'Define Vehicle Details'
+                        subPageName:'Define Vehicle Details'
                     },
                     {
-                        pageName:'Define Vehicle Route'
+                        subPageName:'Define Vehicle Route'
                     },
                     {
-                        pageName:'Define Vehicle Route Relation'
+                        subPageName:'Define Vehicle Route Relation'
                     },
                     {
-                        pageName:'Define Transport Group'
+                        subPageName:'Define Transport Group'
                     },
                     {
-                        pageName:'Define Transport Medium'
+                        subPageName:'Define Transport Medium'
                     },
                     {
-                        pageName:'Define Route Stop'
+                        subPageName:'Define Route Stop'
                     },
                     {
-                        pageName:'Assign Transport to Students'
+                        subPageName:'Assign Transport to Students'
                     },
                     {
-                        pageName:'Assign Self Transport to Students'
+                        subPageName:'Assign Self Transport to Students'
                     },
                 ]
             },
