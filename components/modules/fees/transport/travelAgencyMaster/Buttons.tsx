@@ -9,24 +9,22 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateTravelMaster, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting form
         form.reset({
-            travel_agency_name:'',
-            mobile_no:'',
-            mail_id:''
+            narration:'',
+            voucher_type:'Cash Payment Voucher'
         });
         // Reseting updte entity
-        setUpdateTravelMaster({
+        setUpdateNarration({
             id:'',
-            isDeleteClicked:false,
-            travel_agency_name:'',
-            mobile_no:'',
-            mail_id:''
+            narration:'',
+            voucher_type:'',
+            isDeleteClicked:false
         });
     };
 
@@ -38,7 +36,7 @@ const Buttons = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
             {
-                updateTravelMaster.id === '' ? (
+                updateNarration.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -80,7 +78,7 @@ const Buttons = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateTravelMaster({...updateTravelMaster, isDeleteClicked:true})}
+                                onClick={() => setUpdateNarration({...updateNarration, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -90,7 +88,7 @@ const Buttons = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateTravelMaster({...updateTravelMaster, isDeleteClicked:false})}
+                                        onClick={() => setUpdateNarration({...updateNarration, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -119,7 +117,7 @@ const Buttons = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
 
 
             {/* Print button */}
-            <PrintButton travelMasters={travelMasters}/>
+            <PrintButton narrations={narrations}/>
 
 
             {/* Cancel button */}

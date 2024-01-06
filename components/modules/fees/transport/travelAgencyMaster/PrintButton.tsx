@@ -2,21 +2,45 @@
 import {ChevronDown, Download} from 'lucide-react';
 import {ExcelFile, ExcelSheet} from 'react-xlsx-wrapper';
 import {Select, SelectContent, SelectTrigger} from '@/components/ui/select';
-import moment from 'moment';
 
 
 
 
 
 // Main Function
-const PrintButton = (travelMasters:any) => {
+const PrintButton = ({narrations}:any) => {
 
 
-    // travelMasters Array
-    const excelTravelMastersArray = travelMasters?.map((travelMaster:any) => {
+    // Narrations Array
+    const excelNarrationsArray = narrations.map((narration:any) => {
+        let abbreviation;
+        switch (narration.voucher_type) {
+            case 'Cash Payment Voucher':
+                abbreviation = 'CASHP';
+                break;
+            case 'Cash Receipt Voucher':
+                abbreviation = 'CASHR';
+                break;
+            case 'Bank Payment Voucher':
+                abbreviation = 'BANKP';
+                break;
+            case 'Bank Receipt Voucher':
+                abbreviation = 'BANKR';
+                break;
+            case 'Contra Voucher':
+                abbreviation = 'CONTRA';
+                break;
+            case 'Journal Voucher':
+                abbreviation = 'JVENT';
+                break;
+            default:
+                '';
+        }
         return([
-            {value:travelMaster.travel_agency_name},
-            {value:moment(travelMaster.createdAt).format('D-MMM-yy')},
+            {value:narrations.indexOf(narration)},
+            {value:narration.narration},
+            {value:narration.voucher_type},
+            {value:abbreviation}
         ]);
     });
 
@@ -25,17 +49,22 @@ const PrintButton = (travelMasters:any) => {
     const excelData:any = [
         {
             columns:[
-                {title:'travelMasters List', width:{wpx:500}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Narrations List', width:{wpx:500}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'Travel Agency Name', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Id', width:{wpx:20}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Narrations', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Voucher Type', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Entry Type', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:excelTravelMastersArray
+            data:excelNarrationsArray
         }
     ];
 
@@ -60,12 +89,12 @@ const PrintButton = (travelMasters:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Travel Masters List'
+                            filename='Narration List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={excelData}
-                                name='travelMasters'
+                                name='Narrations'
                             />
                         </ExcelFile>
 
@@ -78,12 +107,12 @@ const PrintButton = (travelMasters:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Travel Masters List'
+                            filename='Narration List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={excelData}
-                                name='travelMasters'
+                                name='Narrations'
                             />
                         </ExcelFile>
 
