@@ -9,13 +9,13 @@ import VehicleRoute from '@/lib/models/fees/transport/VehicleRoute.model';
 
 // Create vehicle route props
 interface CreateVehicleRouteProps{
-    route_no:Number;
-    vehicle_description:String;
+    route_no:String;
+    route_description:String;
     route_in_charge_name:String;
     route_in_charge_mobile_no:Number;
 };
 // Create vehicle route
-export const createVehicleRoute = async ({route_no, vehicle_description, route_in_charge_name, route_in_charge_mobile_no}:CreateVehicleRouteProps) => {
+export const createVehicleRoute = async ({route_no, route_description, route_in_charge_name, route_in_charge_mobile_no}:CreateVehicleRouteProps) => {
     try {
 
     
@@ -31,7 +31,7 @@ export const createVehicleRoute = async ({route_no, vehicle_description, route_i
 
 
         // Creating new vehicle route
-        const newVehicleRoute = await VehicleRoute.create({route_no, vehicle_description, route_in_charge_name, route_in_charge_mobile_no});
+        const newVehicleRoute = await VehicleRoute.create({route_no, route_description, route_in_charge_name, route_in_charge_mobile_no});
         newVehicleRoute.save();
 
 
@@ -72,13 +72,13 @@ export const fetchVehicleRoutes = async (pageNumber = 1, pageSize=20) => {
 // Modify vehecle routes props
 interface ModifyVehicleRoutesProps{
     id:String;
-    route_no:Number;
-    vehicle_description:String;
+    route_no:String;
+    route_description:String;
     route_in_charge_name:String;
     route_in_charge_mobile_no:Number;
 }
 // Modify vehicle route
-export const modifyVehicleRoute = async ({id, route_no, vehicle_description, route_in_charge_name, route_in_charge_mobile_no}:ModifyVehicleRoutesProps) => {
+export const modifyVehicleRoute = async ({id, route_no, route_description, route_in_charge_name, route_in_charge_mobile_no}:ModifyVehicleRoutesProps) => {
     try {
 
         // Db connection
@@ -92,7 +92,7 @@ export const modifyVehicleRoute = async ({id, route_no, vehicle_description, rou
 
 
         // Update vehicle route
-        const updatedVehicleRoute = await VehicleRoute.findByIdAndUpdate(id, {route_no, vehicle_description, route_in_charge_name, route_in_charge_mobile_no}, {new:true});
+        const updatedVehicleRoute = await VehicleRoute.findByIdAndUpdate(id, {route_no, route_description, route_in_charge_name, route_in_charge_mobile_no}, {new:true});
 
 
         // Return 
