@@ -52,16 +52,24 @@ const ViewCom = ({ setIsViewOpened, groups, setUpdateGroup }: any) => {
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                        <li className='w-[20%] basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='w-[20%] basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Select
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='w-[20%] basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='w-[20%] basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Is Special
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='basis-[20%] w-[20%] flex flex-row items-center justify-between px-2'>
+                            Modify Details
                             <ChevronsUpDown size={12} />
                         </li>
                     </ul>
@@ -80,8 +88,8 @@ const ViewCom = ({ setIsViewOpened, groups, setUpdateGroup }: any) => {
                                     value={`${groups.indexOf(group) + 1} ${group.name} ${group.is_special} `}
                                     className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{groups.indexOf(group) + 1}</li>
-                                    <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <li className='w-[20%] basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{groups.indexOf(group) + 1}</li>
+                                    <li className='w-[20%] basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
@@ -90,9 +98,9 @@ const ViewCom = ({ setIsViewOpened, groups, setUpdateGroup }: any) => {
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{group.name}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{group.is_special}</li>
-                                    <li className='basis-[25%] flex flex-row items-center px-2'>{moment(group.updateAt).format('D-MMM-yy')}</li>
+                                    <li className='w-[20%] basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{group.name}</li>
+                                    <li className='w-[20%] basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{group.is_special ? 'True' : 'False'} </li>
+                                    <li className='w-[20%] basis-[20%] flex flex-row items-center px-2'>{moment(group.updateAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))
                         }

@@ -299,7 +299,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                                                     value={field.value}
                                                     onCheckedChange={field.onChange}
                                                     checked={field.value}
-                                                    disabled={updateHead.id === '' ? false : updateHead.show_in_certificate}
+                                                    // disabled={updateHead.id === '' ? false : updateHead.show_in_certificate}
                                                 />
                                             </div>
                                         </FormControl>
@@ -330,7 +330,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                                                     value={field.value}
                                                     onCheckedChange={field.onChange}
                                                     checked={field.value}
-                                                    disabled={updateHead.id === '' ? false : updateHead.fee_refundable}
+                                                    // disabled={updateHead.id === '' ? false : updateHead.fee_refundable}
                                                 />
                                             </div>
                                         </FormControl>

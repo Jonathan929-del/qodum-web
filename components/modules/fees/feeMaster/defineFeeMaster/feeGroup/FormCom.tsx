@@ -150,7 +150,7 @@ const FormCom = ({ setIsViewOpened, groups, updateGroup, setUpdateGroup }: any) 
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
-                                                disabled={updateGroup.id === '' ? false : updateGroup.is_special}
+                                                // disabled={updateGroup.id === '' ? false : updateGroup.is_special}
                                             />
                                         </div>
                                     </FormControl>
