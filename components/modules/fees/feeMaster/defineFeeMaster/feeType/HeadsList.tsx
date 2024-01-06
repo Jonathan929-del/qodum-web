@@ -6,26 +6,28 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 
 
 
 
 // Main Function
-const HeadsList = ({ heads, setSelectedHeads, selectedHeads}: any) => {
+const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
 
     const toggleTypeHead = (selected: boolean | string, head: any) => {
 
         if (selected) {
-            setSelectedHeads((old:any) => [...old, head])
+            setSelectedHeads((old: any) => [...old, head])
         } else {
-            let filterd = selectedHeads.filter((hd: any ) => hd._id !== head._id);
+            let filterd = selectedHeads.filter((hd: any) => hd._id !== head._id);
+            setSelectedHeads(filterd)
         }
     }
 
     return (
         <Command
-            className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
+            className='w-[80%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
         >
 
             {/* Header */}
@@ -71,7 +73,35 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads}: any) => {
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                     <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.name}</li>
                                     <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
-                                        <Checkbox onCheckedChange={(selected) => toggleTypeHead(selected, head)} />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="heads"
+                                            render={({ field  } : any) => {
+                                                return (
+                                                    <FormItem
+                                                        key={head.name}
+                                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                                    >
+                                                        <FormControl>
+                                                            <Checkbox
+                                                                checked={field.value?.includes(head._id)}
+                                                                onCheckedChange={(checked) => {
+                                                                    
+                                                                    return checked
+                                                                        ? field.onChange([...field.value, head._id])
+                                                                        : field.onChange(
+                                                                            field.value?.filter(
+                                                                                (value: any) => value._id !== head._id
+                                                                            )
+                                                                        )
+                                                                }}
+                                                            />
+                                                        </FormControl>
+                                                    </FormItem>
+                                                )
+                                            }}
+                                        />
                                     </li>
 
                                 </CommandItem>

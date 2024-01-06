@@ -56,44 +56,44 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                 {/* Heads */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[5%] w-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Print Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Pay Schedule
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Priority No
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Type
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Show In Certificate
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Fee Refundable
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[10%] w-[10%] flex flex-row items-center justify-between px-2'>
                             Modify Details
                             <ChevronsUpDown size={12} />
                         </li>
@@ -111,10 +111,10 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                                 <CommandItem
                                     key={index}
                                     value={`${heads.indexOf(head) + 1} ${head.name} ${head.print_name} ${head.pay_schedule} ${head.priority_no} ${head.type} ${head.show_in_certificate ? 'True' : 'False'}  ${head.fee_refundable ? 'True' : 'False'}`}
-                                    className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
-                                    <li className='w-[10%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <li className='basis-[5%] w-[5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
+                                    <li className='basis-[15%] w-[15%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
@@ -123,14 +123,14 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.name}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.print_name}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.pay_schedule}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.priority_no}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.type}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.show_in_certificate ? 'True' : 'False'}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.fee_refundable ? 'True' : 'False'}</li>
-                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{moment(head.updateAt).format('D-MMM-yy')}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.name}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.print_name}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.pay_schedule}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.priority_no}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.type}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.show_in_certificate ? 'True' : 'False'}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.fee_refundable ? 'True' : 'False'}</li>
+                                    <li className='basis-[10%] w-[10%] flex flex-row items-center px-2'>{moment(head.updateAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))
                         }

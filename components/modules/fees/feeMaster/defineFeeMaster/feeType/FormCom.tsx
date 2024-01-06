@@ -46,7 +46,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<any>) => {
+    const onSubmit = async (values: z.infer<typeof FeeTypeValidation>) => {
     // const onSubmit = async (values:any) => {
         console.log('submitted', values)
 
@@ -160,7 +160,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
                     </div>
 
 
-                    <HeadsList heads={heads} setSelectedHeads={setSelectedHeads} selectedHeads={selectedHeads} />
+                    <HeadsList heads={heads} setSelectedHeads={setSelectedHeads} selectedHeads={selectedHeads} form={form} />
 
 
 
