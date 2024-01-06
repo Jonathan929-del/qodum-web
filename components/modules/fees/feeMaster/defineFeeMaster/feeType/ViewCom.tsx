@@ -17,7 +17,7 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
     // Select handler
     const selectHandler = (type: any) => {
         setUpdateType({
-            id: type.id,
+            id: type._id,
             isDeleteClicked: false,
             name: type.name,
             preference_no: type.preference_no,
@@ -53,16 +53,28 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                        <li className='w-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='w-[10%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                            Select
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='w-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='w-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
                             Preference No
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='w-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                            Heads
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='w-[20%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                            Modify Details
                             <ChevronsUpDown size={12} />
                         </li>
                     
@@ -82,8 +94,8 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
                                     value={`${types.indexOf(type) + 1} ${type.name} ${type.preference_no} `}
                                     className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{types.indexOf(types) + 1}</li>
-                                    <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                    <li className='w-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{types.indexOf(type) + 1}</li>
+                                    <li className='w-[10%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
@@ -92,10 +104,10 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.name}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.preference_no}</li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.heads.length > 0 ? `${ type.heads.map((h: any, index: any) => (<span key={index}> {h.name} </span>)  )} ` : 'No Heads' }</li>
-                                    <li className='basis-[25%] flex flex-row items-center px-2'>{moment(type.updateAt).format('D-MMM-yy')}</li>
+                                    <li className='w-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.name}</li>
+                                    <li className='w-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.preference_no}</li>
+                                    <li className='w-[20%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{type.heads.length > 0 ? `${ type.heads.map((h: any, index: any) => (<span key={index}> {h.name} </span>)  )} ` : 'No Heads' }</li>
+                                    <li className='w-[20%] flex flex-row items-center px-2'>{moment(type.updateAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))
                         }

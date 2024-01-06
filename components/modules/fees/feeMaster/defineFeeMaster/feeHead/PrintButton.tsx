@@ -30,7 +30,11 @@ const PrintButton = ({heads}:any) => {
     const data:any = [
         {
             columns:[
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'Heads List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],

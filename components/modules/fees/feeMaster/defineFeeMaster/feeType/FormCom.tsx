@@ -30,7 +30,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
     const comparisonObject = {
         name: updateType.name,
         preference_no: updateType.preference_no,
-        types: updateType.types
+        heads: updateType.heads
     };
 
 
@@ -40,14 +40,15 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
         defaultValues: {
             name: updateType.id === '' ? '' : updateType.name,
             preference_no: updateType.id === '' ? '' : updateType.preference_no,
-            types: updateType.id === '' ? '' : updateType.types,
+            heads: updateType.id === '' ? '' : updateType.heads,
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<typeof FeeTypeValidation>) => {
-        console.log('submitted')
+    const onSubmit = async (values: z.infer<any>) => {
+    // const onSubmit = async (values:any) => {
+        console.log('submitted', values)
 
         // Create type
         if (updateType.id === '') {

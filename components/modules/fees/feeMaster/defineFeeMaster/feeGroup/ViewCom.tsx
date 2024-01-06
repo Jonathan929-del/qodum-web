@@ -17,7 +17,7 @@ const ViewCom = ({ setIsViewOpened, groups, setUpdateGroup }: any) => {
     // Select handler
     const selectHandler = (group: any) => {
         setUpdateGroup({
-            id: group.id,
+            id: group._id,
             isDeleteClicked: false,
             name: group.name,
             is_special: group.is_special

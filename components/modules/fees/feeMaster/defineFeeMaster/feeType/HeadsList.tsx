@@ -18,10 +18,8 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads}: any) => {
 
         if (selected) {
             setSelectedHeads((old:any) => [...old, head])
-            console.log('adding')
         } else {
             let filterd = selectedHeads.filter((hd: any ) => hd._id !== head._id);
-            console.log('removing', filterd)
         }
     }
 
