@@ -2,29 +2,45 @@
 // Imports
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
-import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
 
 
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarration, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting form
         form.reset({
-            narration:'',
-            voucher_type:'Cash Payment Voucher'
+            vehicle_owner:'school',
+            vehicle_type:'',
+            vehicle_name:'',
+            vehicle_reg_no:'',
+            driver_name:'',
+            driver_mobile_no:'',
+            gps_no:'',
+            service_due_date:'',
+            insurance_due_date:'',
+            vendor:''
         });
         // Reseting updte entity
-        setUpdateNarration({
+        setUpdateVehicleDetails({
             id:'',
-            narration:'',
-            voucher_type:'',
-            isDeleteClicked:false
+            isDeleteClicked:false,
+            vehicle_owner:'school',
+            vehicle_type:'',
+            vehicle_name:'',
+            vehicle_reg_no:'',
+            driver_name:'',
+            driver_mobile_no:'',
+            gps_no:'',
+            service_due_date:'',
+            insurance_due_date:'',
+            vendor:''
         });
     };
 
@@ -36,7 +52,7 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
             {
-                updateNarration.id === '' ? (
+                updateVehicleDetails.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -62,12 +78,14 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>No</AlertDialogCancel>
-                                    <Button
-                                        className='border-[0.5px] border-black'
-                                        onClick={handleSubmit}
-                                    >
-                                        Yes
-                                    </Button>
+                                    <AlertDialogAction>
+                                        <Button
+                                            className='border-[0.5px] border-black'
+                                            onClick={handleSubmit}
+                                        >
+                                            Yes
+                                        </Button>
+                                    </AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
@@ -78,7 +96,7 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateNarration({...updateNarration, isDeleteClicked:true})}
+                                onClick={() => setUpdateVehicleDetails({...updateVehicleDetails, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -88,16 +106,18 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateNarration({...updateNarration, isDeleteClicked:false})}
+                                        onClick={() => setUpdateVehicleDetails({...updateVehicleDetails, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
-                                    <Button
-                                        className='border-[0.5px] border-black'
-                                        onClick={handleSubmit}
-                                    >
-                                        Yes
-                                    </Button>
+                                    <AlertDialogAction>
+                                        <Button
+                                            className='border-[0.5px] border-black'
+                                            onClick={handleSubmit}
+                                        >
+                                            Yes
+                                        </Button>
+                                    </AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
@@ -117,7 +137,7 @@ const Buttons = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
 
 
             {/* Print button */}
-            <PrintButton narrations={narrations}/>
+            <PrintButton vehiclesDetails={vehiclesDetails}/>
 
 
             {/* Cancel button */}

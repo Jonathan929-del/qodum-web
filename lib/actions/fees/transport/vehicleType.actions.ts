@@ -21,7 +21,7 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
         // Checking if the vehicle type already exists
-        const existingVehicleType = await VehicleType.findOne({name});
+        const existingVehicleType = await VehicleType.findOne({vehicle_name});
         if(existingVehicleType){
             throw new Error('Vehicle type already exists');
         };

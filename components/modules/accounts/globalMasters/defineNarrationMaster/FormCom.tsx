@@ -1,13 +1,13 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import Buttons from '@/components/modules/accounts/globalMasters/defineNarrationMaster/Buttons';
 import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';

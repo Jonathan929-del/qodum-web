@@ -14,7 +14,7 @@ export const VehicleDetailsValidation = z.object({
     driver_name:z.string(),
     driver_mobile_no:z.string(),
     gps_no:z.string(),
-    service_due_date:z.string().nonempty({message:'*Service due date is required'}),
-    insurance_due_date:z.string().nonempty({message:'*Insurance due date is required'}),
+    service_due_date:z.string(),
+    insurance_due_date:z.string(),
     vendor:z.string()
 });

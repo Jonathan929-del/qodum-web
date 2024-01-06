@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const TravelMasterSchema = new mongoose.Schema(
     {
         travel_agency_name:{type:String, required:true},
-        mobile_no:{type:String, required:true},
+        mobile_no:{type:Number, required:true},
         mail_id:{type:String, required:true},
     },
     {

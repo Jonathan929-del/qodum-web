@@ -1,19 +1,15 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
-import {ChevronDown} from 'lucide-react';
-import {Textarea} from '@/components/ui/textarea';
+import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import Buttons from '@/components/modules/accounts/globalMasters/defineNarrationMaster/Buttons';
-import {NarrationMasterValidation} from '@/lib/validations/accounts/globalMasters/narrationMaster';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {createNarrationMaster, deleteNarrationMaster, modifyNarrationMaster} from '@/lib/actions/accounts/globalMasters/defineNarrationMasters.actions';
 import {TravelMasterValidation} from '@/lib/validations/fees/transport/travelMaster.validation';
-import { createTravelMaster, deleteTravelMaster, modifyTravelMaster } from '@/lib/actions/fees/transport/travelMaster.actions';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {createTravelMaster, deleteTravelMaster, modifyTravelMaster} from '@/lib/actions/fees/transport/travelMaster.actions';
 
 
 
@@ -33,14 +29,14 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
         mobile_no:updateTravelMaster.mobile_no,
         mail_id:updateTravelMaster.mail_id
     };
-
-
+    
+    
     // Form
     const form = useForm({
         resolver:zodResolver(TravelMasterValidation),
         defaultValues:{
             travel_agency_name:updateTravelMaster.id === '' ? '' : updateTravelMaster.travel_agency_name,
-            mobile_no:updateTravelMaster.id === '' ? '' : updateTravelMaster.mobile_no,
+            mobile_no:updateTravelMaster.id === '' ? null : updateTravelMaster.mobile_no,
             mail_id:updateTravelMaster.id === '' ? '' : updateTravelMaster.mail_id
         }
     });
@@ -59,6 +55,7 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
         }
         // Modify travel master
         else if(!deepEqual(comparisonObject, values)){
+            console.log('Excuting');
             await modifyTravelMaster({
                 id:updateTravelMaster.id,
                 travel_agency_name:values.travel_agency_name,
@@ -99,7 +96,7 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full flex flex-col items-center px-2 sm:px-4'
+                    className='w-full flex flex-col items-center gap-2 px-2 sm:px-4'
                 >
 
 
@@ -108,16 +105,16 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                         control={form.control}
                         name='travel_agency_name'
                         render={({field}) => (
-                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Travel Agency Name</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
-                                        <Textarea
+                                        <Input
                                             {...field}
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
-                                    <FormMessage className='text-xs'/>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
                                 </div>
                             </FormItem>
                         )}
@@ -128,16 +125,16 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                         control={form.control}
                         name='mobile_no'
                         render={({field}) => (
-                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Mobile No.</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
-                                        <Textarea
+                                        <Input
                                             {...field}
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
-                                    <FormMessage className='text-xs'/>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
                                 </div>
                             </FormItem>
                         )}
@@ -148,16 +145,16 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                         control={form.control}
                         name='mail_id'
                         render={({field}) => (
-                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Mail Id</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
-                                        <Textarea
+                                        <Input
                                             {...field}
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />
                                     </FormControl>
-                                    <FormMessage className='text-xs'/>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
                                 </div>
                             </FormItem>
                         )}

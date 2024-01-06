@@ -15,7 +15,7 @@ const VehicleDetailsSchema = new mongoose.Schema(
         driver_name:{type:String},
         driver_mobile_no:{type:String},
         gps_no:{type:String},
-        serice_due_date:{type:String},
+        service_due_date:{type:String},
         insurance_due_date:{type:String},
         vendor:{type:String}
     },

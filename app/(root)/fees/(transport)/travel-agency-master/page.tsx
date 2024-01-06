@@ -26,11 +26,11 @@ const page = () => {
         id:'',
         isDeleteClicked:false,
         travel_agency_name:'',
-        mobile_no:'',
+        mobile_no:null,
         mail_id:''
     });
 
-    
+
     // Use effect
     useEffect(() => {
         const travelMastersFetcher = async () => {
@@ -45,12 +45,11 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
-                    // <ViewCom
-                    //     narrations={narrations}
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     setUpdateNarration={setUpdateNarration}
-                    // />
-                    ''
+                    <ViewCom
+                        setIsViewOpened={setIsViewOpened}
+                        travelMasters={travelMasters}
+                        setUpdateTravelMaster={setUpdateTravelMaster}
+                    />
                 ) : (
                     <FormCom
                         isViewOpened={isViewOpened}

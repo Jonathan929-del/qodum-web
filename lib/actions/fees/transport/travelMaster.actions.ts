@@ -104,6 +104,6 @@ export const deleteTravelMaster = async ({id}:{id:String}) => {
         return 'Travel master Deleted';
 
     } catch (err) {
-        throw new Error(`Error deleting travel master: ${err}`);      
+        throw new Error(`Error deleting travel master: ${err}`);
     };
 };
