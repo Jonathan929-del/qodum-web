@@ -334,9 +334,9 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
 
                     {/* Due On date */}
-                    <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Due On date</FormLabel>
-                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                    <div className='w-full h-10 flex flex-col items-center sm:items-center sm:flex-row'>
+                        <FormLabel className='w-full text-start text-[#726E71] text-xs pr-2 sm:text-end sm:basis-[30%]'>Due On date</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
                             {/* Year */}
                             <FormField
                                 control={form.control}
@@ -430,9 +430,9 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
 
                     {/* Due  Date */}
-                    <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-xs text-end pr-2 text-[#726E71]'>Due  Date</FormLabel>
-                        <div className='relative basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                    <div className='w-full h-10 flex flex-col items-center sm:items-center sm:flex-row'>
+                        <FormLabel className='w-full text-start text-[#726E71] text-xs pr-2 sm:text-end sm:basis-[30%]'>Due  Date</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
                             {/* Year */}
                             <FormField
                                 control={form.control}

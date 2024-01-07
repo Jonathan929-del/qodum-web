@@ -2,6 +2,7 @@
 // Imports
 import * as z from 'zod';
 import Buttons from './Buttons';
+import HeadsList from './HeadsList';
 import { deepEqual } from '@/lib/utils';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -9,10 +10,9 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FeeTypeValidation } from '@/lib/validations/fees/feeMaster/feeMaster/type.validation';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { createType, deleteType, modifyType } from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
-import { FeeTypeValidation } from '@/lib/validations/fees/feeMaster/feeMaster/type.validation';
-import HeadsList from './HeadsList';
 
 
 
@@ -47,8 +47,6 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof FeeTypeValidation>) => {
-    // const onSubmit = async (values:any) => {
-        console.log('submitted', values)
 
         // Create type
         if (updateType.id === '') {
@@ -112,7 +110,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
                     className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
                 >
 
-                    <div className="flex w-full mb-4">
+                    <div className="flex flex-col w-full gap-6 mb-4 sm:flex-row sm:gap-0">
 
                         {/* Type name */}
                         <FormField
@@ -120,12 +118,12 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
                             name='name'
                             render={({ field }) => (
                                 <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>fee Type Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Fee Type Name</FormLabel>
                                     <div className='w-full flex items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='flex flex-row h-8 max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='flex flex-row h-8 sm:max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
                                         <div className='mt-[-10px] text-xs'>
@@ -142,12 +140,12 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
                             name='preference_no'
                             render={({ field }) => (
                                 <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] min-w-[160px] '> Fee Type Preference No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%] '>Fee Type Preference No.</FormLabel>
                                     <div className='w-full flex justify-end items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='flex h-8 flex-row max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='flex h-8 flex-row sm:max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
                                         <div className='mt-[-10px] text-xs'>

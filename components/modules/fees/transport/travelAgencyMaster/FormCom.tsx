@@ -96,7 +96,7 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full flex flex-col items-center gap-2 px-2 sm:px-4'
+                    className='w-full flex flex-col items-center gap-6 px-2 sm:px-4 sm:gap-2'
                 >
 
 
@@ -105,7 +105,7 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
                         control={form.control}
                         name='travel_agency_name'
                         render={({field}) => (
-                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto text-xs text-[#726E71] sm:basis-[30%]'>Travel Agency Name</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>

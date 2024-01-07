@@ -7,16 +7,16 @@ import {useForm} from 'react-hook-form';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {VehicleRouteValidation} from '@/lib/validations/fees/transport/vehicelRoute.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createVehicleRoute, deleteVehicleRoute, modifyVehicleRoute} from '@/lib/actions/fees/transport/vehicleRoute.actions';
+import {TransportGroupValidation} from '@/lib/validations/fees/transport/transportlGroup.validation';
+import {createTransportGroup, deleteTransportGroup, modifyTransportGroup} from '@/lib/actions/fees/transport/transportGroup.actions';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateVehicleRoute}:any) => {
+const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpdateTransportGroup}:any) => {
 
 
     // Toast
@@ -25,85 +25,85 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
 
     // Comparison object
     const comparisonObject = {
-        route_no:updateVehicleRoute.route_no,
-        route_description:updateVehicleRoute.route_description,
-        route_in_charge_name:updateVehicleRoute.route_in_charge_name,
-        route_in_charge_mobile_no:updateVehicleRoute.route_in_charge_mobile_no
+        distance_name:updateTransportGroup.distance_name,
+        distance_amount:updateTransportGroup.distance_amount,
+        distance_from:updateTransportGroup.distance_from,
+        distance_to:updateTransportGroup.distance_to
     };
     
     
     // Form
     const form = useForm({
-        resolver:zodResolver(VehicleRouteValidation),
+        resolver:zodResolver(TransportGroupValidation),
         defaultValues:{
-            route_no:updateVehicleRoute.id === '' ? '' : updateVehicleRoute.route_no,
-            route_description:updateVehicleRoute.id === '' ? '' : updateVehicleRoute.route_description,
-            route_in_charge_name:updateVehicleRoute.id === '' ? '' : updateVehicleRoute.route_in_charge_name,
-            route_in_charge_mobile_no:updateVehicleRoute.id === '' ? '' : updateVehicleRoute.route_in_charge_mobile_no
+            distance_name:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_name,
+            distance_amount:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_amount,
+            distance_from:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_from,
+            distance_to:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_to
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values:z.infer<typeof VehicleRouteValidation>) => {
-        // Create vehicle route
-        if(updateVehicleRoute.id === ''){
-            if(vehicleRoutes.map((vehicleRoute:any) => vehicleRoute.route_no).includes(values.route_no)){
-                toast({title:'Route no. already exists', variant:'error'});
+    const onSubmit = async (values:z.infer<typeof TransportGroupValidation>) => {
+        // Create transport group
+        if(updateTransportGroup.id === ''){
+            if(transportGroups.map((transportGroup:any) => transportGroup.distance_name).includes(values.distance_name)){
+                toast({title:'Distance name already exists', variant:'error'});
                 return;
             };
-            await createVehicleRoute({
-                route_no:values.route_no,
-                route_description:values.route_description,
-                route_in_charge_name:values.route_in_charge_name,
-                route_in_charge_mobile_no:values.route_in_charge_mobile_no
+            await createTransportGroup({
+                distance_name:values.distance_name,
+                distance_amount:values.distance_amount,
+                distance_from:values.distance_from,
+                distance_to:values.distance_to
             });
             toast({title:'Added Successfully!'});
         }
-        // Modify vehicle route
+        // Modify transport group
         else if(!deepEqual(comparisonObject, values)){
-            if(comparisonObject.route_no !== values.route_no && vehicleRoutes.map((vehicleRoute:any) => vehicleRoute.route_no).includes(values.route_no)) {
-                toast({title:'Route no. already exists', variant:'error'});
+            if(comparisonObject.distance_name !== values.distance_name && transportGroups.map((transportGroup:any) => transportGroup.distance_name).includes(values.distance_name)) {
+                toast({title:'Distance name already exists', variant:'error'});
                 return;
             };
-            await modifyVehicleRoute({
-                id:updateVehicleRoute.id,
-                route_no:values.route_no,
-                route_description:values.route_description,
-                route_in_charge_name:values.route_in_charge_name,
-                route_in_charge_mobile_no:values.route_in_charge_mobile_no
+            await modifyTransportGroup({
+                id:updateTransportGroup.id,
+                distance_name:values.distance_name,
+                distance_amount:values.distance_amount,
+                distance_from:values.distance_from,
+                distance_to:values.distance_to
             });
             toast({title:'Updated Successfully!'});
         }
-        // Delete vehicle route
-        else if(updateVehicleRoute.isDeleteClicked){
-            await deleteVehicleRoute({id:updateVehicleRoute.id});
+        // Delete transport group
+        else if(updateTransportGroup.isDeleteClicked){
+            await deleteTransportGroup({id:updateTransportGroup.id});
             toast({title:'Deleted Successfully!'});
         };
 
 
         // Reseting update entity
-        setUpdateVehicleRoute({
+        setUpdateTransportGroup({
             id:'',
             isDeleteClicked:false,
-            route_no:'',
-            route_description:'',
-            route_in_charge_name:'',
-            route_in_charge_mobile_no:''
+            distance_name:'',
+            distance_amount:'',
+            distance_from:'',
+            distance_to:''
         });
         // Reseting form
         form.reset({
-            route_no:'',
-            route_description:'',
-            route_in_charge_name:'',
-            route_in_charge_mobile_no:''
+            distance_name:'',
+            distance_amount:'',
+            distance_from:'',
+            distance_to:''
         });
     };
 
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Vehicle Route</h2>
+            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Transport Group</h2>
             <Form
                 {...form}
             >
@@ -113,13 +113,13 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
                 >
 
 
-                    {/* Route No. */}
+                    {/* Distance Name */}
                     <FormField
                         control={form.control}
-                        name='route_no'
+                        name='distance_name'
                         render={({field}) => (
                             <FormItem className='w-full h-8 mt-6 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Route No.</FormLabel>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Distance Name</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -133,13 +133,13 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
                         )}
                     />
 
-                    {/* Vehicle Description */}
+                    {/* Distance Amount */}
                     <FormField
                         control={form.control}
-                        name='route_description'
+                        name='distance_amount'
                         render={({field}) => (
                             <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Vehicle Description</FormLabel>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Distance Amount (Monthly)</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -153,13 +153,13 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
                         )}
                     />
 
-                    {/* Route Incharge Name */}
+                    {/* Distance From */}
                     <FormField
                         control={form.control}
-                        name='route_in_charge_name'
+                        name='distance_from'
                         render={({field}) => (
                             <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Route Incharge Name</FormLabel>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Distance From (K.M.)</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -173,13 +173,13 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
                         )}
                     />
 
-                    {/* Route Incharge Mobile No. */}
+                    {/* Distance To */}
                     <FormField
                         control={form.control}
-                        name='route_in_charge_mobile_no'
+                        name='distance_to'
                         render={({field}) => (
                             <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Route Incharge Mobile No.</FormLabel>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Distance To (K.M.)</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -196,7 +196,7 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
 
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} vehicleRoutes={vehicleRoutes} updateVehicleRoute={updateVehicleRoute} setUpdateVehicleRoute={setUpdateVehicleRoute} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} transportGroups={transportGroups} updateTransportGroup={updateTransportGroup} setUpdateTransportGroup={setUpdateTransportGroup} onSubmit={onSubmit} form={form}/>
                     </div>
                 </form>
             </Form>

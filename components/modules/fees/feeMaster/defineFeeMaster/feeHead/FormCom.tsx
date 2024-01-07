@@ -183,9 +183,9 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
 
 
                     {/* Head Pay Schedule */}
-                    <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Pay Schedule</FormLabel>
-                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                    <div className='w-full h-10 flex flex-col items-center sm:flex-row'>
+                        <FormLabel className='w-full text-xs text-start pr-2 text-[#726E71] sm:basis-[30%] sm:text-end'>Pay Schedule</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
                             <FormField
                                 control={form.control}
                                 name='pay_schedule'
@@ -214,15 +214,12 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         </div>
                     </div>
 
-
-
-
                     {/* Head Priority Number */}
                     <FormField
                         control={form.control}
                         name='priority_no'
                         render={({ field }) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='w-full mt-4 sm:mt-0'>
                                 <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
                                     <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Priority Nmber</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
@@ -239,11 +236,10 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         )}
                     />
 
-
                     {/* Head Type  */}
-                    <div className='w-full h-10 flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-xs pr-2 text-end text-[#726E71]'>Type</FormLabel>
-                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                    <div className='w-full h-10 flex flex-col items-center sm:flex-row'>
+                        <FormLabel className='w-full text-xs text-start pr-2 text-[#726E71] sm:basis-[30%] sm:text-end'>Type</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
                             <FormField
                                 control={form.control}
                                 name='type'
@@ -299,7 +295,6 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                                                     value={field.value}
                                                     onCheckedChange={field.onChange}
                                                     checked={field.value}
-                                                    // disabled={updateHead.id === '' ? false : updateHead.show_in_certificate}
                                                 />
                                             </div>
                                         </FormControl>
@@ -330,7 +325,6 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                                                     value={field.value}
                                                     onCheckedChange={field.onChange}
                                                     checked={field.value}
-                                                    // disabled={updateHead.id === '' ? false : updateHead.fee_refundable}
                                                 />
                                             </div>
                                         </FormControl>

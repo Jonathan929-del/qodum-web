@@ -94,7 +94,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                 <h2>Installments List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}

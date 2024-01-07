@@ -172,14 +172,14 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
 
     return (
-        <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] max-w-[500px] max-h-[90%] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] overflow-scroll custom-sidebar-scrollbar sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Vehicle Details</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full flex flex-col items-center gap-2 px-2 sm:px-4'
+                    className='w-full flex flex-col items-center gap-8 px-2 sm:px-4 sm:gap-2'
                 >
 
 
@@ -188,7 +188,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         control={form.control}
                         name='vehicle_owner'
                         render={({field}) => (
-                            <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2'>
                                 <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Vehicle Owner</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>

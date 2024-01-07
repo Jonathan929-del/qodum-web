@@ -33,7 +33,7 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
 
     return (
         <Command
-            className='w-[99%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[80%]'
+            className='w-[89%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
         >
 
             {/* Header */}
@@ -41,7 +41,7 @@ const ViewCom = ({ setIsViewOpened, heads, setUpdateHead }: any) => {
                 <h2>Heads List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)} />
             </div>
-            <div className='w-[99%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[99%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}

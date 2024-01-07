@@ -38,9 +38,9 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
 
 
                 {/* Heads */}
-                <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
+                <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[300px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
@@ -49,7 +49,7 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
                             Head Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2'>
                             Select
                             <ChevronsUpDown size={12} />
                         </li>
@@ -68,7 +68,7 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
                                 <CommandItem
                                     key={index}
                                     value={`${heads.indexOf(head) + 1} ${head.name}   `}
-                                    className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                     <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.name}</li>
@@ -109,34 +109,6 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
                         }
                     </CommandList>
                     <CommandEmpty>No results found</CommandEmpty>
-                </div>
-
-
-                {/* Buttons */}
-                <div className='w-full flex flex-row items-center justify-between py-4 px-2 border-t-[0.5px] border-[#ccc]'>
-                    {/* Items per page */}
-                    <div className='text-[10px] flex flex-col items-center gap-2 sm:text-sm sm:flex-row'>
-                        <p className='text-hash-color'>Items per page:</p>
-                        <Select>
-                            <SelectTrigger className='flex flex-row items-center h-8 pl-2 text-[10px] bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:text-xs'>
-                                <SelectValue placeholder='1000' className='text-xs' />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value='10'>10</SelectItem>
-                                <SelectItem value='15'>15</SelectItem>
-                                <SelectItem value='50'>50</SelectItem>
-                                <SelectItem value='100'>100</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    {/* Skipping */}
-                    <div className='flex flex-row items-center gap-[2px] sm:gap-[4px]'>
-                        <Button disabled className='h-5 text-[10px] my-[0.5px] px-2 bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs sm:px-4 sm:h-7 xl:px-6'>First</Button>
-                        <Button disabled className='h-5 text-[10px] my-[0.5px] px-2 bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs sm:px-4 sm:h-7 xl:px-6'>Prev.</Button>
-                        <Button disabled className='h-5 text-[10px] my-[0.5px] px-2 bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs sm:px-4 sm:h-7 xl:px-6'>1</Button>
-                        <Button disabled className='h-5 text-[10px] my-[0.5px] px-2 bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs sm:px-4 sm:h-7 xl:px-6'>Next</Button>
-                        <Button disabled className='h-5 text-[10px] my-[0.5px] px-2 bg-white rounded-[5px] text-hash-color hover:bg-[#F1F1F1] sm:text-xs sm:px-4 sm:h-7 xl:px-6'>Last</Button>
-                    </div>
                 </div>
 
 
