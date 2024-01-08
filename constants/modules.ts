@@ -647,7 +647,7 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define Health Master',
+                        subPageName:'Student Health Master',
                         threads:[
                             'Health Unit Master',
                             'Health Master',
