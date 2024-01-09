@@ -2,8 +2,8 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {fetchRemarks} from '@/lib/actions/admission/globalMasters/remark.actions';
-import FormCom from '@/components/modules/admission/globalMasters/define remark/FormCom';
-import ViewCom from '@/components/modules/admission/globalMasters/define remark/ViewCom';
+import FormCom from '@/components/modules/admission/globalMasters/defineRemark/FormCom';
+import ViewCom from '@/components/modules/admission/globalMasters/defineRemark/ViewCom';
 
 
 
