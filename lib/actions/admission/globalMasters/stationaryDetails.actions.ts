@@ -1,18 +1,22 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import Religion from '@/lib/models/admission/globalMasters/Religion.model';
+import StationaryDetails from '@/lib/models/admission/globalMasters/StationaryDetails.model';
 
 
 
 
 
-// Create religion Props
-interface CreateReligionProps{
-    religion_name:String,
+// Create stationary details props
+interface CreateStationaryDetailsProps{
+    stationary_name:String;
+    amount:String;
+    post_account_name:String;
+    school_name:String;
+    session:String;
 };
-// Create religion
-export const createReligion = async ({religion_name}:CreateReligionProps) => {
+// Create stationary details
+export const createStationaryDetails = async ({stationary_name, amount, post_account_name, school_name, session}:CreateStationaryDetailsProps) => {
     try {
 
     
@@ -20,24 +24,24 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
         connectToDb('accounts');
 
 
-        // Checking if the religion name already exists
-        const existinReligion = await Religion.findOne({religion_name});
-        if(existinReligion){
-            throw new Error('Religion name already exists');
+        // Checking if the stationary name already exists
+        const existinStationaryDetails = await StationaryDetails.findOne({stationary_name});
+        if(existinStationaryDetails){
+            throw new Error('Stationary name already exists');
         };
 
 
-        // Creating new religion
-        const newReligion = await Religion.create({religion_name});
-        newReligion.save();
+        // Creating new stationary details
+        const newStationaryDetails = await StationaryDetails.create({stationary_name, amount, post_account_name, school_name, session});
+        newStationaryDetails.save();
 
 
         // Return
-        return newReligion;
+        return newStationaryDetails;
 
         
     } catch (err:any) {
-        console.log(`Error creating religion: ${err.message}`);
+        console.log(`Error creating stationary details: ${err.message}`);
     };
 };
 
@@ -45,8 +49,8 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
 
 
 
-// Fetch religions
-export const fetchReligions = async () => {
+// Fetch stationary details
+export const fetchStationaryDetails = async () => {
     try {
 
         // Db connection
@@ -54,64 +58,68 @@ export const fetchReligions = async () => {
 
 
         // Fetching
-        const religions = await Religion.find();
-        return religions;
+        const stationaryDetails = await StationaryDetails.find();
+        return stationaryDetails;
 
     } catch (err:any) {
-        throw new Error(`Error fetching religions: ${err}`);
+        throw new Error(`Error fetching stationary details: ${err}`);
     };
 };
 
 
 
 
-// Modify religion props
-interface ModifyReligionProps{
+// Modify stationary details props
+interface ModifyStationaryDetailsProps{
     id:String;
-    religion_name:String;
+    stationary_name:String;
+    amount:String;
+    post_account_name:String;
+    school_name:String;
+    session:String;
 }
-// Modify religion
-export const modifyReligion = async ({id, religion_name}:ModifyReligionProps) => {
+// Modify stationry details
+export const modifyStationaryDetails = async ({id, stationary_name, amount, post_account_name, school_name, session}:ModifyStationaryDetailsProps) => {
     try {
 
         // Db connection
         connectToDb('accounts');
 
 
-        // Checking if the religion already exists
-        const religions = await Religion.find();
-        const existingReligion = await Religion.findById(id);
-        if(existingReligion.religion_name !== religion_name && religions.map(r => r.religion_name).includes(religion_name)){throw new Error('Religion already exists')};
+        // Checking if the stationary details already exists
+        const stationaryDetails = await StationaryDetails.find();
+        const existingStationaryDetails = await StationaryDetails.findById(id);
+        if(existingStationaryDetails.stationary_name !== stationary_name && stationaryDetails.map(s => s.stationary_name).includes(stationary_name)){throw new Error('Stationary name already exists')};
 
 
-        // Updating religion
-        const updatedReligion = await Religion.findByIdAndUpdate(id, {religion_name}, {new:true});
+        // Updating stationary details
+        const updatedStationaryDetails = await StationaryDetails.findByIdAndUpdate(id, {stationary_name, amount, post_account_name, school_name, session}, {new:true});
 
 
         // Return
-        return updatedReligion;
+        return updatedStationaryDetails;
 
     } catch (err) {
-        throw new Error(`Error updating religion: ${err}`);
+        throw new Error(`Error updating stationary details: ${err}`);
     };
 };
 
 
 
 
-// Delete religion
-export const deleteReligion = async ({id}:{id:String}) => {
+// Delete stationary details
+export const deleteStationaryDetails = async ({id}:{id:String}) => {
     try {
 
         // Db connection
         connectToDb('accounts');
 
 
-        // Deleting religion
-        await Religion.findByIdAndDelete(id);
-        return 'Religion Deleted';
+        // Deleting stationary details
+        await StationaryDetails.findByIdAndDelete(id);
+        return 'Stationary details deleted';
 
     } catch (err) {
-        throw new Error(`Error deleting religion: ${err}`);      
+        throw new Error(`Error deleting stationary details: ${err}`);      
     };
 };
