@@ -13,17 +13,9 @@ import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/for
 
 
 // Main Function
-const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
+const HeadsList = ({ heads, form }: any) => {
 
-    const toggleTypeHead = (selected: boolean | string, head: any) => {
 
-        if (selected) {
-            setSelectedHeads((old: any) => [...old, head])
-        } else {
-            let filterd = selectedHeads.filter((hd: any) => hd._id !== head._id);
-            setSelectedHeads(filterd)
-        }
-    }
 
     return (
         <Command
@@ -62,41 +54,43 @@ const HeadsList = ({ heads, setSelectedHeads, selectedHeads, form }: any) => {
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
                                     No heads yet
                                 </p>
-                            ) : !heads[0]?.name ? (
+                            ) : !heads[0] ? (
                                 <LoadingIcon />
                             ) : heads.map((head: any, index: number) => (
                                 <CommandItem
                                     key={index}
-                                    value={`${heads.indexOf(head) + 1} ${head.name}   `}
+                                    value={`${heads.indexOf(head) + 1} `}
                                     className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
-                                    <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{head.name}</li>
+                                    <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
+                                        { `${head}`}
+                                    </li>
                                     <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
-
-                                        <FormField
+                                         <FormField
                                             control={form.control}
                                             name="heads"
-                                            render={({ field  } : any) => {
-                                                return (
-                                                    <FormItem
-                                                        key={head.name}
+                                            render={({ field }: any) => { 
+                                                 return (
+                                                    <FormItem 
+                                                      key={head}
                                                         className="flex flex-row items-start space-x-3 space-y-0"
                                                     >
-                                                        <FormControl>
+                                                        <FormControl >
+                                              
                                                             <Checkbox
-                                                                checked={field.value?.includes(head._id)}
-                                                                onCheckedChange={(checked) => {
-                                                                    
+                                                                checked={field.value?.includes(head)}
+                                                                onCheckedChange={(checked: any) => {
                                                                     return checked
-                                                                        ? field.onChange([...field.value, head._id])
+                                                                        ? field.onChange([...field.value, head])
                                                                         : field.onChange(
                                                                             field.value?.filter(
-                                                                                (value: any) => value._id !== head._id
+                                                                                (value: any) => value !== head
                                                                             )
                                                                         )
                                                                 }}
                                                             />
+
                                                         </FormControl>
                                                     </FormItem>
                                                 )

@@ -19,7 +19,7 @@ import { createType, deleteType, modifyType } from '@/lib/actions/fees/feeMaster
 
 
 // Main function
-const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, selectedHeads, setUpdateType }: any) => {
+const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: any) => {
 
 
     // Toast
@@ -57,7 +57,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
             await createType({
                 name: values.name,
                 preference_no: values.preference_no,
-                heads: selectedHeads
+                heads: values.heads
             });
             toast({ title: 'Added Successfully!' });
         }
@@ -158,7 +158,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setSelectedHeads, 
                     </div>
 
 
-                    <HeadsList heads={heads} setSelectedHeads={setSelectedHeads} selectedHeads={selectedHeads} form={form} />
+                    <HeadsList heads={heads} form={form} />
 
 
 

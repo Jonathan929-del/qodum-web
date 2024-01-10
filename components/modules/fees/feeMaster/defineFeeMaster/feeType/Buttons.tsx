@@ -56,7 +56,6 @@ const Buttons = ({setIsViewOpened, types, updateType, setUpdateType, onSubmit, f
                 ) : (
                     <>
 
-
                         {/* Modify button */}
                         <AlertDialog>
                             <AlertDialogTrigger
@@ -128,7 +127,7 @@ const Buttons = ({setIsViewOpened, types, updateType, setUpdateType, onSubmit, f
 
 
             {/* Print button */}
-            {/* <PrintButton types={types}/> */}
+            <PrintButton types={types}/>
 
 
             {/* Cancel button */}
@@ -139,8 +138,6 @@ const Buttons = ({setIsViewOpened, types, updateType, setUpdateType, onSubmit, f
             >
                 Cancel
             </span>
-
-
         </div>
     );
 };

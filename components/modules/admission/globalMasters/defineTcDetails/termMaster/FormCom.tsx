@@ -33,7 +33,7 @@ const FormCom = ({setIsViewOpened, termMasters, updateTermMaster, setUpdateTermM
     const form:any = useForm({
         resolver:zodResolver(RemarkValidation),
         defaultValues:{
-            name:updateTermMaster.id === '' ? '' : updateTermMaster.name,
+            name: updateTermMaster.id === '' ? '' : updateTermMaster.name,
         }
     });
 

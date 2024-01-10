@@ -8,20 +8,17 @@ import { ChevronDown, Download } from 'lucide-react';
 
 
 // Main Function
-const PrintButton = ({heads}:any) => {
+const PrintButton = ({types}:any) => {
 
     
 
-    // Heads Array
-    const headsArray = heads.map((head:any) => {
+    // Types Array
+    const typesArray = types.map((type:any) => {
         return([
-            {value:head.name},
-            {value:head.print_name},
-            {value:head.pay_schedule},
-            {value:head.type},
-            {value:head.show_in_certificate},
-            {value:head.fee_refundable},
-            {value:moment(head.createdAt).format('D-MMM-yy')}
+            {value:type.name},
+            {value:type.preference_no},
+            {value: type.heads?.length },
+            {value:moment(type.createdAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -30,8 +27,9 @@ const PrintButton = ({heads}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'Heads List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Types List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
@@ -39,14 +37,11 @@ const PrintButton = ({heads}:any) => {
         {
             columns: [
                 {title:'Name ', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Head Print Name', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Pay Schedule', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Type', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Show In Certificate', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Fee Refundable', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Preference No', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Heads Ids', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:headsArray,
+            data: typesArray,
         }
     ];
 
@@ -71,12 +66,12 @@ const PrintButton = ({heads}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Heads List'
+                            filename='Types List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Head'
+                                name='Types'
                             />
                         </ExcelFile>
 
@@ -89,12 +84,12 @@ const PrintButton = ({heads}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Heads List'
+                            filename='Types List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Head'
+                                name='Types'
                             />
                         </ExcelFile>
 
@@ -106,8 +101,6 @@ const PrintButton = ({heads}:any) => {
                             .pdf
                             <Download size={16} className='text-hash-color ml-2'/>
                         </span>
-
-
 
                 </SelectContent>
             </Select>

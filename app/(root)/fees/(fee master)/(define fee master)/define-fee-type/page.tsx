@@ -34,8 +34,6 @@ const page = () => {
         heads: []
     });
 
-    // selected heads for fee type
-    const [selectedHeads, setSelectedHeads] = useState([])
 
     // Use effect for types
     useEffect(() => {
@@ -50,7 +48,10 @@ const page = () => {
     // Use effect for heads
     useEffect(() => {
         const headsFetcher = async () => {
-            const res = await fetchHeads();
+            const res = (await fetchHeads()).reduce((acc, cur) => {
+                acc.push(cur._id)
+                return acc; 
+            }, []);
             setHeads(res);
         };
         headsFetcher();
@@ -70,11 +71,9 @@ const page = () => {
                     <FormCom
                         types={types}
                         heads={heads}
-                        setSelectedHeads={setSelectedHeads}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
                         updateType={updateType}
-                        selectedHeads={selectedHeads}
                         setUpdateType={setUpdateType}
                     />
                 )
