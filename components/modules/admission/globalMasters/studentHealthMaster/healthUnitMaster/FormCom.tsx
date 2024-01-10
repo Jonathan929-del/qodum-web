@@ -49,7 +49,7 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
         // Create remark
         if(updateHealthUnit.id === ''){
             if(healthUnits.map((hUnit:any) => hUnit.unit_name).includes(values.unit_name)){
-                toast({title:'Health Unit name already exists', variant:'error'});
+                toast({title:'Health unit name already exists', variant:'error'});
                 return;
             };
             await createHealthUnit({
@@ -60,7 +60,7 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
         }
         // Modify remark
         else if(!deepEqual(comparisonObject, values)){
-            if(comparisonObject.unit_name !== values.unit_name && healthUnits.map((hUnit:any) => healthUnits.unit_name).includes(values.unit_name)){
+            if(comparisonObject.unit_name !== values.unit_name && healthUnits.map((hUnit:any) => hUnit.unit_name).includes(values.unit_name)){
                 toast({title:'Health Unit name is already exists', variant:'error'});
                 return;
             };
@@ -112,13 +112,13 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
                         control={form.control}
                         name='unit_name'
                         render={({ field }) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
+                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
                                 <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Unit Name</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='flex h-8 flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                     <div className='mt-[-10px] text-xs'>
@@ -135,8 +135,8 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
                         control={form.control}
                         name='unit_type'
                         render={({ field }) => (
-                            <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
-                                <FormLabel className='basis-auto mb-[-4px] text-end text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Unit Type</FormLabel>
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-8 mt-6 sm:flex-row sm:items-center sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] pr-2 text-end text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Unit Type</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Select
@@ -144,15 +144,14 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
                                             value={field.value}
                                             onValueChange={field.onChange}
                                         >
-                                            <SelectTrigger className='w-full h-full flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Select' />
                                                 <ChevronDown className='h-4 w-4 opacity-50' />
                                             </SelectTrigger>
                                             <SelectContent>
 
-                                                <SelectItem >Select Unit Type</SelectItem>
                                                 <SelectItem value='numeric'>Numeric</SelectItem>
-                                                <SelectItem value='non_numeric'>NoN Numeric</SelectItem>
+                                                <SelectItem value='non_numeric'>Non Numeric</SelectItem>
                                                 
                                             </SelectContent>
                                         </Select>

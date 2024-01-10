@@ -36,7 +36,7 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
                 <h2>Health Units List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
@@ -51,20 +51,20 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
                 {/* Casts */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[650px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Unit Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Unit Type
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -82,11 +82,11 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
                                 </p>
                             ) : !healthUnits[0]?.unit_name ? (
                                     <LoadingIcon />
-                                ) : healthUnits.map((hUnit:any, index: number) => (
+                                ) : healthUnits.map((hUnit:any, index:number) => (
                                     <CommandItem
                                         key={index}
                                         value={`${healthUnits.indexOf(hUnit) + 1} ${hUnit.unit_name} ${hUnit.unit_type}`}
-                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        className='w-full min-w-[650px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                     >
                                         <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{healthUnits.indexOf(hUnit) + 1}</li>
                                         <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>

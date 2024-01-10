@@ -4,25 +4,26 @@ import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {HealthMasterValidation} from '@/lib/validations/admission/globalMasters/studentHealthMaster/healthMaster.validation';
 import {createHealthMaster, deleteHealthMaster, modifyHealthMaster} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthMaster.actions';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {ChevronDown} from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main function
-const FormCom = ({ setIsViewOpened, healthMasters, updateHealthMaster, setUpdateHealthMaster }: any) => {
+const FormCom = ({setIsViewOpened, healthMasters, updateHealthMaster, setUpdateHealthMaster, healthUnits}:any) => {
 
 
     // Toast
-    const { toast } = useToast();
+    const {toast} = useToast();
 
 
     // Comparison object
@@ -47,7 +48,7 @@ const FormCom = ({ setIsViewOpened, healthMasters, updateHealthMaster, setUpdate
         // Create remark
         if (updateHealthMaster.id === '') {
             if (healthMasters.map((hMaster: any) => hMaster.health_parameter).includes(values.health_parameter)) {
-                toast({ title: 'Health Master Paramater already exists', variant: 'error' });
+                toast({ title: 'Health paramater already exists', variant: 'error' });
                 return;
             };
             await createHealthMaster({
@@ -59,7 +60,7 @@ const FormCom = ({ setIsViewOpened, healthMasters, updateHealthMaster, setUpdate
         // Modify Health Master
         else if (!deepEqual(comparisonObject, values)) {
             if (comparisonObject.health_parameter !== values.health_parameter && healthMasters.map((hMaster: any) => hMaster.health_parameter).includes(values.health_parameter)) {
-                toast({ title: 'Health Master name is already exists', variant: 'error' });
+                toast({ title: 'Health parameter already exists', variant: 'error' });
                 return;
             };
             await modifyHealthMaster({
@@ -99,7 +100,7 @@ const FormCom = ({ setIsViewOpened, healthMasters, updateHealthMaster, setUpdate
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
+                    className='relative w-full flex flex-col pt-4 items-center px-2 gap-2 sm:px-4'
                 >
 
 
@@ -131,28 +132,24 @@ const FormCom = ({ setIsViewOpened, healthMasters, updateHealthMaster, setUpdate
                     <FormField
                         control={form.control}
                         name='unit'
-                        render={({ field }) => (
-                            <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
-                                <FormLabel className='basis-auto mb-[-4px] text-end text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Unit</FormLabel>
-                                <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
+                        render={({field}) => (
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-10 mt-6 sm:flex-row sm:items-center sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] text-end text-xs text-[#726E71] pr-2 sm:basis-[30%] sm:mb-0'>Unit</FormLabel>
+                                <div className='w-full h-10 flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Select
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
                                         >
-                                            <SelectTrigger className='w-full h-full flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectTrigger className='w-full h-10 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Select' />
                                                 <ChevronDown className='h-4 w-4 opacity-50' />
                                             </SelectTrigger>
                                             <SelectContent>
-
-                                                <SelectItem >Select Unit Name</SelectItem>
-                                                <SelectItem value='cm'>CM</SelectItem>
-                                                <SelectItem value='kg'>KG</SelectItem>
-                                                <SelectItem value='kg'>KG</SelectItem>
-                                                <SelectItem value='text'>Text</SelectItem>
-
+                                                {healthUnits.length < 1 ? <p>No health units</p> : !healthUnits[0] ? <LoadingIcon /> : healthUnits.map((u:any) => (
+                                                    <SelectItem value={u || 'jn'} key={u}>{u}</SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </FormControl>

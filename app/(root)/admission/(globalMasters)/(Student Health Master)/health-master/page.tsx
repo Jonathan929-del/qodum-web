@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {fetchHealthMasters} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthMaster.actions';
 import FormCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/FormCom';
 import ViewCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/ViewCom';
+import { fetchHealthUnits } from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthUnit.actions';
 
 
 
@@ -21,6 +22,10 @@ const page = () => {
     const [healthMasters, setHealthMasters] = useState([{}]);
 
 
+    // Health units
+    const [healthUnits, setHealthUnits] = useState(['']);
+
+
     // Update Health Master
     const [updateHealthMaster, setUpdateHealthMaster] = useState({
         id:'',
@@ -34,8 +39,10 @@ const page = () => {
     useEffect(() => {
         const healthMastersFetcher = async () => {
 
-            const res = await fetchHealthMasters();
-            setHealthMasters(res);
+            const healthMasterRes = await fetchHealthMasters();
+            const healthUnitsRes = await fetchHealthUnits();
+            setHealthMasters(healthMasterRes);
+            setHealthUnits(healthUnitsRes.map(u => u.unit_name));
         };
         healthMastersFetcher();
     }, [isViewOpened, updateHealthMaster]);
@@ -52,6 +59,7 @@ const page = () => {
                     />
                 ) : (
                     <FormCom
+                        healthUnits={healthUnits}
                         healthMasters={healthMasters}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
