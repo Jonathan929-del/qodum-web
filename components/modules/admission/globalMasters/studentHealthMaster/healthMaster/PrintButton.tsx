@@ -25,7 +25,8 @@ const PrintButton = ({healthMasters}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'Health Masters List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Health Masters List', width:{wpx:275}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
@@ -33,8 +34,8 @@ const PrintButton = ({healthMasters}:any) => {
         {
             columns: [
                 {title:'Health Parameter', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Unit', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Unit', width:{wpx:50}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Created At', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
             data:heathMastersArray,
         }
@@ -61,7 +62,7 @@ const PrintButton = ({healthMasters}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='heath Masters List'
+                            filename='Health Masters List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet

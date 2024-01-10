@@ -36,11 +36,11 @@ const ViewCom = ({setIsViewOpened, healthMasters, setUpdateHealthMaster}:any) =>
                 <h2>Health Masters List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -51,20 +51,20 @@ const ViewCom = ({setIsViewOpened, healthMasters, setUpdateHealthMaster}:any) =>
                 {/* Health Masters */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[700px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Health Parameter
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Unit
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -77,7 +77,7 @@ const ViewCom = ({setIsViewOpened, healthMasters, setUpdateHealthMaster}:any) =>
                     <CommandList>
                         {
                             healthMasters.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No Health Masters yet
                                 </p>
                             ) : !healthMasters[0]?.unit ? (
@@ -86,10 +86,10 @@ const ViewCom = ({setIsViewOpened, healthMasters, setUpdateHealthMaster}:any) =>
                                     <CommandItem
                                         key={index}
                                         value={`${healthMasters.indexOf(hMaster) + 1} ${hMaster.health_parameter} ${hMaster.unit}`}
-                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        className='w-full min-w-[700px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{healthMasters.indexOf(hMaster) + 1}</li>
-                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{healthMasters.indexOf(hMaster) + 1}</li>
+                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
                                                 className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
@@ -98,8 +98,8 @@ const ViewCom = ({setIsViewOpened, healthMasters, setUpdateHealthMaster}:any) =>
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{hMaster.health_parameter}</li>
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{hMaster.unit}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{hMaster.health_parameter}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{hMaster.unit}</li>
                                         <li className='basis-[30%] flex flex-row items-center px-2'>{moment(hMaster.updateAt).format('D-MMM-yy')}</li>
                                     </CommandItem>
                                 ))
