@@ -70,10 +70,6 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
                             Preference No
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[20%] w-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Heads
-                            <ChevronsUpDown size={12} />
-                        </li>
                         <li className='basis-[20%] w-[20%] flex flex-row items-center justify-between px-2'>
                             Modify Details
                             <ChevronsUpDown size={12} />
@@ -107,7 +103,6 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
                                     </li>
                                     <li className='basis-[20%] w-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{type.name}</li>
                                     <li className='basis-[20%] w-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{type.preference_no}</li>
-                                    <li className='basis-[20%] w-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{type.heads.length  || 'No Heads' }</li>
                                     <li className='basis-[20%] w-[20%] flex flex-row items-center px-2'>{moment(type.updateAt).format('D-MMM-yy')}</li>
                                 </CommandItem>
                             ))

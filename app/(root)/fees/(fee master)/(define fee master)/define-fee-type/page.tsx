@@ -49,7 +49,7 @@ const page = () => {
     useEffect(() => {
         const headsFetcher = async () => {
             const res = (await fetchHeads()).reduce((acc, cur) => {
-                acc.push(cur._id)
+                acc.push(cur.name)
                 return acc; 
             }, []);
             setHeads(res);
