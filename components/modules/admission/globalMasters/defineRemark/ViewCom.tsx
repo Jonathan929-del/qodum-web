@@ -60,7 +60,7 @@ const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[40%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Board
+                            Remark
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[40%] flex flex-row items-center justify-between px-2'>

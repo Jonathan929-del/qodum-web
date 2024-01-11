@@ -9,20 +9,20 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, religions, updateReligion, setUpdateReligion, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, streams, updateStream, setUpdateStream, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateReligion({
+        setUpdateStream({
             id:'',
             isDeleteClicked:false,
-            religion_name:''
+            stream_name:''
         });
         // Reseting form
         form.reset({
-            religion_name:''
+            stream_name:''
         });
     };
 
@@ -34,7 +34,7 @@ const Buttons = ({setIsViewOpened, religions, updateReligion, setUpdateReligion,
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateReligion.id === '' ? (
+                updateStream.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -78,7 +78,7 @@ const Buttons = ({setIsViewOpened, religions, updateReligion, setUpdateReligion,
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateReligion({...updateReligion, isDeleteClicked:true})}
+                                onClick={() => setUpdateStream({...updateStream, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -88,7 +88,7 @@ const Buttons = ({setIsViewOpened, religions, updateReligion, setUpdateReligion,
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateReligion({...updateReligion, isDeleteClicked:false})}
+                                        onClick={() => setUpdateStream({...updateStream, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -117,7 +117,7 @@ const Buttons = ({setIsViewOpened, religions, updateReligion, setUpdateReligion,
 
 
             {/* Print button */}
-            <PrintButton religions={religions}/>
+            <PrintButton streams={streams}/>
 
 
             {/* Cancel button */}

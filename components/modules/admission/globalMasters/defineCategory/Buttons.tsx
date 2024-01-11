@@ -19,12 +19,12 @@ const Buttons = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
             id:'',
             isDeleteClicked:false,
             category_name:'',
-            is_default: false
+            is_default:false
         });
         // Reseting form
         form.reset({
             category_name:'',
-            is_default: false
+            is_default:false
         });
     };
 

@@ -33,9 +33,7 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const categoriesFetcher = async () => {
-
             const res = await fetchCategories();
-
             setCategories(res);
         };
         categoriesFetcher();

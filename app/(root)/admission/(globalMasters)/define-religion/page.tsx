@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchHealthMasters} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthMaster.actions';
-import FormCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/FormCom';
-import ViewCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/ViewCom';
+import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
+import FormCom from '@/components/modules/admission/globalMasters/defineReligion/FormCom';
+import ViewCom from '@/components/modules/admission/globalMasters/defineReligion/ViewCom';
 
 
 
@@ -17,28 +17,26 @@ const page = () => {
     const [isViewOpened, setIsViewOpened] = useState(false);
 
 
-    // Health Masters
-    const [healthMasters, setHealthMasters] = useState([{}]);
+    // Religions
+    const [religions, setReligions] = useState([{}]);
 
 
-    // Update Health Master
-    const [updateHealthMaster, setUpdateHealthMaster] = useState({
+    // Update religion
+    const [updateReligion, setUpdateReligion] = useState({
         id:'',
         isDeleteClicked:false,
-        health_parameter:'',
-        unit:'',
+        religion_name:''
     });
 
     
     // Use effect
     useEffect(() => {
-        const healthMastersFetcher = async () => {
-
-            const res = await fetchHealthMasters();
-            setHealthMasters(res);
+        const religionsFetcher = async () => {
+            const res = await fetchReligions();
+            setReligions(res);
         };
-        healthMastersFetcher();
-    }, [isViewOpened, updateHealthMaster]);
+        religionsFetcher();
+    }, [isViewOpened, setUpdateReligion]);
 
 
     return (
@@ -46,17 +44,17 @@ const page = () => {
             {
                 isViewOpened ? (
                     <ViewCom
-                        healthMasters={healthMasters}
                         setIsViewOpened={setIsViewOpened}
-                        setUpdateHealthMaster={setUpdateHealthMaster}
+                        religions={religions}
+                        setUpdateReligion={setUpdateReligion}
                     />
                 ) : (
                     <FormCom
-                        healthMasters={healthMasters}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
-                        updateHealthMaster={updateHealthMaster}
-                        setUpdateHealthMaster={setUpdateHealthMaster}
+                        religions={religions}
+                        updateReligion={updateReligion}
+                        setUpdateReligion={setUpdateReligion}
                     />
                 )
             }

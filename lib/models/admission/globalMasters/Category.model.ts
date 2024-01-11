@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const CategorySchema = new mongoose.Schema(
     {
         category_name:{type:String, required:true, unique:true},
-        is_default:{type:String},
+        is_default:{type:Boolean}
     },
     {
         timestamps:true

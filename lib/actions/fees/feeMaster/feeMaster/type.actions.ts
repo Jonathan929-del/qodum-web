@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import FeeType from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeType.model';
+import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 
 
 
@@ -43,6 +44,13 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
         });
         newType.save().then(async () => {
             await FeeType.findOneAndUpdate({name}, {heads});
+            // Afilliating fee group with the new type
+        });
+
+
+        // Updating head
+        heads.map(async (head:any) => {
+            await Head.findOneAndUpdate({head}, {affiliated_fee_type:name});
         });
 
 

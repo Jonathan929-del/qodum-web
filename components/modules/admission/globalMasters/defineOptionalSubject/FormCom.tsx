@@ -10,13 +10,15 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import { RemarkValidation } from '@/lib/validations/admission/globalMasters/remark.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {createRemark, deleteRemark, modifyRemark} from '@/lib/actions/admission/globalMasters/remark.actions';
+import { OptionalSubjectValidation } from '@/lib/validations/admission/globalMasters/optionalSubject.validation';
+import { createOptionalSubject, deleteOptionalSubject, modifyOptionalSubject } from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, termMasters, updateTermMaster, setUpdateTermMaster}:any) => {
+const FormCom = ({setIsViewOpened, subjects, updateSubject, setUpdateSubject}:any) => {
 
 
     // Toast
@@ -25,67 +27,67 @@ const FormCom = ({setIsViewOpened, termMasters, updateTermMaster, setUpdateTermM
 
     // Comparison object
     const comparisonObject = {
-        name:updateTermMaster.name
+        subject_name:updateSubject.subject_name
     };
 
 
     // Form
     const form:any = useForm({
-        resolver:zodResolver(RemarkValidation),
+        resolver:zodResolver(OptionalSubjectValidation),
         defaultValues:{
-            name: updateTermMaster.id === '' ? '' : updateTermMaster.name,
+            subject_name:updateSubject.id === '' ? '' : updateSubject.subject_name
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values:z.infer<typeof RemarkValidation>) => {
-        // Create remark
-        if(updateTermMaster.id === ''){
-            if(termMasters.map((term:any) => term.name).includes(values.name)){
-                toast({title:'Term Master name already exists', variant:'error'});
+    const onSubmit = async (values:z.infer<typeof OptionalSubjectValidation>) => {
+        // Create subject
+        if(updateSubject.id === ''){
+            if(subjects.map((s:any) => s.subject_name).includes(values.subject_name)){
+                toast({title:'Optional subject name already exists', variant:'error'});
                 return;
             };
-            await createTermMaster({
-                name:values.name
+            await createOptionalSubject({
+                subject_name:values.subject_name
             });
             toast({title:'Added Successfully!'});
         }
-        // Modify remark
+        // Modify subject
         else if(!deepEqual(comparisonObject, values)){
-            if(comparisonObject.name !== values.name && termMasters.map((term:any) => term.name).includes(values.name)){
-                toast({title:'Term Master name is already exists', variant:'error'});
+            if(comparisonObject.subject_name !== values.subject_name && subjects.map((s:any) => s.subject_name).includes(values.subject_name)){
+                toast({title:'Optional subject name already exists', variant:'error'});
                 return;
             };
-            await modifyTermsMAster({
-                id:updateTermMaster.id,
-                name:values.name,
+            await modifyOptionalSubject({
+                id:updateSubject.id,
+                subject_name:values.subject_name,
             });
             toast({title:'Updated Successfully!'});
         }
-        // Delete remark
-        else if(updateTermMaster.isDeleteClicked){
-            await deleteRemark({id:updateTermMaster.id});
+        // Delete subject
+        else if(updateSubject.isDeleteClicked){
+            await deleteOptionalSubject({id:updateSubject.id});
             toast({title:'Deleted Successfully!'});
         };
 
 
         // Reseting update entity
-        setUpdateTermMaster({
+        setUpdateSubject({
             id:'',
             isDeleteClicked:false,
-            name:''
+            subject_name:''
         });
         // Reseting form
         form.reset({
-            name:''
+            subject_name:''
         });
     };
 
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Remark</h2>
+            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Optional Subject</h2>
             <Form
                 {...form}
             >
@@ -96,13 +98,13 @@ const FormCom = ({setIsViewOpened, termMasters, updateTermMaster, setUpdateTermM
 
 
 
-                    {/* Term Master Name */}
+                    {/* Subject Name */}
                     <FormField
                         control={form.control}
-                        name='name'
+                        name='subject_name'
                         render={({field}) => (
                             <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Term Master Name</FormLabel>
+                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Subject Name</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -120,7 +122,7 @@ const FormCom = ({setIsViewOpened, termMasters, updateTermMaster, setUpdateTermM
 
 
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} termMasters={termMasters} updateTermMaster={updateTermMaster} setUpdateTermMaster={setUpdateTermMaster} onSubmit={onSubmit} form={form}/>
+                    <Buttons setIsViewOpened={setIsViewOpened} subjects={subjects} updateSubject={updateSubject} setUpdateSubject={setUpdateSubject} onSubmit={onSubmit} form={form}/>
 
                     
                 </form>

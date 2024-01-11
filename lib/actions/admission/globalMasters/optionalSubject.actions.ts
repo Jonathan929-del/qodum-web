@@ -9,10 +9,10 @@ import OptionalSubject from '@/lib/models/admission/globalMasters/OptionalSubjec
 
 // Create optional subject props
 interface CreateOptionalSubjectProps{
-    object_name:String;
+    subject_name:String;
 };
 // Create optional subject
-export const createSubject = async ({object_name}:CreateOptionalSubjectProps) => {
+export const createOptionalSubject = async ({subject_name}:CreateOptionalSubjectProps) => {
     try {
 
     
@@ -21,14 +21,14 @@ export const createSubject = async ({object_name}:CreateOptionalSubjectProps) =>
 
 
         // Checking if the optional subject already exists
-        const existinOptionalSubject = await OptionalSubject.findOne({object_name});
+        const existinOptionalSubject = await OptionalSubject.findOne({subject_name});
         if(existinOptionalSubject){
             throw new Error('Subject already exists');
         };
 
 
         // Creating new optional subject
-        const newOptionalSubject = await OptionalSubject.create({object_name});
+        const newOptionalSubject = await OptionalSubject.create({subject_name});
         newOptionalSubject.save();
 
 
@@ -71,7 +71,7 @@ interface ModifySubjectProps{
     subject_name:String;
 }
 // Modify subject
-export const modifySubject = async ({id, subject_name}:ModifySubjectProps) => {
+export const modifyOptionalSubject = async ({id, subject_name}:ModifySubjectProps) => {
     try {
 
         // Db connection
@@ -100,7 +100,7 @@ export const modifySubject = async ({id, subject_name}:ModifySubjectProps) => {
 
 
 // Delete subject
-export const deleteSubject = async ({id}:{id:String}) => {
+export const deleteOptionalSubject = async ({id}:{id:String}) => {
     try {
 
         // Db connection

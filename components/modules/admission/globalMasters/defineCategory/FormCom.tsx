@@ -4,17 +4,14 @@ import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import { RemarkValidation } from '@/lib/validations/admission/globalMasters/remark.validation';
+import {CategoryValidation} from '@/lib/validations/admission/globalMasters/category.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createRemark, deleteRemark, modifyRemark} from '@/lib/actions/admission/globalMasters/remark.actions';
-import { CategoryValidation } from '@/lib/validations/admission/globalMasters/category.validation';
-import { createCategory, deleteCategory, modifyCategory } from '@/lib/actions/admission/globalMasters/category.actions';
-import { deleteCache } from 'next/dist/server/lib/render-server';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+import {createCategory, deleteCategory, modifyCategory} from '@/lib/actions/admission/globalMasters/category.actions';
 
 
 
@@ -30,28 +27,27 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
 
     // Comparison object
     const comparisonObject = {
-        category_name: updateCategory.category_name,
-        is_default: updateCategory.is_default
+        category_name:updateCategory.category_name,
+        is_default:updateCategory.is_default
     };
 
 
     // Form
-    const form:any = useForm({
+    const form = useForm({
         resolver:zodResolver(CategoryValidation),
         defaultValues:{
-            category_name : updateCategory.id === '' ? '' : updateCategory.category_name,
-            is_default : updateCategory.id === '' ? '' : updateCategory.is_default,
+            category_name:updateCategory.id === '' ? '' : updateCategory.category_name,
+            is_default:updateCategory.id === '' ? false : updateCategory.is_default
         }
     });
 
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof CategoryValidation>) => {
-        console.log(values)
         // Create category
         if(updateCategory.id === ''){
-            if(categories.map((cat:any) => cat.name).includes(values.category_name)){
-                toast({title:'Category Name already exists', variant:'error'});
+            if(categories.map((cat:any) => cat.category_name).includes(values.category_name)){
+                toast({title:'Category name already exists', variant:'error'});
                 return;
             };
             await createCategory({
@@ -63,7 +59,7 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
         // Modify Category
         else if(!deepEqual(comparisonObject, values)){
             if(comparisonObject.category_name !== values.category_name && categories.map((cat:any) => cat.category_name).includes(values.category_name)){
-                toast({title:'Category Name is already exists', variant:'error'});
+                toast({title:'Category name already exists', variant:'error'});
                 return;
             };
             await modifyCategory({
@@ -75,6 +71,7 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
         }
         // Delete remark
         else if(updateCategory.isDeleteClicked){
+            console.log('Excuting');
             await deleteCategory({id:updateCategory.id});
             toast({title:'Deleted Successfully!'});
         };
@@ -85,12 +82,12 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
             id:'',
             isDeleteClicked:false,
             category_name:'',
-            is_default: false
+            is_default:false
         });
         // Reseting form
         form.reset({
             category_name:'',
-            is_default: false
+            is_default:false
         });
     };
 
@@ -107,8 +104,7 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
                 >
 
 
-
-                    {/* Cast Name */}
+                    {/* Category Name */}
                     <FormField
                         control={form.control}
                         name='category_name'
@@ -130,7 +126,7 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
                         )}
                     />
 
-                            
+
                     {/* Is Default */}
                     <FormField
                         control={form.control}
@@ -152,7 +148,6 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
-                                                // disabled={updateGroup.id === '' ? false : updateGroup.is_special}
                                             />
                                         </div>
                                     </FormControl>
@@ -160,7 +155,6 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
                             </FormItem>
                         )}
                     />
-
 
 
                     {/* Buttons */}

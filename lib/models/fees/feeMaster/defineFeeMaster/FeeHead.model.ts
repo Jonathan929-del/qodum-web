@@ -14,7 +14,8 @@ const HeadSchema = new mongoose.Schema(
         priority_no:{type:Number},
         type:{type:String, required:true},
         show_in_certificate:{type:Boolean},
-        fee_refundable:{type:Boolean}
+        fee_refundable:{type:Boolean},
+        affiliated_fee_type:{type:String}
     },
     {
         timestamps:true

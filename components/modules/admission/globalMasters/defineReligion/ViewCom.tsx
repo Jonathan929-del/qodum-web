@@ -11,15 +11,15 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, casts, setUpdateCast}:any) => {
+const ViewCom = ({setIsViewOpened, religions, setUpdateReligion}:any) => {
 
 
     // Select handler
-    const selectHandler = (cast:any) => {
-        setUpdateCast({
-            id:cast._id,
+    const selectHandler = (r:any) => {
+        setUpdateReligion({
+            id:r._id,
             isDeleteClicked:false,
-            name:cast.name
+            religion_name:r.religion_name
         });
         setIsViewOpened(false);
     };
@@ -32,14 +32,14 @@ const ViewCom = ({setIsViewOpened, casts, setUpdateCast}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Casts List</h2>
+                <h2>Religions List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -47,58 +47,53 @@ const ViewCom = ({setIsViewOpened, casts, setUpdateCast}:any) => {
                 </div>
 
 
-                {/* Casts */}
+                {/* Religions */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[300px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[40%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Name
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[40%] flex flex-row items-center justify-between px-2'>
-                            Modify Details
+                        <li className='basis-[60%] flex flex-row items-center justify-between px-2'>
+                            Religion Name
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            casts.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No casts yet
+                            religions.length < 1 ? (
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                    No religions yet
                                 </p>
-                            ) : !casts[0]?.remark ? (
+                            ) : !religions[0]?.religion_name ? (
                                     <LoadingIcon />
-                                ) : casts.map((cast:any) => (
+                                ) : religions.map((religion:any) => (
                                     <CommandItem
-                                        value={`${casts.indexOf(cast) + 1} ${cast.name}`}
-                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        value={`${religions.indexOf(religion) + 1} ${religion.religion_name}`}
+                                        className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{casts.indexOf(cast) + 1}</li>
-                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{religions.indexOf(religion) + 1}</li>
+                                        <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
                                                 className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                                onClick={() => selectHandler(cast)}
+                                                onClick={() => selectHandler(religion)}
                                             >
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[40%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{cast.name}</li>
-                                        <li className='basis-[40%] flex flex-row items-center px-2'>{moment(cast.updateAt).format('D-MMM-yy')}</li>
+                                        <li className='basis-[60%] flex flex-row items-center px-2'>{religion.religion_name}</li>
                                     </CommandItem>
                                 ))
                         }
                     </CommandList>
-                    <CommandEmpty>No results found</CommandEmpty>
+                    {religions.length > 0 && <CommandEmpty>No results found</CommandEmpty>}
                 </div>
 
 

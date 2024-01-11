@@ -147,8 +147,8 @@ const FormCom = ({setIsViewOpened, healthMasters, updateHealthMaster, setUpdateH
                                                 <ChevronDown className='h-4 w-4 opacity-50' />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {healthUnits.length < 1 ? <p>No health units</p> : !healthUnits[0] ? <LoadingIcon /> : healthUnits.map((u:any) => (
-                                                    <SelectItem value={u || 'jn'} key={u}>{u}</SelectItem>
+                                                {healthUnits?.length < 1 ? <p>No health units</p> : !healthUnits ? <LoadingIcon /> : healthUnits.map((u:any) => (
+                                                    <SelectItem value={u} key={u}>{u}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>

@@ -8,14 +8,14 @@ import { ChevronDown, Download } from 'lucide-react';
 
 
 // Main Function
-const PrintButton = ({religions}:any) => {
+const PrintButton = ({streams}:any) => {
 
 
-    // Religions Array
-    const religionsArray = religions.map((r:any) => {
+    // Streams Array
+    const streamsArray = streams.map((s:any) => {
         return([
-            {value:r.religion_name},
-            {value:moment(r.createdAt).format('D-MMM-yy')}
+            {value:s.stream_name},
+            {value:moment(s.createdAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -24,17 +24,17 @@ const PrintButton = ({religions}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'Religions List', width:{wpx:400}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Streams List', width:{wpx:200}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'Religion', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Stream Name', width:{wpx:125}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Created At', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:religionsArray,
+            data:streamsArray,
         }
     ];
 
@@ -59,12 +59,12 @@ const PrintButton = ({religions}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Religions List'
+                            filename='Streams List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Religion'
+                                name='Stream'
                             />
                         </ExcelFile>
 
@@ -77,12 +77,12 @@ const PrintButton = ({religions}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Religions List'
+                            filename='Streams List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Religion'
+                                name='Stream'
                             />
                         </ExcelFile>
 

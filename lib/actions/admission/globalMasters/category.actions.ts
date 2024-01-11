@@ -13,7 +13,7 @@ interface CreateCategoryProps{
     is_default:Boolean;
 };
 // Create category
-export const createCategory = async ({category_name, is_default}:CreateCategoryProps) => {
+export const createCategory:any = async ({category_name, is_default}:CreateCategoryProps) => {
     try {
 
     

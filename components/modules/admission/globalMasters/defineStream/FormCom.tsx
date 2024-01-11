@@ -7,16 +7,18 @@ import {useForm} from 'react-hook-form';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {ReligionValidation} from '@/lib/validations/admission/globalMasters/religion.validation';
+import { RemarkValidation } from '@/lib/validations/admission/globalMasters/remark.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {createReligion, deleteReligion, modifyReligion} from '@/lib/actions/admission/globalMasters/religion.actions';
+import {createRemark, deleteRemark, modifyRemark} from '@/lib/actions/admission/globalMasters/remark.actions';
+import { StreamValidation } from '@/lib/validations/admission/globalMasters/stream.validation';
+import { createStream, deleteStream, modifyStream } from '@/lib/actions/admission/globalMasters/stream.actions';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, religions, updateReligion, setUpdateReligion}:any) => {
+const FormCom = ({setIsViewOpened, streams, updateStream, setUpdateStream}:any) => {
 
 
     // Toast
@@ -25,67 +27,67 @@ const FormCom = ({setIsViewOpened, religions, updateReligion, setUpdateReligion}
 
     // Comparison object
     const comparisonObject = {
-        religion_name:updateReligion.religion_name
+        stream_name:updateStream.stream_name
     };
 
 
     // Form
-    const form = useForm({
-        resolver:zodResolver(ReligionValidation),
+    const form:any = useForm({
+        resolver:zodResolver(StreamValidation),
         defaultValues:{
-            religion_name:updateReligion.id === '' ? '' : updateReligion.religion_name
+            stream_name:updateStream.id === '' ? '' : updateStream.stream_name
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values:z.infer<typeof ReligionValidation>) => {
-        // Create religion
-        if(updateReligion.id === ''){
-            if(religions.map((r:any) => r.religion_name).includes(values.religion_name)){
-                toast({title:'Religion name already exists', variant:'error'});
+    const onSubmit = async (values:z.infer<typeof StreamValidation>) => {
+        // Create stream
+        if(updateStream.id === ''){
+            if(streams.map((s:any) => s.stream_name).includes(values.stream_name)){
+                toast({title:'Stream name already exists', variant:'error'});
                 return;
             };
-            await createReligion({
-                religion_name:values.religion_name
+            await createStream({
+                stream_name:values.stream_name
             });
             toast({title:'Added Successfully!'});
         }
-        // Modify religion
+        // Modify stream
         else if(!deepEqual(comparisonObject, values)){
-            if(comparisonObject.religion_name !== values.religion_name && religions.map((r:any) => r.religion_name).includes(values.religion_name)){
-                toast({title:'Religion name already exists', variant:'error'});
+            if(comparisonObject.stream_name !== values.stream_name && streams.map((s:any) => s.stream_name).includes(values.stream_name)){
+                toast({title:'Stream name is already exists', variant:'error'});
                 return;
             };
-            await modifyReligion({
-                id:updateReligion.id,
-                religion_name:values.religion_name,
+            await modifyStream({
+                id:updateStream.id,
+                stream_name:values.stream_name
             });
             toast({title:'Updated Successfully!'});
         }
-        // Delete religion
-        else if(updateReligion.isDeleteClicked){
-            await deleteReligion({id:updateReligion.id});
+        // Delete stream
+        else if(updateStream.isDeleteClicked){
+            await deleteStream({id:updateStream.id});
             toast({title:'Deleted Successfully!'});
         };
 
 
         // Reseting update entity
-        setUpdateReligion({
+        setUpdateStream({
             id:'',
             isDeleteClicked:false,
-            religion_name:''
+            stream_name:''
         });
         // Reseting form
         form.reset({
-            religion_name:''
+            stream_name:''
         });
     };
 
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Religion</h2>
+            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Stream</h2>
             <Form
                 {...form}
             >
@@ -96,13 +98,13 @@ const FormCom = ({setIsViewOpened, religions, updateReligion, setUpdateReligion}
 
 
 
-                    {/* Religion Name */}
+                    {/* Stream Name */}
                     <FormField
                         control={form.control}
-                        name='religion_name'
+                        name='stream_name'
                         render={({field}) => (
                             <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Religion Name</FormLabel>
+                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Stream Name</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -120,7 +122,7 @@ const FormCom = ({setIsViewOpened, religions, updateReligion, setUpdateReligion}
 
 
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} religions={religions} updateReligion={updateReligion} setUpdateReligion={setUpdateReligion} onSubmit={onSubmit} form={form}/>
+                    <Buttons setIsViewOpened={setIsViewOpened} streams={streams} updateStream={updateStream} setUpdateStream={setUpdateStream} onSubmit={onSubmit} form={form}/>
 
                     
                 </form>
