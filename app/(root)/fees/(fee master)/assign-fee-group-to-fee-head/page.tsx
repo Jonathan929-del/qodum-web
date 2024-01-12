@@ -3,7 +3,6 @@
 import {useEffect, useState} from 'react';
 import {fetchGroups} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeGroup/FormCom';
-import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeGroup/ViewCom';
 
 
 
@@ -11,10 +10,6 @@ import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeGrou
 
 // Main function
 const page = () => {
-
-
-    // Is view component opened
-    const [isViewOpened, setIsViewOpened] = useState(false);
 
 
     // Groups
@@ -36,28 +31,16 @@ const page = () => {
             setGroups(res);
         };
         groupFetcher();
-    }, [isViewOpened, updateGroup]);
+    }, [updateGroup]);
 
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
-            {
-                isViewOpened ? (
-                    <ViewCom
-                        groups={groups}
-                        setIsViewOpened={setIsViewOpened}
-                        setUpdateGroup={setUpdateGroup}
-                    />
-                ) : (
-                    <FormCom
-                        groups={groups}
-                        isViewOpened={isViewOpened}
-                        setIsViewOpened={setIsViewOpened}
-                        updateGroup={updateGroup}
-                        setUpdateGroup={setUpdateGroup}
-                    />
-                )
-            }
+            <FormCom
+                groups={groups}
+                updateGroup={updateGroup}
+                setUpdateGroup={setUpdateGroup}
+            />
         </div>
     );
 };
