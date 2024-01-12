@@ -1,31 +1,28 @@
 'use client';
 // Imports
 import PrintButton from './PrintButton';
-import { Button } from '@/components/ui/button';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import {Button} from '@/components/ui/button';
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
 
 
 
 
 // Main Function
-const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, form }: any) => {
+const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateType({
-            id: '',
-            name: '',
-            preference_no: '',
-            heads: []
+        setUpdateRemark({
+            id:'',
+            isDeleteClicked:false,
+            remark:''
         });
         // Reseting form
         form.reset({
-            name: '',
-            preference_no: '',
-            heads: []
+            remark:''
         });
     };
 
@@ -37,7 +34,7 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateType.id === '' ? (
+                updateRemark.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -47,6 +44,7 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
                     </Button>
                 ) : (
                     <>
+
 
                         {/* Modify button */}
                         <AlertDialog>
@@ -80,7 +78,7 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateType({ ...updateType, isDeleteClicked: true })}
+                                onClick={() => setUpdateRemark({...updateRemark, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -90,7 +88,7 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateType({ ...updateType, isDeleteClicked: false })}
+                                        onClick={() => setUpdateRemark({...updateRemark, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -119,7 +117,7 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
 
 
             {/* Print button */}
-            <PrintButton types={types} />
+            <PrintButton remarks={remarks}/>
 
 
             {/* Cancel button */}
@@ -130,6 +128,8 @@ const Buttons = ({ setIsViewOpened, types, updateType, setUpdateType, onSubmit, 
             >
                 Cancel
             </span>
+
+
         </div>
     );
 };

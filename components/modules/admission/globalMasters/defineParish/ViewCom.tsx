@@ -11,17 +11,18 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
+const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions, setSelectedReligions}:any) => {
 
 
     // Select handler
-    const selectHandler = (remark:any) => {
-        console.log(remark)
-        setUpdateRemark({
-            id:remark._id,
+    const selectHandler = (parish:any) => {
+        setUpdateParish({
+            id: parish._id,
             isDeleteClicked:false,
-            remark:remark.remark
+            parish:parish.parish,
+            religion: selectedReligions
         });
+        setSelectedReligions(parish.religion)
         setIsViewOpened(false);
     };
 
@@ -33,7 +34,7 @@ const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Remarks List</h2>
+                <h2>Parishes List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
@@ -48,23 +49,27 @@ const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
                 </div>
 
 
-                {/* Remarks */}
+                {/* parishes */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[40%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
-                            Remark
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
+                            Parish Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[40%] flex flex-row items-center justify-between px-2'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
+                            Parish Religions
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2'>
                             Modify Details
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -72,29 +77,31 @@ const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            remarks.length < 1 ? (
+                            parishes.length < 1 ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No remarks yet
+                                    No parishes yet
                                 </p>
-                            ) : !remarks[0]?.remark ? (
+                            ) : !parishes[0]?.parish ? (
                                     <LoadingIcon />
-                                ) : remarks.map((remark:any) => (
+                                ) : parishes.map((parish:any, index:number) => (
                                     <CommandItem
-                                        value={`${remarks.indexOf(remark) + 1} ${remark.remark}`}
+                                        key={index}
+                                        value={`${parishes.indexOf(parish) + 1} ${parish.parish} ${parish.religion}`}
                                         className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{remarks.indexOf(remark) + 1}</li>
-                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{parishes.indexOf(parish) + 1}</li>
+                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[.5px] border-[#ccc]'>
                                             <Button
                                                 className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                                onClick={() => selectHandler(remark)}
+                                                onClick={() => selectHandler(parish)}
                                             >
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[40%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{remark.remark}</li>
-                                        <li className='basis-[40%] flex flex-row items-center px-2'>{moment(remark.updateAt).format('D-MMM-yy')}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{parish.parish}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{parish.religion.length}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2'>{moment(parish.updateAt).format('D-MMM-yy')}</li>
                                     </CommandItem>
                                 ))
                         }
