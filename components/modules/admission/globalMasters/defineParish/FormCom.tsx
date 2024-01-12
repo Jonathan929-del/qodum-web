@@ -39,7 +39,7 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
         resolver: zodResolver(ParishValidation),
         defaultValues: {
             parish: updateParish.id === '' ? '' : updateParish.parish,
-            religion: updateParish.id === [''] ? '' : selectedReligions,
+            religion: updateParish.id === '' ? '' : selectedReligions,
         }
     });
 
