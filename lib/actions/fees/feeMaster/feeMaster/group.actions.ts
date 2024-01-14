@@ -147,7 +147,6 @@ interface AssignFeeGroupToFeeHeadProps{
     }[]
 };
 // Fee group to fee head
-// export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads:[{type_name, head_name, schedule_type, installment, account, post_account}]}:AssignFeeGroupToFeeHeadProps) => {
 export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads}:AssignFeeGroupToFeeHeadProps) => {
     try {
 
@@ -156,24 +155,36 @@ export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads}:Ass
 
 
         // Assigning
-        const group = await Group.findOne({name:group_name});
+        console.log(affiliated_heads);
         await Group.findOneAndUpdate(
             {name:group_name},
-            {affiliated_heads:affiliated_heads.map((head:any) => {
-                return {
-                    type_name:head.type_name,
-                    head_name:head.head_name,
-                    schedule_type:head.schedule_type,
-                    installment:head.installment,
-                    account:head.account,
-                    post_account:head.post_account
-                }
-            })},
+            {affiliated_heads},
             {new:true}
         );
         
 
     } catch (err) {
         throw new Error(`Error assigning fee group to fee head: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetch group by name
+export const fetchGroupByName = async ({name}:{name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching group
+        const group = await Group.findOne({name});
+        return group;
+
+    } catch (err) {
+        throw new Error(`Error deleting group: ${err}`);      
     }
 };

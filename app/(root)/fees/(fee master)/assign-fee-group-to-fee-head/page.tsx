@@ -2,7 +2,8 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {fetchGroups} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
-import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeGroup/FormCom';
+import {fetchAffiliatedHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import FormCom from '@/components/modules/fees/feeMaster/assignFeeGroupToFeeHead/FormCom';
 
 
 
@@ -16,30 +17,27 @@ const page = () => {
     const [groups, setGroups] = useState([{}]);
 
 
-    // Update Group
-    const [updateGroup, setUpdateGroup] = useState({
-        id: '',
-        name: '',
-        is_special: false
-    });
+    // Heads
+    const [heads, setHeads] = useState([{}]);
 
 
     // Use effect
     useEffect(() => {
-        const groupFetcher = async () => {
-            const res = await fetchGroups();
-            setGroups(res);
+        const fetcher = async () => {
+            const groupsRes = await fetchGroups();
+            const headsRes = await fetchAffiliatedHeads();
+            setHeads(headsRes);
+            setGroups(groupsRes);
         };
-        groupFetcher();
-    }, [updateGroup]);
+        fetcher();
+    }, []);
 
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             <FormCom
                 groups={groups}
-                updateGroup={updateGroup}
-                setUpdateGroup={setUpdateGroup}
+                heads={heads}
             />
         </div>
     );

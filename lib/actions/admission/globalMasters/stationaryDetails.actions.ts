@@ -10,7 +10,7 @@ import StationaryDetails from '@/lib/models/admission/globalMasters/StationaryDe
 // Create stationary details props
 interface CreateStationaryDetailsProps{
     stationary_name:String;
-    amount:String;
+    amount:Number;
     post_account_name:String;
     school_name:String;
     session:String;
@@ -73,7 +73,7 @@ export const fetchStationaryDetails = async () => {
 interface ModifyStationaryDetailsProps{
     id:String;
     stationary_name:String;
-    amount:String;
+    amount:Number;
     post_account_name:String;
     school_name:String;
     session:String;

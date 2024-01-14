@@ -48,7 +48,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Updating head
-        await Head.updateMany({'_id':heads}, {affiliated_fee_type:name});
+        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
 
 
         // Return
@@ -110,7 +110,7 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
         // Freeing disselected heads from fee type
         const difference = existingType.heads.filter((x:any) => !heads.includes(x));
-        await Head.updateMany({'_id':difference}, {affiliated_fee_type:''});
+        await Head.updateMany({'name':difference}, {affiliated_fee_type:''});
 
 
         // Update type
@@ -126,7 +126,7 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
 
         // Updating head
-        await Head.updateMany({'_id':heads}, {affiliated_fee_type:name});
+        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
 
 
         // Return 
@@ -172,7 +172,7 @@ export const fetchFreeHeads = async () => {
 
         // Fetching
         const heads = await Head.find();
-        const freeHeads = heads.filter((head:any) => head.affiliated_fee_type === '');
+        const freeHeads = heads.filter((head:any) => head.affiliated_fee_type === '' || !head.affiliated_fee_type);
 
 
         // Return

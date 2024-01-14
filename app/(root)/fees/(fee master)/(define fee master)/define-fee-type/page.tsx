@@ -2,7 +2,7 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import {fetchFreeHeads, fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeType/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeType/ViewCom';
@@ -48,7 +48,7 @@ const page = () => {
     // Use effect for heads
     useEffect(() => {
         const headsFetcher = async () => {
-            const res = (await fetchHeads()).reduce((acc, cur) => {
+            const res = (await fetchFreeHeads()).reduce((acc, cur) => {
                 acc.push(cur.name)
                 return acc; 
             }, []);

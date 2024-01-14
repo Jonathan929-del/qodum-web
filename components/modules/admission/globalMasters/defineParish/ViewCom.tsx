@@ -20,7 +20,7 @@ const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions,
             id: parish._id,
             isDeleteClicked:false,
             parish:parish.parish,
-            religion: selectedReligions
+            religion: parish.religion
         });
         setSelectedReligions(parish.religion)
         setIsViewOpened(false);
@@ -37,11 +37,11 @@ const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions,
                 <h2>Parishes List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
-            <div className='w-[95%] h-[90%] flex flex-col items-center border-[1px] border-[#ccc] bg-[#F1F1F1] rounded-[8px]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -52,7 +52,7 @@ const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions,
                 {/* parishes */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
@@ -78,7 +78,7 @@ const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions,
                     <CommandList>
                         {
                             parishes.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No parishes yet
                                 </p>
                             ) : !parishes[0]?.parish ? (
@@ -87,7 +87,7 @@ const ViewCom = ({setIsViewOpened, parishes, setUpdateParish, selectedReligions,
                                     <CommandItem
                                         key={index}
                                         value={`${parishes.indexOf(parish) + 1} ${parish.parish} ${parish.religion}`}
-                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
                                         <li className='basis-[15%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{parishes.indexOf(parish) + 1}</li>
                                         <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[.5px] border-[#ccc]'>

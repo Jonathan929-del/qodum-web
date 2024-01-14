@@ -110,7 +110,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                     className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
                 >
 
-                    <div className="flex flex-col w-full gap-6 mb-4 sm:flex-row sm:gap-0">
+                    <div className="flex flex-col w-full gap-10 mt-4 mb-4 sm:gap-2 sm:mt-0">
 
                         {/* Type name */}
                         <FormField
@@ -118,17 +118,15 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                             name='name'
                             render={({ field }) => (
                                 <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Fee Type Name</FormLabel>
-                                    <div className='w-full flex items-start gap-4 sm:basis-[70%]'>
+                                    <FormLabel className='basis-auto pr-2 text-center text-xs text-[#726E71] sm:basis-[35%]'>Fee Type Name</FormLabel>
+                                    <div className='w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='flex flex-row h-8 sm:max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='flex flex-row h-8 items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <div className='mt-[-10px] text-xs'>
-                                            <FormMessage />
-                                        </div>
+                                        <FormMessage className='mt-[-20px] text-xs'/>
                                     </div>
                                 </FormItem>
                             )}
@@ -140,17 +138,15 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                             name='preference_no'
                             render={({ field }) => (
                                 <FormItem className='w-full h-8 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%] '>Fee Type Preference No.</FormLabel>
-                                    <div className='w-full flex justify-end items-start gap-4 sm:basis-[70%]'>
+                                    <FormLabel className='basis-auto pr-2 text-center text-xs text-[#726E71] sm:basis-[35%] '>Fee Type Preference No.</FormLabel>
+                                    <div className='w-full flex flex-col justify-end items-start gap-4 sm:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='flex h-8 flex-row sm:max-w-[250px] items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='flex h-8 flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <div className='mt-[-10px] text-xs'>
-                                            <FormMessage />
-                                        </div>
+                                        <FormMessage className='mt-[-20px] text-xs'/>
                                     </div>
                                 </FormItem>
                             )}
@@ -158,7 +154,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                     </div>
 
 
-                    <HeadsList heads={heads} form={form} />
+                    <HeadsList heads={heads} updateType={updateType} form={form} />
 
 
 

@@ -1,168 +1,179 @@
 'use client';
 // Imports
-import * as z from 'zod';
-import Buttons from './Buttons';
-import {deepEqual} from '@/lib/utils';
+import {useEffect, useState} from 'react';
+import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
-import {Input} from '@/components/ui/input';
-import {Switch} from '@/components/ui/switch';
-import {Label} from '@/components/ui/label';
+import {ChevronDown} from 'lucide-react';
+import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {GroupValidation} from '@/lib/validations/fees/feeMaster/feeMaster/group.validation';
-import {createGroup, deleteGroup, modifyGroup} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {AssignFeeGroupToFeeHeadValidation} from '@/lib/validations/fees/feeMaster/assignFeeGroupToFeeHead.validation';
 
 
 
 
 
 // Main function
-const FormCom = ({ setIsViewOpened, groups, updateGroup, setUpdateGroup }: any) => {
+const FormCom = ({groups, heads}: any) => {
 
 
     // Toast
-    const { toast } = useToast();
+    const {toast} = useToast();
 
 
-    // Comparison object
-    const comparisonObject = {
-        name: updateGroup.name,
-        is_special: updateGroup.is_special,
-    };
+    // Selected heads
+    const [selectedHeads, setSelectedHeads] = useState([{}]);
+
+
+    // Selected heads names
+    const [selectedNames, setSelectedNames] = useState(['']);
 
 
     // Form
-    const form: any = useForm({
-        resolver: zodResolver(GroupValidation),
+    const form = useForm({
+        resolver:zodResolver(AssignFeeGroupToFeeHeadValidation),
         defaultValues: {
-            name: updateGroup.id === '' ? '' : updateGroup.name,
-            is_special: updateGroup.id === '' ? '' : updateGroup.is_special,
+            group_name:'',
+            affiliated_heads:[{
+                type_name:'',
+                head_name:'',
+                schedule_type:'',
+                installment:'',
+                account:'',
+                post_account:''
+            }]
         }
     });
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<typeof GroupValidation>) => {
-        // Create head
-        if (updateGroup.id === '') {
-            if (groups.map((group: any) => group.name).includes(values.name)) {
-                toast({ title: 'Group name already exists', variant: 'error' });
-                return;
-            };
-            await createGroup({
-                name: values.name,
-                is_special: values.is_special
-            });
-            toast({ title: 'Added Successfully!' });
-        }
-
-        // Modify group
-        else if (!deepEqual(comparisonObject, values)) {
-            if (comparisonObject.name !== values.name && groups.map((group: any) => group.name).includes(values.name)) {
-                toast({ title: 'Group name already exists', variant: 'error' });
-                return;
-            };
-            await modifyGroup({
-                id: updateGroup.id,
-                name: values.name,
-                is_special: values.is_special
-            });
-            toast({ title: 'Updated Successfully!' });
-        }
-        // Delete group
-        else if (updateGroup.isDeleteClicked) {
-            await deleteGroup({ id: updateGroup.id });
-            toast({ title: 'Deleted Successfully!' });
+    const onSubmit = async (e:any) => {
+        e.preventDefault();
+        const submitObject = {
+            group_name:form.getValues().group_name,
+            affiliated_heads:selectedHeads.map((head:any) => {
+                return {
+                    type_name:head.affiliated_fee_type,
+                    head_name:head.name,
+                    schedule_type:head.pay_schedule,
+                    installment:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.installment,
+                    account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.account,
+                    post_account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.post_account
+                };
+            })
         };
-
-
-        // Reseting update entity
-        setUpdateGroup({
-            id: '',
-            name: '',
-            is_special: false
+        await assignFeeGroupToFeeHead({
+            group_name:submitObject.group_name,
+            affiliated_heads:submitObject.affiliated_heads.filter(head => head.type_name !== undefined)
         });
-        // Reseting form
+        toast({title:'Saved Successfully!'});
         form.reset({
-            name: '',
-            is_special: false
+            group_name:'',
+            affiliated_heads:[]
         });
+        setSelectedHeads([{}]);
+        setSelectedNames([]);
     };
 
 
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            if(form.getValues().group_name !== ''){
+                const group = await fetchGroupByName({name:form.getValues().group_name});
+                setSelectedHeads(group.affiliated_heads.map((head:any) => {
+                    return{
+                        name:head.head_name,
+                        pay_schedule:head.schedule_type,
+                        affiliated_fee_type:head.type_name
+                    }
+                }));
+                setSelectedNames(group.affiliated_heads?.map((head:any) => head.head_name));
+                selectedHeads.map((head:any) => {
+                    groups.affiliated_heads?.map((groupHead:any) => {
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.installment);
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.account`, groupHead.account);
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.post_account);
+                    });
+                });
+            }
+        };
+        fetcher();
+    }, [form.watch('group_name')]);
+
+
     return (
-        <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Fee Group</h2>
+        <div className='w-[100%] max-w-[1500px] flex flex-col items-center'>
             <Form
                 {...form}
             >
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
+                    onSubmit={onSubmit}
+                    className='relative w-full flex flex-col pt-4 items-center px-2 gap-4 sm:px-4'
                 >
 
 
-
-                    {/* Group Name */}
+                    {/* Fee group */}
                     <FormField
                         control={form.control}
-                        name='name'
-                        render={({ field }) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Group Name</FormLabel>
+                        name='group_name'
+                        render={({field}) => (
+                            <FormItem className='w-full max-w-[300px]'>
+                            <div className='w-full h-8 flex flex-col items-start justify-center gap-2 sm:flex-row sm:items-center'>
+                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Fee Group</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
-                                        <Input
+                                        <Select
                                             {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
+                                            value={field.value}
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                <SelectValue placeholder='Select Group'/>
+                                                <ChevronDown className='h-4 w-4 opacity-50'/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {groups.length < 1 ? (
+                                                    <p>No Group</p>
+                                                ) : !groups[0] ? (
+                                                    <LoadingIcon />
+                                                ) : groups.map((group:any) => (
+                                                    <SelectItem value={group.name} key={group._id}>{group.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                     </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
-                                    </div>
+                                    <FormMessage className='mt-[-20px] text-xs'/>
                                 </div>
-                            </FormItem>
-                        )}
-                    />
-
-                
-
-
-                    {/* Is Special */}
-                    <FormField
-                        control={form.control}
-                        name='is_special'
-                        render={({ field }) => (
-                            <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                <>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2'>
-                                            <Label
-                                                htmlFor='is_default'
-                                                className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sm:basis-[30%]'
-                                            >
-                                                Is Special
-                                            </Label>
-                                            <Switch
-                                                id='is_special'
-                                                {...field}
-                                                value={field.value}
-                                                onCheckedChange={field.onChange}
-                                                checked={field.value}
-                                                // disabled={updateGroup.id === '' ? false : updateGroup.is_special}
-                                            />
-                                        </div>
-                                    </FormControl>
-                                </>
-                            </FormItem>
+                            </div>
+                        </FormItem>
                         )}
                     />
 
 
+                    {/* Fee heads */}
+                    <HeadsList
+                        heads={heads}
+                        form={form}
+                        selectedHeads={selectedHeads}
+                        setSelectedHeads={setSelectedHeads}
+                        selectedNames={selectedNames}
+                        setSelectedNames={setSelectedNames}
+                    />
 
-                    {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} groups={groups} updateGroup={updateGroup} setUpdateGroup={setUpdateGroup} onSubmit={onSubmit} form={form} />
+
+                    {/* Save button */}
+                    <Button
+                        type='submit'
+                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                    >
+                        Save
+                    </Button>
 
 
                 </form>

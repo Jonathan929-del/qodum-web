@@ -41,7 +41,8 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
             priority_no,
             type,
             show_in_certificate,
-            fee_refundable
+            fee_refundable,
+            affiliated_fee_type:''
         });
         newHead.save();
 
@@ -144,6 +145,33 @@ export const deleteHead = async ({id}:{id:String}) => {
         // Deleting head
         await Head.findByIdAndDelete(id);
         return 'Head Deleted';
+
+    } catch (err) {
+        throw new Error(`Error deleting head: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetching heads affiliated with types
+export const fetchAffiliatedHeads = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const heads = await Head.find();
+        const filteredHeads = heads.filter((head:any) => {
+            return head.affiliated_fee_type !== '';
+        });
+
+
+        // Return
+        return filteredHeads;
 
     } catch (err) {
         throw new Error(`Error deleting head: ${err}`);      

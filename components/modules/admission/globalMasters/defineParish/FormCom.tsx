@@ -35,22 +35,21 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
 
 
     // Form
-    const form: any = useForm({
+    const form = useForm({
         resolver: zodResolver(ParishValidation),
         defaultValues: {
             parish: updateParish.id === '' ? '' : updateParish.parish,
-            religion: updateParish.id === '' ? '' : selectedReligions,
+            religion: updateParish.id === '' ? selectedReligions : selectedReligions,
         }
     });
 
-
+    
     // Submit handler
     const onSubmit = async (values: z.infer<typeof ParishValidation>) => {
         // Create parish
         if (updateParish.id === '') {
-            console.log('id', values)
             if (parishes.map((parish: any) => parish.parish).includes(values.parish)) {
-                toast({ title: 'Parish Name already exists', variant: 'error' });
+                toast({ title: 'Parish name already exists', variant: 'error' });
                 return;
             };
             await createParish({
@@ -61,11 +60,10 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
         }
         // Modify Parish
         else if (!deepEqual(comparisonObject, values)) {
-            console.log('no id', values)
-            // if (comparisonObject.parish !== values.parish && parishes.map((parish: any) => parish.parish).includes(values.parish)) {
-            //     toast({ title: 'Parish Name is already exists', variant: 'error' });
-            //     return;
-            // };
+            if (comparisonObject.parish !== values.parish && parishes.map((parish: any) => parish.parish).includes(values.parish)) {
+                toast({ title: 'Parish name already exists', variant: 'error' });
+                return;
+            };
             await modifyParish({
                 id: updateParish.id,
                 parish: values.parish,
@@ -104,7 +102,7 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
+                    className='relative w-full flex flex-col gap-3 pt-4 items-center px-2 sm:px-4'
                 >
 
 
@@ -123,9 +121,7 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
                                             className='flex h-8 flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
-                                    </div>
+                                    <FormMessage className='mt-[-20px] text-xs'/>
                                 </div>
                             </FormItem>
                         )}
