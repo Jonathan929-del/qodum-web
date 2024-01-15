@@ -14,9 +14,11 @@ const PrintButton = ({parishes}:any) => {
     // parishes Array
     const parishesArray = parishes.map((parish:any) => {
         return([
-            {value: parish.parish},
-            {value: parish.religion},
-            {value:moment(parish.createdAt).format('D-MMM-yy')}
+            {value:parishes.indexOf(parish) + 1},
+            {value:parish.parish},
+            {value: '-'},
+            {value:moment(parish.createdAt).format('D-MMM-yy')},
+            {value:moment(parish.updateddAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -26,16 +28,20 @@ const PrintButton = ({parishes}:any) => {
         {
             columns:[
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
-                {title:'Parishes List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Parishes List', width:{wpx:400}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
+                {title:'S.N.', width:{wpx:50}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Parish Name', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Parish Religion', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Religion', width:{wpx:50}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Created At', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Modified At', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
             data:parishesArray,
         }

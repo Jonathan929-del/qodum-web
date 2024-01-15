@@ -10,16 +10,7 @@ const GroupSchema = new mongoose.Schema(
     {
         name:{type:String, required:true, unique:true},
         is_special:{type:Boolean},
-        affiliated_heads:{
-            fee_type:{type:String},
-            head:{
-                type:mongoose.Schema.Types.ObjectId,
-                ref:'Head'
-            },
-            installment:{type:String},
-            account:{type:String},
-            post_account:{type:String}
-        }
+        affiliated_heads:{type:Array}
     },
     {
         timestamps:true

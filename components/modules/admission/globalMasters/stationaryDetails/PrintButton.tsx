@@ -8,14 +8,16 @@ import { ChevronDown, Download } from 'lucide-react';
 
 
 // Main Function
-const PrintButton = ({remarks}:any) => {
+const PrintButton = ({stationaryDetails}:any) => {
 
 
-    // remarks Array
-    const remarksArray = remarks.map((remark:any) => {
+    // Stationary details Array
+    const stationaryDetailsArray = stationaryDetails.map((s:any) => {
         return([
-            {value:remark.remark},
-            {value:moment(remark.createdAt).format('D-MMM-yy')}
+            {value:s.stationary_name},
+            {value:s.school_name},
+            {value:s.amount},
+            {value:moment(s.createdAt).format('D-MMM-yy')}
         ]);
     });
 
@@ -24,17 +26,21 @@ const PrintButton = ({remarks}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'Remarks List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Stationary List', width:{wpx:400}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'Remark', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Stationary Name', width:{wpx:125}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'School Name', width:{wpx:125}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Amount', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Created Date', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
-            data:remarksArray,
+            data:stationaryDetailsArray,
         }
     ];
 
@@ -59,12 +65,12 @@ const PrintButton = ({remarks}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Remarks List'
+                            filename='Stationary List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Remark'
+                                name='Stationary'
                             />
                         </ExcelFile>
 
@@ -77,12 +83,12 @@ const PrintButton = ({remarks}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Remarks List'
+                            filename='Stationary List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
                                 dataSet={data}
-                                name='Remark'
+                                name='Stationary'
                             />
                         </ExcelFile>
 

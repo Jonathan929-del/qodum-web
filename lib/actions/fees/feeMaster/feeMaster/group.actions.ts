@@ -129,3 +129,62 @@ export const deleteGroup = async ({id}:{id:String}) => {
         throw new Error(`Error deleting group: ${err}`);      
     }
 };
+
+
+
+
+
+// Fee group to fee head props
+interface AssignFeeGroupToFeeHeadProps{
+    group_name:String;
+    affiliated_heads:{
+        type_name:String;
+        head_name:String;
+        schedule_type:String;
+        installment:String;
+        account:String;
+        post_account:String;
+    }[]
+};
+// Fee group to fee head
+export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads}:AssignFeeGroupToFeeHeadProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Assigning
+        console.log(affiliated_heads);
+        await Group.findOneAndUpdate(
+            {name:group_name},
+            {affiliated_heads},
+            {new:true}
+        );
+        
+
+    } catch (err) {
+        throw new Error(`Error assigning fee group to fee head: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetch group by name
+export const fetchGroupByName = async ({name}:{name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching group
+        const group = await Group.findOne({name});
+        return group;
+
+    } catch (err) {
+        throw new Error(`Error deleting group: ${err}`);      
+    }
+};

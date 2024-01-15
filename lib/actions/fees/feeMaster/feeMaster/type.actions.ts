@@ -44,14 +44,11 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
         });
         newType.save().then(async () => {
             await FeeType.findOneAndUpdate({name}, {heads});
-            // Afilliating fee group with the new type
         });
 
 
         // Updating head
-        heads.map(async (head:any) => {
-            await Head.findOneAndUpdate({head}, {affiliated_fee_type:name});
-        });
+        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
 
 
         // Return
@@ -107,9 +104,13 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
         const types = await FeeType.find();
         const existingType = await FeeType.findById(id);
         if(existingType.name !== name && types.map(i => i.name).includes(name)){throw new Error('Fee type name already exists')};
-
         // Checking if the preference number already exists
         if(existingType.preference_no !== preference_no && types.map(i => i.preference_no).includes(preference_no)){throw new Error('Preference number already exists')};
+
+
+        // Freeing disselected heads from fee type
+        const difference = existingType.heads.filter((x:any) => !heads.includes(x));
+        await Head.updateMany({'name':difference}, {affiliated_fee_type:''});
 
 
         // Update type
@@ -122,6 +123,10 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
             },
             {new:true}
         );
+
+
+        // Updating head
+        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
 
 
         // Return 
@@ -149,6 +154,31 @@ export const deleteType = async ({id}:{id:String}) => {
         return 'Fee type deleted';
 
     } catch (err) {
-        throw new Error(`Error deleting fee type: ${err}`);      
+        throw new Error(`Error deleting fee type: ${err}`);
+    }
+};
+
+
+
+
+
+// Fetching free heads
+export const fetchFreeHeads = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const heads = await Head.find();
+        const freeHeads = heads.filter((head:any) => head.affiliated_fee_type === '' || !head.affiliated_fee_type);
+
+
+        // Return
+        return freeHeads;
+        
+    } catch (err) {
+        throw new Error(`Error fetching fee heads: ${err}`);
     }
 };

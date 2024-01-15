@@ -1,43 +1,55 @@
 // Imports
-import moment from 'moment';
-import { Button } from '@/components/ui/button';
-import { ChevronsUpDown, X } from 'lucide-react';
+import {ChevronsUpDown} from 'lucide-react';
+import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import {FormControl, FormField, FormItem} from '@/components/ui/form';
+import {Command, CommandItem, CommandList} from '@/components/ui/command';
+import { useEffect, useState } from 'react';
+import { fetchHeads } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 
 
 
 // Main Function
-const HeadsList = ({ heads, form }: any) => {
+const HeadsList = ({heads, updateType, form}: any) => {
 
+
+    // All heads
+    const [allHeads, setAllHeads] = useState([{}]);
+
+
+    // Use effect
+    useEffect(() => {
+        const headsFetcher = async () => {
+            const res = await fetchHeads();
+            setAllHeads(res.map((h) => h.name));
+        };
+        headsFetcher();
+    }, []);
 
 
     return (
         <Command
-            className='w-[80%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
+            className='w-[80%] max-h-[90%] flex flex-col items-center pb-2 gap-2 mt-4 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%] lg:mt-0'
         >
 
             {/* Header */}
-            <div className='flex flex-row items-center justify-center  w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
+            <div className='flex flex-row items-center justify-center w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
                 <h2>Heads List</h2>
             </div>
-            <div className='w-full h-[90%] flex flex-col items-center bg-[#F1F1F1]'>
+            <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 
 
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[300px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[300px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[30%] flex-grow flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[30%] flex-grow flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Head Name
                             <ChevronsUpDown size={12} />
                         </li>
@@ -50,59 +62,113 @@ const HeadsList = ({ heads, form }: any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            heads.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No heads yet
-                                </p>
-                            ) : !heads[0] ? (
-                                <LoadingIcon />
-                            ) : heads.map((head: any, index: number) => (
-                                <CommandItem
-                                    key={index}
-                                    value={`${heads.indexOf(head) + 1} `}
-                                    className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
-                                >
-                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{heads.indexOf(head) + 1}</li>
-                                    <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
-                                        { `${head}`}
-                                    </li>
-                                    <li className='basis-[30%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>
-                                         <FormField
-                                            control={form.control}
-                                            name="heads"
-                                            render={({ field }: any) => { 
-                                                 return (
-                                                    <FormItem 
-                                                      key={head}
-                                                        className="flex flex-row items-start space-x-3 space-y-0"
-                                                    >
-                                                        <FormControl >
-                                              
-                                                            <Checkbox
-                                                                checked={field.value?.includes(head)}
-                                                                onCheckedChange={(checked: any) => {
-                                                                    return checked
-                                                                        ? field.onChange([...field.value, head])
-                                                                        : field.onChange(
-                                                                            field.value?.filter(
-                                                                                (value: any) => value !== head
+                            updateType.id === '' ? 
+                                // Free heads 
+                                heads.length < 1 ? (
+                                    <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                        No heads yet
+                                    </p>
+                                ) : typeof(heads[0]) !== 'string' ? (
+                                    <LoadingIcon />
+                                ) : heads.map((head: any, index: number) => (
+                                    <CommandItem
+                                        key={index}
+                                        value={`${heads.indexOf(head) + 1} `}
+                                        className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    >
+                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
+                                        <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                            { `${head}`}
+                                        </li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-[#ccc]'>
+                                            <FormField
+                                                control={form.control}
+                                                name="heads"
+                                                render={({ field }: any) => { 
+                                                    return (
+                                                        <FormItem 
+                                                        key={head}
+                                                            className="flex flex-row items-start space-x-3 space-y-0"
+                                                        >
+                                                            <FormControl >
+                                                
+                                                                <Checkbox
+                                                                    checked={field.value?.includes(head)}
+                                                                    onCheckedChange={(checked: any) => {
+                                                                        return checked
+                                                                            ? field.onChange([...field.value, head])
+                                                                            : field.onChange(
+                                                                                field.value?.filter(
+                                                                                    (value: any) => value !== head
+                                                                                )
                                                                             )
-                                                                        )
-                                                                }}
-                                                            />
+                                                                    }}
+                                                                    className='rounded-[2px] text-hash-color my-[2px]'
+                                                                />
 
-                                                        </FormControl>
-                                                    </FormItem>
-                                                )
-                                            }}
-                                        />
-                                    </li>
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )
+                                                }}
+                                            />
+                                        </li>
 
-                                </CommandItem>
-                            ))
+                                    </CommandItem>
+                                )) :
+                                // All heads
+                                allHeads.length < 1 ? (
+                                    <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                        No heads yet
+                                    </p>
+                                ) : typeof(allHeads[0]) !== 'string' ? (
+                                    <LoadingIcon />
+                                ) : allHeads.map((head: any, index: number) => (
+                                    <CommandItem
+                                        key={index}
+                                        value={`${heads.indexOf(head) + 1} `}
+                                        className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    >
+                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{allHeads.indexOf(head) + 1}</li>
+                                        <li className='basis-[30%] flex-grow flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                            { `${head}`}
+                                        </li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-[#ccc]'>
+                                            <FormField
+                                                control={form.control}
+                                                name="heads"
+                                                render={({ field }: any) => { 
+                                                    return (
+                                                        <FormItem 
+                                                        key={head}
+                                                            className="flex flex-row items-start space-x-3 space-y-0"
+                                                        >
+                                                            <FormControl >
+                                                
+                                                                <Checkbox
+                                                                    checked={field.value?.includes(head)}
+                                                                    onCheckedChange={(checked: any) => {
+                                                                        return checked
+                                                                            ? field.onChange([...field.value, head])
+                                                                            : field.onChange(
+                                                                                field.value?.filter(
+                                                                                    (value: any) => value !== head
+                                                                                )
+                                                                            )
+                                                                    }}
+                                                                    className='rounded-[2px] text-hash-color my-[2px]'
+                                                                />
+
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )
+                                                }}
+                                            />
+                                        </li>
+
+                                    </CommandItem>
+                                ))
                         }
                     </CommandList>
-                    <CommandEmpty>No results found</CommandEmpty>
                 </div>
 
 

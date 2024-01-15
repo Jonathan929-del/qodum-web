@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 // Imports
 import {useEffect, useState} from 'react';

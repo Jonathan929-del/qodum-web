@@ -9,20 +9,28 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, setUpdateStationaryDetails, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateRemark({
+        setUpdateStationaryDetails({
             id:'',
             isDeleteClicked:false,
-            remark:''
+            stationary_name:'',
+            amount:'',
+            post_account_name:'',
+            school_name:'',
+            session:''
         });
         // Reseting form
         form.reset({
-            remark:''
+            stationary_name:'',
+            amount:'',
+            post_account_name:'',
+            school_name:'',
+            session:''
         });
     };
 
@@ -34,7 +42,7 @@ const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSub
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateRemark.id === '' ? (
+                updateStationaryDetails.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -78,7 +86,7 @@ const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSub
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateRemark({...updateRemark, isDeleteClicked:true})}
+                                onClick={() => setUpdateStationaryDetails({...updateStationaryDetails, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -88,7 +96,7 @@ const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSub
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateRemark({...updateRemark, isDeleteClicked:false})}
+                                        onClick={() => setUpdateStationaryDetails({...updateStationaryDetails, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -117,7 +125,7 @@ const Buttons = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark, onSub
 
 
             {/* Print button */}
-            <PrintButton remarks={remarks}/>
+            <PrintButton stationaryDetails={stationaryDetails}/>
 
 
             {/* Cancel button */}

@@ -16,8 +16,6 @@ const PrintButton = ({types}:any) => {
     const typesArray = types.map((type:any) => {
         return([
             {value:type.name},
-            {value:type.preference_no},
-            {value: type.heads?.length },
             {value:moment(type.createdAt).format('D-MMM-yy')}
         ]);
     });
@@ -27,19 +25,15 @@ const PrintButton = ({types}:any) => {
     const data:any = [
         {
             columns:[
-                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
-                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
-                {title:'Types List', width:{wpx:400}, style:{font:{bold:true, sz:'20', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'Fee Types List', width:{wpx:400}, style:{font:{bold:true, sz:'16', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'Name ', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Preference No', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Heads Ids', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Created At', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Fee Type ', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Created At', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
             data: typesArray,
         }
@@ -66,7 +60,7 @@ const PrintButton = ({types}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Types List'
+                            filename='Fee Types List'
                             fileExtension='xlsx'
                         >
                             <ExcelSheet
@@ -84,7 +78,7 @@ const PrintButton = ({types}:any) => {
                                     <Download size={16} className='text-hash-color ml-2'/>
                                 </span>
                             }
-                            filename='Types List'
+                            filename='Fee Types List'
                             fileExtension='csv'
                         >
                             <ExcelSheet
