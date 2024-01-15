@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 
 
 // Main Function
-const HeadsList = ({heads, form}:any) => {
+const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedNames, setSelectedNames}:any) => {
 
 
     // Installments
@@ -31,23 +31,6 @@ const HeadsList = ({heads, form}:any) => {
     const [bankLedgers, setBankLedgers]  = useState([{}]);
 
 
-    // Check change
-    const checkChange = (head:any) => {
-        if(form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name)){
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, '');
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, '');
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, '');
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.installment`, '');
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.account`, '');
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.post_account`, '');
-        }else{
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, head.affiliated_fee_type);
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, head.name);
-            form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, head.pay_schedule);
-        }
-    };
-
-
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
@@ -60,9 +43,6 @@ const HeadsList = ({heads, form}:any) => {
         };
         fetcher();
     }, []);
-    useEffect(() => {
-    }, [form.watch('affiliated_heads')]);
-
 
 
     return (
@@ -88,25 +68,16 @@ const HeadsList = ({heads, form}:any) => {
                             Select
                             {heads[0]?.name && (
                                 <Checkbox
-                                    className='rounded-[2px] text-hash-color'
                                     onCheckedChange={() => {
-                                        if(form.getValues().affiliated_heads.filter((head:any) => head.head_name === '').length === heads.length || form.getValues().affiliated_heads.filter((head:any) => head.head_name === '').length !== 0){
-                                            heads.map((head:any) => {
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, head.affiliated_fee_type);
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, head.name);
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, head.pay_schedule);
-                                            });
+                                        if(selectedHeads?.length === heads.length){
+                                            setSelectedHeads([{}]);
+                                            setSelectedNames([]);
                                         }else{
-                                            heads.map((head:any) => {
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, '');
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, '');
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, '');
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.installment`, '');
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.account`, '');
-                                                form.setValue(`affiliated_heads.${heads.indexOf(head)}.post_account`, '');
-                                            });
+                                            setSelectedHeads(heads);
+                                            setSelectedNames(heads.map((head:any) => head.name));
                                         };
                                     }}
+                                    className='rounded-[2px] text-hash-color'
                                 />
                             )}
                             <ChevronsUpDown size={12}/>
@@ -151,9 +122,17 @@ const HeadsList = ({heads, form}:any) => {
                                         <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                         <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Checkbox
-                                                checked={form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name)}
-                                                onCheckedChange={() => checkChange(head)}
                                                 className='rounded-[2px] text-hash-color'
+                                                checked={selectedNames?.includes(head.name)}
+                                                onCheckedChange={() => {
+                                                    if(selectedHeads?.includes(head)){
+                                                        setSelectedHeads(selectedHeads?.filter((h:any) => h.name !== head.name));
+                                                        setSelectedNames(selectedNames?.filter((n:any) => n !== head.name));
+                                                    }else{
+                                                        setSelectedHeads([...selectedHeads, head]);
+                                                        setSelectedNames([...selectedNames, head.name]);
+                                                    }
+                                                }}
                                             />
                                         </li>
                                         <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.affiliated_fee_type}</li>
@@ -162,10 +141,10 @@ const HeadsList = ({heads, form}:any) => {
 
                                         {/* Installment */}
                                         <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
-                                            {form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name) ? (
+                                            {selectedHeads?.includes(head) ? (
                                                 <FormField
                                                     control={form.control}
-                                                    name={`affiliated_heads.${heads.indexOf(head)}.installment`}
+                                                    name={`affiliated_heads[${selectedHeads?.indexOf(head)}].installment`}
                                                     render={({field}) => (
                                                         <FormItem className='w-full'>
                                                             <FormControl>
@@ -216,10 +195,10 @@ const HeadsList = ({heads, form}:any) => {
 
                                         {/* Fee account */}
                                         <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
-                                            {form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name) ? (
+                                            {selectedHeads?.includes(head) ? (
                                                 <FormField
                                                     control={form.control}
-                                                    name={`affiliated_heads.${heads.indexOf(head)}.account`}
+                                                    name={`affiliated_heads[${selectedHeads?.indexOf(head)}].account`}
                                                     render={({field}) => (
                                                         <FormItem className='w-full'>
                                                             <FormControl>
@@ -270,10 +249,10 @@ const HeadsList = ({heads, form}:any) => {
 
                                         {/* Fee post account */}
                                         <li className='basis-[15%] flex flex-row items-center px-2'>
-                                            {form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name) ? (
+                                            {selectedHeads?.includes(head) ? (
                                                 <FormField
                                                     control={form.control}
-                                                    name={`affiliated_heads.${heads.indexOf(head)}.post_account`}
+                                                    name={`affiliated_heads[${selectedHeads?.indexOf(head)}].post_account`}
                                                     render={({field}) => (
                                                         <FormItem className='w-full'>
                                                             <FormControl>
