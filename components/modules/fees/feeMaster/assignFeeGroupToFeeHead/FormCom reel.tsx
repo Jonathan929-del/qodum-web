@@ -1,18 +1,17 @@
 'use client';
 // Imports
-import * as z from 'zod';
+import {useEffect, useState} from 'react';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import {AssignFeeGroupToFeeHeadValidation} from '@/lib/validations/fees/feeMaster/assignFeeGroupToFeeHead.validation';
-import { assignFeeGroupToFeeHead, fetchGroupByName } from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -24,6 +23,14 @@ const FormCom = ({groups, heads}: any) => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // Selected heads
+    const [selectedHeads, setSelectedHeads] = useState([{}]);
+
+
+    // Selected heads names
+    const [selectedNames, setSelectedNames] = useState(['']);
 
 
     // Form
@@ -44,16 +51,32 @@ const FormCom = ({groups, heads}: any) => {
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<typeof AssignFeeGroupToFeeHeadValidation>) => {
+    const onSubmit = async (e:any) => {
+        e.preventDefault();
+        const submitObject = {
+            group_name:form.getValues().group_name,
+            affiliated_heads:selectedHeads.map((head:any) => {
+                return {
+                    type_name:head.affiliated_fee_type,
+                    head_name:head.name,
+                    schedule_type:head.pay_schedule,
+                    installment:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.installment,
+                    account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.account,
+                    post_account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.post_account
+                };
+            })
+        };
         await assignFeeGroupToFeeHead({
-            group_name:values.group_name,
-            affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
+            group_name:submitObject.group_name,
+            affiliated_heads:submitObject.affiliated_heads.filter(head => head.type_name !== undefined)
         });
         toast({title:'Saved Successfully!'});
         form.reset({
             group_name:'',
             affiliated_heads:[]
         });
+        setSelectedHeads([{}]);
+        setSelectedNames([]);
     };
 
 
@@ -62,15 +85,20 @@ const FormCom = ({groups, heads}: any) => {
         const fetcher = async () => {
             if(form.getValues().group_name !== ''){
                 const group = await fetchGroupByName({name:form.getValues().group_name});
-                const groupHeads = group.affiliated_heads;
-                console.log(groupHeads);
-                groupHeads.map((head:any) => {
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.type_name`, head.type_name);
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.head_name`, head.head_name);
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.schedule_type`, head.schedule_type);
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.installment`, head.installment);
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.account`, head.account);
-                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.post_account`, head.post_account);
+                setSelectedHeads(group.affiliated_heads.map((head:any) => {
+                    return{
+                        name:head.head_name,
+                        pay_schedule:head.schedule_type,
+                        affiliated_fee_type:head.type_name
+                    }
+                }));
+                setSelectedNames(group.affiliated_heads?.map((head:any) => head.head_name));
+                selectedHeads.map((head:any) => {
+                    groups.affiliated_heads?.map((groupHead:any) => {
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.installment);
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.account`, groupHead.account);
+                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.post_account);
+                    });
                 });
             }
         };
@@ -84,7 +112,7 @@ const FormCom = ({groups, heads}: any) => {
                 {...form}
             >
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={onSubmit}
                     className='relative w-full flex flex-col pt-4 items-center px-2 gap-4 sm:px-4'
                 >
 
@@ -131,6 +159,10 @@ const FormCom = ({groups, heads}: any) => {
                     <HeadsList
                         heads={heads}
                         form={form}
+                        selectedHeads={selectedHeads}
+                        setSelectedHeads={setSelectedHeads}
+                        selectedNames={selectedNames}
+                        setSelectedNames={setSelectedNames}
                     />
 
 
