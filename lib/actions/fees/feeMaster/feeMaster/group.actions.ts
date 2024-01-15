@@ -185,6 +185,82 @@ export const fetchGroupByName = async ({name}:{name:String}) => {
         return group;
 
     } catch (err) {
-        throw new Error(`Error deleting group: ${err}`);      
+        throw new Error(`Error fetching group: ${err}`);      
+    }
+};
+
+
+
+
+
+// Assign amount group props
+interface AssignAmountGroupValidation{
+    group_name:String;
+    installment:String;
+    affiliated_heads:{
+        head_name:String;
+        amount:Number;
+    }[]
+};
+// Assign amount group
+export const assignAmountGroup = async ({group_name, installment, affiliated_heads}:AssignAmountGroupValidation) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Selected installment in group
+        const group = await Group.findOne({name:group_name});
+        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment);
+        const newHeads = selectedHeads.map((head:any) => {
+            return{
+                ...head,
+                amount:affiliated_heads[selectedHeads.indexOf(head)].amount
+            }
+        });
+        const otherHeads = affiliated_heads.filter((head:any) => newHeads.map((h:any) => h.head_name).includes(head.head_name));
+
+
+        // Assigning
+        await Group.findOneAndUpdate(
+            {name:group_name},
+            {affiliated_heads:[otherHeads, newHeads]},
+            {new:true}
+        );
+        
+
+    } catch (err) {
+        throw new Error(`Error assigning fee group amount: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetch group heads using installment props
+interface FetchGroupHeadWithInstallmentValidation{
+    group_name:String;
+    installment:String;
+};
+// Fetch group heads using installment
+export const fetchGroupHeadWithInstallment = async ({group_name, installment}:FetchGroupHeadWithInstallmentValidation) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Selected installment in group
+        const group = await Group.findOne({name:group_name});
+        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment);
+
+
+        // Return
+        return selectedHeads;
+
+    } catch (err) {
+        throw new Error(`Error fetching group: ${err}`);      
     }
 };

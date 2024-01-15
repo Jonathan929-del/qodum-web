@@ -63,7 +63,6 @@ const FormCom = ({groups, heads}: any) => {
             if(form.getValues().group_name !== ''){
                 const group = await fetchGroupByName({name:form.getValues().group_name});
                 const groupHeads = group.affiliated_heads;
-                console.log(groupHeads);
                 groupHeads.map((head:any) => {
                     form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.type_name`, head.type_name);
                     form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.head_name`, head.head_name);

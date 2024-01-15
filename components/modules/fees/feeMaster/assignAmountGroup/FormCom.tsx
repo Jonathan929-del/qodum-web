@@ -1,109 +1,83 @@
 'use client';
 // Imports
-import {useEffect, useState} from 'react';
+import * as z from 'zod';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
-import {AssignFeeGroupToFeeHeadValidation} from '@/lib/validations/fees/feeMaster/assignFeeGroupToFeeHead.validation';
+import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
+import {assignAmountGroup, fetchGroupHeadWithInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
 
 
 // Main function
-const FormCom = ({groups, heads}: any) => {
+const FormCom = ({groups, installments}: any) => {
 
 
     // Toast
     const {toast} = useToast();
 
 
-    // Selected heads
-    const [selectedHeads, setSelectedHeads] = useState([{}]);
-
-
-    // Selected heads names
-    const [selectedNames, setSelectedNames] = useState(['']);
+    // Heads
+    const [heads, setHeads] = useState([{}]);
 
 
     // Form
     const form = useForm({
-        resolver:zodResolver(AssignFeeGroupToFeeHeadValidation),
+        resolver:zodResolver(AssignAmountGroupValidation),
         defaultValues: {
             group_name:'',
+            installment:'',
             affiliated_heads:[{
-                type_name:'',
                 head_name:'',
-                schedule_type:'',
-                installment:'',
-                account:'',
-                post_account:''
+                amount:0
             }]
         }
     });
+    console.log(form.getValues());
 
 
     // Submit handler
-    const onSubmit = async (e:any) => {
-        e.preventDefault();
-        const submitObject = {
-            group_name:form.getValues().group_name,
-            affiliated_heads:selectedHeads.map((head:any) => {
-                return {
-                    type_name:head.affiliated_fee_type,
-                    head_name:head.name,
-                    schedule_type:head.pay_schedule,
-                    installment:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.installment,
-                    account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.account,
-                    post_account:form.getValues().affiliated_heads[selectedHeads.indexOf(head)]?.post_account
-                };
-            })
-        };
-        await assignFeeGroupToFeeHead({
-            group_name:submitObject.group_name,
-            affiliated_heads:submitObject.affiliated_heads.filter(head => head.type_name !== undefined)
+    const onSubmit = async (values:z.infer<typeof AssignAmountGroupValidation>) => {
+        await assignAmountGroup({
+            group_name:values.group_name,
+            installment:values.installment,
+            affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
         });
         toast({title:'Saved Successfully!'});
         form.reset({
             group_name:'',
+            installment:'',
             affiliated_heads:[]
         });
-        setSelectedHeads([{}]);
-        setSelectedNames([]);
     };
 
 
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            if(form.getValues().group_name !== ''){
-                const group = await fetchGroupByName({name:form.getValues().group_name});
-                setSelectedHeads(group.affiliated_heads.map((head:any) => {
-                    return{
-                        name:head.head_name,
-                        pay_schedule:head.schedule_type,
-                        affiliated_fee_type:head.type_name
-                    }
-                }));
-                setSelectedNames(group.affiliated_heads?.map((head:any) => head.head_name));
-                selectedHeads.map((head:any) => {
-                    groups.affiliated_heads?.map((groupHead:any) => {
-                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.installment);
-                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.account`, groupHead.account);
-                        form.setValue(`affiliated_heads.${selectedHeads.indexOf(head)}.installment`, groupHead.post_account);
-                    });
+            if(form.getValues().group_name !== '' && form.getValues().installment !== ''){
+                const res:any = await fetchGroupHeadWithInstallment({
+                    group_name:form.getValues().group_name,
+                    installment:form.getValues().installment
+                });
+                setHeads(res);
+                res.map((head:any) => {
+                    form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
+                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head?.amount);
                 });
             }
         };
         fetcher();
-    }, [form.watch('group_name')]);
+    }, [form.watch('group_name'), form.watch('installment')]);
 
 
     return (
@@ -112,7 +86,7 @@ const FormCom = ({groups, heads}: any) => {
                 {...form}
             >
                 <form
-                    onSubmit={onSubmit}
+                    onSubmit={form.handleSubmit(onSubmit)}
                     className='relative w-full flex flex-col pt-4 items-center px-2 gap-4 sm:px-4'
                 >
 
@@ -139,7 +113,7 @@ const FormCom = ({groups, heads}: any) => {
                                             <SelectContent>
                                                 {groups.length < 1 ? (
                                                     <p>No Group</p>
-                                                ) : !groups[0] ? (
+                                                ) : groups[0].name === '' ? (
                                                     <LoadingIcon />
                                                 ) : groups.map((group:any) => (
                                                     <SelectItem value={group.name} key={group._id}>{group.name}</SelectItem>
@@ -155,14 +129,48 @@ const FormCom = ({groups, heads}: any) => {
                     />
 
 
+                    {/* Installment */}
+                    <FormField
+                        control={form.control}
+                        name='installment'
+                        render={({field}) => (
+                            <FormItem className='w-full max-w-[300px]'>
+                            <div className='w-full h-8 flex flex-col items-start justify-center gap-2 sm:flex-row sm:items-center'>
+                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Installment</FormLabel>
+                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Select
+                                            {...field}
+                                            value={field.value}
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                <SelectValue placeholder='Select Installment'/>
+                                                <ChevronDown className='h-4 w-4 opacity-50'/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {installments.length < 1 ? (
+                                                    <p>No installments</p>
+                                                ) : installments[0].name === '' ? (
+                                                    <LoadingIcon />
+                                                ) : installments.map((installment:any) => (
+                                                    <SelectItem value={installment.name} key={installment._id}>{installment.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-xs'/>
+                                </div>
+                            </div>
+                        </FormItem>
+                        )}
+                    />
+
+
                     {/* Fee heads */}
                     <HeadsList
-                        heads={heads}
                         form={form}
-                        selectedHeads={selectedHeads}
-                        setSelectedHeads={setSelectedHeads}
-                        selectedNames={selectedNames}
-                        setSelectedNames={setSelectedNames}
+                        heads={heads}
                     />
 
 
