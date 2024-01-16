@@ -9,8 +9,8 @@ import {Switch} from '@/components/ui/switch';
 import {Label} from '@/components/ui/label';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {GroupValidation} from '@/lib/validations/fees/feeMaster/feeMaster/group.validation';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {createGroup, deleteGroup, modifyGroup} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
@@ -33,13 +33,14 @@ const FormCom = ({ setIsViewOpened, groups, updateGroup, setUpdateGroup }: any) 
 
 
     // Form
-    const form: any = useForm({
+    const form = useForm({
         resolver: zodResolver(GroupValidation),
         defaultValues: {
             name: updateGroup.id === '' ? '' : updateGroup.name,
-            is_special: updateGroup.id === '' ? '' : updateGroup.is_special,
+            is_special: updateGroup.id === '' ? false : updateGroup.is_special,
         }
     });
+    console.log(form.getValues());
 
 
     // Submit handler
