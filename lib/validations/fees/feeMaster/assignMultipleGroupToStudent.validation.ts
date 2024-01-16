@@ -10,5 +10,5 @@ export const AssignMultipleGroupToStudentValidation = z.object({
     group_type:z.string(),
     fees_group:z.string().nonempty({message:'*Please select group'}),
     fees_installment:z.string(),
-    class:z.string()
+    class:z.array(z.string())
 });

@@ -4,12 +4,11 @@ import {Checkbox} from '@/components/ui/checkbox';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
+import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import {fetchAccountGroups} from '@/lib/actions/accounts/accounts/accountGroup.actions';
+import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 
 
 
@@ -52,7 +51,7 @@ const HeadsList = ({heads, form}:any) => {
     useEffect(() => {
         const fetcher = async () => {
             const installmentsRes = await fetchInstallments();
-            const accountLedgersRes = await fetchAccountGroups();
+            const accountLedgersRes = await fetchGeneralLedgers();
             const bankLedgersRes = await fetchBankLedgers();
             setInstallments(installmentsRes);
             setAccountLedgers(accountLedgersRes)
@@ -236,10 +235,10 @@ const HeadsList = ({heads, form}:any) => {
                                                                         {accountLedgers.length < 1 ? (
                                                                             <p>No account ledgers</p>
                                                                             // @ts-ignore
-                                                                        ) : accountLedgers[0]?.group_name === '' ? (
+                                                                        ) : accountLedgers[0]?.account_name === '' ? (
                                                                             <LoadingIcon />
                                                                         ) : accountLedgers.map((ledger:any) => (
-                                                                            <SelectItem value={ledger.group_name} key={ledger._id}>{ledger.group_name}</SelectItem>
+                                                                            <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
                                                                         ))}
                                                                     </SelectContent>
                                                                 </Select>
@@ -258,10 +257,10 @@ const HeadsList = ({heads, form}:any) => {
                                                         {accountLedgers.length < 1 ? (
                                                             <p>No account ledgers</p>
                                                             // @ts-ignore
-                                                        ) : accountLedgers[0]?.group_name === '' ? (
+                                                        ) : accountLedgers[0]?.account_name === '' ? (
                                                             <LoadingIcon />
                                                         ) : accountLedgers.map((ledger:any) => (
-                                                            <SelectItem value={ledger.group_name} key={ledger._id}>{ledger.group_name}</SelectItem>
+                                                            <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>

@@ -42,7 +42,6 @@ const FormCom = ({groups, installments}: any) => {
             }]
         }
     });
-    console.log(form.getValues());
 
 
     // Submit handler
@@ -53,6 +52,7 @@ const FormCom = ({groups, installments}: any) => {
             affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
         });
         toast({title:'Saved Successfully!'});
+        setHeads([]);
         form.reset({
             group_name:'',
             installment:'',
@@ -65,14 +65,14 @@ const FormCom = ({groups, installments}: any) => {
     useEffect(() => {
         const fetcher = async () => {
             if(form.getValues().group_name !== '' && form.getValues().installment !== ''){
-                const res:any = await fetchGroupHeadWithInstallment({
+                const res = await fetchGroupHeadWithInstallment({
                     group_name:form.getValues().group_name,
                     installment:form.getValues().installment
                 });
                 setHeads(res);
                 res.map((head:any) => {
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
-                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head?.amount);
+                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head.amount);
                 });
             }
         };

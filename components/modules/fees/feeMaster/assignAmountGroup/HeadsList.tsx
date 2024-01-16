@@ -1,7 +1,6 @@
 // Imports
 import {Input} from '@/components/ui/input';
 import {ChevronsUpDown} from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
 import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
 
@@ -43,7 +42,7 @@ const HeadsList = ({heads, form}:any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            heads[0]?.head_name === undefined ? (
+                            form.getValues().affiliated_heads[0]?.head_name === '' ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
                                     No heads
                                 </p>
