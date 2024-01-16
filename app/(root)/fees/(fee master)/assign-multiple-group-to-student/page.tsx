@@ -1,9 +1,11 @@
 'use client';
 // Imports
-import {useEffect, useState} from 'react';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import { useEffect, useState } from 'react';
 import FormCom from '@/components/modules/fees/feeMaster/assignMultipleGroupToStudent/FormCom';
-import ViewCom from '@/components/modules/fees/feeMaster/assignMultipleGroupToStudent/ViewCom';
+import { fetchTypes } from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import { fetchGroups } from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
+import { fetchClasses } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 
 
 
@@ -13,51 +15,57 @@ import ViewCom from '@/components/modules/fees/feeMaster/assignMultipleGroupToSt
 const page = () => {
 
 
-    // Is view component opened
-    const [isViewOpened, setIsViewOpened] = useState(false);
+    // Is Form for Save
+    const [isSave, setIsSave] = useState(true);
+
+    // Types
+    const [types, setTypes] = useState([{}]);
+
+    // Groups
+    const [groups, setGroups] = useState([{}]);
+
+    // Installments
+    const [installments, setInstallments] = useState([{}]);
+
+    // Classes
+    const [classes, setClasses] = useState([{}]);
 
 
-    // Boards
-    const [boards, setBoards] = useState([{}]);
 
-
-    // Update board
-    const [updateBoard, setUpdateBoard] = useState({
-        id:'',
-        isDeleteClicked:false,
-        board:'',
-        is_default:false
-    });
-
-    
     // Use effect
     useEffect(() => {
-        const boardsFetcher = async () => {
-            const res = await fetchBoards();
-            setBoards(res);
+        const fetcher = async () => {
+            const typesRes = await fetchTypes();
+            const groupsRes = await fetchGroups();
+            const installmentsRes = await fetchInstallments();
+            const classesRes = await fetchClasses();
+
+            // console.log(groupsRes)
+            // console.log(typesRes)
+            // console.log(installmentsRes)
+            // console.log( classesRes)
+            
+            setTypes(typesRes);
+            setGroups(groupsRes);
+            setInstallments(installmentsRes);
+            setClasses(classesRes);
         };
-        boardsFetcher();
-    }, [isViewOpened, updateBoard]);
+        fetcher();
+    }, []);
+
 
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white'>
             {
-                isViewOpened ? (
-                    <ViewCom
-                        boards={boards}
-                        setIsViewOpened={setIsViewOpened}
-                        setUpdateBoard={setUpdateBoard}
-                    />
-                ) : (
-                    <FormCom
-                        boards={boards}
-                        isViewOpened={isViewOpened}
-                        setIsViewOpened={setIsViewOpened}
-                        updateBoard={updateBoard}
-                        setUpdateBoard={setUpdateBoard}
-                    />
-                )
+
+                <FormCom
+                    isSave={isSave}
+                    setIsSave={setIsSave}
+                    installments={installments}
+                    classes={classes}
+                />
+
             }
         </div>
     );
