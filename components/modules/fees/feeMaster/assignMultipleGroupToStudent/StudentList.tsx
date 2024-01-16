@@ -6,15 +6,14 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
+import {  FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 
 
 
 
 // Main Function
-const StudentsList = ({ students , setStudents}: any) => {
+const StudentsList = ({ students}: any) => {
 
     // Form
    

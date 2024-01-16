@@ -40,10 +40,7 @@ const page = () => {
             const installmentsRes = await fetchInstallments();
             const classesRes = await fetchClasses();
 
-            // console.log(groupsRes)
-            // console.log(typesRes)
-            // console.log(installmentsRes)
-            // console.log( classesRes)
+        
             
             setTypes(typesRes);
             setGroups(groupsRes);
