@@ -219,13 +219,13 @@ export const assignAmountGroup = async ({group_name, installment, affiliated_hea
                 amount:affiliated_heads[selectedHeads.indexOf(head)].amount
             }
         });
-        const otherHeads = affiliated_heads.filter((head:any) => newHeads.map((h:any) => h.head_name).includes(head.head_name));
+        const unselectedHeads = group.affiliated_heads.filter((head:any) => head.installment !== installment);
 
 
         // Assigning
         await Group.findOneAndUpdate(
             {name:group_name},
-            {affiliated_heads:[otherHeads, newHeads]},
+            {affiliated_heads:[...newHeads, ...unselectedHeads]},
             {new:true}
         );
         

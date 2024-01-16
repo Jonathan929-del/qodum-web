@@ -27,7 +27,7 @@ const FormCom = ({groups, installments}: any) => {
 
 
     // Heads
-    const [heads, setHeads] = useState([{}]);
+    // const [heads, setHeads] = useState([{}]);
 
 
     // Form
@@ -69,7 +69,7 @@ const FormCom = ({groups, installments}: any) => {
                     group_name:form.getValues().group_name,
                     installment:form.getValues().installment
                 });
-                setHeads(res);
+                // setHeads(res);
                 res.map((head:any) => {
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head?.amount);
@@ -170,7 +170,7 @@ const FormCom = ({groups, installments}: any) => {
                     {/* Fee heads */}
                     <HeadsList
                         form={form}
-                        heads={heads}
+                        // heads={heads}
                     />
 
 

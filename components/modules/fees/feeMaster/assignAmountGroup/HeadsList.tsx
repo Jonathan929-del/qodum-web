@@ -10,7 +10,7 @@ import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/for
 
 
 // Main Function
-const HeadsList = ({heads, form}:any) => {
+const HeadsList = ({form}:any) => {
     return (
         <Command
             className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] '
@@ -43,20 +43,20 @@ const HeadsList = ({heads, form}:any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            heads[0]?.head_name === undefined ? (
+                            form.getValues().affiliated_heads[0]?.head_name === '' ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
                                     No heads
                                 </p>
-                            ) : heads.map((head:any) => (
+                            ) : form.getValues().affiliated_heads.map((head:any) => (
                                     <CommandItem key={head._id} className='w-full min-w-[500px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
-                                        <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
+                                        <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{form.getValues().affiliated_heads.indexOf(head) + 1}</li>
                                         <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.head_name}</li>
 
                                         {/* Amount */}
                                         <li className='basis-[50%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <FormField
                                                 control={form.control}
-                                                name={`affiliated_heads.${heads.indexOf(head)}.amount`}
+                                                name={`affiliated_heads.${form.getValues().affiliated_heads.indexOf(head)}.amount`}
                                                 render={({field}) => (
                                                     <FormItem className='w-full'>
                                                         <FormControl>
