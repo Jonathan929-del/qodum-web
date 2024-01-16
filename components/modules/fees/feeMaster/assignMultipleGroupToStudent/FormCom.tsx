@@ -1,7 +1,6 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import Buttons from './Buttons';
 import { deepEqual } from '@/lib/utils';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -42,7 +41,7 @@ const FormCom = ({ groups, types, installments, classes }: any) => {
             group_type: '',
             fees_group: '',
             fees_installment: '',
-            class: ''
+            class: ['']
         }
     });
 
