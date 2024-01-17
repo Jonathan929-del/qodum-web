@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 // Imports
 import * as z from 'zod';
@@ -155,7 +154,8 @@ const page = () => {
                                             <Switch
                                                 id='is_default'
                                                 {...field}
-                                                // value={field.value}
+                                                // @ts-ignore
+                                                value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
                                             />
