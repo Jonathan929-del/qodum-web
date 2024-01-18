@@ -39,7 +39,6 @@ const page = () => {
     const onSubmit = async (values: z.infer<typeof AdmissionSettingValidation>) => {
         try {
 
-            console.log(values)
             toast({ title: 'Group Assigned Successfully!' });
 
         } catch (err: any) {

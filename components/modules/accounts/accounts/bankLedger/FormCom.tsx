@@ -14,7 +14,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {ChevronDown, Calendar as CalendarIcon} from 'lucide-react';
 import Buttons from '@/components/modules/accounts/accounts/bankLedger/Buttons';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
-import { BankLedgerValidation } from '@/lib/validations/accounts/accounts/bankLedger.validation';
+import {BankLedgerValidation} from '@/lib/validations/accounts/accounts/bankLedger.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createBankLedger, deleteBankLedger, modifyBankLedger} from '@/lib/actions/accounts/accounts/bankLedger.actions';
