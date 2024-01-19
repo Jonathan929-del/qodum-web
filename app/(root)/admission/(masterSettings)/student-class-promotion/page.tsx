@@ -14,6 +14,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { StudentClassPromotionValidation } from '@/lib/validations/admission/masterSettings/studentClassPromotion.validation';
+import StudentsList from './StudentList';
 
 
 
@@ -61,15 +62,16 @@ const page = () => {
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative mx-auto w-full sm:w-[900px]  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2 '
+                    className='relative mx-auto w-full  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2 '
                 >
 
-                    <div className='bg-[#f0f0f0] py-2 flex flex-col'>
+                    <div className='bg-[#f0f0f0] w-full sm:w-[900px] py-2 flex flex-col'>
+
                         <div className="w-full flex gap-2 items-start flex-wrap  py-4 px-5 lg:items-end flex-col lg:flex-row justify-between text-left">
 
 
                             <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
-                                <FormLabel className='text-xs w-[95px] text-[#726E71] mt-2'>Select Class</FormLabel>
+                                <FormLabel className='text-xs w-[95px] text-[#726E71] '>Select Class</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name='class'
@@ -99,7 +101,7 @@ const page = () => {
                                 />
                             </div>
                             <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
-                                <FormLabel className='text-xs w-[95px] text-[#726E71] mt-2'>Select Session</FormLabel>
+                                <FormLabel className='text-xs w-[95px] text-[#726E71] '>Select Session</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name='session'
@@ -129,7 +131,7 @@ const page = () => {
                                 />
                             </div>
                             <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
-                                <FormLabel className='text-xs w-[95px] text-[#726E71] mt-2'>Current Session</FormLabel>
+                                <FormLabel className='text-xs w-[95px] text-[#726E71] '>Current Session</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name='current_session'
@@ -160,7 +162,7 @@ const page = () => {
                             </div>
 
                             <div className="w-full lg:w-[49%] flex justify-between lg:justify-start gap-1">
-                                <FormLabel className='text-xs w-[95px] text-[#726E71] mt-2'>Next Session</FormLabel>
+                                <FormLabel className='text-xs w-[95px] text-[#726E71] '>Next Session</FormLabel>
                                 <FormField
                                     control={form.control}
                                     name='next_session'
@@ -204,6 +206,8 @@ const page = () => {
 
                     </div>
 
+
+                    <StudentsList form={form} />
 
                 </form>
             </Form>
