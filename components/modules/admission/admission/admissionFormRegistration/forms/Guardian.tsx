@@ -22,9 +22,9 @@ const Guardian = ({form}:any) => {
 
 
     return (
-        <div className='flex flex-col'>
-            <div className='flex flex-row'>
-                <div className='flex flex-col gap-3 lg:gap-2'>
+        <div className='flex flex-col gap-8 lg:gap-3'>
+            <div className='flex flex-row gap-3'>
+                <div className='flex-1 flex flex-col gap-3 lg:gap-2'>
                     {/* Guardian Name */}
                     <FormField
                         control={form.control}
@@ -225,14 +225,14 @@ const Guardian = ({form}:any) => {
                             </FormItem>
                         )}
                     />
-                    {/* Email */}
+                    {/* Mobile */}
                     <FormField
                         control={form.control}
-                        name='guardian_details.email'
+                        name='guardian_details.mobile'
                         render={({ field }) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Email</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Mobile</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -246,14 +246,14 @@ const Guardian = ({form}:any) => {
                             </FormItem>
                         )}
                     />
-                    {/* Email */}
+                    {/* Phone */}
                     <FormField
                         control={form.control}
-                        name='guardian_details.email'
+                        name='guardian_details.phone'
                         render={({ field }) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Email</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Phone</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -267,14 +267,393 @@ const Guardian = ({form}:any) => {
                             </FormItem>
                         )}
                     />
-                    {/* Email */}
+                </div>
+                <div className='flex-1 flex flex-col gap-3 lg:gap-2'>
+                    {/* Company Name */}
                     <FormField
                         control={form.control}
-                        name='guardian_details.email'
+                        name='guardian_details.company_name'
                         render={({ field }) => (
                             <FormItem className='w-full'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Email</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Company Name</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Business Details */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.business_details'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Business Details</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Qualification */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.qualification'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Qualification</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Service In */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.service_in'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Service In</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Office Phone */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.office_phone'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Office Phone</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Office Mobile */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.office_mobile'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Office Mobile</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Office Extension */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.office_extension'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Office Extension</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Office Email */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.office_email'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Office Email</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Qualification */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.qualification'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Qualification</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Office Website */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.office_website'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Office Website</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Income */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.income'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Income</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+            </div>
+            <div className='flex flex-col'>
+                <h4 className='text-xs'>If Single Parent Please Specify:</h4>
+                <div className='flex flex-col pt-2 gap-2'>
+                    <div className='flex flex-row gap-3'>
+                        <div className='flex-1 flex flex-col gap-3 lg:gap-2'>
+                            {/* Student Lives With */}
+                            <div className='w-full flex flex-col items-center sm:flex-row'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Student Lives With</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name='guardian_details.if_single_parent.student_lives_with'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                                <SelectItem value='Both Parents'>Both Parents</SelectItem>
+                                                                <SelectItem value='Mother'>Mother</SelectItem>
+                                                                <SelectItem value='Father'>Father</SelectItem>
+                                                                <SelectItem value='Other'>Other</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Correspondence To */}
+                            <div className='w-full flex flex-col items-center sm:flex-row'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Correspondence To</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name='guardian_details.if_single_parent.correspondence_to'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                                <SelectItem value='Both Parents'>Both Parents</SelectItem>
+                                                                <SelectItem value='Mother'>Mother</SelectItem>
+                                                                <SelectItem value='Father'>Father</SelectItem>
+                                                                <SelectItem value='Other'>Other</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex-1 flex flex-col gap-3 lg:gap-2'>
+                            {/* Legal Custody Of The Child */}
+                            <div className='w-full flex flex-col items-center sm:flex-row'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Legal Custody Of The Child</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name='guardian_details.if_single_parent.legal_custody_of_the_child'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                                <SelectItem value='Both Parents'>Both Parents</SelectItem>
+                                                                <SelectItem value='Mother'>Mother</SelectItem>
+                                                                <SelectItem value='Father'>Father</SelectItem>
+                                                                <SelectItem value='Other'>Other</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Check If Applicalble */}
+                            <div className='w-full flex flex-col items-center sm:flex-row'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Check If Applicalble</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name='guardian_details.if_single_parent.check_id_applicable'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                                <SelectItem value='Father Deceased'>Father Deceased</SelectItem>
+                                                                <SelectItem value='Parents Divorced'>Parents Divorced</SelectItem>
+                                                                <SelectItem value='Father Remarried'>Father Remarried</SelectItem>
+                                                                <SelectItem value='Mother Deceased'>Mother Deceased</SelectItem>
+                                                                <SelectItem value='Parents Separated'>Parents Separated</SelectItem>
+                                                                <SelectItem value='Mother Remarried'>Mother Remarried</SelectItem>
+                                                                <SelectItem value='Parents Living Outside India'>Parents Living Outside India</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Separation Reason */}
+                    <FormField
+                        control={form.control}
+                        name='guardian_details.if_single_parent.separation_reason'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center mt-2'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Separation Reason</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                         <FormControl>
                                             <Input

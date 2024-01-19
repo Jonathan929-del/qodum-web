@@ -52,39 +52,19 @@ const PrintButton = ({students}:any) => {
                 <SelectContent>
 
                         {/* Excel printing */}
-                        <ExcelFile
-                            element={
-                                <span className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
-                                    .xlsx
-                                    <Download size={16} className='text-hash-color ml-2'/>
-                                </span>
-                            }
-                            filename='Students List'
-                            fileExtension='xlsx'
-                        >
-                            <ExcelSheet
-                                dataSet={excelData}
-                                name='Students'
-                            />
-                        </ExcelFile>
+                        <span className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                            .xlsx
+                            <Download size={16} className='text-hash-color ml-2'/>
+                        </span>
+
 
 
                         {/* Excel printing */}
-                        <ExcelFile
-                            element={
-                                <span className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
-                                    .csv
-                                    <Download size={16} className='text-hash-color ml-2'/>
-                                </span>
-                            }
-                            filename='Students List'
-                            fileExtension='csv'
-                        >
-                            <ExcelSheet
-                                dataSet={excelData}
-                                name='Students'
-                            />
-                        </ExcelFile>
+                        <span className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                            .csv
+                            <Download size={16} className='text-hash-color ml-2'/>
+                        </span>
+
 
 
                         {/* Pdf printing */}
@@ -94,8 +74,6 @@ const PrintButton = ({students}:any) => {
                             .pdf
                             <Download size={16} className='text-hash-color ml-2'/>
                         </span>
-
-
 
                 </SelectContent>
             </Select>

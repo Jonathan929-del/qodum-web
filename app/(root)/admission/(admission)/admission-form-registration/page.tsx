@@ -222,12 +222,11 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
-                    // <ViewCom
-                    //     setIsViewOpened={setIsViewOpened}
-                    //     students={students}
-                    //     setUpdateStudent={setUpdateStudent}
-                    // />
-                    ''
+                    <ViewCom
+                        setIsViewOpened={setIsViewOpened}
+                        students={students}
+                        setUpdateStudent={setUpdateStudent}
+                    />
                 ) : (
                     <FormCom
                         isViewOpened={isViewOpened}

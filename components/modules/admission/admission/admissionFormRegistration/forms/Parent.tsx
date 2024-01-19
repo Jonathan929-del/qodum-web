@@ -566,7 +566,7 @@ const Parent = ({form}:any) => {
                     render={({ field }) => (
                         <FormItem className='w-full'>
                             <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Father Name</FormLabel>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Mother Name</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                     <FormControl>
                                         <Input
