@@ -30,15 +30,24 @@ const page = () => {
         defaultValues: {
             session:'2023-2024',
             // @ts-ignore
-            setting_type:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
+            setting_type:'Automatic',
             // @ts-ignore
-            prefix:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
+            prefix:'',
             // @ts-ignore
-            start_from:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
+            start_from:0,
             // @ts-ignore
-            lead_zero:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
+            lead_zero:'',
             // @ts-ignore
-            suffix:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
+            suffix:'',
+            // setting_type:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
+            // // @ts-ignore
+            // prefix:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
+            // // @ts-ignore
+            // start_from:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
+            // // @ts-ignore
+            // lead_zero:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
+            // // @ts-ignore
+            // suffix:typeof(window) !== 'undefined' ? JSON.parse(localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
         }
     });
 
@@ -47,17 +56,17 @@ const page = () => {
     const onSubmit = async (values: z.infer<typeof EnquiryNoSettingValidation>) => {
         try {
 
-            if(typeof(window) !== 'undefined'){
-                localStorage.setItem('enquiry_no_setting', JSON.stringify({
-                    session:values.session,
-                    setting_type:values.setting_type,
-                    prefix:values.prefix,
-                    start_from:values.start_from,
-                    lead_zero:values.lead_zero,
-                    suffix:values.suffix
-                }));
-                toast({title:'Setting Saved Successfully!'});
-            }
+            // if(typeof(window) !== 'undefined'){
+            //     localStorage.setItem('enquiry_no_setting', JSON.stringify({
+            //         session:values.session,
+            //         setting_type:values.setting_type,
+            //         prefix:values.prefix,
+            //         start_from:values.start_from,
+            //         lead_zero:values.lead_zero,
+            //         suffix:values.suffix
+            //     }));
+            //     toast({title:'Setting Saved Successfully!'});
+            // }
 
         } catch (err:any) {
             console.log(err);
