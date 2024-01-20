@@ -30,15 +30,15 @@ const page = () => {
         defaultValues: {
             session:'2023-2024',
             // @ts-ignore
-            setting_type:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
+            setting_type:JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic',
             // @ts-ignore
-            prefix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
+            prefix:JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix || '',
             // @ts-ignore
-            start_from:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
+            start_from:JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from || 0,
             // @ts-ignore
-            lead_zero:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
+            lead_zero:JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero || '',
             // @ts-ignore
-            suffix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
+            suffix:JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix || '',
         }
     });
 
