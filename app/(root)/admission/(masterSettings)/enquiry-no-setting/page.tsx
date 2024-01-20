@@ -76,6 +76,7 @@ const page = () => {
 
 
     useEffect(() => {
+        window.localStorage.setItem('item', 'TEXT');
     }, [form.watch('setting_type')]);
     useEffect(() => {
         console.log(form.getValues());
