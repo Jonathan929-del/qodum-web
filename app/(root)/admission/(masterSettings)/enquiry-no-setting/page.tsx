@@ -81,8 +81,8 @@ const page = () => {
         localStorage.setItem('item', 'TEXT');
     }, []);
     useEffect(() => {
-        console.log(form.getValues());
     }, [form.watch('lead_zero'), form.watch('start_from')]);
+    console.log(localStorage.getItem('item'));
 
 
 
