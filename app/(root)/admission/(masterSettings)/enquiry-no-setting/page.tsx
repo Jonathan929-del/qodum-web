@@ -29,16 +29,11 @@ const page = () => {
         resolver: zodResolver(EnquiryNoSettingValidation),
         defaultValues: {
             session:'2023-2024',
-            // @ts-ignore
-            setting_type:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
-            // @ts-ignore
-            prefix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
-            // @ts-ignore
-            start_from:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
-            // @ts-ignore
-            lead_zero:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
-            // @ts-ignore
-            suffix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
+            setting_type:'Automatic',
+            prefix:'',
+            start_from:0,
+            lead_zero:'',
+            suffix:'',
         }
     });
 
@@ -47,17 +42,7 @@ const page = () => {
     const onSubmit = async (values: z.infer<typeof EnquiryNoSettingValidation>) => {
         try {
 
-            if(typeof(window) !== 'undefined'){
-                window.localStorage.setItem('enquiry_no_setting', JSON.stringify({
-                    session:values.session,
-                    setting_type:values.setting_type,
-                    prefix:values.prefix,
-                    start_from:values.start_from,
-                    lead_zero:values.lead_zero,
-                    suffix:values.suffix
-                }));
-                toast({title:'Setting Saved Successfully!'});
-            }
+
 
         } catch (err:any) {
             console.log(err);
@@ -66,12 +51,35 @@ const page = () => {
 
 
 
+    // Use effects
     useEffect(() => {
-        window.localStorage.setItem('item', 'TEXT');
-    }, [form.watch('setting_type')]);
+        // @ts-ignore
+        form.setValue('setting_type', JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type);
+        // @ts-ignore
+        form.setValue('prefix', JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix);
+        // @ts-ignore
+        form.setValue('start_from', JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from);
+        // @ts-ignore
+        form.setValue('lead_zero', JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero);
+        // @ts-ignore
+        form.setValue('suffix', JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix);
+    }, []);
     useEffect(() => {
         console.log(form.getValues());
     }, [form.watch('lead_zero'), form.watch('start_from')]);
+    useEffect(() => {
+        if(typeof(window) !== 'undefined'){
+            window.localStorage.setItem('enquiry_no_setting', JSON.stringify({
+                session:form.getValues().session,
+                setting_type:form.getValues().setting_type,
+                prefix:form.getValues().prefix,
+                start_from:form.getValues().start_from,
+                lead_zero:form.getValues().lead_zero,
+                suffix:form.getValues().suffix
+            }));
+            toast({title:'Setting Saved Successfully!'});
+        }
+    }, [form.handleSubmit]);
 
 
 
