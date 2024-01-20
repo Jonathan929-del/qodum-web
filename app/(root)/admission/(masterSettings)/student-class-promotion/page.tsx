@@ -100,7 +100,7 @@ const page = () => {
                                     )}
                                 />
                             </div>
-                            <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
+                            {/* <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
                                 <FormLabel className='text-xs w-[95px] text-[#726E71] '>Select Session</FormLabel>
                                 <FormField
                                     control={form.control}
@@ -129,7 +129,7 @@ const page = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </div>
+                            </div> */}
                             <div className="w-full lg:w-[49%] flex items-center justify-between lg:justify-start gap-1">
                                 <FormLabel className='text-xs w-[95px] text-[#726E71] '>Current Session</FormLabel>
                                 <FormField
