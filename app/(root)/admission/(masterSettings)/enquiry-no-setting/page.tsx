@@ -82,8 +82,13 @@ const page = () => {
     }, []);
     useEffect(() => {
     }, [form.watch('lead_zero'), form.watch('start_from')]);
+    const object = {
+        name:'Name',
+        age:'15'
+    };
+    localStorage.setItem('data', JSON.stringify(object));
     // @ts-ignore
-    console.log(typeof localStorage.getItem('item') === 'object' ? JSON.parse(localStorage.getItem('item')) : '');
+    console.log(JSON.parse(localStorage.getItem('item')));
 
 
 
