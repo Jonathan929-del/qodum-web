@@ -2,7 +2,6 @@
 // Imports
 import * as z from 'zod';
 import {useEffect} from 'react';
-import dynamic from 'next/dynamic';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Label} from '@/components/ui/label';
@@ -30,16 +29,16 @@ const page = () => {
         resolver: zodResolver(EnquiryNoSettingValidation),
         defaultValues: {
             session:'2023-2024',
-            // @ts-ignore
-            setting_type:localStorage.getItem('enquiry_no_setting').setting_type || 'Automatic',
-            // @ts-ignore
-            prefix:localStorage.getItem('enquiry_no_setting').prefix || '',
-            // @ts-ignore
-            start_from:localStorage.getItem('enquiry_no_setting').start_from || 0,
-            // @ts-ignore
-            lead_zero:localStorage.getItem('enquiry_no_setting').lead_zero || '',
-            // @ts-ignore
-            suffix:localStorage.getItem('enquiry_no_setting').suffix || '',
+            // setting_type:localStorage.getItem('setting_type') !== null ? localStorage.getItem('setting_type') : 'Automatic',
+            // prefix:localStorage.getItem('prefix') !== null ? localStorage.getItem('prefix') : '',
+            // start_from:localStorage.getItem('start_from') !== null ? localStorage.getItem('start_from') : 0,
+            // lead_zero:localStorage.getItem('lead_zero') !== null ? localStorage.getItem('lead_zero') : '',
+            // suffix:localStorage.getItem('suffix') !== null ? localStorage.getItem('suffix') : '',
+            setting_type:'Automatic',
+            prefix:'',
+            start_from:0,
+            lead_zero:'',
+            suffix:'',
         }
     });
 
@@ -64,7 +63,18 @@ const page = () => {
 
     // Use effect
     useEffect(() => {
+
     }, [form.watch('lead_zero'), form.watch('start_from')]);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('setting_type', localStorage.getItem('setting_type'));
+        // @ts-ignore
+        form.setValue('prefix', localStorage.getItem('prefix'));
+        // @ts-ignore
+        form.setValue('lead_zero', localStorage.getItem('lead_zero'));
+        // @ts-ignore
+        form.setValue('suffix', localStorage.getItem('suffix'));
+    }, []);
 
 
 
