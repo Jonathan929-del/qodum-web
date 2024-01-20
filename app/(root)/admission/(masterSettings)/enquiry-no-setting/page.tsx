@@ -88,7 +88,7 @@ const page = () => {
     };
     localStorage.setItem('data', JSON.stringify(object));
     // @ts-ignore
-    console.log(JSON.parse(localStorage.getItem('item')));
+    console.log(localStorage.getItem('item'));
 
 
 
