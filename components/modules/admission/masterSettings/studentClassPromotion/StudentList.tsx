@@ -18,10 +18,10 @@ const StudentsList = ({ form }: any) => {
 
 
     const [students, setStudents] = useState([
-        { admin_no: '1375', bill_no: '120120', name: 'mohammed', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohammed', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohammed', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohammed', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
+        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
+        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
+        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
+        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
 
     ])
 
@@ -32,7 +32,7 @@ const StudentsList = ({ form }: any) => {
     return (
 
         <Command
-            className='w-[100%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
+            className='w-[100%] max-h-[90%] flex flex-col items-center overflow-visible pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
         >
 
             {/* Header */}
@@ -82,7 +82,7 @@ const StudentsList = ({ form }: any) => {
                                     control={form.control}
                                     name='new_class'
                                     render={({ field }) => (
-                                        <FormItem className='max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormItem className='w-auto md:max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                             <FormControl>
                                                 <Select
                                                     {...field}
@@ -119,7 +119,7 @@ const StudentsList = ({ form }: any) => {
                                     control={form.control}
                                     name='new_class'
                                     render={({ field }) => (
-                                        <FormItem className='max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormItem className='w-auto md:max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                             <FormControl>
                                                 <Select
                                                     {...field}
@@ -160,10 +160,10 @@ const StudentsList = ({ form }: any) => {
                                 <CommandItem
                                     key={index}
                                     value={`${students.indexOf(student) + 1} ${student.bill_no}  ${student.admin_no}  ${student.name} ${student.father_name} ${student.assigned_class} ${student.new_class} ${student.assigned_section} ${student.new_section} `}
-                                    className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className=' basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{students.indexOf(student) + 1}</li>
-                                    <li className=' basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    <li className=' basis-[20%] text-center flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         <FormField
                                             // control={form.control}
                                             name="class"
