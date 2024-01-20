@@ -1,11 +1,11 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useEffect, useState} from 'react';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -26,6 +26,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     const {toast} = useToast();
 
 
+    // Last number
+    const [lastNumber, setLastNumber] = useState();
+
+
     // Comparison object
     const comparisonObject = {
         enquiry_no:updateEnquiry.enquiry_no,
@@ -43,11 +47,17 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     };
 
 
+    // Automatic enquiry number
+    // @ts-ignore
+    const enquiryNumber = `${JSON.parse(localStorage.getItem('enquiry_no_setting')).prefix}${JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero.substring(0, JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero.length - 1)}${enquiries.length + 1}${JSON.parse(localStorage.getItem('enquiry_no_setting')).suffix}`;
+
+
     // Form
     const form = useForm({
         resolver:zodResolver(EnquiryValidation),
         defaultValues:{
-            enquiry_no:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
+            // @ts-ignore
+            enquiry_no:JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
             enquiry_date:{
                 year:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.year,
                 month:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.month,
@@ -67,6 +77,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     const onSubmit = async (values:z.infer<typeof EnquiryValidation>) => {
         // Create enquiry
         if(updateEnquiry.id === ''){
+            if(enquiries.map((e:any) => e.enquiry_no).includes(values.enquiry_no)){
+                toast({title:'Enquiry number already exists', variant:'error'});
+                return;
+            };
             await createEnquiry({
                 enquiry_no:values.enquiry_no,
                 enquiry_date:{
@@ -85,6 +99,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         }
         // Modify enquiry
         else if(!deepEqual(comparisonObject, values)){
+            if(comparisonObject.enquiry_no !== values.enquiry_no && enquiries.map((e:any) => e.enquiry_no).includes(values.enquiry_no)){
+                toast({title:'Enquiry number already exists', variant:'error'});
+                return;
+            };
             // Update
             await modifyEnquiry({
                 id:updateEnquiry.id,
@@ -152,7 +170,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         return newArr;
     };
 
-    
+
     // Months Loop
     const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -176,6 +194,13 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     };
 
 
+    // Last number handler
+    const lastNumberHandler = () => {
+        const number = enquiries[enquiries.length - 1].enquiry_no;
+        setLastNumber(number);
+    };
+
+
     // Use effect
     useEffect(() => {
         if(form.getValues().enquiry_date.year !== '' && form.getValues().enquiry_date.month !== ''){
@@ -186,15 +211,31 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
     return (
-        <div className='w-[90%] max-w-[500px] flex flex-col items-center border-[0.5px] border-[##E8E8E8] rounded-[8px] sm:w-[70%]'>
+        <div className='w-[90%] max-w-[500px] max-h-[95%] flex flex-col items-center border-[0.5px] border-[##E8E8E8] rounded-[8px] sm:w-[70%] overflow-y-scroll custom-sidebar-scrollbar'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Enquiry</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full h-full flex flex-col items-center gap-5 px-2 pt-4 sm:px-4'
+                    className='w-full h-full flex flex-col items-center gap-8 px-2 pt-4 sm:gap-5 sm:px-4'
                 >
+
+
+                    {/* Get last enquiry no. */}
+                    <div className='w-full flex flex-row justify-center gap-2'>
+                        <span className='flex-1 flex justify-end'>
+                            <span
+                                onClick={lastNumberHandler}
+                                className='text-[11px] border-[1px] border-[#ccc] rounded-[2px] px-2 font-bold cursor-pointer'
+                            >
+                                GET LAST ENQUIRY NO.
+                            </span>
+                        </span>
+                        <span className='flex-1 text-xs'>
+                            {lastNumber}
+                        </span>
+                    </div>
 
 
                     {/* Enquiry No. */}
@@ -208,6 +249,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                     <FormControl>
                                         <Input
                                             {...field}
+                                            disabled={
+                                                // @ts-ignore
+                                                JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type === 'Automatic'
+                                            }
                                             className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -219,9 +264,9 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry Date */}
-                    <div className='w-full flex flex-row items-center'>
-                        <FormLabel className='basis-[30%] text-xs text-end pr-2 text-[#726E71]'>Enquiry Date</FormLabel>
-                        <div className='basis-[70%] h-full flex flex-row items-center justify-between gap-2'>
+                    <div className='w-full flex flex-col items-center sm:flex-row'>
+                        <FormLabel className='w-full text-xs text-start pr-2 text-[#726E71] sm:text-end sm:basis-[30%]'>Enquiry Date</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
                             {/* Year */}
                             <FormField
                                 control={form.control}
@@ -320,7 +365,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='visitor_name'
                         render={({field}) => (
                             <FormItem className='w-full h-7 flex flex-col items-start justify-center mt-[-8px] sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Name</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Name</FormLabel>
                                 <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -341,7 +386,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='visitor_address'
                         render={({field}) => (
                             <FormItem className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Address</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Address</FormLabel>
                                 <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -362,7 +407,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='mobile_no'
                         render={({field}) => (
                             <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Mobile No.</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Mobile No.</FormLabel>
                                 <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -383,7 +428,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='purpose'
                         render={({field}) => (
                             <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Purpose</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Purpose</FormLabel>
                                 <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -404,7 +449,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='contact_person'
                         render={({field}) => (
                             <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Contact Person</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Contact Person</FormLabel>
                                 <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -425,7 +470,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         name='reference_details'
                         render={({field}) => (
                             <FormItem className='relative w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Reference Details</FormLabel>
+                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Reference Details</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input

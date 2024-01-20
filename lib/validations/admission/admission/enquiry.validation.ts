@@ -7,7 +7,7 @@ import * as z from 'zod';
 
 // Enquiry Validation
 export const EnquiryValidation = z.object({
-    enquiry_no:z.number({invalid_type_error:'*Please enquiry number'}).or(z.string().nonempty({message:'*Please enter enquiry number'})).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+    enquiry_no:z.string().nonempty({message:'*Please enter enquiry number'}),
     enquiry_date:z.object({
         year:z.string(),
         month:z.string(),

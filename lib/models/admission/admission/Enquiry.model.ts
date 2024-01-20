@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 // Enquiry Schema
 const EnquirySchema = new mongoose.Schema(
     {
-        enquiry_no:{type:Number, required:true},
+        enquiry_no:{type:String, required:true},
         enquiry_date:{
             year:{type:String},
             month:{type:String},

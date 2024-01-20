@@ -1,25 +1,24 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
+import {Label} from '@/components/ui/label';
+import {Input} from '@/components/ui/input';
+import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {ChevronDown} from 'lucide-react';
-import {useForm} from 'react-hook-form';
-import {Button} from '@/components/ui/button';
-import {Label} from '@/components/ui/label';
-import {EnquiryNoSettingValidation} from '@/lib/validations/admission/masterSettings/enquiryNoSetting.validation';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {useState} from 'react';
-import {Input} from '@/components/ui/input';
+import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {EnquiryNoSettingValidation} from '@/lib/validations/admission/masterSettings/enquiryNoSetting.validation';
 
 
 
 // Main function
 const page = () => {
 
-    const [isVisible, setIsVisible] = useState(true)
 
     // Toast
     const { toast } = useToast();
@@ -29,12 +28,17 @@ const page = () => {
     const form = useForm({
         resolver: zodResolver(EnquiryNoSettingValidation),
         defaultValues: {
-            session: '',
-            setting_type: false,
-            prefix: '',
-            start_from: '',
-            lead_zero: '',
-            suffix: '',
+            session:'2023-2024',
+            // @ts-ignore
+            setting_type:JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic',
+            // @ts-ignore
+            prefix:JSON.parse(localStorage.getItem('enquiry_no_setting')).prefix || '',
+            // @ts-ignore
+            start_from:JSON.parse(localStorage.getItem('enquiry_no_setting')).start_from || 0,
+            // @ts-ignore
+            lead_zero:JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero || '',
+            // @ts-ignore
+            suffix:JSON.parse(localStorage.getItem('enquiry_no_setting')).suffix || '',
         }
     });
 
@@ -43,13 +47,28 @@ const page = () => {
     const onSubmit = async (values: z.infer<typeof EnquiryNoSettingValidation>) => {
         try {
 
+            localStorage.setItem('enquiry_no_setting', JSON.stringify({
+                session:values.session,
+                setting_type:values.setting_type,
+                prefix:values.prefix,
+                start_from:values.start_from,
+                lead_zero:values.lead_zero,
+                suffix:values.suffix
+            }));
+            toast({title:'Setting Saved Successfully!'});
 
-            toast({ title: 'Group Assigned Successfully!' });
-
-        } catch (err: any) {
+        } catch (err:any) {
             console.log(err);
         }
     };
+
+
+
+    useEffect(() => {
+    }, [form.watch('setting_type')]);
+    useEffect(() => {
+        console.log(form.getValues());
+    }, [form.watch('lead_zero'), form.watch('start_from')]);
 
 
 
@@ -62,27 +81,21 @@ const page = () => {
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative mx-auto w-full sm:w-[900px]  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2 '
+                    className='relative mx-auto w-full sm:w-[1000px]  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2'
                 >
 
-                    <div className="w-full flex gap-2 items-start bg-[#f0f0f0] py-4 px-5 lg:items-end flex-col lg:flex-row justify-between text-left">
-
-                        <div className="me-2 min-w-[300px] flex justify-between lg:justify-start gap-1">
+                <div className="w-full flex gap-2 items-start bg-[#f0f0f0] py-4 px-5 lg:items-end flex-col lg:flex-row justify-between text-left">
+                        <div className='me-2 min-w-[150px] flex justify-between lg:justify-start gap-1'>
                             <FormLabel className='text-xs text-[#726E71] mt-2'>Session</FormLabel>
                             <FormField
-                            disabled
                                 control={form.control}
                                 name='session'
                                 render={({ field }) => (
-                                    <FormItem className='max-w-[180px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl className='mt-0 mohammed'>
-                                            <Select
-                                                {...field}
-                                                value={field.value}
-                                                onValueChange={field.onChange}
-                                            >
+                                    <FormItem className='flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormControl>
+                                            <Select disabled>
                                                 <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Year' className='text-xs' />
+                                                    <SelectValue placeholder='2023-2024' className='text-xs' />
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -98,19 +111,25 @@ const page = () => {
                                 )}
                             />
                         </div>
-
-                        <div className="me-2 min-w-[300px] h-full flex items-center justify-between lg:justify-start gap-1">
+                        <div className="me-2 h-full w-full flex flex-row items-center lg:justify-start lg:w-auto gap-1">
                             <FormLabel className='text-xs text-[#726E71]  me-3'>Enquiry No. setting should be</FormLabel>
                             <FormField
                                 control={form.control}
                                 name='setting_type'
                                 render={({ field }) => (
                                     <FormItem className='max-w-[180px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl className='mt-0 mohammed'>
-                                            <RadioGroup defaultValue='automatic' onChange={() => setIsVisible(!isVisible)} className='flex gap-2'>
-                                                <RadioGroupItem value='automatic'> </RadioGroupItem>
+                                        <FormControl>
+                                            {/* @ts-ignore */}
+                                            <RadioGroup defaultValue={form.getValues().setting_type} className='flex gap-2'>
+                                                <RadioGroupItem
+                                                    value='Automatic'
+                                                    onClick={() => form.setValue('setting_type', 'Automatic')}
+                                                />
                                                 <Label className='text-xs text-[#726E71] '>Automatic</Label>
-                                                <RadioGroupItem value='manual'> </RadioGroupItem>
+                                                <RadioGroupItem
+                                                    value='Manual'
+                                                    onClick={() => form.setValue('setting_type', 'Manual')}
+                                                />
                                                 <Label className='text-xs text-[#726E71] '>Manual</Label>
                                             </RadioGroup>
                                         </FormControl>
@@ -118,31 +137,27 @@ const page = () => {
                                 )}
                             />
                         </div>
-
-
-
-
-
-
-                        <Button
-                            type='submit'
-                            className='w-24 mx-auto px-[8px] mt-5 sm:mt-0 h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                        >
-                            Modify
-                        </Button>
+                        <div className='w-full flex item-end justify-end lg:w-auto'>
+                            <Button
+                                type='submit'
+                                className='w-24 px-[8px] mt-5 sm:mt-0 h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                            >
+                                Modify
+                            </Button>
+                        </div>
 
 
                     </div>
 
-                    <div className="w-full mt-5 sm:mt-2 flex flex-col md:flex-row gap-2 items-center bg-[#f0f0f0] py-4 px-5 lg:flex-row justify-between text-left">
-                        {isVisible && (
+                    <div className="w-full mt-5 sm:mt-2 flex flex-col gap-2 items-center bg-[#f0f0f0] py-4 px-5 xl:flex-row justify-between text-left">
+                        { form.getValues().setting_type === 'Automatic' ? (
                             <>
-                                <div className="me-2 flex items-center justify-between sm:justify-start gap-1">
-                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Session</FormLabel>
+                                <div className="me-2 flex items-center justify-between sm:justify-start gap-[2px]">
+                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Prefix</FormLabel>
                                     <FormField
                                         control={form.control}
-                                        name='session'
+                                        name='prefix'
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormControl>
@@ -211,7 +226,7 @@ const page = () => {
                                     />
                                 </div>
                             </>
-                        )}
+                        ) : ''}
 
 
 

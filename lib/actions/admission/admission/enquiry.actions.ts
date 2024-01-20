@@ -9,7 +9,7 @@ import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
 
 // Create enquiry props
 interface CreateEnquiryProps{
-    enquiry_no:Number;
+    enquiry_no:String;
     enquiry_date:{
         year:String;
         month:String;
@@ -99,7 +99,7 @@ export const fetchEnquiries = async () => {
 // Modify enquiry props
 interface ModifyEnquiryProps{
     id:String;
-    enquiry_no:Number;
+    enquiry_no:String;
     enquiry_date:{
         year:String;
         month:String;
