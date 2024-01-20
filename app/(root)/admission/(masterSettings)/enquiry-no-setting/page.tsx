@@ -78,11 +78,12 @@ const page = () => {
 
     // Use ee
     useEffect(() => {
-        localStorage.setItem('item', 'TEXT');
+        localStorage.setItem('item', '{name:"person name", age:"person age"}');
     }, []);
     useEffect(() => {
     }, [form.watch('lead_zero'), form.watch('start_from')]);
-    console.log(localStorage.getItem('item'));
+    // @ts-ignore
+    console.log(typeof localStorage.getItem('item') === 'object' ? JSON.parse(localStorage.getItem('item')) : '');
 
 
 
