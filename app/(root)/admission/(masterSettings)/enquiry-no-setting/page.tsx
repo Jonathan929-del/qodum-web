@@ -30,16 +30,25 @@ const page = () => {
         resolver: zodResolver(EnquiryNoSettingValidation),
         defaultValues: {
             session:'2023-2024',
-            // @ts-ignore
-            setting_type:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
-            // @ts-ignore
-            prefix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
-            // @ts-ignore
-            start_from:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
-            // @ts-ignore
-            lead_zero:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
-            // @ts-ignore
-            suffix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
+            // // @ts-ignore
+            // setting_type:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).setting_type || 'Automatic' : 'Automatic',
+            // // @ts-ignore
+            // prefix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).prefix || '' : '',
+            // // @ts-ignore
+            // start_from:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).start_from || 0 : 0,
+            // // @ts-ignore
+            // lead_zero:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).lead_zero || '' : '',
+            // // @ts-ignore
+            // suffix:typeof(window) !== 'undefined' ? JSON.parse(window.localStorage.getItem('enquiry_no_setting')).suffix || '' : '',
+
+
+
+
+            setting_type:'Automatic',
+            prefix:'',
+            start_from:0,
+            lead_zero:'',
+            suffix:'',
         }
     });
 
@@ -48,17 +57,17 @@ const page = () => {
     const onSubmit = async (values: z.infer<typeof EnquiryNoSettingValidation>) => {
         try {
 
-            if(typeof(window) !== 'undefined'){
-                window.localStorage.setItem('enquiry_no_setting', JSON.stringify({
-                    session:values.session,
-                    setting_type:values.setting_type,
-                    prefix:values.prefix,
-                    start_from:values.start_from,
-                    lead_zero:values.lead_zero,
-                    suffix:values.suffix
-                }));
-                toast({title:'Setting Saved Successfully!'});
-            }
+            // if(typeof(window) !== 'undefined'){
+            //     window.localStorage.setItem('enquiry_no_setting', JSON.stringify({
+            //         session:values.session,
+            //         setting_type:values.setting_type,
+            //         prefix:values.prefix,
+            //         start_from:values.start_from,
+            //         lead_zero:values.lead_zero,
+            //         suffix:values.suffix
+            //     }));
+            //     toast({title:'Setting Saved Successfully!'});
+            // }
 
         } catch (err:any) {
             console.log(err);
@@ -249,4 +258,4 @@ const page = () => {
 
 
 // Export
-export default dynamic(() => Promise.resolve(page), {ssr:false});
+export default page;
