@@ -49,7 +49,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
     // Automatic enquiry number
     // @ts-ignore
-    const enquiryNumber = `${JSON.parse(localStorage.getItem('enquiry_no_setting')).prefix}${JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero.substring(0, JSON.parse(localStorage.getItem('enquiry_no_setting')).lead_zero.length - 1)}${enquiries.length + 1}${JSON.parse(localStorage.getItem('enquiry_no_setting')).suffix}`;
+    const enquiryNumber = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
 
 
     // Form
@@ -57,7 +57,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         resolver:zodResolver(EnquiryValidation),
         defaultValues:{
             // @ts-ignore
-            enquiry_no:JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
+            enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
             enquiry_date:{
                 year:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.year,
                 month:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.month,
@@ -249,10 +249,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            disabled={
-                                                // @ts-ignore
-                                                JSON.parse(localStorage.getItem('enquiry_no_setting')).setting_type === 'Automatic'
-                                            }
+                                            disabled={localStorage.getItem('setting_type') === 'Automatic'}
                                             className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
