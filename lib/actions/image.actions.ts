@@ -8,7 +8,6 @@ import {S3Client, PutObjectCommand} from '@aws-sdk/client-s3';
 
 
 // Configs
-// @ts-ignore
 const configs = new S3Client({
     region:process.env.NEXT_PUBLIC_AWS_REGION,
     credentials:{

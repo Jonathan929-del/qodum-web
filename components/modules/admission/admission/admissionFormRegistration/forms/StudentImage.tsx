@@ -36,7 +36,7 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc}:any) => {
                             src={imageSrc}
                             width={100}
                             height={100}
-                            className='w-full h-full'
+                            className='w-full h-full rounded-[5px]'
                         />
                     ) : updateStudent.student.image ? (
                         <Image
