@@ -59,7 +59,6 @@ const page = () => {
 
     // Use effect
     useEffect(() => {
-        console.log(form.getValues());
     }, [form.watch('setting_type')]);
 
 

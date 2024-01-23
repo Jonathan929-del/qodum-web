@@ -12,8 +12,7 @@ interface CreateStudentProps{
     // Student
     student:{
         // 1
-        class:String;
-        board:String;
+        image:String;
         reg_no:Number;
         pros_no:Number;
         amount:Number;
@@ -21,8 +20,12 @@ interface CreateStudentProps{
         payment_mode:String;
         admission_account:String;
         post_account:String;
-        session:String;
         // 2
+        class:String;
+        board:String;
+        stream:String;
+        subject:String;
+        optional_subject:String;
         name:String;
         middle_name:String;
         last_name:String;
@@ -109,50 +112,37 @@ interface CreateStudentProps{
     // Other details
     others:{
         // 1
-        general_description:String;
-        // 2
-        emergency_contact:{
-            person_name:String;
-            mobile_no:Number;
-            phone_no:Number;
-            address:String;
-            relation:String;
-        },
-        // 3
-        emergency_contact_two:{
-            person_name:String;
-            mobile_no:Number;
-            phone_no:Number;
-            address:String;
-            relation:String;
-            is_alumni:Boolean;
-        },
-        // 4
         student_other_details:{
-            stream:String;
-            optional_subject:String;
             medical_history:String;
+            descriptions:String;
             allergies:String;
-            other_medical_info:String;
+            allergies_causes:String;
             family_doctor_name:String;
             family_doctor_phone:Number;
             family_doctor_address:String;
             distance_from_home:Number;
-            no_of_living_years:Number;
-            only_child:Boolean;
+            no_of_living_year:Number;
+            only_child:String;
+            general_description:String;
         },
-        // 5
+        // 2
         student_staff_relation:{
             staff_ward:String;
             staff_name:String;
         },
-        // 6
+        // 3
         previous_school_details:{
             school_name:String;
-            city:String;
-            class:String;
-            year:String;
             board:String;
+            passing_year:String;
+            total_marks:String;
+            percentage:String;
+            result:String;
+            is_alumni:String;
+            father_name:String;
+            father_passing_year:String;
+            mother_name:String;
+            mother_passing_year:String;
         }
     };
 
@@ -162,28 +152,14 @@ interface CreateStudentProps{
         guardian_name:String;
         profession:String;
         designation:String;
-        residence_address:String;
-        office_address:String;
-        email:String;
-        alternate_email:String;
-        dob:Date;
-        mobile:Number;
-        phone:Number;
         company_name:String;
         business_details:String;
         qualification:String;
-        service_in:String;
-        office_phone:Number;
-        office_mobile:Number;
-        office_extension:String;
-        office_email:String;
-        office_website:String;
-        income:String;
         // 2
         if_single_parent:{
             student_lives_with:String;
-            correspondence_to:String;
             legal_custody_of_the_child:String;
+            correspondence_to:String;
             check_id_applicable:String;
             separation_reason:String;
         }
@@ -248,8 +224,7 @@ interface ModifyStudentProps{
     // Student
     student:{
         // 1
-        class:String;
-        board:String;
+        image:String;
         reg_no:Number;
         pros_no:Number;
         amount:Number;
@@ -257,8 +232,12 @@ interface ModifyStudentProps{
         payment_mode:String;
         admission_account:String;
         post_account:String;
-        session:String;
         // 2
+        class:String;
+        board:String;
+        stream:String;
+        subject:String;
+        optional_subject:String;
         name:String;
         middle_name:String;
         last_name:String;
@@ -345,50 +324,37 @@ interface ModifyStudentProps{
     // Other details
     others:{
         // 1
-        general_description:String;
-        // 2
-        emergency_contact:{
-            person_name:String;
-            mobile_no:Number;
-            phone_no:Number;
-            address:String;
-            relation:String;
-        },
-        // 3
-        emergency_contact_two:{
-            person_name:String;
-            mobile_no:Number;
-            phone_no:Number;
-            address:String;
-            relation:String;
-            is_alumni:Boolean;
-        },
-        // 4
         student_other_details:{
-            stream:String;
-            optional_subject:String;
             medical_history:String;
+            descriptions:String;
             allergies:String;
-            other_medical_info:String;
+            allergies_causes:String;
             family_doctor_name:String;
             family_doctor_phone:Number;
             family_doctor_address:String;
             distance_from_home:Number;
-            no_of_living_years:Number;
-            only_child:Boolean;
+            no_of_living_year:Number;
+            only_child:String;
+            general_description:String;
         },
-        // 5
+        // 2
         student_staff_relation:{
             staff_ward:String;
             staff_name:String;
         },
-        // 6
+        // 3
         previous_school_details:{
             school_name:String;
-            city:String;
-            class:String;
-            year:String;
             board:String;
+            passing_year:String;
+            total_marks:String;
+            percentage:String;
+            result:String;
+            is_alumni:String;
+            father_name:String;
+            father_passing_year:String;
+            mother_name:String;
+            mother_passing_year:String;
         }
     };
 
@@ -398,28 +364,14 @@ interface ModifyStudentProps{
         guardian_name:String;
         profession:String;
         designation:String;
-        residence_address:String;
-        office_address:String;
-        email:String;
-        alternate_email:String;
-        dob:Date;
-        mobile:Number;
-        phone:Number;
         company_name:String;
         business_details:String;
         qualification:String;
-        service_in:String;
-        office_phone:Number;
-        office_mobile:Number;
-        office_extension:String;
-        office_email:String;
-        office_website:String;
-        income:String;
         // 2
         if_single_parent:{
             student_lives_with:String;
-            correspondence_to:String;
             legal_custody_of_the_child:String;
+            correspondence_to:String;
             check_id_applicable:String;
             separation_reason:String;
         }
@@ -458,6 +410,30 @@ export const deleteStudent = async ({id}:{id:String}) => {
         // Deleting student
         await Student.findByIdAndDelete(id);
         return 'Student Deleted';
+
+    } catch (err) {
+        throw new Error(`Error deleting student: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch student by register number
+export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching student
+        const student = await Student.findOne({'student.reg_no':reg_no});
+
+
+        // Return
+        return student;
 
     } catch (err) {
         throw new Error(`Error deleting student: ${err}`);

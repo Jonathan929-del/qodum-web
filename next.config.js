@@ -10,7 +10,8 @@ const nextConfig = {
                 hostname: 'img.clerk.com',
                 port: ''
             }
-        ]
+        ],
+        domains:['qodum.s3.amazonaws.com']
     }
 }
 

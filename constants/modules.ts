@@ -739,42 +739,24 @@ const modules = [
                 pageName:'Admission',
                 subPages:[
                     {
-                        subPageName:'Admission Entry',
-                        threads:[
-                            'Admission Fee Collection',
-                            'Adm Entry Amt Structure',
-                            'Challan Amount'
-                        ]
-                    },
-                    {
                         subPageName:'Enquiry'
-                    },
-                    {
-                        subPageName:'Prospectus Entry'
                     },
                     {
                         subPageName:'Admission Form Registration'
                     },
                     {
-                        subPageName:'Manual List Generation'
+                        subPageName:'Entrance Test',
+                        threads:[
+                            'Define Merit Criteria',
+                            'Slot Creation',
+                            'Slot Wise Point Entry',
+                            'Re Sloting',
+                            'Merit List Generation',
+                            'Manual List Generation',
+                        ]
                     },
                     {
-                        subPageName:'Student Registration'
-                    },
-                    {
-                        subPageName:'Slot Creation'
-                    },
-                    {
-                        subPageName:'Define Merit Criteria'
-                    },
-                    {
-                        subPageName:'Slot Wise Point Entry'
-                    },
-                    {
-                        subPageName:'Merit List Generation'
-                    },
-                    {
-                        subPageName:'Re Slotting'
+                        subPageName:'Admission'
                     },
                     {
                         subPageName:'Upload Student Document'
@@ -783,10 +765,13 @@ const modules = [
                         subPageName:'Requests for Changes From Parents'
                     },
                     {
-                        subPageName:'Create ID Card'
+                        subPageName:'Admission Entry'
                     },
                     {
                         subPageName:'Generate Student Info Performa in Bulk'
+                    },
+                    {
+                        subPageName:'Create ID Card'
                     },
                     {
                         subPageName:'Print Student Label'

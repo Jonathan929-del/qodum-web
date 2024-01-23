@@ -25,6 +25,7 @@ const Parent = ({form}:any) => {
         <div className='flex flex-row justify-between gap-2'>
             {/* Father Data */}
             <div className='flex-1 flex flex-col gap-3 sm:gap-2'>
+                <h2 className='w-full bg-[#EDF1F5] font-semibold text-center text-sm py-2'>Father's Details</h2>
                 {/* Father Name */}
                 <FormField
                     control={form.control}
@@ -559,6 +560,7 @@ const Parent = ({form}:any) => {
 
             {/* Mother Data */}
             <div className='flex-1 flex flex-col gap-3 sm:gap-2'>
+                <h2 className='w-full bg-[#EDF1F5] font-semibold text-center text-sm py-2'>Mother's Details</h2>
                 {/* Mother Name */}
                 <FormField
                     control={form.control}

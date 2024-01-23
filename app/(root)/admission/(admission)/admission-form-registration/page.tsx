@@ -29,8 +29,7 @@ const page = () => {
         // Student
         student:{
             // 1
-            class:'',
-            board:'',
+            image:'',
             reg_no:'',
             pros_no:'',
             amount:'',
@@ -38,8 +37,12 @@ const page = () => {
             payment_mode:'',
             admission_account:'',
             post_account:'',
-            session:'',
             // 2
+            class:'',
+            board:'',
+            stream:'',
+            subject:'',
+            optional_subject:'',
             name:'',
             middle_name:'',
             last_name:'',
@@ -126,50 +129,37 @@ const page = () => {
         // Other details
         others:{
             // 1
-            general_description:'',
-            // 2
-            emergency_contact:{
-                person_name:'',
-                mobile_no:'',
-                phone_no:'',
-                address:'',
-                relation:'',
-            },
-            // 3
-            emergency_contact_two:{
-                person_name:'',
-                mobile_no:'',
-                phone_no:'',
-                address:'',
-                relation:'',
-                is_alumni:false
-            },
-            // 4
             student_other_details:{
-                stream:'',
-                optional_subject:'',
                 medical_history:'',
+                descriptions:'',
                 allergies:'',
-                other_medical_info:'',
+                allergies_causes:'',
                 family_doctor_name:'',
-                family_doctor_phone:'',
+                family_doctor_phone:0,
                 family_doctor_address:'',
-                distance_from_home:'',
-                no_of_living_years:'',
-                only_child:false
+                distance_from_home:0,
+                no_of_living_year:0,
+                only_child:'',
+                general_description:''
             },
-            // 5
+            // 2
             student_staff_relation:{
                 staff_ward:'',
                 staff_name:''
             },
-            // 6
+            // 3
             previous_school_details:{
                 school_name:'',
-                city:'',
-                class:'',
-                year:'',
-                board:''
+                board:'',
+                passing_year:'',
+                total_marks:'',
+                percentage:'',
+                result:'',
+                is_alumni:'',
+                father_name:'',
+                father_passing_year:'',
+                mother_name:'',
+                mother_passing_year:''
             }
         },
 
@@ -179,28 +169,14 @@ const page = () => {
             guardian_name:'',
             profession:'',
             designation:'',
-            residence_address:'',
-            office_address:'',
-            email:'',
-            alternate_email:'',
-            dob:new Date(),
-            mobile:'',
-            phone:'',
             company_name:'',
             business_details:'',
             qualification:'',
-            service_in:'',
-            office_phone:'',
-            office_mobile:'',
-            office_extension:'',
-            office_email:'',
-            office_website:'',
-            income:'',
             // 2
             if_single_parent:{
                 student_lives_with:'',
-                correspondence_to:'',
                 legal_custody_of_the_child:'',
+                correspondence_to:'',
                 check_id_applicable:'',
                 separation_reason:''
             }

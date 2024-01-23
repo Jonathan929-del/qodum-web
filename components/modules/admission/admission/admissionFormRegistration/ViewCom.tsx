@@ -1,9 +1,9 @@
 // Imports
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -21,8 +21,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
             // Student
             student:{
                 // 1
-                class:student.student.class,
-                board:student.student.board,
+                image:student.student.image,
                 reg_no:student.student.reg_no,
                 pros_no:student.student.pros_no,
                 amount:student.student.amount,
@@ -32,6 +31,11 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                 post_account:student.student.post_account,
                 session:student.student.session,
                 // 2
+                class:student.student.class,
+                board:student.student.board,
+                stream:student.student.stream,
+                subject:student.student.subject,
+                optional_subject:student.student.optional_subject,
                 name:student.student.name,
                 middle_name:student.student.middle_name,
                 last_name:student.student.last_name,
@@ -118,50 +122,37 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
             // Other details
             others:{
                 // 1
-                general_description:student.others.general_description,
-                // 2
-                emergency_contact:{
-                    person_name:student.others.emergency_contact.person_name,
-                    mobile_no:student.others.emergency_contact.mobile_no,
-                    phone_no:student.others.emergency_contact.phone_no,
-                    address:student.others.emergency_contact.address,
-                    relation:student.others.emergency_contact.relation
-                },
-                // 3
-                emergency_contact_two:{
-                    person_name:student.others.emergency_contact_two.person_name,
-                    mobile_no:student.others.emergency_contact_two.mobile_no,
-                    phone_no:student.others.emergency_contact_two.phone_no,
-                    address:student.others.emergency_contact_two.address,
-                    relation:student.others.emergency_contact_two.relation,
-                    is_alumni:student.others.emergency_contact_two.is_alumni
-                },
-                // 4
                 student_other_details:{
-                    stream:student.others.student_other_details.stream,
-                    optional_subject:student.others.student_other_details.optional_subject,
                     medical_history:student.others.student_other_details.medical_history,
+                    descriptions:student.others.student_other_details.descriptions,
                     allergies:student.others.student_other_details.allergies,
-                    other_medical_info:student.others.student_other_details.other_medical_info,
+                    allergies_causes:student.others.student_other_details.allergies_causes,
                     family_doctor_name:student.others.student_other_details.family_doctor_name,
                     family_doctor_phone:student.others.student_other_details.family_doctor_phone,
                     family_doctor_address:student.others.student_other_details.family_doctor_address,
                     distance_from_home:student.others.student_other_details.distance_from_home,
-                    no_of_living_years:student.others.student_other_details.no_of_living_years,
-                    only_child:student.others.student_other_details.only_child
+                    no_of_living_year:student.others.student_other_details.no_of_living_year,
+                    only_child:student.others.student_other_details.only_child,
+                    general_description:student.others.student_other_details.general_description,
                 },
-                // 5
+                // 2
                 student_staff_relation:{
                     staff_ward:student.others.student_staff_relation.staff_ward,
                     staff_name:student.others.student_staff_relation.staff_name
                 },
-                // 6
+                // 3
                 previous_school_details:{
                     school_name:student.others.previous_school_details.school_name,
-                    city:student.others.previous_school_details.city,
-                    class:student.others.previous_school_details.class,
-                    year:student.others.previous_school_details.year,
-                    board:student.others.previous_school_details.board
+                    board:student.others.previous_school_details.board,
+                    passing_year:student.others.previous_school_details.passing_year,
+                    total_marks:student.others.previous_school_details.total_marks,
+                    percentage:student.others.previous_school_details.percentage,
+                    result:student.others.previous_school_details.result,
+                    is_alumni:student.others.previous_school_details.is_alumni,
+                    father_name:student.others.previous_school_details.father_name,
+                    father_passing_year:student.others.previous_school_details.father_passing_year,
+                    mother_name:student.others.previous_school_details.mother_name,
+                    mother_passing_year:student.others.previous_school_details.mother_passing_year,
                 }
             },
 
@@ -171,28 +162,14 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                 guardian_name:student.guardian_details.guardian_name,
                 profession:student.guardian_details.profession,
                 designation:student.guardian_details.designation,
-                residence_address:student.guardian_details.residence_address,
-                office_address:student.guardian_details.office_address,
-                email:student.guardian_details.email,
-                alternate_email:student.guardian_details.alternate_email,
-                dob:student.guardian_details.dob,
-                mobile:student.guardian_details.mobile,
-                phone:student.guardian_details.phone,
                 company_name:student.guardian_details.company_name,
                 business_details:student.guardian_details.business_details,
                 qualification:student.guardian_details.qualification,
-                service_in:student.guardian_details.service_in,
-                office_phone:student.guardian_details.office_phone,
-                office_mobile:student.guardian_details.office_mobile,
-                office_extension:student.guardian_details.office_extension,
-                office_email:student.guardian_details.office_email,
-                office_website:student.guardian_details.office_website,
-                income:student.guardian_details.income,
                 // 2
                 if_single_parent:{
                     student_lives_with:student.guardian_details.if_single_parent.student_lives_with,
-                    correspondence_to:student.guardian_details.if_single_parent.correspondence_to,
                     legal_custody_of_the_child:student.guardian_details.if_single_parent.legal_custody_of_the_child,
+                    correspondence_to:student.guardian_details.if_single_parent.correspondence_to,
                     check_id_applicable:student.guardian_details.if_single_parent.check_id_applicable,
                     separation_reason:student.guardian_details.if_single_parent.separation_reason
                 }
@@ -203,9 +180,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
 
 
     return (
-        <Command
-            className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
-        >
+        <Command className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>

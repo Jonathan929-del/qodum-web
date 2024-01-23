@@ -8,12 +8,15 @@ import {deepEqual} from '@/lib/utils';
 import Student from './forms/Student';
 import Guardian from './forms/Guardian';
 import {useForm} from 'react-hook-form';
+import {useEffect, useState} from 'react';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StudentValidation} from '@/lib/validations/admission/admission/student.validation';
 import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admission/admission/student.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -27,13 +30,24 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
     const {toast} = useToast();
 
 
+    // Is Loading
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    // File
+    const [file, setFile] = useState(null);
+
+
+    // Image source (For image preview)
+    const [imageSrc, setImageSrc] = useState('');
+
+
     // Comparison object
     const comparisonObject = {
         // Student
         student:{
             // 1
-            class:updateStudent.student.class,
-            board:updateStudent.student.board,
+            image:updateStudent.student.image,
             reg_no:updateStudent.student.reg_no,
             pros_no:updateStudent.student.pros_no,
             amount:updateStudent.student.amount,
@@ -41,8 +55,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             payment_mode:updateStudent.student.payment_mode,
             admission_account:updateStudent.student.admission_account,
             post_account:updateStudent.student.post_account,
-            session:updateStudent.student.session,
             // 2
+            class:updateStudent.student.class,
+            board:updateStudent.student.board,
+            stream:updateStudent.student.stream,
+            subject:updateStudent.student.subject,
+            optional_subject:updateStudent.student.optional_subject,
             name:updateStudent.student.name,
             middle_name:updateStudent.student.middle_name,
             last_name:updateStudent.student.last_name,
@@ -129,50 +147,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
         // Other details
         others:{
             // 1
-            general_description:updateStudent.others.general_description,
-            // 2
-            emergency_contact:{
-                person_name:updateStudent.others.emergency_contact.person_name,
-                mobile_no:updateStudent.others.emergency_contact.mobile_no,
-                phone_no:updateStudent.others.emergency_contact.phone_no,
-                address:updateStudent.others.emergency_contact.address,
-                relation:updateStudent.others.emergency_contact.relation
-            },
-            // 3
-            emergency_contact_two:{
-                person_name:updateStudent.others.emergency_contact_two.person_name,
-                mobile_no:updateStudent.others.emergency_contact_two.mobile_no,
-                phone_no:updateStudent.others.emergency_contact_two.phone_no,
-                address:updateStudent.others.emergency_contact_two.address,
-                relation:updateStudent.others.emergency_contact_two.relation,
-                is_alumni:updateStudent.others.emergency_contact_two.is_alumni
-            },
-            // 4
             student_other_details:{
-                stream:updateStudent.others.student_other_details.stream,
-                optional_subject:updateStudent.others.student_other_details.optional_subject,
                 medical_history:updateStudent.others.student_other_details.medical_history,
+                descriptions:updateStudent.others.student_other_details.descriptions,
                 allergies:updateStudent.others.student_other_details.allergies,
-                other_medical_info:updateStudent.others.student_other_details.other_medical_info,
+                allergies_causes:updateStudent.others.student_other_details.allergies_causes,
                 family_doctor_name:updateStudent.others.student_other_details.family_doctor_name,
                 family_doctor_phone:updateStudent.others.student_other_details.family_doctor_phone,
                 family_doctor_address:updateStudent.others.student_other_details.family_doctor_address,
                 distance_from_home:updateStudent.others.student_other_details.distance_from_home,
-                no_of_living_years:updateStudent.others.student_other_details.no_of_living_years,
-                only_child:updateStudent.others.student_other_details.only_child
+                no_of_living_year:updateStudent.others.student_other_details.no_of_living_year,
+                only_child:updateStudent.others.student_other_details.only_child,
+                general_description:updateStudent.others.student_other_details.general_description,
             },
-            // 5
+            // 2
             student_staff_relation:{
                 staff_ward:updateStudent.others.student_staff_relation.staff_ward,
                 staff_name:updateStudent.others.student_staff_relation.staff_name
             },
-            // 6
+            // 3
             previous_school_details:{
                 school_name:updateStudent.others.previous_school_details.school_name,
-                city:updateStudent.others.previous_school_details.city,
-                class:updateStudent.others.previous_school_details.class,
-                year:updateStudent.others.previous_school_details.year,
-                board:updateStudent.others.previous_school_details.board
+                board:updateStudent.others.previous_school_details.board,
+                passing_year:updateStudent.others.previous_school_details.passing_year,
+                total_marks:updateStudent.others.previous_school_details.total_marks,
+                percentage:updateStudent.others.previous_school_details.percentage,
+                result:updateStudent.others.previous_school_details.result,
+                is_alumni:updateStudent.others.previous_school_details.is_alumni,
+                father_name:updateStudent.others.previous_school_details.father_name,
+                father_passing_year:updateStudent.others.previous_school_details.father_passing_year,
+                mother_name:updateStudent.others.previous_school_details.mother_name,
+                mother_passing_year:updateStudent.others.previous_school_details.mother_passing_year,
             }
         },
 
@@ -182,28 +187,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             guardian_name:updateStudent.guardian_details.guardian_name,
             profession:updateStudent.guardian_details.profession,
             designation:updateStudent.guardian_details.designation,
-            residence_address:updateStudent.guardian_details.residence_address,
-            office_address:updateStudent.guardian_details.office_address,
-            email:updateStudent.guardian_details.email,
-            alternate_email:updateStudent.guardian_details.alternate_email,
-            dob:updateStudent.guardian_details.dob,
-            mobile:updateStudent.guardian_details.mobile,
-            phone:updateStudent.guardian_details.phone,
             company_name:updateStudent.guardian_details.company_name,
             business_details:updateStudent.guardian_details.business_details,
             qualification:updateStudent.guardian_details.qualification,
-            service_in:updateStudent.guardian_details.service_in,
-            office_phone:updateStudent.guardian_details.office_phone,
-            office_mobile:updateStudent.guardian_details.office_mobile,
-            office_extension:updateStudent.guardian_details.office_extension,
-            office_email:updateStudent.guardian_details.office_email,
-            office_website:updateStudent.guardian_details.office_website,
-            income:updateStudent.guardian_details.income,
             // 2
             if_single_parent:{
                 student_lives_with:updateStudent.guardian_details.if_single_parent.student_lives_with,
-                correspondence_to:updateStudent.guardian_details.if_single_parent.correspondence_to,
                 legal_custody_of_the_child:updateStudent.guardian_details.if_single_parent.legal_custody_of_the_child,
+                correspondence_to:updateStudent.guardian_details.if_single_parent.correspondence_to,
                 check_id_applicable:updateStudent.guardian_details.if_single_parent.check_id_applicable,
                 separation_reason:updateStudent.guardian_details.if_single_parent.separation_reason
             }
@@ -218,8 +209,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Student
             student:{
                 // 1
-                class:updateStudent.id === '' ? '' : updateStudent.student.class,
-                board:updateStudent.id === '' ? '' : updateStudent.student.board,
+                image:updateStudent.id === '' ? '' : updateStudent.student.image,
                 reg_no:updateStudent.id === '' ? '' : updateStudent.student.reg_no,
                 pros_no:updateStudent.id === '' ? '' : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? '' : updateStudent.student.amount,
@@ -227,8 +217,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 payment_mode:updateStudent.id === '' ? '' : updateStudent.student.payment_mode,
                 admission_account:updateStudent.id === '' ? '' : updateStudent.student.admission_account,
                 post_account:updateStudent.id === '' ? '' : updateStudent.student.post_account,
-                session:updateStudent.id === '' ? '' : updateStudent.student.session,
                 // 2
+                class:updateStudent.id === '' ? '' : updateStudent.student.class,
+                board:updateStudent.id === '' ? '' : updateStudent.student.board,
+                stream:updateStudent.id === '' ? '' : updateStudent.student.stream,
+                subject:updateStudent.id === '' ? '' : updateStudent.student.subject,
+                optional_subject:updateStudent.id === '' ? '' : updateStudent.student.optional_subject,
                 name:updateStudent.id === '' ? '' : updateStudent.student.name,
                 middle_name:updateStudent.id === '' ? '' : updateStudent.student.middle_name,
                 last_name:updateStudent.id === '' ? '' : updateStudent.student.last_name,
@@ -315,50 +309,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Other details
             others:{
                 // 1
-                general_description:updateStudent.id === '' ? '' : updateStudent.others.general_description,
-                // 2
-                emergency_contact:{
-                    person_name:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact.person_name,
-                    mobile_no:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact.mobile_no,
-                    phone_no:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact.phone_no,
-                    address:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact.address,
-                    relation:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact.relation
-                },
-                // 3
-                emergency_contact_two:{
-                    person_name:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact_two.person_name,
-                    mobile_no:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact_two.mobile_no,
-                    phone_no:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact_two.phone_no,
-                    address:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact_two.address,
-                    relation:updateStudent.id === '' ? '' : updateStudent.others.emergency_contact_two.relation,
-                    is_alumni:updateStudent.id === '' ? false : updateStudent.others.emergency_contact_two.is_alumni
-                },
-                // 4
                 student_other_details:{
-                    stream:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.stream,
-                    optional_subject:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.optional_subject,
                     medical_history:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.medical_history,
+                    descriptions:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.descriptions,
                     allergies:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies,
-                    other_medical_info:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.other_medical_info,
+                    allergies_causes:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies_causes,
                     family_doctor_name:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
-                    family_doctor_phone:updateStudent.others.student_other_details.family_doctor_phone,
+                    family_doctor_phone:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_phone,
                     family_doctor_address:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
                     distance_from_home:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.distance_from_home,
-                    no_of_living_years:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.no_of_living_years,
-                    only_child:updateStudent.id === '' ? false : updateStudent.others.student_other_details.only_child
+                    no_of_living_year:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.no_of_living_year,
+                    only_child:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
+                    general_description:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
                 },
-                // 5
+                // 2
                 student_staff_relation:{
                     staff_ward:updateStudent.id === '' ? '' : updateStudent.others.student_staff_relation.staff_ward,
                     staff_name:updateStudent.id === '' ? '' : updateStudent.others.student_staff_relation.staff_name
                 },
-                // 6
+                // 3
                 previous_school_details:{
                     school_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.school_name,
-                    city:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.city,
-                    class:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.class,
-                    year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.year,
-                    board:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.board
+                    board:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.board,
+                    passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.passing_year,
+                    total_marks:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.total_marks,
+                    percentage:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.percentage,
+                    result:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.result,
+                    is_alumni:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.is_alumni,
+                    father_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.father_name,
+                    father_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.father_passing_year,
+                    mother_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.mother_name,
+                    mother_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details.mother_passing_year
                 }
             },
 
@@ -368,28 +349,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 guardian_name:updateStudent.id === '' ? '' : updateStudent.guardian_details.guardian_name,
                 profession:updateStudent.id === '' ? '' : updateStudent.guardian_details.profession,
                 designation:updateStudent.id === '' ? '' : updateStudent.guardian_details.designation,
-                residence_address:updateStudent.id === '' ? '' : updateStudent.guardian_details.residence_address,
-                office_address:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_address,
-                email:updateStudent.id === '' ? '' : updateStudent.guardian_details.email,
-                alternate_email:updateStudent.id === '' ? '' : updateStudent.guardian_details.alternate_email,
-                dob:updateStudent.id === '' ? new Date() : updateStudent.guardian_details.dob,
-                mobile:updateStudent.id === '' ? '' : updateStudent.guardian_details.mobile,
-                phone:updateStudent.id === '' ? '' : updateStudent.guardian_details.phone,
                 company_name:updateStudent.id === '' ? '' : updateStudent.guardian_details.company_name,
                 business_details:updateStudent.id === '' ? '' : updateStudent.guardian_details.business_details,
                 qualification:updateStudent.id === '' ? '' : updateStudent.guardian_details.qualification,
-                service_in:updateStudent.id === '' ? '' : updateStudent.guardian_details.service_in,
-                office_phone:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_phone,
-                office_mobile:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_mobile,
-                office_extension:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_extension,
-                office_email:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_email,
-                office_website:updateStudent.id === '' ? '' : updateStudent.guardian_details.office_website,
-                income:updateStudent.id === '' ? '' : updateStudent.guardian_details.income,
                 // 2
                 if_single_parent:{
                     student_lives_with:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.student_lives_with,
-                    correspondence_to:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.correspondence_to,
                     legal_custody_of_the_child:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.legal_custody_of_the_child,
+                    correspondence_to:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.correspondence_to,
                     check_id_applicable:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.check_id_applicable,
                     separation_reason:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.separation_reason
                 }
@@ -400,14 +367,19 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
+        setIsLoading(true);
         // Create Account Group
         if(updateStudent.id === ''){
+            if(file){
+                const formData = new FormData();
+                formData.append('file', file);
+                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+            };
             await createStudent({
                 // Student
                 student:{
                     // 1
-                    class:values.student.class,
-                    board:values.student.board,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : '',
                     reg_no:values.student.reg_no,
                     pros_no:values.student.pros_no,
                     amount:values.student.amount,
@@ -415,8 +387,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     payment_mode:values.student.payment_mode,
                     admission_account:values.student.admission_account,
                     post_account:values.student.post_account,
-                    session:values.student.session,
                     // 2
+                    class:values.student.class,
+                    board:values.student.board,
+                    stream:values.student.stream,
+                    subject:values.student.subject,
+                    optional_subject:values.student.optional_subject,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
                     last_name:values.student.last_name,
@@ -503,50 +479,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // Other details
                 others:{
                     // 1
-                    general_description:values.others.general_description,
-                    // 2
-                    emergency_contact:{
-                        person_name:values.others.emergency_contact.person_name,
-                        mobile_no:values.others.emergency_contact.mobile_no,
-                        phone_no:values.others.emergency_contact.phone_no,
-                        address:values.others.emergency_contact.address,
-                        relation:values.others.emergency_contact.relation
-                    },
-                    // 3
-                    emergency_contact_two:{
-                        person_name:values.others.emergency_contact_two.person_name,
-                        mobile_no:values.others.emergency_contact_two.mobile_no,
-                        phone_no:values.others.emergency_contact_two.phone_no,
-                        address:values.others.emergency_contact_two.address,
-                        relation:values.others.emergency_contact_two.relation,
-                        is_alumni:values.others.emergency_contact_two.is_alumni
-                    },
-                    // 4
                     student_other_details:{
-                        stream:values.others.student_other_details.stream,
-                        optional_subject:values.others.student_other_details.optional_subject,
                         medical_history:values.others.student_other_details.medical_history,
+                        descriptions:values.others.student_other_details.descriptions,
                         allergies:values.others.student_other_details.allergies,
-                        other_medical_info:values.others.student_other_details.other_medical_info,
+                        allergies_causes:values.others.student_other_details.allergies_causes,
                         family_doctor_name:values.others.student_other_details.family_doctor_name,
                         family_doctor_phone:values.others.student_other_details.family_doctor_phone,
                         family_doctor_address:values.others.student_other_details.family_doctor_address,
                         distance_from_home:values.others.student_other_details.distance_from_home,
-                        no_of_living_years:values.others.student_other_details.no_of_living_years,
-                        only_child:values.others.student_other_details.only_child
+                        no_of_living_year:values.others.student_other_details.no_of_living_year,
+                        only_child:values.others.student_other_details.only_child,
+                        general_description:values.others.student_other_details.general_description,
                     },
-                    // 5
+                    // 2
                     student_staff_relation:{
                         staff_ward:values.others.student_staff_relation.staff_ward,
                         staff_name:values.others.student_staff_relation.staff_name
                     },
-                    // 6
+                    // 3
                     previous_school_details:{
                         school_name:values.others.previous_school_details.school_name,
-                        city:values.others.previous_school_details.city,
-                        class:values.others.previous_school_details.class,
-                        year:values.others.previous_school_details.year,
-                        board:values.others.previous_school_details.board
+                        board:values.others.previous_school_details.board,
+                        passing_year:values.others.previous_school_details.passing_year,
+                        total_marks:values.others.previous_school_details.total_marks,
+                        percentage:values.others.previous_school_details.percentage,
+                        result:values.others.previous_school_details.result,
+                        is_alumni:values.others.previous_school_details.is_alumni,
+                        father_name:values.others.previous_school_details.father_name,
+                        father_passing_year:values.others.previous_school_details.father_passing_year,
+                        mother_name:values.others.previous_school_details.mother_name,
+                        mother_passing_year:values.others.previous_school_details.mother_passing_year,
                     }
                 },
 
@@ -556,28 +519,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     guardian_name:values.guardian_details.guardian_name,
                     profession:values.guardian_details.profession,
                     designation:values.guardian_details.designation,
-                    residence_address:values.guardian_details.residence_address,
-                    office_address:values.guardian_details.office_address,
-                    email:values.guardian_details.email,
-                    alternate_email:values.guardian_details.alternate_email,
-                    dob:values.guardian_details.dob,
-                    mobile:values.guardian_details.mobile,
-                    phone:values.guardian_details.phone,
                     company_name:values.guardian_details.company_name,
                     business_details:values.guardian_details.business_details,
                     qualification:values.guardian_details.qualification,
-                    service_in:values.guardian_details.service_in,
-                    office_phone:values.guardian_details.office_phone,
-                    office_mobile:values.guardian_details.office_mobile,
-                    office_extension:values.guardian_details.office_extension,
-                    office_email:values.guardian_details.office_email,
-                    office_website:values.guardian_details.office_website,
-                    income:values.guardian_details.income,
                     // 2
                     if_single_parent:{
                         student_lives_with:values.guardian_details.if_single_parent.student_lives_with,
-                        correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
                         legal_custody_of_the_child:values.guardian_details.if_single_parent.legal_custody_of_the_child,
+                        correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
@@ -586,15 +535,19 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             toast({title:'Added Successfully!'});
         }
         // Modify Account Group
-        else if(!deepEqual(comparisonObject, values)){
+        else if(!deepEqual(comparisonObject, values) || file){
+            if(file){
+                const formData = new FormData();
+                formData.append('file', file);
+                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+            };
             // Update
             await modifyStudent({
                 id:updateStudent.id,
                 // Student
                 student:{
                     // 1
-                    class:values.student.class,
-                    board:values.student.board,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : comparisonObject.student.image,
                     reg_no:values.student.reg_no,
                     pros_no:values.student.pros_no,
                     amount:values.student.amount,
@@ -602,8 +555,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     payment_mode:values.student.payment_mode,
                     admission_account:values.student.admission_account,
                     post_account:values.student.post_account,
-                    session:values.student.session,
                     // 2
+                    class:values.student.class,
+                    board:values.student.board,
+                    stream:values.student.stream,
+                    subject:values.student.subject,
+                    optional_subject:values.student.optional_subject,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
                     last_name:values.student.last_name,
@@ -690,50 +647,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // Other details
                 others:{
                     // 1
-                    general_description:values.others.general_description,
-                    // 2
-                    emergency_contact:{
-                        person_name:values.others.emergency_contact.person_name,
-                        mobile_no:values.others.emergency_contact.mobile_no,
-                        phone_no:values.others.emergency_contact.phone_no,
-                        address:values.others.emergency_contact.address,
-                        relation:values.others.emergency_contact.relation
-                    },
-                    // 3
-                    emergency_contact_two:{
-                        person_name:values.others.emergency_contact_two.person_name,
-                        mobile_no:values.others.emergency_contact_two.mobile_no,
-                        phone_no:values.others.emergency_contact_two.phone_no,
-                        address:values.others.emergency_contact_two.address,
-                        relation:values.others.emergency_contact_two.relation,
-                        is_alumni:values.others.emergency_contact_two.is_alumni
-                    },
-                    // 4
                     student_other_details:{
-                        stream:values.others.student_other_details.stream,
-                        optional_subject:values.others.student_other_details.optional_subject,
                         medical_history:values.others.student_other_details.medical_history,
+                        descriptions:values.others.student_other_details.descriptions,
                         allergies:values.others.student_other_details.allergies,
-                        other_medical_info:values.others.student_other_details.other_medical_info,
+                        allergies_causes:values.others.student_other_details.allergies_causes,
                         family_doctor_name:values.others.student_other_details.family_doctor_name,
                         family_doctor_phone:values.others.student_other_details.family_doctor_phone,
                         family_doctor_address:values.others.student_other_details.family_doctor_address,
                         distance_from_home:values.others.student_other_details.distance_from_home,
-                        no_of_living_years:values.others.student_other_details.no_of_living_years,
-                        only_child:values.others.student_other_details.only_child
+                        no_of_living_year:values.others.student_other_details.no_of_living_year,
+                        only_child:values.others.student_other_details.only_child,
+                        general_description:values.others.student_other_details.general_description,
                     },
-                    // 5
+                    // 2
                     student_staff_relation:{
                         staff_ward:values.others.student_staff_relation.staff_ward,
                         staff_name:values.others.student_staff_relation.staff_name
                     },
-                    // 6
+                    // 3
                     previous_school_details:{
                         school_name:values.others.previous_school_details.school_name,
-                        city:values.others.previous_school_details.city,
-                        class:values.others.previous_school_details.class,
-                        year:values.others.previous_school_details.year,
-                        board:values.others.previous_school_details.board
+                        board:values.others.previous_school_details.board,
+                        passing_year:values.others.previous_school_details.passing_year,
+                        total_marks:values.others.previous_school_details.total_marks,
+                        percentage:values.others.previous_school_details.percentage,
+                        result:values.others.previous_school_details.result,
+                        is_alumni:values.others.previous_school_details.is_alumni,
+                        father_name:values.others.previous_school_details.father_name,
+                        father_passing_year:values.others.previous_school_details.father_passing_year,
+                        mother_name:values.others.previous_school_details.mother_name,
+                        mother_passing_year:values.others.previous_school_details.mother_passing_year,
                     }
                 },
 
@@ -743,28 +687,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     guardian_name:values.guardian_details.guardian_name,
                     profession:values.guardian_details.profession,
                     designation:values.guardian_details.designation,
-                    residence_address:values.guardian_details.residence_address,
-                    office_address:values.guardian_details.office_address,
-                    email:values.guardian_details.email,
-                    alternate_email:values.guardian_details.alternate_email,
-                    dob:values.guardian_details.dob,
-                    mobile:values.guardian_details.mobile,
-                    phone:values.guardian_details.phone,
                     company_name:values.guardian_details.company_name,
                     business_details:values.guardian_details.business_details,
                     qualification:values.guardian_details.qualification,
-                    service_in:values.guardian_details.service_in,
-                    office_phone:values.guardian_details.office_phone,
-                    office_mobile:values.guardian_details.office_mobile,
-                    office_extension:values.guardian_details.office_extension,
-                    office_email:values.guardian_details.office_email,
-                    office_website:values.guardian_details.office_website,
-                    income:values.guardian_details.income,
                     // 2
                     if_single_parent:{
                         student_lives_with:values.guardian_details.if_single_parent.student_lives_with,
-                        correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
                         legal_custody_of_the_child:values.guardian_details.if_single_parent.legal_custody_of_the_child,
+                        correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
@@ -787,8 +717,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Student
             student:{
                 // 1
-                class:'',
-                board:'',
+                image:'',
                 reg_no:'',
                 pros_no:'',
                 amount:'',
@@ -796,8 +725,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 payment_mode:'',
                 admission_account:'',
                 post_account:'',
-                session:'',
                 // 2
+                class:'',
+                board:'',
+                stream:'',
+                subject:'',
+                optional_subject:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -884,50 +817,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Other details
             others:{
                 // 1
-                general_description:'',
-                // 2
-                emergency_contact:{
-                    person_name:'',
-                    mobile_no:'',
-                    phone_no:'',
-                    address:'',
-                    relation:'',
-                },
-                // 3
-                emergency_contact_two:{
-                    person_name:'',
-                    mobile_no:'',
-                    phone_no:'',
-                    address:'',
-                    relation:'',
-                    is_alumni:false
-                },
-                // 4
                 student_other_details:{
-                    stream:'',
-                    optional_subject:'',
                     medical_history:'',
+                    descriptions:'',
                     allergies:'',
-                    other_medical_info:'',
+                    allergies_causes:'',
                     family_doctor_name:'',
                     family_doctor_phone:'',
                     family_doctor_address:'',
                     distance_from_home:'',
-                    no_of_living_years:'',
-                    only_child:false
+                    no_of_living_year:'',
+                    only_child:'',
+                    general_description:'',
                 },
-                // 5
+                // 2
                 student_staff_relation:{
                     staff_ward:'',
                     staff_name:''
                 },
-                // 6
+                // 3
                 previous_school_details:{
                     school_name:'',
-                    city:'',
-                    class:'',
-                    year:'',
-                    board:''
+                    board:'',
+                    passing_year:'',
+                    total_marks:'',
+                    percentage:'',
+                    result:'',
+                    is_alumni:'',
+                    father_name:'',
+                    father_passing_year:'',
+                    mother_name:'',
+                    mother_passing_year:''
                 }
             },
     
@@ -937,23 +857,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 guardian_name:'',
                 profession:'',
                 designation:'',
-                residence_address:'',
-                office_address:'',
-                email:'',
-                alternate_email:'',
-                dob:new Date(),
-                mobile:'',
-                phone:'',
                 company_name:'',
                 business_details:'',
                 qualification:'',
-                service_in:'',
-                office_phone:'',
-                office_mobile:'',
-                office_extension:'',
-                office_email:'',
-                office_website:'',
-                income:'',
                 // 2
                 if_single_parent:{
                     student_lives_with:'',
@@ -969,8 +875,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Student
             student:{
                 // 1
-                class:'',
-                board:'',
+                image:'',
                 reg_no:'',
                 pros_no:'',
                 amount:'',
@@ -978,8 +883,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 payment_mode:'',
                 admission_account:'',
                 post_account:'',
-                session:'',
                 // 2
+                class:'',
+                board:'',
+                stream:'',
+                subject:'',
+                optional_subject:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -1066,50 +975,37 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             // Other details
             others:{
                 // 1
-                general_description:'',
-                // 2
-                emergency_contact:{
-                    person_name:'',
-                    mobile_no:'',
-                    phone_no:'',
-                    address:'',
-                    relation:'',
-                },
-                // 3
-                emergency_contact_two:{
-                    person_name:'',
-                    mobile_no:'',
-                    phone_no:'',
-                    address:'',
-                    relation:'',
-                    is_alumni:false
-                },
-                // 4
                 student_other_details:{
-                    stream:'',
-                    optional_subject:'',
                     medical_history:'',
+                    descriptions:'',
                     allergies:'',
-                    other_medical_info:'',
+                    allergies_causes:'',
                     family_doctor_name:'',
                     family_doctor_phone:'',
                     family_doctor_address:'',
                     distance_from_home:'',
-                    no_of_living_years:'',
-                    only_child:false
+                    no_of_living_year:'',
+                    only_child:'',
+                    general_description:'',
                 },
-                // 5
+                // 2
                 student_staff_relation:{
                     staff_ward:'',
                     staff_name:''
                 },
-                // 6
+                // 3
                 previous_school_details:{
                     school_name:'',
-                    city:'',
-                    class:'',
-                    year:'',
-                    board:''
+                    board:'',
+                    passing_year:'',
+                    total_marks:'',
+                    percentage:'',
+                    result:'',
+                    is_alumni:'',
+                    father_name:'',
+                    father_passing_year:'',
+                    mother_name:'',
+                    mother_passing_year:''
                 }
             },
     
@@ -1119,34 +1015,169 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 guardian_name:'',
                 profession:'',
                 designation:'',
-                residence_address:'',
-                office_address:'',
-                email:'',
-                alternate_email:'',
-                dob:new Date(),
-                mobile:'',
-                phone:'',
                 company_name:'',
                 business_details:'',
                 qualification:'',
-                service_in:'',
-                office_phone:'',
-                office_mobile:'',
-                office_extension:'',
-                office_email:'',
-                office_website:'',
-                income:'',
                 // 2
                 if_single_parent:{
                     student_lives_with:'',
-                    correspondence_to:'',
                     legal_custody_of_the_child:'',
+                    correspondence_to:'',
                     check_id_applicable:'',
                     separation_reason:''
                 }
             }
         });
+        // Image
+        setFile(null);
+        setImageSrc('');
+        setIsLoading(false);
     };
+
+
+    // Use Effect
+    useEffect(() => {
+        if(updateStudent.id !== ''){
+            // Student
+            form.setValue('student.image', updateStudent.student.image);
+            form.setValue('student.reg_no', updateStudent.student.reg_no);
+            form.setValue('student.pros_no', updateStudent.student.pros_no);
+            form.setValue('student.amount', updateStudent.student.amount);
+            form.setValue('student.date', updateStudent.student.date);
+            form.setValue('student.payment_mode', updateStudent.student.payment_mode);
+            form.setValue('student.admission_account', updateStudent.student.admission_account);
+            form.setValue('student.post_account', updateStudent.student.post_account);
+            form.setValue('student.class', updateStudent.student.class);
+            form.setValue('student.board', updateStudent.student.board);
+            form.setValue('student.stream', updateStudent.student.stream);
+            form.setValue('student.subject', updateStudent.student.subject);
+            form.setValue('student.optional_subject', updateStudent.student.optional_subject);
+            form.setValue('student.name', updateStudent.student.name);
+            form.setValue('student.middle_name', updateStudent.student.middle_name);
+            form.setValue('student.last_name', updateStudent.student.last_name);
+            form.setValue('student.dob', updateStudent.student.dob);
+            form.setValue('student.place_of_birth', updateStudent.student.place_of_birth);
+            form.setValue('student.gender', updateStudent.student.gender);
+            form.setValue('student.contact_person_name', updateStudent.student.contact_person_name);
+            form.setValue('student.contact_person_mobile', updateStudent.student.contact_person_mobile);
+            form.setValue('student.contact_person_email', updateStudent.student.contact_person_email);
+            form.setValue('student.secondary_contact_no', updateStudent.student.secondary_contact_no);
+            form.setValue('student.h_no_and_streets', updateStudent.student.h_no_and_streets);
+            form.setValue('student.email', updateStudent.student.email);
+            form.setValue('student.city', updateStudent.student.city);
+            form.setValue('student.mobile', updateStudent.student.mobile);
+            form.setValue('student.state', updateStudent.student.state);
+            form.setValue('student.pin_code', updateStudent.student.pin_code);
+            form.setValue('student.aadhar_card_no', updateStudent.student.aadhar_card_no);
+            form.setValue('student.religion', updateStudent.student.religion);
+            form.setValue('student.blood_group', updateStudent.student.blood_group);
+            form.setValue('student.caste', updateStudent.student.caste);
+            form.setValue('student.category', updateStudent.student.category);
+            form.setValue('student.is_ews', updateStudent.student.is_ews);
+            form.setValue('student.sibling', updateStudent.student.sibling);
+            form.setValue('student.transport', updateStudent.student.transport);
+            form.setValue('student.nationality', updateStudent.student.nationality);
+
+
+
+
+
+            // Parents
+            form.setValue('parents.father.father_name', updateStudent.parents.father.father_name);
+            form.setValue('parents.father.middle_name', updateStudent.parents.father.middle_name);
+            form.setValue('parents.father.last_name', updateStudent.parents.father.last_name);
+            form.setValue('parents.father.profession', updateStudent.parents.father.profession);
+            form.setValue('parents.father.designation', updateStudent.parents.father.designation);
+            form.setValue('parents.father.residence_address', updateStudent.parents.father.residence_address);
+            form.setValue('parents.father.office_address', updateStudent.parents.father.office_address);
+            form.setValue('parents.father.email', updateStudent.parents.father.email);
+            form.setValue('parents.father.alternate_email', updateStudent.parents.father.alternate_email);
+            form.setValue('parents.father.dob', updateStudent.parents.father.dob);
+            form.setValue('parents.father.mobile', updateStudent.parents.father.mobile);
+            form.setValue('parents.father.phone', updateStudent.parents.father.phone);
+            form.setValue('parents.father.company_name', updateStudent.parents.father.company_name);
+            form.setValue('parents.father.business_details', updateStudent.parents.father.business_details);
+            form.setValue('parents.father.qualification', updateStudent.parents.father.qualification);
+            form.setValue('parents.father.service_in', updateStudent.parents.father.service_in);
+            form.setValue('parents.father.office_phone', updateStudent.parents.father.office_phone);
+            form.setValue('parents.father.office_mobile', updateStudent.parents.father.office_mobile);
+            form.setValue('parents.father.office_extension', updateStudent.parents.father.office_extension);
+            form.setValue('parents.father.office_email', updateStudent.parents.father.office_email);
+            form.setValue('parents.father.office_website', updateStudent.parents.father.office_website);
+            form.setValue('parents.father.annual_income', updateStudent.parents.father.annual_income);
+            form.setValue('parents.father.parent_status', updateStudent.parents.father.parent_status);
+            form.setValue('parents.mother.mother_name', updateStudent.parents.mother.mother_name);
+            form.setValue('parents.mother.middle_name', updateStudent.parents.mother.middle_name);
+            form.setValue('parents.mother.last_name', updateStudent.parents.mother.last_name);
+            form.setValue('parents.mother.profession', updateStudent.parents.mother.profession);
+            form.setValue('parents.mother.designation', updateStudent.parents.mother.designation);
+            form.setValue('parents.mother.residence_address', updateStudent.parents.mother.residence_address);
+            form.setValue('parents.mother.office_address', updateStudent.parents.mother.office_address);
+            form.setValue('parents.mother.email', updateStudent.parents.mother.email);
+            form.setValue('parents.mother.alternate_email', updateStudent.parents.mother.alternate_email);
+            form.setValue('parents.mother.dob', updateStudent.parents.mother.dob);
+            form.setValue('parents.mother.mobile', updateStudent.parents.mother.mobile);
+            form.setValue('parents.mother.phone', updateStudent.parents.mother.phone);
+            form.setValue('parents.mother.company_name', updateStudent.parents.mother.company_name);
+            form.setValue('parents.mother.business_details', updateStudent.parents.mother.business_details);
+            form.setValue('parents.mother.qualification', updateStudent.parents.mother.qualification);
+            form.setValue('parents.mother.service_in', updateStudent.parents.mother.service_in);
+            form.setValue('parents.mother.office_phone', updateStudent.parents.mother.office_phone);
+            form.setValue('parents.mother.office_mobile', updateStudent.parents.mother.office_mobile);
+            form.setValue('parents.mother.office_extension', updateStudent.parents.mother.office_extension);
+            form.setValue('parents.mother.office_email', updateStudent.parents.mother.office_email);
+            form.setValue('parents.mother.office_website', updateStudent.parents.mother.office_website);
+            form.setValue('parents.mother.annual_income', updateStudent.parents.mother.annual_income);
+            form.setValue('parents.mother.dob', updateStudent.parents.mother.dob);
+
+
+
+
+
+            // Others
+            form.setValue('others.student_other_details.medical_history', updateStudent.others.student_other_details.medical_history);
+            form.setValue('others.student_other_details.descriptions', updateStudent.others.student_other_details.descriptions);
+            form.setValue('others.student_other_details.allergies', updateStudent.others.student_other_details.allergies);
+            form.setValue('others.student_other_details.allergies_causes', updateStudent.others.student_other_details.allergies_causes);
+            form.setValue('others.student_other_details.family_doctor_name', updateStudent.others.student_other_details.family_doctor_name);
+            form.setValue('others.student_other_details.family_doctor_phone', updateStudent.others.student_other_details.family_doctor_phone);
+            form.setValue('others.student_other_details.family_doctor_address', updateStudent.others.student_other_details.family_doctor_address);
+            form.setValue('others.student_other_details.distance_from_home', updateStudent.others.student_other_details.distance_from_home);
+            form.setValue('others.student_other_details.no_of_living_year', updateStudent.others.student_other_details.no_of_living_year);
+            form.setValue('others.student_other_details.only_child', updateStudent.others.student_other_details.only_child);
+            form.setValue('others.student_other_details.general_description', updateStudent.others.student_other_details.general_description);
+            form.setValue('others.student_staff_relation.staff_ward', updateStudent.others.student_staff_relation.staff_ward);
+            form.setValue('others.student_staff_relation.staff_name', updateStudent.others.student_staff_relation.staff_name);
+            form.setValue('others.previous_school_details.school_name', updateStudent.others.previous_school_details.school_name);
+            form.setValue('others.previous_school_details.board', updateStudent.others.previous_school_details.board);
+            form.setValue('others.previous_school_details.passing_year', updateStudent.others.previous_school_details.passing_year);
+            form.setValue('others.previous_school_details.total_marks', updateStudent.others.previous_school_details.total_marks);
+            form.setValue('others.previous_school_details.percentage', updateStudent.others.previous_school_details.percentage);
+            form.setValue('others.previous_school_details.result', updateStudent.others.previous_school_details.result);
+            form.setValue('others.previous_school_details.is_alumni', updateStudent.others.previous_school_details.is_alumni);
+            form.setValue('others.previous_school_details.father_name', updateStudent.others.previous_school_details.father_name);
+            form.setValue('others.previous_school_details.father_passing_year', updateStudent.others.previous_school_details.father_passing_year);
+            form.setValue('others.previous_school_details.mother_name', updateStudent.others.previous_school_details.mother_name);
+            form.setValue('others.previous_school_details.mother_passing_year', updateStudent.others.previous_school_details.mother_passing_year);
+
+
+
+
+
+            // Guardian
+            form.setValue('guardian_details.guardian_name', updateStudent.guardian_details.guardian_name);
+            form.setValue('guardian_details.profession', updateStudent.guardian_details.profession);
+            form.setValue('guardian_details.designation', updateStudent.guardian_details.designation);
+            form.setValue('guardian_details.company_name', updateStudent.guardian_details.company_name);
+            form.setValue('guardian_details.business_details', updateStudent.guardian_details.business_details);
+            form.setValue('guardian_details.qualification', updateStudent.guardian_details.qualification);
+            form.setValue('guardian_details.if_single_parent.student_lives_with', updateStudent.guardian_details.if_single_parent.student_lives_with);
+            form.setValue('guardian_details.if_single_parent.legal_custody_of_the_child', updateStudent.guardian_details.if_single_parent.legal_custody_of_the_child);
+            form.setValue('guardian_details.if_single_parent.correspondence_to', updateStudent.guardian_details.if_single_parent.correspondence_to);
+            form.setValue('guardian_details.if_single_parent.check_id_applicable', updateStudent.guardian_details.if_single_parent.check_id_applicable);
+            form.setValue('guardian_details.if_single_parent.separation_reason', updateStudent.guardian_details.if_single_parent.separation_reason);
+        }
+    }, [updateStudent]);
 
 
     return (
@@ -1154,40 +1185,54 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             <Form
                 {...form}
             >
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full h-full flex flex-col items-center px-2 sm:px-4'
-                >
+                {isLoading ? (
+                    <LoadingIcon />
+                ) : (
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='w-full h-full flex flex-col items-center px-2 sm:px-4'
+                    >
 
 
-                    {/* Tabs */}
-                    <Tabs defaultValue='student' className='w-full h-[85%] px-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'>
-                        <TabsList className='w-full'>
-                            <TabsTrigger value='student'>Student</TabsTrigger>
-                            <TabsTrigger value='parent'>Parent</TabsTrigger>
-                            <TabsTrigger value='other'>Other</TabsTrigger>
-                            <TabsTrigger value='guardian'>Guardian</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value='student'>
-                            <Student form={form}/>
-                        </TabsContent>
-                        <TabsContent value='parent'>
-                            <Parent form={form}/>
-                        </TabsContent>
-                        <TabsContent value='other'>
-                            <Other form={form}/>
-                        </TabsContent>
-                        <TabsContent value='guardian'>
-                            <Guardian form={form}/>
-                        </TabsContent>
-                    </Tabs>
+                        {/* Tabs */}
+                        <Tabs defaultValue='student' className='w-full h-[85%] px-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'>
+                            <TabsList className='w-full'>
+                                <TabsTrigger value='student'>Student</TabsTrigger>
+                                <TabsTrigger value='parent'>Parent</TabsTrigger>
+                                <TabsTrigger value='other'>Other</TabsTrigger>
+                                <TabsTrigger value='guardian'>Guardian</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value='student'>
+                                <Student
+                                    form={form}
+                                    setFile={setFile}
+                                    students={students}
+                                    imageSrc={imageSrc}
+                                    setImageSrc={setImageSrc}
+                                    setIsViewOpened={setIsViewOpened}
+                                    setUpdateStudent={setUpdateStudent}
+                                    updateStudent={updateStudent}
+                                    setIsLoading={setIsLoading}
+                                />
+                            </TabsContent>
+                            <TabsContent value='parent'>
+                                <Parent form={form}/>
+                            </TabsContent>
+                            <TabsContent value='other'>
+                                <Other form={form}/>
+                            </TabsContent>
+                            <TabsContent value='guardian'>
+                                <Guardian form={form}/>
+                            </TabsContent>
+                        </Tabs>
 
 
-                    {/* Buttons */}
-                    <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form}/>
-                    </div>
-                </form>
+                        {/* Buttons */}
+                        <div className='sm:px-10'>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc}/>
+                        </div>
+                    </form>
+                )}
             </Form>
         </div>
     );

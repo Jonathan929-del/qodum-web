@@ -11,8 +11,7 @@ const StudentSchema = new mongoose.Schema(
         // Student
         student:{
             // 1
-            class:{type:String, required:true},
-            board:{type:String},
+            image:{type:String},
             reg_no:{type:Number, required:true},
             pros_no:{type:Number},
             amount:{type:Number},
@@ -20,8 +19,12 @@ const StudentSchema = new mongoose.Schema(
             payment_mode:{type:String},
             admission_account:{type:String},
             post_account:{type:String},
-            session:{type:String},
             // 2
+            class:{type:String, required:true},
+            board:{type:String},
+            stream:{type:String},
+            subject:{type:String},
+            optional_subject:{type:String},
             name:{type:String, required:true},
             middle_name:{type:String},
             last_name:{type:String},
@@ -112,50 +115,37 @@ const StudentSchema = new mongoose.Schema(
         // Other details
         others:{
             // 1
-            general_description:{type:String},
-            // 2
-            emergency_contact:{
-                person_name:{type:String},
-                mobile_no:{type:Number},
-                phone_no:{type:Number},
-                address:{type:String},
-                relation:{type:String}
-            },
-            // 3
-            emergency_contact_two:{
-                person_name:{type:String},
-                mobile_no:{type:Number},
-                phone_no:{type:Number},
-                address:{type:String},
-                relation:{type:String},
-                is_alumni:{type:Boolean}
-            },
-            // 4
             student_other_details:{
-                stream:{type:String},
-                optional_subject:{type:String},
                 medical_history:{type:String},
+                descriptions:{type:String},
                 allergies:{type:String},
-                other_medical_info:{type:String},
+                allergies_causes:{type:String},
                 family_doctor_name:{type:String},
                 family_doctor_phone:{type:Number},
                 family_doctor_address:{type:String},
                 distance_from_home:{type:Number},
-                no_of_living_years:{type:Number},
-                only_child:{type:Boolean},
+                no_of_living_year:{type:Number},
+                only_child:{type:String},
+                general_description:{type:String},
             },
-            // 5
+            // 2
             student_staff_relation:{
                 staff_ward:{type:String},
                 staff_name:{type:String}
             },
-            // 6
+            // 3
             previous_school_details:{
                 school_name:{type:String},
-                city:{type:String},
-                class:{type:String},
-                year:{type:String},
-                board:{type:String}
+                board:{type:String},
+                passing_year:{type:String},
+                total_marks:{type:String},
+                percentage:{type:String},
+                result:{type:String},
+                is_alumni:{type:String},
+                father_name:{type:String},
+                father_passing_year:{type:String},
+                mother_name:{type:String},
+                mother_passing_year:{type:String}
             }
         },
 
@@ -167,28 +157,14 @@ const StudentSchema = new mongoose.Schema(
             guardian_name:{type:String},
             profession:{type:String},
             designation:{type:String},
-            residence_address:{type:String},
-            office_address:{type:String},
-            email:{type:String},
-            alternate_email:{type:String},
-            dob:{type:Date},
-            mobile:{type:Number},
-            phone:{type:Number},
             company_name:{type:String},
             business_details:{type:String},
             qualification:{type:String},
-            service_in:{type:String},
-            office_phone:{type:Number},
-            office_mobile:{type:Number},
-            office_extension:{type:String},
-            office_email:{type:String},
-            office_website:{type:String},
-            income:{type:String},
             // 2
             if_single_parent:{
                 student_lives_with:{type:String},
-                correspondence_to:{type:String},
                 legal_custody_of_the_child:{type:String},
+                correspondence_to:{type:String},
                 check_id_applicable:{type:String},
                 separation_reason:{type:String}
             }
