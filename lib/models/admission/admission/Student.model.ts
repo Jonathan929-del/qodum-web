@@ -8,11 +8,14 @@ import mongoose from 'mongoose';
 // Student Schema
 const StudentSchema = new mongoose.Schema(
     {
+
+
         // Student
         student:{
             // 1
             image:{type:String},
-            reg_no:{type:Number, required:true},
+            enquiry_no:{type:String, unique:true, required:true},
+            reg_no:{type:Number},
             pros_no:{type:Number},
             amount:{type:Number},
             date:{type:Date},
@@ -20,12 +23,13 @@ const StudentSchema = new mongoose.Schema(
             admission_account:{type:String},
             post_account:{type:String},
             // 2
-            class:{type:String, required:true},
+            with_enquiry:{type:Boolean},
+            class:{type:String},
             board:{type:String},
             stream:{type:String},
             subject:{type:String},
             optional_subject:{type:String},
-            name:{type:String, required:true},
+            name:{type:String},
             middle_name:{type:String},
             last_name:{type:String},
             dob:{type:Date},
@@ -49,9 +53,8 @@ const StudentSchema = new mongoose.Schema(
             is_ews:{type:Boolean},
             sibling:{type:Boolean},
             transport:{type:String},
-            nationality:{type:String, required:true}
+            nationality:{type:String}
         },
-
 
 
         // Parents
@@ -111,7 +114,6 @@ const StudentSchema = new mongoose.Schema(
         },
 
 
-
         // Other details
         others:{
             // 1
@@ -134,21 +136,8 @@ const StudentSchema = new mongoose.Schema(
                 staff_name:{type:String}
             },
             // 3
-            previous_school_details:{
-                school_name:{type:String},
-                board:{type:String},
-                passing_year:{type:String},
-                total_marks:{type:String},
-                percentage:{type:String},
-                result:{type:String},
-                is_alumni:{type:String},
-                father_name:{type:String},
-                father_passing_year:{type:String},
-                mother_name:{type:String},
-                mother_passing_year:{type:String}
-            }
+            previous_school_details:{type:Array}
         },
-
 
 
         // Guardian details
@@ -169,6 +158,8 @@ const StudentSchema = new mongoose.Schema(
                 separation_reason:{type:String}
             }
         }
+
+
     },
     {
         timestamps:true

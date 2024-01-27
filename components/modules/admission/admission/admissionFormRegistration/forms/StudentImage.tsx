@@ -44,7 +44,7 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc}:any) => {
                             src={updateStudent.student.image}
                             width={100}
                             height={100}
-                            className='w-full h-full'
+                            className='w-full h-full rounded-[5px]'
                         />
                     ) : (
                         <p>Select Image</p>

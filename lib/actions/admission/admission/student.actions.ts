@@ -13,6 +13,7 @@ interface CreateStudentProps{
     student:{
         // 1
         image:String;
+        enquiry_no:String;
         reg_no:Number;
         pros_no:Number;
         amount:Number;
@@ -21,6 +22,7 @@ interface CreateStudentProps{
         admission_account:String;
         post_account:String;
         // 2
+        with_enquiry:Boolean;
         class:String;
         board:String;
         stream:String;
@@ -143,7 +145,7 @@ interface CreateStudentProps{
             father_passing_year:String;
             mother_name:String;
             mother_passing_year:String;
-        }
+        }[]
     };
 
     // Guardian details
@@ -174,6 +176,13 @@ export const createStudent = async ({student, parents, others, guardian_details}
         connectToDb('accounts');
 
 
+        // Checking if the enquiry number already exists
+        const existingStudent = await Student.findOne({'student.enquiry_no':student.enquiry_no});
+        if(existingStudent){
+            throw new Error('Enquiry no. already exists');
+        };
+
+
         // Creating new student
         const newStudent = await Student.create({
             student,
@@ -181,7 +190,15 @@ export const createStudent = async ({student, parents, others, guardian_details}
             others,
             guardian_details
         });
-        newStudent.save();
+        newStudent.save().then(async () => {
+            await Student.findOneAndUpdate({'student.enquiry_no':student.enquiry_no}, {
+                others:{
+                    student_other_details:others.student_other_details,
+                    student_staff_relation:others.student_staff_relation,
+                    previous_school_details:others.previous_school_details
+                }
+            });
+        });
 
 
         // Return
@@ -225,6 +242,7 @@ interface ModifyStudentProps{
     student:{
         // 1
         image:String;
+        enquiry_no:String;
         reg_no:Number;
         pros_no:Number;
         amount:Number;
@@ -233,6 +251,7 @@ interface ModifyStudentProps{
         admission_account:String;
         post_account:String;
         // 2
+        with_enquiry:Boolean;
         class:String;
         board:String;
         stream:String;
@@ -355,7 +374,7 @@ interface ModifyStudentProps{
             father_passing_year:String;
             mother_name:String;
             mother_passing_year:String;
-        }
+        }[]
     };
 
     // Guardian details
@@ -383,6 +402,12 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
         // Db connection
         connectToDb('accounts');
+
+
+        // Checking if the enquiry no. already exists
+        const students = await Student.find();
+        const existingStudent = await Student.findById(id);
+        if(existingStudent.student.enquiry_no !== student.enquiry_no && students.map(student => student.student.enquiry_no).includes(student.enquiry_no)){throw new Error('Enquiry no. already exists')};
 
 
         // Update student
@@ -420,8 +445,8 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
 
 
-// Fetch student by register number
-export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
+// Fetch student by enquiry number
+export const fetchStudentByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) => {
     try {
 
         // Db connection
@@ -429,13 +454,13 @@ export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
 
 
         // Fetching student
-        const student = await Student.findOne({'student.reg_no':reg_no});
+        const student = await Student.findOne({'student.enquiry_no':enquiry_no});
 
 
         // Return
         return student;
 
     } catch (err) {
-        throw new Error(`Error deleting student: ${err}`);
+        throw new Error(`Error fetching student: ${err}`);
     };
 };

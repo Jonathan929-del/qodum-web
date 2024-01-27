@@ -1,9 +1,9 @@
 // Imports
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -27,7 +27,10 @@ const ViewCom = ({setIsViewOpened, enquiries, setUpdateEnquiry}:any) => {
             visitor_name:enquiry.visitor_name,
             visitor_address:enquiry.visitor_address,
             mobile_no:enquiry.mobile_no,
-            purpose:enquiry.purpose,
+            purpose_is_admission:enquiry.purpose_is_admission,
+            student_name:enquiry.student_name,
+            class_name:enquiry.class_name,
+            reason_to_visit:enquiry.reason_to_visit,
             contact_person:enquiry.contact_person,
             reference_details:enquiry.reference_details
         });
@@ -98,7 +101,7 @@ const ViewCom = ({setIsViewOpened, enquiries, setUpdateEnquiry}:any) => {
                                 <LoadingIcon />
                             ) : enquiries.map((enquiry:any) => (
                                 <CommandItem
-                                    value={`${enquiries.indexOf(enquiry) + 1} ${enquiry.enquiry_no} ${`${enquiry.enquiry_date.day}-${enquiry.enquiry_date.month}-${enquiry.enquiry_date.year}`} ${enquiry.visitor_name} ${enquiry.purpose}`}
+                                    value={`${enquiries.indexOf(enquiry) + 1} ${enquiry.enquiry_no} ${`${enquiry.enquiry_date.day}-${enquiry.enquiry_date.month}-${enquiry.enquiry_date.year}`} ${enquiry.visitor_name} ${enquiry.purpose_is_admission ? 'Admission' : enquiry.reason_to_visit}`}
                                     className='w-full min-w-[700px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{enquiries.indexOf(enquiry) + 1}</li>
@@ -114,7 +117,7 @@ const ViewCom = ({setIsViewOpened, enquiries, setUpdateEnquiry}:any) => {
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{enquiry.enquiry_no}</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{`${enquiry.enquiry_date.day}-${enquiry.enquiry_date.month}-${enquiry.enquiry_date.year}`}</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{enquiry.visitor_name}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2'>{enquiry.purpose}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2'>{enquiry.purpose_is_admission ? 'Admission' : enquiry.reason_to_visit}</li>
                                 </CommandItem>
                             ))
                         }

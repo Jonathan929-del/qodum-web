@@ -7,9 +7,13 @@ import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.validation';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createEnquiry, deleteEnquiry, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
@@ -24,6 +28,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
     // Toast
     const {toast} = useToast();
+
+
+    // Classes
+    const [classes, setClasses] = useState([{}]);
 
 
     // Last number
@@ -41,7 +49,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         visitor_name:updateEnquiry.visitor_name,
         visitor_address:updateEnquiry.visitor_address,
         mobile_no:updateEnquiry.mobile_no,
-        purpose:updateEnquiry.purpose,
+        purpose_is_admission:updateEnquiry.purpose_is_admission,
+        student_name:updateEnquiry.student_name,
+        class_name:updateEnquiry.class_name,
+        reason_to_visit:updateEnquiry.reason_to_visit,
         contact_person:updateEnquiry.contact_person,
         reference_details:updateEnquiry.reference_details
     };
@@ -66,7 +77,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             visitor_name:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_name,
             visitor_address:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_address,
             mobile_no:updateEnquiry.id === '' ? '' : updateEnquiry.mobile_no,
-            purpose:updateEnquiry.id === '' ? '' : updateEnquiry.purpose,
+            purpose_is_admission:updateEnquiry.id === '' ? false : updateEnquiry.purpose_is_admission,
+            student_name:updateEnquiry.id === '' ? '' : updateEnquiry.student_name,
+            class_name:updateEnquiry.id === '' ? '' : updateEnquiry.class_name,
+            reason_to_visit:updateEnquiry.id === '' ? '' : updateEnquiry.reason_to_visit,
             contact_person:updateEnquiry.id === '' ? '' : updateEnquiry.contact_person,
             reference_details:updateEnquiry.id === '' ? '' : updateEnquiry.reference_details
         }
@@ -91,7 +105,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
                 mobile_no:values.mobile_no,
-                purpose:values.purpose,
+                purpose_is_admission:values.purpose_is_admission,
+                student_name:values.student_name,
+                class_name:values.class_name,
+                reason_to_visit:values.reason_to_visit,
                 contact_person:values.contact_person,
                 reference_details:values.reference_details
             });
@@ -106,7 +123,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             // Update
             await modifyEnquiry({
                 id:updateEnquiry.id,
-                enquiry_no:values.enquiry_no,
+                enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
                 enquiry_date:{
                     year:values.enquiry_date.year,
                     month:values.enquiry_date.month,
@@ -115,7 +132,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
                 mobile_no:values.mobile_no,
-                purpose:values.purpose,
+                purpose_is_admission:values.purpose_is_admission,
+                student_name:values.student_name,
+                class_name:values.class_name,
+                reason_to_visit:values.reason_to_visit,
                 contact_person:values.contact_person,
                 reference_details:values.reference_details
             });
@@ -141,7 +161,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
-            purpose:'',
+            purpose_is_admission:false,
+            student_name:'',
+            class_name:'',
+            reason_to_visit:'',
             contact_person:'',
             reference_details:''
         });
@@ -156,7 +179,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
-            purpose:'',
+            purpose_is_admission:false,
+            student_name:'',
+            class_name:'',
+            reason_to_visit:'',
             contact_person:'',
             reference_details:''
         });
@@ -208,6 +234,13 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             setEndDaysInTheMonth(daysLoopFuncResult);
         }
     }, [form.watch('enquiry_date.year'), form.watch('enquiry_date.month')]);
+    useEffect(() => {
+        const fetcher = async () => {
+            const res = await fetchClasses();
+            setClasses(res);
+        };
+        fetcher();
+    }, []);
 
 
     return (
@@ -419,25 +452,110 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                     />
 
 
-                    {/* Purpose */}
+                    {/* Purpose Is Admission */}
                     <FormField
                         control={form.control}
-                        name='purpose'
+                        name='purpose_is_admission'
                         render={({field}) => (
-                            <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Purpose</FormLabel>
-                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                            <FormItem className='w-full flex flex-row mx-2 items-start justify-start sm:items-center sm:gap-2'>
                                     <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
+                                        <div className='flex-1 flex items-center justify-start space-x-2'>
+                                            <Label htmlFor='purpose_is_admission' className='text-xs text-hash-color'>
+                                                Purpose Is Admission
+                                            </Label>
+                                            <Switch
+                                                id='purpose_is_admission'
+                                                {...field}
+                                                value={field.value}
+                                                onCheckedChange={field.onChange}
+                                                checked={field.value}
+                                            />
+                                        </div>
                                     </FormControl>
-                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                </div>
                             </FormItem>
                         )}
                     />
+
+
+                    {form.getValues().purpose_is_admission ? (
+                        <>
+                            {/* Student Name */}
+                            <FormField
+                                control={form.control}
+                                name='student_name'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Student Name</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            {/* Class */}
+                            <FormField
+                                control={form.control}
+                                name='class_name'
+                                render={({field}) => (
+                                    <FormItem className='w-full flex flex-col items-start justify-center sm:flex-row sm:items-center sm:mt-0'>
+                                        <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field.value}
+                                                    onValueChange={field.onChange}
+                                                >
+                                                    <FormLabel className='w-full text-xs text-start pr-2 text-[#726E71] sm:text-end sm:basis-[30%]'>Class</FormLabel>
+                                                    <SelectTrigger className='w-full h-10 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
+                                                        <SelectValue placeholder='Select class' className='text-xs'/>
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {
+                                                            classes.length < 1 ? (
+                                                                <p>No classes yet</p>
+                                                            ) : // @ts-ignore
+                                                            !classes[0].class_name ? (
+                                                                <LoadingIcon />
+                                                            ) : classes.map((item:any) => (
+                                                                <SelectItem value={item.class_name} key={item._id}>{item.class_name}</SelectItem>
+                                                            ))
+                                                        }
+                                                    </SelectContent>
+                                                </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            {/* Reason To Visit */}
+                            <FormField
+                                control={form.control}
+                                name='reason_to_visit'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Reason To Visit</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                        </>
+                    )}
 
 
                     {/* Contact Person */}

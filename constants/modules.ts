@@ -706,12 +706,6 @@ const modules = [
                         subPageName:'Admission Setting'
                     },
                     {
-                        subPageName:'Enquiry No Setting'
-                    },
-                    {
-                        subPageName:'Prospectus and Registration No. Setting'
-                    },
-                    {
                         subPageName:'Student Class Promotion'
                     },
                     {

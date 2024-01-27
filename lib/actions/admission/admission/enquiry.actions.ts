@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
+import Student from '@/lib/models/admission/admission/Student.model';
 
 
 
@@ -18,7 +19,10 @@ interface CreateEnquiryProps{
     visitor_name:String;
     visitor_address:String;
     mobile_no:Number;
-    purpose:String;
+    purpose_is_admission:Boolean;
+    student_name:String;
+    class_name:String;
+    reason_to_visit:String;
     contact_person:String;
     reference_details:String;
 };
@@ -33,7 +37,10 @@ export const createEnquiry = async ({
     visitor_name,
     visitor_address,
     mobile_no,
-    purpose,
+    purpose_is_admission,
+    student_name,
+    class_name,
+    reason_to_visit,
     contact_person,
     reference_details
 }:CreateEnquiryProps) => {
@@ -55,11 +62,33 @@ export const createEnquiry = async ({
             visitor_name,
             visitor_address,
             mobile_no,
-            purpose,
+            purpose_is_admission,
+            student_name,
+            class_name,
+            reason_to_visit,
             contact_person,
             reference_details
         });
         newEnquiry.save();
+
+
+        // Creating student
+        if(purpose_is_admission){
+            const newStudent = await Student.create({
+                student:{
+                    enquiry_no,
+                    h_no_and_streets:visitor_address,
+                    contact_person_mobile:mobile_no,
+                    name:student_name,
+                    class:class_name,
+                    contact_person_name:contact_person
+                },
+                parents:{},
+                others:{},
+                guardian_details:{}
+            });
+            newStudent.save();
+        };
 
 
         // Return
@@ -108,10 +137,13 @@ interface ModifyEnquiryProps{
     visitor_name:String;
     visitor_address:String;
     mobile_no:Number;
-    purpose:String;
+    purpose_is_admission:Boolean;
+    student_name:String;
+    class_name:String;
+    reason_to_visit:String;
     contact_person:String;
     reference_details:String;
-}
+};
 // Modify enquiry
 export const modifyEnquiry = async ({
     id,
@@ -124,7 +156,10 @@ export const modifyEnquiry = async ({
     visitor_name,
     visitor_address,
     mobile_no,
-    purpose,
+    purpose_is_admission,
+    student_name,
+    class_name,
+    reason_to_visit,
     contact_person,
     reference_details
 }:ModifyEnquiryProps) => {
@@ -145,10 +180,35 @@ export const modifyEnquiry = async ({
             visitor_name,
             visitor_address,
             mobile_no,
-            purpose,
+            purpose_is_admission,
+            student_name,
+            class_name,
+            reason_to_visit,
             contact_person,
             reference_details
         }, {new:true});
+
+
+        // Creating student
+        if(purpose_is_admission){
+            const newStudent = await Student.create({
+                student:{
+                    enquiry_no,
+                    h_no_and_streets:visitor_address,
+                    contact_person_mobile:mobile_no,
+                    name:student_name,
+                    class:class_name,
+                    contact_person_name:contact_person
+                },
+                parents:{},
+                others:{},
+                guardian_details:{}
+            });
+            newStudent.save();
+        };
+
+
+        // Return
         return updatedEnquiry;
 
 

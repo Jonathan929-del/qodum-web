@@ -26,7 +26,10 @@ const Buttons = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, o
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
-            purpose:'',
+            purpose_is_admission:false,
+            student_name:'',
+            class_name:'',
+            reason_to_visit:'',
             contact_person:'',
             reference_details:''
         });
@@ -43,7 +46,10 @@ const Buttons = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, o
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
-            purpose:'',
+            purpose_is_admission:false,
+            student_name:'',
+            class_name:'',
+            reason_to_visit:'',
             contact_person:'',
             reference_details:''
         });

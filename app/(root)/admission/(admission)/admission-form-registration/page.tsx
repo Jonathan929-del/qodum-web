@@ -30,6 +30,7 @@ const page = () => {
         student:{
             // 1
             image:'',
+            enquiry_no:'',
             reg_no:'',
             pros_no:'',
             amount:'',
@@ -37,6 +38,7 @@ const page = () => {
             payment_mode:'',
             admission_account:'',
             post_account:'',
+            with_enquiry:false,
             // 2
             class:'',
             board:'',
@@ -148,19 +150,47 @@ const page = () => {
                 staff_name:''
             },
             // 3
-            previous_school_details:{
-                school_name:'',
-                board:'',
-                passing_year:'',
-                total_marks:'',
-                percentage:'',
-                result:'',
-                is_alumni:'',
-                father_name:'',
-                father_passing_year:'',
-                mother_name:'',
-                mother_passing_year:''
-            }
+            previous_school_details:[
+                {
+                    school_name:'',
+                    board:'',
+                    passing_year:'',
+                    total_marks:'',
+                    percentage:'',
+                    result:'',
+                    is_alumni:'',
+                    father_name:'',
+                    father_passing_year:'',
+                    mother_name:'',
+                    mother_passing_year:''
+                },
+                {
+                    school_name:'',
+                    board:'',
+                    passing_year:'',
+                    total_marks:'',
+                    percentage:'',
+                    result:'',
+                    is_alumni:'',
+                    father_name:'',
+                    father_passing_year:'',
+                    mother_name:'',
+                    mother_passing_year:''
+                },
+                {
+                    school_name:'',
+                    board:'',
+                    passing_year:'',
+                    total_marks:'',
+                    percentage:'',
+                    result:'',
+                    is_alumni:'',
+                    father_name:'',
+                    father_passing_year:'',
+                    mother_name:'',
+                    mother_passing_year:''
+                }
+            ]
         },
 
         // Guardian details
@@ -195,12 +225,12 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
+        <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
                 isViewOpened ? (
                     <ViewCom
-                        setIsViewOpened={setIsViewOpened}
                         students={students}
+                        setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
                     />
                 ) : (

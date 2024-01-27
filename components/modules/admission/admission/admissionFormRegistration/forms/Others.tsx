@@ -9,7 +9,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Other = ({form}:any) => {
+const Other = ({form, updateStudent}:any) => {
     return (
         <div className='flex flex-col gap-2'>
 
@@ -363,251 +363,253 @@ const Other = ({form}:any) => {
 
 
             {/* Previous School Details */}
-            <div className='flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
-                <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Previous School Details</h2>
-                <div className='flex flex-col px-4 py-2 gap-2 lg:flex-row'>
-                    {/* School Name */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School Name</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.school_name'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
+            <div className='w-full flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
+                <h2 className='bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Previous School Details</h2>
+                <div className='w-full overflow-x-scroll custom-sidebar-scrollbar'>
+                    {updateStudent.others.previous_school_details.map((school:any) => (
+                        <div className='flex flex-row min-w-[1600px] px-4 py-2 gap-2'>
+                            {/* School Name */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School Name</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.school_name`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Board */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Board</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.board`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Passing Year */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.passing_year`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Total Marks */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.total_marks`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Percentage */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.percentage`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Result */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.result`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Is Alumni */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Is Alumni</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.is_alumni`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value='All Staff'>Name</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Father Name */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Father Name</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.father_name`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Passing Year */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.father_passing_year`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Mother Name */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Mother Name</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.mother_name`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Passing Year */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.mother_passing_year`}
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    {/* Board */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Board</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.board'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Passing Year */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.passing_year'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Total Marks */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.total_marks'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Percentage */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.percentage'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Result */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.result'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className='flex flex-col px-4 py-2 gap-2 lg:flex-row'>
-                    {/* Is Alumni */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Is Alumni</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.is_alumni'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field.value}
-                                                onValueChange={field.onChange}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value='All Staff'>Name</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Father Name */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Father Name</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.father_name'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Passing Year */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.father_passing_year'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Mother Name */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Mother Name</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.mother_name'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    {/* Passing Year */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.previous_school_details.mother_passing_year'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
 

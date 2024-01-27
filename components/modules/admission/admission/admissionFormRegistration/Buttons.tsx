@@ -21,6 +21,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             student:{
                 // 1
                 image:'',
+                enquiry_no:'',
                 reg_no:'',
                 pros_no:'',
                 amount:'',
@@ -29,6 +30,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 admission_account:'',
                 post_account:'',
                 // 2
+                with_enquiry:false,
                 class:'',
                 board:'',
                 stream:'',
@@ -139,19 +141,47 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     staff_name:''
                 },
                 // 3
-                previous_school_details:{
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
-                }
+                previous_school_details:[
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    }
+                ]
             },
     
             // Guardian details
@@ -181,6 +211,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             student:{
                 // 1
                 reg_no:'',
+                enquiry_no:'',
                 pros_no:'',
                 amount:'',
                 date:new Date(),
@@ -188,6 +219,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 admission_account:'',
                 post_account:'',
                 // 2
+                with_enquiry:false,
                 class:'',
                 board:'',
                 stream:'',
@@ -298,19 +330,47 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     staff_name:''
                 },
                 // 3
-                previous_school_details:{
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
-                }
+                previous_school_details:[
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    }
+                ]
             },
     
             // Guardian details

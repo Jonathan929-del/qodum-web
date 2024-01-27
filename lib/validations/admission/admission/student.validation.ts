@@ -11,6 +11,7 @@ export const StudentValidation = z.object({
     student:z.object({
         // 1
         image:z.string(),
+        enquiry_no:z.string(),
         reg_no:z.number({invalid_type_error:'*Register no. is required'}).or(z.string().nonempty({message:'*Register no. is required'})).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         pros_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         amount:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
@@ -19,6 +20,7 @@ export const StudentValidation = z.object({
         admission_account:z.string(),
         post_account:z.string(),
         // 2
+        with_enquiry:z.boolean(),
         class:z.string().nonempty({message:'*Class is required'}),
         board:z.string(),
         stream:z.string(),
@@ -133,7 +135,7 @@ export const StudentValidation = z.object({
             staff_name:z.string()
         }),
         // 3
-        previous_school_details:z.object({
+        previous_school_details:z.array(z.object({
             school_name:z.string(),
             board:z.string(),
             passing_year:z.string(),
@@ -145,7 +147,7 @@ export const StudentValidation = z.object({
             father_passing_year:z.string(),
             mother_name:z.string(),
             mother_passing_year:z.string()
-        })
+        }))
     }),
 
 

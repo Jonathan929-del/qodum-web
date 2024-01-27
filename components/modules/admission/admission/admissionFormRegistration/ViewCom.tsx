@@ -22,6 +22,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
             student:{
                 // 1
                 image:student.student.image,
+                enquiry_no:student.student.enquiry_no,
                 reg_no:student.student.reg_no,
                 pros_no:student.student.pros_no,
                 amount:student.student.amount,
@@ -31,6 +32,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                 post_account:student.student.post_account,
                 session:student.student.session,
                 // 2
+                with_enquiry:student.student.with_enquiry,
                 class:student.student.class,
                 board:student.student.board,
                 stream:student.student.stream,
@@ -141,19 +143,47 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                     staff_name:student.others.student_staff_relation.staff_name
                 },
                 // 3
-                previous_school_details:{
-                    school_name:student.others.previous_school_details.school_name,
-                    board:student.others.previous_school_details.board,
-                    passing_year:student.others.previous_school_details.passing_year,
-                    total_marks:student.others.previous_school_details.total_marks,
-                    percentage:student.others.previous_school_details.percentage,
-                    result:student.others.previous_school_details.result,
-                    is_alumni:student.others.previous_school_details.is_alumni,
-                    father_name:student.others.previous_school_details.father_name,
-                    father_passing_year:student.others.previous_school_details.father_passing_year,
-                    mother_name:student.others.previous_school_details.mother_name,
-                    mother_passing_year:student.others.previous_school_details.mother_passing_year,
-                }
+                previous_school_details:[
+                    {
+                        school_name:student.others.previous_school_details[0].school_name,
+                        board:student.others.previous_school_details[0].board,
+                        passing_year:student.others.previous_school_details[0].passing_year,
+                        total_marks:student.others.previous_school_details[0].total_marks,
+                        percentage:student.others.previous_school_details[0].percentage,
+                        result:student.others.previous_school_details[0].result,
+                        is_alumni:student.others.previous_school_details[0].is_alumni,
+                        father_name:student.others.previous_school_details[0].father_name,
+                        father_passing_year:student.others.previous_school_details[0].father_passing_year,
+                        mother_name:student.others.previous_school_details[0].mother_name,
+                        mother_passing_year:student.others.previous_school_details[0].mother_passing_year
+                    },
+                    {
+                        school_name:student.others.previous_school_details[1].school_name,
+                        board:student.others.previous_school_details[1].board,
+                        passing_year:student.others.previous_school_details[1].passing_year,
+                        total_marks:student.others.previous_school_details[1].total_marks,
+                        percentage:student.others.previous_school_details[1].percentage,
+                        result:student.others.previous_school_details[1].result,
+                        is_alumni:student.others.previous_school_details[1].is_alumni,
+                        father_name:student.others.previous_school_details[1].father_name,
+                        father_passing_year:student.others.previous_school_details[1].father_passing_year,
+                        mother_name:student.others.previous_school_details[1].mother_name,
+                        mother_passing_year:student.others.previous_school_details[1].mother_passing_year
+                    },
+                    {
+                        school_name:student.others.previous_school_details[2].school_name,
+                        board:student.others.previous_school_details[2].board,
+                        passing_year:student.others.previous_school_details[2].passing_year,
+                        total_marks:student.others.previous_school_details[2].total_marks,
+                        percentage:student.others.previous_school_details[2].percentage,
+                        result:student.others.previous_school_details[2].result,
+                        is_alumni:student.others.previous_school_details[2].is_alumni,
+                        father_name:student.others.previous_school_details[2].father_name,
+                        father_passing_year:student.others.previous_school_details[2].father_passing_year,
+                        mother_name:student.others.previous_school_details[2].mother_name,
+                        mother_passing_year:student.others.previous_school_details[2].mother_passing_year
+                    }
+                ]
             },
 
             // Guardian details
@@ -260,7 +290,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student.student.reg_no}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>True</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student.student.name}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student.parents.father.father_name}</li>
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.father?.father_name}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2'>700</li>
                                 </CommandItem>
                             ))
