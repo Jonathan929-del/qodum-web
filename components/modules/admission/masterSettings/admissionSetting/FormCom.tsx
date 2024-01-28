@@ -3,20 +3,21 @@ import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
+import {Label} from '@/components/ui/label';
+import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import LoadingIcon from '@/components/utils/LoadingIcon';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admissionSetting.validation';
-import LoadingIcon from '@/components/utils/LoadingIcon';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import { fetchClasses } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -58,12 +59,12 @@ function FormCom() {
             class:'',
             board:'',
             number:'',
-            should_be:'',
+            should_be:localStorage.getItem('setting_type') || 'Automatic',
             rec_no_start_from:'',
-            prefix:'',
-            start_from:'',
-            lead_zero:'',
-            suffix:''
+            prefix:localStorage.getItem('prefix') || '',
+            start_from:localStorage.getItem('start_from') || '',
+            lead_zero:localStorage.getItem('lead_zero') || '',
+            suffix:localStorage.getItem('suffix') || ''
         }
     });
 
@@ -72,6 +73,11 @@ function FormCom() {
     const onSubmit = async (values: z.infer<typeof AdmissionSettingValidation>) => {
         try {
 
+            localStorage.setItem('setting_type', values.should_be);
+            localStorage.setItem('prefix', values.prefix);
+            localStorage.setItem('start_from', values.start_from);
+            localStorage.setItem('lead_zero', values.lead_zero);
+            localStorage.setItem('suffix', values.suffix);
             toast({title:'Settings Saved Successfully!'});
 
         } catch (err: any) {
@@ -94,6 +100,7 @@ function FormCom() {
         };
         fetcher();
     }, []);
+    useEffect(() => {}, [form.watch('should_be')]);
 
 
     return (
@@ -251,6 +258,9 @@ function FormCom() {
                     </div>
 
 
+
+
+
                     {/* Enquiry, Registration, and Admission No. Setting */}
                     <div className='w-full flex flex-col mt-4 border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
                         <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Enquiry, Registration, and Admission No. Setting</h2>
@@ -369,78 +379,70 @@ function FormCom() {
                             </div>
 
 
-                            <div className='flex flex-col gap-2 lg:flex-row mt-4'>
-                                {/* Prefix */}
-                                <FormField
-                                    control={form?.control}
-                                    name='prefix'
-                                    render={({ field }) => (
-                                        <FormItem className='w-full mt-2 sm:mt-0'>
-                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Prefix</FormLabel>
-                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
-                                                    <FormControl>
-                                                        <Input
-                                                            {...field}
-                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            <div className='flex flex-col gap-4 lg:flex-row mt-4'>
+                                {/* Number */}
+                                <div className='flex-1 flex flex-col items-center'>
+                                    <FormField 
+                                        control={form?.control}
+                                        name='number'
+                                        render={({ field }) => (
+                                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value='Enquiry No.'>Enquiry No.</SelectItem>
+                                                            <SelectItem value='Registration No.'>Registration No.</SelectItem>
+                                                            <SelectItem value='Admission No.'>Admission No.</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* Should Be */}
+                                <div className="flex-1 flex flex-col items-start  gap-1">
+                                    <FormLabel className='text-start text-xs text-[#726E71] me-3'>should be</FormLabel>
+                                    <FormField
+                                        control={form.control}
+                                        name='should_be'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    {/* @ts-ignore */}
+                                                    <RadioGroup defaultValue={form.getValues().should_be} className='flex gap-2'>
+                                                        <RadioGroupItem
+                                                            value='Automatic'
+                                                            onClick={() => form.setValue('should_be', 'Automatic')}
                                                         />
-                                                    </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
-                                                </div>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                                {/* Start From */}
-                                <FormField
-                                    control={form?.control}
-                                    name='start_from'
-                                    render={({ field }) => (
-                                        <FormItem className='w-full mt-2 sm:mt-0'>
-                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Start From</FormLabel>
-                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
-                                                    <FormControl>
-                                                        <Input
-                                                            {...field}
-                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        <Label className='text-xs text-[#726E71] '>Automatic</Label>
+                                                        <RadioGroupItem
+                                                            value='Manual'
+                                                            onClick={() => form.setValue('should_be', 'Manual')}
                                                         />
-                                                    </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
-                                                </div>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                                {/* Lead Zero */}
+                                                        <Label className='text-xs text-[#726E71] '>Manual</Label>
+                                                    </RadioGroup>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {/* Rec. No. Start From (School Wise) */}
                                 <FormField
                                     control={form?.control}
-                                    name='lead_zero'
+                                    name='rec_no_start_from'
                                     render={({ field }) => (
-                                        <FormItem className='w-full mt-2 sm:mt-0'>
-                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Lead Zero</FormLabel>
-                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
-                                                    <FormControl>
-                                                        <Input
-                                                            {...field}
-                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
-                                                </div>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                                {/* Suffix */}
-                                <FormField
-                                    control={form?.control}
-                                    name='suffix'
-                                    render={({ field }) => (
-                                        <FormItem className='w-full mt-2 sm:mt-0'>
-                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Suffix</FormLabel>
+                                        <FormItem className='flex-1 mt-2 sm:mt-0'>
+                                            <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                                <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] sm:basis-[35%]'>Rec. No. Start From (School Wise)</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
@@ -455,6 +457,96 @@ function FormCom() {
                                     )}
                                 />
                             </div>
+
+
+                            {form.getValues().should_be === 'Automatic' && (
+                                <div className='flex flex-col gap-2 lg:flex-row mt-4'>
+                                    {/* Prefix */}
+                                    <FormField
+                                        control={form?.control}
+                                        name='prefix'
+                                        render={({ field }) => (
+                                            <FormItem className='w-full mt-2 sm:mt-0'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Prefix</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {/* Start From */}
+                                    <FormField
+                                        control={form?.control}
+                                        name='start_from'
+                                        render={({ field }) => (
+                                            <FormItem className='w-full mt-2 sm:mt-0'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Start From</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {/* Lead Zero */}
+                                    <FormField
+                                        control={form?.control}
+                                        name='lead_zero'
+                                        render={({ field }) => (
+                                            <FormItem className='w-full mt-2 sm:mt-0'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Lead Zero</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {/* Suffix */}
+                                    <FormField
+                                        control={form?.control}
+                                        name='suffix'
+                                        render={({ field }) => (
+                                            <FormItem className='w-full mt-2 sm:mt-0'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Suffix</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
 
 
                         </div>

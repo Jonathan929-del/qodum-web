@@ -307,26 +307,28 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
 
 
                 {/* Enquiry No. */}
-                <FormField
-                    control={form?.control}
-                    name='student.enquiry_no'
-                    render={({ field }) => (
-                        <FormItem className='w-full'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Enquiry No.</FormLabel>
-                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                {form.getValues().student.with_enquiry && (
+                    <FormField
+                        control={form?.control}
+                        name='student.enquiry_no'
+                        render={({ field }) => (
+                            <FormItem className='w-full'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Enquiry No.</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
                                 </div>
-                            </div>
-                        </FormItem>
-                    )}
-                />
+                            </FormItem>
+                        )}
+                    />
+                )}
 
 
                 {/* Reg. No. */}
