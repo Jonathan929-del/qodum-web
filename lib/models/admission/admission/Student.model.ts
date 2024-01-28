@@ -136,6 +136,13 @@ const StudentSchema = new mongoose.Schema(
                 staff_name:{type:String}
             },
             // 3
+            is_alumni:{
+                is_alumni:{type:Boolean},
+                academic_session:{type:String},
+                class_name:{type:String},
+                admission_number:{type:Number},
+            },
+            // 4
             previous_school_details:{type:Array}
         },
 

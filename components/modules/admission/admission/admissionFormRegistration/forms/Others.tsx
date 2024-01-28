@@ -1,8 +1,14 @@
 // Imports
+import {useEffect, useState} from 'react';
 import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Switch} from '@/components/ui/switch';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -10,6 +16,28 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 // Main function
 const Other = ({form, updateStudent}:any) => {
+
+
+    // Sessions
+    const [sessions, setSessions] = useState([{}]);
+
+
+    // CLasses
+    const [classes, setClases] = useState([{}]);
+
+
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const sessionsRes = await fetchAcademicYears();
+            const classesRes = await fetchClasses();
+            setSessions(sessionsRes);
+            setClases(classesRes);
+        };
+        fetcher();
+    }, []);
+
+
     return (
         <div className='flex flex-col gap-2'>
 
@@ -355,6 +383,139 @@ const Other = ({form, updateStudent}:any) => {
                             />
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+
+
+
+            {/* Is Alumni */}
+            <div className='flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
+                <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Is Alumni</h2>
+                <div className='flex flex-col px-4 py-2 gap-2 lg:flex-row'>
+                    {/* Is Alumni */}
+                    <FormField
+                        control={form?.control}
+                        name='others.is_alumni.is_alumni'
+                        render={({field}) => (
+                            <FormItem className='flex flex-row mx-2 items-start justify-start sm:items-center min-w-[150px] sm:gap-2'>
+                                    <FormControl>
+                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                            <Label htmlFor='main_is_alumni' className='text-[11px]'>
+                                                Is Alumni
+                                            </Label>
+                                            <Switch
+                                                id='main_is_alumni'
+                                                {...field}
+                                                value={field?.value}
+                                                onCheckedChange={field?.onChange}
+                                                checked={field?.value}
+                                            />
+                                        </div>
+                                    </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    {form.getValues().others.is_alumni.is_alumni && (
+                        <>
+                            {/* Session */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Session</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='others.is_alumni.session'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {sessions?.length < 1 ? (
+                                                                <p>No sessions</p>
+                                                                // @ts-ignore
+                                                            ) : !sessions[0]?.year_name ? (
+                                                                <LoadingIcon />
+                                                            ) : sessions?.map((item:any) => (
+                                                                <SelectItem value={item?.year_name} key={item?._id}>{item?.year_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Class */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='others.is_alumni.class_name'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {classes?.length < 1 ? (
+                                                                <p>No classes</p>
+                                                                // @ts-ignore
+                                                            ) : !classes[0]?.class_name ? (
+                                                                <LoadingIcon />
+                                                            ) : classes?.map((item:any) => (
+                                                                <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            {/* Admission No. */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Admission No.</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form.control}
+                                        name='others.is_alumni.admission_no'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                    />
+                                                </FormControl>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
 

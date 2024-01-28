@@ -11,11 +11,7 @@ import Student from '@/lib/models/admission/admission/Student.model';
 // Create enquiry props
 interface CreateEnquiryProps{
     enquiry_no:String;
-    enquiry_date:{
-        year:String;
-        month:String;
-        day:String;
-    },
+    enquiry_date:Date,
     visitor_name:String;
     visitor_address:String;
     mobile_no:Number;
@@ -29,11 +25,7 @@ interface CreateEnquiryProps{
 // Create enquiry
 export const createEnquiry = async ({
     enquiry_no,
-    enquiry_date:{
-        year,
-        month,
-        day,
-    },
+    enquiry_date,
     visitor_name,
     visitor_address,
     mobile_no,
@@ -54,11 +46,7 @@ export const createEnquiry = async ({
         // Creating new enquiiry
         const newEnquiry = await Enquiry.create({
             enquiry_no,
-            enquiry_date:{
-                year,
-                month,
-                day,
-            },
+            enquiry_date,
             visitor_name,
             visitor_address,
             mobile_no,
@@ -129,11 +117,7 @@ export const fetchEnquiries = async () => {
 interface ModifyEnquiryProps{
     id:String;
     enquiry_no:String;
-    enquiry_date:{
-        year:String;
-        month:String;
-        day:String;
-    },
+    enquiry_date:Date;
     visitor_name:String;
     visitor_address:String;
     mobile_no:Number;
@@ -148,11 +132,7 @@ interface ModifyEnquiryProps{
 export const modifyEnquiry = async ({
     id,
     enquiry_no,
-    enquiry_date:{
-        year,
-        month,
-        day,
-    },
+    enquiry_date,
     visitor_name,
     visitor_address,
     mobile_no,
@@ -172,11 +152,7 @@ export const modifyEnquiry = async ({
         // Update propspectus
         const updatedEnquiry = await Enquiry.findByIdAndUpdate(id, {
             enquiry_no,
-            enquiry_date:{
-                year,
-                month,
-                day,
-            },
+            enquiry_date,
             visitor_name,
             visitor_address,
             mobile_no,

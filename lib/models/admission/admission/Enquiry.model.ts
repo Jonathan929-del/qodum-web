@@ -9,11 +9,7 @@ import mongoose from 'mongoose';
 const EnquirySchema = new mongoose.Schema(
     {
         enquiry_no:{type:String, required:true},
-        enquiry_date:{
-            year:{type:String},
-            month:{type:String},
-            day:{type:String}
-        },
+        enquiry_date:{type:Date},
         visitor_name:{type:String, required:true},
         visitor_address:{type:String, required:true},
         mobile_no:{type:Number, required:true},

@@ -169,6 +169,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 staff_name:updateStudent.others.student_staff_relation.staff_name
             },
             // 3
+            is_alumni:{
+                is_alumni:updateStudent.others.is_alumni.is_alumni,
+                academic_session:updateStudent.others.is_alumni.academic_session,
+                class_name:updateStudent.others.is_alumni.class_name,
+                admission_number:updateStudent.others.is_alumni.admission_number
+            },
+            // 4
             previous_school_details:[
                 {
                     school_name:updateStudent.others.previous_school_details[0].school_name,
@@ -361,6 +368,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     staff_name:updateStudent.id === '' ? '' : updateStudent.others.student_staff_relation.staff_name
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.is_alumni,
+                    academic_session:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.academic_session,
+                    class_name:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.class_name,
+                    admission_number:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.admission_number
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].school_name,
@@ -565,6 +579,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                         staff_name:values.others.student_staff_relation.staff_name
                     },
                     // 3
+                    is_alumni:{
+                        is_alumni:values.others.is_alumni.is_alumni,
+                        academic_session:values.others.is_alumni.academic_session,
+                        class_name:values.others.is_alumni.class_name,
+                        admission_number:values.others.is_alumni.admission_number
+                    },
+                    // 4
                     previous_school_details:[
                         {
                             school_name:values.others.previous_school_details[0].school_name,
@@ -767,6 +788,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                         staff_name:values.others.student_staff_relation.staff_name
                     },
                     // 3
+                    is_alumni:{
+                        is_alumni:values.others.is_alumni.is_alumni,
+                        academic_session:values.others.is_alumni.academic_session,
+                        class_name:values.others.is_alumni.class_name,
+                        admission_number:values.others.is_alumni.admission_number
+                    },
+                    // 4
                     previous_school_details:[
                         {
                             school_name:values.others.previous_school_details[0].school_name,
@@ -967,6 +995,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     staff_name:''
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:''
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:'',
@@ -1155,6 +1190,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     staff_name:''
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:''
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:'',
@@ -1339,7 +1381,11 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             form.setValue('others.student_other_details.general_description', updateStudent.others.student_other_details.general_description);
             form.setValue('others.student_staff_relation.staff_ward', updateStudent.others.student_staff_relation.staff_ward);
             form.setValue('others.student_staff_relation.staff_name', updateStudent.others.student_staff_relation.staff_name);
-            
+            form.setValue('others.is_alumni.is_alumni', updateStudent.others.is_alumni.is_alumni);
+            form.setValue('others.is_alumni.academic_session', updateStudent.others.is_alumni.academic_session);
+            form.setValue('others.is_alumni.class_name', updateStudent.others.is_alumni.class_name);
+            form.setValue('others.is_alumni.admission_number', updateStudent.others.is_alumni.admission_number);
+
             form.setValue('others.previous_school_details.0.school_name', updateStudent.others.previous_school_details[0].school_name);
             form.setValue('others.previous_school_details.0.board', updateStudent.others.previous_school_details[0].board);
             form.setValue('others.previous_school_details.0.passing_year', updateStudent.others.previous_school_details[0].passing_year);

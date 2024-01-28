@@ -194,6 +194,13 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                         staff_name:student?.others?.student_staff_relation?.staff_name
                     },
                     // 3
+                    is_alumni:{
+                        is_alumni:student?.others?.is_alumni?.is_alumni,
+                        academic_session:student?.others?.is_alumni?.academic_session,
+                        class_name:student?.others?.is_alumni?.class_name,
+                        admission_number:student?.others?.is_alumni?.admission_number,
+                    },
+                    // 4
                     previous_school_details:[
                         {
                             school_name:student?.others?.previous_school_details[0]?.school_name,
@@ -564,17 +571,17 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
 
 
 
-            <div className='basis-[70%] flex-1 flex flex-col gap-2'>
+            <div className='basis-[70%] flex-1 flex flex-col pr-2 gap-2'>
                 {/* Search */}
-                <div className='flex items-center justify-center p-2 ml-2 border-[0.5px] border-[#ccc] bg-[#F7F7F7] rounded-[5px] text-xs text-hash-color'>
+                <div className='flex flex-col p-2 ml-2 border-[0.5px] border-[#ccc] bg-[#F7F7F7] gap-2 rounded-[5px] text-xs text-hash-color lg:flex-row'>
                     {/* With Enquiry */}
                     <FormField
                         control={form?.control}
                         name='student.with_enquiry'
                         render={({field}) => (
-                            <FormItem className='flex flex-row mx-2 items-start justify-start sm:items-center sm:gap-2'>
+                            <FormItem className='flex flex-row min-w-[200px] mx-2 items-start justify-start sm:items-center sm:gap-2'>
                                     <FormControl>
-                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                        <div className='flex-1 flex items-center justify-start space-x-2'>
                                             <Label htmlFor='with_enquiry' className='text-[11px]'>
                                                 With Enquiry
                                             </Label>
@@ -590,21 +597,23 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                             </FormItem>
                         )}
                     />
-                    <div className='flex flex-row justify-center min-w-[250px] max-w-[600px] w-[100%] bg-white rounded-[5px] border-[0.5px] border-[#E4E4E4]'>
-                        <Input
-                            value={search}
-                            onChange={(e:any) => setSearch(e?.target?.value)}
-                            className='h-7 border-[0] text-xs placeholder:text-xs'
-                            placeholder='Search enquiry no.'
-                        />
-                        <div
-                            onClick={searchClick}
-                            className='group flex flex-row items-center justify-center gap-[2px] px-2 border-[0.5px] border-[#2EABE5] rounded-r-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
-                        >
-                            <Search size={15} className='text-[#2EABE5] transition group-hover:text-white'/>
-                            <p className='transition text-[#2EABE5] group-hover:text-white'>Search</p>
+                    {form.getValues().student.with_enquiry && (
+                        <div className='flex flex-row justify-center min-w-[200px] max-w-[600px] w-[100%] bg-white rounded-[5px] border-[0.5px] border-[#E4E4E4]'>
+                            <Input
+                                value={search}
+                                onChange={(e:any) => setSearch(e?.target?.value)}
+                                className='h-7 border-[0] text-xs placeholder:text-xs'
+                                placeholder='Search enquiry no.'
+                            />
+                            <div
+                                onClick={searchClick}
+                                className='group flex flex-row items-center justify-center gap-[2px] px-2 border-[0.5px] border-[#2EABE5] rounded-r-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
+                            >
+                                <Search size={15} className='text-[#2EABE5] transition group-hover:text-white'/>
+                                <p className='transition text-[#2EABE5] group-hover:text-white'>Search</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
                 <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
                     {/* Class */}

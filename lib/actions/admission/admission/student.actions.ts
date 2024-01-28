@@ -133,6 +133,13 @@ interface CreateStudentProps{
             staff_name:String;
         },
         // 3
+        is_alumni:{
+            is_alumni:Boolean;
+            academic_session:String;
+            class_name:String;
+            admission_number:Number;
+        },
+        // 4
         previous_school_details:{
             school_name:String;
             board:String;
@@ -360,6 +367,12 @@ interface ModifyStudentProps{
         student_staff_relation:{
             staff_ward:String;
             staff_name:String;
+        },
+        is_alumni:{
+            is_alumni:Boolean;
+            academic_session:String;
+            class_name:String;
+            admission_number:Number;
         },
         // 3
         previous_school_details:{

@@ -135,6 +135,13 @@ export const StudentValidation = z.object({
             staff_name:z.string()
         }),
         // 3
+        is_alumni:z.object({
+            is_alumni:z.boolean(),
+            academic_session:z.string(),
+            class_name:z.string(),
+            admission_number:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        }),
+        // 4
         previous_school_details:z.array(z.object({
             school_name:z.string(),
             board:z.string(),

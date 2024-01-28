@@ -143,6 +143,13 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                     staff_name:student.others.student_staff_relation.staff_name
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:student.others.is_alumni.is_alumni,
+                    academic_session:student.others.is_alumni.academic_session,
+                    class_name:student.others.is_alumni.class_name,
+                    admission_number:student.others.is_alumni.admission_number,
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:student.others.previous_school_details[0].school_name,

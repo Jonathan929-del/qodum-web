@@ -1,17 +1,21 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import {format} from 'date-fns';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
-import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {Switch} from '@/components/ui/switch';
+import {Button} from '@/components/ui/button';
+import {Calendar} from '@/components/ui/calendar';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.validation';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -34,6 +38,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     const [classes, setClasses] = useState([{}]);
 
 
+    // Date states
+    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+
+
     // Last number
     const [lastNumber, setLastNumber] = useState();
 
@@ -41,11 +49,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     // Comparison object
     const comparisonObject = {
         enquiry_no:updateEnquiry.enquiry_no,
-        enquiry_date:{
-            year:updateEnquiry.enquiry_date.year,
-            month:updateEnquiry.enquiry_date.month,
-            day:updateEnquiry.enquiry_date.day
-        },
+        enquiry_date:updateEnquiry.enquiry_date,
         visitor_name:updateEnquiry.visitor_name,
         visitor_address:updateEnquiry.visitor_address,
         mobile_no:updateEnquiry.mobile_no,
@@ -69,11 +73,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         defaultValues:{
             // @ts-ignore
             enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
-            enquiry_date:{
-                year:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.year,
-                month:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.month,
-                day:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_date.day
-            },
+            enquiry_date:updateEnquiry.id === '' ? new Date() : updateEnquiry.enquiry_date,
             visitor_name:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_name,
             visitor_address:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_address,
             mobile_no:updateEnquiry.id === '' ? '' : updateEnquiry.mobile_no,
@@ -97,11 +97,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             };
             await createEnquiry({
                 enquiry_no:values.enquiry_no,
-                enquiry_date:{
-                    year:values.enquiry_date.year,
-                    month:values.enquiry_date.month,
-                    day:values.enquiry_date.day
-                },
+                enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
                 mobile_no:values.mobile_no,
@@ -124,11 +120,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             await modifyEnquiry({
                 id:updateEnquiry.id,
                 enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
-                enquiry_date:{
-                    year:values.enquiry_date.year,
-                    month:values.enquiry_date.month,
-                    day:values.enquiry_date.day
-                },
+                enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
                 mobile_no:values.mobile_no,
@@ -153,11 +145,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             id:'',
             isDeleteClicked:false,
             enquiry_no:'',
-            enquiry_date:{
-                year:'',
-                month:'',
-                day:''
-            },
+            enquiry_date:new Date(),
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
@@ -171,11 +159,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         // Reseting form
         form.reset({
             enquiry_no:'',
-            enquiry_date:{
-                year:'',
-                month:'',
-                day:''
-            },
+            enquiry_date:new Date(),
             visitor_name:'',
             visitor_address:'',
             mobile_no:'',
@@ -189,37 +173,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     };
 
 
-    // Years Loop
-    const yearsLoop = () => {
-        let newArr = [];
-        for (let i = 2050; i >= 1960; i--) newArr.push(i);
-        return newArr;
-    };
-
-
-    // Months Loop
-    const monthsLoop = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
-    // Days Loop
-    const [endDaysInTheMonth, setEndDaysInTheMonth] = useState<any>([]);
-    const daysLoop = (year:string, month:string) => {
-        let newArr = [];
-        
-        // Converting month string into number ex:december => 12
-        const monthNumber = monthsLoop.indexOf(month) + 1;
-        
-        
-        // Getting number of days in a month
-        const days = new Date(JSON.parse(year), monthNumber, 0).getDate();
-        
-        
-        // Days Loop
-        for (let i = 1; i <= days; i++) newArr.push(i);
-        return newArr;
-    };
-
-
     // Last number handler
     const lastNumberHandler = () => {
         const number = enquiries[enquiries.length - 1].enquiry_no;
@@ -228,12 +181,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
     // Use effect
-    useEffect(() => {
-        if(form.getValues().enquiry_date.year !== '' && form.getValues().enquiry_date.month !== ''){
-            const daysLoopFuncResult = daysLoop(form.getValues().enquiry_date.year, form.getValues().enquiry_date.month);
-            setEndDaysInTheMonth(daysLoopFuncResult);
-        }
-    }, [form.watch('enquiry_date.year'), form.watch('enquiry_date.month')]);
     useEffect(() => {
         const fetcher = async () => {
             const res = await fetchClasses();
@@ -294,99 +241,38 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry Date */}
-                    <div className='w-full flex flex-col items-center sm:flex-row'>
-                        <FormLabel className='w-full text-xs text-start pr-2 text-[#726E71] sm:text-end sm:basis-[30%]'>Enquiry Date</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[70%]'>
-                            {/* Year */}
-                            <FormField
-                                control={form.control}
-                                name='enquiry_date.year'
-                                render={({field}) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field.value}
-                                                    onValueChange={field.onChange}
-                                                >
-                                                    <SelectTrigger className='w-full h-10 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Year' className='text-xs'/>
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {
-                                                            yearsLoop().map((year:any) => (
-                                                                <SelectItem value={JSON.stringify(year)}>{year}</SelectItem>
-                                                            ))
-                                                        }
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            {/* Month */}
-                            <FormField
-                                control={form.control}
-                                name='enquiry_date.month'
-                                render={({field}) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='w-full h-10 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Month' className='text-xs'/>
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {
-                                                                monthsLoop.map((month:any) => (
-                                                                    <SelectItem value={month}>{month}</SelectItem>
-                                                                ))
-                                                            }
-                                                        </SelectContent>
-                                                    </Select>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            {/* Day */}
-                            <FormField
-                                control={form.control}
-                                name='enquiry_date.day'
-                                render={({field}) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='w-full h-10 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Day' className='text-xs'/>
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {
-                                                                form.getValues().enquiry_date.year !== '' && form.getValues().enquiry_date.month !== '' ? 
-                                                                    endDaysInTheMonth.map((n:number) => (
-                                                                        <SelectItem value={JSON.stringify(n)}>{n}</SelectItem>
-                                                                    ))
-                                                                :(
-                                                                    <SelectItem value='day'>Day</SelectItem>
-                                                                )
-                                                            }
-                                                        </SelectContent>
-                                                    </Select>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
+                    <FormField
+                        control={form?.control}
+                        name='enquiry_date'
+                        render={() => (
+                            <FormItem className='relative w-full h-10 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
+                                <FormLabel className='basis-auto h-2 pr-2 text-end text-[11px] text-[#726E71] sm:basis-[30%]'>Enquiry Date</FormLabel>
+                                <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
+                                    <PopoverTrigger asChild className='h-10'>
+                                        <Button
+                                            variant='outline'
+                                            className='flex flex-row items-center w-full h-10 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[70%]'
+                                        >
+                                            <CalendarIcon className='mr-2 h-4 w-4' />
+                                            {
+                                                form?.getValues().enquiry_date
+                                                        ? <span>{format(form?.getValues().enquiry_date, 'PPP')}</span>
+                                                        : <span>Pick a date</span>
+                                            }
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='w-auto p-0'>
+                                        <Calendar
+                                            mode='single'
+                                            selected={form?.getValues().enquiry_date}
+                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('enquiry_date', v)}}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            </FormItem>
+                        )}
+                    />
 
 
                     {/* Visitor Name */}

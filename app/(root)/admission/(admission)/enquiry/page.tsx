@@ -26,11 +26,7 @@ const page = () => {
         id:'',
         isDeleteClicked:false,
         enquiry_no:'',
-        enquiry_date:{
-            year:'',
-            month:'',
-            day:''
-        },
+        enquiry_date:new Date(),
         visitor_name:'',
         visitor_address:'',
         mobile_no:'',

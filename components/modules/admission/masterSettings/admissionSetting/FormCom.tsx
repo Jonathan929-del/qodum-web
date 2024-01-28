@@ -6,13 +6,17 @@ import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {FormControl, Form, FormField, FormItem, FormLabel} from '@/components/ui/form';
+import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admissionSetting.validation';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import { fetchClasses } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 
 
 
@@ -28,6 +32,18 @@ function FormCom() {
 
     // Sessions
     const [sessions, setSessions] = useState([{}]);
+
+
+    // Schools
+    const [schools, setSchools] = useState([{}]);
+
+
+    // Classes
+    const [classes, setClasses] = useState([{}]);
+
+
+    // Boards
+    const [boards, setBoards] = useState([{}]);
 
 
     // Form
@@ -68,7 +84,13 @@ function FormCom() {
     useEffect(() => {
         const fetcher = async () => {
             const sessionsRes = await fetchAcademicYears();
+            const schoolsRes = await fetchGlobalSchoolDetails();
+            const classesRes = await fetchClasses();
+            const boardsRes = await fetchBoards();
             setSessions(sessionsRes);
+            setSchools(schoolsRes);
+            setClasses(classesRes);
+            setBoards(boardsRes);
         };
         fetcher();
     }, []);
@@ -85,74 +107,142 @@ function FormCom() {
                 >
 
 
-                    <div className='flex flex-row w-full gap-2'>
-                        {/* Session */}
-                        <div className='w-full flex flex-col items-center sm:flex-row'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Session</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                    {/* Admission Setting */}
+                    <div className='w-full flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
+                        <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Admission Setting</h2>
+                        <div className='flex flex-col px-4 py-2 gap-2'>
+                            <div className='flex flex-row w-full gap-2'>
+                                {/* Session */}
+                                <div className='w-full flex flex-col items-center sm:flex-row'>
+                                    <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Session</FormLabel>
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                        <FormField
+                                            control={form.control}
+                                            name='session'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field.value}
+                                                            onValueChange={field.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {sessions.length < 1 ? (
+                                                                    <p>No sessions</p>
+                                                                ) : // @ts-ignore
+                                                                    !sessions[0].year_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : sessions.map((session:any) => (
+                                                                    <SelectItem value={session.year_name} key={session._id}>{session.year_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                                {/* Paymode */}
+                                <div className='w-full flex flex-col items-center sm:flex-row'>
+                                    <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Paymode</FormLabel>
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                        <FormField
+                                            control={form.control}
+                                            name='pay_mode'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field.value}
+                                                            onValueChange={field.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value='Cash'>Cash</SelectItem>
+                                                                <SelectItem value='Cheque'>Cheque</SelectItem>
+                                                                <SelectItem value='Credit Card'>Credit Card</SelectItem>
+                                                                <SelectItem value='DD'>DD</SelectItem>
+                                                                <SelectItem value='Debit Card'>Debit Card</SelectItem>
+                                                                <SelectItem value='NEFT'>NEFT</SelectItem>
+                                                                <SelectItem value='Net Banking'>Net Banking</SelectItem>
+                                                                <SelectItem value='Swiped Card'>Swiped Card</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className='flex flex-row w-full gap-2'>
+                                {/* Send SMS */}
                                 <FormField
                                     control={form.control}
-                                    name='session'
+                                    name='send_sms'
                                     render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field.value}
-                                                    onValueChange={field.onChange}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {sessions.length < 1 ? (
-                                                            <p>No sessions</p>
-                                                        ) : // @ts-ignore
-                                                            !sessions[0].year_name ? (
-                                                            <LoadingIcon />
-                                                        ) : sessions.map((session:any) => (
-                                                            <SelectItem value={session.year_name} key={session._id}>{session.year_name}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
+                                        <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-end justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                            <>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-end space-x-2'>
+                                                        <Label
+                                                            htmlFor='send_sms'
+                                                            className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                        >
+                                                            Send SMS After Enquiry
+                                                        </Label>
+                                                        <Switch
+                                                            id='send_sms'
+                                                            {...field}
+                                                            // @ts-ignore
+                                                            value={field.value}
+                                                            onCheckedChange={field.onChange}
+                                                            checked={field.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                            </>
                                         </FormItem>
                                     )}
                                 />
-                            </div>
-                        </div>
-                        {/* Paymode */}
-                        <div className='w-full flex flex-col items-center sm:flex-row'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Paymode</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                {/* Is Auto Roll No. */}
                                 <FormField
                                     control={form.control}
-                                    name='pay_mode'
+                                    name='is_auto_roll_no'
                                     render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field.value}
-                                                    onValueChange={field.onChange}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value='Cash'>Cash</SelectItem>
-                                                        <SelectItem value='Cheque'>Cheque</SelectItem>
-                                                        <SelectItem value='Credit Card'>Credit Card</SelectItem>
-                                                        <SelectItem value='DD'>DD</SelectItem>
-                                                        <SelectItem value='Debit Card'>Debit Card</SelectItem>
-                                                        <SelectItem value='NEFT'>NEFT</SelectItem>
-                                                        <SelectItem value='Net Banking'>Net Banking</SelectItem>
-                                                        <SelectItem value='Swiped Card'>Swiped Card</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
+                                        <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                            <>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-end space-x-2'>
+                                                        <Label
+                                                            htmlFor='is_auto_roll_no'
+                                                            className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                        >
+                                                            Is Auto Roll No.
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_auto_roll_no'
+                                                            {...field}
+                                                            // @ts-ignore
+                                                            value={field.value}
+                                                            onCheckedChange={field.onChange}
+                                                            checked={field.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                            </>
                                         </FormItem>
                                     )}
                                 />
@@ -161,65 +251,213 @@ function FormCom() {
                     </div>
 
 
-                    <div className='flex flex-row w-full gap-2'>
-                        {/* Send SMS */}
-                        <FormField
-                            control={form.control}
-                            name='send_sms'
-                            render={({ field }) => (
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-end justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                    <>
-                                        <FormControl>
-                                            <div className='flex-1 flex items-center justify-end space-x-2'>
-                                                <Label
-                                                    htmlFor='send_sms'
-                                                    className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                                >
-                                                    Send SMS After Enquiry
-                                                </Label>
-                                                <Switch
-                                                    id='send_sms'
-                                                    {...field}
-                                                    // @ts-ignore
-                                                    value={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                    checked={field.value}
-                                                />
+                    {/* Enquiry, Registration, and Admission No. Setting */}
+                    <div className='w-full flex flex-col mt-4 border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
+                        <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Enquiry, Registration, and Admission No. Setting</h2>
+                        <div className='flex flex-col px-4 py-2 gap-2'>
+                            <div className='flex flex-row gap-2'>
+                                {/* School */}
+                                <div className='w-full flex flex-col items-center'>
+                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School</FormLabel>
+                                    <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='school'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {schools?.length < 1 ? (
+                                                                    <p>No schoolss</p>
+                                                                    // @ts-ignore
+                                                                ) : !schools[0]?.school_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : schools?.map((item:any) => (
+                                                                    <SelectItem value={item?.school_name} key={item?._id}>{item?.school_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                                {/* Class */}
+                                <div className='w-full flex flex-col items-center'>
+                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
+                                    <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='class'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {classes?.length < 1 ? (
+                                                                    <p>No classes</p>
+                                                                    // @ts-ignore
+                                                                ) : !classes[0]?.class_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : classes?.map((item:any) => (
+                                                                    <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                                {/* Board */}
+                                <div className='w-full flex flex-col items-center'>
+                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Board</FormLabel>
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                        <FormField 
+                                            control={form?.control}
+                                            name='board'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {boards?.length < 1 ? (
+                                                                    <p>No boards</p>
+                                                                    // @ts-ignore
+                                                                ) : !boards[0]?.board ? (
+                                                                    <LoadingIcon />
+                                                                ) : boards?.map((item:any) => (
+                                                                    <SelectItem value={item?.board} key={item?._id}>{item?.board}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className='flex flex-col gap-2 lg:flex-row mt-4'>
+                                {/* Prefix */}
+                                <FormField
+                                    control={form?.control}
+                                    name='prefix'
+                                    render={({ field }) => (
+                                        <FormItem className='w-full mt-2 sm:mt-0'>
+                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Prefix</FormLabel>
+                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                    <FormControl>
+                                                        <Input
+                                                            {...field}
+                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                </div>
                                             </div>
-                                        </FormControl>
-                                    </>
-                                </FormItem>
-                            )}
-                        />
-                        {/* Is Auto Roll No. */}
-                        <FormField
-                            control={form.control}
-                            name='is_auto_roll_no'
-                            render={({ field }) => (
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                    <>
-                                        <FormControl>
-                                            <div className='flex-1 flex items-center justify-end space-x-2'>
-                                                <Label
-                                                    htmlFor='is_auto_roll_no'
-                                                    className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                                >
-                                                    Is Auto Roll No.
-                                                </Label>
-                                                <Switch
-                                                    id='is_auto_roll_no'
-                                                    {...field}
-                                                    // @ts-ignore
-                                                    value={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                    checked={field.value}
-                                                />
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* Start From */}
+                                <FormField
+                                    control={form?.control}
+                                    name='start_from'
+                                    render={({ field }) => (
+                                        <FormItem className='w-full mt-2 sm:mt-0'>
+                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Start From</FormLabel>
+                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                    <FormControl>
+                                                        <Input
+                                                            {...field}
+                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                </div>
                                             </div>
-                                        </FormControl>
-                                    </>
-                                </FormItem>
-                            )}
-                        />
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* Lead Zero */}
+                                <FormField
+                                    control={form?.control}
+                                    name='lead_zero'
+                                    render={({ field }) => (
+                                        <FormItem className='w-full mt-2 sm:mt-0'>
+                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Lead Zero</FormLabel>
+                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                    <FormControl>
+                                                        <Input
+                                                            {...field}
+                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                </div>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* Suffix */}
+                                <FormField
+                                    control={form?.control}
+                                    name='suffix'
+                                    render={({ field }) => (
+                                        <FormItem className='w-full mt-2 sm:mt-0'>
+                                            <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Suffix</FormLabel>
+                                                <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                                    <FormControl>
+                                                        <Input
+                                                            {...field}
+                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                </div>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+
+                        </div>
                     </div>
 
                     

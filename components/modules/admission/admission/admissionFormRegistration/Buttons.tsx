@@ -141,6 +141,13 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     staff_name:''
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:0,
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:'',
@@ -330,6 +337,13 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     staff_name:''
                 },
                 // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:0,
+                },
+                // 4
                 previous_school_details:[
                     {
                         school_name:'',
