@@ -442,6 +442,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
+        console.log('Comparison Object:', comparisonObject);
+        console.log('values:', values);
         setIsLoading(true);
         // Create Account Group
         if(updateStudent.id === ''){
@@ -1440,8 +1442,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             form.setValue('guardian_details.if_single_parent.separation_reason', updateStudent.guardian_details.if_single_parent.separation_reason);
         }
     }, [updateStudent]);
-    useEffect(() => {
-    }, [form.watch('others')]);
+    useEffect(() => {}, [form.watch('others')]);
 
 
     return (

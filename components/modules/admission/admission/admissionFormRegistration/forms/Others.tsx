@@ -425,7 +425,7 @@ const Other = ({form, updateStudent}:any) => {
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <FormField
                                         control={form?.control}
-                                        name='others.is_alumni.session'
+                                        name='others.is_alumni.academic_session'
                                         render={({ field }) => (
                                             <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                                 <FormControl>
@@ -499,7 +499,7 @@ const Other = ({form, updateStudent}:any) => {
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <FormField
                                         control={form.control}
-                                        name='others.is_alumni.admission_no'
+                                        name='others.is_alumni.admission_number'
                                         render={({ field }) => (
                                             <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                                 <FormControl>

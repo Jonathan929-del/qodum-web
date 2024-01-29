@@ -145,7 +145,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     is_alumni:false,
                     academic_session:'',
                     class_name:'',
-                    admission_number:0,
+                    admission_number:'',
                 },
                 // 4
                 previous_school_details:[
@@ -341,7 +341,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     is_alumni:false,
                     academic_session:'',
                     class_name:'',
-                    admission_number:0,
+                    admission_number:'',
                 },
                 // 4
                 previous_school_details:[

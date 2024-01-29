@@ -284,6 +284,15 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                     </>
                                 </FormItem>
                             </div>
+                            <div className='flex justify-center mt-4'>
+                                <span
+                                    onClick={() => toast({title:'Saved Successfully!'})}
+                                    className='flex items-center justify-center w-[100px] px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                                >
+                                    Save
+                                </span>
+                            </div>
                         </div>
                     </div>
 
@@ -429,7 +438,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value='Enquiry No.'>Enquiry No.</SelectItem>
+                                                            <SelectItem value='Prospectus No.'>Prospectus No.</SelectItem>
                                                             <SelectItem value='Registration No.'>Registration No.</SelectItem>
                                                             <SelectItem value='Admission No.'>Admission No.</SelectItem>
                                                         </SelectContent>

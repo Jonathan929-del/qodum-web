@@ -38,8 +38,8 @@ const page = () => {
             payment_mode:'',
             admission_account:'',
             post_account:'',
-            with_enquiry:false,
             // 2
+            with_enquiry:false,
             class:'',
             board:'',
             stream:'',
@@ -137,10 +137,10 @@ const page = () => {
                 allergies:'',
                 allergies_causes:'',
                 family_doctor_name:'',
-                family_doctor_phone:0,
+                family_doctor_phone:'',
                 family_doctor_address:'',
-                distance_from_home:0,
-                no_of_living_year:0,
+                distance_from_home:'',
+                no_of_living_year:'',
                 only_child:'',
                 general_description:''
             },
@@ -154,7 +154,7 @@ const page = () => {
                 is_alumni:false,
                 academic_session:'',
                 class_name:'',
-                admission_number:0,
+                admission_number:'',
             },
             // 4
             previous_school_details:[
