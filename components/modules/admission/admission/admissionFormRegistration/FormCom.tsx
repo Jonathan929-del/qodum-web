@@ -249,9 +249,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // 1
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
                 enquiry_no:updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
-                reg_no:updateStudent.id === '' ? '' : updateStudent.student.reg_no,
-                pros_no:updateStudent.id === '' ? '' : updateStudent.student.pros_no,
-                amount:updateStudent.id === '' ? '' : updateStudent.student.amount,
+                reg_no:updateStudent.id === '' ? 0 : updateStudent.student.reg_no,
+                pros_no:updateStudent.id === '' ? 0 : updateStudent.student.pros_no,
+                amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,
                 date:updateStudent.id === '' ? new Date() : updateStudent.student.date,
                 payment_mode:updateStudent.id === '' ? '' : updateStudent.student.payment_mode,
                 admission_account:updateStudent.id === '' ? '' : updateStudent.student.admission_account,
@@ -268,18 +268,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 last_name:updateStudent.id === '' ? '' : updateStudent.student.last_name,
                 dob:updateStudent.id === '' ? new Date() : updateStudent.student.dob,
                 place_of_birth:updateStudent.id === '' ? '' : updateStudent.student.place_of_birth,
-                gender:updateStudent.id === '' ? 'male' : updateStudent.student.gender,
+                gender:updateStudent.id === '' ? 'Male' : updateStudent.student.gender,
                 contact_person_name:updateStudent.id === '' ? '' : updateStudent.student.contact_person_name,
-                contact_person_mobile:updateStudent.id === '' ? '' : updateStudent.student.contact_person_mobile,
+                contact_person_mobile:updateStudent.id === '' ? 0 : updateStudent.student.contact_person_mobile,
                 contact_person_email:updateStudent.id === '' ? '' : updateStudent.student.contact_person_email,
-                secondary_contact_no:updateStudent.id === '' ? '' : updateStudent.student.secondary_contact_no,
+                secondary_contact_no:updateStudent.id === '' ? 0 : updateStudent.student.secondary_contact_no,
                 h_no_and_streets:updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
                 email:updateStudent.id === '' ? '' : updateStudent.student.email,
                 city:updateStudent.id === '' ? '' : updateStudent.student.city,
-                mobile:updateStudent.id === '' ? '' : updateStudent.student.mobile,
+                mobile:updateStudent.id === '' ? 0 : updateStudent.student.mobile,
                 state:updateStudent.id === '' ? '' : updateStudent.student.state,
-                pin_code:updateStudent.id === '' ? '' : updateStudent.student.pin_code,
-                aadhar_card_no:updateStudent.id === '' ? '' : updateStudent.student.aadhar_card_no,
+                pin_code:updateStudent.id === '' ? 0 : updateStudent.student.pin_code,
+                aadhar_card_no:updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
                 religion:updateStudent.id === '' ? '' : updateStudent.student.religion,
                 blood_group:updateStudent.id === '' ? '' : updateStudent.student.blood_group,
                 caste:updateStudent.id === '' ? '' : updateStudent.student.caste,
@@ -304,14 +304,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:updateStudent.id === '' ? '' : updateStudent.parents.father.email,
                     alternate_email:updateStudent.id === '' ? '' : updateStudent.parents.father.alternate_email,
                     dob:updateStudent.id === '' ? new Date() : updateStudent.parents.father.dob,
-                    mobile:updateStudent.id === '' ? '' : updateStudent.parents.father.mobile,
-                    phone:updateStudent.id === '' ? '' : updateStudent.parents.father.phone,
+                    mobile:updateStudent.id === '' ? 0 : updateStudent.parents.father.mobile,
+                    phone:updateStudent.id === '' ? 0 : updateStudent.parents.father.phone,
                     company_name:updateStudent.id === '' ? '' : updateStudent.parents.father.company_name,
                     business_details:updateStudent.id === '' ? '' : updateStudent.parents.father.business_details,
                     qualification:updateStudent.id === '' ? '' : updateStudent.parents.father.qualification,
                     service_in:updateStudent.id === '' ? '' : updateStudent.parents.father.service_in,
-                    office_phone:updateStudent.id === '' ? '' : updateStudent.parents.father.office_phone,
-                    office_mobile:updateStudent.id === '' ? '' : updateStudent.parents.father.office_mobile,
+                    office_phone:updateStudent.id === '' ? 0 : updateStudent.parents.father.office_phone,
+                    office_mobile:updateStudent.id === '' ? 0 : updateStudent.parents.father.office_mobile,
                     office_extension:updateStudent.id === '' ? '' : updateStudent.parents.father.office_extension,
                     office_email:updateStudent.id === '' ? '' : updateStudent.parents.father.office_email,
                     office_website:updateStudent.id === '' ? '' : updateStudent.parents.father.office_website,
@@ -330,14 +330,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:updateStudent.id === '' ? '' : updateStudent.parents.mother.email,
                     alternate_email:updateStudent.id === '' ? '' : updateStudent.parents.mother.alternate_email,
                     dob:updateStudent.id === '' ? new Date() : updateStudent.parents.mother.dob,
-                    mobile:updateStudent.id === '' ? '' : updateStudent.parents.mother.mobile,
-                    phone:updateStudent.id === '' ? '' : updateStudent.parents.mother.phone,
+                    mobile:updateStudent.id === '' ? 0 : updateStudent.parents.mother.mobile,
+                    phone:updateStudent.id === '' ? 0 : updateStudent.parents.mother.phone,
                     company_name:updateStudent.id === '' ? '' : updateStudent.parents.mother.company_name,
                     business_details:updateStudent.id === '' ? '' : updateStudent.parents.mother.business_details,
                     qualification:updateStudent.id === '' ? '' : updateStudent.parents.mother.qualification,
                     service_in:updateStudent.id === '' ? '' : updateStudent.parents.mother.service_in,
-                    office_phone:updateStudent.id === '' ? '' : updateStudent.parents.mother.office_phone,
-                    office_mobile:updateStudent.id === '' ? '' : updateStudent.parents.mother.office_mobile,
+                    office_phone:updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_phone,
+                    office_mobile:updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_mobile,
                     office_extension:updateStudent.id === '' ? '' : updateStudent.parents.mother.office_extension,
                     office_email:updateStudent.id === '' ? '' : updateStudent.parents.mother.office_email,
                     office_website:updateStudent.id === '' ? '' : updateStudent.parents.mother.office_website,
@@ -355,10 +355,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     allergies:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies,
                     allergies_causes:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies_causes,
                     family_doctor_name:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
-                    family_doctor_phone:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_phone,
+                    family_doctor_phone:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.family_doctor_phone,
                     family_doctor_address:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
-                    distance_from_home:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.distance_from_home,
-                    no_of_living_year:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.no_of_living_year,
+                    distance_from_home:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.distance_from_home,
+                    no_of_living_year:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.no_of_living_year,
                     only_child:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
                     general_description:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
                 },
@@ -372,7 +372,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     is_alumni:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.is_alumni,
                     academic_session:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.academic_session,
                     class_name:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.class_name,
-                    admission_number:updateStudent.id === '' ? '' : updateStudent.others.is_alumni.admission_number
+                    admission_number:updateStudent.id === '' ? 0 : updateStudent.others.is_alumni.admission_number
                 },
                 // 4
                 previous_school_details:[
@@ -878,9 +878,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // 1
                 image:'',
                 enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:'',
+                reg_no:0,
+                pros_no:0,
+                amount:0,
                 date:new Date(),
                 payment_mode:'',
                 admission_account:'',
@@ -897,18 +897,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 last_name:'',
                 dob:new Date(),
                 place_of_birth:'',
-                gender:'',
+                gender:'Male',
                 contact_person_name:'',
-                contact_person_mobile:'',
+                contact_person_mobile:0,
                 contact_person_email:'',
-                secondary_contact_no:'',
+                secondary_contact_no:0,
                 h_no_and_streets:'',
                 email:'',
                 city:'',
-                mobile:'',
+                mobile:0,
                 state:'',
-                pin_code:'',
-                aadhar_card_no:'',
+                pin_code:0,
+                aadhar_card_no:0,
                 religion:'',
                 blood_group:'',
                 caste:'',
@@ -918,7 +918,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 transport:'',
                 nationality:''
             },
-    
+
             // Parents
             parents:{
                 // Father
@@ -933,14 +933,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:'',
                     alternate_email:'',
                     dob:new Date(),
-                    mobile:'',
-                    phone:'',
+                    mobile:0,
+                    phone:0,
                     company_name:'',
                     business_details:'',
                     qualification:'',
                     service_in:'',
-                    office_phone:'',
-                    office_mobile:'',
+                    office_phone:0,
+                    office_mobile:0,
                     office_extension:'',
                     office_email:'',
                     office_website:'',
@@ -959,14 +959,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:'',
                     alternate_email:'',
                     dob:new Date(),
-                    mobile:'',
-                    phone:'',
+                    mobile:0,
+                    phone:0,
                     company_name:'',
                     business_details:'',
                     qualification:'',
                     service_in:'',
-                    office_phone:'',
-                    office_mobile:'',
+                    office_phone:0,
+                    office_mobile:0,
                     office_extension:'',
                     office_email:'',
                     office_website:'',
@@ -974,7 +974,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     anniversary_date:new Date()
                 }
             },
-    
+
             // Other details
             others:{
                 // 1
@@ -984,12 +984,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     allergies:'',
                     allergies_causes:'',
                     family_doctor_name:'',
-                    family_doctor_phone:'',
+                    family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:'',
-                    no_of_living_year:'',
+                    distance_from_home:0,
+                    no_of_living_year:0,
                     only_child:'',
-                    general_description:'',
+                    general_description:''
                 },
                 // 2
                 student_staff_relation:{
@@ -1001,7 +1001,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     is_alumni:false,
                     academic_session:'',
                     class_name:'',
-                    admission_number:''
+                    admission_number:0
                 },
                 // 4
                 previous_school_details:[
@@ -1046,7 +1046,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     }
                 ]
             },
-    
+
             // Guardian details
             guardian_details:{
                 // 1
@@ -1059,8 +1059,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // 2
                 if_single_parent:{
                     student_lives_with:'',
-                    correspondence_to:'',
                     legal_custody_of_the_child:'',
+                    correspondence_to:'',
                     check_id_applicable:'',
                     separation_reason:''
                 }
@@ -1073,9 +1073,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 // 1
                 image:'',
                 enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:'',
+                reg_no:0,
+                pros_no:0,
+                amount:0,
                 date:new Date(),
                 payment_mode:'',
                 admission_account:'',
@@ -1092,18 +1092,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 last_name:'',
                 dob:new Date(),
                 place_of_birth:'',
-                gender:'',
+                gender:'Male',
                 contact_person_name:'',
-                contact_person_mobile:'',
+                contact_person_mobile:0,
                 contact_person_email:'',
-                secondary_contact_no:'',
+                secondary_contact_no:0,
                 h_no_and_streets:'',
                 email:'',
                 city:'',
-                mobile:'',
+                mobile:0,
                 state:'',
-                pin_code:'',
-                aadhar_card_no:'',
+                pin_code:0,
+                aadhar_card_no:0,
                 religion:'',
                 blood_group:'',
                 caste:'',
@@ -1113,7 +1113,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 transport:'',
                 nationality:''
             },
-    
+
             // Parents
             parents:{
                 // Father
@@ -1128,14 +1128,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:'',
                     alternate_email:'',
                     dob:new Date(),
-                    mobile:'',
-                    phone:'',
+                    mobile:0,
+                    phone:0,
                     company_name:'',
                     business_details:'',
                     qualification:'',
                     service_in:'',
-                    office_phone:'',
-                    office_mobile:'',
+                    office_phone:0,
+                    office_mobile:0,
                     office_extension:'',
                     office_email:'',
                     office_website:'',
@@ -1154,14 +1154,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     email:'',
                     alternate_email:'',
                     dob:new Date(),
-                    mobile:'',
-                    phone:'',
+                    mobile:0,
+                    phone:0,
                     company_name:'',
                     business_details:'',
                     qualification:'',
                     service_in:'',
-                    office_phone:'',
-                    office_mobile:'',
+                    office_phone:0,
+                    office_mobile:0,
                     office_extension:'',
                     office_email:'',
                     office_website:'',
@@ -1169,7 +1169,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     anniversary_date:new Date()
                 }
             },
-    
+
             // Other details
             others:{
                 // 1
@@ -1179,12 +1179,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     allergies:'',
                     allergies_causes:'',
                     family_doctor_name:'',
-                    family_doctor_phone:'',
+                    family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:'',
-                    no_of_living_year:'',
+                    distance_from_home:0,
+                    no_of_living_year:0,
                     only_child:'',
-                    general_description:'',
+                    general_description:''
                 },
                 // 2
                 student_staff_relation:{
@@ -1196,7 +1196,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     is_alumni:false,
                     academic_session:'',
                     class_name:'',
-                    admission_number:''
+                    admission_number:0
                 },
                 // 4
                 previous_school_details:[
@@ -1241,7 +1241,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     }
                 ]
             },
-    
+
             // Guardian details
             guardian_details:{
                 // 1

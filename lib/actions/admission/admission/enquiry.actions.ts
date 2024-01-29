@@ -67,28 +67,6 @@ export const createEnquiry = async ({
         newEnquiry.save();
 
 
-        // Creating student
-        if(purpose_is_admission){
-            const students = await Student.find();
-            if(!students.map((s:any) => s.student.enquiry_no).includes(enquiry_no)){
-                const newStudent = await Student.create({
-                    student:{
-                        enquiry_no,
-                        h_no_and_streets:visitor_address,
-                        contact_person_mobile:mobile_no,
-                        name:student_name,
-                        class:class_name,
-                        contact_person_name:contact_person
-                    },
-                    parents:{},
-                    others:{},
-                    guardian_details:{}
-                });
-                newStudent.save();
-            }
-        };
-
-
         // Return
         return newEnquiry;
 
@@ -179,28 +157,6 @@ export const modifyEnquiry = async ({
             contact_person,
             reference_details
         }, {new:true});
-
-
-        // Creating student
-        if(purpose_is_admission){
-            const students = await Student.find();
-            if(!students.map((s:any) => s.student.enquiry_no).includes(enquiry_no)){
-                const newStudent = await Student.create({
-                    student:{
-                        enquiry_no,
-                        h_no_and_streets:visitor_address,
-                        contact_person_mobile:mobile_no,
-                        name:student_name,
-                        class:class_name,
-                        contact_person_name:contact_person
-                    },
-                    parents:{},
-                    others:{},
-                    guardian_details:{}
-                });
-                newStudent.save();
-            }
-        };
 
 
         // Return

@@ -186,6 +186,14 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             setClasses(res);
         };
         fetcher();
+        // @ts-ignore
+        setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
+        form.setValue(
+            'enquiry_no',
+            updateEnquiry.id !== ''
+                ? updateEnquiry.enquiry_no
+                : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
+        );
     }, []);
     useEffect(() => {
         // @ts-ignore
@@ -196,7 +204,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 ? updateEnquiry.enquiry_no
                 : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
         );
-    }, [enquiries]);
+    }, [enquiries, updateEnquiry, onSubmit]);
 
 
     return (

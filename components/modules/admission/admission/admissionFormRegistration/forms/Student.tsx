@@ -80,9 +80,9 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                     // 1
                     image:student?.student?.image || '',
                     enquiry_no:search,
-                    reg_no:student?.student?.reg_no || '',
-                    pros_no:student?.student?.pros_no || '',
-                    amount:student?.student?.amount || '',
+                    reg_no:student?.student?.reg_no || 0,
+                    pros_no:student?.student?.pros_no || 0,
+                    amount:student?.student?.amount || 0,
                     date:student?.student?.date || new Date(),
                     payment_mode:student?.student?.payment_mode || '',
                     admission_account:student?.student?.admission_account || '',
@@ -99,18 +99,18 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                     last_name:student?.student?.last_name || '',
                     dob:student?.student?.dob || new Date(),
                     place_of_birth:student?.student?.place_of_birth || '',
-                    gender:student?.student?.gender || '',
+                    gender:student?.student?.gender || 'Male',
                     contact_person_name:student?.student?.contact_person_name || '',
-                    contact_person_mobile:student?.student?.contact_person_mobile || '',
+                    contact_person_mobile:student?.student?.contact_person_mobile || 0,
                     contact_person_email:student?.student?.contact_person_email || '',
-                    secondary_contact_no:student?.student?.secondary_contact_no || '',
+                    secondary_contact_no:student?.student?.secondary_contact_no || 0,
                     h_no_and_streets:student?.student?.h_no_and_streets || '',
                     email:student?.student?.email || '',
                     city:student?.student?.city || '',
-                    mobile:student?.student?.mobile || '',
+                    mobile:student?.student?.mobile || 0,
                     state:student?.student?.state || '',
-                    pin_code:student?.student?.pin_code || '',
-                    aadhar_card_no:student?.student?.aadhar_card_no || '',
+                    pin_code:student?.student?.pin_code || 0,
+                    aadhar_card_no:student?.student?.aadhar_card_no || 0,
                     religion:student?.student?.religion || '',
                     blood_group:student?.student?.blood_group || '',
                     caste:student?.student?.caste || '',
@@ -135,14 +135,14 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                         email:student?.parents?.father?.email || '',
                         alternate_email:student?.parents?.father?.alternate_email || '',
                         dob:student?.parents?.father?.dob || new Date(),
-                        mobile:student?.parents?.father?.mobile || '',
-                        phone:student?.parents?.father?.phone || '',
+                        mobile:student?.parents?.father?.mobile || 0,
+                        phone:student?.parents?.father?.phone || 0,
                         company_name:student?.parents?.father?.company_name || '',
                         business_details:student?.parents?.father?.business_details || '',
                         qualification:student?.parents?.father?.qualification || '',
                         service_in:student?.parents?.father?.service_in || '',
-                        office_phone:student?.parents?.father?.office_phone || '',
-                        office_mobile:student?.parents?.father?.office_mobile || '',
+                        office_phone:student?.parents?.father?.office_phone || 0,
+                        office_mobile:student?.parents?.father?.office_mobile || 0,
                         office_extension:student?.parents?.father?.office_extension || '',
                         office_email:student?.parents?.father?.office_email || '',
                         office_website:student?.parents?.father?.office_website || '',
@@ -161,14 +161,14 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                         email:student?.parents?.mother?.email || '',
                         alternate_email:student?.parents?.mother?.alternate_email || '',
                         dob:student?.parents?.mother?.dob || new Date(),
-                        mobile:student?.parents?.mother?.mobile || '',
-                        phone:student?.parents?.mother?.phone || '',
+                        mobile:student?.parents?.mother?.mobile || 0,
+                        phone:student?.parents?.mother?.phone || 0,
                         company_name:student?.parents?.mother?.company_name || '',
                         business_details:student?.parents?.mother?.business_details || '',
                         qualification:student?.parents?.mother?.qualification || '',
                         service_in:student?.parents?.mother?.service_in || '',
-                        office_phone:student?.parents?.mother?.office_phone || '',
-                        office_mobile:student?.parents?.mother?.office_mobile || '',
+                        office_phone:student?.parents?.mother?.office_phone || 0,
+                        office_mobile:student?.parents?.mother?.office_mobile || 0,
                         office_extension:student?.parents?.mother?.office_extension || '',
                         office_email:student?.parents?.mother?.office_email || '',
                         office_website:student?.parents?.mother?.office_website || '',
@@ -186,10 +186,10 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                         allergies:student?.others?.student_other_details?.allergies || '',
                         allergies_causes:student?.others?.student_other_details?.allergies_causes || '',
                         family_doctor_name:student?.others?.student_other_details?.family_doctor_name || '',
-                        family_doctor_phone:student?.others?.student_other_details?.family_doctor_phone || '',
+                        family_doctor_phone:student?.others?.student_other_details?.family_doctor_phone || 0,
                         family_doctor_address:student?.others?.student_other_details?.family_doctor_address || '',
-                        distance_from_home:student?.others?.student_other_details?.distance_from_home || '',
-                        no_of_living_year:student?.others?.student_other_details?.no_of_living_year || '',
+                        distance_from_home:student?.others?.student_other_details?.distance_from_home || 0,
+                        no_of_living_year:student?.others?.student_other_details?.no_of_living_year || 0,
                         only_child:student?.others?.student_other_details?.only_child || '',
                         general_description:student?.others?.student_other_details?.general_description || ''
                     },
@@ -203,7 +203,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                         is_alumni:student?.others?.is_alumni?.is_alumni || false,
                         academic_session:student?.others?.is_alumni?.academic_session || '',
                         class_name:student?.others?.is_alumni?.class_name || '',
-                        admission_number:student?.others?.is_alumni?.admission_number || '',
+                        admission_number:student?.others?.is_alumni?.admission_number || 0,
                     },
                     // 4
                     previous_school_details:[
@@ -969,12 +969,12 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                                                 className='h-full flex flex-row'
                                             >
                                                 <div className='flex items-center space-x-[2px]'>
-                                                    <RadioGroupItem value='male' id='male' onClick={() => form?.setValue('student?.gender', 'male')}/>
-                                                    <Label htmlFor='male' className='text-[11px] text-hash-color'>Male</Label>
+                                                    <RadioGroupItem value='Male' id='Male' onClick={() => form?.setValue('student.gender', 'Male')}/>
+                                                    <Label htmlFor='Male' className='text-[11px] text-hash-color'>Male</Label>
                                                 </div>
                                                 <div className='flex items-center space-x-[2px]'>
-                                                    <RadioGroupItem value='female' id='femal' onClick={() => form?.setValue('student?.gender', 'female')}/>
-                                                    <Label htmlFor='male' className='text-[11px] text-hash-color'>Female</Label>
+                                                    <RadioGroupItem value='Female' id='Female' onClick={() => form?.setValue('student.gender', 'Female')}/>
+                                                    <Label htmlFor='Female' className='text-[11px] text-hash-color'>Female</Label>
                                                 </div>
                                             </RadioGroup>
                                             </FormControl>
