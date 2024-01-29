@@ -73,11 +73,11 @@ function FormCom() {
     const onSubmit = async (values: z.infer<typeof AdmissionSettingValidation>) => {
         try {
 
-            localStorage.setItem('setting_type', values.should_be);
-            localStorage.setItem('prefix', values.prefix);
-            localStorage.setItem('start_from', values.start_from);
-            localStorage.setItem('lead_zero', values.lead_zero);
-            localStorage.setItem('suffix', values.suffix);
+            // localStorage.setItem('setting_type', values.should_be);
+            // localStorage.setItem('prefix', values.prefix);
+            // localStorage.setItem('start_from', values.start_from);
+            // localStorage.setItem('lead_zero', values.lead_zero);
+            // localStorage.setItem('suffix', values.suffix);
             toast({title:'Settings Saved Successfully!'});
 
         } catch (err: any) {
@@ -109,7 +109,7 @@ function FormCom() {
                 {...form}
             >
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    // onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full flex flex-col items-center px-2 pt-6 sm:px-4'
                 >
 
