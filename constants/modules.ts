@@ -703,6 +703,9 @@ const modules = [
                         subPageName:'Change Academic'
                     },
                     {
+                        subPageName:'Enquiry No Setting'
+                    },
+                    {
                         subPageName:'Admission Setting'
                     },
                     {

@@ -21,6 +21,8 @@ import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/compon
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { fetchBankLedgers } from '@/lib/actions/accounts/accounts/bankLedger.actions';
+import { Item } from '@radix-ui/react-accordion';
 
 
 
@@ -58,8 +60,16 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
     const [categories, setCategories] = useState([{}]);
 
 
+    // Bank Ledgers
+    const [bankLedgers, setBankLedgers] = useState([{}]);
+
+
     // Search
     const [search, setSearch] = useState('');
+
+
+    // Enquiry number
+    const [enquiryNumber, setEnquiryNumber] = useState('');
 
 
     // Handle Search Click
@@ -280,12 +290,14 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
             const subjectsRes = await fetchOptionalSubjects();
             const religionsRes = await fetchReligions();
             const categoriesRes = await fetchCategories();
+            const bankLedgerRes = await fetchBankLedgers();
             setClasses(classesRes);
             setBoards(boardsRes);
             setStreams(streamsRes);
             setSubjects(subjectsRes);
             setReligions(religionsRes);
             setCategories(categoriesRes);
+            setBankLedgers(bankLedgerRes);
         };
         fetcher();
     }, []);
@@ -310,6 +322,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                 {form.getValues().student.with_enquiry && (
                     <FormField
                         control={form?.control}
+                        disabled
                         name='student.enquiry_no'
                         render={({ field }) => (
                             <FormItem className='w-full'>
@@ -449,14 +462,20 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                                             {...field}
                                             value={field?.value}
                                             onValueChange={field?.onChange}
-                                            disabled={true}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value='item'>item</SelectItem>
+                                                <SelectItem value='Cash'>Cash</SelectItem>
+                                                <SelectItem value='Cheque'>Cheque</SelectItem>
+                                                <SelectItem value='Credit Card'>Credit Card</SelectItem>
+                                                <SelectItem value='DD'>DD</SelectItem>
+                                                <SelectItem value='Debit Card'>Debit Card</SelectItem>
+                                                <SelectItem value='NEFT'>NEFT</SelectItem>
+                                                <SelectItem value='Net Banking'>Net Banking</SelectItem>
+                                                <SelectItem value='Swiped Card'>Swiped Card</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
@@ -513,14 +532,21 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                                             {...field}
                                             value={field?.value}
                                             onValueChange={field?.onChange}
-                                            disabled={true}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value='item'>item</SelectItem>
+                                                {bankLedgers.length < 1 ? (
+                                                        <p>No bank ledgers yet</p>
+                                                    ) : // @ts-ignore
+                                                    !bankLedgers[0].account_name ? (
+                                                        <LoadingIcon />
+                                                    ) : bankLedgers.map((ledger:any) => (
+                                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                                    ))
+                                                }
                                             </SelectContent>
                                         </Select>
                                     </FormControl>

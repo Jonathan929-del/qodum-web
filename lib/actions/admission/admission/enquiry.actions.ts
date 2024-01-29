@@ -43,6 +43,13 @@ export const createEnquiry = async ({
         connectToDb('accounts');
 
 
+        // Checking if the enquiry already exists
+        const existinEnquiry = await Enquiry.findOne({enquiry_no});
+        if(existinEnquiry){
+            throw new Error('Enquiry already exists');
+        };
+
+
         // Creating new enquiiry
         const newEnquiry = await Enquiry.create({
             enquiry_no,
@@ -62,20 +69,23 @@ export const createEnquiry = async ({
 
         // Creating student
         if(purpose_is_admission){
-            const newStudent = await Student.create({
-                student:{
-                    enquiry_no,
-                    h_no_and_streets:visitor_address,
-                    contact_person_mobile:mobile_no,
-                    name:student_name,
-                    class:class_name,
-                    contact_person_name:contact_person
-                },
-                parents:{},
-                others:{},
-                guardian_details:{}
-            });
-            newStudent.save();
+            const students = await Student.find();
+            if(!students.map((s:any) => s.student.enquiry_no).includes(enquiry_no)){
+                const newStudent = await Student.create({
+                    student:{
+                        enquiry_no,
+                        h_no_and_streets:visitor_address,
+                        contact_person_mobile:mobile_no,
+                        name:student_name,
+                        class:class_name,
+                        contact_person_name:contact_person
+                    },
+                    parents:{},
+                    others:{},
+                    guardian_details:{}
+                });
+                newStudent.save();
+            }
         };
 
 
@@ -149,6 +159,12 @@ export const modifyEnquiry = async ({
         connectToDb('accounts');
 
 
+        // Checking if the enquiry already exists
+        const enquiries = await Enquiry.find();
+        const existingEnquiry = await Enquiry.findById(id);
+        if(existingEnquiry.enquiry_no !== enquiry_no && enquiries.map(e => e.enquiry_no).includes(enquiry_no)){throw new Error('Enquiry already exists')};
+
+
         // Update propspectus
         const updatedEnquiry = await Enquiry.findByIdAndUpdate(id, {
             enquiry_no,
@@ -167,20 +183,23 @@ export const modifyEnquiry = async ({
 
         // Creating student
         if(purpose_is_admission){
-            const newStudent = await Student.create({
-                student:{
-                    enquiry_no,
-                    h_no_and_streets:visitor_address,
-                    contact_person_mobile:mobile_no,
-                    name:student_name,
-                    class:class_name,
-                    contact_person_name:contact_person
-                },
-                parents:{},
-                others:{},
-                guardian_details:{}
-            });
-            newStudent.save();
+            const students = await Student.find();
+            if(!students.map((s:any) => s.student.enquiry_no).includes(enquiry_no)){
+                const newStudent = await Student.create({
+                    student:{
+                        enquiry_no,
+                        h_no_and_streets:visitor_address,
+                        contact_person_mobile:mobile_no,
+                        name:student_name,
+                        class:class_name,
+                        contact_person_name:contact_person
+                    },
+                    parents:{},
+                    others:{},
+                    guardian_details:{}
+                });
+                newStudent.save();
+            }
         };
 
 

@@ -63,8 +63,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
     // Automatic enquiry number
-    // @ts-ignore
-    const enquiryNumber = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
+    const [enquiryNumber, setEnquiryNumber] = useState('');
 
 
     // Form
@@ -188,6 +187,16 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        // @ts-ignore
+        setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
+        form.setValue(
+            'enquiry_no',
+            updateEnquiry.id !== ''
+                ? updateEnquiry.enquiry_no
+                : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
+        );
+    }, [enquiries]);
 
 
     return (
