@@ -438,6 +438,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
+                                                            <SelectItem value='Enquiry No.'>Enquiry No.</SelectItem>
                                                             <SelectItem value='Prospectus No.'>Prospectus No.</SelectItem>
                                                             <SelectItem value='Registration No.'>Registration No.</SelectItem>
                                                             <SelectItem value='Admission No.'>Admission No.</SelectItem>
