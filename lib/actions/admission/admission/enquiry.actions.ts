@@ -188,3 +188,48 @@ export const deleteEnquiry = async ({id}:{id:String}) => {
         throw new Error(`Error deleting enquiry: ${err}`);
     };
 };
+
+
+
+
+
+// Fetch enquiries with admission purpose
+export const fetchAdmissionEnquiries = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const enquiries = await Enquiry.find({purpose_is_admission:true});
+        return enquiries;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching enquiries: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch enquiry by enquiry number
+export const fetchEnquiryByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching student
+        const enquiry = await Enquiry.findOne({enquiry_no});
+
+
+        // Return
+        return enquiry;
+
+    } catch (err) {
+        throw new Error(`Error fetching enquiry: ${err}`);
+    };
+};

@@ -20,7 +20,6 @@ export const StudentValidation = z.object({
         admission_account:z.string(),
         post_account:z.string(),
         // 2
-        with_enquiry:z.boolean(),
         class:z.string().nonempty({message:'*Class is required'}),
         board:z.string(),
         stream:z.string(),

@@ -22,7 +22,6 @@ interface CreateStudentProps{
         admission_account:String;
         post_account:String;
         // 2
-        with_enquiry:Boolean;
         class:String;
         board:String;
         stream:String;
@@ -258,7 +257,6 @@ interface ModifyStudentProps{
         admission_account:String;
         post_account:String;
         // 2
-        with_enquiry:Boolean;
         class:String;
         board:String;
         stream:String;
@@ -451,29 +449,5 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting student: ${err}`);
-    };
-};
-
-
-
-
-
-// Fetch student by enquiry number
-export const fetchStudentByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Fetching student
-        const student = await Student.findOne({'student.enquiry_no':enquiry_no});
-
-
-        // Return
-        return student;
-
-    } catch (err) {
-        throw new Error(`Error fetching student: ${err}`);
     };
 };

@@ -10,11 +10,20 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry}:any) => {
 
 
     // Select handler
     const selectHandler = (student:any) => {
+        setValuesFromEnquiry({
+            enquiry_no:'',
+            visitor_name:'',
+            visitor_address:'',
+            mobile_no:0,
+            student_name:'',
+            class_name:'',
+            contact_person:''
+        });
         setUpdateStudent({
             id:student?._id,
             isDeleteClicked:false,
@@ -31,7 +40,6 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                 admission_account:student?.student?.admission_account || '',
                 post_account:student?.student?.post_account || '',
                 // 2
-                with_enquiry:student?.student?.with_enquiry || false,
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
                 stream:student?.student?.stream || '',
@@ -211,7 +219,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
                 }
             }
         });
-        setIsViewOpened(false);
+        setIsViewOpened('');
     };
 
 
@@ -221,7 +229,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent}:any) => {
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
                 <h2>Students List</h2>
-                <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
+                <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened('')}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
 

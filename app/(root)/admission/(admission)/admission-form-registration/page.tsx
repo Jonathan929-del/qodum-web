@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
+import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
+import { fetchAdmissionEnquiries } from '@/lib/actions/admission/admission/enquiry.actions';
 
 
 
@@ -14,11 +16,15 @@ const page = () => {
 
 
     // Is view component opened
-    const [isViewOpened, setIsViewOpened] = useState(false);
+    const [isViewOpened, setIsViewOpened] = useState('');
 
 
     // Students
     const [students, setStudents] = useState([{}]);
+
+
+    // Admission Enquiries
+    const [admissionEnquiries, setAdmissionEnquiries] = useState([{}]);
 
 
     // Update student
@@ -39,7 +45,6 @@ const page = () => {
             admission_account:'',
             post_account:'',
             // 2
-            with_enquiry:false,
             class:'',
             board:'',
             stream:'',
@@ -220,12 +225,26 @@ const page = () => {
         }
     });
 
+
+    // Values from enquiry
+    const [valuesFromEnquiry, setValuesFromEnquiry] = useState({
+        enquiry_no:'',
+        visitor_name:'',
+        visitor_address:'',
+        mobile_no:0,
+        student_name:'',
+        class_name:'',
+        contact_person:''
+    });
+
     
     // Use effect
     useEffect(() => {
         const accountGroupsFetcher = async () => {
-            const res = await fetchStudents();
-            setStudents(res);
+            const studentsRes = await fetchStudents();
+            const enquiriesRes = await fetchAdmissionEnquiries();
+            setStudents(studentsRes);
+            setAdmissionEnquiries(enquiriesRes);
         };
         accountGroupsFetcher();
     }, [isViewOpened, updateStudent]);
@@ -234,11 +253,19 @@ const page = () => {
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                isViewOpened ? (
+                isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
+                        setValuesFromEnquiry={setValuesFromEnquiry}
+                    />
+                ) : isViewOpened === 'enquiry' ? (
+                    <EnquiryViewCom
+                        setUpdateStudent={setUpdateStudent}
+                        enquiries={admissionEnquiries}
+                        setIsViewOpened={setIsViewOpened}
+                        setValuesFromEnquiry={setValuesFromEnquiry}
                     />
                 ) : (
                     <FormCom
@@ -246,7 +273,10 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         students={students}
                         updateStudent={updateStudent}
+                        valuesFromEnquiry={valuesFromEnquiry}
                         setUpdateStudent={setUpdateStudent}
+                        admissionEnquiries={admissionEnquiries}
+                        setValuesFromEnquiry={setValuesFromEnquiry}
                     />
                 )
             }

@@ -10,11 +10,217 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
+        setValuesFromEnquiry({
+            enquiry_no:'',
+            visitor_name:'',
+            visitor_address:'',
+            mobile_no:0,
+            student_name:'',
+            class_name:'',
+            contact_person:''
+        });
+        // Reseting update entity
+        setUpdateStudent({
+            id:'',
+            isDeleteClicked:false,
+    
+            // Student
+            student:{
+                // 1
+                image:'',
+                enquiry_no:'',
+                reg_no:0,
+                pros_no:0,
+                amount:0,
+                date:new Date(),
+                payment_mode:'',
+                admission_account:'',
+                post_account:'',
+                // 2
+                class:'',
+                board:'',
+                stream:'',
+                subject:'',
+                optional_subject:'',
+                name:'',
+                middle_name:'',
+                last_name:'',
+                dob:new Date(),
+                place_of_birth:'',
+                gender:'Male',
+                contact_person_name:'',
+                contact_person_mobile:0,
+                contact_person_email:'',
+                secondary_contact_no:0,
+                h_no_and_streets:'',
+                email:'',
+                city:'',
+                mobile:0,
+                state:'',
+                pin_code:0,
+                aadhar_card_no:0,
+                religion:'',
+                blood_group:'',
+                caste:'',
+                category:'',
+                is_ews:false,
+                sibling:false,
+                transport:'',
+                nationality:''
+            },
+    
+            // Parents
+            parents:{
+                // Father
+                father:{
+                    father_name:'',
+                    middle_name:'',
+                    last_name:'',
+                    profession:'',
+                    designation:'',
+                    residence_address:'',
+                    office_address:'',
+                    email:'',
+                    alternate_email:'',
+                    dob:new Date(),
+                    mobile:0,
+                    phone:0,
+                    company_name:'',
+                    business_details:'',
+                    qualification:'',
+                    service_in:'',
+                    office_phone:0,
+                    office_mobile:0,
+                    office_extension:'',
+                    office_email:'',
+                    office_website:'',
+                    annual_income:'',
+                    parent_status:''
+                },
+                // Mother
+                mother:{
+                    mother_name:'',
+                    middle_name:'',
+                    last_name:'',
+                    profession:'',
+                    designation:'',
+                    residence_address:'',
+                    office_address:'',
+                    email:'',
+                    alternate_email:'',
+                    dob:new Date(),
+                    mobile:0,
+                    phone:0,
+                    company_name:'',
+                    business_details:'',
+                    qualification:'',
+                    service_in:'',
+                    office_phone:0,
+                    office_mobile:0,
+                    office_extension:'',
+                    office_email:'',
+                    office_website:'',
+                    annual_income:'',
+                    anniversary_date:new Date()
+                }
+            },
+    
+            // Other details
+            others:{
+                // 1
+                student_other_details:{
+                    medical_history:'',
+                    descriptions:'',
+                    allergies:'',
+                    allergies_causes:'',
+                    family_doctor_name:'',
+                    family_doctor_phone:0,
+                    family_doctor_address:'',
+                    distance_from_home:0,
+                    no_of_living_year:0,
+                    only_child:'',
+                    general_description:''
+                },
+                // 2
+                student_staff_relation:{
+                    staff_ward:'',
+                    staff_name:''
+                },
+                // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:0
+                },
+                // 4
+                previous_school_details:[
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    }
+                ]
+            },
+    
+            // Guardian details
+            guardian_details:{
+                // 1
+                guardian_name:'',
+                profession:'',
+                designation:'',
+                company_name:'',
+                business_details:'',
+                qualification:'',
+                // 2
+                if_single_parent:{
+                    student_lives_with:'',
+                    legal_custody_of_the_child:'',
+                    correspondence_to:'',
+                    check_id_applicable:'',
+                    separation_reason:''
+                }
+            }
+        });
         // Reseting form
         form.reset({
             // Student
@@ -30,7 +236,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 admission_account:'',
                 post_account:'',
                 // 2
-                with_enquiry:false,
+                with_enquiry:true,
                 class:'',
                 board:'',
                 stream:'',
@@ -297,7 +503,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
 
             {/* View button */}
             <span
-                onClick={() => setIsViewOpened(true)}
+                onClick={() => setIsViewOpened('admission')}
                 className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#51B272] to-[#94E7B1] rounded-full transition border-[1px] border-white cursor-pointer
                          hover:border-[#51B272] hover:from-[#5cbb7d21] hover:to-[#5cbb7d21] hover:text-[#51B272] sm:text-[16px] sm:px-4'
             >

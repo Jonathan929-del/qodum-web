@@ -23,12 +23,12 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries}:any) => {
 
 
     // Toast
     const {toast} = useToast();
-
+    console.log(valuesFromEnquiry);
 
     // Is Loading
     const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             admission_account:updateStudent.student.admission_account,
             post_account:updateStudent.student.post_account,
             // 2
-            with_enquiry:updateStudent.student.with_enquiry,
             class:updateStudent.student.class,
             board:updateStudent.student.board,
             stream:updateStudent.student.stream,
@@ -248,7 +247,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             student:{
                 // 1
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
-                enquiry_no:updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
+                enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
                 reg_no:updateStudent.id === '' ? 0 : updateStudent.student.reg_no,
                 pros_no:updateStudent.id === '' ? 0 : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,
@@ -257,23 +256,23 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 admission_account:updateStudent.id === '' ? '' : updateStudent.student.admission_account,
                 post_account:updateStudent.id === '' ? '' : updateStudent.student.post_account,
                 // 2
-                with_enquiry:updateStudent.id === '' ? false : updateStudent.student.with_enquiry,
-                class:updateStudent.id === '' ? '' : updateStudent.student.class,
+                with_enquiry:true,
+                class:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.class_name : updateStudent.id === '' ? '' : updateStudent.student.class,
                 board:updateStudent.id === '' ? '' : updateStudent.student.board,
                 stream:updateStudent.id === '' ? '' : updateStudent.student.stream,
                 subject:updateStudent.id === '' ? '' : updateStudent.student.subject,
                 optional_subject:updateStudent.id === '' ? '' : updateStudent.student.optional_subject,
-                name:updateStudent.id === '' ? '' : updateStudent.student.name,
+                name:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.student_name : updateStudent.id === '' ? '' : updateStudent.student.name,
                 middle_name:updateStudent.id === '' ? '' : updateStudent.student.middle_name,
                 last_name:updateStudent.id === '' ? '' : updateStudent.student.last_name,
                 dob:updateStudent.id === '' ? new Date() : updateStudent.student.dob,
                 place_of_birth:updateStudent.id === '' ? '' : updateStudent.student.place_of_birth,
                 gender:updateStudent.id === '' ? 'Male' : updateStudent.student.gender,
-                contact_person_name:updateStudent.id === '' ? '' : updateStudent.student.contact_person_name,
-                contact_person_mobile:updateStudent.id === '' ? 0 : updateStudent.student.contact_person_mobile,
+                contact_person_name:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.contact_person : updateStudent.id === '' ? '' : updateStudent.student.contact_person_name,
+                contact_person_mobile:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.mobile_no : updateStudent.id === '' ? 0 : updateStudent.student.contact_person_mobile,
                 contact_person_email:updateStudent.id === '' ? '' : updateStudent.student.contact_person_email,
                 secondary_contact_no:updateStudent.id === '' ? 0 : updateStudent.student.secondary_contact_no,
-                h_no_and_streets:updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
+                h_no_and_streets:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.visitor_address : updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
                 email:updateStudent.id === '' ? '' : updateStudent.student.email,
                 city:updateStudent.id === '' ? '' : updateStudent.student.city,
                 mobile:updateStudent.id === '' ? 0 : updateStudent.student.mobile,
@@ -470,7 +469,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     admission_account:values.student.admission_account,
                     post_account:values.student.post_account,
                     // 2
-                    with_enquiry:values.student.with_enquiry,
                     class:values.student.class,
                     board:values.student.board,
                     stream:values.student.stream,
@@ -679,7 +677,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                     admission_account:values.student.admission_account,
                     post_account:values.student.post_account,
                     // 2
-                    with_enquiry:values.student.with_enquiry,
                     class:values.student.class,
                     board:values.student.board,
                     stream:values.student.stream,
@@ -868,6 +865,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
         };
 
 
+        setValuesFromEnquiry({
+            enquiry_no:'',
+            visitor_name:'',
+            visitor_address:'',
+            mobile_no:0,
+            student_name:'',
+            class_name:'',
+            contact_person:''
+        });
         // Reseting update entity
         setUpdateStudent({
             id:'',
@@ -886,7 +892,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 admission_account:'',
                 post_account:'',
                 // 2
-                with_enquiry:false,
                 class:'',
                 board:'',
                 stream:'',
@@ -1081,7 +1086,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                 admission_account:'',
                 post_account:'',
                 // 2
-                with_enquiry:false,
+                with_enquiry:true,
                 class:'',
                 board:'',
                 stream:'',
@@ -1281,7 +1286,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             form.setValue('student.payment_mode', updateStudent.student.payment_mode);
             form.setValue('student.admission_account', updateStudent.student.admission_account);
             form.setValue('student.post_account', updateStudent.student.post_account);
-            form.setValue('student.with_enquiry', updateStudent.student.with_enquiry);
             form.setValue('student.class', updateStudent.student.class);
             form.setValue('student.board', updateStudent.student.board);
             form.setValue('student.stream', updateStudent.student.stream);
@@ -1442,6 +1446,16 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
             form.setValue('guardian_details.if_single_parent.separation_reason', updateStudent.guardian_details.if_single_parent.separation_reason);
         }
     }, [updateStudent]);
+    useEffect(() => {
+        if(valuesFromEnquiry.enquiry_no !== ''){
+            form.setValue('student.enquiry_no', valuesFromEnquiry.enquiry_no);
+            form.setValue('student.class', valuesFromEnquiry.class_name);
+            form.setValue('student.name', valuesFromEnquiry.student_name);
+            form.setValue('student.contact_person_name', valuesFromEnquiry.contact_person);
+            form.setValue('student.contact_person_mobile', valuesFromEnquiry.mobile_no);
+            form.setValue('student.h_no_and_streets', valuesFromEnquiry.visitor_address);
+        }
+    }, [valuesFromEnquiry]);
     useEffect(() => {}, [form.watch('others')]);
 
 
@@ -1475,12 +1489,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
                                     form={form}
                                     setFile={setFile}
                                     students={students}
+                                    admissionEnquiries={admissionEnquiries}
                                     imageSrc={imageSrc}
                                     setImageSrc={setImageSrc}
                                     setIsViewOpened={setIsViewOpened}
                                     setUpdateStudent={setUpdateStudent}
                                     updateStudent={updateStudent}
                                     setIsLoading={setIsLoading}
+                                    setValuesFromEnquiry={setValuesFromEnquiry}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -1500,7 +1516,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent}:an
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry}/>
                         </div>
                     </form>
                 )}

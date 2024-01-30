@@ -23,7 +23,6 @@ const StudentSchema = new mongoose.Schema(
             admission_account:{type:String},
             post_account:{type:String},
             // 2
-            with_enquiry:{type:Boolean},
             class:{type:String},
             board:{type:String},
             stream:{type:String},
