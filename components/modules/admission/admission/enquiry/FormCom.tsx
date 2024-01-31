@@ -235,7 +235,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry No. */}
-                    {enquiries[0].enquiry_no !== '' ? (
+                    {enquiries[0]?.enquiry_no !== '' ? (
                         <FormField
                             control={form.control}
                             name='enquiry_no'
