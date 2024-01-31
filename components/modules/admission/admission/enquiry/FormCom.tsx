@@ -204,7 +204,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 ? updateEnquiry.enquiry_no
                 : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
         );
-    }, [enquiries, updateEnquiry, onSubmit]);
+    }, [enquiries, updateEnquiry]);
 
 
     return (

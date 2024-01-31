@@ -28,7 +28,7 @@ const StudentsList = ({students}: any) => {
                     {/* Headers */}
                     <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
 
-                        <li className='flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
