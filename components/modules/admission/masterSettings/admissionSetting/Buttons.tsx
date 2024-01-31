@@ -19,7 +19,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             id:'',
             isDeleteClicked:false,
             school:'',
-            class_name:'All Classes',
+            class_name:'',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -32,7 +32,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         // Reseting form
         form.reset({
             school:'',
-            class_name:'All Classes',
+            class_name:'',
             board:'',
             setting_type:'',
             should_be:'Automatic',

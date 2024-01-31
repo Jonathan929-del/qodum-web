@@ -18,6 +18,7 @@ import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.act
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchEnquiryByEnquiryNo} from '@/lib/actions/admission/admission/enquiry.actions';
+import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
@@ -28,7 +29,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries}:any) => {
 
 
     // Date states
@@ -285,7 +286,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         const fetcher = async () => {
             const classesRes = await fetchClasses();
@@ -305,6 +306,21 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        const numberGenerator = async () => {
+            try {
+                const admissionNumbers = await fetchClassNumbers({class_name:form.getValues().student.class});
+                const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0];
+                const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];
+
+                form.setValue('student.reg_no', `${registerEntity.prefix}${registerEntity.lead_zero.substring(0, registerEntity.lead_zero.length - 1)}${students.length + 1}${registerEntity.suffix}`);
+                form.setValue('student.pros_no', `${prospectusEntity.prefix}${prospectusEntity.lead_zero.substring(0, prospectusEntity.lead_zero.length - 1)}${students.length + 1}${prospectusEntity.suffix}`);
+            } catch (err:any) {
+                console.log(err);
+            }
+        };
+        numberGenerator();
+    }, [form.watch('student.class')]);
 
 
     return (
@@ -320,6 +336,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                     setImageSrc={setImageSrc}
                     updateStudent={updateStudent}
                 />
+
 
 
                 {/* Enquiry No. */}
@@ -361,7 +378,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                     <FormMessage className='mt-[-20px] text-[11px]' />
@@ -385,7 +402,7 @@ const Student = ({form, students, setIsViewOpened, setUpdateStudent, setFile, up
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                     <FormMessage className='mt-[-20px] text-[11px]' />

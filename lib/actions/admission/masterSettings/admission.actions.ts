@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Admission from '@/lib/models/admission/masterSettings/admissionSetting/Admission.model';
+import { fetchClasses } from '../../fees/globalMasters/defineClassDetails/class.actions';
 
 
 
@@ -118,5 +119,26 @@ export const deleteAdmission = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting admission: ${err}`);      
+    };
+};
+
+
+
+
+
+// Get class numbers
+export const fetchClassNumbers = async ({class_name}:{class_name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching admission
+        const numbers = await Admission.find({class_name});
+        return numbers;
+
+    } catch (err) {
+        throw new Error(`Error fetching admission: ${err}`);      
     };
 };

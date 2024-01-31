@@ -28,7 +28,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Toast
     const {toast} = useToast();
-    console.log(valuesFromEnquiry);
 
     // Is Loading
     const [isLoading, setIsLoading] = useState(false);
@@ -248,8 +247,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 1
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
                 enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
-                reg_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? 0 : updateStudent.student.reg_no,
-                pros_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? 0 : updateStudent.student.pros_no,
+                reg_no:updateStudent.id === '' ? 0 : updateStudent.student.reg_no,
+                pros_no:updateStudent.id === '' ? 0 : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,
                 date:updateStudent.id === '' ? new Date() : updateStudent.student.date,
                 payment_mode:updateStudent.id === '' ? '' : updateStudent.student.payment_mode,
@@ -441,8 +440,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
-        console.log('Comparison Object:', comparisonObject);
-        console.log('values:', values);
         setIsLoading(true);
         // Create Account Group
         if(updateStudent.id === ''){

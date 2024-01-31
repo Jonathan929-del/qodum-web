@@ -1,26 +1,25 @@
 // Imports
 import * as z from 'zod';
+import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
-import {Button} from '@/components/ui/button';
 import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
-import {createAdmission, deleteAdmission, modifyAdmission} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admission.validation';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import Buttons from './Buttons';
+import {createAdmission, deleteAdmission, modifyAdmission} from '@/lib/actions/admission/masterSettings/admission.actions';
 
 
 
@@ -50,6 +49,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     const [boards, setBoards] = useState([{}]);
 
 
+    // Is all classes
+    const [isAllClasses, setIsAllClasses] = useState(localStorage.getItem('all_classes') === 'true');
+
+
     // Comparison object
     const comparisonObject = {
         school:updateAdmission.school,
@@ -70,7 +73,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         resolver:zodResolver(AdmissionSettingValidation),
         defaultValues:{
             school:updateAdmission.id === '' ? '' : updateAdmission.school,
-            class_name:updateAdmission.id === '' ? 'All Classes' : updateAdmission.class_name,
+            class_name:updateAdmission.id === '' ? '' : updateAdmission.class_name,
             board:updateAdmission.id === '' ? '' : updateAdmission.board,
             setting_type:updateAdmission.id === '' ? '' : updateAdmission.setting_type,
             should_be:updateAdmission.id === '' ? 'Automatic' : updateAdmission.should_be,
@@ -85,7 +88,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmissionSettingValidation>) => {
-        // Create category
+        // Create admission setting
         if(updateAdmission.id === ''){
             await createAdmission({
                 school:values.school,
@@ -130,7 +133,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             id:'',
             isDeleteClicked:false,
             school:'',
-            class_name:'All Classes',
+            class_name:'',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -143,7 +146,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         // Reseting form
         form.reset({
             school:'',
-            class_name:'All Classes',
+            class_name:'',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -156,21 +159,37 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         const fetcher = async () => {
             const sessionsRes = await fetchAcademicYears();
             const schoolsRes = await fetchGlobalSchoolDetails();
-            const classesRes = await fetchClasses();
             const boardsRes = await fetchBoards();
+            const classesRes = await fetchClasses();
             setSessions(sessionsRes);
             setSchools(schoolsRes);
-            setClasses(classesRes);
             setBoards(boardsRes);
+            setClasses(classesRes.concat({class_name:'All Classes'}));
         };
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('should_be')]);
+    // useEffect(() => {
+    //     const fetcher = async () => {
+    //         const classesRes = await fetchClasses();
+    //         const allClasses = classesRes.map((item:any) => item.class_name).concat('All Classes');
+    //         const admissionSetClasses = admissions.map((a:any) => a.class_name);
+    //         if(admissionSetClasses[0] !== undefined){
+    //             let filteredClasses = allClasses.filter((x:any) => !admissionSetClasses.includes(x));
+    //             setClasses(
+    //                 updateAdmission.class_name === ''
+    //                 ? filteredClasses
+    //                 : filteredClasses.concat(updateAdmission.class_name)
+    //             );
+    //         };
+    //     };
+    //     fetcher();
+    // }, [window.onload, updateAdmission]);
 
 
     return (
@@ -305,6 +324,36 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                         <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Enquiry, Registration, and Admission No. Setting</h2>
                         <div className='flex flex-col px-4 py-2 gap-2'>
                             <div className='flex flex-row gap-2'>
+                                {/* All Classes */}
+                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-end justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                    <>
+                                        <FormControl>
+                                            <div className='flex-1 flex items-center justify-center space-x-2'>
+                                                <Label
+                                                    htmlFor='all_classes'
+                                                    className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                                >
+                                                    All Classes
+                                                </Label>
+                                                <Switch
+                                                    id='all_classes'
+                                                    // @ts-ignore
+                                                    checked={isAllClasses}
+                                                    onClick={() => {
+                                                        if(localStorage.getItem('all_classes') === 'true'){
+                                                            localStorage.setItem('all_classes', 'false')
+                                                        }else{
+                                                            localStorage.setItem('all_classes', 'true');
+                                                        }
+                                                        setIsAllClasses(!isAllClasses);
+                                                    }}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                    </>
+                                </FormItem>                       
+                            </div>
+                            <div className='flex flex-row gap-2'>
                                 {/* School */}
                                 <div className='w-full flex flex-col items-center'>
                                     <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School</FormLabel>
@@ -326,7 +375,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 {schools?.length < 1 ? (
-                                                                    <p>No schoolss</p>
+                                                                    <p>No schools</p>
                                                                     // @ts-ignore
                                                                 ) : !schools[0]?.school_name ? (
                                                                     <LoadingIcon />
@@ -362,7 +411,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                <SelectItem value='All Classes'>All Classes</SelectItem>
                                                                 {classes?.length < 1 ? (
                                                                     <p>No classes</p>
                                                                     // @ts-ignore
@@ -511,10 +559,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                         control={form?.control}
                                         name='prefix'
                                         render={({ field }) => (
-                                            <FormItem className='w-full mt-2 sm:mt-0'>
-                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Prefix</FormLabel>
-                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                            <FormItem className='w-full mt-2 lg:mb-2'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-[11px] text-[#726E71]'>Prefix</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4'>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}
@@ -532,10 +580,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                         control={form?.control}
                                         name='start_from'
                                         render={({ field }) => (
-                                            <FormItem className='w-full mt-2 sm:mt-0'>
-                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Start From</FormLabel>
-                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                            <FormItem className='w-full mt-2 lg:mb-2'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71]'>Start From</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4'>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}
@@ -553,10 +601,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                         control={form?.control}
                                         name='lead_zero'
                                         render={({ field }) => (
-                                            <FormItem className='w-full mt-2 sm:mt-0'>
-                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Lead Zero</FormLabel>
-                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                            <FormItem className='w-full mt-2 lg:mb-2'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71]'>Lead Zero</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4'>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}
@@ -574,10 +622,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                         control={form?.control}
                                         name='suffix'
                                         render={({ field }) => (
-                                            <FormItem className='w-full mt-2 sm:mt-0'>
-                                                <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Suffix</FormLabel>
-                                                    <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                            <FormItem className='w-full mt-2 lg:mb-2'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71]'>Suffix</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4'>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}

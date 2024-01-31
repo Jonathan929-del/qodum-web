@@ -26,7 +26,7 @@ const page = () => {
         id:'',
         isDeleteClicked:false,
         school:'',
-        class_name:'All Classes',
+        class_name:'',
         board:'',
         setting_type:'',
         should_be:'Automatic',
