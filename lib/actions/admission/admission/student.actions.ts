@@ -14,8 +14,8 @@ interface CreateStudentProps{
         // 1
         image:String;
         enquiry_no:String;
-        reg_no:Number;
-        pros_no:Number;
+        reg_no:String;
+        pros_no:String;
         amount:Number;
         date:Date;
         payment_mode:String;
@@ -249,8 +249,8 @@ interface ModifyStudentProps{
         // 1
         image:String;
         enquiry_no:String;
-        reg_no:Number;
-        pros_no:Number;
+        reg_no:String;
+        pros_no:String;
         amount:Number;
         date:Date;
         payment_mode:String;

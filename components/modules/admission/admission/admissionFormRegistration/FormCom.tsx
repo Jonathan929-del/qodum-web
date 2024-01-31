@@ -247,8 +247,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 1
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
                 enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
-                reg_no:updateStudent.id === '' ? 0 : updateStudent.student.reg_no,
-                pros_no:updateStudent.id === '' ? 0 : updateStudent.student.pros_no,
+                reg_no:updateStudent.id === '' ? '' : updateStudent.student.reg_no,
+                pros_no:updateStudent.id === '' ? '' : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,
                 date:updateStudent.id === '' ? new Date() : updateStudent.student.date,
                 payment_mode:updateStudent.id === '' ? '' : updateStudent.student.payment_mode,
@@ -441,7 +441,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     // Submit handler
     const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
         setIsLoading(true);
-        // Create Account Group
+        // Create Student
         if(updateStudent.id === ''){
             if(students.map((student:any) => student.student.enquiry_no).includes(values.student.enquiry_no)){
                 toast({title:'Enquiry no. already exists', variant:'error'});
@@ -647,7 +647,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             });
             toast({title:'Added Successfully!'});
         }
-        // Modify Account Group
+        // Modify Student
         else if(!deepEqual(comparisonObject, values) || file){
             if(comparisonObject.student.enquiry_no !== values.student.enquiry_no && students.map((student:any) => student.student.enquiry_no).includes(values.student.enquiry_no)){
                 toast({title:'Enquiry no. already exists', variant:'error'});
@@ -855,7 +855,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             });
             toast({title:'Updated Successfully!'});
         }
-        // Delete Account Group
+        // Delete Student
         else if(updateStudent.isDeleteClicked){
             await deleteStudent({id:updateStudent.id});
             toast({title:'Deleted Successfully!'});
@@ -881,8 +881,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 1
                 image:'',
                 enquiry_no:'',
-                reg_no:0,
-                pros_no:0,
+                reg_no:'',
+                pros_no:'',
                 amount:0,
                 date:new Date(),
                 payment_mode:'',
@@ -1075,8 +1075,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 1
                 image:'',
                 enquiry_no:'',
-                reg_no:0,
-                pros_no:0,
+                reg_no:'',
+                pros_no:'',
                 amount:0,
                 date:new Date(),
                 payment_mode:'',

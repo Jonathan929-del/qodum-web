@@ -12,8 +12,8 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {CalendarIcon, ChevronDown, Search} from 'lucide-react';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import { fetchStreams } from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
@@ -82,8 +82,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     // 1
                     image:'',
                     enquiry_no:'',
-                    reg_no:0,
-                    pros_no:0,
+                    reg_no:'',
+                    pros_no:'',
                     amount:0,
                     date:new Date(),
                     payment_mode:'',

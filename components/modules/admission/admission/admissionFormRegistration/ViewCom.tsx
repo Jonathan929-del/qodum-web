@@ -32,8 +32,8 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 // 1
                 image:student?.student?.image || '',
                 enquiry_no:student?.student?.enquiry_no || '',
-                reg_no:student?.student?.reg_no || 0,
-                pros_no:student?.student?.pros_no || 0,
+                reg_no:student?.student?.reg_no || '',
+                pros_no:student?.student?.pros_no || '',
                 amount:student?.student?.amount || 0,
                 date:student?.student?.date || new Date(),
                 payment_mode:student?.student?.payment_mode || '',

@@ -37,8 +37,8 @@ const page = () => {
             // 1
             image:'',
             enquiry_no:'',
-            reg_no:0,
-            pros_no:0,
+            reg_no:'',
+            pros_no:'',
             amount:0,
             date:new Date(),
             payment_mode:'',

@@ -15,8 +15,8 @@ const StudentSchema = new mongoose.Schema(
             // 1
             image:{type:String},
             enquiry_no:{type:String, unique:true, required:true},
-            reg_no:{type:Number},
-            pros_no:{type:Number},
+            reg_no:{type:String},
+            pros_no:{type:String},
             amount:{type:Number},
             date:{type:Date},
             payment_mode:{type:String},
