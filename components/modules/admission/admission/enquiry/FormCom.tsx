@@ -198,12 +198,11 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     useEffect(() => {
         // @ts-ignore
         setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
-        form.setValue(
-            'enquiry_no',
-            updateEnquiry.id !== ''
-                ? updateEnquiry.enquiry_no
-                : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
-        );
+        if(updateEnquiry.id !== ''){
+            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+        }else{
+            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+        };
     }, [enquiries, updateEnquiry]);
 
 
@@ -236,7 +235,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry No. */}
-                    {enquiries[0].enquiry_no ? (
+                    {enquiries[0].enquiry_no !== '' ? (
                         <FormField
                             control={form.control}
                             name='enquiry_no'
@@ -247,7 +246,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    disabled={localStorage.getItem('setting_type') === 'Automatic'}
+                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
                                                     className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>
