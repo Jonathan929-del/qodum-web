@@ -196,15 +196,16 @@ export const createStudent = async ({student, parents, others, guardian_details}
             others,
             guardian_details
         });
-        newStudent.save().then(async () => {
-            await Student.findOneAndUpdate({'student.enquiry_no':student.enquiry_no}, {
-                others:{
-                    student_other_details:others.student_other_details,
-                    student_staff_relation:others.student_staff_relation,
-                    previous_school_details:others.previous_school_details
-                }
-            });
-        });
+        newStudent.save();
+        // newStudent.save().then(async () => {
+        //     await Student.findOneAndUpdate({'student.enquiry_no':student.enquiry_no}, {
+        //         others:{
+        //             student_other_details:others.student_other_details,
+        //             student_staff_relation:others.student_staff_relation,
+        //             previous_school_details:others.previous_school_details
+        //         }
+        //     });
+        // });
 
 
         // Return

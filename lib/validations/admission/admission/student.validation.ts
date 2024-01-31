@@ -12,9 +12,9 @@ export const StudentValidation = z.object({
         // 1
         image:z.string(),
         enquiry_no:z.string(),
-        reg_no:z.number({invalid_type_error:'*Register no. is required'}).or(z.string().nonempty({message:'*Register no. is required'})).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        reg_no:z.string().nonempty({message:'*Please enter register no.'}),
         pros_no:z.string(),
-        amount:z.string(),
+        amount:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         date:z.date(),
         payment_mode:z.string(),
         admission_account:z.string(),
