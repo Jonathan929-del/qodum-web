@@ -62,16 +62,12 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     };
 
 
-    // Automatic enquiry number
-    const [enquiryNumber, setEnquiryNumber] = useState('');
-
-
     // Form
     const form = useForm({
         resolver:zodResolver(EnquiryValidation),
         defaultValues:{
             // @ts-ignore
-            enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
+            enquiry_no:updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no,
             enquiry_date:updateEnquiry.id === '' ? new Date() : updateEnquiry.enquiry_date,
             visitor_name:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_name,
             visitor_address:updateEnquiry.id === '' ? '' : updateEnquiry.visitor_address,
@@ -187,20 +183,20 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         };
         fetcher();
         // @ts-ignore
-        setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
+        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
         if(updateEnquiry.id !== ''){
             form.setValue('enquiry_no', updateEnquiry.enquiry_no);
         }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
         };
     }, []);
     useEffect(() => {
         // @ts-ignore
-        setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
+        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
         if(updateEnquiry.id !== ''){
             form.setValue('enquiry_no', updateEnquiry.enquiry_no);
         }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
         };
     }, [enquiries, updateEnquiry]);
 
@@ -234,7 +230,27 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry No. */}
-                    {enquiries[0]?.enquiry_no !== '' ? (
+                    {enquiries.length < 1 ? (
+                        <FormField
+                            control={form.control}
+                            name='enquiry_no'
+                            render={({field}) => (
+                                <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Enquiry No.</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                </FormItem>
+                            )}
+                        />                        
+                    ) : enquiries[0]?.enquiry_no ? (
                         <FormField
                             control={form.control}
                             name='enquiry_no'
