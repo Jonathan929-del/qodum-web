@@ -170,6 +170,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setSchools(schoolsRes);
             setBoards(boardsRes);
             setClasses(classesRes.concat({class_name:'All Classes'}));
+            localStorage.getItem('all_classes') === 'true' && form.setValue('class_name', 'All Classes');
         };
         fetcher();
     }, []);
@@ -341,9 +342,11 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                     checked={isAllClasses}
                                                     onClick={() => {
                                                         if(localStorage.getItem('all_classes') === 'true'){
-                                                            localStorage.setItem('all_classes', 'false')
+                                                            localStorage.setItem('all_classes', 'false');
+                                                            form.setValue('class_name', '');
                                                         }else{
                                                             localStorage.setItem('all_classes', 'true');
+                                                            form.setValue('class_name', 'All Classes');
                                                         }
                                                         setIsAllClasses(!isAllClasses);
                                                     }}

@@ -29,6 +29,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     // Toast
     const {toast} = useToast();
 
+
     // Is Loading
     const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +40,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Image source (For image preview)
     const [imageSrc, setImageSrc] = useState('');
-
 
 
     // Comparison object

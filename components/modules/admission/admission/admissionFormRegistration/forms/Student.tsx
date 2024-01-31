@@ -369,7 +369,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 <FormField
                     control={form?.control}
                     name='student.reg_no'
-                    disabled
                     render={({ field }) => (
                         <FormItem className='w-full'>
                             <div className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
@@ -392,7 +391,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 {/* Pros. No. */}
                 <FormField
                     control={form?.control}
-                    disabled
                     name='student.pros_no'
                     render={({ field }) => (
                         <FormItem className='w-full mt-2 sm:mt-0'>

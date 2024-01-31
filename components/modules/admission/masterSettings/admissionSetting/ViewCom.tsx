@@ -108,7 +108,7 @@ const ViewCom = ({setIsViewOpened, admissions, setUpdateAdmission}:any) => {
                                 <p className='w-full min-w-[1200px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No prefixes yet
                                 </p>
-                            ) : !admissions[0]?.prefix ? (
+                            ) : !admissions[0]?.setting_type ? (
                                     <LoadingIcon />
                                 ) : admissions.map((item:any, index:number) => (
                                     <CommandItem
