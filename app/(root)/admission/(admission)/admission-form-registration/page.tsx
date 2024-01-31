@@ -2,10 +2,10 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
+import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
-import { fetchAdmissionEnquiries } from '@/lib/actions/admission/admission/enquiry.actions';
 
 
 

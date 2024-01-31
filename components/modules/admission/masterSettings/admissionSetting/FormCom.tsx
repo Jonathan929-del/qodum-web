@@ -170,7 +170,9 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setSchools(schoolsRes);
             setBoards(boardsRes);
             setClasses(classesRes.concat({class_name:'All Classes'}));
-            localStorage.getItem('all_classes') === 'true' && form.setValue('class_name', 'All Classes');
+            if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true'){
+                form.setValue('class_name', 'All Classes');
+            };
         };
         fetcher();
     }, []);

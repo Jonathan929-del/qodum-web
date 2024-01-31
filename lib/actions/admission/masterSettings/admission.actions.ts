@@ -2,7 +2,6 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Admission from '@/lib/models/admission/masterSettings/admissionSetting/Admission.model';
-import { fetchClasses } from '../../fees/globalMasters/defineClassDetails/class.actions';
 
 
 

@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const AdmissionSchema = new mongoose.Schema(
     {
         school:{type:String, required:true},
-        class_name:{type:String, unique:true, required:true},
+        class_name:{type:String, required:true},
         board:{type:String},
         setting_type:{type:String},
         should_be:{type:String},
