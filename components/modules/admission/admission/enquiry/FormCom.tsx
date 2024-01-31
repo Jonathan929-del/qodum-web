@@ -188,12 +188,11 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         fetcher();
         // @ts-ignore
         setEnquiryNumber(`${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`);
-        form.setValue(
-            'enquiry_no',
-            updateEnquiry.id !== ''
-                ? updateEnquiry.enquiry_no
-                : localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no
-        );
+        if(updateEnquiry.id !== ''){
+            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+        }else{
+            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? enquiryNumber : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+        };
     }, []);
     useEffect(() => {
         // @ts-ignore
