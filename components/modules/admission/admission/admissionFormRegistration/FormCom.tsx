@@ -246,7 +246,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             student:{
                 // 1
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
-                enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
+                // enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no || '' : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no || '',
+                enquiry_no:'',
                 reg_no:updateStudent.id === '' ? '' : updateStudent.student.reg_no,
                 pros_no:updateStudent.id === '' ? '' : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,

@@ -182,10 +182,10 @@ export const createStudent = async ({student, parents, others, guardian_details}
         connectToDb('accounts');
 
 
-        // Checking if the enquiry number already exists
-        const existingStudent = await Student.findOne({'student.enquiry_no':student.enquiry_no});
+        // Checking if the register number already exists
+        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no});
         if(existingStudent){
-            throw new Error('Enquiry no. already exists');
+            throw new Error('Register no. already exists');
         };
 
 
@@ -197,15 +197,6 @@ export const createStudent = async ({student, parents, others, guardian_details}
             guardian_details
         });
         newStudent.save();
-        // newStudent.save().then(async () => {
-        //     await Student.findOneAndUpdate({'student.enquiry_no':student.enquiry_no}, {
-        //         others:{
-        //             student_other_details:others.student_other_details,
-        //             student_staff_relation:others.student_staff_relation,
-        //             previous_school_details:others.previous_school_details
-        //         }
-        //     });
-        // });
 
 
         // Return
@@ -416,10 +407,10 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         connectToDb('accounts');
 
 
-        // Checking if the enquiry no. already exists
+        // Checking if the register no. already exists
         const students = await Student.find();
         const existingStudent = await Student.findById(id);
-        if(existingStudent.student.enquiry_no !== student.enquiry_no && students.map(student => student.student.enquiry_no).includes(student.enquiry_no)){throw new Error('Enquiry no. already exists')};
+        if(existingStudent.student.reg_no !== student.reg_no && students.map(student => student.student.reg_no).includes(student.reg_no)){throw new Error('Register no. already exists')};
 
 
         // Update student

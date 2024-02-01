@@ -112,7 +112,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                 class_name:values.class_name,
                 board:values.board,
                 setting_type:values.setting_type,
-                should_be:updateAdmission.should_be,
+                should_be:values.should_be,
                 rec_no:values.rec_no,
                 prefix:values.prefix,
                 start_from:values.start_from,
