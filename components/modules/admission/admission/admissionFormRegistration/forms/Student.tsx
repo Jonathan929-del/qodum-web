@@ -309,9 +309,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     useEffect(() => {
         const numberGenerator = async () => {
             try {
-                // console.log(form.getValues().student.class_name);
-                if(form.getValues().student.class !== ''){
-
+                if(form.getValues().student.class !== '' && updateStudent.id === ''){
                     const admissionNumbers = localStorage.getItem('all_classes') === 'true'
                         ? await fetchClassNumbers({class_name:'All Classes'})
                         : await fetchClassNumbers({class_name:form.getValues().student.class});
@@ -331,6 +329,26 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         form.setValue('student.pros_no', '');
                     };
                 };
+                if(updateStudent.id !== '' && form.getValues().student.class !== updateStudent.student.class){
+                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                        ? await fetchClassNumbers({class_name:'All Classes'})
+                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    // @ts-ignore
+                    const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0]
+                    const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];
+                    
+                    if(registerEntity && registerEntity?.should_be === 'Automatic'){
+                        form.setValue('student.reg_no', `${registerEntity?.prefix}${registerEntity?.lead_zero.substring(0, registerEntity?.lead_zero?.length - 1)}${students?.length + 1}${registerEntity?.suffix}`);
+                    }else{
+                        form.setValue('student.reg_no', '');
+                    };
+
+                    if(prospectusEntity && prospectusEntity?.should_be === 'Automatic'){
+                        form.setValue('student.pros_no', `${prospectusEntity?.prefix}${prospectusEntity?.lead_zero.substring(0, prospectusEntity?.lead_zero.length - 1)}${students?.length + 1}${prospectusEntity?.suffix}`);
+                    }else{
+                        form.setValue('student.pros_no', '');
+                    };
+                }
             } catch (err:any) {
                 console.log(err);
             }
