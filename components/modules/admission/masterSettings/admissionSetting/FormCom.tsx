@@ -53,6 +53,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     const [isAllClasses, setIsAllClasses] = useState(localStorage.getItem('all_classes') === 'true');
 
 
+    // Numbers
+    const [numbers, setNumbers] = useState(['Enquiry No.', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+
+
     // Comparison object
     const comparisonObject = {
         school:updateAdmission.school,
@@ -90,6 +94,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     const onSubmit = async (values:z.infer<typeof AdmissionSettingValidation>) => {
         // Create admission setting
         if(updateAdmission.id === ''){
+            if(values.prefix !== '' && admissions.map((a:any) => a.prefix).includes(values.prefix)){
+                toast({title:'Number already exists', variant:'error'});
+                return;
+            };
             await createAdmission({
                 school:values.school,
                 class_name:values.class_name,
@@ -106,6 +114,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         }
         // Modify Category
         else if(!deepEqual(comparisonObject, values)){
+            if(values.prefix !== '' && comparisonObject.prefix !== values.prefix && admissions.map((a:any) => a.prefix).includes(values.prefix)){
+                toast({title:'Number already exists', variant:'error'});
+                return;
+            };
             await modifyAdmission({
                 id:updateAdmission.id,
                 school:values.school,
@@ -169,30 +181,40 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setSessions(sessionsRes);
             setSchools(schoolsRes);
             setBoards(boardsRes);
-            setClasses(classesRes.concat({class_name:'All Classes'}));
-            if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true'){
+            setClasses(classesRes);
+            if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
                 form.setValue('class_name', 'All Classes');
+                // const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
+                // const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
+                // const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
+                // setNumbers(viewNumbers);
             };
         };
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('should_be')]);
-    // useEffect(() => {
-    //     const fetcher = async () => {
-    //         const classesRes = await fetchClasses();
-    //         const allClasses = classesRes.map((item:any) => item.class_name).concat('All Classes');
-    //         const admissionSetClasses = admissions.map((a:any) => a.class_name);
-    //         if(admissionSetClasses[0] !== undefined){
-    //             let filteredClasses = allClasses.filter((x:any) => !admissionSetClasses.includes(x));
-    //             setClasses(
-    //                 updateAdmission.class_name === ''
-    //                 ? filteredClasses
-    //                 : filteredClasses.concat(updateAdmission.class_name)
-    //             );
-    //         };
-    //     };
-    //     fetcher();
-    // }, [window.onload, updateAdmission]);
+    useEffect(() => {
+        if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
+            form.setValue('class_name', 'All Classes');
+            const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
+            const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
+            const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
+            setNumbers(viewNumbers);
+        };
+        if(!isAllClasses){
+            setNumbers(['Enquiry No.', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+        };
+    }, [isAllClasses]);
+    useEffect(() => {
+        if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
+            form.setValue('class_name', 'All Classes');
+            const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
+            const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
+            const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
+            console.log(viewNumbers);
+            setNumbers(viewNumbers);
+        };
+    }, [window.onload]);
 
 
     return (
@@ -401,6 +423,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                     <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
                                     <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                         <FormField
+                                            disabled={isAllClasses}
                                             control={form?.control}
                                             name='class_name'
                                             render={({ field }) => (
@@ -416,6 +439,9 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
+                                                                {isAllClasses && (
+                                                                    <SelectItem value='All Classes'>All Classes</SelectItem>
+                                                                )}
                                                                 {classes?.length < 1 ? (
                                                                     <p>No classes</p>
                                                                     // @ts-ignore
@@ -491,10 +517,11 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value='Enquiry No.'>Enquiry No.</SelectItem>
-                                                            <SelectItem value='Prospectus No.'>Prospectus No.</SelectItem>
-                                                            <SelectItem value='Registration No.'>Registration No.</SelectItem>
-                                                            <SelectItem value='Admission No.'>Admission No.</SelectItem>
+                                                            {numbers.length < 1 ? (
+                                                                <span>No numbers to set</span>
+                                                            ) : numbers.map((n:any) => (
+                                                                <SelectItem value={n}>{n}</SelectItem>
+                                                            ))}
                                                         </SelectContent>
                                                     </Select>
                                                 </FormControl>

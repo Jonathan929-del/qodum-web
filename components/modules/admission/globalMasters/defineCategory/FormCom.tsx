@@ -71,7 +71,6 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
         }
         // Delete remark
         else if(updateCategory.isDeleteClicked){
-            console.log('Excuting');
             await deleteCategory({id:updateCategory.id});
             toast({title:'Deleted Successfully!'});
         };

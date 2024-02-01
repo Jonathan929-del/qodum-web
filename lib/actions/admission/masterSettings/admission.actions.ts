@@ -24,9 +24,17 @@ interface CreateAdmissionProps{
 export const createAdmission = async ({school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix}:CreateAdmissionProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
+
+
+        // Checking if the prefix already exists
+        if(prefix !== ''){
+            const existingAdmission = await Admission.findOne({prefix});
+            if(existingAdmission){
+                throw new Error('Prefix already exists');
+            };
+        }
 
 
         // Creating new admission
@@ -89,10 +97,17 @@ export const modifyAdmission = async ({id, school, class_name, board, setting_ty
         connectToDb('accounts');
 
 
+        if(prefix !== ''){
+            // Checking if the prefix already exists
+            const admissions = await Admission.find();
+            const existingAdmission = await Admission.findById(id);
+            if(existingAdmission.prefix !== prefix && admissions.map(a => a.prefix).includes(prefix)){throw new Error('Prefix already exists')};
+        }
+
+
         // Update admission
         const updatedAdmission = await Admission.findByIdAndUpdate(id, {school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix}, {new:true});
         return updatedAdmission;
-
 
 
     } catch (err) {
