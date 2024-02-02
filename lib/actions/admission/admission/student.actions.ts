@@ -12,6 +12,7 @@ interface CreateStudentProps{
     // Student
     student:{
         // 1
+        is_online:Boolean;
         image:String;
         enquiry_no:String;
         reg_no:String;
@@ -239,6 +240,7 @@ interface ModifyStudentProps{
     // Student
     student:{
         // 1
+        is_online:Boolean;
         image:String;
         enquiry_no:String;
         reg_no:String;

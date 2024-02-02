@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {fetchAdmissions} from '@/lib/actions/admission/masterSettings/admission.actions';
 import FormCom from '@/components/modules/admission/masterSettings/admissionSetting/FormCom';
 import ViewCom from '@/components/modules/admission/masterSettings/admissionSetting/ViewCom';
+import FormComTwo from '@/components/modules/admission/masterSettings/admissionSetting/FormComTwo';
 
 
 
@@ -58,13 +59,16 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                     />
                 ) : (
-                    <FormCom
-                        admissions={admissions}
-                        isViewOpened={isViewOpened}
-                        setIsViewOpened={setIsViewOpened}
-                        updateAdmission={updateAdmission}
-                        setUpdateAdmission={setUpdateAdmission}
-                    />
+                    <div className='w-[90%] h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] overflow-y-scroll custom-sidebar-scrollbar sm:w-[80%]'>
+                        <FormComTwo/>
+                        <FormCom
+                            admissions={admissions}
+                            isViewOpened={isViewOpened}
+                            setIsViewOpened={setIsViewOpened}
+                            updateAdmission={updateAdmission}
+                            setUpdateAdmission={setUpdateAdmission}
+                        />
+                    </div>
                 )
             }
         </div>

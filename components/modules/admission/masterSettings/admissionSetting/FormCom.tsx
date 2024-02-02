@@ -33,10 +33,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     const {toast} = useToast();
 
 
-    // Sessions
-    const [sessions, setSessions] = useState([{}]);
-
-
     // Schools
     const [schools, setSchools] = useState([{}]);
 
@@ -54,7 +50,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
 
     // Numbers
-    const [numbers, setNumbers] = useState(['Enquiry No.', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+    const [numbers, setNumbers] = useState(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
 
 
     // Comparison object
@@ -174,20 +170,14 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
-            const sessionsRes = await fetchAcademicYears();
             const schoolsRes = await fetchGlobalSchoolDetails();
             const boardsRes = await fetchBoards();
             const classesRes = await fetchClasses();
-            setSessions(sessionsRes);
             setSchools(schoolsRes);
             setBoards(boardsRes);
             setClasses(classesRes);
             if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
                 form.setValue('class_name', 'All Classes');
-                // const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
-                // const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
-                // const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
-                // setNumbers(viewNumbers);
             };
         };
         fetcher();
@@ -202,7 +192,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setNumbers(viewNumbers);
         };
         if(!isAllClasses){
-            setNumbers(['Enquiry No.', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+            setNumbers(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
         };
     }, [isAllClasses]);
     useEffect(() => {
@@ -211,14 +201,12 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
             const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
             const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
-            console.log(viewNumbers);
             setNumbers(viewNumbers);
         };
     }, [window.onload]);
 
 
     return (
-        <div className='w-[90%] h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] overflow-y-scroll custom-sidebar-scrollbar sm:w-[80%]'>
             <Form
                 {...form}
             >
@@ -226,122 +214,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full flex flex-col items-center px-2 pt-6 sm:px-4'
                 >
-
-
-                    {/* Admission Setting */}
-                    <div className='w-full flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
-                        <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Admission Setting</h2>
-                        <div className='flex flex-col px-4 py-2 gap-2'>
-                            <div className='flex flex-row w-full gap-2'>
-                                {/* Session */}
-                                <div className='w-full flex flex-col items-center sm:flex-row'>
-                                    <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Session</FormLabel>
-                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select>
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {sessions.length < 1 ? (
-                                                            <p>No sessions</p>
-                                                        ) : // @ts-ignore
-                                                            !sessions[0].year_name ? (
-                                                            <LoadingIcon />
-                                                        ) : sessions.map((session:any) => (
-                                                            <SelectItem value={session.year_name} key={session._id}>{session.year_name}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    </div>
-                                </div>
-                                {/* Paymode */}
-                                <div className='w-full flex flex-col items-center sm:flex-row'>
-                                    <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Paymode</FormLabel>
-                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select>
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value='Cash'>Cash</SelectItem>
-                                                        <SelectItem value='Cheque'>Cheque</SelectItem>
-                                                        <SelectItem value='Credit Card'>Credit Card</SelectItem>
-                                                        <SelectItem value='DD'>DD</SelectItem>
-                                                        <SelectItem value='Debit Card'>Debit Card</SelectItem>
-                                                        <SelectItem value='NEFT'>NEFT</SelectItem>
-                                                        <SelectItem value='Net Banking'>Net Banking</SelectItem>
-                                                        <SelectItem value='Swiped Card'>Swiped Card</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className='flex flex-row w-full gap-2'>
-                                {/* Send SMS */}
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-end justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                    <>
-                                        <FormControl>
-                                            <div className='flex-1 flex items-center justify-end space-x-2'>
-                                                <Label
-                                                    htmlFor='send_sms'
-                                                    className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                                >
-                                                    Send SMS After Enquiry
-                                                </Label>
-                                                <Switch
-                                                    id='send_sms'
-                                                    // @ts-ignore
-                                                />
-                                            </div>
-                                        </FormControl>
-                                    </>
-                                </FormItem>
-                                {/* Is Auto Roll No. */}
-                                <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
-                                    <>
-                                        <FormControl>
-                                            <div className='flex-1 flex items-center justify-end space-x-2'>
-                                                <Label
-                                                    htmlFor='is_auto_roll_no'
-                                                    className='text-xs text-[#726E71] text-end pr-2 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                                >
-                                                    Is Auto Roll No.
-                                                </Label>
-                                                <Switch
-                                                    id='is_auto_roll_no'
-                                                    // @ts-ignore
-                                                />
-                                            </div>
-                                        </FormControl>
-                                    </>
-                                </FormItem>
-                            </div>
-                            <div className='flex justify-center mt-4'>
-                                <span
-                                    onClick={() => toast({title:'Saved Successfully!'})}
-                                    className='flex items-center justify-center w-[100px] px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                                >
-                                    Save
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-
-
 
 
                     {/* Enquiry, Registration, and Admission No. Setting */}
@@ -682,7 +554,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                     <Buttons setIsViewOpened={setIsViewOpened} admissions={admissions} updateAdmission={updateAdmission} setUpdateAdmission={setUpdateAdmission} onSubmit={onSubmit} form={form}/>
                 </form>
             </Form>
-        </div>
     )
 }
 

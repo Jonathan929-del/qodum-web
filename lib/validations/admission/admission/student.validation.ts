@@ -10,6 +10,7 @@ export const StudentValidation = z.object({
     // Student
     student:z.object({
         // 1
+        is_online:z.boolean(),
         image:z.string(),
         enquiry_no:z.string(),
         reg_no:z.string().nonempty({message:'*Please enter register no.'}),

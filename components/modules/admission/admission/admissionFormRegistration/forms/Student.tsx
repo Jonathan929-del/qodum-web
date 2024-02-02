@@ -23,6 +23,7 @@ import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/compon
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
 
 
 
@@ -64,6 +65,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     const [bankLedgers, setBankLedgers] = useState([{}]);
 
 
+    // Admission Accounts
+    const [admissionAccounts, setAdmissionAccounts] = useState([{}]);
+
+
     // Search
     const [search, setSearch] = useState('');
 
@@ -80,15 +85,16 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 // Student
                 student:{
                     // 1
+                    is_online:false,
                     image:'',
                     enquiry_no:'',
                     reg_no:'',
                     pros_no:'',
                     amount:0,
                     date:new Date(),
-                    payment_mode:'',
-                    admission_account:'',
-                    post_account:'',
+                    payment_mode:localStorage.getItem('pay_mode'),
+                    admission_account:localStorage.getItem('admission_account'),
+                    post_account:localStorage.getItem('post_account'),
                     // 2
                     class:'',
                     board:'',
@@ -296,6 +302,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const religionsRes = await fetchReligions();
             const categoriesRes = await fetchCategories();
             const bankLedgerRes = await fetchBankLedgers();
+            const admissionAccountRes = await fetchGeneralLedgers();
             setClasses(classesRes);
             setBoards(boardsRes);
             setStreams(streamsRes);
@@ -303,6 +310,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setReligions(religionsRes);
             setCategories(categoriesRes);
             setBankLedgers(bankLedgerRes);
+            setAdmissionAccounts(admissionAccountRes);
         };
         fetcher();
     }, []);
@@ -316,6 +324,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     // @ts-ignore
                     const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0]
                     const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];
+                    const onlineRegisterEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No. (Online)')[0];
                     
                     if(registerEntity && registerEntity?.should_be === 'Automatic'){
                         form.setValue('student.reg_no', `${registerEntity?.prefix}${registerEntity?.lead_zero.substring(0, registerEntity?.lead_zero?.length - 1)}${students?.length + 1}${registerEntity?.suffix}`);
@@ -327,6 +336,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         form.setValue('student.pros_no', `${prospectusEntity?.prefix}${prospectusEntity?.lead_zero.substring(0, prospectusEntity?.lead_zero.length - 1)}${students?.length + 1}${prospectusEntity?.suffix}`);
                     }else{
                         form.setValue('student.pros_no', '');
+                    };
+
+                    if(onlineRegisterEntity){
+                        form.setValue('student.is_online', true);
+                    }else{
+                        form.setValue('student.is_online', false);
                     };
                 };
                 if(updateStudent.id !== '' && form.getValues().student.class !== updateStudent.student.class){
@@ -336,6 +351,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     // @ts-ignore
                     const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0]
                     const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];
+                    const onlineRegisterEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No. (Online)')[0];
                     
                     if(registerEntity && registerEntity?.should_be === 'Automatic'){
                         form.setValue('student.reg_no', `${registerEntity?.prefix}${registerEntity?.lead_zero.substring(0, registerEntity?.lead_zero?.length - 1)}${students?.length + 1}${registerEntity?.suffix}`);
@@ -347,6 +363,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         form.setValue('student.pros_no', `${prospectusEntity?.prefix}${prospectusEntity?.lead_zero.substring(0, prospectusEntity?.lead_zero.length - 1)}${students?.length + 1}${prospectusEntity?.suffix}`);
                     }else{
                         form.setValue('student.pros_no', '');
+                    };
+
+                    if(onlineRegisterEntity){
+                        form.setValue('student.is_online', true);
+                    }else{
+                        form.setValue('student.is_online', false);
                     };
                 }
             } catch (err:any) {
@@ -362,6 +384,29 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             <div className='basis-[30%] flex flex-col gap-2 border-r-[0.5px] border-[#ccc] pr-[4px]'>
 
 
+                {/* Is online */}
+                <FormField
+                    control={form?.control}
+                    name='student.is_online'
+                    render={({field}) => (
+                        <FormItem className='flex flex-row items-start justify-start sm:items-center sm:gap-2'>
+                            <FormControl>
+                                <div className='flex-1 flex items-center justify-start space-x-2'>
+                                    <Label htmlFor='is_online' className='text-[11px]'>
+                                        Is online
+                                    </Label>
+                                    <Switch
+                                        id='is_online'
+                                        {...field}
+                                        value={field?.value}
+                                        onCheckedChange={field?.onChange}
+                                        checked={field?.value}
+                                    />
+                                </div>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
 
                 {/* Image */}
                 <StudentImage
@@ -555,14 +600,21 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             {...field}
                                             value={field?.value}
                                             onValueChange={field?.onChange}
-                                            disabled={true}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value='item'>item</SelectItem>
+                                                {admissionAccounts.length < 1 ? (
+                                                        <p>No accounts yet</p>
+                                                    ) : // @ts-ignore
+                                                    !admissionAccounts[0].account_name ? (
+                                                        <LoadingIcon />
+                                                    ) : admissionAccounts.map((ledger:any) => (
+                                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                                    ))
+                                                }
                                             </SelectContent>
                                         </Select>
                                     </FormControl>

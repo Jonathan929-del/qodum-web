@@ -47,6 +47,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         // Student
         student:{
             // 1
+            is_online:updateStudent.student.is_online,
             image:updateStudent.student.image,
             enquiry_no:updateStudent.student.enquiry_no,
             reg_no:updateStudent.student.reg_no,
@@ -245,15 +246,16 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             // Student
             student:{
                 // 1
+                is_online:updateStudent.id === '' ? false : updateStudent.student.is_online,
                 image:updateStudent.id === '' ? '' : updateStudent.student.image,
                 enquiry_no:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.enquiry_no || '' : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no || '',
                 reg_no:updateStudent.id === '' ? '' : updateStudent.student.reg_no,
                 pros_no:updateStudent.id === '' ? '' : updateStudent.student.pros_no,
                 amount:updateStudent.id === '' ? 0 : updateStudent.student.amount,
                 date:updateStudent.id === '' ? new Date() : updateStudent.student.date,
-                payment_mode:updateStudent.id === '' ? '' : updateStudent.student.payment_mode,
-                admission_account:updateStudent.id === '' ? '' : updateStudent.student.admission_account,
-                post_account:updateStudent.id === '' ? '' : updateStudent.student.post_account,
+                payment_mode:updateStudent.id === '' ? localStorage.getItem('pay_mode') : updateStudent.student.payment_mode,
+                admission_account:updateStudent.id === '' ? localStorage.getItem('admission_account') : updateStudent.student.admission_account,
+                post_account:updateStudent.id === '' ? localStorage.getItem('post_account') : updateStudent.student.post_account,
                 // 2
                 with_enquiry:true,
                 class:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.class_name : updateStudent.id === '' ? '' : updateStudent.student.class,
@@ -456,6 +458,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Student
                 student:{
                     // 1
+                    is_online:values.student.is_online,
                     image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : '',
                     enquiry_no:values.student.enquiry_no,
                     reg_no:values.student.reg_no,
@@ -664,6 +667,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Student
                 student:{
                     // 1
+                    is_online:values.student.is_online,
                     image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : comparisonObject.student.image,
                     enquiry_no:values.student.enquiry_no,
                     reg_no:values.student.reg_no,
@@ -879,15 +883,16 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             // Student
             student:{
                 // 1
+                is_online:false,
                 image:'',
                 enquiry_no:'',
                 reg_no:'',
                 pros_no:'',
                 amount:0,
                 date:new Date(),
-                payment_mode:'',
-                admission_account:'',
-                post_account:'',
+                payment_mode:localStorage.getItem('pay_mode'),
+                admission_account:localStorage.getItem('admission_account'),
+                post_account:localStorage.getItem('post_account'),
                 // 2
                 class:'',
                 board:'',
@@ -1073,15 +1078,16 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             // Student
             student:{
                 // 1
+                is_online:false,
                 image:'',
                 enquiry_no:'',
                 reg_no:'',
                 pros_no:'',
                 amount:0,
                 date:new Date(),
-                payment_mode:'',
-                admission_account:'',
-                post_account:'',
+                payment_mode:localStorage.getItem('pay_mode'),
+                admission_account:localStorage.getItem('admission_account'),
+                post_account:localStorage.getItem('post_account'),
                 // 2
                 with_enquiry:true,
                 class:'',
@@ -1274,6 +1280,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     useEffect(() => {
         if(updateStudent.id !== ''){
             // Student
+            form.setValue('student.is_online', updateStudent.student.is_online);
             form.setValue('student.image', updateStudent.student.image);
             form.setValue('student.enquiry_no', updateStudent.student.enquiry_no);
             form.setValue('student.reg_no', updateStudent.student.reg_no);

@@ -32,15 +32,16 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             // Student
             student:{
                 // 1
+                is_online:false,
                 image:'',
                 enquiry_no:'',
                 reg_no:'',
                 pros_no:'',
                 amount:0,
                 date:new Date(),
-                payment_mode:'',
-                admission_account:'',
-                post_account:'',
+                payment_mode:localStorage.getItem('pay_mode'),
+                admission_account:localStorage.getItem('admission_account'),
+                post_account:localStorage.getItem('post_account'),
                 // 2
                 class:'',
                 board:'',
@@ -226,15 +227,16 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             // Student
             student:{
                 // 1
+                is_online:false,
                 image:'',
                 enquiry_no:'',
                 reg_no:'',
                 pros_no:'',
                 amount:0,
                 date:new Date(),
-                payment_mode:'',
-                admission_account:'',
-                post_account:'',
+                payment_mode:localStorage.getItem('pay_mode'),
+                admission_account:localStorage.getItem('admission_account'),
+                post_account:localStorage.getItem('post_account'),
                 // 2
                 with_enquiry:true,
                 class:'',

@@ -30,15 +30,16 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
             // Student
             student:{
                 // 1
+                is_online:student?.student?.is_online || false,
                 image:student?.student?.image || '',
                 enquiry_no:student?.student?.enquiry_no || '',
                 reg_no:student?.student?.reg_no || '',
                 pros_no:student?.student?.pros_no || '',
                 amount:student?.student?.amount || 0,
                 date:student?.student?.date || new Date(),
-                payment_mode:student?.student?.payment_mode || '',
-                admission_account:student?.student?.admission_account || '',
-                post_account:student?.student?.post_account || '',
+                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode'),
+                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account'),
+                post_account:student?.student?.post_account || localStorage.getItem('post_account'),
                 // 2
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
