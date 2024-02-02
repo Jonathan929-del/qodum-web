@@ -30,9 +30,9 @@ const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUp
                 pros_no:'',
                 amount:0,
                 date:new Date(),
-                payment_mode:localStorage.getItem('pay_mode'),
-                admission_account:localStorage.getItem('admission_account'),
-                post_account:localStorage.getItem('post_account'),
+                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
+                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
+                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
                 class:'',
                 board:'',

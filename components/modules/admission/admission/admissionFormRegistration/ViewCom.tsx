@@ -37,9 +37,9 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 pros_no:student?.student?.pros_no || '',
                 amount:student?.student?.amount || 0,
                 date:student?.student?.date || new Date(),
-                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode') || '',
-                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account') || '',
-                post_account:student?.student?.post_account || localStorage.getItem('post_account') || '',
+                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
+                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
+                post_account:student?.student?.post_account || localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
@@ -247,7 +247,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 {/* Account group */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[1300px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
@@ -256,7 +256,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Reg. No.
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -268,7 +268,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                             Student Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Father Name
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -290,7 +290,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                             ) : students.map((student:any) => (
                                 <CommandItem
                                     value={`${students.indexOf(student) + 1}`}
-                                    className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    className='w-full min-w-[1300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{students.indexOf(student) + 1}</li>
                                     <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
@@ -302,10 +302,10 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.reg_no}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.reg_no}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>True</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.name}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.father?.father_name}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.father?.father_name}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2'>700</li>
                                 </CommandItem>
                             ))
