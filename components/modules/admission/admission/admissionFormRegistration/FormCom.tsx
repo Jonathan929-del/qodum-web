@@ -445,8 +445,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setIsLoading(true);
         // Create Student
         if(updateStudent.id === ''){
-            if(students.map((student:any) => student.student.enquiry_no).includes(values.student.enquiry_no)){
-                toast({title:'Enquiry no. already exists', variant:'error'});
+            if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
+                toast({title:'Register no. already exists', variant:'error'});
                 return;
             };
             if(file){
@@ -652,8 +652,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
         // Modify Student
         else if(!deepEqual(comparisonObject, values) || file){
-            if(comparisonObject.student.enquiry_no !== values.student.enquiry_no && students.map((student:any) => student.student.enquiry_no).includes(values.student.enquiry_no)){
-                toast({title:'Enquiry no. already exists', variant:'error'});
+            if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
+                toast({title:'Register no. already exists', variant:'error'});
                 return;
             };
             if(file){
