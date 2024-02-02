@@ -37,9 +37,9 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 pros_no:student?.student?.pros_no || '',
                 amount:student?.student?.amount || 0,
                 date:student?.student?.date || new Date(),
-                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode'),
-                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account'),
-                post_account:student?.student?.post_account || localStorage.getItem('post_account'),
+                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode') || '',
+                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account') || '',
+                post_account:student?.student?.post_account || localStorage.getItem('post_account') || '',
                 // 2
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
