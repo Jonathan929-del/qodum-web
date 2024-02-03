@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
+import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import FormCom from '@/components/modules/admission/globalMasters/stationaryDetails/FormCom';
 import ViewCom from '@/components/modules/admission/globalMasters/stationaryDetails/ViewCom';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
@@ -24,15 +24,15 @@ const page = () => {
     const [stationaryDetails, setStationaryDetails] = useState([{}]);
 
 
-    // Bank ledgers
-    const [bankLedgers, setBankLedgers] = useState([{}]);
+    // Genral ledgers
+    const [generalLedgers, setGeneralLedgers] = useState([{}]);
 
 
     // Schools
     const [schools, setSchools] = useState([{}]);
 
     
-    // Bank ledgers
+    // Sessions
     const [sessions, setSessions] = useState([{}]);
 
 
@@ -42,9 +42,10 @@ const page = () => {
         isDeleteClicked:false,
         stationary_name:'',
         amount: '',
-        post_account_name: '',
+        account_name: '',
         school_name: '',
-        session:''
+        session:'',
+        is_online:false
     });
 
     
@@ -52,11 +53,11 @@ const page = () => {
     useEffect(() => {
         const stationaryDetailsFetcher = async () => {
             const stationaryRes = await fetchStationaryDetails();
-            const bankLedgersRes = await fetchBankLedgers();
+            const generalLedgersRes = await fetchGeneralLedgers();
             const schoolsRes = await fetchGlobalSchoolDetails();
             const sessionsRes = await fetchAcademicYears();
             setStationaryDetails(stationaryRes);
-            setBankLedgers(bankLedgersRes);
+            setGeneralLedgers(generalLedgersRes);
             setSchools(schoolsRes);
             setSessions(sessionsRes);
         };
@@ -77,7 +78,7 @@ const page = () => {
                     <FormCom
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
-                        bankLedgers={bankLedgers}
+                        generalLedgers={generalLedgers}
                         schools={schools}
                         sessions={sessions}
                         stationaryDetails={stationaryDetails}

@@ -247,7 +247,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
         // Updating subjects
-        const subjectsAffected = await Subject.find({subject_name:student.subjects});
+        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true});
         subjectsAffected.map(async s => {
             await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
         });
@@ -473,8 +473,8 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         
         
         // Subjects handling
-        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects});
-        const newSubjects = await Subject.find({subject_name:student.subjects});
+        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects, is_university:true});
+        const newSubjects = await Subject.find({subject_name:student.subjects, is_university:true});
         
 
         // Additional subjects
@@ -518,7 +518,7 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
         // Adding subject available seats
         const student = await Student.findById(id);
-        const subjects = await Subject.find({subject_name:student.student.subjects});
+        const subjects = await Subject.find({subject_name:student.student.subjects, is_university:true});
         if(subjects.length > 0){
             subjects.map(async s => {
                 await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});

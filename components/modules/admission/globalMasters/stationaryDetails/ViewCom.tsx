@@ -21,9 +21,10 @@ const ViewCom = ({setIsViewOpened, stationaryDetails, setUpdateStationaryDetails
             isDeleteClicked:false,
             stationary_name:s.stationary_name,
             amount:s.amount,
-            post_account_name:s.post_account_name,
+            account_name:s.account_name,
             school_name:s.school_name,
-            session:s.session
+            session:s.session,
+            is_online:s.is_online
         });
         setIsViewOpened(false);
     };
@@ -91,7 +92,7 @@ const ViewCom = ({setIsViewOpened, stationaryDetails, setUpdateStationaryDetails
                                     <LoadingIcon />
                                 ) : stationaryDetails.map((s:any) => (
                                     <CommandItem
-                                        value={`${stationaryDetails.indexOf(s) + 1} ${s.stationary_name} ${s.amount} ${s.school_name} ${s.school_name}`}
+                                        value={`${stationaryDetails.indexOf(s) + 1} ${s.stationary_name} ${s.amount} ${s.school_name} ${s.account_name}`}
                                         className='w-full min-w-[900px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
                                         <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{stationaryDetails.indexOf(s) + 1}</li>
@@ -107,7 +108,7 @@ const ViewCom = ({setIsViewOpened, stationaryDetails, setUpdateStationaryDetails
                                         <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{s.stationary_name}</li>
                                         <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{s.amount}</li>
                                         <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{s.school_name}</li>
-                                        <li className='basis-[20%] flex flex-row items-center px-2'>{s.post_account_name}</li>
+                                        <li className='basis-[20%] flex flex-row items-center px-2'>{s.account_name}</li>
                                     </CommandItem>
                                 ))
                         }

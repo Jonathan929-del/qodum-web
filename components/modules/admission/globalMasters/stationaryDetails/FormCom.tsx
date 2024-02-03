@@ -14,13 +14,15 @@ import {createStationaryDetails, deleteStationaryDetails, modifyStationaryDetail
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ChevronDown } from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, setUpdateStationaryDetails, bankLedgers, schools, sessions}:any) => {
+const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, setUpdateStationaryDetails, generalLedgers, schools, sessions}:any) => {
 
 
     // Toast
@@ -31,9 +33,10 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
     const comparisonObject = {
         stationary_name:updateStationaryDetails.stationary_name,
         amount:updateStationaryDetails.amount,
-        post_account_name:updateStationaryDetails.post_account_name,
+        account_name:updateStationaryDetails.account_name,
         school_name:updateStationaryDetails.school_name,
-        session:updateStationaryDetails.session
+        session:updateStationaryDetails.session,
+        is_online:updateStationaryDetails.is_online
     };
 
 
@@ -43,9 +46,10 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
         defaultValues:{
             stationary_name:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.stationary_name,
             amount:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.amount,
-            post_account_name:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.post_account_name,
+            account_name:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.account_name,
             school_name:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.school_name,
-            session:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.session
+            session:updateStationaryDetails.id === '' ? '' : updateStationaryDetails.session,
+            is_online:updateStationaryDetails.id === '' ? false : updateStationaryDetails.is_online,
         }
     });
 
@@ -58,12 +62,17 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                 toast({title:'Stationary name already exists', variant:'error'});
                 return;
             };
+            if(stationaryDetails.map((s:any) => s.is_online).includes(values.is_online)){
+                toast({title:`${values.is_online ? 'Online' : 'Offline'} data already exists`, variant:'error'});
+                return;
+            };
             await createStationaryDetails({
                 stationary_name:values.stationary_name,
                 amount:values.amount,
-                post_account_name:values.post_account_name,
+                account_name:values.account_name,
                 school_name:values.school_name,
-                session:values.session
+                session:values.session,
+                is_online:values.is_online,
             });
             toast({title:'Added Successfully!'});
         }
@@ -73,13 +82,18 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                 toast({title:'Stationary name is already exists', variant:'error'});
                 return;
             };
+            if(stationaryDetails.map((s:any) => s.is_online).includes(values.is_online)){
+                toast({title:`${values.is_online ? 'Online' : 'Offline'} data already exists`, variant:'error'});
+                return;
+            };
             await modifyStationaryDetails({
                 id:updateStationaryDetails.id,
                 stationary_name:values.stationary_name,
                 amount:values.amount,
-                post_account_name:values.post_account_name,
+                account_name:values.account_name,
                 school_name:values.school_name,
-                session:values.session
+                session:values.session,
+                is_online:values.is_online
             });
             toast({title:'Updated Successfully!'});
         }
@@ -96,17 +110,19 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
             isDeleteClicked:false,
             stationary_name:'',
             amount:'',
-            post_account_name:'',
+            account_name:'',
             school_name:'',
-            session:''
+            session:'',
+            is_online:false
         });
         // Reseting form
         form.reset({
             stationary_name:'',
             amount:'',
-            post_account_name:'',
+            account_name:'',
             school_name:'',
-            session:''
+            session:'',
+            is_online:false
         });
     };
 
@@ -165,14 +181,14 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                     />
 
 
-                    {/* Post Account Name */}
+                    {/* Account Name */}
                     <FormField
                         control={form.control}
-                        name='post_account_name'
+                        name='account_name'
                         render={({field}) => (
                             <FormItem className='w-full'>
                                 <div className='w-full flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Post Account Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Account Name</FormLabel>
                                     <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Select
@@ -185,11 +201,11 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                                                     <ChevronDown className='h-4 w-4 opacity-50'/>
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {bankLedgers.length < 1 ? (
-                                                        <p>No post accounts</p>
-                                                    ) : !bankLedgers[0] ? (
+                                                    {generalLedgers.length < 1 ? (
+                                                        <p>No accounts</p>
+                                                    ) : !generalLedgers[0] ? (
                                                         <LoadingIcon />
-                                                    ) : bankLedgers.map((account:any) => (
+                                                    ) : generalLedgers.map((account:any) => (
                                                         <SelectItem value={account.account_name} key={account._id}>{account.account_name}</SelectItem>
                                                     ))}
                                                 </SelectContent>
@@ -275,6 +291,35 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                                 </div>
                             </div>
                         </FormItem>
+                        )}
+                    />
+
+
+                    {/* Is Online */}
+                    <FormField
+                        control={form.control}
+                        name='is_online'
+                        render={({field}) => (
+                            <FormItem className='w-full flex-1 h-10 pt-4 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                                <FormControl>
+                                    <div className='flex-1 flex items-center justify-center space-x-2'>
+                                        <Label
+                                            htmlFor='is_online'
+                                            className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                        >
+                                            Is Online
+                                        </Label>
+                                        <Switch
+                                            id='is_online'
+                                            {...field}
+                                            value={field.value}
+                                            onCheckedChange={field.onChange}
+                                            checked={field.value}
+                                            // disabled={updateAcademicYear.id === '' ? false : updateAcademicYear.is_active}
+                                        />
+                                    </div>
+                                </FormControl>
+                            </FormItem>
                         )}
                     />
 

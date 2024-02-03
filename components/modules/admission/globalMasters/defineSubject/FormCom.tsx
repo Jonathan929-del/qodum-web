@@ -132,29 +132,6 @@ const FormCom = ({setIsViewOpened, subjects, updateSubject, setUpdateSubject}:an
                     />
 
 
-                    {/* Available Seats */}
-                    <FormField
-                        control={form.control}
-                        name='available_seats'
-                        render={({field}) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Available Seats</FormLabel>
-                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <div className='mt-[-10px] text-xs'>
-                                        <FormMessage />
-                                    </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
                     {/* Is University */}
                     <FormField
                         control={form.control}
@@ -183,6 +160,31 @@ const FormCom = ({setIsViewOpened, subjects, updateSubject, setUpdateSubject}:an
                             </FormItem>
                         )}
                     />
+
+
+                    {/* Available Seats */}
+                    {form.getValues().is_university && (
+                        <FormField
+                            control={form.control}
+                            name='available_seats'
+                            render={({field}) => (
+                                <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Available Seats</FormLabel>
+                                    <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <div className='mt-[-10px] text-xs'>
+                                            <FormMessage />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    )}
 
 
                     {/* Buttons */}

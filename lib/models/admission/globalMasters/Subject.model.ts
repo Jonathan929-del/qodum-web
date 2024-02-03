@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const SubjectSchema = new mongoose.Schema(
     {
         subject_name:{type:String, required:true, unique:true},
-        available_seats:{type:Number, required:true},
+        available_seats:{type:Number},
         is_university:{type:Boolean}
     },
     {

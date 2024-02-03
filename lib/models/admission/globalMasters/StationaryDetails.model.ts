@@ -10,9 +10,10 @@ const StationaryDetailsSchema = new mongoose.Schema(
     {
         stationary_name:{type:String, required:true, unique:true},
         amount:{type:Number, required:true},
-        post_account_name:{type:String, required:true},
+        account_name:{type:String, required:true},
         school_name:{type:String, required:true},
-        session:{type:String}
+        session:{type:String},
+        is_online:{type:Boolean, unique:true}
     },
     {
         timestamps:true

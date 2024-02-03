@@ -11,17 +11,25 @@ import StationaryDetails from '@/lib/models/admission/globalMasters/StationaryDe
 interface CreateStationaryDetailsProps{
     stationary_name:String;
     amount:Number;
-    post_account_name:String;
+    account_name:String;
     school_name:String;
     session:String;
+    is_online:Boolean;
 };
 // Create stationary details
-export const createStationaryDetails = async ({stationary_name, amount, post_account_name, school_name, session}:CreateStationaryDetailsProps) => {
+export const createStationaryDetails = async ({stationary_name, amount, account_name, school_name, session, is_online}:CreateStationaryDetailsProps) => {
     try {
 
-    
+
         // Database connection
         connectToDb('accounts');
+
+
+        // Checking if online or offline data already exists
+        const existingData = await StationaryDetails.findOne({is_online});
+        if(existingData){
+            throw new Error(`${is_online ? 'Online' : 'Offline'} stationary details already exsist`);
+        };
 
 
         // Checking if the stationary name already exists
@@ -32,14 +40,14 @@ export const createStationaryDetails = async ({stationary_name, amount, post_acc
 
 
         // Creating new stationary details
-        const newStationaryDetails = await StationaryDetails.create({stationary_name, amount, post_account_name, school_name, session});
+        const newStationaryDetails = await StationaryDetails.create({stationary_name, amount, account_name, school_name, session, is_online});
         newStationaryDetails.save();
 
 
         // Return
         return newStationaryDetails;
 
-        
+
     } catch (err:any) {
         console.log(`Error creating stationary details: ${err.message}`);
     };
@@ -74,16 +82,26 @@ interface ModifyStationaryDetailsProps{
     id:String;
     stationary_name:String;
     amount:Number;
-    post_account_name:String;
+    account_name:String;
     school_name:String;
     session:String;
+    is_online:Boolean;
+
 }
 // Modify stationry details
-export const modifyStationaryDetails = async ({id, stationary_name, amount, post_account_name, school_name, session}:ModifyStationaryDetailsProps) => {
+export const modifyStationaryDetails = async ({id, stationary_name, amount, account_name, school_name, session, is_online}:ModifyStationaryDetailsProps) => {
     try {
 
         // Db connection
         connectToDb('accounts');
+
+
+        // Checking if online or offline data already exists
+        const existingData = await StationaryDetails.findOne({is_online});
+        if(existingData){
+            throw new Error(`${is_online ? 'Online' : 'Offline'} stationary details already exsist`);
+        };
+
 
 
         // Checking if the stationary details already exists
@@ -93,7 +111,7 @@ export const modifyStationaryDetails = async ({id, stationary_name, amount, post
 
 
         // Updating stationary details
-        const updatedStationaryDetails = await StationaryDetails.findByIdAndUpdate(id, {stationary_name, amount, post_account_name, school_name, session}, {new:true});
+        const updatedStationaryDetails = await StationaryDetails.findByIdAndUpdate(id, {stationary_name, amount, account_name, school_name, session, is_online}, {new:true});
 
 
         // Return

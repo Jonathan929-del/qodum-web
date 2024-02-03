@@ -121,24 +121,3 @@ export const deleteSubject = async ({id}:{id:String}) => {
         throw new Error(`Error deleting subject: ${err}`);      
     };
 };
-
-
-
-
-
-// Fetch is university subjects
-export const fetchIsUniversitySubjects = async () => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Fetching
-        const subjects = await Subject.find({is_university:true});
-        return subjects;
-
-    } catch (err:any) {
-        throw new Error(`Error fetching subjects: ${err}`);
-    };
-};

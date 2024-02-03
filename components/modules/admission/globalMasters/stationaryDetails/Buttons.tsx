@@ -20,17 +20,19 @@ const Buttons = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
             isDeleteClicked:false,
             stationary_name:'',
             amount:'',
-            post_account_name:'',
+            account_name:'',
             school_name:'',
-            session:''
+            session:'',
+            is_online:false
         });
         // Reseting form
         form.reset({
             stationary_name:'',
             amount:'',
-            post_account_name:'',
+            account_name:'',
             school_name:'',
-            session:''
+            session:'',
+            is_online:false
         });
     };
 
