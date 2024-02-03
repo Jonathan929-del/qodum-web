@@ -11,7 +11,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
-import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
+import {applyStudentForAdmission, fetchClassStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
@@ -46,6 +46,10 @@ function FormCom() {
     const [sessions, setSessions] = useState([{}]);
 
 
+    // Selected students
+    const [selectedStudents, setSelectedStudents] = useState([]);
+
+
     // Form
     const form = useForm({
         resolver: zodResolver(ManualListGenerationValidation),
@@ -64,7 +68,19 @@ function FormCom() {
     // Submit handler
     const onSubmit = async (values: z.infer<typeof ManualListGenerationValidation>) => {
         try {
-
+            const res = await applyStudentForAdmission({reg_nos:selectedStudents});
+            console.log(res);
+            form.reset({
+                class_name:'',
+                merit_list:'',
+                date:new Date(),
+                admission_date_from:new Date(),
+                admission_date_to:new Date(),
+                session:'',
+                students:[]
+            });
+            setStudents([{}]);
+            setSelectedStudents([]);
             toast({title:'Updated Successfully!'});
 
         } catch (err: any) {
@@ -73,13 +89,24 @@ function FormCom() {
     };
 
 
+    // Get students
+    const getStudents = async (class_name:any) => {
+        const classStudents = await fetchClassStudents({class_name});
+        if(classStudents.length > 0){
+            setStudents(classStudents);
+            // @ts-ignore
+            setSelectedStudents(classStudents.map((s:any) => s?.student?.reg_no));
+        }else{
+            toast({title:'No students found', variant:'alert'});
+        }
+    };
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const studentsRes = await fetchStudents();
             const classesRes = await fetchClasses();
             const sessionsRes = await fetchAcademicYears();
-            setStudents(studentsRes);
             setClasses(classesRes);
             setSessions(sessionsRes);
         };
@@ -214,6 +241,7 @@ function FormCom() {
                         <span
                             className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            onClick={() => getStudents(form.getValues().class_name)}
                         >
                             Get Student
                         </span>
@@ -346,6 +374,8 @@ function FormCom() {
 
                     <StudentsList
                         students={students}
+                        selectedStudents={selectedStudents}
+                        setSelectedStudents={setSelectedStudents}
                     />
 
 

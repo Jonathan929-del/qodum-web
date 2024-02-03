@@ -195,6 +195,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
         const newStudent = await Student.create({
             student:{
                 // 1
+                is_up_for_admission:false,
                 is_online:student.is_online,
                 image:student.image,
                 enquiry_no:student.enquiry_no,
@@ -532,5 +533,58 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting student: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch students in a class
+export const fetchClassStudents = async ({class_name}:{class_name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching students
+        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false});
+
+
+        // Return
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error deleting student: ${err}`);
+    };
+};
+
+
+
+
+
+
+// Apply student for admission props
+interface ApplyStudentForAdmissionProps{
+    reg_nos:string[];
+}
+// Apply student for admission
+export const applyStudentForAdmission = async ({reg_nos}:ApplyStudentForAdmissionProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Update student
+        reg_nos.map(async no => {
+            const updatedStudents = await Student.updateMany({'student.reg_no':no}, {'student.is_up_for_admission':true}, {new:true});
+            return updatedStudents;
+        });
+    
+
+    } catch (err) {
+        throw new Error(`Error updating student: ${err}`);
     };
 };

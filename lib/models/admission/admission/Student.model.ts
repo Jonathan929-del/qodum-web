@@ -13,6 +13,7 @@ const StudentSchema = new mongoose.Schema(
         // Student
         student:{
             // 1
+            is_up_for_admission:{type:Boolean},
             is_online:{type:Boolean},
             image:{type:String},
             enquiry_no:{type:String},
