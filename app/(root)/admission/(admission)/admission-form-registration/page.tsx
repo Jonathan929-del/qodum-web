@@ -49,7 +49,7 @@ const page = () => {
             class:'',
             board:'',
             stream:'',
-            subject:'',
+            subjects:[''],
             optional_subject:'',
             name:'',
             middle_name:'',
@@ -238,7 +238,11 @@ const page = () => {
         contact_person:''
     });
 
-    
+
+    // Selected subjects
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
+
+
     // Use effect
     useEffect(() => {
         const accountGroupsFetcher = async () => {
@@ -260,12 +264,14 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
                         setValuesFromEnquiry={setValuesFromEnquiry}
+                        setSelectedSubjects={setSelectedSubjects}
                     />
                 ) : isViewOpened === 'enquiry' ? (
                     <EnquiryViewCom
                         setUpdateStudent={setUpdateStudent}
                         enquiries={admissionEnquiries}
                         setIsViewOpened={setIsViewOpened}
+                        setSelectedSubjects={setSelectedSubjects}
                         setValuesFromEnquiry={setValuesFromEnquiry}
                     />
                 ) : (
@@ -278,6 +284,8 @@ const page = () => {
                         setUpdateStudent={setUpdateStudent}
                         admissionEnquiries={admissionEnquiries}
                         setValuesFromEnquiry={setValuesFromEnquiry}
+                        selectedSubjects={selectedSubjects}
+                        setSelectedSubjects={setSelectedSubjects}
                     />
                 )
             }

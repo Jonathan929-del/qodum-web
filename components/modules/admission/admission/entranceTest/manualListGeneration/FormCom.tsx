@@ -2,6 +2,7 @@
 import * as z from 'zod';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
+import StudentsList from './StudentList';
 import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Calendar} from '@/components/ui/calendar';
@@ -10,13 +11,12 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {ManualListGenerationValidation} from '@/lib/validations/admission/admission/entranceTest/manualListGeneration.validation';
-import { fetchAcademicYears } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import { fetchStudents } from '@/lib/actions/admission/admission/student.actions';
-import StudentsList from './StudentList';
 
 
 
@@ -88,7 +88,7 @@ function FormCom() {
 
 
     return (
-        <div className='w-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] overflow-y-scroll custom-sidebar-scrollbar'>
             <Form
                 {...form}
             >
@@ -101,7 +101,7 @@ function FormCom() {
 
 
 
-                    <div className='w-full flex flex-row gap-2'>
+                    <div className='w-full flex flex-col items-start gap-2 lg:items-end lg:flex-row'>
                         {/* Class */}
                         <div className='w-full flex flex-col items-center'>
                             <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
@@ -208,13 +208,22 @@ function FormCom() {
                                 </FormItem>
                             )}
                         />
+
+
+                        {/* Get Student */}
+                        <span
+                            className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Get Student
+                        </span>
                     </div>
 
 
 
 
 
-                    <div className='w-full flex flex-row gap-2 mt-4'>
+                    <div className='w-full flex flex-col items-start gap-2 mt-2 lg:items-end lg:flex-row'>
                         {/* Adm. Date From */}
                         <FormField
                             control={form?.control}
@@ -323,6 +332,15 @@ function FormCom() {
                                 />
                             </div>
                         </div>
+
+
+                        {/* Update */}
+                        <span
+                            className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Update
+                        </span>
                     </div>
 
 

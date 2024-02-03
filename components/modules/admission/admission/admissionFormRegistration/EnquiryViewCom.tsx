@@ -11,7 +11,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUpdateStudent}:any) => {
+const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUpdateStudent, setSelectedSubjects}:any) => {
 
 
     // Select handler
@@ -37,7 +37,7 @@ const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUp
                 class:'',
                 board:'',
                 stream:'',
-                subject:'',
+                subjects:[''],
                 optional_subject:'',
                 name:'',
                 middle_name:'',
@@ -223,6 +223,7 @@ const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUp
             contact_person:enquiry.contact_person
         });
         setIsViewOpened('');
+        setSelectedSubjects([]);
     };
 
 

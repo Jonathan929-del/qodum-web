@@ -682,6 +682,9 @@ const modules = [
                         subPageName:'Define Stream'
                     },
                     {
+                        subPageName:'Define Subject'
+                    },
+                    {
                         subPageName:'Define Optional Subject'
                     },
                     {

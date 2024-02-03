@@ -23,7 +23,7 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects}:any) => {
 
 
     // Toast
@@ -61,7 +61,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             class:updateStudent.student.class,
             board:updateStudent.student.board,
             stream:updateStudent.student.stream,
-            subject:updateStudent.student.subject,
+            subjects:updateStudent.student.subjects,
             optional_subject:updateStudent.student.optional_subject,
             name:updateStudent.student.name,
             middle_name:updateStudent.student.middle_name,
@@ -261,7 +261,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 class:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.class_name : updateStudent.id === '' ? '' : updateStudent.student.class,
                 board:updateStudent.id === '' ? '' : updateStudent.student.board,
                 stream:updateStudent.id === '' ? '' : updateStudent.student.stream,
-                subject:updateStudent.id === '' ? '' : updateStudent.student.subject,
+                subjects:updateStudent.id === '' ? [''] : updateStudent.student.subjects,
                 optional_subject:updateStudent.id === '' ? '' : updateStudent.student.optional_subject,
                 name:valuesFromEnquiry.enquiry_no !== '' ? valuesFromEnquiry.student_name : updateStudent.id === '' ? '' : updateStudent.student.name,
                 middle_name:updateStudent.id === '' ? '' : updateStudent.student.middle_name,
@@ -472,7 +472,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     class:values.student.class,
                     board:values.student.board,
                     stream:values.student.stream,
-                    subject:values.student.subject,
+                    // subjects:values.student.subjects,
+                    subjects:selectedSubjects,
                     optional_subject:values.student.optional_subject,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
@@ -651,7 +652,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             toast({title:'Added Successfully!'});
         }
         // Modify Student
-        else if(!deepEqual(comparisonObject, values) || file){
+        else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects){
             if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                 toast({title:'Register no. already exists', variant:'error'});
                 return;
@@ -681,7 +682,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     class:values.student.class,
                     board:values.student.board,
                     stream:values.student.stream,
-                    subject:values.student.subject,
+                    // subjects:values.student.subjects,
+                    subjects:selectedSubjects,
                     optional_subject:values.student.optional_subject,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
@@ -897,7 +899,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 class:'',
                 board:'',
                 stream:'',
-                subject:'',
+                subjects:[''],
                 optional_subject:'',
                 name:'',
                 middle_name:'',
@@ -1093,7 +1095,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 class:'',
                 board:'',
                 stream:'',
-                subject:'',
+                subjects:[''],
                 optional_subject:'',
                 name:'',
                 middle_name:'',
@@ -1273,10 +1275,11 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setFile(null);
         setImageSrc('');
         setIsLoading(false);
+        setSelectedSubjects([]);
     };
 
 
-    // Use Effect
+    // Use Effects
     useEffect(() => {
         if(updateStudent.id !== ''){
             // Student
@@ -1293,7 +1296,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.class', updateStudent.student.class);
             form.setValue('student.board', updateStudent.student.board);
             form.setValue('student.stream', updateStudent.student.stream);
-            form.setValue('student.subject', updateStudent.student.subject);
+            form.setValue('student.subjects', updateStudent.student.subjects);
             form.setValue('student.optional_subject', updateStudent.student.optional_subject);
             form.setValue('student.name', updateStudent.student.name);
             form.setValue('student.middle_name', updateStudent.student.middle_name);
@@ -1501,6 +1504,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     updateStudent={updateStudent}
                                     setIsLoading={setIsLoading}
                                     setValuesFromEnquiry={setValuesFromEnquiry}
+                                    selectedSubjects={selectedSubjects}
+                                    setSelectedSubjects={setSelectedSubjects}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -1520,7 +1525,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects}/>
                         </div>
                     </form>
                 )}

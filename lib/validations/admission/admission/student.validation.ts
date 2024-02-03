@@ -24,7 +24,7 @@ export const StudentValidation = z.object({
         class:z.string().nonempty({message:'*Class is required'}),
         board:z.string(),
         stream:z.string(),
-        subject:z.string(),
+        subjects:z.array(z.string()),
         optional_subject:z.string(),
         name:z.string().nonempty({message:'*Name is required'}),
         middle_name:z.string(),

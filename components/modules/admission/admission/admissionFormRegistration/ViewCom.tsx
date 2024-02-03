@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects}:any) => {
 
 
     // Select handler
@@ -44,7 +44,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
                 stream:student?.student?.stream || '',
-                subject:student?.student?.subject || '',
+                subjects:student?.student?.subjects || [''],
                 optional_subject:student?.student?.optional_subject || '',
                 name:student?.student?.name || '',
                 middle_name:student?.student?.middle_name || '',
@@ -221,6 +221,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
             }
         });
         setIsViewOpened('');
+        setSelectedSubjects(student?.student?.subjects || []);
     };
 
 
@@ -281,7 +282,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                     <CommandList>
                         {
                             students.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                <p className='w-full min-w-[1300px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No students yet
                                 </p>
                             ):

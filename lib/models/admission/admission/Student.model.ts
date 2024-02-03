@@ -27,7 +27,7 @@ const StudentSchema = new mongoose.Schema(
             class:{type:String},
             board:{type:String},
             stream:{type:String},
-            subject:{type:String},
+            subjects:{type:Array},
             optional_subject:{type:String},
             name:{type:String},
             middle_name:{type:String},

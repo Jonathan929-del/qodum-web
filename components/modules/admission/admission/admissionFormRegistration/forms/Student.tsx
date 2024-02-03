@@ -9,7 +9,7 @@ import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
 import {Calendar} from '@/components/ui/calendar';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {CalendarIcon, ChevronDown, Search} from 'lucide-react';
+import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
@@ -18,19 +18,21 @@ import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.act
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchEnquiryByEnquiryNo} from '@/lib/actions/admission/admission/enquiry.actions';
+import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
+import { Checkbox } from '@/components/ui/checkbox';
+import { fetchIsUniversitySubjects } from '@/lib/actions/admission/globalMasters/subject.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects}:any) => {
 
 
     // Date states
@@ -47,10 +49,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Streams
     const [streams, setStreams] = useState([{}]);
-
-
-    // Subjects
-    const [subjects, setSubjects] = useState([{}]);
 
 
     // Religions
@@ -71,6 +69,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Search
     const [search, setSearch] = useState('');
+
+
+    // Subjects
+    const [subjects, setSubjects] = useState([{}]);
+
+
+    // Optional subjects
+    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
 
 
     // Handle Search Click
@@ -99,7 +105,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     class:'',
                     board:'',
                     stream:'',
-                    subject:'',
+                    subject:[''],
                     optional_subject:'',
                     name:'',
                     middle_name:'',
@@ -298,7 +304,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const classesRes = await fetchClasses();
             const boardsRes = await fetchBoards();
             const streamsRes = await fetchStreams();
-            const subjectsRes = await fetchOptionalSubjects();
+            const subjectsRes = await fetchIsUniversitySubjects();
+            const optionalSubjectsRes = await fetchOptionalSubjects();
             const religionsRes = await fetchReligions();
             const categoriesRes = await fetchCategories();
             const bankLedgerRes = await fetchBankLedgers();
@@ -307,6 +314,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setBoards(boardsRes);
             setStreams(streamsRes);
             setSubjects(subjectsRes);
+            setOptionalSubjects(optionalSubjectsRes);
             setReligions(religionsRes);
             setCategories(categoriesRes);
             setBankLedgers(bankLedgerRes);
@@ -832,7 +840,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Stream</FormLabel>
                         <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField 
+                            <FormField
                                 control={form?.control}
                                 name='student.stream'
                                 render={({ field }) => (
@@ -865,34 +873,74 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                     </div>
 
-
-                    {/* Subject */}
+                    {/* Subjects */}
                     <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Subject</FormLabel>
+                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Subjects</FormLabel>
                         <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField 
+                            {/* <FormField
                                 control={form?.control}
-                                name='student.subject'
-                                render={({ field }) => (
+                                name='student.subjects'
+                                render={({ field }) => ( */}
                                     <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
                                         <FormControl>
                                             <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
+                                                // {...field}
+                                                // value={field?.value}
+                                                // onValueChange={field?.onChange}
                                             >
                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                        <SelectItem value='Subject'>Subject</SelectItem>
+                                                    {subjects.length < 1 ? (
+                                                        <p>No subjects</p>
+                                                    ) : // @ts-ignore
+                                                    !subjects[0]?.subject_name ? (
+                                                        <LoadingIcon />
+                                                    ) : (
+                                                        <>
+                                                            <div className='flex flex-row'>
+                                                                <div
+                                                                    // @ts-ignore
+                                                                    onClick={() => setSelectedSubjects(subjects.map((s:any) => s.subject_name))}
+                                                                    className='group flex flex-row items-center justify-center cursor-pointer'
+                                                                >
+                                                                    <Check size={12}/>
+                                                                    <p className='text-xs group-hover:underline'>All</p>
+                                                                </div>
+                                                                <div
+                                                                    onClick={() => setSelectedSubjects([])}
+                                                                    className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                                                >
+                                                                    <X size={12}/>
+                                                                    <p className='text-xs group-hover:underline'>Clear</p>
+                                                                </div>
+                                                            </div>
+                                                            <ul className='mt-2'>
+                                                                {subjects.map((subject:any) => (
+                                                                    <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
+                                                                        <Checkbox
+                                                                            className='rounded-[3px] text-hash-color font-semibold'
+                                                                            checked={selectedSubjects?.map((s:any) => s).includes(subject.subject_name)}
+                                                                            // @ts-ignore
+                                                                            onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
+                                                                        />
+                                                                        <div className='w-full flex flex-row'>
+                                                                            <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
+                                                                            <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </>
+                                                    )}
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>
                                     </FormItem>
-                                )}
-                            />
+                                {/* )}
+                            /> */}
                         </div>
                     </div>
 
@@ -917,12 +965,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {subjects?.length < 1 ? (
-                                                        <p>No subjects</p>
+                                                    {optionalSubjects?.length < 1 ? (
+                                                        <p>No optional subjects</p>
                                                         // @ts-ignore
-                                                    ) : !subjects[0]?.subject_name ? (
+                                                    ) : !optionalSubjects[0]?.subject_name ? (
                                                         <LoadingIcon />
-                                                    ) : subjects?.map((item:any) => (
+                                                    ) : optionalSubjects?.map((item:any) => (
                                                         <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
                                                     ))}
                                                 </SelectContent>

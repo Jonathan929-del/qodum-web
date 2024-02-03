@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Student from '@/lib/models/admission/admission/Student.model';
+import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 
 
 
@@ -26,7 +27,7 @@ interface CreateStudentProps{
         class:String;
         board:String;
         stream:String;
-        subject:String;
+        subjects:string[];
         optional_subject:String;
         name:String;
         middle_name:String;
@@ -178,7 +179,7 @@ interface CreateStudentProps{
 export const createStudent = async ({student, parents, others, guardian_details}:CreateStudentProps) => {
     try {
 
-    
+
         // Database connection
         connectToDb('accounts');
 
@@ -192,12 +193,64 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
         // Creating new student
         const newStudent = await Student.create({
-            student,
+            student:{
+                // 1
+                is_online:student.is_online,
+                image:student.image,
+                enquiry_no:student.enquiry_no,
+                reg_no:student.reg_no,
+                pros_no:student.pros_no,
+                amount:student.amount,
+                date:student.date,
+                payment_mode:student.payment_mode,
+                admission_account:student.admission_account,
+                post_account:student.post_account,
+                // 2
+                class:student.class,
+                board:student.board,
+                stream:student.stream,
+                subjects:student.subjects,
+                optional_subject:student.optional_subject,
+                name:student.name,
+                middle_name:student.middle_name,
+                last_name:student.last_name,
+                dob:student.dob,
+                place_of_birth:student.place_of_birth,
+                gender:student.gender,
+                contact_person_name:student.contact_person_name,
+                contact_person_mobile:student.contact_person_mobile,
+                contact_person_email:student.contact_person_email,
+                secondary_contact_no:student.secondary_contact_no,
+                h_no_and_streets:student.h_no_and_streets,
+                email:student.email,
+                city:student.city,
+                mobile:student.mobile,
+                state:student.state,
+                pin_code:student.pin_code,
+                aadhar_card_no:student.aadhar_card_no,
+                religion:student.religion,
+                blood_group:student.blood_group,
+                caste:student.caste,
+                category:student.category,
+                is_ews:student.is_ews,
+                sibling:student.sibling,
+                transport:student.transport,
+                nationality:student.nationality
+            },
             parents,
             others,
             guardian_details
         });
-        newStudent.save();
+        newStudent.save().then(async () => {
+            await Student.findOneAndUpdate({'student.reg_no':student.reg_no}, {'student.subjects':student.subjects});
+        });
+
+
+        // Updating subjects
+        const subjectsAffected = await Subject.find({subject_name:student.subjects});
+        subjectsAffected.map(async s => {
+            await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
+        });
 
 
         // Return
@@ -254,7 +307,7 @@ interface ModifyStudentProps{
         class:String;
         board:String;
         stream:String;
-        subject:String;
+        subjects:string[];
         optional_subject:String;
         name:String;
         middle_name:String;
@@ -417,8 +470,34 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
         // Update student
         const updatedStudent = await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
-        return updatedStudent;
+        
+        
+        // Subjects handling
+        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects});
+        const newSubjects = await Subject.find({subject_name:student.subjects});
+        
 
+        // Additional subjects
+        const additionalSubjects = newSubjects.filter(s => !previousSubjects.map(subject => subject.subject_name).includes(s.subject_name));
+        if(additionalSubjects.length > 0){
+            additionalSubjects.map(async s => {
+                await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
+            });
+        };
+
+
+        // Substracted subjects
+        const subtractedSubjects = previousSubjects.filter(s => !newSubjects.map(subject => subject.subject_name).includes(s.subject_name));
+        if(subtractedSubjects.length > 0){
+            subtractedSubjects.map(async s => {
+                await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
+            });
+        };
+
+
+        // Return
+        return updatedStudent;
+    
 
     } catch (err) {
         throw new Error(`Error updating student: ${err}`);
@@ -435,6 +514,16 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
         // Db connection
         connectToDb('accounts');
+
+
+        // Adding subject available seats
+        const student = await Student.findById(id);
+        const subjects = await Subject.find({subject_name:student.student.subjects});
+        if(subjects.length > 0){
+            subjects.map(async s => {
+                await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
+            });
+        };
 
 
         // Deleting student

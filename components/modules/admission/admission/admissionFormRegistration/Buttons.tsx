@@ -10,7 +10,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects}:any) => {
 
 
     // Cancel click
@@ -46,7 +46,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 class:'',
                 board:'',
                 stream:'',
-                subject:'',
+                subjects:[''],
                 optional_subject:'',
                 name:'',
                 middle_name:'',
@@ -242,7 +242,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 class:'',
                 board:'',
                 stream:'',
-                subject:'',
+                subjects:[''],
                 optional_subject:'',
                 name:'',
                 middle_name:'',
@@ -421,6 +421,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
         // Image
         setFile(null);
         setImageSrc('');
+        setSelectedSubjects([]);
     };
 
 
