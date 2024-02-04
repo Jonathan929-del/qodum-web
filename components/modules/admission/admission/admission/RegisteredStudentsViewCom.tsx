@@ -10,23 +10,226 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects}:any) => {
+const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpdateStudent, setValuesFromRegister, setSelectedSubjects}:any) => {
 
 
     // Select handler
     const selectHandler = (student:any) => {
-        setValuesFromEnquiry({
-            enquiry_no:'',
-            visitor_name:'',
-            visitor_address:'',
-            mobile_no:0,
-            student_name:'',
-            class_name:'',
-            contact_person:''
-        });
         setUpdateStudent({
-            id:student?._id,
+            id:'',
             isDeleteClicked:false,
+    
+            // Student
+            student:{
+                // Admission data
+                section:'',
+                adm_no:'',
+                pen_no:'',
+                roll_no:'',
+                bill_no:'',
+                is_university:false,
+                re_adm_no:'',
+                is_minority:false,
+                is_disability:false,
+                dis_disc:'',
+                is_new:false,
+                is_active:false,
+                reason:'',
+                is_only_child:false,
+                student_status:'',
+                house:'',
+                // 1
+                is_online:false,
+                image:'',
+                enquiry_no:'',
+                reg_no:'',
+                pros_no:'',
+                amount:0,
+                date:new Date(),
+                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
+                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
+                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
+                // 2
+                class:'',
+                board:'',
+                stream:'',
+                subjects:[''],
+                optional_subject:'',
+                name:'',
+                middle_name:'',
+                last_name:'',
+                dob:new Date(),
+                place_of_birth:'',
+                gender:'Male',
+                contact_person_name:'',
+                contact_person_mobile:0,
+                contact_person_email:'',
+                secondary_contact_no:0,
+                h_no_and_streets:'',
+                email:'',
+                city:'',
+                mobile:0,
+                state:'',
+                pin_code:0,
+                aadhar_card_no:0,
+                religion:'',
+                blood_group:'',
+                caste:'',
+                category:'',
+                is_ews:false,
+                sibling:false,
+                transport:'',
+                nationality:''
+            },
+    
+            // Parents
+            parents:{
+                // Father
+                father:{
+                    father_name:'',
+                    middle_name:'',
+                    last_name:'',
+                    profession:'',
+                    designation:'',
+                    residence_address:'',
+                    office_address:'',
+                    email:'',
+                    alternate_email:'',
+                    dob:new Date(),
+                    mobile:0,
+                    phone:0,
+                    company_name:'',
+                    business_details:'',
+                    qualification:'',
+                    service_in:'',
+                    office_phone:0,
+                    office_mobile:0,
+                    office_extension:'',
+                    office_email:'',
+                    office_website:'',
+                    annual_income:'',
+                    parent_status:''
+                },
+                // Mother
+                mother:{
+                    mother_name:'',
+                    middle_name:'',
+                    last_name:'',
+                    profession:'',
+                    designation:'',
+                    residence_address:'',
+                    office_address:'',
+                    email:'',
+                    alternate_email:'',
+                    dob:new Date(),
+                    mobile:0,
+                    phone:0,
+                    company_name:'',
+                    business_details:'',
+                    qualification:'',
+                    service_in:'',
+                    office_phone:0,
+                    office_mobile:0,
+                    office_extension:'',
+                    office_email:'',
+                    office_website:'',
+                    annual_income:'',
+                    anniversary_date:new Date()
+                }
+            },
+    
+            // Other details
+            others:{
+                // 1
+                student_other_details:{
+                    medical_history:'',
+                    descriptions:'',
+                    allergies:'',
+                    allergies_causes:'',
+                    family_doctor_name:'',
+                    family_doctor_phone:0,
+                    family_doctor_address:'',
+                    distance_from_home:0,
+                    no_of_living_year:0,
+                    only_child:'',
+                    general_description:''
+                },
+                // 2
+                student_staff_relation:{
+                    staff_ward:'',
+                    staff_name:''
+                },
+                // 3
+                is_alumni:{
+                    is_alumni:false,
+                    academic_session:'',
+                    class_name:'',
+                    admission_number:0
+                },
+                // 4
+                previous_school_details:[
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    },
+                    {
+                        school_name:'',
+                        board:'',
+                        passing_year:'',
+                        total_marks:'',
+                        percentage:'',
+                        result:'',
+                        is_alumni:'',
+                        father_name:'',
+                        father_passing_year:'',
+                        mother_name:'',
+                        mother_passing_year:''
+                    }
+                ]
+            },
+    
+            // Guardian details
+            guardian_details:{
+                // 1
+                guardian_name:'',
+                profession:'',
+                designation:'',
+                company_name:'',
+                business_details:'',
+                qualification:'',
+                // 2
+                if_single_parent:{
+                    student_lives_with:'',
+                    legal_custody_of_the_child:'',
+                    correspondence_to:'',
+                    check_id_applicable:'',
+                    separation_reason:''
+                }
+            }
+        });
+        setValuesFromRegister({
             // Student
             student:{
                 // 1
@@ -281,19 +484,19 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                     {/* Values */}
                     <CommandList>
                         {
-                            students.length < 1 ? (
+                            registeredStudents.length < 1 ? (
                                 <p className='w-full min-w-[1300px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No students yet
                                 </p>
                             ):
-                            !students[0]?.student?.name ? (
+                            !registeredStudents[0]?.student?.name ? (
                                 <LoadingIcon />
-                            ) : students.map((student:any) => (
+                            ) : registeredStudents.map((student:any) => (
                                 <CommandItem
-                                    value={`${students.indexOf(student) + 1} ${student?.student?.reg_no} ${student?.student?.name} ${student?.parents?.father?.father_name}`}
+                                    value={`${registeredStudents.indexOf(student) + 1} ${student?.student?.reg_no} ${student?.student?.name} ${student?.parents?.father?.father_name}`}
                                     className='w-full min-w-[1300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{students.indexOf(student) + 1}</li>
+                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{registeredStudents.indexOf(student) + 1}</li>
                                     <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
@@ -312,7 +515,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                             ))
                         }
                     </CommandList>
-                    {students.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
+                    {registeredStudents.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
                 </div>
 
 
@@ -354,4 +557,4 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
 
 
 // Export
-export default ViewCom;
+export default RegisteredStudentsViewCom;

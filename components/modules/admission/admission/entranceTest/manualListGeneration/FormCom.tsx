@@ -69,7 +69,6 @@ function FormCom() {
     const onSubmit = async (values: z.infer<typeof ManualListGenerationValidation>) => {
         try {
             const res = await applyStudentForAdmission({reg_nos:selectedStudents});
-            console.log(res);
             form.reset({
                 class_name:'',
                 merit_list:'',

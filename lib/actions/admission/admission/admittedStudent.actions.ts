@@ -1,17 +1,34 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import Student from '@/lib/models/admission/admission/Student.model';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
 
 
-// Create student props
-interface CreateStudentProps{
+// Create admitted student props
+interface CreateAdmittedStudentProps{
     // Student
     student:{
+        // Admission data
+        section:String;
+        adm_no:String;
+        pen_no:String;
+        roll_no:String;
+        bill_no:String;
+        is_university:Boolean;
+        re_adm_no:String;
+        is_minority:Boolean;
+        is_disability:Boolean;
+        dis_disc:String;
+        is_new:Boolean;
+        is_active:Boolean;
+        reason:String;
+        is_only_child:Boolean;
+        student_status:String;
+        house:String;
         // 1
         is_online:Boolean;
         image:String;
@@ -175,8 +192,8 @@ interface CreateStudentProps{
         }
     }
 };
-// Create student
-export const createStudent = async ({student, parents, others, guardian_details}:CreateStudentProps) => {
+// Create admitted student
+export const createAdmittedStudent = async ({student, parents, others, guardian_details}:CreateAdmittedStudentProps) => {
     try {
 
 
@@ -185,17 +202,34 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
         // Checking if the register number already exists
-        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no});
+        const existingStudent = await AdmittedStudent.findOne({'student.reg_no':student.reg_no});
         if(existingStudent){
             throw new Error('Register no. already exists');
         };
 
 
         // Creating new student
-        const newStudent = await Student.create({
+        const newStudent = await AdmittedStudent.create({
             student:{
+                // Admission data
+                section:student.section,
+                adm_no:student.adm_no,
+                pen_no:student.pen_no,
+                roll_no:student.roll_no,
+                bill_no:student.bill_no,
+                is_university:student.is_university,
+                re_adm_no:student.re_adm_no,
+                is_minority:student.is_minority,
+                is_disability:student.is_disability,
+                dis_disc:student.dis_disc,
+                is_new:student.is_new,
+                is_active:student.is_active,
+                reason:student.reason,
+                is_only_child:student.is_only_child,
+                student_status:student.student_status,
+                house:student.house,
                 // 1
-                is_up_for_admission:false,
+                is_up_for_admission:true,
                 is_online:student.is_online,
                 image:student.image,
                 enquiry_no:student.enquiry_no,
@@ -243,7 +277,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
             guardian_details
         });
         newStudent.save().then(async () => {
-            await Student.findOneAndUpdate({'student.reg_no':student.reg_no}, {'student.subjects':student.subjects});
+            await AdmittedStudent.findOneAndUpdate({'student.reg_no':student.reg_no}, {'student.subjects':student.subjects});
         });
 
 
@@ -259,7 +293,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
     } catch (err:any) {
-        console.log(`Error creating student: ${err.message}`);
+        console.log(`Error creating admitted student: ${err.message}`);
     };
 };
 
@@ -267,8 +301,8 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
 
-// Fetch students
-export const fetchStudents = async () => {
+// Fetch admitted students
+export const fetchAdmittedStudents = async () => {
     try {
 
         // Db connection
@@ -276,11 +310,11 @@ export const fetchStudents = async () => {
 
 
         // Fetching
-        const students = await Student.find();
+        const students = await AdmittedStudent.find();
         return students;
 
     } catch (err:any) {
-        throw new Error(`Error fetching students: ${err}`);
+        throw new Error(`Error fetching admitted students: ${err}`);
     };
 };
 
@@ -288,11 +322,28 @@ export const fetchStudents = async () => {
 
 
 
-// Modify student props
-interface ModifyStudentProps{
+// Modify admitted student props
+interface ModifyAdmittedStudentProps{
     id:String;
     // Student
     student:{
+        // Admission data
+        section:String;
+        adm_no:String;
+        pen_no:String;
+        roll_no:String;
+        bill_no:String;
+        is_university:Boolean;
+        re_adm_no:String;
+        is_minority:Boolean;
+        is_disability:Boolean;
+        dis_disc:String;
+        is_new:Boolean;
+        is_active:Boolean;
+        reason:String;
+        is_only_child:Boolean;
+        student_status:String;
+        house:String;
         // 1
         is_online:Boolean;
         image:String;
@@ -455,8 +506,8 @@ interface ModifyStudentProps{
         }
     }
 }
-// Modify student
-export const modifyStudent = async ({id, student, parents, others, guardian_details}:ModifyStudentProps) => {
+// Modify admitted student
+export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details}:ModifyAdmittedStudentProps) => {
     try {
 
         // Db connection
@@ -464,13 +515,13 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
 
         // Checking if the register no. already exists
-        const students = await Student.find();
-        const existingStudent = await Student.findById(id);
+        const students = await AdmittedStudent.find();
+        const existingStudent = await AdmittedStudent.findById(id);
         if(existingStudent.student.reg_no !== student.reg_no && students.map(student => student.student.reg_no).includes(student.reg_no)){throw new Error('Register no. already exists')};
 
 
         // Update student
-        const updatedStudent = await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
         
         
         // Subjects handling
@@ -501,7 +552,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
     
 
     } catch (err) {
-        throw new Error(`Error updating student: ${err}`);
+        throw new Error(`Error updating admitted student: ${err}`);
     };
 };
 
@@ -509,8 +560,8 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
 
 
-// Delete student
-export const deleteStudent = async ({id}:{id:String}) => {
+// Delete admitted student
+export const deleteAdmittedStudent = async ({id}:{id:String}) => {
     try {
 
         // Db connection
@@ -518,7 +569,7 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
 
         // Adding subject available seats
-        const student = await Student.findById(id);
+        const student = await AdmittedStudent.findById(id);
         const subjects = await Subject.find({subject_name:student.student.subjects, is_university:true});
         if(subjects.length > 0){
             subjects.map(async s => {
@@ -528,106 +579,8 @@ export const deleteStudent = async ({id}:{id:String}) => {
 
 
         // Deleting student
-        await Student.findByIdAndDelete(id);
+        await AdmittedStudent.findByIdAndDelete(id);
         return 'Student Deleted';
-
-    } catch (err) {
-        throw new Error(`Error deleting student: ${err}`);
-    };
-};
-
-
-
-
-
-// Fetch students in a class
-export const fetchClassStudents = async ({class_name}:{class_name:String}) => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Fetching students
-        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false});
-
-
-        // Return
-        return students;
-
-    } catch (err) {
-        throw new Error(`Error deleting student: ${err}`);
-    };
-};
-
-
-
-
-
-
-// Apply student for admission props
-interface ApplyStudentForAdmissionProps{
-    reg_nos:string[];
-}
-// Apply student for admission
-export const applyStudentForAdmission = async ({reg_nos}:ApplyStudentForAdmissionProps) => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Update student
-        reg_nos.map(async no => {
-            const updatedStudents = await Student.updateMany({'student.reg_no':no}, {'student.is_up_for_admission':true}, {new:true});
-            return updatedStudents;
-        });
-    
-
-    } catch (err) {
-        throw new Error(`Error updating student: ${err}`);
-    };
-};
-
-
-
-
-
-// Fetch manual list students
-export const fetchManualListStudents = async () => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Fetching
-        const students = await Student.find({'student.is_up_for_admission':true});
-        return students;
-
-    } catch (err:any) {
-        throw new Error(`Error fetching students: ${err}`);
-    };
-};
-
-
-
-
-
-// Fetch student by reg no
-export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Fetching student
-        const student = await Student.findOne({'student.reg_no':reg_no});
-
-
-        // Return
-        return student;
 
     } catch (err) {
         throw new Error(`Error deleting student: ${err}`);
