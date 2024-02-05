@@ -51,23 +51,17 @@ const page = () => {
             is_only_child:false,
             student_status:'',
             house:'',
+            doa:new Date(),
+            doj:new Date(),
+            admitted_class:'',
             // 1
-            is_online:false,
             image:'',
-            enquiry_no:'',
-            reg_no:'',
-            pros_no:'',
-            amount:0,
-            date:new Date(),
-            payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-            admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-            post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
             // 2
-            class:'',
-            board:'',
             stream:'',
             subjects:[''],
             optional_subject:'',
+            class:'',
+            board:'',
             name:'',
             middle_name:'',
             last_name:'',
@@ -249,22 +243,13 @@ const page = () => {
         // Student
         student:{
             // 1
-            is_online:false,
             image:'',
-            enquiry_no:'',
-            reg_no:'',
-            pros_no:'',
-            amount:0,
-            date:new Date(),
-            payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-            admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-            post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
             // 2
-            class:'',
-            board:'',
             stream:'',
             subjects:[''],
             optional_subject:'',
+            class:'',
+            board:'',
             name:'',
             middle_name:'',
             last_name:'',
@@ -463,18 +448,18 @@ const page = () => {
                 isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}
+                        setSelectedSubjects={setSelectedSubjects}
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
                         setValuesFromRegister={setValuesFromRegister}
-                        setSelectedSubjects={setSelectedSubjects}
                     />
                 ) : isViewOpened === 'register' ? (
                     <RegisteredStudentsViewCom
                         setUpdateStudent={setUpdateStudent}
+                        setSelectedSubjects={setSelectedSubjects}
                         registeredStudents={registeredStudents}
                         setIsViewOpened={setIsViewOpened}
-                        setSelectedSubjects={setSelectedSubjects}
-                        setValuesFromRegister={setValuesFromRegister}
+l                       setValuesFromRegister={setValuesFromRegister}
                     />
                 ) : (
                     <FormCom

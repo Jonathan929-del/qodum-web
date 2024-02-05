@@ -19,22 +19,13 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
             // Student
             student:{
                 // 1
-                is_online:false,
                 image:'',
-                enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:0,
-                date:new Date(),
-                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
-                class:'',
-                board:'',
                 stream:'',
                 subjects:[''],
                 optional_subject:'',
+                class:'',
+                board:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -231,23 +222,17 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 is_only_child:student?.student?.is_only_child || false,
                 student_status:student?.student?.student_status || '',
                 house:student?.student?.house || '',
+                doa:student?.student?.doa || new Date(),
+                doj:student?.student?.doj || new Date(),
+                admitted_class:student?.student?.admitted_class || '',
                 // 1
-                is_online:student?.student?.is_online || false,
                 image:student?.student?.image || '',
-                enquiry_no:student?.student?.enquiry_no || '',
-                reg_no:student?.student?.reg_no || '',
-                pros_no:student?.student?.pros_no || '',
-                amount:student?.student?.amount || 0,
-                date:student?.student?.date || new Date(),
-                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:student?.student?.post_account || localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
-                class:student?.student?.class || '',
-                board:student?.student?.board || '',
                 stream:student?.student?.stream || '',
                 subjects:student?.student?.subjects || [''],
                 optional_subject:student?.student?.optional_subject || '',
+                class:student?.student?.class || '',
+                board:student?.student?.board || '',
                 name:student?.student?.name || '',
                 middle_name:student?.student?.middle_name || '',
                 last_name:student?.student?.last_name || '',
@@ -423,7 +408,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
             }
         });
         setIsViewOpened('');
-        setSelectedSubjects(student?.student?.subjects || []);
+        setSelectedSubjects(student?.student?.subjects);
     };
 
 

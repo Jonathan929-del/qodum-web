@@ -67,23 +67,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             is_only_child:updateStudent.student.is_only_child,
             student_status:updateStudent.student.student_status,
             house:updateStudent.student.house,
+            doa:updateStudent.student.doa,
+            doj:updateStudent.student.doj,
+            admitted_class:updateStudent.student.admitted_class,
             // 1
-            is_online:updateStudent.student.is_online,
             image:updateStudent.student.image,
-            enquiry_no:updateStudent.student.enquiry_no,
-            reg_no:updateStudent.student.reg_no,
-            pros_no:updateStudent.student.pros_no,
-            amount:updateStudent.student.amount,
-            date:updateStudent.student.date,
-            payment_mode:updateStudent.student.payment_mode,
-            admission_account:updateStudent.student.admission_account,
-            post_account:updateStudent.student.post_account,
             // 2
-            class:updateStudent.student.class,
-            board:updateStudent.student.board,
             stream:updateStudent.student.stream,
             subjects:updateStudent.student.subjects,
             optional_subject:updateStudent.student.optional_subject,
+            class:updateStudent.student.class,
+            board:updateStudent.student.board,
             name:updateStudent.student.name,
             middle_name:updateStudent.student.middle_name,
             last_name:updateStudent.student.last_name,
@@ -283,103 +277,97 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 is_only_child:updateStudent.id === '' ? false : updateStudent.student.is_only_child,
                 student_status:updateStudent.id === '' ? '' : updateStudent.student.student_status,
                 house:updateStudent.id === '' ? '' : updateStudent.student.house,
+                doa:updateStudent.id === '' ? new Date() : updateStudent.student.doa,
+                doj:updateStudent.id === '' ? new Date() : updateStudent.student.doj,
+                admitted_class:updateStudent.id === '' ? '' : updateStudent.student.admitted_class,
                 // 1
-                is_online:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.is_online : updateStudent.id === '' ? false : updateStudent.student.is_online,
-                image:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.image : updateStudent.id === '' ? '' : updateStudent.student.image,
-                enquiry_no:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.enquiry_no : updateStudent.id === '' ? '' : updateStudent.student.enquiry_no,
-                reg_no:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.reg_no : updateStudent.id === '' ? '' : updateStudent.student.reg_no,
-                pros_no:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.pros_no : updateStudent.id === '' ? '' : updateStudent.student.pros_no,
-                amount:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.amount : updateStudent.id === '' ? 0 : updateStudent.student.amount,
-                date:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.date : updateStudent.id === '' ? new Date() : updateStudent.student.date,
-                payment_mode:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.payment_mode : updateStudent.id === '' ? localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '' : updateStudent.student.payment_mode,
-                admission_account:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.admission_account : updateStudent.id === '' ? localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '' : updateStudent.student.admission_account,
-                post_account:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.post_account : updateStudent.id === '' ? localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '' : updateStudent.student.post_account,
+                image:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.image : updateStudent.id === '' ? '' : updateStudent.student.image,
                 // 2
-                class:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.class : updateStudent.id === '' ? '' : updateStudent.student.class,
-                board:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.board : updateStudent.id === '' ? '' : updateStudent.student.board,
-                stream:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.stream : updateStudent.id === '' ? '' : updateStudent.student.stream,
-                subjects:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.subjects : updateStudent.id === '' ? [''] : updateStudent.student.subjects,
-                optional_subject:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.optional_subject : updateStudent.id === '' ? '' : updateStudent.student.optional_subject,
-                name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.name : updateStudent.id === '' ? '' : updateStudent.student.name,
-                middle_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.middle_name : updateStudent.id === '' ? '' : updateStudent.student.middle_name,
-                last_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.last_name : updateStudent.id === '' ? '' : updateStudent.student.last_name,
-                dob:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.dob : updateStudent.id === '' ? new Date() : updateStudent.student.dob,
-                place_of_birth:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.place_of_birth : updateStudent.id === '' ? '' : updateStudent.student.place_of_birth,
-                gender:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.gender : updateStudent.id === '' ? 'Male' : updateStudent.student.gender,
-                contact_person_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.contact_person_name : updateStudent.id === '' ? '' : updateStudent.student.contact_person_name,
-                contact_person_mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.contact_person_mobile : updateStudent.id === '' ? 0 : updateStudent.student.contact_person_mobile,
-                contact_person_email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.contact_person_email : updateStudent.id === '' ? '' : updateStudent.student.contact_person_email,
-                secondary_contact_no:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.secondary_contact_no : updateStudent.id === '' ? 0 : updateStudent.student.secondary_contact_no,
-                h_no_and_streets:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.h_no_and_streets : updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
-                email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.email : updateStudent.id === '' ? '' : updateStudent.student.email,
-                city:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.city : updateStudent.id === '' ? '' : updateStudent.student.city,
-                mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.mobile : updateStudent.id === '' ? 0 : updateStudent.student.mobile,
-                state:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.state : updateStudent.id === '' ? '' : updateStudent.student.state,
-                pin_code:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.pin_code : updateStudent.id === '' ? 0 : updateStudent.student.pin_code,
-                aadhar_card_no:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.aadhar_card_no : updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
-                religion:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.religion : updateStudent.id === '' ? '' : updateStudent.student.religion,
-                blood_group:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.blood_group : updateStudent.id === '' ? '' : updateStudent.student.blood_group,
-                caste:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.caste : updateStudent.id === '' ? '' : updateStudent.student.caste,
-                category:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.category : updateStudent.id === '' ? '' : updateStudent.student.category,
-                is_ews:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.is_ews : updateStudent.id === '' ? false : updateStudent.student.is_ews,
-                sibling:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.sibling : updateStudent.id === '' ? false : updateStudent.student.sibling,
-                transport:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.transport : updateStudent.id === '' ? '' : updateStudent.student.transport,
-                nationality:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.student.nationality : updateStudent.id === '' ? '' : updateStudent.student.nationality
+                stream:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.stream : updateStudent.id === '' ? '' : updateStudent.student.stream,
+                subjects:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.subjects : updateStudent.id === '' ? [''] : updateStudent.student.subjects,
+                optional_subject:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.optional_subject : updateStudent.id === '' ? '' : updateStudent.student.optional_subject,
+                class:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.class : updateStudent.id === '' ? '' : updateStudent.student.class,
+                board:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.board : updateStudent.id === '' ? '' : updateStudent.student.board,
+                name:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.name : updateStudent.id === '' ? '' : updateStudent.student.name,
+                middle_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.middle_name : updateStudent.id === '' ? '' : updateStudent.student.middle_name,
+                last_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.last_name : updateStudent.id === '' ? '' : updateStudent.student.last_name,
+                dob:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.dob : updateStudent.id === '' ? new Date() : updateStudent.student.dob,
+                place_of_birth:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.place_of_birth : updateStudent.id === '' ? '' : updateStudent.student.place_of_birth,
+                gender:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.gender : updateStudent.id === '' ? 'Male' : updateStudent.student.gender,
+                contact_person_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.contact_person_name : updateStudent.id === '' ? '' : updateStudent.student.contact_person_name,
+                contact_person_mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.contact_person_mobile : updateStudent.id === '' ? 0 : updateStudent.student.contact_person_mobile,
+                contact_person_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.contact_person_email : updateStudent.id === '' ? '' : updateStudent.student.contact_person_email,
+                secondary_contact_no:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.secondary_contact_no : updateStudent.id === '' ? 0 : updateStudent.student.secondary_contact_no,
+                h_no_and_streets:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.h_no_and_streets : updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
+                email:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.email : updateStudent.id === '' ? '' : updateStudent.student.email,
+                city:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.city : updateStudent.id === '' ? '' : updateStudent.student.city,
+                mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.mobile : updateStudent.id === '' ? 0 : updateStudent.student.mobile,
+                state:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.state : updateStudent.id === '' ? '' : updateStudent.student.state,
+                pin_code:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.pin_code : updateStudent.id === '' ? 0 : updateStudent.student.pin_code,
+                aadhar_card_no:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.aadhar_card_no : updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
+                religion:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.religion : updateStudent.id === '' ? '' : updateStudent.student.religion,
+                blood_group:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.blood_group : updateStudent.id === '' ? '' : updateStudent.student.blood_group,
+                caste:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.caste : updateStudent.id === '' ? '' : updateStudent.student.caste,
+                category:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.category : updateStudent.id === '' ? '' : updateStudent.student.category,
+                is_ews:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.is_ews : updateStudent.id === '' ? false : updateStudent.student.is_ews,
+                sibling:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.sibling : updateStudent.id === '' ? false : updateStudent.student.sibling,
+                transport:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.transport : updateStudent.id === '' ? '' : updateStudent.student.transport,
+                nationality:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.nationality : updateStudent.id === '' ? '' : updateStudent.student.nationality
             },
 
             // Parents
             parents:{
                 // Father
                 father:{
-                    father_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.father_name : updateStudent.id === '' ? '' : updateStudent.parents.father.father_name,
-                    middle_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.middle_name : updateStudent.id === '' ? '' : updateStudent.parents.father.middle_name,
-                    last_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.last_name : updateStudent.id === '' ? '' : updateStudent.parents.father.last_name,
-                    profession:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.profession : updateStudent.id === '' ? '' : updateStudent.parents.father.profession,
-                    designation:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.designation : updateStudent.id === '' ? '' : updateStudent.parents.father.designation,
-                    residence_address:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.residence_address : updateStudent.id === '' ? '' : updateStudent.parents.father.residence_address,
-                    office_address:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_address : updateStudent.id === '' ? '' : updateStudent.parents.father.office_address,
-                    email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.email : updateStudent.id === '' ? '' : updateStudent.parents.father.email,
-                    alternate_email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.alternate_email : updateStudent.id === '' ? '' : updateStudent.parents.father.alternate_email,
-                    dob:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.dob : updateStudent.id === '' ? new Date() : updateStudent.parents.father.dob,
-                    mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.mobile : updateStudent.id === '' ? 0 : updateStudent.parents.father.mobile,
-                    phone:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.phone : updateStudent.id === '' ? 0 : updateStudent.parents.father.phone,
-                    company_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.company_name : updateStudent.id === '' ? '' : updateStudent.parents.father.company_name,
-                    business_details:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.business_details : updateStudent.id === '' ? '' : updateStudent.parents.father.business_details,
-                    qualification:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.qualification : updateStudent.id === '' ? '' : updateStudent.parents.father.qualification,
-                    service_in:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.service_in : updateStudent.id === '' ? '' : updateStudent.parents.father.service_in,
-                    office_phone:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_phone : updateStudent.id === '' ? 0 : updateStudent.parents.father.office_phone,
-                    office_mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_mobile : updateStudent.id === '' ? 0 : updateStudent.parents.father.office_mobile,
-                    office_extension:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_extension : updateStudent.id === '' ? '' : updateStudent.parents.father.office_extension,
-                    office_email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_email : updateStudent.id === '' ? '' : updateStudent.parents.father.office_email,
-                    office_website:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.office_website : updateStudent.id === '' ? '' : updateStudent.parents.father.office_website,
-                    annual_income:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.annual_income : updateStudent.id === '' ? '' : updateStudent.parents.father.annual_income,
-                    parent_status:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.father.parent_status : updateStudent.id === '' ? '' : updateStudent.parents.father.parent_status,
+                    father_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.father_name : updateStudent.id === '' ? '' : updateStudent.parents.father.father_name,
+                    middle_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.middle_name : updateStudent.id === '' ? '' : updateStudent.parents.father.middle_name,
+                    last_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.last_name : updateStudent.id === '' ? '' : updateStudent.parents.father.last_name,
+                    profession:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.profession : updateStudent.id === '' ? '' : updateStudent.parents.father.profession,
+                    designation:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.designation : updateStudent.id === '' ? '' : updateStudent.parents.father.designation,
+                    residence_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.residence_address : updateStudent.id === '' ? '' : updateStudent.parents.father.residence_address,
+                    office_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_address : updateStudent.id === '' ? '' : updateStudent.parents.father.office_address,
+                    email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.email : updateStudent.id === '' ? '' : updateStudent.parents.father.email,
+                    alternate_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.alternate_email : updateStudent.id === '' ? '' : updateStudent.parents.father.alternate_email,
+                    dob:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.dob : updateStudent.id === '' ? new Date() : updateStudent.parents.father.dob,
+                    mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.mobile : updateStudent.id === '' ? 0 : updateStudent.parents.father.mobile,
+                    phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.phone : updateStudent.id === '' ? 0 : updateStudent.parents.father.phone,
+                    company_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.company_name : updateStudent.id === '' ? '' : updateStudent.parents.father.company_name,
+                    business_details:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.business_details : updateStudent.id === '' ? '' : updateStudent.parents.father.business_details,
+                    qualification:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.qualification : updateStudent.id === '' ? '' : updateStudent.parents.father.qualification,
+                    service_in:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.service_in : updateStudent.id === '' ? '' : updateStudent.parents.father.service_in,
+                    office_phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_phone : updateStudent.id === '' ? 0 : updateStudent.parents.father.office_phone,
+                    office_mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_mobile : updateStudent.id === '' ? 0 : updateStudent.parents.father.office_mobile,
+                    office_extension:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_extension : updateStudent.id === '' ? '' : updateStudent.parents.father.office_extension,
+                    office_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_email : updateStudent.id === '' ? '' : updateStudent.parents.father.office_email,
+                    office_website:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.office_website : updateStudent.id === '' ? '' : updateStudent.parents.father.office_website,
+                    annual_income:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.annual_income : updateStudent.id === '' ? '' : updateStudent.parents.father.annual_income,
+                    parent_status:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.father.parent_status : updateStudent.id === '' ? '' : updateStudent.parents.father.parent_status,
                 },
                 // Mother
                 mother:{
-                    mother_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.mother_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.mother_name,
-                    middle_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.middle_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.middle_name,
-                    last_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.last_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.last_name,
-                    profession:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.profession : updateStudent.id === '' ? '' : updateStudent.parents.mother.profession,
-                    designation:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.designation : updateStudent.id === '' ? '' : updateStudent.parents.mother.designation,
-                    residence_address:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.residence_address : updateStudent.id === '' ? '' : updateStudent.parents.mother.residence_address,
-                    office_address:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_address : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_address,
-                    email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.email : updateStudent.id === '' ? '' : updateStudent.parents.mother.email,
-                    alternate_email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.alternate_email : updateStudent.id === '' ? '' : updateStudent.parents.mother.alternate_email,
-                    dob:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.dob : updateStudent.id === '' ? new Date() : updateStudent.parents.mother.dob,
-                    mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.mobile : updateStudent.id === '' ? 0 : updateStudent.parents.mother.mobile,
-                    phone:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.phone : updateStudent.id === '' ? 0 : updateStudent.parents.mother.phone,
-                    company_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.company_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.company_name,
-                    business_details:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.business_details : updateStudent.id === '' ? '' : updateStudent.parents.mother.business_details,
-                    qualification:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.qualification : updateStudent.id === '' ? '' : updateStudent.parents.mother.qualification,
-                    service_in:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.service_in : updateStudent.id === '' ? '' : updateStudent.parents.mother.service_in,
-                    office_phone:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_phone : updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_phone,
-                    office_mobile:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_mobile : updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_mobile,
-                    office_extension:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_extension : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_extension,
-                    office_email:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_email : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_email,
-                    office_website:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.office_website : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_website,
-                    annual_income:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.annual_income : updateStudent.id === '' ? '' : updateStudent.parents.mother.annual_income,
-                    anniversary_date:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.parents.mother.anniversary_date : updateStudent.id === '' ? new Date() : updateStudent.parents.mother.anniversary_date,
+                    mother_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.mother_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.mother_name,
+                    middle_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.middle_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.middle_name,
+                    last_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.last_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.last_name,
+                    profession:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.profession : updateStudent.id === '' ? '' : updateStudent.parents.mother.profession,
+                    designation:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.designation : updateStudent.id === '' ? '' : updateStudent.parents.mother.designation,
+                    residence_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.residence_address : updateStudent.id === '' ? '' : updateStudent.parents.mother.residence_address,
+                    office_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_address : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_address,
+                    email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.email : updateStudent.id === '' ? '' : updateStudent.parents.mother.email,
+                    alternate_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.alternate_email : updateStudent.id === '' ? '' : updateStudent.parents.mother.alternate_email,
+                    dob:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.dob : updateStudent.id === '' ? new Date() : updateStudent.parents.mother.dob,
+                    mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.mobile : updateStudent.id === '' ? 0 : updateStudent.parents.mother.mobile,
+                    phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.phone : updateStudent.id === '' ? 0 : updateStudent.parents.mother.phone,
+                    company_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.company_name : updateStudent.id === '' ? '' : updateStudent.parents.mother.company_name,
+                    business_details:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.business_details : updateStudent.id === '' ? '' : updateStudent.parents.mother.business_details,
+                    qualification:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.qualification : updateStudent.id === '' ? '' : updateStudent.parents.mother.qualification,
+                    service_in:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.service_in : updateStudent.id === '' ? '' : updateStudent.parents.mother.service_in,
+                    office_phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_phone : updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_phone,
+                    office_mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_mobile : updateStudent.id === '' ? 0 : updateStudent.parents.mother.office_mobile,
+                    office_extension:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_extension : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_extension,
+                    office_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_email : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_email,
+                    office_website:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.office_website : updateStudent.id === '' ? '' : updateStudent.parents.mother.office_website,
+                    annual_income:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.annual_income : updateStudent.id === '' ? '' : updateStudent.parents.mother.annual_income,
+                    anniversary_date:valuesFromRegister.student.name !== '' ? valuesFromRegister.parents.mother.anniversary_date : updateStudent.id === '' ? new Date() : updateStudent.parents.mother.anniversary_date,
                 }
             },
 
@@ -387,70 +375,70 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             others:{
                 // 1
                 student_other_details:{
-                    medical_history:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.medical_history : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.medical_history,
-                    descriptions:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.descriptions : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.descriptions,
-                    allergies:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.allergies : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies,
-                    allergies_causes:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.allergies_causes : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies_causes,
-                    family_doctor_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.family_doctor_name : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
-                    family_doctor_phone:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.family_doctor_phone : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.family_doctor_phone,
-                    family_doctor_address:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.family_doctor_address : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
-                    distance_from_home:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.distance_from_home : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.distance_from_home,
-                    no_of_living_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.no_of_living_year : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.no_of_living_year,
-                    only_child:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.only_child : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
-                    general_description:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_other_details.general_description : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
+                    medical_history:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.medical_history : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.medical_history,
+                    descriptions:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.descriptions : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.descriptions,
+                    allergies:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.allergies : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies,
+                    allergies_causes:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.allergies_causes : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.allergies_causes,
+                    family_doctor_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_name : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
+                    family_doctor_phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_phone : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.family_doctor_phone,
+                    family_doctor_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_address : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
+                    distance_from_home:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.distance_from_home : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.distance_from_home,
+                    no_of_living_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.no_of_living_year : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.no_of_living_year,
+                    only_child:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.only_child : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
+                    general_description:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.general_description : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
                 },
                 // 2
                 student_staff_relation:{
-                    staff_ward:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_staff_relation.staff_ward : updateStudent.id === '' ? '' : updateStudent.others.others.student_staff_relation.staff_ward,
-                    staff_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.student_staff_relation.staff_name : updateStudent.id === '' ? '' : updateStudent.others.others.student_staff_relation.staff_name
+                    staff_ward:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_staff_relation.staff_ward : updateStudent.id === '' ? '' : updateStudent.others.student_staff_relation.staff_ward,
+                    staff_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_staff_relation.staff_name : updateStudent.id === '' ? '' : updateStudent.others.student_staff_relation.staff_name
                 },
                 // 3
                 is_alumni:{
-                    is_alumni:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.is_alumni.is_alumni : updateStudent.id === '' ? false : updateStudent.others.is_alumni.is_alumni,
-                    academic_session:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.is_alumni.academic_session : updateStudent.id === '' ? '' : updateStudent.others.is_alumni.academic_session,
-                    class_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.is_alumni.class_name : updateStudent.id === '' ? '' : updateStudent.others.is_alumni.class_name,
-                    admission_number:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.is_alumni.admission_number : updateStudent.id === '' ? 0 : updateStudent.others.is_alumni.admission_number
+                    is_alumni:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.is_alumni.is_alumni : updateStudent.id === '' ? false : updateStudent.others.is_alumni.is_alumni,
+                    academic_session:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.is_alumni.academic_session : updateStudent.id === '' ? '' : updateStudent.others.is_alumni.academic_session,
+                    class_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.is_alumni.class_name : updateStudent.id === '' ? '' : updateStudent.others.is_alumni.class_name,
+                    admission_number:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.is_alumni.admission_number : updateStudent.id === '' ? 0 : updateStudent.others.is_alumni.admission_number
                 },
                 // 4
                 previous_school_details:[
                     {
-                        school_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].school_name,
-                        board:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].board,
-                        passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].passing_year,
-                        total_marks:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].total_marks,
-                        percentage:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].percentage,
-                        result:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].result,
-                        is_alumni:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].is_alumni,
-                        father_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_name,
-                        father_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_passing_year,
-                        mother_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_name,
-                        mother_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_passing_year,
+                        school_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].school_name,
+                        board:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].board,
+                        passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].passing_year,
+                        total_marks:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].total_marks,
+                        percentage:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].percentage,
+                        result:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].result,
+                        is_alumni:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].is_alumni,
+                        father_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_name,
+                        father_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_passing_year,
+                        mother_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_name,
+                        mother_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_passing_year,
                     },
                     {
-                        school_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].school_name,
-                        board:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].board,
-                        passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].passing_year,
-                        total_marks:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].total_marks,
-                        percentage:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].percentage,
-                        result:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].result,
-                        is_alumni:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].is_alumni,
-                        father_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_name,
-                        father_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_passing_year,
-                        mother_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_name,
-                        mother_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[1].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_passing_year,
+                        school_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].school_name,
+                        board:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].board,
+                        passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].passing_year,
+                        total_marks:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].total_marks,
+                        percentage:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].percentage,
+                        result:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].result,
+                        is_alumni:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].is_alumni,
+                        father_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_name,
+                        father_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_passing_year,
+                        mother_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_name,
+                        mother_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[1].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_passing_year,
                     },
                     {
-                        school_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].school_name,
-                        board:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].board,
-                        passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].passing_year,
-                        total_marks:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].total_marks,
-                        percentage:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].percentage,
-                        result:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].result,
-                        is_alumni:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].is_alumni,
-                        father_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[0].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_name,
-                        father_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_passing_year,
-                        mother_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_name,
-                        mother_passing_year:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.others.previous_school_details[2].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_passing_year,
+                        school_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].school_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].school_name,
+                        board:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].board : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].board,
+                        passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].passing_year,
+                        total_marks:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].total_marks : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].total_marks,
+                        percentage:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].percentage : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].percentage,
+                        result:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].result : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].result,
+                        is_alumni:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].is_alumni : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].is_alumni,
+                        father_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[0].father_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_name,
+                        father_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].father_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_passing_year,
+                        mother_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].mother_name : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_name,
+                        mother_passing_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.previous_school_details[2].mother_passing_year : updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_passing_year,
                     }
                 ]
             },
@@ -458,19 +446,19 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             // Guardian details
             guardian_details:{
                 // 1
-                guardian_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.guardian_name : updateStudent.id === '' ? '' : updateStudent.guardian_details.guardian_name,
-                profession:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.profession : updateStudent.id === '' ? '' : updateStudent.guardian_details.profession,
-                designation:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.designation : updateStudent.id === '' ? '' : updateStudent.guardian_details.designation,
-                company_name:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.company_name : updateStudent.id === '' ? '' : updateStudent.guardian_details.company_name,
-                business_details:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.business_details : updateStudent.id === '' ? '' : updateStudent.guardian_details.business_details,
-                qualification:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.qualification : updateStudent.id === '' ? '' : updateStudent.guardian_details.qualification,
+                guardian_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.guardian_name : updateStudent.id === '' ? '' : updateStudent.guardian_details.guardian_name,
+                profession:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.profession : updateStudent.id === '' ? '' : updateStudent.guardian_details.profession,
+                designation:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.designation : updateStudent.id === '' ? '' : updateStudent.guardian_details.designation,
+                company_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.company_name : updateStudent.id === '' ? '' : updateStudent.guardian_details.company_name,
+                business_details:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.business_details : updateStudent.id === '' ? '' : updateStudent.guardian_details.business_details,
+                qualification:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.qualification : updateStudent.id === '' ? '' : updateStudent.guardian_details.qualification,
                 // 2
                 if_single_parent:{
-                    student_lives_with:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.if_single_parent.student_lives_with : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.student_lives_with,
-                    legal_custody_of_the_child:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.if_single_parent.legal_custody_of_the_child : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.legal_custody_of_the_child,
-                    correspondence_to:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.if_single_parent.correspondence_to : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.correspondence_to,
-                    check_id_applicable:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.if_single_parent.check_id_applicable : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.check_id_applicable,
-                    separation_reason:valuesFromRegister.student.reg_no !== '' ? valuesFromRegister.guardian_details.if_single_parent.separation_reason : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.separation_reason
+                    student_lives_with:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.student_lives_with : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.student_lives_with,
+                    legal_custody_of_the_child:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.legal_custody_of_the_child : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.legal_custody_of_the_child,
+                    correspondence_to:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.correspondence_to : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.correspondence_to,
+                    check_id_applicable:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.check_id_applicable : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.check_id_applicable,
+                    separation_reason:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.separation_reason : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.separation_reason
                 }
             }
         }
@@ -482,14 +470,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setIsLoading(true);
         // Create Student
         if(updateStudent.id === ''){
-            if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
-                toast({title:'Register no. already exists', variant:'error'});
+            if(students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
+                toast({title:'Admission no. already exists', variant:'error'});
                 return;
             };
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.adm_no});
             };
             await createAdmittedStudent({
                 // Student
@@ -511,23 +499,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     is_only_child:values.student.is_only_child,
                     student_status:values.student.student_status,
                     house:values.student.house,
+                    doa:values.student.doa,
+                    doj:values.student.doj,
+                    admitted_class:values.student.admitted_class,
                     // 1
-                    is_online:values.student.is_online,
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : '',
-                    enquiry_no:values.student.enquiry_no,
-                    reg_no:values.student.reg_no,
-                    pros_no:values.student.pros_no,
-                    amount:values.student.amount,
-                    date:values.student.date,
-                    payment_mode:values.student.payment_mode,
-                    admission_account:values.student.admission_account,
-                    post_account:values.student.post_account,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.adm_no}` : '',
                     // 2
-                    class:values.student.class,
-                    board:values.student.board,
                     stream:values.student.stream,
                     subjects:selectedSubjects,
                     optional_subject:values.student.optional_subject,
+                    class:values.student.class,
+                    board:values.student.board,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
                     last_name:values.student.last_name,
@@ -706,14 +688,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
         // Modify Student
         else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects){
-            if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
-                toast({title:'Register no. already exists', variant:'error'});
+            if(comparisonObject.student.adm_no !== values.student.adm_no && students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
+                toast({title:'Admission no. already exists', variant:'error'});
                 return;
             };
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.adm_no});
             };
             // Update
             await modifyAdmittedStudent({
@@ -737,24 +719,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     is_only_child:values.student.is_only_child,
                     student_status:values.student.student_status,
                     house:values.student.house,
+                    doa:values.student.doa,
+                    doj:values.student.doj,
+                    admitted_class:values.student.admitted_class,
                     // 1
-                    is_online:values.student.is_online,
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : comparisonObject.student.image,
-                    enquiry_no:values.student.enquiry_no,
-                    reg_no:values.student.reg_no,
-                    pros_no:values.student.pros_no,
-                    amount:values.student.amount,
-                    date:values.student.date,
-                    payment_mode:values.student.payment_mode,
-                    admission_account:values.student.admission_account,
-                    post_account:values.student.post_account,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.adm_no}` : comparisonObject.student.image,
                     // 2
-                    class:values.student.class,
-                    board:values.student.board,
                     stream:values.student.stream,
-                    // subjects:values.student.subjects,
                     subjects:selectedSubjects,
                     optional_subject:values.student.optional_subject,
+                    class:values.student.class,
+                    board:values.student.board,
                     name:values.student.name,
                     middle_name:values.student.middle_name,
                     last_name:values.student.last_name,
@@ -938,26 +913,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         };
 
 
-        valuesFromRegister({
+        setValuesFromRegister({
             // Student
             student:{
                 // 1
-                is_online:false,
                 image:'',
-                enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:0,
-                date:new Date(),
-                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
-                class:'',
-                board:'',
                 stream:'',
                 subjects:[''],
                 optional_subject:'',
+                class:'',
+                board:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -1156,23 +1122,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 is_only_child:false,
                 student_status:'',
                 house:'',
+                doa:new Date(),
+                doj:new Date(),
+                admitted_class:'',
                 // 1
-                is_online:false,
                 image:'',
-                enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:0,
-                date:new Date(),
-                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
-                class:'',
-                board:'',
                 stream:'',
                 subjects:[''],
                 optional_subject:'',
+                class:'',
+                board:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -1368,23 +1328,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 is_only_child:false,
                 student_status:'',
                 house:'',
+                doa:new Date(),
+                doj:new Date(),
+                admitted_class:'',
                 // 1
-                is_online:false,
                 image:'',
-                enquiry_no:'',
-                reg_no:'',
-                pros_no:'',
-                amount:0,
-                date:new Date(),
-                payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
-                class:'',
-                board:'',
                 stream:'',
                 subjects:[''],
                 optional_subject:'',
+                class:'',
+                board:'',
                 name:'',
                 middle_name:'',
                 last_name:'',
@@ -1587,24 +1541,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.is_only_child', updateStudent.student.is_only_child);
             form.setValue('student.student_status', updateStudent.student.student_status);
             form.setValue('student.house', updateStudent.student.house);
+            form.setValue('student.doa', updateStudent.student.doa);
+            form.setValue('student.doj', updateStudent.student.doj);
+            form.setValue('student.admitted_class', updateStudent.student.admitted_class);
 
 
 
-            form.setValue('student.is_online', updateStudent.student.is_online);
             form.setValue('student.image', updateStudent.student.image);
-            form.setValue('student.enquiry_no', updateStudent.student.enquiry_no);
-            form.setValue('student.reg_no', updateStudent.student.reg_no);
-            form.setValue('student.pros_no', updateStudent.student.pros_no);
-            form.setValue('student.amount', updateStudent.student.amount);
-            form.setValue('student.date', updateStudent.student.date);
-            form.setValue('student.payment_mode', updateStudent.student.payment_mode);
-            form.setValue('student.admission_account', updateStudent.student.admission_account);
-            form.setValue('student.post_account', updateStudent.student.post_account);
-            form.setValue('student.class', updateStudent.student.class);
-            form.setValue('student.board', updateStudent.student.board);
             form.setValue('student.stream', updateStudent.student.stream);
             form.setValue('student.subjects', updateStudent.student.subjects);
             form.setValue('student.optional_subject', updateStudent.student.optional_subject);
+            form.setValue('student.class', updateStudent.student.class);
+            form.setValue('student.board', updateStudent.student.board);
             form.setValue('student.name', updateStudent.student.name);
             form.setValue('student.middle_name', updateStudent.student.middle_name);
             form.setValue('student.last_name', updateStudent.student.last_name);
@@ -1761,42 +1709,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
     }, [updateStudent]);
     useEffect(() => {
-        if(valuesFromRegister.student.reg_no !== ''){
+        if(valuesFromRegister.student.name !== ''){
             // Student
-            form.setValue('student.section', valuesFromRegister.student.section);
-            form.setValue('student.adm_no', valuesFromRegister.student.adm_no);
-            form.setValue('student.pen_no', valuesFromRegister.student.pen_no);
-            form.setValue('student.roll_no', valuesFromRegister.student.roll_no);
-            form.setValue('student.bill_no', valuesFromRegister.student.bill_no);
-            form.setValue('student.is_university', valuesFromRegister.student.is_university);
-            form.setValue('student.re_adm_no', valuesFromRegister.student.re_adm_no);
-            form.setValue('student.is_minority', valuesFromRegister.student.is_minority);
-            form.setValue('student.is_disability', valuesFromRegister.student.is_disability);
-            form.setValue('student.dis_disc', valuesFromRegister.student.dis_disc);
-            form.setValue('student.is_new', valuesFromRegister.student.is_new);
-            form.setValue('student.is_active', valuesFromRegister.student.is_active);
-            form.setValue('student.reason', valuesFromRegister.student.reason);
-            form.setValue('student.is_only_child', valuesFromRegister.student.is_only_child);
-            form.setValue('student.student_status', valuesFromRegister.student.student_status);
-            form.setValue('student.house', valuesFromRegister.student.house);
-
-
-
-            form.setValue('student.is_online', valuesFromRegister.student.is_online);
             form.setValue('student.image', valuesFromRegister.student.image);
-            form.setValue('student.enquiry_no', valuesFromRegister.student.enquiry_no);
-            form.setValue('student.reg_no', valuesFromRegister.student.reg_no);
-            form.setValue('student.pros_no', valuesFromRegister.student.pros_no);
-            form.setValue('student.amount', valuesFromRegister.student.amount);
-            form.setValue('student.date', valuesFromRegister.student.date);
-            form.setValue('student.payment_mode', valuesFromRegister.student.payment_mode);
-            form.setValue('student.admission_account', valuesFromRegister.student.admission_account);
-            form.setValue('student.post_account', valuesFromRegister.student.post_account);
-            form.setValue('student.class', valuesFromRegister.student.class);
-            form.setValue('student.board', valuesFromRegister.student.board);
             form.setValue('student.stream', valuesFromRegister.student.stream);
             form.setValue('student.subjects', valuesFromRegister.student.subjects);
             form.setValue('student.optional_subject', valuesFromRegister.student.optional_subject);
+            form.setValue('student.class', valuesFromRegister.student.class);
+            form.setValue('student.board', valuesFromRegister.student.board);
             form.setValue('student.name', valuesFromRegister.student.name);
             form.setValue('student.middle_name', valuesFromRegister.student.middle_name);
             form.setValue('student.last_name', valuesFromRegister.student.last_name);
@@ -1994,10 +1914,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     updateStudent={updateStudent}
                                     setIsLoading={setIsLoading}
                                     setValuesFromRegister={setValuesFromRegister}
-                                    selectedSubjects={selectedSubjects}
-                                    setSelectedSubjects={setSelectedSubjects}
                                     setIsDataFetched={setIsDataFetched}
                                     valuesFromRegister={valuesFromRegister}
+                                    selectedSubjects={selectedSubjects}
+                                    setSelectedSubjects={setSelectedSubjects}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>

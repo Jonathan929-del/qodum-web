@@ -29,23 +29,17 @@ interface CreateAdmittedStudentProps{
         is_only_child:Boolean;
         student_status:String;
         house:String;
+        doa:Date;
+        doj:Date;
+        admitted_class:String;
         // 1
-        is_online:Boolean;
         image:String;
-        enquiry_no:String;
-        reg_no:String;
-        pros_no:String;
-        amount:Number;
-        date:Date;
-        payment_mode:String;
-        admission_account:String;
-        post_account:String;
         // 2
-        class:String;
-        board:String;
         stream:String;
         subjects:string[];
         optional_subject:String;
+        class:String;
+        board:String;
         name:String;
         middle_name:String;
         last_name:String;
@@ -202,82 +196,21 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
 
         // Checking if the register number already exists
-        const existingStudent = await AdmittedStudent.findOne({'student.reg_no':student.reg_no});
+        const existingStudent = await AdmittedStudent.findOne({'student.adm_no':student.adm_no});
         if(existingStudent){
-            throw new Error('Register no. already exists');
+            throw new Error('Admission no. already exists');
         };
 
 
         // Creating new student
         const newStudent = await AdmittedStudent.create({
-            student:{
-                // Admission data
-                section:student.section,
-                adm_no:student.adm_no,
-                pen_no:student.pen_no,
-                roll_no:student.roll_no,
-                bill_no:student.bill_no,
-                is_university:student.is_university,
-                re_adm_no:student.re_adm_no,
-                is_minority:student.is_minority,
-                is_disability:student.is_disability,
-                dis_disc:student.dis_disc,
-                is_new:student.is_new,
-                is_active:student.is_active,
-                reason:student.reason,
-                is_only_child:student.is_only_child,
-                student_status:student.student_status,
-                house:student.house,
-                // 1
-                is_up_for_admission:true,
-                is_online:student.is_online,
-                image:student.image,
-                enquiry_no:student.enquiry_no,
-                reg_no:student.reg_no,
-                pros_no:student.pros_no,
-                amount:student.amount,
-                date:student.date,
-                payment_mode:student.payment_mode,
-                admission_account:student.admission_account,
-                post_account:student.post_account,
-                // 2
-                class:student.class,
-                board:student.board,
-                stream:student.stream,
-                subjects:student.subjects,
-                optional_subject:student.optional_subject,
-                name:student.name,
-                middle_name:student.middle_name,
-                last_name:student.last_name,
-                dob:student.dob,
-                place_of_birth:student.place_of_birth,
-                gender:student.gender,
-                contact_person_name:student.contact_person_name,
-                contact_person_mobile:student.contact_person_mobile,
-                contact_person_email:student.contact_person_email,
-                secondary_contact_no:student.secondary_contact_no,
-                h_no_and_streets:student.h_no_and_streets,
-                email:student.email,
-                city:student.city,
-                mobile:student.mobile,
-                state:student.state,
-                pin_code:student.pin_code,
-                aadhar_card_no:student.aadhar_card_no,
-                religion:student.religion,
-                blood_group:student.blood_group,
-                caste:student.caste,
-                category:student.category,
-                is_ews:student.is_ews,
-                sibling:student.sibling,
-                transport:student.transport,
-                nationality:student.nationality
-            },
+            student,
             parents,
             others,
             guardian_details
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.reg_no':student.reg_no}, {'student.subjects':student.subjects});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects});
         });
 
 
@@ -344,23 +277,17 @@ interface ModifyAdmittedStudentProps{
         is_only_child:Boolean;
         student_status:String;
         house:String;
+        doa:Date;
+        doj:Date;
+        admitted_class:String;
         // 1
-        is_online:Boolean;
         image:String;
-        enquiry_no:String;
-        reg_no:String;
-        pros_no:String;
-        amount:Number;
-        date:Date;
-        payment_mode:String;
-        admission_account:String;
-        post_account:String;
         // 2
-        class:String;
-        board:String;
         stream:String;
         subjects:string[];
         optional_subject:String;
+        class:String;
+        board:String;
         name:String;
         middle_name:String;
         last_name:String;
@@ -517,7 +444,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         // Checking if the register no. already exists
         const students = await AdmittedStudent.find();
         const existingStudent = await AdmittedStudent.findById(id);
-        if(existingStudent.student.reg_no !== student.reg_no && students.map(student => student.student.reg_no).includes(student.reg_no)){throw new Error('Register no. already exists')};
+        if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
 
 
         // Update student
@@ -545,6 +472,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
                 await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
             });
         };
+        console.log('*************************************************************************************************************************************************************************************************************************************************');
 
 
         // Return
