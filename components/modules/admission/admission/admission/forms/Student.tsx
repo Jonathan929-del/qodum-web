@@ -7,31 +7,32 @@ import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
+import {Checkbox} from '@/components/ui/checkbox';
 import {Calendar} from '@/components/ui/calendar';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
+import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchSubjects } from '@/lib/actions/admission/globalMasters/subject.actions';
-import { fetchOptionalSubjects } from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
-import { fetchStreams } from '@/lib/actions/admission/globalMasters/stream.actions';
-import { Checkbox } from '@/components/ui/checkbox';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, valuesFromRegister, setValuesFromRegister, registeredStudents, setIsDataFetched, selectedSubjects, setSelectedSubjects}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects}:any) => {
 
 
     // Date states
@@ -496,13 +497,63 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setCategories(categoriesRes);
             setSections(sectionsRes);
             setHouses(housesRes);
-            setIsDataFetched(true);
             setSubjects(subjectsRes);
             setOptionalSubjects(optionalSubjectsRes);
             setStreams(streamsRes);
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        const numberGenerator = async () => {
+            try {
+                let substringValue;
+                if(students?.length < 9){
+                    substringValue = 0;
+                }else if(students?.length >= 9){
+                    substringValue = 1;
+                }else if(students?.length >= 99){
+                    substringValue = 2;
+                }else if(students?.length >= 999){
+                    substringValue = 3;
+                }else if(students?.length >= 9999){
+                    substringValue = 4;
+                }else if(students?.length >= 99999){
+                    substringValue = 5;
+                }else if(students?.length >= 999999){
+                    substringValue = 6;
+                }
+                if(form.getValues().student.class !== '' && updateStudent.id === ''){
+                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                        ? await fetchClassNumbers({class_name:'All Classes'})
+                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    // @ts-ignore
+                    const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
+                    
+                    if(admissionEntity && admissionEntity?.should_be === 'Automatic'){
+                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${students?.length + 1}${admissionEntity?.suffix}`);
+                    }else{
+                        form.setValue('student.adm_no', '');
+                    };
+                };
+                if(updateStudent.id !== '' && form.getValues().student.class !== updateStudent.student.class){
+                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                        ? await fetchClassNumbers({class_name:'All Classes'})
+                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    // @ts-ignore
+                    const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
+                    
+                    if(admissionEntity && admissionEntity?.should_be === 'Automatic'){
+                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${students?.length + 1}${admissionEntity?.suffix}`);
+                    }else{
+                        form.setValue('student.adm_no', '');
+                    };
+                };
+            } catch (err:any) {
+                console.log(err);
+            }
+        };
+        numberGenerator();
+    }, [form.watch('student.class')]);
 
 
     return (
@@ -557,7 +608,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     </div>
                 </div>
 
-                
+
 
                 {/* Section */}
                 <div className='w-full flex flex-col items-center lg:flex-row'>
@@ -889,20 +940,85 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
             <div className='basis-[70%] flex-1 flex flex-col pr-2 gap-2'>
                 {/* Search */}
-                <div className='flex flex-col p-2 ml-2 border-[0.5px] border-[#ccc] bg-[#F7F7F7] gap-2 rounded-[5px] text-xs text-hash-color lg:flex-row'>
-                    <div className='flex flex-row justify-center min-w-[200px] max-w-[600px] w-[100%] bg-white rounded-[5px] border-[0.5px] border-[#E4E4E4]'>
-                        <Input
-                            value={search}
-                            onChange={(e:any) => setSearch(e?.target?.value)}
-                            className='h-7 border-[0] text-xs placeholder:text-xs'
-                            placeholder='Search register no.'
-                        />
+                <div className='flex flex-col p-2 ml-2 border-[0.5px] border-[#ccc] bg-[#F7F7F7] gap-2 rounded-[5px] text-xs text-hash-color xxl:flex-row xxl:items-end'>
+                    <div className='flex-1 flex flex-row gap-2'>
+                        {/* Class */}
+                        <div className='w-full flex flex-col items-center'>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Class</FormLabel>
+                            <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                    <FormControl>
+                                        <Select>
+                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {classes?.length < 1 ? (
+                                                    <p>No classes</p>
+                                                    // @ts-ignore
+                                                ) : !classes[0]?.class_name ? (
+                                                    <LoadingIcon />
+                                                ) : classes?.map((item:any) => (
+                                                    <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                </FormItem>
+                            </div>
+                        </div>
+                        {/* Section */}
+                        <div className='w-full flex flex-col items-center'>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Section</FormLabel>
+                            <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                    <FormControl>
+                                        <Select>
+                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {sections?.length < 1 ? (
+                                                    <p>No sections</p>
+                                                    // @ts-ignore
+                                                ) : !sections[0]?.section_name ? (
+                                                    <LoadingIcon />
+                                                ) : sections?.map((item:any) => (
+                                                    <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                </FormItem>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex-1 flex flex-row h-8'>
+                        {/* Search input */}
+                        <div className='flex h-full flex-row justify-center min-w-[200px] max-w-[600px] w-[100%] bg-white rounded-[5px] border-[0.5px] border-[#E4E4E4]'>
+                            <Input
+                                value={search}
+                                onChange={(e:any) => setSearch(e?.target?.value)}
+                                className='h-full border-[0] text-xs placeholder:text-xs'
+                                placeholder='Search register no.'
+                            />
+                            <div
+                                onClick={searchClick}
+                                className='group flex flex-row items-center justify-center gap-[2px] px-2 border-[0.5px] border-[#2EABE5] rounded-r-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
+                            >
+                                <Search size={15} className='text-[#2EABE5] transition group-hover:text-white'/>
+                                <p className='transition text-[#2EABE5] group-hover:text-white'>Search</p>
+                            </div>
+                        </div>
                         <div
                             onClick={searchClick}
-                            className='group flex flex-row items-center justify-center gap-[2px] px-2 border-[0.5px] border-[#2EABE5] rounded-r-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
+                            className='group w-[250px] flex flex-row items-center justify-center gap-[2px] ml-2 px-2 border-[0.5px] border-[#2EABE5] bg-white rounded-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
                         >
-                            <Search size={15} className='text-[#2EABE5] transition group-hover:text-white'/>
-                            <p className='transition text-[#2EABE5] group-hover:text-white'>Search</p>
+                            <p className='transition text-[#2EABE5] group-hover:text-white'>Search From Admission</p>
                         </div>
                     </div>
                 </div>

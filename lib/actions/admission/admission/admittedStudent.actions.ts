@@ -472,7 +472,6 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
                 await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
             });
         };
-        console.log('*************************************************************************************************************************************************************************************************************************************************');
 
 
         // Return
@@ -512,5 +511,29 @@ export const deleteAdmittedStudent = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting student: ${err}`);
+    };
+};
+
+
+
+
+
+// Siblings search
+export const siblingsSearch = async ({class_name, section, adm_no}:{class_name:String; section:String; adm_no:String;}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching student
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, 'student.adm_no':adm_no});
+
+
+        // Returing
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error fetching student: ${err}`);
     };
 };

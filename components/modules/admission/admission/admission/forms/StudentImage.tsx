@@ -22,7 +22,7 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc}:any) => {
 
 
     return (
-        <div className='w-full flex items-center justify-center'>
+        <div className='w-full mt-10 flex items-center justify-center'>
             <div className='w-[125px] h-[125px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-[5px] transition hover:opacity-90'>
                 <label
                     // @ts-ignore

@@ -5,6 +5,7 @@ import Buttons from './Buttons';
 import Other from './forms/Others';
 import Parent from './forms/Parent';
 import {deepEqual} from '@/lib/utils';
+import Sibling from './forms/Sibling';
 import Student from './forms/Student';
 import Guardian from './forms/Guardian';
 import {useForm} from 'react-hook-form';
@@ -32,10 +33,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Is Loading
     const [isLoading, setIsLoading] = useState(false);
-
-
-    // Is Data Fetched
-    const [isDataFetched, setIsDataFetched] = useState(false);
 
 
     // File
@@ -1891,15 +1888,19 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Tabs */}
                         <Tabs
-                            defaultValue='student'
+                            defaultValue='sibling'
                             className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
-                            <TabsList className='-rotate-90 absolute left-[-170px] top-[45%]'>
+                            {/* <TabsList className={`-rotate-90 absolute ${form.getValues().student.sibling ? 'left-[-200px]' : 'left-[-170px]'} ${form.getValues().student.sibling ? 'top-[50%]' : 'top-[45%]'}`}> */}
+                            <TabsList className='-rotate-90 absolute left-[-200px] top-[50%]'>
                                 <TabsTrigger value='student'>Student</TabsTrigger>
                                 <TabsTrigger value='parent'>Parent</TabsTrigger>
                                 <TabsTrigger value='other'>Other</TabsTrigger>
                                 <TabsTrigger value='guardian'>Guardian</TabsTrigger>
                                 <TabsTrigger value='document'>Document</TabsTrigger>
+                                {/* {form.getValues().student.sibling && ( */}
+                                    <TabsTrigger value='sibling'>Sibling</TabsTrigger>
+                                {/* )} */}
                             </TabsList>
                             <TabsContent value='student' className='w-full'>
                                 <Student
@@ -1914,7 +1915,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     updateStudent={updateStudent}
                                     setIsLoading={setIsLoading}
                                     setValuesFromRegister={setValuesFromRegister}
-                                    setIsDataFetched={setIsDataFetched}
                                     valuesFromRegister={valuesFromRegister}
                                     selectedSubjects={selectedSubjects}
                                     setSelectedSubjects={setSelectedSubjects}
@@ -1935,17 +1935,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                             <TabsContent value='document'>
                                 <h1>Document</h1>
                             </TabsContent>
+                            <TabsContent value='sibling'>
+                                <Sibling
+                                    setIsLoading={setIsLoading}
+                                    setIsViewOpened={setIsViewOpened}
+                                />
+                            </TabsContent>
                         </Tabs>
 
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            {isDataFetched ? (
-                                    <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromRegister={setValuesFromRegister} setSelectedSubjects={setSelectedSubjects}/>
-                                ):(
-                                    <LoadingIcon />
-                                )
-                            }
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromRegister={setValuesFromRegister} setSelectedSubjects={setSelectedSubjects}/>
                         </div>
                     </form>
                 )}
