@@ -1888,7 +1888,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Tabs */}
                         <Tabs
-                            defaultValue='sibling'
+                            defaultValue='student'
                             className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
                             <TabsList className={`-rotate-90 absolute ${form.getValues().student.sibling ? 'left-[-200px]' : 'left-[-170px]'} ${form.getValues().student.sibling ? 'top-[50%]' : 'top-[45%]'}`}>
