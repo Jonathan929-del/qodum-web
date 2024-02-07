@@ -66,11 +66,13 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                 state:'',
                 pin_code:0,
                 aadhar_card_no:0,
+                whats_app_no:0,
                 religion:'',
                 blood_group:'',
                 caste:'',
                 category:'',
                 is_ews:false,
+                is_rte:false,
                 sibling:false,
                 transport:'',
                 nationality:''

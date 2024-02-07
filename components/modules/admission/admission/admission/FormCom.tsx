@@ -92,11 +92,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             state:updateStudent.student.state,
             pin_code:updateStudent.student.pin_code,
             aadhar_card_no:updateStudent.student.aadhar_card_no,
+            whats_app_no:updateStudent.student.whats_app_no,
             religion:updateStudent.student.religion,
             blood_group:updateStudent.student.blood_group,
             caste:updateStudent.student.caste,
             category:updateStudent.student.category,
             is_ews:updateStudent.student.is_ews,
+            is_rte:updateStudent.student.is_rte,
             sibling:updateStudent.student.sibling,
             transport:updateStudent.student.transport,
             nationality:updateStudent.student.nationality
@@ -301,12 +303,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.mobile : updateStudent.id === '' ? 0 : updateStudent.student.mobile,
                 state:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.state : updateStudent.id === '' ? '' : updateStudent.student.state,
                 pin_code:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.pin_code : updateStudent.id === '' ? 0 : updateStudent.student.pin_code,
-                aadhar_card_no:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.aadhar_card_no : updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
+                aadhar_card_no:updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
+                whats_app_no:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.whats_app_no : updateStudent.id === '' ? 0 : updateStudent.student.whats_app_no,
                 religion:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.religion : updateStudent.id === '' ? '' : updateStudent.student.religion,
                 blood_group:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.blood_group : updateStudent.id === '' ? '' : updateStudent.student.blood_group,
                 caste:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.caste : updateStudent.id === '' ? '' : updateStudent.student.caste,
                 category:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.category : updateStudent.id === '' ? '' : updateStudent.student.category,
                 is_ews:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.is_ews : updateStudent.id === '' ? false : updateStudent.student.is_ews,
+                is_rte:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.is_rte : updateStudent.id === '' ? false : updateStudent.student.is_rte,
                 sibling:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.sibling : updateStudent.id === '' ? false : updateStudent.student.sibling,
                 transport:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.transport : updateStudent.id === '' ? '' : updateStudent.student.transport,
                 nationality:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.nationality : updateStudent.id === '' ? '' : updateStudent.student.nationality
@@ -524,11 +528,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     state:values.student.state,
                     pin_code:values.student.pin_code,
                     aadhar_card_no:values.student.aadhar_card_no,
+                    whats_app_no:values.student.whats_app_no,
                     religion:values.student.religion,
                     blood_group:values.student.blood_group,
                     caste:values.student.caste,
                     category:values.student.category,
                     is_ews:values.student.is_ews,
+                    is_rte:values.student.is_rte,
                     sibling:values.student.sibling,
                     transport:values.student.transport,
                     nationality:values.student.nationality
@@ -744,11 +750,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     state:values.student.state,
                     pin_code:values.student.pin_code,
                     aadhar_card_no:values.student.aadhar_card_no,
+                    whats_app_no:values.student.whats_app_no,
                     religion:values.student.religion,
                     blood_group:values.student.blood_group,
                     caste:values.student.caste,
                     category:values.student.category,
                     is_ews:values.student.is_ews,
+                    is_rte:values.student.is_rte,
                     sibling:values.student.sibling,
                     transport:values.student.transport,
                     nationality:values.student.nationality
@@ -1147,11 +1155,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 state:'',
                 pin_code:0,
                 aadhar_card_no:0,
+                whats_app_no:0,
                 religion:'',
                 blood_group:'',
                 caste:'',
                 category:'',
                 is_ews:false,
+                is_rte:false,
                 sibling:false,
                 transport:'',
                 nationality:''
@@ -1353,11 +1363,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 state:'',
                 pin_code:0,
                 aadhar_card_no:0,
+                whats_app_no:0,
                 religion:'',
                 blood_group:'',
                 caste:'',
                 category:'',
                 is_ews:false,
+                is_rte:false,
                 sibling:false,
                 transport:'',
                 nationality:''
@@ -1567,11 +1579,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.state', updateStudent.student.state);
             form.setValue('student.pin_code', updateStudent.student.pin_code);
             form.setValue('student.aadhar_card_no', updateStudent.student.aadhar_card_no);
+            form.setValue('student.whats_app_no', updateStudent.student.whats_app_no);
             form.setValue('student.religion', updateStudent.student.religion);
             form.setValue('student.blood_group', updateStudent.student.blood_group);
             form.setValue('student.caste', updateStudent.student.caste);
             form.setValue('student.category', updateStudent.student.category);
             form.setValue('student.is_ews', updateStudent.student.is_ews);
+            form.setValue('student.is_rte', updateStudent.student.is_rte);
             form.setValue('student.sibling', updateStudent.student.sibling);
             form.setValue('student.transport', updateStudent.student.transport);
             form.setValue('student.nationality', updateStudent.student.nationality);
@@ -1889,9 +1903,11 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         {/* Tabs */}
                         <Tabs
                             defaultValue='student'
-                            className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                            // className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                            className='w-full h-[85%] pr-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
-                            <TabsList className={`-rotate-90 absolute ${form.getValues().student.sibling ? 'left-[-200px]' : 'left-[-170px]'} ${form.getValues().student.sibling ? 'top-[50%]' : 'top-[45%]'}`}>
+                            {/* <TabsList className={`-rotate-90 absolute ${form.getValues().student.sibling ? 'left-[-200px]' : 'left-[-170px]'} ${form.getValues().student.sibling ? 'top-[50%]' : 'top-[45%]'}`}> */}
+                            <TabsList className='pl-10'>
                                 <TabsTrigger value='student'>Student</TabsTrigger>
                                 <TabsTrigger value='parent'>Parent</TabsTrigger>
                                 <TabsTrigger value='other'>Other</TabsTrigger>

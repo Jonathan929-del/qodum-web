@@ -318,6 +318,127 @@ const Other = ({form, updateStudent}:any) => {
 
 
 
+            {/* Contact Details */}
+            <div className='flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
+                <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Contact Details</h2>
+                <div className='flex flex-col gap-6 p-4'>
+                    <div className='flex flex-col gap-4 lg:flex-row lg:gap-2'>
+                        {/* Contact Person Name */}
+                        <FormField
+                            control={form?.control}
+                            name='student.contact_person_name'
+                            render={({ field }) => (
+                                <FormItem className='w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Name</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        {/* Contact Person Mobile */}
+                        <FormField
+                            control={form?.control}
+                            name='student.contact_person_mobile'
+                            render={({ field }) => (
+                                <FormItem className='w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Mobile</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className='flex flex-col gap-4 lg:flex-row lg:gap-2'>
+                        {/* Contact Person Email */}
+                        <FormField
+                            control={form?.control}
+                            name='student.contact_person_email'
+                            render={({ field }) => (
+                                <FormItem className='w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Email</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        {/* Secondary Contact No. */}
+                        <FormField
+                            control={form?.control}
+                            name='student.secondary_contact_no'
+                            render={({ field }) => (
+                                <FormItem className='w-full my-2 lg:my-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Secondary Contact No.</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div>
+                        {/* Aadhar Card No */}
+                        <FormField
+                            control={form?.control}
+                            name='student.aadhar_card_no'
+                            render={({ field }) => (
+                                <FormItem className='w-full my-2 lg:my-0 lg:w-[50%]'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Aadhar Card No</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                </div>
+            </div>
+
+
+
+
 
             {/* Student Staff Relation */}
             <div className='flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
@@ -401,7 +522,7 @@ const Other = ({form, updateStudent}:any) => {
                         render={({field}) => (
                             <FormItem className='flex flex-row mx-2 items-start justify-start sm:items-center min-w-[150px] sm:gap-2'>
                                     <FormControl>
-                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                        <div className='flex-1 flex items-center justify-start space-x-2'>
                                             <Label htmlFor='main_is_alumni' className='text-[11px]'>
                                                 Is Alumni
                                             </Label>

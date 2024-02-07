@@ -54,11 +54,13 @@ export const AdmittedStudentValidation = z.object({
         state:z.string(),
         pin_code:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         aadhar_card_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        whats_app_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         religion:z.string(),
         blood_group:z.string(),
         caste:z.string(),
         category:z.string(),
         is_ews:z.boolean(),
+        is_rte:z.boolean(),
         sibling:z.boolean(),
         transport:z.string(),
         nationality:z.string().nonempty({message:'*Nationality is required'})

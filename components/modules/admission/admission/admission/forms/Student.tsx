@@ -132,11 +132,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     state:'',
                     pin_code:0,
                     aadhar_card_no:0,
+                    whats_app_no:0,
                     religion:'',
                     blood_group:'',
                     caste:'',
                     category:'',
                     is_ews:false,
+                    is_rte:false,
                     sibling:false,
                     transport:'',
                     nationality:''
@@ -1230,101 +1232,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                 <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
                     <div className='flex flex-col gap-2 lg:flex-row'>
-                        {/* Contact Person Name */}
-                        <FormField
-                            control={form?.control}
-                            name='student.contact_person_name'
-                            render={({ field }) => (
-                                <FormItem className='w-full mt-2 lg:mt-0'>
-                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Name</FormLabel>
-                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='mt-[-20px] text-[11px]' />
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                        {/* Contact Person Mobile */}
-                        <FormField
-                            control={form?.control}
-                            name='student.contact_person_mobile'
-                            render={({ field }) => (
-                                <FormItem className='w-full mt-2 lg:mt-0'>
-                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Mobile</FormLabel>
-                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='mt-[-20px] text-[11px]' />
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <div className='flex flex-col gap-2 lg:flex-row'>
-                        {/* Contact Person Email */}
-                        <FormField
-                            control={form?.control}
-                            name='student.contact_person_email'
-                            render={({ field }) => (
-                                <FormItem className='w-full mt-2 lg:mt-0'>
-                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Contact Person Email</FormLabel>
-                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='mt-[-20px] text-[11px]' />
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                        {/* Secondary Contact No. */}
-                        <FormField
-                            control={form?.control}
-                            name='student.secondary_contact_no'
-                            render={({ field }) => (
-                                <FormItem className='w-full my-2 lg:my-0'>
-                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Secondary Contact No.</FormLabel>
-                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='mt-[-20px] text-[11px]' />
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                </div>
-
-
-
-
-
-                <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
-                    <div className='flex flex-col gap-2 lg:flex-row'>
                         {/* H. No. and Streets */}
                         <FormField
                             control={form?.control}
@@ -1458,14 +1365,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             />
                         </div>
                         <div className='basis-[50%]'>
-                            {/* Aadhar Card No */}
+                            {/* What's App No */}
                             <FormField
                                 control={form?.control}
-                                name='student.aadhar_card_no'
+                                name='student.whats_app_no'
                                 render={({ field }) => (
                                     <FormItem className='w-full my-2 lg:my-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Aadhar Card No</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -1813,78 +1720,131 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
 
-                <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
-                    {/* Is Minority */}
-                    <FormField
-                        control={form?.control}
-                        name='student.is_minority'
-                        render={({field}) => (
-                            <FormItem className='flex flex-row lg:gap-2'>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2'>
-                                            <Label htmlFor='is_minority' className='text-[10px] text-hash-color'>
-                                                Is Minority
-                                            </Label>
-                                            <Switch
-                                                id='is_minority'
-                                                {...field}
-                                                value={field?.value}
-                                                onCheckedChange={field?.onChange}
-                                                checked={field?.value}
-                                            />
-                                        </div>
-                                    </FormControl>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Is Disability */}
-                    <FormField
-                        control={form?.control}
-                        name='student.is_disability'
-                        render={({field}) => (
-                            <FormItem className='flex flex-row lg:gap-2'>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2'>
-                                            <Label htmlFor='is_disability' className='text-[10px] text-hash-color'>
-                                                Is Disability
-                                            </Label>
-                                            <Switch
-                                                id='is_disability'
-                                                {...field}
-                                                value={field?.value}
-                                                onCheckedChange={field?.onChange}
-                                                checked={field?.value}
-                                            />
-                                        </div>
-                                    </FormControl>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Dis. Disc. */}
-                    <FormField
-                        control={form?.control}
-                        name='student.dis_disc'
-                        render={({ field }) => (
-                            <FormItem className='flex-1 my-2 lg:my-0'>
-                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
-                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 xl:flex-row'>
+                    <div className='flex-1 flex flex-row justify-between'>
+                        {/* Is Minority */}
+                        <FormField
+                            control={form?.control}
+                            name='student.is_minority'
+                            render={({field}) => (
+                                <FormItem className='flex flex-row lg:gap-2'>
                                         <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
+                                            <div className='flex items-center justify-start space-x-2'>
+                                                <Label htmlFor='is_minority' className='text-[10px] text-hash-color'>
+                                                    Is Minority
+                                                </Label>
+                                                <Switch
+                                                    id='is_minority'
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onCheckedChange={field?.onChange}
+                                                    checked={field?.value}
+                                                />
+                                            </div>
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                </FormItem>
+                            )}
+                        />
+
+
+                        {/* Is EWS */}
+                        <FormField
+                            control={form?.control}
+                            name='student.is_ews'
+                            render={({field}) => (
+                                    <FormItem className='flex flex-row lg:gap-2'>
+                                        <FormControl>
+                                            <div className='flex-1 flex items-center justify-start space-x-2'>
+                                                <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
+                                                    Is EWS
+                                                </Label>
+                                                <Switch
+                                                    id='is_ews'
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onCheckedChange={field?.onChange}
+                                                    checked={field?.value}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                </FormItem>
+                            )}
+                        />
+
+
+                        {/* Is RTE */}
+                        <FormField
+                            control={form?.control}
+                            name='student.is_rte'
+                            render={({field}) => (
+                                    <FormItem className='flex flex-row lg:gap-2'>
+                                        <FormControl>
+                                            <div className='flex-1 flex items-center justify-start space-x-2'>
+                                                <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
+                                                    Is RTE
+                                                </Label>
+                                                <Switch
+                                                    id='is_ews'
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onCheckedChange={field?.onChange}
+                                                    checked={field?.value}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
+                    <div className='flex-1 flex flex-row gap-4'>
+                        {/* Is Disability */}
+                        <FormField
+                            control={form?.control}
+                            name='student.is_disability'
+                            render={({field}) => (
+                                <FormItem className='flex flex-row lg:gap-2'>
+                                        <FormControl>
+                                            <div className='flex items-center justify-start space-x-2'>
+                                                <Label htmlFor='is_disability' className='text-[10px] text-hash-color'>
+                                                    Is Disability
+                                                </Label>
+                                                <Switch
+                                                    id='is_disability'
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onCheckedChange={field?.onChange}
+                                                    checked={field?.value}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                </FormItem>
+                            )}
+                        />
+
+
+                        {/* Dis. Disc. */}
+                        <FormField
+                            control={form?.control}
+                            name='student.dis_disc'
+                            render={({ field }) => (
+                                <FormItem className='flex-1 my-2 lg:my-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
                                     </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
 
 
@@ -1892,13 +1852,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
                 <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 xl:flex-row'>
-                    <div className='flex-1 flex flex-row'>
+                    <div className='flex-1 flex flex-row justify-between'>
                         {/* Is New */}
                         <FormField
                             control={form?.control}
                             name='student.is_new'
                             render={({field}) => (
-                                <FormItem className='flex-1 flex flex-row lg:gap-2'>
+                                <FormItem className='flex flex-row lg:gap-2'>
                                         <FormControl>
                                             <div className='flex-1 flex items-center space-x-2'>
                                                 <Label htmlFor='is_new' className='text-[10px] text-hash-color'>
@@ -1918,16 +1878,16 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         />
 
 
-                        {/* Is EWS */}
+                        {/* Sibling */}
                         <FormField
                             control={form?.control}
-                            name='student.is_ews'
+                            name='student.sibling'
                             render={({field}) => (
-                                    <FormItem className='flex-1 flex flex-row lg:gap-2'>
+                                <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
                                         <FormControl>
-                                            <div className='flex-1 flex items-center justify-start space-x-2'>
+                                            <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
                                                 <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
-                                                    Is EWS
+                                                    Sibling
                                                 </Label>
                                                 <Switch
                                                     id='is_ews'
@@ -1941,8 +1901,33 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 </FormItem>
                             )}
                         />
+
+
+                        {/* Is Ony Child */}
+                        <FormField
+                            control={form?.control}
+                            name='student.is_only_child'
+                            render={({field}) => (
+                                <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
+                                        <FormControl>
+                                            <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
+                                                <Label htmlFor='is_only_child' className='text-[10px] text-hash-color'>
+                                                    Is Ony Child
+                                                </Label>
+                                                <Switch
+                                                    id='is_only_child'
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onCheckedChange={field?.onChange}
+                                                    checked={field?.value}
+                                                />
+                                            </div>
+                                        </FormControl>
+                                </FormItem>
+                            )}
+                        />
                     </div>
-                    <div className='flex-1 flex gap-2 flex-row'>
+                    <div className='flex-1 flex flex-row gap-4'>
                         {/* Is Active */}
                         <FormField
                             control={form?.control}
@@ -1966,6 +1951,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 </FormItem>
                             )}
                         />
+
+
                         {/* Reason */}
                         <FormField
                             control={form?.control}
@@ -1988,59 +1975,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             )}
                         />
                     </div>
-                </div>
-
-
-
-
-
-                <div className='flex flex-row gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
-                    {/* Sibling */}
-                    <FormField
-                        control={form?.control}
-                        name='student.sibling'
-                        render={({field}) => (
-                            <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
-                                            <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
-                                                Sibling
-                                            </Label>
-                                            <Switch
-                                                id='is_ews'
-                                                {...field}
-                                                value={field?.value}
-                                                onCheckedChange={field?.onChange}
-                                                checked={field?.value}
-                                            />
-                                        </div>
-                                    </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    {/* Is Ony Child */}
-                    <FormField
-                        control={form?.control}
-                        name='student.is_only_child'
-                        render={({field}) => (
-                            <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
-                                    <FormControl>
-                                        <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
-                                            <Label htmlFor='is_only_child' className='text-[10px] text-hash-color'>
-                                                Is Ony Child
-                                            </Label>
-                                            <Switch
-                                                id='is_only_child'
-                                                {...field}
-                                                value={field?.value}
-                                                onCheckedChange={field?.onChange}
-                                                checked={field?.value}
-                                            />
-                                        </div>
-                                    </FormControl>
-                            </FormItem>
-                        )}
-                    />
                 </div>
 
 

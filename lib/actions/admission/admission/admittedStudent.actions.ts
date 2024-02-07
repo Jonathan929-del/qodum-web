@@ -57,11 +57,13 @@ interface CreateAdmittedStudentProps{
         state:String;
         pin_code:Number;
         aadhar_card_no:Number;
+        whats_app_no:Number;
         religion:String;
         blood_group:String;
         caste:String;
         category:String;
         is_ews:Boolean;
+        is_rte:Boolean;
         sibling:Boolean;
         transport:String;
         nationality:String;
@@ -305,10 +307,12 @@ interface ModifyAdmittedStudentProps{
         state:String;
         pin_code:Number;
         aadhar_card_no:Number;
+        whats_app_no:Number;
         religion:String;
         blood_group:String;
         caste:String;
         category:String;
+        is_rte:Boolean;
         is_ews:Boolean;
         sibling:Boolean;
         transport:String;

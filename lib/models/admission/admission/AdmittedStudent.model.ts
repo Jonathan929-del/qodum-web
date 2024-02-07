@@ -58,11 +58,13 @@ const AdmittedStudentSchema = new mongoose.Schema(
             state:{type:String},
             pin_code:{type:Number},
             aadhar_card_no:{type:Number},
+            whats_app_no:{type:Number},
             religion:{type:String},
             blood_group:{type:String},
             caste:{type:String},
             category:{type:String},
             is_ews:{type:Boolean},
+            is_rte:{type:Boolean},
             sibling:{type:Boolean},
             transport:{type:String},
             nationality:{type:String}
