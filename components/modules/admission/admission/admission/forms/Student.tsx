@@ -26,6 +26,7 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { fetchStudentByAdmNo } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -475,6 +476,408 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             });
         }else{
             setIsViewOpened('register');
+        }
+        setSearch('');
+        setIsLoading(false);
+    };
+
+
+    // Handle Search Click
+    const admissionSearchClick = async () => {
+        setIsLoading(true);
+        if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
+            const student = await fetchStudentByAdmNo({adm_no:search});
+            setValuesFromRegister({        
+                // Student
+                student:{
+                    // 1
+                    image:'',
+                    // 2
+                    class:'',
+                    board:'',
+                    name:'',
+                    middle_name:'',
+                    last_name:'',
+                    dob:new Date(),
+                    place_of_birth:'',
+                    gender:'Male',
+                    contact_person_name:'',
+                    contact_person_mobile:0,
+                    contact_person_email:'',
+                    secondary_contact_no:0,
+                    h_no_and_streets:'',
+                    email:'',
+                    city:'',
+                    mobile:0,
+                    state:'',
+                    pin_code:0,
+                    aadhar_card_no:0,
+                    religion:'',
+                    blood_group:'',
+                    caste:'',
+                    category:'',
+                    is_ews:false,
+                    sibling:false,
+                    transport:'',
+                    nationality:''
+                },
+        
+                // Parents
+                parents:{
+                    // Father
+                    father:{
+                        father_name:'',
+                        middle_name:'',
+                        last_name:'',
+                        profession:'',
+                        designation:'',
+                        residence_address:'',
+                        office_address:'',
+                        email:'',
+                        alternate_email:'',
+                        dob:new Date(),
+                        mobile:0,
+                        phone:0,
+                        company_name:'',
+                        business_details:'',
+                        qualification:'',
+                        service_in:'',
+                        office_phone:0,
+                        office_mobile:0,
+                        office_extension:'',
+                        office_email:'',
+                        office_website:'',
+                        annual_income:'',
+                        parent_status:''
+                    },
+                    // Mother
+                    mother:{
+                        mother_name:'',
+                        middle_name:'',
+                        last_name:'',
+                        profession:'',
+                        designation:'',
+                        residence_address:'',
+                        office_address:'',
+                        email:'',
+                        alternate_email:'',
+                        dob:new Date(),
+                        mobile:0,
+                        phone:0,
+                        company_name:'',
+                        business_details:'',
+                        qualification:'',
+                        service_in:'',
+                        office_phone:0,
+                        office_mobile:0,
+                        office_extension:'',
+                        office_email:'',
+                        office_website:'',
+                        annual_income:'',
+                        anniversary_date:new Date()
+                    }
+                },
+        
+                // Other details
+                others:{
+                    // 1
+                    student_other_details:{
+                        medical_history:'',
+                        descriptions:'',
+                        allergies:'',
+                        allergies_causes:'',
+                        family_doctor_name:'',
+                        family_doctor_phone:0,
+                        family_doctor_address:'',
+                        distance_from_home:0,
+                        no_of_living_year:0,
+                        only_child:'',
+                        general_description:''
+                    },
+                    // 2
+                    student_staff_relation:{
+                        staff_ward:'',
+                        staff_name:''
+                    },
+                    // 3
+                    is_alumni:{
+                        is_alumni:false,
+                        academic_session:'',
+                        class_name:'',
+                        admission_number:0
+                    },
+                    // 4
+                    previous_school_details:[
+                        {
+                            school_name:'',
+                            board:'',
+                            passing_year:'',
+                            total_marks:'',
+                            percentage:'',
+                            result:'',
+                            is_alumni:'',
+                            father_name:'',
+                            father_passing_year:'',
+                            mother_name:'',
+                            mother_passing_year:''
+                        },
+                        {
+                            school_name:'',
+                            board:'',
+                            passing_year:'',
+                            total_marks:'',
+                            percentage:'',
+                            result:'',
+                            is_alumni:'',
+                            father_name:'',
+                            father_passing_year:'',
+                            mother_name:'',
+                            mother_passing_year:''
+                        },
+                        {
+                            school_name:'',
+                            board:'',
+                            passing_year:'',
+                            total_marks:'',
+                            percentage:'',
+                            result:'',
+                            is_alumni:'',
+                            father_name:'',
+                            father_passing_year:'',
+                            mother_name:'',
+                            mother_passing_year:''
+                        }
+                    ]
+                },
+        
+                // Guardian details
+                guardian_details:{
+                    // 1
+                    guardian_name:'',
+                    profession:'',
+                    designation:'',
+                    company_name:'',
+                    business_details:'',
+                    qualification:'',
+                    // 2
+                    if_single_parent:{
+                        student_lives_with:'',
+                        legal_custody_of_the_child:'',
+                        correspondence_to:'',
+                        check_id_applicable:'',
+                        separation_reason:''
+                    }
+                }
+            });
+            setUpdateStudent({
+                id:student?.student?._id,
+                isDeleteClicked:false,
+
+                // Student
+                student:{
+                    // Admission data
+                    section:student?.student?.section || '',
+                    adm_no:student?.student?.adm_no || '',
+                    pen_no:student?.student?.pen_no || '',
+                    roll_no:student?.student?.roll_no || '',
+                    bill_no:student?.student?.bill_no || '',
+                    is_university:student?.student?.is_university || false,
+                    re_adm_no:student?.student?.re_adm_no || '',
+                    is_minority:student?.student?.is_minority || false,
+                    is_disability:student?.student?.is_disability || false,
+                    dis_disc:student?.student?.dis_disc || '',
+                    is_new:student?.student?.is_new || false,
+                    is_active:student?.student?.is_active || false,
+                    reason:student?.student?.reason || '',
+                    is_only_child:student?.student?.is_only_child || false,
+                    student_status:student?.student?.student_status || '',
+                    house:student?.student?.house || '',
+                    doa:student?.student?.doa || new Date(),
+                    doj:student?.student?.doj || new Date(),
+                    admitted_class:student?.student?.admitted_class || '',
+                    whats_app_no:student?.student?.whats_app_no || 0,
+                    is_rte:student?.student?.is_rte || false,
+                    // 1
+                    image:student?.student?.image || '',
+                    // 2
+                    class:student?.student?.class || '',
+                    board:student?.student?.board || '',
+                    name:student?.student?.name || '',
+                    middle_name:student?.student?.middle_name || '',
+                    last_name:student?.student?.last_name || '',
+                    dob:student?.student?.dob || new Date(),
+                    place_of_birth:student?.student?.place_of_birth || '',
+                    gender:student?.student?.gender || 'Male',
+                    contact_person_name:student?.student?.contact_person_name || '',
+                    contact_person_mobile:student?.student?.contact_person_mobile || 0,
+                    contact_person_email:student?.student?.contact_person_email || '',
+                    secondary_contact_no:student?.student?.secondary_contact_no || 0,
+                    h_no_and_streets:student?.student?.h_no_and_streets || '',
+                    email:student?.student?.email || '',
+                    city:student?.student?.city || '',
+                    mobile:student?.student?.mobile || 0,
+                    state:student?.student?.state || '',
+                    pin_code:student?.student?.pin_code || 0,
+                    aadhar_card_no:student?.student?.aadhar_card_no || 0,
+                    religion:student?.student?.religion || '',
+                    blood_group:student?.student?.blood_group || '',
+                    caste:student?.student?.caste || '',
+                    category:student?.student?.category || '',
+                    is_ews:student?.student?.is_ews || false,
+                    sibling:student?.student?.sibling || false,
+                    transport:student?.student?.transport || '',
+                    nationality:student?.student?.nationality || '',
+                },
+
+                // Parents
+                parents:{
+                    // Father
+                    father:{
+                        father_name:student?.parents?.father?.father_name || '',
+                        middle_name:student?.parents?.father?.middle_name || '',
+                        last_name:student?.parents?.father?.last_name || '',
+                        profession:student?.parents?.father?.profession || '',
+                        designation:student?.parents?.father?.designation || '',
+                        residence_address:student?.parents?.father?.residence_address || '',
+                        office_address:student?.parents?.father?.office_address || '',
+                        email:student?.parents?.father?.email || '',
+                        alternate_email:student?.parents?.father?.alternate_email || '',
+                        dob:student?.parents?.father?.dob || new Date(),
+                        mobile:student?.parents?.father?.mobile || 0,
+                        phone:student?.parents?.father?.phone || 0,
+                        company_name:student?.parents?.father?.company_name || '',
+                        business_details:student?.parents?.father?.business_details || '',
+                        qualification:student?.parents?.father?.qualification || '',
+                        service_in:student?.parents?.father?.service_in || '',
+                        office_phone:student?.parents?.father?.office_phone || 0,
+                        office_mobile:student?.parents?.father?.office_mobile || 0,
+                        office_extension:student?.parents?.father?.office_extension || '',
+                        office_email:student?.parents?.father?.office_email || '',
+                        office_website:student?.parents?.father?.office_website || '',
+                        annual_income:student?.parents?.father?.annual_income || '',
+                        parent_status:student?.parents?.father?.parent_status || '',
+                    },
+                    // Mother
+                    mother:{
+                        mother_name:student?.parents?.mother?.mother_name || '',
+                        middle_name:student?.parents?.mother?.middle_name || '',
+                        last_name:student?.parents?.mother?.last_name || '',
+                        profession:student?.parents?.mother?.profession || '',
+                        designation:student?.parents?.mother?.designation || '',
+                        residence_address:student?.parents?.mother?.residence_address || '',
+                        office_address:student?.parents?.mother?.office_address || '',
+                        email:student?.parents?.mother?.email || '',
+                        alternate_email:student?.parents?.mother?.alternate_email || '',
+                        dob:student?.parents?.mother?.dob || new Date(),
+                        mobile:student?.parents?.mother?.mobile || 0,
+                        phone:student?.parents?.mother?.phone || 0,
+                        company_name:student?.parents?.mother?.company_name || '',
+                        business_details:student?.parents?.mother?.business_details || '',
+                        qualification:student?.parents?.mother?.qualification || '',
+                        service_in:student?.parents?.mother?.service_in || '',
+                        office_phone:student?.parents?.mother?.office_phone || 0,
+                        office_mobile:student?.parents?.mother?.office_mobile || 0,
+                        office_extension:student?.parents?.mother?.office_extension || '',
+                        office_email:student?.parents?.mother?.office_email || '',
+                        office_website:student?.parents?.mother?.office_website || '',
+                        annual_income:student?.parents?.mother?.annual_income || '',
+                        anniversary_date:student?.parents?.mother?.anniversary_date || new Date()
+                    }
+                },
+
+                // Other details
+                others:{
+                    // 1
+                    student_other_details:{
+                        medical_history:student?.others?.student_other_details?.medical_history || '',
+                        descriptions:student?.others?.student_other_details?.descriptions || '',
+                        allergies:student?.others?.student_other_details?.allergies || '',
+                        allergies_causes:student?.others?.student_other_details?.allergies_causes || '',
+                        family_doctor_name:student?.others?.student_other_details?.family_doctor_name || '',
+                        family_doctor_phone:student?.others?.student_other_details?.family_doctor_phone || 0,
+                        family_doctor_address:student?.others?.student_other_details?.family_doctor_address || '',
+                        distance_from_home:student?.others?.student_other_details?.distance_from_home || 0,
+                        no_of_living_year:student?.others?.student_other_details?.no_of_living_year || 0,
+                        only_child:student?.others?.student_other_details?.only_child || '',
+                        general_description:student?.others?.student_other_details?.general_description || ''
+                    },
+                    // 2
+                    student_staff_relation:{
+                        staff_ward:student?.others?.student_staff_relation?.staff_ward || '',
+                        staff_name:student?.others?.student_staff_relation?.staff_name || ''
+                    },
+                    // 3
+                    is_alumni:{
+                        is_alumni:student?.others?.is_alumni?.is_alumni || false,
+                        academic_session:student?.others?.is_alumni?.academic_session || '',
+                        class_name:student?.others?.is_alumni?.class_name || '',
+                        admission_number:student?.others?.is_alumni?.admission_number || 0,
+                    },
+                    // 4
+                    previous_school_details:[
+                        {
+                            school_name:student?.others?.previous_school_details[0]?.school_name || '',
+                            board:student?.others?.previous_school_details[0]?.board || '',
+                            passing_year:student?.others?.previous_school_details[0]?.passing_year || '',
+                            total_marks:student?.others?.previous_school_details[0]?.total_marks || '',
+                            percentage:student?.others?.previous_school_details[0]?.percentage || '',
+                            result:student?.others?.previous_school_details[0]?.result || '',
+                            is_alumni:student?.others?.previous_school_details[0]?.is_alumni || '',
+                            father_name:student?.others?.previous_school_details[0]?.father_name || '',
+                            father_passing_year:student?.others?.previous_school_details[0]?.father_passing_year || '',
+                            mother_name:student?.others?.previous_school_details[0]?.mother_name || '',
+                            mother_passing_year:student?.others?.previous_school_details[0]?.mother_passing_year || '' || '',
+                        },
+                        {
+                            school_name:student?.others?.previous_school_details[1]?.school_name || '',
+                            board:student?.others?.previous_school_details[1]?.board || '',
+                            passing_year:student?.others?.previous_school_details[1]?.passing_year || '',
+                            total_marks:student?.others?.previous_school_details[1]?.total_marks || '',
+                            percentage:student?.others?.previous_school_details[1]?.percentage || '',
+                            result:student?.others?.previous_school_details[1]?.result || '',
+                            is_alumni:student?.others?.previous_school_details[1]?.is_alumni || '',
+                            father_name:student?.others?.previous_school_details[1]?.father_name || '',
+                            father_passing_year:student?.others?.previous_school_details[1]?.father_passing_year || '',
+                            mother_name:student?.others?.previous_school_details[1]?.mother_name || '',
+                            mother_passing_year:student?.others?.previous_school_details[1]?.mother_passing_year || '',
+                        },
+                        {
+                            school_name:student?.others?.previous_school_details[2]?.school_name || '',
+                            board:student?.others?.previous_school_details[2]?.board || '',
+                            passing_year:student?.others?.previous_school_details[2]?.passing_year || '',
+                            total_marks:student?.others?.previous_school_details[2]?.total_marks || '',
+                            percentage:student?.others?.previous_school_details[2]?.percentage || '',
+                            result:student?.others?.previous_school_details[2]?.result || '',
+                            is_alumni:student?.others?.previous_school_details[2]?.is_alumni || '',
+                            father_name:student?.others?.previous_school_details[2]?.father_name || '',
+                            father_passing_year:student?.others?.previous_school_details[2]?.father_passing_year || '',
+                            mother_name:student?.others?.previous_school_details[2]?.mother_name || '',
+                            mother_passing_year:student?.others?.previous_school_details[2]?.mother_passing_year || '',
+                        }
+                    ]
+                },
+
+                // Guardian details
+                guardian_details:{
+                    // 1
+                    guardian_name:student?.guardian_details?.guardian_name || '',
+                    profession:student?.guardian_details?.profession || '',
+                    designation:student?.guardian_details?.designation || '',
+                    company_name:student?.guardian_details?.company_name || '',
+                    business_details:student?.guardian_details?.business_details || '',
+                    qualification:student?.guardian_details?.qualification || '',
+                    // 2
+                    if_single_parent:{
+                        student_lives_with:student?.guardian_details?.if_single_parent?.student_lives_with || '',
+                        legal_custody_of_the_child:student?.guardian_details?.if_single_parent?.legal_custody_of_the_child || '',
+                        correspondence_to:student?.guardian_details?.if_single_parent?.correspondence_to || '',
+                        check_id_applicable:student?.guardian_details?.if_single_parent?.check_id_applicable || '',
+                        separation_reason:student?.guardian_details?.if_single_parent?.separation_reason || ''
+                    }
+                }
+            });
+        }else{
+            setIsViewOpened('admission');
         }
         setSearch('');
         setIsLoading(false);
@@ -1006,7 +1409,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 value={search}
                                 onChange={(e:any) => setSearch(e?.target?.value)}
                                 className='h-full border-[0] text-xs placeholder:text-xs'
-                                placeholder='Search register no.'
+                                placeholder='Search student'
                             />
                             <div
                                 onClick={searchClick}
@@ -1017,7 +1420,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             </div>
                         </div>
                         <div
-                            onClick={searchClick}
+                            onClick={admissionSearchClick}
                             className='group w-[250px] flex flex-row items-center justify-center gap-[2px] ml-2 px-2 border-[0.5px] border-[#2EABE5] bg-white rounded-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
                         >
                             <p className='transition text-[#2EABE5] group-hover:text-white'>Search From Admission</p>

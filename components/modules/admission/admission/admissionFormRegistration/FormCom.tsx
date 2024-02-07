@@ -1481,9 +1481,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         {/* Tabs */}
                         <Tabs
                             defaultValue='student'
-                            className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                            className='w-full h-[85%] pr-2 pl-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
-                            <TabsList className='-rotate-90 absolute left-[-130px] top-[45%]'>
+                            <TabsList className='pl-10'>
                                 <TabsTrigger value='student'>Student</TabsTrigger>
                                 <TabsTrigger value='parent'>Parent</TabsTrigger>
                                 <TabsTrigger value='other'>Other</TabsTrigger>

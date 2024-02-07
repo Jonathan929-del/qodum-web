@@ -11,16 +11,15 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
+const ViewCom = ({setIsViewOpened, terms, setUpdateTerm}:any) => {
 
 
     // Select handler
-    const selectHandler = (hUnit:any) => {
-        setUpdateHealthUnit({
-            id:hUnit._id,
+    const selectHandler = (item:any) => {
+        setUpdateTerm({
+            id:item._id,
             isDeleteClicked:false,
-            unit_name:hUnit.unit_name,
-            unit_type:hUnit.unit_type
+            term_name:item.term_name
         });
         setIsViewOpened(false);
     };
@@ -33,7 +32,7 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Health Units List</h2>
+                <h2>Terms List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
@@ -48,27 +47,23 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
                 </div>
 
 
-                {/* Casts */}
+                {/* Terms */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[650px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
+                    <ul className='w-full min-w-[500px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Unit Name
+                            Term Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Unit Type
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2'>
+                        <li className='basis-[30%] flex flex-row items-center justify-between px-2'>
                             Modify Details
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -76,36 +71,35 @@ const ViewCom = ({setIsViewOpened, healthUnits, setUpdateHealthUnit}:any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            healthUnits.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
-                                    No Health Units yet
+                            terms.length < 1 ? (
+                                <p className='w-full min-w-[500px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                    No terms yet
                                 </p>
-                            ) : !healthUnits[0]?.unit_name ? (
+                            ) : !terms[0]?.term_name ? (
                                     <LoadingIcon />
-                                ) : healthUnits.map((hUnit:any, index:number) => (
+                                ) : terms.map((term:any, index: number) => (
                                     <CommandItem
                                         key={index}
-                                        value={`${healthUnits.indexOf(hUnit) + 1} ${hUnit.unit_name} ${hUnit.unit_type}`}
-                                        className='w-full min-w-[650px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                        value={`${terms.indexOf(term) + 1} ${term.term_name} ${moment(term.updateAt).format('D-MMM-yy')}`}
+                                        className='w-full min-w-[500px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{healthUnits.indexOf(hUnit) + 1}</li>
-                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{terms.indexOf(term) + 1}</li>
+                                        <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
-                                                className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
+                                                className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                                onClick={() => selectHandler(hUnit)}
+                                                onClick={() => selectHandler(term)}
                                             >
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{hUnit.unit_name}</li>
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{hUnit.unit_type}</li>
-                                        <li className='basis-[20%] flex flex-row items-center px-2'>{moment(hUnit.updateAt).format('D-MMM-yy')}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{term.term_name}</li>
+                                        <li className='basis-[30%] flex flex-row items-center px-2'>{moment(term.updateAt).format('D-MMM-yy')}</li>
                                     </CommandItem>
                                 ))
                         }
                     </CommandList>
-                    <CommandEmpty>No results found</CommandEmpty>
+                    {terms.length > 0 && <CommandEmpty>No results found</CommandEmpty>}
                 </div>
 
 

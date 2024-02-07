@@ -1,10 +1,10 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchHealthMasters} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthMaster.actions';
 import FormCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/FormCom';
 import ViewCom from '@/components/modules/admission/globalMasters/studentHealthMaster/healthMaster/ViewCom';
-import { fetchHealthUnits } from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthUnit.actions';
+import {fetchHealthUnits} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthUnit.actions';
+import {fetchHealthMasters} from '@/lib/actions/admission/globalMasters/studentHealthMaster/healthMaster.actions';
 
 
 

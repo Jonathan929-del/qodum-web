@@ -651,6 +651,7 @@ const modules = [
                         threads:[
                             'Health Unit Master',
                             'Health Master',
+                            'Define Term',
                             'Student Health Entry'
                         ]
                     },

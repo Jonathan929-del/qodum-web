@@ -148,7 +148,7 @@ const FormCom = ({setIsViewOpened, healthMasters, updateHealthMaster, setUpdateH
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {healthUnits?.length < 1 ? <p>No health units</p> : !healthUnits ? <LoadingIcon /> : healthUnits.map((u:any) => (
-                                                    <SelectItem value={u} key={u}>{u}</SelectItem>
+                                                    <SelectItem value={u || 'value'} key={u}>{u}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>

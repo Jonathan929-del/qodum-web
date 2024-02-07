@@ -197,7 +197,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
         connectToDb('accounts');
 
 
-        // Checking if the register number already exists
+        // Checking if the admission number already exists
         const existingStudent = await AdmittedStudent.findOne({'student.adm_no':student.adm_no});
         if(existingStudent){
             throw new Error('Admission no. already exists');
@@ -209,7 +209,11 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             student,
             parents,
             others,
-            guardian_details
+            guardian_details,
+            health_details:{
+                height:0,
+                weight:0
+            }
         });
         newStudent.save().then(async () => {
             await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects});
@@ -312,8 +316,8 @@ interface ModifyAdmittedStudentProps{
         blood_group:String;
         caste:String;
         category:String;
-        is_rte:Boolean;
         is_ews:Boolean;
+        is_rte:Boolean;
         sibling:Boolean;
         transport:String;
         nationality:String;
@@ -445,7 +449,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         connectToDb('accounts');
 
 
-        // Checking if the register no. already exists
+        // Checking if the admission no. already exists
         const students = await AdmittedStudent.find();
         const existingStudent = await AdmittedStudent.findById(id);
         if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
@@ -539,5 +543,53 @@ export const siblingsSearch = async ({class_name, section, adm_no}:{class_name:S
 
     } catch (err) {
         throw new Error(`Error fetching student: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch student by admission no
+export const fetchStudentByAdmNo = async ({adm_no}:{adm_no:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching student
+        const student = await AdmittedStudent.findOne({'student.adm_no':adm_no});
+
+
+        // Return
+        return student;
+
+    } catch (err) {
+        throw new Error(`Error deleting student: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch students by class and section
+export const fetchStudentsByClassAndSection = async ({class_name, section}:{class_name:String; section:String;}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching student
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section});
+
+
+        // Return
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error deleting students: ${err}`);
     };
 };

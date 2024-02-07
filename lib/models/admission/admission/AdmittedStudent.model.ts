@@ -178,6 +178,13 @@ const AdmittedStudentSchema = new mongoose.Schema(
                 check_id_applicable:{type:String},
                 separation_reason:{type:String}
             }
+        },
+
+
+        // Health details
+        health_details:{
+            height:{type:Number},
+            weight:{type:Number}
         }
 
 
