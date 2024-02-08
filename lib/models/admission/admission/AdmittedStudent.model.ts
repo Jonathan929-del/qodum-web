@@ -189,7 +189,7 @@ const AdmittedStudentSchema = new mongoose.Schema(
 
 
         // Documents
-        documents:{type:Array}
+        // documents:{type:Array}
 
 
     },

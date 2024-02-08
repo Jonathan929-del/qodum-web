@@ -189,13 +189,13 @@ interface CreateAdmittedStudentProps{
     };
 
     // Documents
-    documents:{
-        document_type:String;
-        document_name:String;
-    }[]
+    // documents:{
+    //     document_type:String;
+    //     document_name:String;
+    // }[]
 };
 // Create admitted student
-export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents}:CreateAdmittedStudentProps) => {
+export const createAdmittedStudent = async ({student, parents, others, guardian_details}:CreateAdmittedStudentProps) => {
     try {
 
 
@@ -220,10 +220,11 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
                 height:0,
                 weight:0
             },
-            documents
+            // documents
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents});
+            // await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects});
         });
 
 
@@ -450,13 +451,13 @@ interface ModifyAdmittedStudentProps{
 
 
     // Documents
-    documents:{
-        document_type:String;
-        document_name:String;
-    }[]
+    // documents:{
+    //     document_type:String;
+    //     document_name:String;
+    // }[]
 }
 // Modify admitted student
-export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents}:ModifyAdmittedStudentProps) => {
+export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details}:ModifyAdmittedStudentProps) => {
     try {
 
         // Db connection
@@ -470,7 +471,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
         
         
         // Subjects handling

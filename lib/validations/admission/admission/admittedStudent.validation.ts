@@ -193,8 +193,8 @@ export const AdmittedStudentValidation = z.object({
 
 
     // Documents
-    documents:z.array(z.object({
-        document_type:z.string(),
-        document_name:z.string()
-    }))
+    // documents:z.array(z.object({
+    //     document_type:z.string(),
+    //     document_name:z.string()
+    // }))
 });
