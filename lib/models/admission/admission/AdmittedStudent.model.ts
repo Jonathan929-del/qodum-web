@@ -185,7 +185,11 @@ const AdmittedStudentSchema = new mongoose.Schema(
         health_details:{
             height:{type:Number},
             weight:{type:Number}
-        }
+        },
+
+
+        // Documents
+        documents:{type:Array}
 
 
     },

@@ -186,10 +186,16 @@ interface CreateAdmittedStudentProps{
             check_id_applicable:String;
             separation_reason:String;
         }
-    }
+    };
+
+    // Documents
+    documents:{
+        document_type:String;
+        document_name:String;
+    }[]
 };
 // Create admitted student
-export const createAdmittedStudent = async ({student, parents, others, guardian_details}:CreateAdmittedStudentProps) => {
+export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents}:CreateAdmittedStudentProps) => {
     try {
 
 
@@ -213,10 +219,11 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             health_details:{
                 height:0,
                 weight:0
-            }
+            },
+            documents
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents});
         });
 
 
@@ -439,10 +446,17 @@ interface ModifyAdmittedStudentProps{
             check_id_applicable:String;
             separation_reason:String;
         }
-    }
+    };
+
+
+    // Documents
+    documents:{
+        document_type:String;
+        document_name:String;
+    }[]
 }
 // Modify admitted student
-export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details}:ModifyAdmittedStudentProps) => {
+export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents}:ModifyAdmittedStudentProps) => {
     try {
 
         // Db connection
@@ -456,7 +470,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
         
         
         // Subjects handling
@@ -591,5 +605,37 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
 
     } catch (err) {
         throw new Error(`Error deleting students: ${err}`);
+    };
+};
+
+
+
+
+// Modify students' health details props
+interface ModifyStudentsHealthDetails{
+    students:{
+        adm_no:String;
+        height:Number;
+        weight:Number;
+    }[]
+};
+// Modify students' health details
+export const modifyStudentsHealthDetails = async ({students}:ModifyStudentsHealthDetails) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Updating students
+        students.map(async student => {
+            await AdmittedStudent.updateMany({'student.adm_no':student.adm_no}, {'health_details.height':student.height, 'health_details.weight':student.weight});
+        });
+
+        // Return
+        return 'Students updated';
+
+    } catch (err) {
+        throw new Error(`Error updating students: ${err}`);
     };
 };

@@ -11,7 +11,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {fetchStudentsByClassAndSection} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchStudentsByClassAndSection, modifyStudentsHealthDetails} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {StudentHealthEntryValidation} from '@/lib/validations/admission/globalMasters/studentHealthMaster/studentHealthEntry.validation';
 
 
@@ -19,7 +19,7 @@ import {StudentHealthEntryValidation} from '@/lib/validations/admission/globalMa
 
 
 // Main function
-const FormCom = ({classes, sections}: any) => {
+const FormCom = ({classes, sections, terms}: any) => {
 
 
     // Toast
@@ -36,13 +36,7 @@ const FormCom = ({classes, sections}: any) => {
         defaultValues: {
             class_name:'',
             section:'',
-            // students:students.map((student:any) => {
-            //     return {
-            //         adm_no:student?.student?.adm_no,
-            //         height:student?.health_details?.height,
-            //         weight:student?.health_details?.weight
-            //     };
-            // })
+            term:'',
             students:[{
                 adm_no:'',
                 height:0,
@@ -51,21 +45,10 @@ const FormCom = ({classes, sections}: any) => {
         }
     });
 
-    console.log(students.map((student:any) => {
-        return {
-            adm_no:student?.student?.adm_no,
-            height:student?.health_details?.height,
-            weight:student?.health_details?.weight
-        };
-    }));
-
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof StudentHealthEntryValidation>) => {
-        // await assignFeeGroupToFeeHead({
-        //     group_name:values.group_name,
-        //     affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
-        // });
+        await modifyStudentsHealthDetails({students:values.students});
         toast({title:'Saved Successfully!'});
         form.reset({
             class_name:'',
@@ -76,6 +59,7 @@ const FormCom = ({classes, sections}: any) => {
                 weight:0
             }]
         });
+        setStudents([{}]);
     };
 
 
@@ -107,7 +91,7 @@ const FormCom = ({classes, sections}: any) => {
                 >
 
 
-                    <div className='w-full flex flex-row items-end gap-2'>
+                    <div className='w-full flex flex-col items-end gap-2 sm:flex-row'>
                         {/* Class */}
                         <FormField
                             control={form.control}
@@ -184,14 +168,54 @@ const FormCom = ({classes, sections}: any) => {
                         />
 
 
+                        {/* Term */}
+                        <FormField
+                            control={form.control}
+                            name='term'
+                            render={({field}) => (
+                                <FormItem className='w-full'>
+                                <div className='w-full flex flex-col items-start justify-center'>
+                                    <FormLabel className='basis-auto pr-2 text-start text-xs text-[#726E71]'>Term</FormLabel>
+                                    <div className='w-full flex flex-col items-start gap-4'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field.value}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                    <SelectValue placeholder='Select Group'/>
+                                                    <ChevronDown className='h-4 w-4 opacity-50'/>
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {terms.length < 1 ? (
+                                                        <p>No terms</p>
+                                                    ) : !terms[0].term_name ? (
+                                                        <LoadingIcon />
+                                                    ) : terms.map((item:any) => (
+                                                        <SelectItem value={item.term_name} key={item._id}>{item.term_name}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-xs'/>
+                                    </div>
+                                </div>
+                            </FormItem>
+                            )}
+                        />
+
+
                         {/* Save button */}
-                        <Button
-                            type='submit'
-                            className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                        >
-                            Save
-                        </Button>
+                        <div className='w-full flex justify-center sm:w-auto'>
+                            <Button
+                                type='submit'
+                                className='px-4 h-8 text-[16px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Save
+                            </Button>
+                        </div>
                     </div>
 
 

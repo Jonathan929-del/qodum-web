@@ -1,15 +1,11 @@
 // Imports
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
+import {Input} from '@/components/ui/input';
+import {ChevronsUpDown} from 'lucide-react';
 import {Checkbox} from '@/components/ui/checkbox';
-import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
 import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
-import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
-import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
 
 
 
@@ -19,50 +15,18 @@ import { Input } from '@/components/ui/input';
 const HeadsList = ({students, form}:any) => {
 
 
-    // Installments
-    const [installments, setInstallments] = useState([{}]);
-
-
-    // Account ledgers
-    const [accountLedgers, setAccountLedgers]  = useState([{}]);
-
-
-    // Bank ledgers
-    const [bankLedgers, setBankLedgers]  = useState([{}]);
-
-
     // Check change
-    const checkChange = (head:any) => {
-        // if(form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name)){
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, '');
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, '');
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, '');
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.installment`, '');
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.account`, '');
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.post_account`, '');
-        // }else{
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.type_name`, head.affiliated_fee_type);
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.head_name`, head.name);
-        //     form.setValue(`affiliated_heads.${heads.indexOf(head)}.schedule_type`, head.pay_schedule);
-        // }
+    const checkChange = (student:any) => {
+        if(form.getValues().students.map((item:any) => item.adm_no).includes(student.student.adm_no)){
+            form.setValue(`students.${students.indexOf(student)}.adm_no`, '');
+        }else{
+            form.setValue(`students.${students.indexOf(student)}.adm_no`, student.student.adm_no);
+        }
     };
 
 
     // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-            const installmentsRes = await fetchInstallments();
-            const accountLedgersRes = await fetchGeneralLedgers();
-            const bankLedgersRes = await fetchBankLedgers();
-            setInstallments(installmentsRes);
-            setAccountLedgers(accountLedgersRes)
-            setBankLedgers(bankLedgersRes);
-        };
-        fetcher();
-    }, []);
-    useEffect(() => {
-    }, [form.watch('affiliated_heads')]);
-
+    useEffect(() => {}, [form.watch('students'), students]);
 
 
     return (
@@ -85,8 +49,12 @@ const HeadsList = ({students, form}:any) => {
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Student Name
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
-                            {students[0]?.student?.name && (
+                            {/* {students[0]?.student?.name && (
                                 <Checkbox
                                     className='rounded-[2px] text-hash-color'
                                     onCheckedChange={() => {
@@ -104,16 +72,17 @@ const HeadsList = ({students, form}:any) => {
                                             });
                                         };
                                     }}
+                                    checked={students.length === form.getValues().students.map((s:any) => s.adm_no).length}
                                 />
-                            )}
+                            )} */}
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Height
+                        <li className='basis-[25%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Height (CM)
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2'>
-                            Weight
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2'>
+                            Weight (KG)
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
@@ -130,7 +99,8 @@ const HeadsList = ({students, form}:any) => {
                                 ) : students.map((student:any) => (
                                     <CommandItem key={student._id} className='w-full min-w-[700px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
                                         <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.adm_no}</li>
-                                        <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.name}</li>
+                                        <li className='basis-[15%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Checkbox
                                                 checked={form.getValues().students.map((item:any) => item.adm_no).includes(student.student.adm_no)}
                                                 onCheckedChange={() => checkChange(student)}
@@ -139,7 +109,7 @@ const HeadsList = ({students, form}:any) => {
                                         </li>
 
                                         {/* Height */}
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <FormField
                                                 control={form.control}
                                                 name={`students.${students.indexOf(student)}.height`}
@@ -158,7 +128,7 @@ const HeadsList = ({students, form}:any) => {
                                         </li>
 
                                         {/* Weight */}
-                                        <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <FormField
                                                 control={form.control}
                                                 name={`students.${students.indexOf(student)}.weight`}

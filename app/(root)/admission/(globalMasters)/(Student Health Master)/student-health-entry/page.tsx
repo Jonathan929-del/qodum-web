@@ -1,9 +1,10 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import FormCom from '@/components/modules/admission/globalMasters/studentHealthMaster/studentHealthEntry/FormCom';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import {fetchTerms} from '@/lib/actions/admission/globalMasters/studentHealthMaster/term.actions';
+import FormCom from '@/components/modules/admission/globalMasters/studentHealthMaster/studentHealthEntry/FormCom';
 
 
 
@@ -21,13 +22,19 @@ const page = () => {
     const [sections, setSections] = useState([{}]);
 
 
+    // Terms
+    const [terms, setTerms] = useState([{}]);
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
+            const termsRes = await fetchTerms();
             setClasses(classesRes)
             setSections(sectionsRes);
+            setTerms(termsRes);
         };
         fetcher();
     }, []);
@@ -38,6 +45,7 @@ const page = () => {
             <FormCom
                 classes={classes}
                 sections={sections}
+                terms={terms}
             />
         </div>
     );

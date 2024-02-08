@@ -189,5 +189,12 @@ export const AdmittedStudentValidation = z.object({
             check_id_applicable:z.string(),
             separation_reason:z.string(),
         })
-    })
+    }),
+
+
+    // Documents
+    documents:z.array(z.object({
+        document_type:z.string(),
+        document_name:z.string()
+    }))
 });
