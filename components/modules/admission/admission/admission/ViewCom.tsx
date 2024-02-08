@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegister, setSelectedSubjects}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments}:any) => {
 
 
     // Select handler
@@ -44,9 +44,9 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 pin_code:0,
                 aadhar_card_no:0,
                 religion:'',
-                blood_group:'',
                 caste:'',
                 category:'',
+                blood_group:'',
                 is_ews:false,
                 sibling:false,
                 transport:'',
@@ -244,6 +244,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 contact_person_email:student?.student?.contact_person_email || '',
                 secondary_contact_no:student?.student?.secondary_contact_no || 0,
                 h_no_and_streets:student?.student?.h_no_and_streets || '',
+                locality:student?.student?.locality || '',
                 email:student?.student?.email || '',
                 city:student?.student?.city || '',
                 mobile:student?.student?.mobile || 0,
@@ -252,9 +253,12 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 aadhar_card_no:student?.student?.aadhar_card_no || 0,
                 whats_app_no:student?.student?.whats_app_no || 0,
                 religion:student?.student?.religion || '',
-                blood_group:student?.student?.blood_group || '',
+                parish:student?.student?.parish || '',
                 caste:student?.student?.caste || '',
                 category:student?.student?.category || '',
+                blood_group:student?.student?.blood_group || '',
+                cadet_type:student?.student?.cadet_type || '',
+                club:student?.student?.club || '',
                 is_ews:student?.student?.is_ews || false,
                 is_rte:student?.student?.is_rte || false,
                 sibling:student?.student?.sibling || false,
@@ -407,10 +411,17 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                     check_id_applicable:student?.guardian_details?.if_single_parent?.check_id_applicable || '',
                     separation_reason:student?.guardian_details?.if_single_parent?.separation_reason || ''
                 }
-            }
+            },
+
+            // Documents
+            documents:student?.documents || [{
+                document_type:'',
+                document_name:''
+            }]
         });
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects);
+        setSelectedDocuments(student?.documents);
     };
 
 

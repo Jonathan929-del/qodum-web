@@ -52,6 +52,7 @@ const AdmittedStudentSchema = new mongoose.Schema(
             contact_person_email:{type:String},
             secondary_contact_no:{type:Number},
             h_no_and_streets:{type:String},
+            locality:{type:String},
             email:{type:String},
             city:{type:String},
             mobile:{type:Number},
@@ -60,9 +61,12 @@ const AdmittedStudentSchema = new mongoose.Schema(
             aadhar_card_no:{type:Number},
             whats_app_no:{type:Number},
             religion:{type:String},
-            blood_group:{type:String},
+            parish:{type:String},
             caste:{type:String},
             category:{type:String},
+            blood_group:{type:String},
+            cadet_type:{type:String},
+            club:{type:String},
             is_ews:{type:Boolean},
             is_rte:{type:Boolean},
             sibling:{type:Boolean},
@@ -189,8 +193,7 @@ const AdmittedStudentSchema = new mongoose.Schema(
 
 
         // Documents
-        // documents:{type:Array}
-
+        documents:{type:Array}
 
     },
     {

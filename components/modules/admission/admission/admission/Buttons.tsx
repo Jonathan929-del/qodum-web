@@ -10,7 +10,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromRegister, setSelectedSubjects}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments}:any) => {
 
 
     // Cancel click
@@ -41,9 +41,9 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 pin_code:0,
                 aadhar_card_no:0,
                 religion:'',
-                blood_group:'',
                 caste:'',
                 category:'',
+                blood_group:'',
                 is_ews:false,
                 sibling:false,
                 transport:'',
@@ -240,6 +240,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 contact_person_email:'',
                 secondary_contact_no:0,
                 h_no_and_streets:'',
+                locality:'',
                 email:'',
                 city:'',
                 mobile:0,
@@ -248,9 +249,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 aadhar_card_no:0,
                 whats_app_no:0,
                 religion:'',
-                blood_group:'',
+                parish:'',
                 caste:'',
                 category:'',
+                blood_group:'',
+                cadet_type:'',
+                club:'',
                 is_ews:false,
                 is_rte:false,
                 sibling:false,
@@ -403,7 +407,13 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     check_id_applicable:'',
                     separation_reason:''
                 }
-            }
+            },
+
+            // Documents
+            documents:[{
+                document_type:'',
+                document_name:''
+            }]
         });
         // Reseting form
         form.reset({
@@ -446,6 +456,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 contact_person_email:'',
                 secondary_contact_no:0,
                 h_no_and_streets:'',
+                locality:'',
                 email:'',
                 city:'',
                 mobile:0,
@@ -454,9 +465,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 aadhar_card_no:0,
                 whats_app_no:0,
                 religion:'',
-                blood_group:'',
+                parish:'',
                 caste:'',
                 category:'',
+                blood_group:'',
+                cadet_type:'',
+                club:'',
                 is_ews:false,
                 is_rte:false,
                 sibling:false,
@@ -609,12 +623,22 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     check_id_applicable:'',
                     separation_reason:''
                 }
-            }
+            },
+
+            // Documents
+            documents:[{
+                document_type:'',
+                document_name:''
+            }]
         });
         // Image
         setFile(null);
         setImageSrc('');
         setSelectedSubjects([]);
+        setSelectedDocuments([{
+            document_type:'',
+            document_name:''
+        }]);
     };
 
 

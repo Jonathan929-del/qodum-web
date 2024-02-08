@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpdateStudent, setValuesFromRegister, setSelectedSubjects}:any) => {
+const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments}:any) => {
 
 
     // Select handler
@@ -60,6 +60,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                 contact_person_email:'',
                 secondary_contact_no:0,
                 h_no_and_streets:'',
+                locality:'',
                 email:'',
                 city:'',
                 mobile:0,
@@ -68,9 +69,12 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                 aadhar_card_no:0,
                 whats_app_no:0,
                 religion:'',
-                blood_group:'',
+                parish:'',
                 caste:'',
                 category:'',
+                blood_group:'',
+                cadet_type:'',
+                club:'',
                 is_ews:false,
                 is_rte:false,
                 sibling:false,
@@ -223,7 +227,13 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                     check_id_applicable:'',
                     separation_reason:''
                 }
-            }
+            },
+
+            // Documents
+            documents:[{
+                document_type:'',
+                document_name:''
+            }]
         });
         setValuesFromRegister({
             // Student
@@ -254,9 +264,9 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                 pin_code:student?.student?.pin_code || 0,
                 aadhar_card_no:student?.student?.aadhar_card_no || 0,
                 religion:student?.student?.religion || '',
-                blood_group:student?.student?.blood_group || '',
                 caste:student?.student?.caste || '',
                 category:student?.student?.category || '',
+                blood_group:student?.student?.blood_group || '',
                 is_ews:student?.student?.is_ews || false,
                 sibling:student?.student?.sibling || false,
                 transport:student?.student?.transport || '',
@@ -412,6 +422,10 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
         });
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects);
+        setSelectedDocuments([{
+            document_type:'',
+            document_name:''
+        }]);
     };
 
 

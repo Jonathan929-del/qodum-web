@@ -15,6 +15,7 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
@@ -22,18 +23,18 @@ import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.ac
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchStudentByAdmNo } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments}:any) => {
 
 
     // Date states
@@ -78,6 +79,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Streams
     const [streams, setStreams] = useState([{}]);
+
+
+    // Parishes
+    const [parishes, setParishes] = useState([{}]);
 
 
     // Handle Search Click
@@ -127,6 +132,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     contact_person_email:'',
                     secondary_contact_no:0,
                     h_no_and_streets:'',
+                    locality:'',
                     email:'',
                     city:'',
                     mobile:0,
@@ -135,9 +141,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     aadhar_card_no:0,
                     whats_app_no:0,
                     religion:'',
-                    blood_group:'',
+                    parish:'',
                     caste:'',
                     category:'',
+                    blood_group:'',
+                    cadet_type:'',
+                    club:'',
                     is_ews:false,
                     is_rte:false,
                     sibling:false,
@@ -290,7 +299,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         check_id_applicable:'',
                         separation_reason:''
                     }
-                }
+                },
+
+                // Documents
+                documents:[{
+                    document_type:'',
+                    document_name:''
+                }]
             });
             setValuesFromRegister({
                 // Student
@@ -318,9 +333,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     pin_code:student?.student?.pin_code || 0,
                     aadhar_card_no:student?.student?.aadhar_card_no || 0,
                     religion:student?.student?.religion || '',
-                    blood_group:student?.student?.blood_group || '',
                     caste:student?.student?.caste || '',
                     category:student?.student?.category || '',
+                    blood_group:student?.student?.blood_group || '',
                     is_ews:student?.student?.is_ews || false,
                     sibling:student?.student?.sibling || false,
                     transport:student?.student?.transport || '',
@@ -513,9 +528,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     pin_code:0,
                     aadhar_card_no:0,
                     religion:'',
-                    blood_group:'',
                     caste:'',
                     category:'',
+                    blood_group:'',
                     is_ews:false,
                     sibling:false,
                     transport:'',
@@ -700,6 +715,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     // 1
                     image:student?.student?.image || '',
                     // 2
+                    stream:student?.student?.stream || '',
+                    subjects:student?.student?.subjects || [''],
+                    optional_subject:student?.student?.optional_subject || '',
                     class:student?.student?.class || '',
                     board:student?.student?.board || '',
                     name:student?.student?.name || '',
@@ -713,6 +731,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     contact_person_email:student?.student?.contact_person_email || '',
                     secondary_contact_no:student?.student?.secondary_contact_no || 0,
                     h_no_and_streets:student?.student?.h_no_and_streets || '',
+                    locality:student?.student?.locality || '',
                     email:student?.student?.email || '',
                     city:student?.student?.city || '',
                     mobile:student?.student?.mobile || 0,
@@ -720,9 +739,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     pin_code:student?.student?.pin_code || 0,
                     aadhar_card_no:student?.student?.aadhar_card_no || 0,
                     religion:student?.student?.religion || '',
-                    blood_group:student?.student?.blood_group || '',
+                    parish:student?.student?.parish || '',
                     caste:student?.student?.caste || '',
                     category:student?.student?.category || '',
+                    blood_group:student?.student?.blood_group || '',
+                    cadet_type:student?.student?.cadet_type || '',
+                    club:student?.student?.club || '',
                     is_ews:student?.student?.is_ews || false,
                     sibling:student?.student?.sibling || false,
                     transport:student?.student?.transport || '',
@@ -874,8 +896,16 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         check_id_applicable:student?.guardian_details?.if_single_parent?.check_id_applicable || '',
                         separation_reason:student?.guardian_details?.if_single_parent?.separation_reason || ''
                     }
-                }
+                },
+
+                // Documents
+                documents:student?.documents || [{
+                    document_type:'',
+                    document_name:''
+                }]
             });
+            setSelectedSubjects(student?.student?.subjects);
+            setSelectedDocuments(student?.documents);
         }else{
             setIsViewOpened('admission');
         }
@@ -896,6 +926,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const subjectsRes = await fetchSubjects();
             const optionalSubjectsRes  = await fetchOptionalSubjects();
             const streamsRes = await fetchStreams();
+            const parishesRes = await fetchParishes();
             setClasses(classesRes);
             setBoards(boardsRes);
             setReligions(religionsRes);
@@ -905,6 +936,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setSubjects(subjectsRes);
             setOptionalSubjects(optionalSubjectsRes);
             setStreams(streamsRes);
+            setParishes(parishesRes);
         };
         fetcher();
     }, []);
@@ -1191,7 +1223,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     render={({ field }) => (
                         <FormItem className='w-full mt-2 lg:mt-0'>
                             <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PEN No.</FormLabel>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
@@ -1723,73 +1755,92 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         />
                     </div>
                     <div className='flex flex-col gap-2 lg:flex-row'>
-                        <div className='basis-[50%] flex flex-col gap-2 lg:flex-row'>
-                            {/* State */}
-                            <FormField
-                                control={form?.control}
-                                name='student.state'
-                                render={({ field }) => (
-                                    <FormItem className='w-full mt-2 lg:mt-0'>
-                                        <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>State</FormLabel>
-                                            <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
-                                            </div>
+                        {/* State */}
+                        <FormField
+                            control={form?.control}
+                            name='student.state'
+                            render={({ field }) => (
+                                <FormItem className='w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>State</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
                                         </div>
-                                    </FormItem>
-                                )}
-                            />
-                            {/* PIN Code */}
-                            <FormField
-                                control={form?.control}
-                                name='student.pin_code'
-                                render={({ field }) => (
-                                    <FormItem className='w-full mt-2 lg:mt-0'>
-                                        <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PIN Code</FormLabel>
-                                            <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
-                                            </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        {/* PIN Code */}
+                        <FormField
+                            control={form?.control}
+                            name='student.pin_code'
+                            render={({ field }) => (
+                                <FormItem className='w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PIN Code</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
                                         </div>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className='basis-[50%]'>
-                            {/* What's App No */}
-                            <FormField
-                                control={form?.control}
-                                name='student.whats_app_no'
-                                render={({ field }) => (
-                                    <FormItem className='w-full my-2 lg:my-0'>
-                                        <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
-                                            <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
-                                            </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className='flex flex-col gap-2 lg:flex-row'>
+                        {/* What's App No */}
+                        <FormField
+                            control={form?.control}
+                            name='student.whats_app_no'
+                            render={({ field }) => (
+                                <FormItem className='w-full my-2 lg:my-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
                                         </div>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        {/* Locality */}
+                        <FormField
+                            control={form?.control}
+                            name='student.locality'
+                            render={({ field }) => (
+                                <FormItem className='w-full my-2 lg:my-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Locality</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
                     </div>
                 </div>
 
@@ -1838,13 +1889,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
 
 
-                        {/* Blood Group */}
+                        {/* Parish */}
                         <div className='w-full flex flex-col items-center lg:flex-row'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Blood Group</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
                             <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                                 <FormField
                                     control={form?.control}
-                                    name='student.blood_group'
+                                    name='student.parish'
                                     render={({ field }) => (
                                         <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
                                             <FormControl>
@@ -1858,7 +1909,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='N.A.'>N.A.</SelectItem>
+                                                        {parishes?.length < 1 ? (
+                                                            <p>No parishes</p>
+                                                            // @ts-ignore
+                                                        ) : !parishes[0]?.parish_name ? (
+                                                            <LoadingIcon />
+                                                        ) : parishes?.map((item:any) => (
+                                                            <SelectItem value={item?.parish_name} key={item?._id}>{item?.parish_name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
@@ -1935,6 +1993,95 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             </div>
                         </div>
                     </div>
+                </div>
+
+
+
+
+
+                <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
+                    {/* Blood Group */}
+                    <div className='w-full flex flex-col items-center'>
+                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                            <FormField
+                                control={form?.control}
+                                name='student.blood_group'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field?.value}
+                                                onValueChange={field?.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value='NA'>NA</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
+                    {/* Cadet Type */}
+                    <div className='w-full flex flex-col items-center'>
+                        <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                            <FormField
+                                control={form?.control}
+                                name='student.cadet_type'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field?.value}
+                                                onValueChange={field?.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value='Type'>Type</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
+                    {/* Club */}
+                    <FormField
+                        control={form?.control}
+                        name='student.club'
+                        render={({ field }) => (
+                            <FormItem className='w-full flex flex-col justify-between items-center'>
+                                <div className='w-full flex flex-col items-start justify-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-[11px] text-[#726E71]'>Club</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-8 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
                 </div>
 
 
@@ -2405,7 +2552,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                        <SelectItem value='School'>School</SelectItem>
+                                                    <SelectItem value='NA'>NA</SelectItem>
+                                                    <SelectItem value='School'>School</SelectItem>
+                                                    <SelectItem value='Self'>Self</SelectItem>
+                                                    <SelectItem value='Public'>Public</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>
@@ -2465,7 +2615,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                        <SelectItem value='student status'>student status</SelectItem>
+                                                        <SelectItem value='Studying'>Studying</SelectItem>
+                                                        <SelectItem value='TC'>TC</SelectItem>
+                                                        <SelectItem value='Left'>Left</SelectItem>
+                                                        <SelectItem value='Rusticate'>Rusticate</SelectItem>
+                                                        <SelectItem value='Withdrawn'>Withdrawn</SelectItem>
+                                                        <SelectItem value='Repeater'>Repeater</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>

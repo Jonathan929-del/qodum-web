@@ -48,6 +48,7 @@ export const AdmittedStudentValidation = z.object({
         contact_person_email:z.string(),
         secondary_contact_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         h_no_and_streets:z.string(),
+        locality:z.string(),
         email:z.string(),
         city:z.string(),
         mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
@@ -56,9 +57,12 @@ export const AdmittedStudentValidation = z.object({
         aadhar_card_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         whats_app_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         religion:z.string(),
-        blood_group:z.string(),
+        parish:z.string(),
         caste:z.string(),
         category:z.string(),
+        blood_group:z.string(),
+        cadet_type:z.string(),
+        club:z.string(),
         is_ews:z.boolean(),
         is_rte:z.boolean(),
         sibling:z.boolean(),
@@ -193,8 +197,8 @@ export const AdmittedStudentValidation = z.object({
 
 
     // Documents
-    // documents:z.array(z.object({
-    //     document_type:z.string(),
-    //     document_name:z.string()
-    // }))
+    documents:z.array(z.object({
+        document_type:z.string(),
+        document_name:z.string()
+    }))
 });

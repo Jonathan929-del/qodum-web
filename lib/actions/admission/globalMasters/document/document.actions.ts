@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Document from '@/lib/models/admission/globalMasters/document/Document.model';
+import DocumentType from '@/lib/models/admission/globalMasters/document/DocumentType.model';
 
 
 
@@ -117,5 +118,36 @@ export const deleteDocument = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting document: ${err}`);      
+    };
+};
+
+
+
+
+
+// Fetch documents for admission
+export const fetchDocumentsForAdmission = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const documents = await Document.find();
+        const documentTypes = await DocumentType.find();
+
+        const filtered = documentTypes.map(dt => {
+            return {
+                document_type:dt.document_type,
+                document_names:documents.filter(d => d.document_type === dt.document_type)
+            };
+        });
+
+        // Return
+        return filtered;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching documents: ${err}`);
     };
 };

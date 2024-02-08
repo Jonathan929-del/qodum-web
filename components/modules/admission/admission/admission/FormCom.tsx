@@ -9,6 +9,7 @@ import Sibling from './forms/Sibling';
 import Student from './forms/Student';
 import Guardian from './forms/Guardian';
 import {useForm} from 'react-hook-form';
+import Document from './forms/Document';
 import {useEffect, useState} from 'react';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
@@ -24,7 +25,7 @@ import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} fro
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments}:any) => {
 
 
     // Toast
@@ -86,6 +87,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             contact_person_email:updateStudent.student.contact_person_email,
             secondary_contact_no:updateStudent.student.secondary_contact_no,
             h_no_and_streets:updateStudent.student.h_no_and_streets,
+            locality:updateStudent.student.locality,
             email:updateStudent.student.email,
             city:updateStudent.student.city,
             mobile:updateStudent.student.mobile,
@@ -94,9 +96,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             aadhar_card_no:updateStudent.student.aadhar_card_no,
             whats_app_no:updateStudent.student.whats_app_no,
             religion:updateStudent.student.religion,
-            blood_group:updateStudent.student.blood_group,
+            parish:updateStudent.student.parish,
             caste:updateStudent.student.caste,
             category:updateStudent.student.category,
+            blood_group:updateStudent.student.blood_group,
+            cadet_type:updateStudent.student.cadet_type,
+            club:updateStudent.student.club,
             is_ews:updateStudent.student.is_ews,
             is_rte:updateStudent.student.is_rte,
             sibling:updateStudent.student.sibling,
@@ -249,7 +254,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 check_id_applicable:updateStudent.guardian_details.if_single_parent.check_id_applicable,
                 separation_reason:updateStudent.guardian_details.if_single_parent.separation_reason
             }
-        }
+        },
+
+        // Documents
+        documents:updateStudent.documents
     };
 
 
@@ -270,10 +278,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 is_minority:updateStudent.id === '' ? false : updateStudent.student.is_minority,
                 is_disability:updateStudent.id === '' ? false : updateStudent.student.is_disability,
                 dis_disc:updateStudent.id === '' ? '' : updateStudent.student.dis_disc,
-                is_new:updateStudent.id === '' ? false : updateStudent.student.is_new,
-                is_active:updateStudent.id === '' ? false : updateStudent.student.is_active,
+                is_new:updateStudent.id === '' ? true : updateStudent.student.is_new,
+                is_active:updateStudent.id === '' ? true : updateStudent.student.is_active,
                 reason:updateStudent.id === '' ? '' : updateStudent.student.reason,
-                is_only_child:updateStudent.id === '' ? false : updateStudent.student.is_only_child,
+                is_only_child:updateStudent.id === '' ? true : updateStudent.student.is_only_child,
                 student_status:updateStudent.id === '' ? '' : updateStudent.student.student_status,
                 house:updateStudent.id === '' ? '' : updateStudent.student.house,
                 doa:updateStudent.id === '' ? new Date() : updateStudent.student.doa,
@@ -298,6 +306,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 contact_person_email:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.contact_person_email : updateStudent.id === '' ? '' : updateStudent.student.contact_person_email,
                 secondary_contact_no:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.secondary_contact_no : updateStudent.id === '' ? 0 : updateStudent.student.secondary_contact_no,
                 h_no_and_streets:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.h_no_and_streets : updateStudent.id === '' ? '' : updateStudent.student.h_no_and_streets,
+                locality:updateStudent.id === '' ? '' : updateStudent.student.locality,
                 email:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.email : updateStudent.id === '' ? '' : updateStudent.student.email,
                 city:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.city : updateStudent.id === '' ? '' : updateStudent.student.city,
                 mobile:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.mobile : updateStudent.id === '' ? 0 : updateStudent.student.mobile,
@@ -306,9 +315,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 aadhar_card_no:updateStudent.id === '' ? 0 : updateStudent.student.aadhar_card_no,
                 whats_app_no:updateStudent.id === '' ? 0 : updateStudent.student.whats_app_no,
                 religion:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.religion : updateStudent.id === '' ? '' : updateStudent.student.religion,
-                blood_group:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.blood_group : updateStudent.id === '' ? '' : updateStudent.student.blood_group,
+                parish:updateStudent.id === '' ? '' : updateStudent.student.parish,
                 caste:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.caste : updateStudent.id === '' ? '' : updateStudent.student.caste,
                 category:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.category : updateStudent.id === '' ? '' : updateStudent.student.category,
+                blood_group:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.blood_group : updateStudent.id === '' ? '' : updateStudent.student.blood_group,
+                cadet_type:updateStudent.id === '' ? '' : updateStudent.student.cadet_type,
+                club:updateStudent.id === '' ? '' : updateStudent.student.club,
                 is_ews:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.is_ews : updateStudent.id === '' ? false : updateStudent.student.is_ews,
                 is_rte:updateStudent.id === '' ? false : updateStudent.student.is_rte,
                 sibling:valuesFromRegister.student.name !== '' ? valuesFromRegister.student.sibling : updateStudent.id === '' ? false : updateStudent.student.sibling,
@@ -461,7 +473,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.check_id_applicable : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.check_id_applicable,
                     separation_reason:valuesFromRegister.student.name !== '' ? valuesFromRegister.guardian_details.if_single_parent.separation_reason : updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.separation_reason
                 }
-            }
+            },
+
+            // Documents
+            documents:updateStudent.id === '' ? [{document_type:'', document_name:''}] : updateStudent.documents
         }
     });
 
@@ -522,6 +537,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     contact_person_email:values.student.contact_person_email,
                     secondary_contact_no:values.student.secondary_contact_no,
                     h_no_and_streets:values.student.h_no_and_streets,
+                    locality:values.student.locality,
                     email:values.student.email,
                     city:values.student.city,
                     mobile:values.student.mobile,
@@ -530,9 +546,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     aadhar_card_no:values.student.aadhar_card_no,
                     whats_app_no:values.student.whats_app_no,
                     religion:values.student.religion,
-                    blood_group:values.student.blood_group,
+                    parish:values.student.parish,
                     caste:values.student.caste,
                     category:values.student.category,
+                    blood_group:values.student.blood_group,
+                    cadet_type:values.student.cadet_type,
+                    club:values.student.club,
                     is_ews:values.student.is_ews,
                     is_rte:values.student.is_rte,
                     sibling:values.student.sibling,
@@ -685,12 +704,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
-                }
+                },
+
+                // Documents
+                documents:selectedDocuments.filter((d:any) => d.document_name !== '')
             });
             toast({title:'Added Successfully!'});
         }
         // Modify Student
-        else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects){
+        else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects || comparisonObject.documents !== selectedDocuments){
             if(comparisonObject.student.adm_no !== values.student.adm_no && students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
                 toast({title:'Admission no. already exists', variant:'error'});
                 return;
@@ -744,6 +766,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     contact_person_email:values.student.contact_person_email,
                     secondary_contact_no:values.student.secondary_contact_no,
                     h_no_and_streets:values.student.h_no_and_streets,
+                    locality:values.student.locality,
                     email:values.student.email,
                     city:values.student.city,
                     mobile:values.student.mobile,
@@ -752,9 +775,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     aadhar_card_no:values.student.aadhar_card_no,
                     whats_app_no:values.student.whats_app_no,
                     religion:values.student.religion,
-                    blood_group:values.student.blood_group,
+                    parish:values.student.parish,
                     caste:values.student.caste,
                     category:values.student.category,
+                    blood_group:values.student.blood_group,
+                    cadet_type:values.student.cadet_type,
+                    club:values.student.club,
                     is_ews:values.student.is_ews,
                     is_rte:values.student.is_rte,
                     sibling:values.student.sibling,
@@ -907,7 +933,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
-                }
+                },
+
+                // Documents
+                documents:selectedDocuments.filter((d:any) => d.document_name !== '')
             });
             toast({title:'Updated Successfully!'});
         }
@@ -947,9 +976,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 pin_code:0,
                 aadhar_card_no:0,
                 religion:'',
-                blood_group:'',
                 caste:'',
                 category:'',
+                blood_group:'',
                 is_ews:false,
                 sibling:false,
                 transport:'',
@@ -1149,6 +1178,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 contact_person_email:'',
                 secondary_contact_no:0,
                 h_no_and_streets:'',
+                locality:'',
                 email:'',
                 city:'',
                 mobile:0,
@@ -1157,9 +1187,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 aadhar_card_no:0,
                 whats_app_no:0,
                 religion:'',
-                blood_group:'',
+                parish:'',
                 caste:'',
                 category:'',
+                blood_group:'',
+                cadet_type:'',
+                club:'',
                 is_ews:false,
                 is_rte:false,
                 sibling:false,
@@ -1312,7 +1345,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:'',
                     separation_reason:''
                 }
-            }
+            },
+
+            // Documents
+            documents:[{
+                document_type:'',
+                document_name:''
+            }]
         });
         // Reseting form
         form.reset({
@@ -1357,6 +1396,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 contact_person_email:'',
                 secondary_contact_no:0,
                 h_no_and_streets:'',
+                locality:'',
                 email:'',
                 city:'',
                 mobile:0,
@@ -1365,9 +1405,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 aadhar_card_no:0,
                 whats_app_no:0,
                 religion:'',
-                blood_group:'',
+                parish:'',
                 caste:'',
                 category:'',
+                blood_group:'',
+                cadet_type:'',
+                club:'',
                 is_ews:false,
                 is_rte:false,
                 sibling:false,
@@ -1520,13 +1563,23 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:'',
                     separation_reason:''
                 }
-            }
+            },
+
+            // Documents
+            documents:[{
+                document_type:'',
+                document_name:''
+            }]
         });
         // Image
         setFile(null);
         setImageSrc('');
         setIsLoading(false);
         setSelectedSubjects([]);
+        setSelectedDocuments([{
+            document_type:'',
+            document_name:''
+        }])
     };
 
 
@@ -1573,6 +1626,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.contact_person_email', updateStudent.student.contact_person_email);
             form.setValue('student.secondary_contact_no', updateStudent.student.secondary_contact_no);
             form.setValue('student.h_no_and_streets', updateStudent.student.h_no_and_streets);
+            form.setValue('student.locality', updateStudent.student.locality);
             form.setValue('student.email', updateStudent.student.email);
             form.setValue('student.city', updateStudent.student.city);
             form.setValue('student.mobile', updateStudent.student.mobile);
@@ -1581,9 +1635,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.aadhar_card_no', updateStudent.student.aadhar_card_no);
             form.setValue('student.whats_app_no', updateStudent.student.whats_app_no);
             form.setValue('student.religion', updateStudent.student.religion);
-            form.setValue('student.blood_group', updateStudent.student.blood_group);
+            form.setValue('student.parish', updateStudent.student.parish);
             form.setValue('student.caste', updateStudent.student.caste);
             form.setValue('student.category', updateStudent.student.category);
+            form.setValue('student.blood_group', updateStudent.student.blood_group);
+            form.setValue('student.cadet_type', updateStudent.student.cadet_type);
+            form.setValue('student.club', updateStudent.student.club);
             form.setValue('student.is_ews', updateStudent.student.is_ews);
             form.setValue('student.is_rte', updateStudent.student.is_rte);
             form.setValue('student.sibling', updateStudent.student.sibling);
@@ -1717,6 +1774,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('guardian_details.if_single_parent.correspondence_to', updateStudent.guardian_details.if_single_parent.correspondence_to);
             form.setValue('guardian_details.if_single_parent.check_id_applicable', updateStudent.guardian_details.if_single_parent.check_id_applicable);
             form.setValue('guardian_details.if_single_parent.separation_reason', updateStudent.guardian_details.if_single_parent.separation_reason);
+
+
+            // Documents
+            form.setValue('documents', updateStudent.documents);
         }
     }, [updateStudent]);
     useEffect(() => {
@@ -1746,9 +1807,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.pin_code', valuesFromRegister.student.pin_code);
             form.setValue('student.aadhar_card_no', valuesFromRegister.student.aadhar_card_no);
             form.setValue('student.religion', valuesFromRegister.student.religion);
-            form.setValue('student.blood_group', valuesFromRegister.student.blood_group);
             form.setValue('student.caste', valuesFromRegister.student.caste);
             form.setValue('student.category', valuesFromRegister.student.category);
+            form.setValue('student.blood_group', valuesFromRegister.student.blood_group);
             form.setValue('student.is_ews', valuesFromRegister.student.is_ews);
             form.setValue('student.sibling', valuesFromRegister.student.sibling);
             form.setValue('student.transport', valuesFromRegister.student.transport);
@@ -1948,7 +2009,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                 <Guardian form={form}/>
                             </TabsContent>
                             <TabsContent value='document'>
-                                <h1>Document</h1>
+                                <Document
+                                    selectedDocuments={selectedDocuments}
+                                    setSelectedDocuments={setSelectedDocuments}
+                                />
                             </TabsContent>
                             <TabsContent value='sibling'>
                                 <Sibling
@@ -1961,7 +2025,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromRegister={setValuesFromRegister} setSelectedSubjects={setSelectedSubjects}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromRegister={setValuesFromRegister} setSelectedSubjects={setSelectedSubjects} setSelectedDocuments={setSelectedDocuments}/>
                         </div>
                     </form>
                 )}

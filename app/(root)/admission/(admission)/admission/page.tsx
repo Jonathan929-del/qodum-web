@@ -3,9 +3,9 @@
 import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/admission/admission/admission/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admission/ViewCom';
+import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
-import { fetchManualListStudents } from '@/lib/actions/admission/admission/student.actions';
 
 
 
@@ -73,6 +73,7 @@ const page = () => {
             contact_person_email:'',
             secondary_contact_no:0,
             h_no_and_streets:'',
+            locality:'',
             email:'',
             city:'',
             mobile:0,
@@ -81,9 +82,12 @@ const page = () => {
             aadhar_card_no:0,
             whats_app_no:0,
             religion:'',
-            blood_group:'',
+            parish:'',
             caste:'',
             category:'',
+            blood_group:'',
+            cadet_type:'',
+            club:'',
             is_ews:false,
             is_rte:false,
             sibling:false,
@@ -236,7 +240,13 @@ const page = () => {
                 check_id_applicable:'',
                 separation_reason:''
             }
-        }
+        },
+
+        // Documents
+        documents:[{
+            document_type:'',
+            document_name:''
+        }]
     });
 
 
@@ -263,6 +273,7 @@ const page = () => {
             contact_person_email:'',
             secondary_contact_no:0,
             h_no_and_streets:'',
+            locality:'',
             email:'',
             city:'',
             mobile:0,
@@ -270,9 +281,9 @@ const page = () => {
             pin_code:0,
             aadhar_card_no:0,
             religion:'',
-            blood_group:'',
             caste:'',
             category:'',
+            blood_group:{type:String},
             is_ews:false,
             sibling:false,
             transport:'',
@@ -432,6 +443,10 @@ const page = () => {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
 
 
+    // Selected documents
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
+
+
     // Use effect
     useEffect(() => {
         const accountGroupsFetcher = async () => {
@@ -451,6 +466,7 @@ const page = () => {
                     <ViewCom
                         students={students}
                         setSelectedSubjects={setSelectedSubjects}
+                        setSelectedDocuments={setSelectedDocuments}
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
                         setValuesFromRegister={setValuesFromRegister}
@@ -459,6 +475,7 @@ const page = () => {
                     <RegisteredStudentsViewCom
                         setUpdateStudent={setUpdateStudent}
                         setSelectedSubjects={setSelectedSubjects}
+                        setSelectedDocuments={setSelectedDocuments}
                         registeredStudents={registeredStudents}
                         setIsViewOpened={setIsViewOpened}
 l                       setValuesFromRegister={setValuesFromRegister}
@@ -475,6 +492,8 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         setValuesFromRegister={setValuesFromRegister}
                         selectedSubjects={selectedSubjects}
                         setSelectedSubjects={setSelectedSubjects}
+                        selectedDocuments={selectedDocuments}
+                        setSelectedDocuments={setSelectedDocuments}
                     />
                 )
             }
