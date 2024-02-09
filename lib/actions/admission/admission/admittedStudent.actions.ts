@@ -577,7 +577,7 @@ export const fetchStudentByAdmNo = async ({adm_no}:{adm_no:String}) => {
         return student;
 
     } catch (err) {
-        throw new Error(`Error deleting student: ${err}`);
+        throw new Error(`Error fetching student: ${err}`);
     };
 };
 
@@ -635,5 +635,78 @@ export const modifyStudentsHealthDetails = async ({students}:ModifyStudentsHealt
 
     } catch (err) {
         throw new Error(`Error updating students: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch students by all data props
+interface fetchStudentsByAllDataProps{
+    name:String;
+    father_name:String;
+    adm_no:String;
+    mobile:String;
+};
+// Fetch students by all data
+export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}:fetchStudentsByAllDataProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Regex
+        // @ts-ignore
+        const nameRegex = new RegExp(name, 'i');
+        // @ts-ignore
+        const fatherNameRegex = new RegExp(father_name, 'i');
+        // @ts-ignore
+        const admNoRegex = new RegExp(adm_no, 'i');
+
+
+        // Students
+        let students; 
+
+
+        // Values
+        const containsAnyLetters = (str:any) => {
+            return /[a-zA-Z]/.test(str);
+        }
+
+        if(!containsAnyLetters(mobile)){
+            const studentsRes = await AdmittedStudent.find({'student.mobile':mobile});
+            students = studentsRes;
+        }else{
+
+            // Name res
+            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}});
+
+            // // Father's name res
+            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}});
+
+            // // Admission number res
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}});
+
+
+            const allRes = nameRes.concat(fatherNameRes, admNoRes);
+            const uniqueBy = (a:any, key:any) => {
+                var seen:any = {};
+                return a.filter(function(item:any) {
+                    var k = key(item);
+                    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+                })
+            }
+            const filteredAllRes = uniqueBy(allRes, JSON.stringify);
+            students = filteredAllRes;
+        }
+
+
+        // Return
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error fetching students: ${err}`);
     };
 };

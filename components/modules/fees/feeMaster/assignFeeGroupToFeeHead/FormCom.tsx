@@ -12,7 +12,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignFeeGroupToFeeHeadValidation} from '@/lib/validations/fees/feeMaster/assignFeeGroupToFeeHead.validation';
-import { assignFeeGroupToFeeHead, fetchGroupByName } from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -75,6 +75,7 @@ const FormCom = ({groups, heads}: any) => {
         };
         fetcher();
     }, [form.watch('group_name')]);
+    console.log(form.formState.errors);
 
 
     return (

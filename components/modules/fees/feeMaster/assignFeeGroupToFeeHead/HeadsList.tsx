@@ -30,6 +30,14 @@ const HeadsList = ({heads, form}:any) => {
     const [bankLedgers, setBankLedgers]  = useState([{}]);
 
 
+    // Selected account ledger
+    const [selectedAccountLedger, setSelectedAccountLedger] = useState('');
+
+
+    // Selected bank ledger
+    const [selectedBankLedger, setSelectedBankLedger] = useState('');
+
+
     // Check change
     const checkChange = (head:any) => {
         if(form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name)){
@@ -66,20 +74,16 @@ const HeadsList = ({heads, form}:any) => {
 
     return (
         <Command
-            className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] '
+            className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[2px] border-[0.5px] border-[#E8E8E8] '
         >
-            
-            {/* Header */}
-            <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Group Head Relation</h2>
-            </div>
+    
             <div className='w-full h-full flex flex-col items-center bg-[#F1F1F1]'>
 
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between p-3 border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -126,13 +130,47 @@ const HeadsList = ({heads, form}:any) => {
                             Installment
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-col p-2 border-r-[0.5px] border-[#ccc]'>
                             Fee Account
-                            <ChevronsUpDown size={12}/>
+                            <Select
+                                onValueChange={(v:any) => form.getValues().affiliated_heads.map((head:any) => form.setValue(`affiliated_heads.${heads.indexOf(head)}.account`, v))}
+                            >
+                                <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                    <SelectValue placeholder='Select Account'/>
+                                    <ChevronDown className='h-4 w-4 opacity-50'/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {accountLedgers.length < 1 ? (
+                                        <p>No account ledgers</p>
+                                        // @ts-ignore
+                                    ) : !accountLedgers[0]?.account_name ? (
+                                        <LoadingIcon />
+                                    ) : accountLedgers.map((ledger:any) => (
+                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </li>
-                        <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
+                        <li className='basis-[15%] flex flex-col p-2'>
                             Fee Post Account
-                            <ChevronsUpDown size={12}/>
+                            <Select
+                                onValueChange={(v:any) => setSelectedBankLedger(v)}
+                            >
+                                <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                    <SelectValue placeholder='Select Post Acc.'/>
+                                    <ChevronDown className='h-4 w-4 opacity-50'/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {bankLedgers.length < 1 ? (
+                                        <p>No bank ledgers</p>
+                                        // @ts-ignore
+                                    ) : bankLedgers[0]?.account_name === '' ? (
+                                        <LoadingIcon />
+                                    ) : bankLedgers.map((ledger:any) => (
+                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </li>
                     </ul>
 
