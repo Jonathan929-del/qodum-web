@@ -21,6 +21,9 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 1
                 image:'',
                 // 2
+                stream:'',
+                subjects:[''],
+                optional_subject:'',
                 class:'',
                 board:'',
                 name:'',
@@ -212,6 +215,9 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 1
                 image:'',
                 // 2
+                stream:'',
+                subjects:[''],
+                optional_subject:'',
                 class:'',
                 board:'',
                 name:'',
@@ -412,7 +418,9 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 1
                 image:'',
                 // 2
-                with_enquiry:true,
+                stream:'',
+                subjects:[''],
+                optional_subject:'',
                 class:'',
                 board:'',
                 name:'',

@@ -1001,7 +1001,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             placeholder='Search student'
                         />
                         <div
-                            onClick={searchClick}
+                            onClick={admissionSearchClick}
                             className='group flex flex-row items-center justify-center gap-[2px] px-2 border-[0.5px] border-[#2EABE5] rounded-r-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5]'
                         >
                             <Search size={15} className='text-[#2EABE5] transition group-hover:text-white'/>
@@ -1009,10 +1009,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                     </div>
                     <div
-                        onClick={admissionSearchClick}
+                        onClick={searchClick}
                         className='group w-[200px] h-6 mt-2 flex flex-row items-center justify-center gap-[2px] ml-2 px-2 border-[0.5px] border-[#2EABE5] bg-white rounded-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5] sm:h-auto sm:w-[250px] sm:mt-0'
                     >
-                        <p className='transition text-[#2EABE5] group-hover:text-white'>Search From Admission</p>
+                        <p className='transition text-[#2EABE5] group-hover:text-white'>Search For Admission</p>
                     </div>
                 </div>
             </div>
