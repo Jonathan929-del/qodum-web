@@ -174,12 +174,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -187,12 +182,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -200,12 +190,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -365,12 +350,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:student?.others?.previous_school_details[0]?.passing_year || '',
                         total_marks:student?.others?.previous_school_details[0]?.total_marks || '',
                         percentage:student?.others?.previous_school_details[0]?.percentage || '',
-                        result:student?.others?.previous_school_details[0]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[0]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[0]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[0]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[0]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[0]?.mother_passing_year || '' || '',
+                        result:student?.others?.previous_school_details[0]?.result || ''
                     },
                     {
                         school_name:student?.others?.previous_school_details[1]?.school_name || '',
@@ -378,12 +358,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:student?.others?.previous_school_details[1]?.passing_year || '',
                         total_marks:student?.others?.previous_school_details[1]?.total_marks || '',
                         percentage:student?.others?.previous_school_details[1]?.percentage || '',
-                        result:student?.others?.previous_school_details[1]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[1]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[1]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[1]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[1]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[1]?.mother_passing_year || '',
+                        result:student?.others?.previous_school_details[1]?.result || ''
                     },
                     {
                         school_name:student?.others?.previous_school_details[2]?.school_name || '',
@@ -391,12 +366,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                         passing_year:student?.others?.previous_school_details[2]?.passing_year || '',
                         total_marks:student?.others?.previous_school_details[2]?.total_marks || '',
                         percentage:student?.others?.previous_school_details[2]?.percentage || '',
-                        result:student?.others?.previous_school_details[2]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[2]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[2]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[2]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[2]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[2]?.mother_passing_year || '',
+                        result:student?.others?.previous_school_details[2]?.result || ''
                     }
                 ]
             },

@@ -142,12 +142,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -155,12 +150,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -168,12 +158,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -354,12 +339,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -367,12 +347,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -380,12 +355,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -570,12 +540,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -583,12 +548,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     },
                     {
                         school_name:'',
@@ -596,12 +556,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                         passing_year:'',
                         total_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },

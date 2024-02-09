@@ -220,10 +220,13 @@ const FormCom = ({classes, sections, terms}: any) => {
 
 
                     {/* Fee heads */}
-                    <HeadsList
-                        students={students}
-                        form={form}
-                    />
+                    <div className='w-full'>
+                        <h2>Student List</h2>
+                        <HeadsList
+                            students={students}
+                            form={form}
+                        />
+                    </div>
 
 
 

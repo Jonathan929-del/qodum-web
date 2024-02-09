@@ -165,12 +165,7 @@ export const AdmittedStudentValidation = z.object({
             passing_year:z.string(),
             total_marks:z.string(),
             percentage:z.string(),
-            result:z.string(),
-            is_alumni:z.string(),
-            father_name:z.string(),
-            father_passing_year:z.string(),
-            mother_name:z.string(),
-            mother_passing_year:z.string()
+            result:z.string()
         }))
     }),
 

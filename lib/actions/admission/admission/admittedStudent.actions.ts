@@ -165,11 +165,6 @@ interface CreateAdmittedStudentProps{
             total_marks:String;
             percentage:String;
             result:String;
-            is_alumni:String;
-            father_name:String;
-            father_passing_year:String;
-            mother_name:String;
-            mother_passing_year:String;
         }[]
     };
 
@@ -428,11 +423,6 @@ interface ModifyAdmittedStudentProps{
             total_marks:String;
             percentage:String;
             result:String;
-            is_alumni:String;
-            father_name:String;
-            father_passing_year:String;
-            mother_name:String;
-            mother_passing_year:String;
         }[]
     };
 

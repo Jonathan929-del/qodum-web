@@ -188,11 +188,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 },
                 {
                     school_name:'',
@@ -201,11 +196,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 },
                 {
                     school_name:'',
@@ -214,11 +204,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 }
             ]
         },
@@ -383,11 +368,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 },
                 {
                     school_name:'',
@@ -396,11 +376,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 },
                 {
                     school_name:'',
@@ -409,11 +384,6 @@ const page = () => {
                     total_marks:'',
                     percentage:'',
                     result:'',
-                    is_alumni:'',
-                    father_name:'',
-                    father_passing_year:'',
-                    mother_name:'',
-                    mother_passing_year:''
                 }
             ]
         },

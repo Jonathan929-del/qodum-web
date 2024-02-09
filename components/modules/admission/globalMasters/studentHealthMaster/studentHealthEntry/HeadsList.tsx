@@ -31,14 +31,10 @@ const HeadsList = ({students, form}:any) => {
 
     return (
         <Command
-            className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] '
+            className='w-full h-auto flex flex-col items-center mt-2 gap-2 rounded-[4px] border-[0.5px] border-[#E8E8E8] '
         >
-            
-            {/* Header */}
-            <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Group Head Relation</h2>
-            </div>
-            <div className='w-full h-full flex flex-col items-center bg-[#F1F1F1]'>
+
+            <div className='w-full flex flex-col items-center bg-[#F1F1F1]'>
 
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
