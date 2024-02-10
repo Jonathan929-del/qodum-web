@@ -174,14 +174,22 @@ const FormCom = ({groups, installments}: any) => {
                     />
 
 
-                    {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Save
-                    </Button>
+                    {/* Buttons */}
+                    <div className='flex flex-row items-center gap-4'>
+                        <Button
+                            type='submit'
+                            className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Save
+                        </Button>
+                        <span
+                            className='flex justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Show
+                        </span>
+                    </div>
 
 
                 </form>

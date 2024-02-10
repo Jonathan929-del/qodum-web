@@ -32,7 +32,7 @@ const FormCom = ({groups}: any) => {
 
 
     // Selected heads
-    const [selectedHeads, setSelectedHeads] = useState<any>([]);
+    const [selectedHeads, setSelectedHeads] = useState([{}]);
 
 
     // Form
@@ -40,16 +40,14 @@ const FormCom = ({groups}: any) => {
         resolver:zodResolver(AssignFeeGroupToFeeHeadValidation),
         defaultValues: {
             group_name:'',
-            affiliated_heads:selectedHeads.map((head:any) => {
-                return{
-                    type_name:head.type_name,
-                    head_name:head.head_name,
-                    schedule_type:head.schedule_type,
-                    installment:head.installment,
-                    account:head.account,
-                    post_account:head.post_account
-                }
-            })
+            affiliated_heads:[{
+                type_name:'',
+                head_name:'',
+                schedule_type:'',
+                installment:'',
+                account:'',
+                post_account:''
+            }]
         }
     });
 
@@ -58,14 +56,13 @@ const FormCom = ({groups}: any) => {
     const onSubmit = async (values: z.infer<typeof AssignFeeGroupToFeeHeadValidation>) => {
         await assignFeeGroupToFeeHead({
             group_name:values.group_name,
-            affiliated_heads:selectedHeads
+            affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
         });
         toast({title:'Saved Successfully!'});
         form.reset({
             group_name:'',
             affiliated_heads:[]
         });
-        setSelectedHeads([]);
     };
 
 
@@ -75,7 +72,14 @@ const FormCom = ({groups}: any) => {
             if(form.getValues().group_name !== ''){
                 const group = await fetchGroupByName({name:form.getValues().group_name});
                 const groupHeads = group.affiliated_heads;
-                setSelectedHeads(groupHeads);
+                groupHeads.map((head:any) => {
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.type_name`, head.type_name);
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.head_name`, head.head_name);
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.schedule_type`, head.schedule_type);
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.installment`, head.installment);
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.account`, head.account);
+                    form.setValue(`affiliated_heads.${groupHeads.indexOf(head)}.post_account`, head.post_account);
+                });
             }
         };
         fetcher();
@@ -88,9 +92,6 @@ const FormCom = ({groups}: any) => {
         };
         fetcher();
     }, []);
-
-    console.log('Heads: ', heads);
-    console.log('Selected heads: ', selectedHeads);
     
 
     return (
@@ -126,7 +127,7 @@ const FormCom = ({groups}: any) => {
                                             <SelectContent>
                                                 {groups.length < 1 ? (
                                                     <p>No Group</p>
-                                                ) : !groups[0].name ? (
+                                                ) : !groups[0] ? (
                                                     <LoadingIcon />
                                                 ) : groups.map((group:any) => (
                                                     <SelectItem value={group.name} key={group._id}>{group.name}</SelectItem>
@@ -146,8 +147,6 @@ const FormCom = ({groups}: any) => {
                     <HeadsList
                         heads={heads}
                         setHeads={setHeads}
-                        selectedHeads={selectedHeads}
-                        setSelectedHeads={setSelectedHeads}
                         form={form}
                     />
 

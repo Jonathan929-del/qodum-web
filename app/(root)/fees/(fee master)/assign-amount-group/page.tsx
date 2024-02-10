@@ -26,7 +26,7 @@ const page = () => {
         const fetcher = async () => {
             const groupsRes = await fetchGroups();
             const installmentsRes = await fetchInstallments();
-            setInstallments(installmentsRes);
+            setInstallments(installmentsRes.concat({name:'All installments'}));
             setGroups(groupsRes);
         };
         fetcher();

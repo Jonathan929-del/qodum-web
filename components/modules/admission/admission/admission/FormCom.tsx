@@ -1833,14 +1833,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         {/* Tabs */}
                         <Tabs
                             defaultValue='student'
-                            className='w-full h-[85%] pr-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                            className='w-full h-[85%] border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
                             <div className='flex justify-center w-full p-[2px]'>
                                 <TabsList className='bg-[#F3F3F3] rounded-full'>
                                     <TabsTrigger
                                         value='student'
                                         onClick={() => setSelectedTab('student')}
-                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
                                         Student
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
@@ -1849,7 +1849,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     <TabsTrigger
                                         value='parent'
                                         onClick={() => setSelectedTab('parent')}
-                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
                                         Parent
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
@@ -1858,7 +1858,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     <TabsTrigger
                                         value='other'
                                         onClick={() => setSelectedTab('other')}
-                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
                                         Other
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
@@ -1867,7 +1867,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     <TabsTrigger
                                         value='guardian'
                                         onClick={() => setSelectedTab('guardian')}
-                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
                                         Guardian
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
@@ -1876,7 +1876,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     <TabsTrigger
                                         value='document'
                                         onClick={() => setSelectedTab('document')}
-                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'document' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'document' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
                                         Document
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
@@ -1886,7 +1886,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                         <TabsTrigger
                                             value='sibling'
                                             onClick={() => setSelectedTab('sibling')}
-                                            className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'sibling' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                            className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'sibling' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                         >
                                             Sibling
                                             <p className='hidden ml-[4px] lg:inline'>Details</p>
