@@ -88,9 +88,6 @@ const FormCom = ({groups}: any) => {
         };
         fetcher();
     }, []);
-
-    console.log('Heads: ', heads);
-    console.log('Selected heads: ', selectedHeads);
     
 
     return (

@@ -12,7 +12,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
-import {assignAmountGroup, fetchGroupHeadWithInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {assignAmountGroup, fetchGroupByName, fetchGroupHeadWithInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -24,6 +24,10 @@ const FormCom = ({groups, installments}: any) => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // Is data fetching
+    const [isDataFetching, setIsDataFetching] = useState(false);
 
 
     // Heads
@@ -65,15 +69,23 @@ const FormCom = ({groups, installments}: any) => {
     useEffect(() => {
         const fetcher = async () => {
             if(form.getValues().group_name !== '' && form.getValues().installment !== ''){
-                const res = await fetchGroupHeadWithInstallment({
-                    group_name:form.getValues().group_name,
-                    installment:form.getValues().installment
-                });
+                setIsDataFetching(true);
+
+                let res:any;
+
+                if(form.getValues().installment === 'Select All'){
+                    const group = await fetchGroupByName({name:form.getValues().group_name})
+                    res = group.affiliated_heads
+                }else{
+                    res = await fetchGroupHeadWithInstallment({group_name:form.getValues().group_name, installment:form.getValues().installment});
+                };
+                console.log(res);
                 setHeads(res);
                 res.map((head:any) => {
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head.amount);
                 });
+                setIsDataFetching(false);
             }
         };
         fetcher();
@@ -113,7 +125,7 @@ const FormCom = ({groups, installments}: any) => {
                                             <SelectContent>
                                                 {groups.length < 1 ? (
                                                     <p>No Group</p>
-                                                ) : groups[0].name === '' ? (
+                                                ) : !groups[0].name ? (
                                                     <LoadingIcon />
                                                 ) : groups.map((group:any) => (
                                                     <SelectItem value={group.name} key={group._id}>{group.name}</SelectItem>
@@ -149,9 +161,10 @@ const FormCom = ({groups, installments}: any) => {
                                                 <ChevronDown className='h-4 w-4 opacity-50'/>
                                             </SelectTrigger>
                                             <SelectContent>
+                                                <SelectItem value='Select All'>Select All</SelectItem>
                                                 {installments.length < 1 ? (
                                                     <p>No installments</p>
-                                                ) : installments[0].name === '' ? (
+                                                ) : !installments[0].name ? (
                                                     <LoadingIcon />
                                                 ) : installments.map((installment:any) => (
                                                     <SelectItem value={installment.name} key={installment._id}>{installment.name}</SelectItem>
@@ -171,6 +184,7 @@ const FormCom = ({groups, installments}: any) => {
                     <HeadsList
                         form={form}
                         heads={heads}
+                        isDataFetching={isDataFetching}
                     />
 
 
@@ -184,7 +198,7 @@ const FormCom = ({groups, installments}: any) => {
                             Save
                         </Button>
                         <span
-                            className='flex justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                            className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
                         >
                             Show

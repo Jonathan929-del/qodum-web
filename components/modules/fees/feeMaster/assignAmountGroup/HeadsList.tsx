@@ -3,16 +3,17 @@ import {Input} from '@/components/ui/input';
 import {ChevronsUpDown} from 'lucide-react';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
 import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main Function
-const HeadsList = ({heads, form}:any) => {
+const HeadsList = ({heads, form, isDataFetching}:any) => {
     return (
         <Command
-            className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] '
+            className='w-[90%] max-h-[50%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] overflow-y-scroll custom-sidebar-scrollbar'
         >
             
             {/* Header */}
@@ -42,11 +43,13 @@ const HeadsList = ({heads, form}:any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            form.getValues().affiliated_heads[0]?.head_name === '' ? (
+                            isDataFetching ? (
+                                <LoadingIcon />
+                            ) : form.getValues().affiliated_heads[0]?.head_name === '' ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
                                     No heads
                                 </p>
-                            ) : heads.map((head:any) => (
+                            ) :  heads.map((head:any) => (
                                     <CommandItem key={head._id} className='w-full min-w-[500px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
                                         <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                         <li className='basis-[25%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.head_name}</li>
