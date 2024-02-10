@@ -38,6 +38,7 @@ const page = () => {
             <FormCom
                 groups={groups}
                 heads={heads}
+                setHeads={setHeads}
             />
         </div>
     );

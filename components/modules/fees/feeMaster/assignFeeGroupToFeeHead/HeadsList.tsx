@@ -15,7 +15,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const HeadsList = ({heads, form}:any) => {
+const HeadsList = ({heads, form, setHeads}:any) => {
 
 
     // Installments
@@ -28,14 +28,6 @@ const HeadsList = ({heads, form}:any) => {
 
     // Bank ledgers
     const [bankLedgers, setBankLedgers]  = useState([{}]);
-
-
-    // Selected account ledger
-    const [selectedAccountLedger, setSelectedAccountLedger] = useState('');
-
-
-    // Selected bank ledger
-    const [selectedBankLedger, setSelectedBankLedger] = useState('');
 
 
     // Check change
@@ -74,7 +66,7 @@ const HeadsList = ({heads, form}:any) => {
 
     return (
         <Command
-            className='w-[90%] flex flex-col items-center pb-2 gap-2 rounded-[2px] border-[0.5px] border-[#E8E8E8] '
+            className='w-[90%] max-h-[70%] flex flex-col items-center pb-2 gap-2 rounded-[2px] border-[0.5px] border-[#E8E8E8] '
         >
     
             <div className='w-full h-full flex flex-col items-center bg-[#F1F1F1]'>
@@ -133,7 +125,17 @@ const HeadsList = ({heads, form}:any) => {
                         <li className='basis-[15%] flex flex-col p-2 border-r-[0.5px] border-[#ccc]'>
                             Fee Account
                             <Select
-                                onValueChange={(v:any) => form.getValues().affiliated_heads.map((head:any) => form.setValue(`affiliated_heads.${heads.indexOf(head)}.account`, v))}
+                                onValueChange={v => {
+                                    setHeads(heads.map((h:any) => {
+                                        return{
+                                            ...h,
+                                            account:v
+                                        };
+                                    }));
+                                    heads.map((h:any) => {
+                                        form.setValue(`affiliated_heads.${heads.indexOf(h)}.account`, v);
+                                    });
+                                }}
                             >
                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                     <SelectValue placeholder='Select Account'/>
@@ -154,7 +156,17 @@ const HeadsList = ({heads, form}:any) => {
                         <li className='basis-[15%] flex flex-col p-2'>
                             Fee Post Account
                             <Select
-                                onValueChange={(v:any) => setSelectedBankLedger(v)}
+                                onValueChange={v => {
+                                    setHeads(heads.map((h:any) => {
+                                        return{
+                                            ...h,
+                                            post_account:v
+                                        };
+                                    }));
+                                    heads.map((h:any) => {
+                                        form.setValue(`affiliated_heads.${heads.indexOf(h)}.post_account`, v);
+                                    });
+                                }}
                             >
                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                     <SelectValue placeholder='Select Post Acc.'/>
@@ -178,13 +190,15 @@ const HeadsList = ({heads, form}:any) => {
                     <CommandList>
                         {
                             heads.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
+                                // <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#F3F8FB] border-b[0.5px] border-[#ccc]'>
                                     No heads yet
                                 </p>
                             ) : !heads[0]?.name ? (
                                     <LoadingIcon />
                                 ) : heads.map((head:any) => (
-                                    <CommandItem key={head._id} className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
+                                    // <CommandItem key={head._id} className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
+                                    <CommandItem key={head._id} className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#F3F8FB] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
                                         <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                         <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Checkbox
@@ -201,6 +215,7 @@ const HeadsList = ({heads, form}:any) => {
                                         <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             {form.getValues().affiliated_heads.map((item:any) => item.head_name).includes(head.name) ? (
                                                 <FormField
+                                                    disabled={heads[heads.indexOf(head)].pay_schedule === 'installment'}
                                                     control={form.control}
                                                     name={`affiliated_heads.${heads.indexOf(head)}.installment`}
                                                     render={({field}) => (
@@ -232,7 +247,9 @@ const HeadsList = ({heads, form}:any) => {
                                                     )}
                                                 />
                                             ) : (
-                                                <Select>
+                                                <Select
+                                                    disabled={heads[heads.indexOf(head)].pay_schedule === 'installment'}
+                                                >
                                                     <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                         <SelectValue placeholder='Select Install'/>
                                                         <ChevronDown className='h-4 w-4 opacity-50'/>
@@ -286,7 +303,13 @@ const HeadsList = ({heads, form}:any) => {
                                                     )}
                                                 />
                                             ) : (
-                                                <Select>
+                                                <Select
+                                                    value={heads[heads.indexOf(head)].account}
+                                                    onValueChange={v => {
+                                                        heads[heads.indexOf(head)].account = v;
+                                                        setHeads([...heads]);
+                                                    }}
+                                                >
                                                     <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                         <SelectValue placeholder='Select Account'/>
                                                         <ChevronDown className='h-4 w-4 opacity-50'/>
@@ -340,7 +363,13 @@ const HeadsList = ({heads, form}:any) => {
                                                     )}
                                                 />
                                             ) : (
-                                                <Select>
+                                                <Select
+                                                    value={heads[heads.indexOf(head)].post_account}
+                                                    onValueChange={v => {
+                                                        heads[heads.indexOf(head)].post_account = v;
+                                                        setHeads([...heads]);
+                                                    }}
+                                                >
                                                     <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                         <SelectValue placeholder='Select Post Acc.'/>
                                                         <ChevronDown className='h-4 w-4 opacity-50'/>

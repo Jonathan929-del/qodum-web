@@ -676,8 +676,25 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}
         }
 
         if(!containsAnyLetters(mobile)){
-            const studentsRes = await AdmittedStudent.find({'student.mobile':mobile});
-            students = studentsRes;
+
+            // Mobile number
+            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile});
+
+            // Admission number res
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}});
+
+            // All res
+            const allRes = mobileRes.concat(admNoRes);
+            const uniqueBy = (a:any, key:any) => {
+                var seen:any = {};
+                return a.filter(function(item:any) {
+                    var k = key(item);
+                    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
+                })
+            }
+            const filteredAllRes = uniqueBy(allRes, JSON.stringify);
+
+            students = filteredAllRes;
         }else{
 
             // Name res
@@ -686,7 +703,7 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}
             // // Father's name res
             const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}});
 
-            // // Admission number res
+            // Admission number res
             const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}});
 
 

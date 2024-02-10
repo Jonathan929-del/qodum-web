@@ -44,6 +44,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     const [imageSrc, setImageSrc] = useState('');
 
 
+    // Selected tab
+    const [selectedTab, setSelectedTab] = useState('student');
+
+
     // Comparison object
     const comparisonObject = {
         // Student
@@ -1829,20 +1833,118 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         {/* Tabs */}
                         <Tabs
                             defaultValue='student'
-                            // className='relative w-full h-[85%] pr-2 pl-16 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                             className='w-full h-[85%] pr-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
-                            {/* <TabsList className={`-rotate-90 absolute ${form.getValues().student.sibling ? 'left-[-200px]' : 'left-[-170px]'} ${form.getValues().student.sibling ? 'top-[50%]' : 'top-[45%]'}`}> */}
-                            <TabsList className='w-full'>
-                                <TabsTrigger value='student' className='lg:py-2 lg:px-4'>Student <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
-                                <TabsTrigger value='parent' className='lg:py-2 lg:px-4'>Parent <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
-                                <TabsTrigger value='other' className='lg:py-2 lg:px-4'>Other <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
-                                <TabsTrigger value='guardian' className='lg:py-2 lg:px-4'>Guardian <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
-                                <TabsTrigger value='document' className='lg:py-2 lg:px-4'>Document <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
+                            <div className='flex justify-center w-full p-[2px]'>
+                                <TabsList className='bg-[#F3F3F3] rounded-full'>
+                                    <TabsTrigger
+                                        value='student'
+                                        onClick={() => setSelectedTab('student')}
+                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Student
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+
+                                    <TabsTrigger
+                                        value='parent'
+                                        onClick={() => setSelectedTab('parent')}
+                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Parent
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+
+                                    <TabsTrigger
+                                        value='other'
+                                        onClick={() => setSelectedTab('other')}
+                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Other
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+
+                                    <TabsTrigger
+                                        value='guardian'
+                                        onClick={() => setSelectedTab('guardian')}
+                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Guardian
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+
+                                    <TabsTrigger
+                                        value='document'
+                                        onClick={() => setSelectedTab('document')}
+                                        className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'document' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Document
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+
+                                    {form.getValues().student.sibling && (
+                                        <TabsTrigger
+                                            value='sibling'
+                                            onClick={() => setSelectedTab('sibling')}
+                                            className={`px-[8px] h-8 text-xs transition rounded-full hover:opacity-90 sm:text-[16px] sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'sibling' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        >
+                                            Sibling
+                                            <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                        </TabsTrigger>
+                                    )}
+                                </TabsList>
+                            </div>
+                            {/* <TabsList className='w-full'>
+                                <TabsTrigger
+                                    value='student'
+                                    className='lg:py-2 lg:px-4'
+                                >
+                                    Student
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+
+                                <TabsTrigger
+                                    value='parent'
+                                    className='lg:py-2 lg:px-4'
+                                >
+                                    Parent
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+
+                                <TabsTrigger
+                                    value='other'
+                                    className='lg:py-2 lg:px-4'
+                                >
+                                    Other
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+
+                                <TabsTrigger
+                                    value='guardian'
+                                    className='lg:py-2 lg:px-4'
+                                >
+                                    Guardian
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+
+                                <TabsTrigger
+                                    value='document'
+                                    className='lg:py-2 lg:px-4'
+                                >
+                                    Document
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+
                                 {form.getValues().student.sibling && (
-                                    <TabsTrigger value='sibling' className='lg:py-2 lg:px-4'>Sibling <p className='hidden ml-[4px] lg:inline'>Details</p></TabsTrigger>
+                                    <TabsTrigger
+                                        value='sibling'
+                                        className='lg:py-2 lg:px-4'
+                                    >
+                                        Sibling
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
                                 )}
-                            </TabsList>
+                            </TabsList> */}
                             <TabsContent value='student' className='pl-2 w-full'>
                                 <Student
                                     form={form}

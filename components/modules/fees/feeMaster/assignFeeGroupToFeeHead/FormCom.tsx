@@ -19,7 +19,7 @@ import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeM
 
 
 // Main function
-const FormCom = ({groups, heads}: any) => {
+const FormCom = ({groups, heads, setHeads}: any) => {
 
 
     // Toast
@@ -75,11 +75,10 @@ const FormCom = ({groups, heads}: any) => {
         };
         fetcher();
     }, [form.watch('group_name')]);
-    console.log(form.formState.errors);
 
 
     return (
-        <div className='w-[100%] max-w-[1500px] flex flex-col items-center'>
+        <div className='w-[100%] max-w-[1500px] h-full overflow-y-scroll overflow-x-hidden custom-sidebar-scrollbar flex flex-col items-center'>
             <Form
                 {...form}
             >
@@ -130,6 +129,7 @@ const FormCom = ({groups, heads}: any) => {
                     {/* Fee heads */}
                     <HeadsList
                         heads={heads}
+                        setHeads={setHeads}
                         form={form}
                     />
 
