@@ -12,7 +12,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
-import {assignAmountGroup, fetchGroupByName, fetchGroupHeadWithInstallment} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeadsByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -71,19 +71,13 @@ const FormCom = ({groups, installments}: any) => {
             if(form.getValues().group_name !== '' && form.getValues().installment !== ''){
                 setIsDataFetching(true);
 
-                let res:any;
-
-                if(form.getValues().installment === 'Select All'){
-                    const group = await fetchGroupByName({name:form.getValues().group_name})
-                    res = group.affiliated_heads
-                }else{
-                    res = await fetchGroupHeadWithInstallment({group_name:form.getValues().group_name, installment:form.getValues().installment});
-                };
-                console.log(res);
+                const res = form.getValues().installment === 'Select All'
+                ? await fetchRegularGroupHeadsByName({name:form.getValues().group_name})
+                : await fetchGroupHeadWithInstallment({group_name:form.getValues().group_name, installment:form.getValues().installment});
                 setHeads(res);
                 res.map((head:any) => {
                     form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
-                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head.amount);
+                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head.amount ? head.amount : 0);
                 });
                 setIsDataFetching(false);
             }
@@ -93,13 +87,13 @@ const FormCom = ({groups, installments}: any) => {
 
 
     return (
-        <div className='w-[100%] max-w-[1500px] flex flex-col items-center'>
+        <div className='w-[100%] max-w-[1500px] flex flex-col items-center overflow-y-scroll custom-sidebar-scrollbar'>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative w-full flex flex-col pt-4 items-center px-2 gap-4 sm:px-4'
+                    className='relative w-full flex flex-col pt-4 items-center px-2 gap-8 sm:px-4 sm:gap-4'
                 >
 
 

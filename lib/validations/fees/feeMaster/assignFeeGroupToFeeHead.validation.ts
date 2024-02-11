@@ -12,7 +12,8 @@ const head = z.object({
     schedule_type:z.string(),
     installment:z.string(),
     account:z.string(),
-    post_account:z.string()
+    post_account:z.string(),
+    fee_type:z.string()
 });
 
 

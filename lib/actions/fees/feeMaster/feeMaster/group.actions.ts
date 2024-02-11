@@ -144,6 +144,7 @@ interface AssignFeeGroupToFeeHeadProps{
         installment:String;
         account:String;
         post_account:String;
+        fee_type:String;
     }[]
 };
 // Fee group to fee head
@@ -155,7 +156,6 @@ export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads}:Ass
 
 
         // Assigning
-        console.log(affiliated_heads);
         await Group.findOneAndUpdate(
             {name:group_name},
             {affiliated_heads},
@@ -212,15 +212,20 @@ export const assignAmountGroup = async ({group_name, installment, affiliated_hea
 
         // Selected installment in group
         const group = await Group.findOne({name:group_name});
-        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment);
+        const selectedHeads = installment === 'Select All'
+            ? group.affiliated_heads.filter((head:any) => head.fee_type === 'regular')
+            : group.affiliated_heads.filter((head:any) => head.installment === installment);
+        console.log(selectedHeads);
         const newHeads = selectedHeads.map((head:any) => {
             return{
                 ...head,
-                amount:affiliated_heads[selectedHeads.indexOf(head)].amount
+                amount:affiliated_heads[selectedHeads.indexOf(head)]?.amount
             }
         });
-        const unselectedHeads = group.affiliated_heads.filter((head:any) => head.installment !== installment);
-
+        const unselectedHeads = installment === 'Select All'
+            ? group.affiliated_heads.filter((head:any) => head.fee_type !== 'regular')
+            : group.affiliated_heads.filter((head:any) => head.installment !== installment);
+        
 
         // Assigning
         await Group.findOneAndUpdate(
@@ -228,8 +233,7 @@ export const assignAmountGroup = async ({group_name, installment, affiliated_hea
             {affiliated_heads:[...newHeads, ...unselectedHeads]},
             {new:true}
         );
-        
-
+            
     } catch (err) {
         throw new Error(`Error assigning fee group amount: ${err}`);      
     }
@@ -262,5 +266,30 @@ export const fetchGroupHeadWithInstallment = async ({group_name, installment}:Fe
 
     } catch (err) {
         throw new Error(`Error fetching group: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetch regular group heads by name
+export const fetchRegularGroupHeadsByName = async ({name}:{name:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const group = await Group.findOne({name:name});
+        const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
+
+
+        // Return
+        return selectedHeads
+
+    } catch (err) {
+        throw new Error(`Error fetching group heads: ${err}`);      
     }
 };

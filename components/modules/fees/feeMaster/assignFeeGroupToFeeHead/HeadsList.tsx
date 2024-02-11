@@ -4,7 +4,6 @@ import {Checkbox} from '@/components/ui/checkbox';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
-import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
@@ -15,7 +14,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any) => {
+const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccountLedger, setSelectedAccountLedger, selectedBankLedger, setSelectedBankLedger}:any) => {
 
 
     // Installments
@@ -28,14 +27,6 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
 
     // Bank ledgers
     const [bankLedgers, setBankLedgers]  = useState([{}]);
-
-
-    // selected account ledger
-    const [selectedAccountLedger, setSelectedAccountLedger]  = useState('');
-
-
-    // seleected bank ledger
-    const [selectedBankLedger, setSelectedBankLedger]  = useState('');
 
 
     // Use effect
@@ -51,7 +42,6 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('affiliated_heads')]);
-
 
 
     return (
@@ -74,6 +64,7 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                             {heads[0]?.name && (
                                 <Checkbox
                                     className='rounded-[2px] text-hash-color'
+                                    checked={selectedHeads.length === heads.length}
                                     onCheckedChange={() => {
                                         if(selectedHeads.length === heads.length){
                                             setSelectedHeads([]);
@@ -85,7 +76,8 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                                                     schedule_type:head.pay_schedule,
                                                     installment:head.pay_schedule === 'installment' ? 'All instalmments' : '',
                                                     account:'',
-                                                    post_account:''
+                                                    post_account:'',
+                                                    fee_type:head.type
                                                 };
                                             }));
                                         };
@@ -115,17 +107,19 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                             <Select
                                 onValueChange={v => {
                                     setSelectedAccountLedger(v);
-                                    setSelectedHeads(heads.map((head:any) => {
+                                    setSelectedHeads(selectedHeads.map((head:any) => {
                                         return{
                                             type_name:head.type_name,
                                             head_name:head.head_name,
                                             schedule_type:head.schedule_type,
                                             installment:head.installment,
                                             account:v,
-                                            post_account:head.post_account
+                                            post_account:head.post_account,
+                                            fee_type:head.fee_type
                                         };
                                     }));
                                 }}
+                                value={selectedAccountLedger}
                             >
                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                     <SelectValue placeholder='Select Account'/>
@@ -147,18 +141,20 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                             Fee Post Account
                             <Select
                                 onValueChange={v => {
-                                    setSelectedAccountLedger(v);
-                                    setSelectedHeads(heads.map((head:any) => {
+                                    setSelectedBankLedger(v);
+                                    setSelectedHeads(selectedHeads.map((head:any) => {
                                         return{
                                             type_name:head.type_name,
                                             head_name:head.head_name,
                                             schedule_type:head.schedule_type,
                                             installment:head.installment,
-                                            account:v,
-                                            post_account:head.post_account
+                                            account:head.account,
+                                            post_account:v,
+                                            fee_type:head.fee_type
                                         };
                                     }));
                                 }}
+                                value={selectedBankLedger}
                             >
                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                     <SelectValue placeholder='Select Post Acc.'/>
@@ -223,7 +219,8 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                                                             schedule_type:head.pay_schedule,
                                                             installment:head.pay_schedule === 'installment' ? 'All installments' : '',
                                                             account:'',
-                                                            post_account:''
+                                                            post_account:'',
+                                                            fee_type:''
                                                         }]);
                                                     };
                                                 }}
@@ -270,7 +267,7 @@ const HeadsList = ({heads, form, setHeads, selectedHeads, setSelectedHeads}:any)
                                             <Select
                                                 onValueChange={v => {
                                                     if(selectedHeads.map((h:any) => h.head_name).includes(head.name)){
-                                                        selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)].account = v;
+                                                        selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)].post_account = v;
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}

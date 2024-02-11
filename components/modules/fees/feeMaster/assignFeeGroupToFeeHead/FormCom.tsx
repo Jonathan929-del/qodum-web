@@ -35,6 +35,14 @@ const FormCom = ({groups}: any) => {
     const [selectedHeads, setSelectedHeads] = useState<any>([]);
 
 
+    // Selected account ledger
+    const [selectedAccountLedger, setSelectedAccountLedger]  = useState('');
+
+
+    // Seleected bank ledger
+    const [selectedBankLedger, setSelectedBankLedger]  = useState('');
+
+
     // Form
     const form = useForm({
         resolver:zodResolver(AssignFeeGroupToFeeHeadValidation),
@@ -47,7 +55,8 @@ const FormCom = ({groups}: any) => {
                     schedule_type:head.schedule_type,
                     installment:head.installment,
                     account:head.account,
-                    post_account:head.post_account
+                    post_account:head.post_account,
+                    fee_type:head.fee_type
                 }
             })
         }
@@ -65,6 +74,8 @@ const FormCom = ({groups}: any) => {
             group_name:'',
             affiliated_heads:[]
         });
+        setSelectedAccountLedger('');
+        setSelectedBankLedger('');
         setSelectedHeads([]);
     };
 
@@ -76,6 +87,8 @@ const FormCom = ({groups}: any) => {
                 const group = await fetchGroupByName({name:form.getValues().group_name});
                 const groupHeads = group.affiliated_heads;
                 setSelectedHeads(groupHeads);
+                setSelectedAccountLedger('');
+                setSelectedBankLedger('');
             }
         };
         fetcher();
@@ -141,11 +154,14 @@ const FormCom = ({groups}: any) => {
 
                     {/* Fee heads */}
                     <HeadsList
+                        form={form}
                         heads={heads}
-                        setHeads={setHeads}
                         selectedHeads={selectedHeads}
                         setSelectedHeads={setSelectedHeads}
-                        form={form}
+                        selectedAccountLedger={selectedAccountLedger}
+                        setSelectedAccountLedger={setSelectedAccountLedger}
+                        selectedBankLedger={selectedBankLedger}
+                        setSelectedBankLedger={setSelectedBankLedger}
                     />
 
 
