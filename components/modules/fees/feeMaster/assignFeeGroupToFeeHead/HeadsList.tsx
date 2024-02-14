@@ -14,7 +14,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccountLedger, setSelectedAccountLedger, selectedBankLedger, setSelectedBankLedger}:any) => {
+const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccountLedger, setSelectedAccountLedger, selectedBankLedger, setSelectedBankLedger, installmentError, feeAccountError, feePostAccountError}:any) => {
 
 
     // Installments
@@ -232,7 +232,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                         <li className='basis-[11%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.pay_schedule}</li>
 
                                         {/* Installment */}
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[15%] flex flex-col items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Select
                                                 onValueChange={v => {
                                                     if(selectedHeads.map((h:any) => h.head_name).includes(head.name)){
@@ -261,10 +261,11 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     )}
                                                 </SelectContent>
                                             </Select>
+                                            {installmentError && selectedHeads[heads.indexOf(head)]?.installment === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Installment</span>}
                                         </li>
 
                                         {/* Fee account */}
-                                        <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
+                                        <li className='basis-[15%] flex flex-col items-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Select
                                                 onValueChange={v => {
                                                     if(selectedHeads.map((h:any) => h.head_name).includes(head.name)){
@@ -289,10 +290,11 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     ))}
                                                 </SelectContent>
                                             </Select>
+                                            {feeAccountError && selectedHeads[heads.indexOf(head)]?.account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Account</span>}
                                         </li>
 
                                         {/* Fee post account */}
-                                        <li className='basis-[15%] flex flex-row items-center px-2'>
+                                        <li className='basis-[15%] flex flex-col items-center px-2'>
                                             <Select
                                                 onValueChange={v => {
                                                     if(selectedHeads.map((h:any) => h.head_name).includes(head.name)){
@@ -317,6 +319,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     ))}
                                                 </SelectContent>
                                             </Select>
+                                            {feePostAccountError && selectedHeads[heads.indexOf(head)]?.post_account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Post A/C</span>}
                                         </li>
                                     </CommandItem>
                                 ))

@@ -27,6 +27,18 @@ const FormCom = ({groups}: any) => {
     const {toast} = useToast();
 
 
+    // Installment error
+    const [installmentError, setInstallmentError] = useState(false);
+
+
+    // Fee account error
+    const [feeAccountError, setFeeAccountError] = useState(false);
+
+
+    // Fee post account error
+    const [feePostAccountError, setFeePostAccountError] = useState(false);
+
+
     // Heads
     const [heads, setHeads] = useState([{}]);
 
@@ -65,6 +77,20 @@ const FormCom = ({groups}: any) => {
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof AssignFeeGroupToFeeHeadValidation>) => {
+
+        if(selectedHeads.filter((head:any) => head.installment === '').length > 0 || selectedHeads.filter((head:any) => head.account === '').length > 0 || selectedHeads.filter((head:any) => head.post_account === '').length > 0){
+            if(selectedHeads.filter((head:any) => head.installment === '')){
+                setInstallmentError(true);
+            };
+            if(selectedHeads.filter((head:any) => head.account === '')){
+                setFeeAccountError(true);
+            };
+            if(selectedHeads.filter((head:any) => head.post_account === '')){
+                setFeePostAccountError(true);
+            };
+            return;
+        }
+
         await assignFeeGroupToFeeHead({
             group_name:values.group_name,
             affiliated_heads:selectedHeads
@@ -94,7 +120,6 @@ const FormCom = ({groups}: any) => {
         fetcher();
     }, [form.watch('group_name')]);
 
-    console.log(selectedHeads);
 
     useEffect(() => {
         const fetcher = async () => {
@@ -164,6 +189,9 @@ const FormCom = ({groups}: any) => {
                         setSelectedAccountLedger={setSelectedAccountLedger}
                         selectedBankLedger={selectedBankLedger}
                         setSelectedBankLedger={setSelectedBankLedger}
+                        installmentError={installmentError}
+                        feeAccountError={feeAccountError}
+                        feePostAccountError={feePostAccountError}
                     />
 
 

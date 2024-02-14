@@ -105,7 +105,7 @@ const HeadsList = ({heads, form, isDataFetching}:any) => {
                         }
 
                         {/* Total */}
-                        {heads.length > 1 && (
+                        {heads.length > 0 && heads[0].head_name !== undefined && (
                             <ul className='w-full min-w-[300px] flex flex-row text-[10px] font-semibold bg-[#E2E4FF] sm:text-xs md:text-md'>
                                 <li className='basis-[20%] h-full py-2 flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] text-[#E2E4FF]'>-</li>
                                 <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>Total</li>

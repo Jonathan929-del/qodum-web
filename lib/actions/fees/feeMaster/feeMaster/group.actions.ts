@@ -258,7 +258,7 @@ export const fetchGroupHeadWithInstallment = async ({group_name, installment}:Fe
 
         // Selected installment in group
         const group = await Group.findOne({name:group_name});
-        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment);
+        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment || head.installment === 'All installments');
 
 
         // Return
