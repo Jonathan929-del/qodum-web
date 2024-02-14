@@ -94,6 +94,8 @@ const FormCom = ({groups}: any) => {
         fetcher();
     }, [form.watch('group_name')]);
 
+    console.log(selectedHeads);
+
     useEffect(() => {
         const fetcher = async () => {
             const headsRes = await fetchAffiliatedHeads();

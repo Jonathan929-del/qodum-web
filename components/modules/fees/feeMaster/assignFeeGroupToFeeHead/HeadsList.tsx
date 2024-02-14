@@ -220,7 +220,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                             installment:head.pay_schedule === 'installment' ? 'All installments' : '',
                                                             account:'',
                                                             post_account:'',
-                                                            fee_type:''
+                                                            fee_type:head.type
                                                         }]);
                                                     };
                                                 }}
@@ -240,6 +240,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
+                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.installment}
                                                 disabled={heads[heads.indexOf(head)].pay_schedule === 'installment'}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
@@ -267,10 +268,11 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                             <Select
                                                 onValueChange={v => {
                                                     if(selectedHeads.map((h:any) => h.head_name).includes(head.name)){
-                                                        selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)].post_account = v;
+                                                        selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)].account = v;
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
+                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.account || selectedAccountLedger}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                     <SelectValue placeholder={selectedAccountLedger ? selectedAccountLedger : 'Select Account'}/>
@@ -298,6 +300,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
+                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.post_account || selectedBankLedger}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                     <SelectValue placeholder={selectedBankLedger ? selectedBankLedger : 'Select Post Acc.'}/>
