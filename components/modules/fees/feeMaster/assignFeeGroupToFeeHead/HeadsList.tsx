@@ -240,11 +240,11 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
-                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.installment}
+                                                value={heads[heads.indexOf(head)].pay_schedule === 'installment' ? 'All installments' : selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.installment}
                                                 disabled={heads[heads.indexOf(head)].pay_schedule === 'installment'}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                                                    <SelectValue placeholder={heads[heads.indexOf(head)].pay_schedule === 'installment' ? 'All installmens' : 'Select Install'}/>
+                                                    <SelectValue placeholder='Select Install'/>
                                                     <ChevronDown className='h-4 w-4 opacity-50'/>
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -272,7 +272,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
-                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.account || selectedAccountLedger}
+                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.account}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                     <SelectValue placeholder={selectedAccountLedger ? selectedAccountLedger : 'Select Account'}/>
@@ -300,7 +300,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                         setSelectedHeads([...selectedHeads]);
                                                     }
                                                 }}
-                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.post_account || selectedBankLedger}
+                                                value={selectedHeads[selectedHeads.map((h:any) => h.head_name).indexOf(head.name)]?.post_account}
                                             >
                                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                     <SelectValue placeholder={selectedBankLedger ? selectedBankLedger : 'Select Post Acc.'}/>
