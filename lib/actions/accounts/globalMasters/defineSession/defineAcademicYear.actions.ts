@@ -28,7 +28,7 @@ export const createAcademicYear = async ({year_name, start_date, end_date, is_ac
 
     
         // Database connection
-        connectToDb('accounts');
+        await connectToDb('accounts');
 
 
         // Checking if the year name already exists
@@ -82,12 +82,14 @@ export const fetchAcademicYears = async (pageNumber = 1, pageSize=20) => {
     try {
 
         // Db connection
-        connectToDb('accounts');
+        await connectToDb('accounts');
 
 
         // Fetching
         const academicYears = await AcademicYear.find();
         return academicYears;
+
+
 
     } catch (err:any) {
         throw new Error(`Error fetching academic years: ${err}`);
