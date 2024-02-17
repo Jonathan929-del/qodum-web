@@ -14,6 +14,7 @@ interface CreateGroupProps{
 };
 // Create Group Year
 export const createGroup = async ({name, is_special}:CreateGroupProps) => {
+
     try {
 
     
@@ -24,7 +25,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
         // Checking if the group name already exists
         const existingGroup = await Group.findOne({name});
         if(existingGroup){
-            throw new Error('HeaGroupd name already exists');
+            throw new Error('Head Group name already exists');
         };
 
 
@@ -41,7 +42,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
 
         
     } catch (err:any) {
-        console.log(`Error Creating Group: ${err.message}`);
+        throw new Error(`Error Creating Group: ${err.message}`);
     }
 };
 
@@ -193,17 +194,8 @@ export const fetchGroupByName = async ({name}:{name:String}) => {
 
 
 
-// Assign amount group props
-interface AssignAmountGroupValidation{
-    group_name:String;
-    installment:String;
-    affiliated_heads:{
-        head_name:String;
-        amount:Number;
-    }[]
-};
 // Assign amount group
-export const assignAmountGroup = async ({group_name, installment, affiliated_heads}:AssignAmountGroupValidation) => {
+export const assignAmountGroup = async ({group_name, installment, affiliated_heads}:any) => {
     try {
 
         // Db connection
@@ -212,25 +204,24 @@ export const assignAmountGroup = async ({group_name, installment, affiliated_hea
 
         // Selected installment in group
         const group = await Group.findOne({name:group_name});
-        const selectedHeads = installment === 'Select All'
-            ? group.affiliated_heads.filter((head:any) => head.fee_type === 'regular')
-            : group.affiliated_heads.filter((head:any) => head.installment === installment);
-        console.log(selectedHeads);
-        const newHeads = selectedHeads.map((head:any) => {
-            return{
-                ...head,
-                amount:affiliated_heads[selectedHeads.indexOf(head)]?.amount
-            }
-        });
-        const unselectedHeads = installment === 'Select All'
-            ? group.affiliated_heads.filter((head:any) => head.fee_type !== 'regular')
-            : group.affiliated_heads.filter((head:any) => head.installment !== installment);
-        
+
+
+        // Affected heads
+        const affectedHeads = group.affiliated_heads.filter((head:any) => affiliated_heads.map((h:any) => h.head_name).includes(head.head_name));
+
+
+        // Unaffected heads
+        const unAffectedHeads = group.affiliated_heads.filter((head:any) => !affiliated_heads.map((h:any) => h.head_name).includes(head.head_name));
+
+
+        // New heads
+        const newHeads = unAffectedHeads.concat(affiliated_heads);
+    
 
         // Assigning
         await Group.findOneAndUpdate(
             {name:group_name},
-            {affiliated_heads:[...newHeads, ...unselectedHeads]},
+            {affiliated_heads:newHeads},
             {new:true}
         );
             

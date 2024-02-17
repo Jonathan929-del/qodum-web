@@ -31,7 +31,7 @@ const FormCom = ({groups, installments}: any) => {
 
 
     // Heads
-    const [heads, setHeads] = useState([{}]);
+    const [heads, setHeads] = useState<any>([]);
 
 
     // Form
@@ -53,7 +53,7 @@ const FormCom = ({groups, installments}: any) => {
         await assignAmountGroup({
             group_name:values.group_name,
             installment:values.installment,
-            affiliated_heads:values.affiliated_heads.filter(head => head.head_name !== '')
+            affiliated_heads:heads
         });
         toast({title:'Saved Successfully!'});
         setHeads([]);
@@ -75,10 +75,6 @@ const FormCom = ({groups, installments}: any) => {
                 ? await fetchRegularGroupHeadsByName({name:form.getValues().group_name})
                 : await fetchGroupHeadWithInstallment({group_name:form.getValues().group_name, installment:form.getValues().installment});
                 setHeads(res);
-                res.map((head:any) => {
-                    form.setValue(`affiliated_heads.${res.indexOf(head)}.head_name`, head.head_name);
-                    form.setValue(`affiliated_heads.${res.indexOf(head)}.amount`, head.amount ? head.amount : 0);
-                });
                 setIsDataFetching(false);
             }
         };
@@ -178,6 +174,8 @@ const FormCom = ({groups, installments}: any) => {
                     <HeadsList
                         form={form}
                         heads={heads}
+                        setHeads={setHeads}
+                        installments={installments}
                         isDataFetching={isDataFetching}
                     />
 

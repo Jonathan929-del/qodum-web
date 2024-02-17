@@ -4,14 +4,13 @@ import {Input} from '@/components/ui/input';
 import {ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
-import {FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
 
 
 
 
 
 // Main Function
-const HeadsList = ({heads, form, isDataFetching}:any) => {
+const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) => {
 
 
     // Total number
@@ -20,18 +19,37 @@ const HeadsList = ({heads, form, isDataFetching}:any) => {
 
     // Number change
     const numberChange = () => {
-
-        let myNums = form.getValues().affiliated_heads.map((h:any) => Number(h.amount));
+        let myNums = heads?.map((head:any) => head?.amounts?.length > 0
+            ?
+                // head?.amounts?.map((amount:any) => Number(amount?.value))[0]
+                form.getValues().installment !== 'Select All'
+                ?
+                    heads[heads.indexOf(head)]?.amounts?.length > 1
+                        ?
+                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).indexOf(form.getValues().installment)]
+                        :
+                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[0]
+                : heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[0]
+            :
+                [{name:'', value:0}][0].value);
         let sum = 0;
-        for (let i = 0; i < myNums.length; i++ ) {sum += myNums[i];};
+        for (let i = 0; i < myNums?.length; i++ ) {sum += myNums[i];};
         setTotalNumber(sum);
-
     };
+
+
+    // New heads creator
+    const newHeadsCreator = (head:any, number:any) => {
+        heads[heads.indexOf(head)].amounts.filter((amount:any) => amount.name === form.getValues().installment)[0].value = number;
+        setHeads([...heads]);
+        return heads[heads.indexOf(head)].amounts;
+    };
+
 
     // Use effect
     useEffect(() => {
         numberChange();
-    }, [form.watch('affiliated_heads'), heads]);
+    }, [heads]);
 
 
     return (
@@ -72,7 +90,7 @@ const HeadsList = ({heads, form, isDataFetching}:any) => {
                                 <p className='w-full min-w-[300px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
                                     No heads
                                 </p>                                
-                            ) : form.getValues().affiliated_heads[0]?.head_name === '' ? (
+                            ) : heads.affiliated_heads && heads.affiliated_heads.length > 0 && heads.affiliated_heads[0] && heads.affiliated_heads[0]?.head_name === '' ? (
                                 <p className='w-full min-w-[300px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b[0.5px] border-[#ccc]'>
                                     No heads
                                 </p>
@@ -83,21 +101,46 @@ const HeadsList = ({heads, form, isDataFetching}:any) => {
 
                                         {/* Amount */}
                                         <li className='basis-[50%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>
-                                            <FormField
-                                                control={form.control}
-                                                name={`affiliated_heads.${heads.indexOf(head)}.amount`}
-                                                render={({field}) => (
-                                                    <FormItem className='w-full'>
-                                                        <FormControl>
-                                                            <Input
-                                                                {...field}
-                                                                onBlurCapture={numberChange}
-                                                                className='h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage className='text-xs'/>
-                                                </FormItem>
-                                                )}
+                                            <Input
+                                                onBlurCapture={numberChange}
+                                                defaultValue={
+                                                    form.getValues().installment !== 'Select All'
+                                                    ?
+                                                        heads[heads.indexOf(head)]?.amounts?.length > 1
+                                                            ?
+                                                                heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).indexOf(form.getValues().installment)]
+                                                            :
+                                                                heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0]
+                                                    : heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0]
+                                                    
+                                                }
+                                                onChange={(v) => {
+                                                    heads[heads.indexOf(head)].amounts =
+                                                    form.getValues().installment === 'Select All'
+                                                        ?
+                                                            head.installment === 'All installments'
+                                                                ?
+                                                                    installments.map((i:any) => {
+                                                                        const amount = {
+                                                                            name:i.name,
+                                                                            value:v.target.value
+                                                                        }
+                                                                        return amount;
+                                                                    })
+                                                                : [{
+                                                                    name:head.installment,
+                                                                    value:v.target.value
+                                                                }]
+                                                        : head.installment === 'All installments'
+                                                            ?
+                                                                newHeadsCreator(head, v.target.value)
+                                                            : 
+                                                                [{
+                                                                    name:head.installment,
+                                                                    value:v.target.value
+                                                                }]
+                                                }}
+                                                className='h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </li>
                                     </CommandItem>
@@ -105,7 +148,7 @@ const HeadsList = ({heads, form, isDataFetching}:any) => {
                         }
 
                         {/* Total */}
-                        {heads.length > 0 && heads[0].head_name !== undefined && (
+                        {heads.length > 0 && heads[0] && heads[0].head_name !== undefined && (
                             <ul className='w-full min-w-[300px] flex flex-row text-[10px] font-semibold bg-[#E2E4FF] sm:text-xs md:text-md'>
                                 <li className='basis-[20%] h-full py-2 flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] text-[#E2E4FF]'>-</li>
                                 <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>Total</li>
