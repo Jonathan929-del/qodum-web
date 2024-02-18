@@ -462,6 +462,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         if(updateStudent.id === ''){
             if(students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
                 toast({title:'Admission no. already exists', variant:'error'});
+                setIsLoading(false);
                 return;
             };
             if(file){
@@ -674,6 +675,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects || comparisonObject.documents !== selectedDocuments){
             if(comparisonObject.student.adm_no !== values.student.adm_no && students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
                 toast({title:'Admission no. already exists', variant:'error'});
+                setIsLoading(false);
                 return;
             };
             if(file){
@@ -1894,57 +1896,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     )}
                                 </TabsList>
                             </div>
-                            {/* <TabsList className='w-full'>
-                                <TabsTrigger
-                                    value='student'
-                                    className='lg:py-2 lg:px-4'
-                                >
-                                    Student
-                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    value='parent'
-                                    className='lg:py-2 lg:px-4'
-                                >
-                                    Parent
-                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    value='other'
-                                    className='lg:py-2 lg:px-4'
-                                >
-                                    Other
-                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    value='guardian'
-                                    className='lg:py-2 lg:px-4'
-                                >
-                                    Guardian
-                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    value='document'
-                                    className='lg:py-2 lg:px-4'
-                                >
-                                    Document
-                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                </TabsTrigger>
-
-                                {form.getValues().student.sibling && (
-                                    <TabsTrigger
-                                        value='sibling'
-                                        className='lg:py-2 lg:px-4'
-                                    >
-                                        Sibling
-                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                    </TabsTrigger>
-                                )}
-                            </TabsList> */}
                             <TabsContent value='student' className='pl-2 w-full'>
                                 <Student
                                     form={form}

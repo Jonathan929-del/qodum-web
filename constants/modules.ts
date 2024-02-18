@@ -336,13 +336,6 @@ const modules = [
                 pageName:'Manage Fee',
                 subPages:[
                     {
-                        subPageName:'Amount Without Structure',
-                        threads:[
-                            'Pay Amount Without Structure',
-                            'Pay Amount Without Structure For Staff'
-                        ]
-                    },
-                    {
                         subPageName:'Fee Entry'
                     },
                     {
@@ -384,6 +377,13 @@ const modules = [
                     {
                         subPageName:'Transfer Concession'
                     },
+                    {
+                        subPageName:'Amount Without Structure',
+                        threads:[
+                            'Pay Amount Without Structure',
+                            'Pay Amount Without Structure For Staff'
+                        ]
+                    }
                 ]
             },
             // Transport
