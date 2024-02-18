@@ -335,7 +335,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
         if(installment === 'All installments'){
             // Fetching
             const group = await Group.findOne({name:group_name});
-            const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
+            const selectedHeads = group.affiliated_heads;
             students.map(async (s:any) => {
                 try {
                     await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});

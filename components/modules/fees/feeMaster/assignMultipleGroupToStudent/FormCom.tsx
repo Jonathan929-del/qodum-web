@@ -50,7 +50,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
         defaultValues:{
             group_type:'Classes',
             fees_group:'',
-            fees_installment:'All Installments',
+            fees_installment:'All installments',
             class:['']
         }
     });
@@ -77,7 +77,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
             form.reset({
                 group_type:'Classes',
                 fees_group:'',
-                fees_installment:'All Installments',
+                fees_installment:'All installments',
                 class:['']
             });
             setStudents([]);
@@ -207,7 +207,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='All Installments'>All Installments</SelectItem>
+                                                    <SelectItem value='All installments'>All Installments</SelectItem>
                                                     {installments.length < 1 ? (
                                                         <p className='text-xs text-hash-color'>No installments yet</p>
                                                     ) : // @ts-ignore
