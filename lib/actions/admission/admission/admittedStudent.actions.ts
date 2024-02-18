@@ -192,13 +192,9 @@ interface CreateAdmittedStudentProps{
         document_type:String;
         document_name:String;
     }[]
-
-
-    // Affiliated heads
-    affiliated_heads:any;
 };
 // Create admitted student
-export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents, affiliated_heads}:CreateAdmittedStudentProps) => {
+export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents}:CreateAdmittedStudentProps) => {
     try {
 
 
@@ -225,7 +221,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:[]});
         });
 
 
@@ -455,13 +451,9 @@ interface ModifyAdmittedStudentProps{
         document_type:String;
         document_name:String;
     }[];
-
-
-    // Affiliated heads
-    affiliated_heads:any;
 }
 // Modify admitted student
-export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents, affiliated_heads}:ModifyAdmittedStudentProps) => {
+export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents}:ModifyAdmittedStudentProps) => {
     try {
 
         // Db connection
@@ -475,7 +467,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:[]}, {new:true});
         
         
         // Subjects handling
