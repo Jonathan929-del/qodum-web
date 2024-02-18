@@ -192,9 +192,13 @@ interface CreateAdmittedStudentProps{
         document_type:String;
         document_name:String;
     }[]
+
+
+    // Affiliated heads
+    affiliated_heads:any;
 };
 // Create admitted student
-export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents}:CreateAdmittedStudentProps) => {
+export const createAdmittedStudent = async ({student, parents, others, guardian_details, documents, affiliated_heads}:CreateAdmittedStudentProps) => {
     try {
 
 
@@ -221,7 +225,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads});
         });
 
 
@@ -450,10 +454,14 @@ interface ModifyAdmittedStudentProps{
     documents:{
         document_type:String;
         document_name:String;
-    }[]
+    }[];
+
+
+    // Affiliated heads
+    affiliated_heads:any;
 }
 // Modify admitted student
-export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents}:ModifyAdmittedStudentProps) => {
+export const modifyAdmittedStudent = async ({id, student, parents, others, guardian_details, documents, affiliated_heads}:ModifyAdmittedStudentProps) => {
     try {
 
         // Db connection
@@ -467,7 +475,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads}, {new:true});
         
         
         // Subjects handling
@@ -718,6 +726,30 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}
             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
             students = filteredAllRes;
         }
+
+
+        // Return
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error fetching students: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch student by classes
+export const fetchStudentsByClasses = async ({classes}:{classes:string[]}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching students
+        const students = await AdmittedStudent.find({'student.class':{$in:classes}});
 
 
         // Return

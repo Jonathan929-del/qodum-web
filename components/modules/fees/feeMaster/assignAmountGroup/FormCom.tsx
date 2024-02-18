@@ -39,7 +39,7 @@ const FormCom = ({groups, installments}: any) => {
         resolver:zodResolver(AssignAmountGroupValidation),
         defaultValues: {
             group_name:'',
-            installment:'',
+            installment:'Select All',
             affiliated_heads:[{
                 head_name:'',
                 amount:0
@@ -59,10 +59,11 @@ const FormCom = ({groups, installments}: any) => {
         setHeads([]);
         form.reset({
             group_name:'',
-            installment:'',
+            installment:'Select All',
             affiliated_heads:[]
         });
     };
+    console.log(heads);
 
 
     // Use effect

@@ -193,7 +193,11 @@ const AdmittedStudentSchema = new mongoose.Schema(
 
 
         // Documents
-        documents:{type:Array}
+        documents:{type:Array},
+
+
+        // Affiliated heads
+        affiliated_heads:{type:Array}
 
     },
     {

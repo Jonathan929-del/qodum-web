@@ -74,7 +74,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     type_name:head.affiliated_fee_type,
                                                     head_name:head.name,
                                                     schedule_type:head.pay_schedule,
-                                                    installment:head.pay_schedule === 'installment' ? 'All instalmments' : '',
+                                                    installment:head.pay_schedule === 'installment' ? 'All installments' : '',
                                                     account:'',
                                                     post_account:'',
                                                     fee_type:head.type

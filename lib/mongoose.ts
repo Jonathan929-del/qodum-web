@@ -33,37 +33,3 @@ export const connectToDb = async (dbName:String) => {
         console.log(err);
     }
 };
-// // Imports
-// import mongoose from 'mongoose';
-
-
-
-
-
-// // Check connection
-// let isConnected = false;
-
-
-
-
-
-// // DB connection
-// export const connectToDb = async (dbName:String) => {
-//     mongoose.set('strictQuery', true);
-
-
-//     // Selected Database
-//     const mongo_url = process.env.MONGO_ACCOUNTS_URL;
-
-
-//     if(!mongo_url) return console.log('MONGO_URL not found');
-//     if(isConnected) return console.log('Already connected to MongoDb');
-
-//     try {
-//         await mongoose.connect(mongo_url);
-//         isConnected = true;
-//         console.log('Connected to MongoDb');
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };

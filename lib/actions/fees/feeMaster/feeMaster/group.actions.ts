@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
@@ -195,7 +196,7 @@ export const fetchGroupByName = async ({name}:{name:String}) => {
 
 
 // Assign amount group
-export const assignAmountGroup = async ({group_name, installment, affiliated_heads}:any) => {
+export const assignAmountGroup = async ({group_name, affiliated_heads}:any) => {
     try {
 
         // Db connection
@@ -278,9 +279,83 @@ export const fetchRegularGroupHeadsByName = async ({name}:{name:String}) => {
 
 
         // Return
-        return selectedHeads
+        return selectedHeads;
 
     } catch (err) {
         throw new Error(`Error fetching group heads: ${err}`);      
+    }
+};
+
+
+
+
+
+// Fetch groups by type
+export const fetchGroupsByTypes = async ({is_special}:{is_special:Boolean}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching special groups
+        const specialGroups = await Group.find({is_special:true});
+
+
+        // Fetching unspecial groups
+        const unSpecialGroups = await Group.find({is_special:false});
+
+
+        if(is_special){
+            return specialGroups;
+        }else{
+            return unSpecialGroups;
+        }
+
+    
+    } catch (err:any) {
+        throw new Error(`Error fetching groups: ${err}`);
+    }
+};
+
+
+
+
+
+// Assign multiple groups to students props
+interface assignMultipleGroupsToStudentsProps{
+    group_name:String;
+    installment:String;
+    students:any;
+};
+// Assign multiple groups to students
+export const assignMultipleGroupsToStudents = async ({group_name, installment, students}:assignMultipleGroupsToStudentsProps) => {
+    try {
+
+        if(installment === 'All installments'){
+            // Fetching
+            const group = await Group.findOne({name:group_name});
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
+            students.map(async (s:any) => {
+                try {
+                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
+                } catch (err:any) {
+                    console.log(err);
+                }
+            });
+        }else{
+            const group = await Group.findOne({name:group_name});
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment || head.installment === 'All installments');
+            students.map(async (s:any) => {
+                try {
+                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
+                } catch (err:any) {
+                    console.log(err);
+                }
+            });
+        };
+
+    } catch (err) {
+        throw new Error(`Error assigning groups: ${err}`);
     }
 };
