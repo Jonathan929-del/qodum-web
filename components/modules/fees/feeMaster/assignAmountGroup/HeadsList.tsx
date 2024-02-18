@@ -10,7 +10,7 @@ import {Command, CommandItem, CommandList} from '@/components/ui/command';
 
 
 // Main Function
-const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) => {
+const HeadsList = ({heads, isDataFetching, installments, form}:any) => {
 
 
     // Total number
@@ -27,7 +27,11 @@ const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) =>
                         ?
                             heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).indexOf(form.getValues().installment)]
                         :
-                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[0]
+                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).includes(form.getValues().installment)
+                                ?
+                                    heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[0]
+                                :
+                                    0
                 : heads[heads.indexOf(head)]?.amounts?.map((amount:any) => Number(amount?.value))[0]
             :
                 [{name:'', value:0}][0].value);
@@ -60,12 +64,11 @@ const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) =>
         }
     };
 
-    console.log(heads);
-
 
     // Use effect
     useEffect(() => {
         numberChange();
+
     }, [heads]);
 
 

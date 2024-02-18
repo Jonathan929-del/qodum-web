@@ -174,7 +174,6 @@ const FormCom = ({groups, installments}: any) => {
                     <HeadsList
                         form={form}
                         heads={heads}
-                        setHeads={setHeads}
                         installments={installments}
                         isDataFetching={isDataFetching}
                     />
