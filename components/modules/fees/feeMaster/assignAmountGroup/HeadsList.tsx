@@ -41,18 +41,26 @@ const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) =>
     const newHeadsCreator = (head:any, number:any) => {
         if(heads[heads.indexOf(head)].amounts && heads[heads.indexOf(head)].amounts.length > 0 && heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).includes(form.getValues().installment)){
             heads[heads.indexOf(head)].amounts.filter((amount:any) => amount.name === form.getValues().installment)[0].value = number || 0;
-            setHeads([...heads]);
             return heads[heads.indexOf(head)].amounts;
         }else{
-            return [
-                ...heads[heads.indexOf(head)]?.amounts,
-                {
+            if(heads[heads.indexOf(head)]?.amounts){
+                return [
+                    ...heads[heads.indexOf(head)]?.amounts,
+                    {
+                        name:form.getValues().installment,
+                        value:number || 0
+                    }
+                ];
+            }else{
+                return [{
                     name:form.getValues().installment,
                     value:number || 0
-                }
-            ];
+                }];
+            }
         }
     };
+
+    console.log(heads);
 
 
     // Use effect
@@ -119,13 +127,13 @@ const HeadsList = ({heads, setHeads, isDataFetching, installments, form}:any) =>
                                                             ?
                                                                 heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).indexOf(form.getValues().installment)] || 0
                                                             :
-                                                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).includes(form.getValues().installment)
-                                                                    ?
-                                                                        heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0] || 0
-                                                                    :
-                                                                        0
+                                                                heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.name).includes(form.getValues().installment)
+                                                                        ?
+                                                                            heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0] || 0
+                                                                        :
+                                                                            0
                                                     :
-                                                        heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0]
+                                                        heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0] || 0
                                                     
                                                 }
                                                 onChange={(v) => {

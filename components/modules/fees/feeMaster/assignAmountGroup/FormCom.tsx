@@ -63,7 +63,6 @@ const FormCom = ({groups, installments}: any) => {
             affiliated_heads:[]
         });
     };
-    console.log(heads);
 
 
     // Use effect
