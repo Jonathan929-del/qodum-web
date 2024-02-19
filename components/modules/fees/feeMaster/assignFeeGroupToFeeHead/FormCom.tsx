@@ -14,6 +14,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import {AssignFeeGroupToFeeHeadValidation} from '@/lib/validations/fees/feeMaster/assignFeeGroupToFeeHead.validation';
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
 
 
@@ -41,6 +42,10 @@ const FormCom = ({groups}: any) => {
 
     // Heads
     const [heads, setHeads] = useState([{}]);
+
+
+    // Old heads
+    const [oldHeads, setOldHeads] = useState<any>([]);
 
 
     // Selected heads
@@ -89,7 +94,7 @@ const FormCom = ({groups}: any) => {
                 setFeePostAccountError(true);
             };
             return;
-        }
+        };
 
         await assignFeeGroupToFeeHead({
             group_name:values.group_name,
@@ -106,6 +111,10 @@ const FormCom = ({groups}: any) => {
     };
 
 
+    // Handle submit
+    const handleSubmit = () => form.handleSubmit(onSubmit)();
+
+
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
@@ -113,14 +122,13 @@ const FormCom = ({groups}: any) => {
                 const group = await fetchGroupByName({name:form.getValues().group_name});
                 const groupHeads = group.affiliated_heads;
                 setSelectedHeads(groupHeads);
+                setOldHeads(groupHeads);
                 setSelectedAccountLedger('');
                 setSelectedBankLedger('');
             }
         };
         fetcher();
     }, [form.watch('group_name')]);
-
-
     useEffect(() => {
         const fetcher = async () => {
             const headsRes = await fetchAffiliatedHeads();
@@ -128,7 +136,7 @@ const FormCom = ({groups}: any) => {
         };
         fetcher();
     }, []);
-    
+
 
     return (
         <div className='w-[100%] max-w-[1500px] h-full overflow-y-scroll overflow-x-hidden custom-sidebar-scrollbar flex flex-col items-center'>
@@ -196,13 +204,40 @@ const FormCom = ({groups}: any) => {
 
 
                     {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Save
-                    </Button>
+                    {oldHeads.length > selectedHeads.length ? (
+                        <AlertDialog>
+                            <AlertDialogTrigger
+                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                            >
+                                Save
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure you want  to delete fee heads?</AlertDialogTitle>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>No</AlertDialogCancel>
+                                    <AlertDialogAction>
+                                        <Button
+                                            className='border-[0.5px] border-black'
+                                            onClick={handleSubmit}
+                                        >
+                                            Yes
+                                        </Button>
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    ) : (
+                        <Button
+                            type='submit'
+                            className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Save
+                        </Button>
+                    )}
 
 
                 </form>

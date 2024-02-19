@@ -1,10 +1,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
-import FormCom from '@/components/modules/fees/feeMaster/assignMultipleGroupToStudent/FormCom';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { fetchAdmittedStudents } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -40,6 +39,7 @@ const page = () => {
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white lg:pt-10'>
+            FEE ENTRY
             <FormCom
                 installments={installments}
                 classes={classes}

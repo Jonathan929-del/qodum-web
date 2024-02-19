@@ -60,7 +60,6 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const onSubmit = async (values: z.infer<typeof AssignMultipleGroupToStudentValidation>) => {
         try {
 
-
             // Assigning
             await assignMultipleGroupsToStudents({
                 group_name:values.fees_group,
@@ -68,10 +67,8 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                 students:selectedStudents
             });
 
-
             // Toast
             toast({title:'Assigned Successfully!'});
-
 
             // Reseting
             form.reset({
@@ -95,6 +92,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
         const fetcher = async () => {
             const groupsRes = await fetchGroupsByTypes({is_special:form.getValues().group_type === 'Special'});
             setFeeGroups(groupsRes);
+            form.getValues().group_type !== 'Special' && setStudents([]);
         };
         fetcher();
     }, [form.watch('group_type')]);
@@ -102,7 +100,6 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
         setIsStudentsLoading(true);
         const fetcher = async () => {
             const res = await fetchStudentsByClasses({classes:selectedClasses.map((c:any) => c.class_name)});
-            setStudents(res);
             setSelectedStudents(res);
             setIsStudentsLoading(false);
         };
@@ -277,13 +274,13 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
 
                         <div className='flex-1 flex flex-row gap-2'>
                             {form.formState.dirtyFields.group_type && (
-                                <Button
-                                    type='submit'
-                                    className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                                <span
+                                    onClick={() => setStudents(selectedStudents)}
+                                    className='flex items-center justify-center h-8 min-w-[120px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
                                 >
                                     Show Details
-                                </Button>
+                                </span>
                             )}
 
                             <Button

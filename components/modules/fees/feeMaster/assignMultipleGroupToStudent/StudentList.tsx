@@ -93,8 +93,8 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                     <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         {student.student.adm_no}
                                     </li>
-                                    <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {student.student.name}
+                                    <li className='basis-[15%] flex-grow flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
+                                        {student.student.name} {student.student.is_new && <span className='px-[2px] text-[11px] text-hash-color rounded-[4px] border-[0.5px] border-[#4CA7DE]'>New</span>}
                                     </li>
                                     <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         {student.parents.father.father_name}

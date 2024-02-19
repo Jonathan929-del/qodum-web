@@ -115,8 +115,7 @@ const HeadsList = ({heads, isDataFetching, installments, form}:any) => {
                                     No heads
                                 </p>
                             ) :  heads.map((head:any) => (
-                                    // <CommandItem key={head._id} className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
-                                    <CommandItem className={`w-full min-w-[300px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((heads.indexOf(head) + 1) / 2) * 2 !== heads.indexOf(head) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
+                                    <CommandItem key={head._id} className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'>
                                         <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{heads.indexOf(head) + 1}</li>
                                         <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{head.head_name}</li>
 
@@ -175,7 +174,7 @@ const HeadsList = ({heads, isDataFetching, installments, form}:any) => {
 
                         {/* Total */}
                         {heads.length > 0 && heads[0] && heads[0].head_name !== undefined && (
-                            <ul className={`w-full min-w-[300px] flex flex-row text-[10px] font-semibold bg-[#E2E4FF] sm:text-xs md:text-md ${Math.floor((heads.length + 1) / 2) * 2 !== heads.length + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
+                            <ul className='w-full min-w-[300px] flex flex-row text-[10px] font-semibold bg-[#E2E4FF] sm:text-xs md:text-md'>
                                 <li className='basis-[20%] h-full py-2 flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] text-[#E2E4FF]'>-</li>
                                 <li className='basis-[30%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>Total</li>
                                 {/* Amount */}

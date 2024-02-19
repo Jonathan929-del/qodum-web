@@ -250,14 +250,14 @@ export const fetchGroupHeadWithInstallment = async ({group_name, installment}:Fe
 
         // Selected installment in group
         const group = await Group.findOne({name:group_name});
-        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment || head.installment === 'All installments');
+        const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
 
 
         // Return
         return selectedHeads;
 
     } catch (err) {
-        throw new Error(`Error fetching group: ${err}`);      
+        throw new Error(`Error fetching group: ${err}`);
     }
 };
 
@@ -335,7 +335,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
         if(installment === 'All installments'){
             // Fetching
             const group = await Group.findOne({name:group_name});
-            const selectedHeads = group.affiliated_heads;
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
                     await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
@@ -345,7 +345,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
             });
         }else{
             const group = await Group.findOne({name:group_name});
-            const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment || head.installment === 'All installments');
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
                     await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
