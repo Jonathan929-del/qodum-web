@@ -338,7 +338,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
-                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
+                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }
@@ -348,7 +348,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
-                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:selectedHeads});
+                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }

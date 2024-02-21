@@ -221,7 +221,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:[]});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:'', heads:[]}});
         });
 
 
@@ -467,7 +467,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:[]}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
         
         
         // Subjects handling
@@ -601,7 +601,7 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
         return students;
 
     } catch (err) {
-        throw new Error(`Error deleting students: ${err}`);
+        throw new Error(`Error fetching students: ${err}`);
     };
 };
 
@@ -749,5 +749,71 @@ export const fetchStudentsByClasses = async ({classes}:{classes:string[]}) => {
 
     } catch (err) {
         throw new Error(`Error fetching students: ${err}`);
+    };
+};
+
+
+
+
+
+// Modify student affiliated heads
+export const ModifyStudentAffiliatedHeads = async ({id, affiliated_heads}:{id:String; affiliated_heads:any;}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Updating
+        await AdmittedStudent.findByIdAndUpdate(id, {affiliated_heads});
+
+    } catch (err) {
+        throw new Error(`Error updating student affiliated heads: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch students count by class and section
+export const fetchStudentsCountByClassAndSection = async ({class_name, section}:{class_name:String; section:String;}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Res
+        let res;
+
+
+        // Class res
+        const classRes = await AdmittedStudent.countDocuments({'student.class':class_name});
+
+
+        // Section res
+        const sectionRes = await AdmittedStudent.countDocuments({'student.section':section === '' ? 'empty' : section});
+
+
+        // All res
+        const allRes = await AdmittedStudent.countDocuments({'student.class':class_name, 'student.section':section === '' ? 'empty' : section});
+
+
+        // All res
+        if(classRes > 0 && !section){
+            res = classRes;
+        }else if(section && classRes === 0){
+            res = sectionRes;
+        }else if(classRes > 0 && section){
+            res = allRes;
+        }
+
+
+        // Return
+        return res;
+
+    } catch (err) {
+        throw new Error(`Error fetching students count: ${err}`);
     };
 };
