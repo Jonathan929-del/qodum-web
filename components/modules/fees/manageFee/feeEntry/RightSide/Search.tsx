@@ -73,13 +73,10 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                     }) || []
                 }
             });
-            const multipleInstallmentsHead = student.affiliated_heads.heads.filter((h:any) => h.amounts.length === 4)[0];
-            if(multipleInstallmentsHead){
-                setInstallments(multipleInstallmentsHead?.amounts?.map((a:any) => a.name));
-            }else{
-                setInstallments(student.affiliated_heads.heads.map((h:any) => h.installment));
-            }
-            setSelectedInstallments([student.affiliated_heads.heads[0].installment]);
+            const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+            const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+            setInstallments(filteredInstallments);
+            setSelectedInstallments([filteredInstallments[0]]);
         }else{
             setIsViewOpened(true);
         }
@@ -120,13 +117,10 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 }) || []
             }
         });
-        const multipleInstallmentsHead = student.affiliated_heads.heads.filter((h:any) => h.amounts.length === 4)[0];
-        if(multipleInstallmentsHead){
-            setInstallments(multipleInstallmentsHead?.amounts?.map((a:any) => a.name));
-        }else{
-            setInstallments(student.affiliated_heads.heads.map((h:any) => h.installment));
-        }
-        setSelectedInstallments([student.affiliated_heads.heads[0].installment]);
+        const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        setInstallments(filteredInstallments);
+        setSelectedInstallments([filteredInstallments[0]]);
         setSearch('');
         setIsLoading(false);
     };

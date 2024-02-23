@@ -10,11 +10,12 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
+const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments, setIsLoading}:any) => {
 
 
     // Select handler
     const selectHandler = (student:any) => {
+        setIsLoading(true);
         setSelectedStudent({
             id:student._id,
             image:student.student.image,
@@ -43,14 +44,12 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
                 })
             }
         });
-        const multipleInstallmentsHead = student.affiliated_heads.heads.filter((h:any) => h.amounts.length === 4)[0];
-        if(multipleInstallmentsHead){
-            setInstallments(multipleInstallmentsHead?.amounts?.map((a:any) => a.name));
-        }else{
-            setInstallments(student.affiliated_heads.heads.map((h:any) => h.installment));
-        }
-        setSelectedInstallments([student.affiliated_heads.heads[0].installment]);
+        const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        setInstallments(filteredInstallments);
+        setSelectedInstallments([filteredInstallments[0]]);
         setIsViewOpened(false);
+        setIsLoading(false);
     };
 
 

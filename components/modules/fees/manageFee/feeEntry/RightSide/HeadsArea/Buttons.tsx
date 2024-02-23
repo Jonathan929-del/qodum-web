@@ -9,8 +9,92 @@ import {FormControl, FormItem, FormLabel, FormField, FormMessage} from '@/compon
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads}:any) => {
 
+
+
+    // Total paid handler
+    const totalPaidHandler = (e:any) => {
+        setTotalPaidAmount(e.target.value)
+        const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))));
+        const inputValue = Number(e.target.value);
+        if(e.target.value !== undefined){
+            if(inputValue >= totalNumber){
+                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - Number(a.conc_amount)));
+            }else{
+
+                const amountsValues = heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)));
+                if(inputValue <= amountsValues[0]){
+                    // First amount
+                    heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = inputValue);
+                    heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                    heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                    heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                    heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                    heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                }else{
+                    const availableAmount = inputValue - amountsValues[0];
+                    if(availableAmount <= amountsValues[1]){
+                        heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[0]);
+                        // Second amount
+                        heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = availableAmount);
+                        heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                        heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                        heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                        heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                    }else{
+                        const availableAmount = inputValue - (Number(amountsValues[0]) + Number(amountsValues[1]));
+                        if(availableAmount <= amountsValues[2]){
+                            heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[0]);
+                            heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[1]);
+                            // Third amount
+                            heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = availableAmount);
+                            heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                            heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                            heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                        }else{
+                            const availableAmount = inputValue - (Number(amountsValues[0]) + Number(amountsValues[1]) +  Number(amountsValues[2]));
+                            if(availableAmount <= amountsValues[3]){
+                                heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[0]);
+                                heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[1]);
+                                heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[2]);
+                                // Fourth amount
+                                heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = availableAmount);
+                                heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                                heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                            }else{
+                                const availableAmount = inputValue - (Number(amountsValues[0]) + Number(amountsValues[1]) + Number(amountsValues[2]) + Number(amountsValues[3]));
+                                if(availableAmount <= amountsValues[4]){
+                                    heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[0]);
+                                    heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[1]);
+                                    heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[2]);
+                                    heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[3]);
+                                    // Fifth amount
+                                    heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = availableAmount);
+                                    heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = 0);
+                                }else{
+                                    const availableAmount = inputValue - (Number(amountsValues[0]) + Number(amountsValues[1]) + Number(amountsValues[2]) + Number(amountsValues[3]) + Number(amountsValues[4]));
+                                    if(availableAmount <= amountsValues[5]){
+                                        heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[0]);
+                                        heads[1] && heads[1].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[1]);
+                                        heads[2] && heads[2].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[2]);
+                                        heads[3] && heads[3].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[3]);
+                                        heads[4] && heads[4].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = amountsValues[4]);
+                                        // Sixth amount
+                                        heads[5] && heads[5].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = availableAmount);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+
+            }
+        };
+    };
 
     // Cancel button
     const cancel = () => {
@@ -65,6 +149,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                 form.setValue('advance_amt', 0);
             };
         };
+        !totalPaidAmount && form.setValue('dues', form.getValues().total_paid_amount);
     }, [totalPaidAmount]);
 
 
@@ -82,7 +167,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                             <Input
                                 type='number'
                                 value={totalPaidAmount}
-                                onChange={(e:any) => setTotalPaidAmount(e.target.value)}
+                                onChange={(e:any) => totalPaidHandler(e)}
                                 className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                             />
                         </FormControl>

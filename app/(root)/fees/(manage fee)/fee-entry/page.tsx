@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
-import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
@@ -79,9 +79,12 @@ const page = () => {
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white'>
-            {isViewOpened ? (
+            {isLoading ? (
+                <LoadingIcon />
+            ) : isViewOpened ? (
                 <ViewCom
                     students={students}
+                    setIsLoading={setIsLoading}
                     setIsViewOpened={setIsViewOpened}
                     setSelectedStudent={setSelectedStudent}
                     setInstallments={setInstallments}

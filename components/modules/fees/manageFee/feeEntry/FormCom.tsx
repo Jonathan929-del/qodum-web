@@ -9,7 +9,7 @@ import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
-import { ModifyStudentAffiliatedHeads } from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -57,6 +57,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const onSubmit = async (values:z.infer<typeof FeeEntryValidation>) => {
 
 
+        // Is loading
+        setIsLoading(true);
         // Unchanged heads
         const unChangedHeads = selectedStudent.affiliated_heads.heads.filter((studentHead:any) => !heads.map((head:any) => head.head_name).includes(studentHead.head_name)).map((studentHead:any) => {
             return {
@@ -66,40 +68,59 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         name:a.name,
                         value:Number(a.value)
                     };
-                }))[0]
+                }))[selectedStudent.affiliated_heads.heads.indexOf(studentHead)]
             };
         });
 
-
-        // Changed heads
+        // New student
         const newHeads = {
-            ...selectedStudent,
-            affiliated_heads:{
                 group_name:selectedStudent.affiliated_heads.group_name,
-                heads:selectedStudent.affiliated_heads.heads.filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name)).map((studentHead:any) => {
-                    return {
-                        ...studentHead,
-                        amounts:heads.filter((h:any) => h.head_name === studentHead.head_name).map((h:any) => h.amounts.map((a:any) => {
+                heads:
+                    selectedStudent.affiliated_heads.heads
+                        .filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name))
+                        .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount)) === 0))
+                        .map((studentHead:any) => {
                             return {
-                                name:a.name,
-                                value:Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount))
+                                ...studentHead,
+                                amounts:
+                                    heads
+                                        .filter((h:any) => h.head_name === studentHead.head_name)
+                                        .map((h:any) =>
+                                            h.amounts
+                                                .filter((a:any) => selectedInstallments.includes(a.name))
+                                                .filter((a:any) => Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount)) !== 0)
+                                                .map((a:any) => {
+                                                    return {
+                                                        name:a.name,
+                                                        value:Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount))
+                                                    };
+                                                })
+                                        )[0].concat(
+                                                heads
+                                                    .filter((h:any) => h.head_name === studentHead.head_name)
+                                                    .map((h:any) =>
+                                                        h.amounts
+                                                            .filter((a:any) => !selectedInstallments.includes(a.name))
+                                                            .map((a:any) => {
+                                                                return {
+                                                                    name:a.name,
+                                                                    value:Number(a.value)
+                                                                };
+                                                            })
+                                                    )[0]
+                                            )
                             };
-                        }))[0]
-                    };
-                }).concat(unChangedHeads)
-            }
+                        })
+                        .concat(unChangedHeads)
+                        .filter((h:any) => h.amounts.length !== 0)
         };
-
-        console.log(newHeads);
-
 
         // Updating student
         await ModifyStudentAffiliatedHeads({id:selectedStudent.id, affiliated_heads:newHeads});
-
-
+        
         // Toast
         toast({title:'Saved Successfully!'});
-
+        
         // Reseting
         form.reset({
             receipt_date:new Date(),
@@ -121,7 +142,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             dues:0,
             advance_amt:0
         });
-        setSelectedInstallments([]);
         setSelectedStudent({
             id:'',
             image:'',
@@ -134,11 +154,13 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             bill_no:'',
             class:'',
             affiliated_heads:{
-                group_name:'',
+                    group_name:'',
                 heads:[]
             }
         });
         setInstallments([]);
+        setSelectedInstallments([]);
+        setIsLoading(false);
     };
 
 

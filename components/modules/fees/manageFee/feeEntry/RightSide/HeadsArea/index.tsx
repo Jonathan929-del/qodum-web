@@ -15,6 +15,14 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
     const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
 
 
+    // Total number generator
+    const totalNumberGenerator = (array:any) => {
+        let sum = 0;
+        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+        return sum;
+    };
+
+
     return (
         <div className='flex flex-col gap-2'>
             {selectedStudent.name && (
@@ -26,6 +34,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                     form={form}
                     heads={heads}
                     setHeads={setHeads}
+                    totalNumberGenerator={totalNumberGenerator}
                 />
             )}
             <Buttons
@@ -37,6 +46,8 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 setSelectedInstallments={setSelectedInstallments}
                 totalPaidAmount={totalPaidAmount}
                 setTotalPaidAmount={setTotalPaidAmount}
+                totalNumberGenerator={totalNumberGenerator}
+                heads={heads}
             />
         </div>
     );
