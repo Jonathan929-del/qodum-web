@@ -100,7 +100,6 @@ const page = () => {
                     setSelectedInstallments={setSelectedInstallments}
                     setSelectedStudent={setSelectedStudent}
                     setIsViewOpened={setIsViewOpened}
-                    setIsLoading={setIsLoading}
                     setInstallments={setInstallments}
                 />
             )}

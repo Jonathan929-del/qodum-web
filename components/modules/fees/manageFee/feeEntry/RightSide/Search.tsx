@@ -12,7 +12,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData, fetchStudentsCountByClassAn
 
 
 // Main function
-const Search = ({classes, sections, setIsViewOpened, students, setSelectedStudent, setIsLoading, setInstallments, setSelectedInstallments}:any) => {
+const Search = ({classes, sections, setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
 
 
     // Search
@@ -41,7 +41,6 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
 
     // Handle Search Click
     const admissionSearchClick = async () => {
-        setIsLoading(true);
         if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
             const student = await fetchStudentByAdmNo({adm_no:search});
             setSelectedStudent({
@@ -81,13 +80,11 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             setIsViewOpened(true);
         }
         setSearch('');
-        setIsLoading(false);
     };
 
 
     // Student search click
     const studentSearchClick = (student:any) => {
-        setIsLoading(true);
         setSelectedStudent({
             id:student?._id || '',
             image:student?.student?.image || '',
@@ -122,7 +119,6 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
         setInstallments(filteredInstallments);
         setSelectedInstallments([filteredInstallments[0]]);
         setSearch('');
-        setIsLoading(false);
     };
 
 

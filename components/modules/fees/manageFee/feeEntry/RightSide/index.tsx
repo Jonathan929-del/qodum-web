@@ -9,7 +9,7 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, heads, setHeads}:any) => {
+const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened, students, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, setInstallments, heads, setHeads}:any) => {
     return (
         <div className='basis-[70%] min-w-[400px] flex flex-col gap-3 px-2'>
             {/* Search */}
@@ -19,7 +19,6 @@ const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened
                 students={students}
                 setSelectedStudent={setSelectedStudent}
                 setIsViewOpened={setIsViewOpened}
-                setIsLoading={setIsLoading}
                 setSelectedInstallments={setSelectedInstallments}
                 setInstallments={setInstallments}
             />
