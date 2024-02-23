@@ -84,7 +84,6 @@ const page = () => {
             ) : isViewOpened ? (
                 <ViewCom
                     students={students}
-                    setIsLoading={setIsLoading}
                     setIsViewOpened={setIsViewOpened}
                     setSelectedStudent={setSelectedStudent}
                     setInstallments={setInstallments}

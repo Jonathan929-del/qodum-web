@@ -10,12 +10,11 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments, setIsLoading}:any) => {
+const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
 
 
     // Select handler
     const selectHandler = (student:any) => {
-        setIsLoading(true);
         setSelectedStudent({
             id:student._id,
             image:student.student.image,
@@ -49,7 +48,6 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
         setInstallments(filteredInstallments);
         setSelectedInstallments([filteredInstallments[0]]);
         setIsViewOpened(false);
-        setIsLoading(false);
     };
 
 
