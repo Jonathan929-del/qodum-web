@@ -101,6 +101,7 @@ const page = () => {
                     setSelectedStudent={setSelectedStudent}
                     setIsViewOpened={setIsViewOpened}
                     setInstallments={setInstallments}
+                    setIsLoading={setIsLoading}
                 />
             )}
         </div>
