@@ -89,6 +89,8 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
                 a.paid_amount = Number(a.value) - Number(a.conc_amount);
                 setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+            }else{
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
             };
         }));
     };
@@ -256,8 +258,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
         };
     };
-    console.log(heads);
-    console.log(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === 'Quarter-I').map((a:any) => Number(a.paid_amount))))));
 
 
 
@@ -317,9 +317,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                             ) : selectedInstallments.length > 0 && heads.map((h:any) => (
                                 <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
                                     <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2 max-w-[90px]'>
-                                        {/* <p className='min-w-[200px]'> */}
-                                            {h.head_name}
-                                        {/* </p> */}
+                                        {h.head_name}
                                     </li>
                                     <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))}
@@ -343,7 +341,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                             type='number'
                                             // value={totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount)))}
                                             value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount)[0]}
-                                            onChange={(e:any) => paidAmountChangeHandler(h, e)}
+                                            onChange={(e:any) => paidAmountChangeHandler(h, e.target.value)}
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </li>
