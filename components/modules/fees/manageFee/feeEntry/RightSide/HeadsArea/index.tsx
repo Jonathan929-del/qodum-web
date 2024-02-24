@@ -35,6 +35,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                     heads={heads}
                     setHeads={setHeads}
                     totalNumberGenerator={totalNumberGenerator}
+                    
                 />
             )}
             <Buttons

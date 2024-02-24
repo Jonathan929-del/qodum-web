@@ -16,10 +16,18 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
 
     // Conc amount change hadler
-    const concAmountChangeHandler = (h:any, e:any) => {
-        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount = e.target.value);
+    const concAmountChangeHandler = (h:any, v:any) => {
+        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount = v);
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.payable_amount = a.value - a.conc_amount);
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = a.value - a.conc_amount);
+        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => {
+            if(Number(a.conc_amount) > Number(a.value)){
+                toast({title:'Concession amount cannot be greater than the total paid amount', variant:'alert'});
+                a.conc_amount = Number(a.value);
+                a.paid_amount = 0;
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
+            }
+        });
         setHeads([...heads]);
         setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
         form.setValue('total_paid_amount', totalNumberGenerator(
@@ -31,8 +39,8 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
 
     // Paid amount change hadler
-    const paidAmountChangeHandler = (h:any, e:any) => {
-        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = e.target.value);
+    const paidAmountChangeHandler = (h:any, v:any) => {
+        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = v);
         setHeads([...heads]);
         totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => {
             if(Number(a.paid_amount) > Number(a.value) - Number(a.conc_amount)){
@@ -42,8 +50,218 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             }else{
                 setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             };
-        }))
+        }));
     };
+
+
+
+
+
+    // Conc amount change hadler (for multiple installments)
+    const concAmountChangeHandlerForMultipleiInstallments = (h:any, v:any, i:any) => {
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.conc_amount = v);
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.payable_amount = a.value - a.conc_amount);
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.paid_amount = a.value - a.conc_amount);
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => {
+            if(Number(a.conc_amount) > Number(a.value)){
+                toast({title:'Concession amount cannot be greater than the total paid amount', variant:'alert'});
+                a.conc_amount = Number(a.value);
+                a.paid_amount = 0;
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+            }
+        });
+        setHeads([...heads]);
+        setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+        form.setValue('total_paid_amount', totalNumberGenerator(
+            heads.map((head:any) => totalNumberGenerator(
+                head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))
+            ))
+        ));
+    };
+
+
+    // Paid amount change hadler (for multiple installments)
+    const paidAmountChangeHandlerForMultipleiInstallments = (h:any, v:any, i:any) => {
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.paid_amount = v);
+        setHeads([...heads]);
+        totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => {
+            if(Number(a.paid_amount) > Number(a.value) - Number(a.conc_amount)){
+                toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
+                a.paid_amount = Number(a.value) - Number(a.conc_amount);
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+            }else{
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+            };
+        }));
+    };
+
+
+    // Installmemt conc amount change hadler
+    const installmentConcAmountChangeHandler = (i:any, v:any) => {
+        const inputValue = Number(v);
+        if(inputValue !== undefined){
+            const filteredHeads = heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i));
+            const installmentValues = filteredHeads.map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))[0]).filter((n:any) => n);
+
+            if(inputValue > totalNumberGenerator(installmentValues)){
+                filteredHeads.filter((h:any) => h.amounts.map((a:any) => a.name !== i)).map((h:any) => {
+                    concAmountChangeHandlerForMultipleiInstallments(h, v, i);
+                });
+            }else{
+                if(inputValue <= Number(installmentValues[0])){
+                    // First amount
+                    concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], inputValue, i);
+                    filteredHeads[1] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], 0, i);
+                    filteredHeads[2] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], 0, i);
+                    filteredHeads[3] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                    filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                    filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                }else{
+                    const availableAmount = inputValue - Number(installmentValues[0]);
+                    if(availableAmount <= Number(installmentValues[1])){
+                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                        // Second amount
+                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], availableAmount, i);
+                        filteredHeads[2] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], 0, i);
+                        filteredHeads[3] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                        filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                        filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                    }else{
+                        const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]));
+                        if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]))){
+                            concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                            concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                            // Third amount
+                            filteredHeads[2] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], availableAmount, i);
+                            filteredHeads[3] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                            filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                            filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                        }else{
+                            const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]));
+                            if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]))){
+                                concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                // Fourth amount
+                                filteredHeads[3] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], availableAmount, i);
+                                filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                                filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                            }else{
+                                const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]));
+                                if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]))){
+                                    concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                    concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                    concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                    concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], Number(installmentValues[3]), i);
+                                    // Fifth amount
+                                    filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], availableAmount, i);
+                                    filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                                }else{
+                                    const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]) + Number(installmentValues[4]));
+                                    if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]) + Number(installmentValues[4]))){
+                                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], Number(installmentValues[3]), i);
+                                        concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], Number(installmentValues[4]), i);
+                                        // Sixth amount
+                                        filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], availableAmount, i);
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+        };
+    };
+
+
+    // Installmemt paid amount change hadler
+    const installmentPaidAmountChangeHandler = (i:any, v:any) => {
+        const inputValue = Number(v);
+        if(inputValue !== undefined){
+            const filteredHeads = heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i));
+            const installmentValues = filteredHeads.map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))[0]).filter((n:any) => n);
+
+            if(inputValue > totalNumberGenerator(installmentValues)){
+                filteredHeads.filter((h:any) => h.amounts.map((a:any) => a.name !== i)).map((h:any) => {
+                    paidAmountChangeHandlerForMultipleiInstallments(h, v, i);
+                });
+            }else{
+                if(inputValue <= Number(installmentValues[0])){
+                    // First amount
+                    paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], inputValue, i);
+                    filteredHeads[1] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], 0, i);
+                    filteredHeads[2] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], 0, i);
+                    filteredHeads[3] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                    filteredHeads[4] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                    filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                }else{
+                    const availableAmount = inputValue - Number(installmentValues[0]);
+                    if(availableAmount <= Number(installmentValues[1])){
+                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                        // Second amount
+                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], availableAmount, i);
+                        filteredHeads[2] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], 0, i);
+                        filteredHeads[3] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                        filteredHeads[4] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                        filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                    }else{
+                        const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]));
+                        if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]))){
+                            paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                            paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                            // Third amount
+                            filteredHeads[2] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], availableAmount, i);
+                            filteredHeads[3] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
+                            filteredHeads[4] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                            filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                        }else{
+                            const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]));
+                            if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]))){
+                                paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                // Fourth amount
+                                filteredHeads[3] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], availableAmount, i);
+                                filteredHeads[4] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
+                                filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                            }else{
+                                const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]));
+                                if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]))){
+                                    paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                    paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                    paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                    paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], Number(installmentValues[3]), i);
+                                    // Fifth amount
+                                    filteredHeads[4] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], availableAmount, i);
+                                    filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
+                                }else{
+                                    const availableAmount = inputValue - (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]) + Number(installmentValues[4]));
+                                    if(availableAmount <= (Number(installmentValues[0]) + Number(installmentValues[1]) + Number(installmentValues[2]) + Number(installmentValues[3]) + Number(installmentValues[4]))){
+                                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], Number(installmentValues[0]), i);
+                                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], Number(installmentValues[1]), i);
+                                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], Number(installmentValues[2]), i);
+                                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], Number(installmentValues[3]), i);
+                                        paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], Number(installmentValues[4]), i);
+                                        // Sixth amount
+                                        filteredHeads[5] && paidAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], availableAmount, i);
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+        };
+    };
+    console.log(heads);
+
+
+
 
 
     // Use effects
@@ -51,11 +269,9 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         const assignedHeads =
             selectedStudent?.affiliated_heads?.heads
                 ?.filter((h:any) => selectedInstallments.includes(h.installment) || h.installment === 'All installments')
-                // ?.filter((h:any) => !h.amounts.map((a:any) => a.name)[0].includes(selectedInstallments[0]));
         assignedHeads.map((h:any) => {
             heads[heads.indexOf(h)]?.amounts?.map((a:any) => a.conc_amount = 0);
         });
-        console.log(assignedHeads);
         setHeads(assignedHeads);
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
@@ -113,7 +329,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                         <Input
                                             type='number'
                                             value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount)[0]}
-                                            onChange={(e:any) => concAmountChangeHandler(h, e)}
+                                            onChange={(e:any) => concAmountChangeHandler(h, e.target.value)}
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </li>
@@ -173,10 +389,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                         )}
                     </>
                 ) : (
-
-
-
-
                     <>
                         {/* Headers */}
                         <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
@@ -207,14 +419,13 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                         {i}
                                     </li>
                                     <li className='basis-[16.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
-                                        {/* {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))} */}
-                                        -
+                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))[0]).filter((n:any) => n))}
                                     </li>
                                     <li className='basis-[17.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
                                         <Input
                                             type='number'
-                                            // value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount)[0]}
-                                            // onChange={(e:any) => concAmountChangeHandler(h, e)}
+                                            onChange={(e:any) => installmentConcAmountChangeHandler(i, e.target.value)}
+                                            value={totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name === i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount))[0]).filter((n:any) => n))}
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </li>
@@ -222,15 +433,15 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                         0
                                     </li>
                                     <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
-                                        {/* {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))} */}
-                                        -
+                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - Number(a.conc_amount))[0]).filter((n:any) => n))}
                                     </li>
                                     <li className='basis-[16.5%] text-center text-hash-color text-[11px] px-2 py-[2px]'>
                                         <Input
                                             type='number'
-                                            // value={totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount)))}
-                                            // value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount)[0]}
-                                            // onChange={(e:any) => paidAmountChangeHandler(h, e)}
+                                            value={totalNumberGenerator(
+                                                totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name === i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))[0]).filter((n:any) => n))
+                                            )}
+                                            onChange={(e:any) => installmentPaidAmountChangeHandler(i, e.target.value)}
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </li>
@@ -262,14 +473,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                             </ul>
                         )}
                     </>
-
-
-
-
-
-
-
-
                 )}
             </div>
 
