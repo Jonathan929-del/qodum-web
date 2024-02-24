@@ -67,11 +67,11 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                 toast({title:'Concession amount cannot be greater than the total paid amount', variant:'alert'});
                 a.conc_amount = Number(a.value);
                 a.paid_amount = 0;
-                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
             }
         });
         setHeads([...heads]);
-        setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+        setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
         form.setValue('total_paid_amount', totalNumberGenerator(
             heads.map((head:any) => totalNumberGenerator(
                 head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))
@@ -88,8 +88,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             if(Number(a.paid_amount) > Number(a.value) - Number(a.conc_amount)){
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
                 a.paid_amount = Number(a.value) - Number(a.conc_amount);
-                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
-            }else{
                 setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
             };
         }));
@@ -259,6 +257,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         };
     };
     console.log(heads);
+    console.log(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === 'Quarter-I').map((a:any) => Number(a.paid_amount))))));
 
 
 
@@ -433,14 +432,12 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                         0
                                     </li>
                                     <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
-                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - Number(a.conc_amount))[0]).filter((n:any) => n))}
+                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - Number(a.conc_amount))[0]).filter((n:any)  => n))}
                                     </li>
                                     <li className='basis-[16.5%] text-center text-hash-color text-[11px] px-2 py-[2px]'>
                                         <Input
                                             type='number'
-                                            value={totalNumberGenerator(
-                                                totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name === i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))[0]).filter((n:any) => n))
-                                            )}
+                                            value={totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount)))))}
                                             onChange={(e:any) => installmentPaidAmountChangeHandler(i, e.target.value)}
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
