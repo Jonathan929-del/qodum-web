@@ -67,14 +67,12 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                 toast({title:'Concession amount cannot be greater than the total paid amount', variant:'alert'});
                 a.conc_amount = Number(a.value);
                 a.paid_amount = 0;
-                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
             }
         });
         setHeads([...heads]);
-        setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
         form.setValue('total_paid_amount', totalNumberGenerator(
             heads.map((head:any) => totalNumberGenerator(
-                head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))
+                head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - Number(a.conc_amount))
             ))
         ));
     };
@@ -88,12 +86,8 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             if(Number(a.paid_amount) > Number(a.value) - Number(a.conc_amount)){
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
                 a.paid_amount = Number(a.value) - Number(a.conc_amount);
-                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
-                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
                 setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             }else{
-                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
-                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
                 setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             };
         }));
@@ -279,6 +273,9 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
     }, [selectedInstallments]);
+    useEffect(() => {
+        setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
+    }, [heads]);
 
 
     return (

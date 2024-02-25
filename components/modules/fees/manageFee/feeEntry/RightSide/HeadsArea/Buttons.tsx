@@ -17,13 +17,25 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
     const totalPaidHandler = (e:any) => {
         setTotalPaidAmount(e.target.value)
         const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))));
+        console.log('heads from buttons: ', heads);
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
             if(inputValue >= totalNumber){
                 heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - Number(a.conc_amount)));
             }else{
 
-                const amountsValues = heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)));
+                const amountsValues = heads.map((h:any) => {
+                    let array;
+                    if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){
+                        const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                        // array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                        array = singleAmount.map((a:any) => a[0][0]);
+                    }else{
+                        array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                    }
+                    return array;
+                });
+                console.log('Amounts', amountsValues);
                 if(inputValue <= amountsValues[0]){
                     // First amount
                     heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = inputValue);
