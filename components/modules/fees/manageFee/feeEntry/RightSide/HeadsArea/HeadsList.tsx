@@ -88,9 +88,13 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             if(Number(a.paid_amount) > Number(a.value) - Number(a.conc_amount)){
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
                 a.paid_amount = Number(a.value) - Number(a.conc_amount);
-                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
+                setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             }else{
-                setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))));
+                // setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.paid_amount))))));
+                setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             };
         }));
     };
