@@ -1,10 +1,9 @@
 // Imports
 import {X} from 'lucide-react';
+import {useState} from 'react';
 import Draggable from 'react-draggable';
-import {useEffect, useState} from 'react';
 import PaymodeWiseDetails from './PaymodeWiseDetails';
 import InstallmentWiseDetails from './InstallmentWiseDetails';
-import {fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 
 
