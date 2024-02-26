@@ -178,7 +178,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
             await createPayment({
                 // Others
-                receipt_no:payments?.length || 0,
+                receipt_no:payments?.length + 1 || 0,
                 installment:i,
                 received_date:values.received_date,
                 remarks:values.remarks,
