@@ -611,11 +611,7 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
 
 // Modify students' health details props
 interface ModifyStudentsHealthDetails{
-    students:{
-        adm_no:String;
-        height:Number;
-        weight:Number;
-    }[]
+    students:any
 };
 // Modify students' health details
 export const modifyStudentsHealthDetails = async ({students}:ModifyStudentsHealthDetails) => {
