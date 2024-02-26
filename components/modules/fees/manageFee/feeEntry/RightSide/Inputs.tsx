@@ -175,6 +175,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                 <FormControl>
                                     <Input
                                         value={payments?.length + 1 || 0}
+                                        readOnly
                                         className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </FormControl>
