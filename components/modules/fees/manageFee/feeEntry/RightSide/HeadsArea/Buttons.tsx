@@ -17,7 +17,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
     const totalPaidHandler = (e:any) => {
         setTotalPaidAmount(e.target.value)
         const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))));
-        console.log('heads from buttons: ', heads);
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
             if(inputValue >= totalNumber){
@@ -35,7 +34,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                     }
                     return array;
                 });
-                console.log('Amounts', amountsValues);
                 if(inputValue <= amountsValues[0]){
                     // First amount
                     heads[0].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = inputValue);
@@ -166,7 +164,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
 
     return (
-        <div className='flex flex-col items-center justify-between gap-3 p-2 border-[0.5px] border-[#ccc] rounded-[5px] lg:flex-row'>
+        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] lg:flex-row'>
 
 
             {/* Inputs */}

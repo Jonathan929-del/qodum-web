@@ -32,11 +32,15 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
                     return {
                         ...h,
                         amounts:h.amounts.map((a:any) => {
+                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
-                                ...a,
-                                conc_amount:0,
-                                paid_amount:a.value,
-                                payable_amount:0
+                                name:a.name,
+                                value:Number(a.value),
+                                conc_amount:conc_amount,
+                                last_rec_amount:last_rec_amount,
+                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                             };
                         })
                     };

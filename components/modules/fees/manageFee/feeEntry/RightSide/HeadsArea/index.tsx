@@ -8,19 +8,11 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads}:any) => {
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator}:any) => {
 
 
     // Total paid amount
     const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
-
-
-    // Total number generator
-    const totalNumberGenerator = (array:any) => {
-        let sum = 0;
-        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
-        return sum;
-    };
 
 
     return (

@@ -9,9 +9,14 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened, students, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, setInstallments, heads, setHeads}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments}:any) => {
     return (
         <div className='basis-[70%] min-w-[400px] flex flex-col gap-3 px-2'>
+
+
+
+
+
             {/* Search */}
             <Search
                 classes={classes}
@@ -33,6 +38,13 @@ const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened
                 installments={installments}
                 selectedInstallments={selectedInstallments}
                 setSelectedInstallments={setSelectedInstallments}
+                chequeDetails={chequeDetails}
+                setChequeDetails={setChequeDetails}
+                ddDetails={ddDetails}
+                setddDetails={setddDetails}
+                neftDetails={neftDetails}
+                setNeftDetails={setNeftDetails}
+                payments={payments}
             />
 
 
@@ -42,6 +54,11 @@ const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened
             {/* Entry Mode */}
             <EntryMode
                 form={form}
+                selectedStudent={selectedStudent}
+                totalNumberGenerator={totalNumberGenerator}
+                installments={installments}
+                setSelectedInstallments={setSelectedInstallments}
+                payments={payments}
             />
 
 
@@ -58,6 +75,7 @@ const index = ({installments, classes, sections, form, onSubmit, setIsViewOpened
                 setSelectedInstallments={setSelectedInstallments}
                 heads={heads}
                 setHeads={setHeads}
+                totalNumberGenerator={totalNumberGenerator}
             />
         </div>
     );

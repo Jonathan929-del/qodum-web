@@ -1,10 +1,13 @@
 // Imports
 import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
+import DDDetails from '../Others/DDDetails';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
+import NeftDetails from '../Others/NeftDetails';
 import {Calendar} from '@/components/ui/calendar';
 import {Checkbox} from '@/components/ui/checkbox';
+import ChequeDetails from '../Others/ChequeDetails';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {CalendarIcon, Check, ChevronDown, X} from 'lucide-react';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
@@ -16,7 +19,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments}:any) => {
+const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, payments}:any) => {
 
 
     // Date states
@@ -24,7 +27,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
 
     // Pay modes
-    const [payModes, setPayModes] = useState(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card']);
+    const [payModes, setPayModes] = useState(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
 
 
     // Use effects
@@ -32,11 +35,11 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
         switch (form.getValues().entry_mode) {
             case 'School':
                 form.setValue('pay_mode', 'Cash');
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
                 break;
             case 'Bank':
                 form.setValue('pay_mode', 'Cash');
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
                 break;
             case 'Online':
                 form.setValue('pay_mode', 'Net Banking');
@@ -44,175 +47,98 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 break;
             default:
                 break;
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
         };
     }, [form.watch('entry_mode'), form.getValues().entry_mode]);
+    useEffect(() => {}, [form.watch('pay_mode')]);
 
 
     return (
-        <div className='flex flex-col gap-2 p-2 rounded-[5px] border-[0.5px] border-[#ccc]'>
+        <div className='flex flex-col gap-2 p-4 rounded-[5px] bg-[#F7F7F7]'>
             <div className='flex flex-col gap-2 lg:flex-row'>
-                <div className='w-full flex flex-row gap-2'>
-                    {/* Receipt Date */}
-                    <div className='flex flex-col'>
-                        <p className='text-xs text-hash-color'>Date</p>
-                        <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                            <PopoverTrigger asChild className='h-7'>
-                                <Button
-                                    variant='outline'
-                                    className='flex flex-row items-center w-full text-[11px] bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                >
-                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                    {
-                                        form.getValues().receipt_date
-                                                ? <span>{format(form.getValues().receipt_date, 'PPP')}</span>
-                                                : <span>Pick a date</span>
-                                    }
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className='w-auto'>
-                                <Calendar
-                                    mode='single'
-                                    selected={form.getValues().receipt_date}
-                                    onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('receipt_date', v)}}
-                                    initialFocus
-                                />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    {/* Ref. No. */}
-                    <FormField
-                        control={form.control}
-                        name='ref_no'
-                        render={({field}) => (
-                            <FormItem className='w-full'>
-                                <div className='relative flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Ref. No.</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-                </div>
-                <div className='w-full flex flex-row gap-2'>
-                    {/* Receipt No. */}
-                    <FormField
-                        control={form.control}
-                        name='receipt_no'
-                        render={({field}) => (
-                            <FormItem className='w-full'>
-                                <div className='relative flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-                    {/* Pay Mode */}
-                    <FormField
-                        control={form.control}
-                        name='pay_mode'
-                        render={({field}) => (
-                            <FormItem className='w-full'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Pay Mode</FormLabel>
-                                    <Select
-                                        {...field}
-                                        value={field.value}
-                                        onValueChange={field.onChange}
-                                    >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {payModes.map((m:any) => (
-                                                <SelectItem value={m} key={m}>{m}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-                </div>
-            </div>
-            <div className='flex flex-row gap-10'>
-                {/* Remarks */}
+                {/* Entry Mode */}
                 <FormField
                     control={form.control}
-                    name='remarks'
+                    name='entry_mode'
                     render={({field}) => (
                         <FormItem className='w-full'>
                             <div className='flex flex-col'>
-                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Remarks</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                        className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </FormControl>
+                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Entry Mode</FormLabel>
+                                <Select
+                                    {...field}
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                >
+                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value='School'>School</SelectItem>
+                                        <SelectItem value='Bank'>Bank</SelectItem>
+                                        <SelectItem value='Online'>Online</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </FormItem>
                     )}
                 />
-                <div className='w-full flex flex-row items-end gap-2'>
-                    {/* Is Adjust Advance */}
-                    <FormField
-                        control={form.control}
-                        name='is_adjust_advance'
-                        render={({field}) => (
-                            <FormItem>
-                                <FormControl>
-                                    <Checkbox
-                                        checked={form.getValues().is_adjust_advance}
-                                        onClick={() => form.setValue('is_adjust_advance', !form.getValues().is_adjust_advance)}
-                                        className='rounded-[2px] text-hash-color'
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    {/* Adjust Advance */}
-                    <FormField
-                        control={form.control}
-                        name='adjust_advance'
-                        render={({field}) => (
-                            <FormItem className='w-full'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Adjust Advance</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled
-                                            value={field.value}
-                                            onChange={field.onChange}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
+                {/* Received Date */}
+                <div className='w-full flex flex-col'>
+                    <p className='text-xs text-hash-color'>Received Date</p>
+                    <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
+                        <PopoverTrigger asChild className='h-7'>
+                            <Button
+                                variant='outline'
+                                className='flex flex-row items-center w-full text-[11px] bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            >
+                                <CalendarIcon className='mr-2 h-4 w-4' />
+                                {
+                                    form.getValues().received_date
+                                            ? <span>{format(form.getValues().received_date, 'PPP')}</span>
+                                            : <span>Pick a date</span>
+                                }
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-auto'>
+                            <Calendar
+                                mode='single'
+                                selected={form.getValues().received_date}
+                                onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('received_date', v)}}
+                                initialFocus
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </div>
+                {/* Pay Mode */}
+                <FormField
+                    control={form.control}
+                    name='pay_mode'
+                    render={({field}) => (
+                        <FormItem className='w-full'>
+                            <div className='flex flex-col'>
+                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Pay Mode</FormLabel>
+                                <Select
+                                    {...field}
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                >
+                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {payModes.map((m:any) => (
+                                            <SelectItem value={m} key={m}>{m}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </FormItem>
+                    )}
+                />
             </div>
-            <div className='flex flex-col gap-2 lg:flex-row'>
+            <div className='flex flex-row items-center gap-2'>
                 {/* Fees Type */}
                 <FormField
                     control={form.control}
@@ -234,6 +160,25 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         <SelectItem value='All Fee Types'>All Fee Types</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                {/* Receipt No. */}
+                <FormField
+                    control={form.control}
+                    name='receipt_no'
+                    render={({field}) => (
+                        <FormItem className='w-full'>
+                            <div className='relative flex flex-col'>
+                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        value={payments?.length + 1 || 0}
+                                        className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                    />
+                                </FormControl>
+                                <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
                             </div>
                         </FormItem>
                     )}
@@ -266,7 +211,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
             </div>
             <div className='flex flex-col gap-2 lg:flex-row'>
                 {/* Installment */}
-                <FormItem className='w-full max-w-[500px] lg:w-[50%]'>
+                <FormItem className='basis-[33.3%]'>
                     <div className='flex flex-col'>
                         <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Installment</FormLabel>
                         <Select>
@@ -286,8 +231,6 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                     <>
                                         <div className='flex flex-row'>
                                             <div
-                                                // @ts-ignore
-                                                // onClick={() => setSelectedInstallments(installments.map((s:any) => s.name))}
                                                 onClick={() => setSelectedInstallments(installments)}
                                                 className='group flex flex-row items-center justify-center cursor-pointer'
                                             >
@@ -304,14 +247,10 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         </div>
                                         <ul className='mt-2'>
                                             {installments.map((i:any) => (
-                                                // <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={i._id}>
                                                 <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={i}>
                                                     <Checkbox
                                                         className='rounded-[3px] text-hash-color font-semibold'
-                                                        // checked={selectedInstallments.map((s:any) => s).includes(i.name)}
                                                         checked={selectedInstallments.map((s:any) => s).includes(i)}
-                                                        // @ts-ignore
-                                                        // onClick={() => selectedInstallments.includes(i.name) ? setSelectedInstallments(selectedInstallments.filter((s:any) => s !== i.name)) : setSelectedInstallments([...selectedInstallments, i.name])}
                                                         onClick={() => selectedInstallments.includes(i) ? setSelectedInstallments(selectedInstallments.filter((s:any) => s !== i)) : setSelectedInstallments([...selectedInstallments, i])}
                                                     />
                                                     <div className='w-full flex flex-row'>
@@ -326,7 +265,29 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         </Select>
                     </div>
                 </FormItem>
+                {/* Remarks */}
+                <FormField
+                    control={form.control}
+                    name='remarks'
+                    render={({field}) => (
+                        <FormItem className='w-full basis-[66.6%]'>
+                            <div className='flex flex-col'>
+                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Remarks</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                    />
+                                </FormControl>
+                            </div>
+                        </FormItem>
+                    )}
+                />
             </div>
+            {form.getValues().pay_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
+            {form.getValues().pay_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
+            {form.getValues().pay_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
         </div>
     );
 };
@@ -336,4 +297,49 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
 
 // Export
-export default Inputs
+export default Inputs;
+
+
+
+
+
+
+
+{/* <div className='w-full flex flex-row items-end gap-2'> */}
+{/* Is Adjust Advance */}
+{/* <FormField
+    control={form.control}
+    name='is_adjust_advance'
+    render={({field}) => (
+        <FormItem>
+            <FormControl>
+                <Checkbox
+                    checked={form.getValues().is_adjust_advance}
+                    onClick={() => form.setValue('is_adjust_advance', !form.getValues().is_adjust_advance)}
+                    className='rounded-[2px] text-hash-color'
+                />
+            </FormControl>
+        </FormItem>
+    )}
+/> */}
+{/* Adjust Advance */}
+{/* <FormField
+    control={form.control}
+    name='adjust_advance'
+    render={({field}) => (
+        <FormItem className='w-full max-w-[200px]'>
+            <div className='flex flex-col'>
+                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Adjust Advance</FormLabel>
+                <FormControl>
+                    <Input
+                        disabled
+                        value={field.value}
+                        onChange={field.onChange}
+                        className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                    />
+                </FormControl>
+            </div>
+        </FormItem>
+    )}
+/> */}
+{/* </div> */}

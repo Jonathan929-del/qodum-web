@@ -61,11 +61,15 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                         return {
                             ...h,
                             amounts:h.amounts.map((a:any) => {
+                                const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                                const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                                 return {
-                                    ...a,
-                                    conc_amount:0,
-                                    paid_amount:a.value,
-                                    payable_amount:0
+                                    name:a.name,
+                                    value:Number(a.value),
+                                    conc_amount:conc_amount,
+                                    last_rec_amount:last_rec_amount,
+                                    payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                    paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                                 };
                             })
                         };
@@ -103,11 +107,15 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                     return {
                         ...h,
                         amounts:h.amounts.map((a:any) => {
+                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
-                                ...a,
-                                conc_amount:0,
-                                paid_amount:a.value,
-                                payable_amount:0
+                                name:a.name,
+                                value:Number(a.value),
+                                conc_amount:conc_amount,
+                                last_rec_amount:last_rec_amount,
+                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                             };
                         })
                     };
@@ -197,7 +205,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
 
 
     return (
-        <div className='flex flex-col p-2 border-[0.5px] border-[#ccc] bg-[#F7F7F7] gap-2 rounded-[5px] text-xs text-hash-color lg:flex-row lg:items-end'>
+        <div className='flex flex-col p-2 bg-[#F7F7F7] gap-2 text-xs text-hash-color lg:flex-row lg:items-end'>
             <div className='flex-1 flex flex-row gap-2'>
                 {/* Class */}
                 <div className='w-full flex flex-col items-center'>

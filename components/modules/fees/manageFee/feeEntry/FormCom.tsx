@@ -8,6 +8,7 @@ import {useForm} from 'react-hook-form';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {createPayment} from '@/lib/actions/fees/manageFee/payment.actions';
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
 import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
@@ -16,7 +17,7 @@ import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/ad
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, setPayments}: any) => {
 
 
     // Toast
@@ -27,25 +28,42 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const [heads, setHeads] = useState<any>([]);
 
 
+    // Cheuqe details
+    const [chequeDetails, setChequeDetails] = useState({});
+
+
+    // DD details
+    const [ddDetails, setddDetails] = useState({});
+
+
+    // Neft details
+    const [neftDetails, setNeftDetails] = useState({});
+
+
+    // Total number generator
+    const totalNumberGenerator = (array:any) => {
+        let sum = 0;
+        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+        return sum;
+    };
+
+
     // Form
     const form = useForm({
         resolver:zodResolver(FeeEntryValidation),
         defaultValues:{
-            receipt_date:new Date(),
-            ref_no:'',
-            receipt_no:0,
-            pay_mode:'',
+            received_date:new Date(),
+            receipt_no:'',
             remarks:'',
-            is_adjust_advance:false,
-            adjust_advance:0,
-            fee_type:'All Fee Types',
+            installment:'',
+            pay_mode:'',
+            pay_mode_details:{},
+
+
+            // Form inputs
+            fee_type:'',
             bank_name:'',
-            installment:[''],
-            entry_mode:'School',
-            heads:[{
-                conc_amount:0,
-                paid_amount:0
-            }],
+            entry_mode:'',
             total_paid_amount:0,
             dues:0,
             advance_amt:0
@@ -64,9 +82,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             return {
                 ...studentHead,
                 amounts:selectedStudent.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => {
+                    const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                    const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                     return {
                         name:a.name,
-                        value:Number(a.value)
+                        value:Number(a.value),
+                        conc_amount:conc_amount,
+                        last_rec_amount:last_rec_amount,
+                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                     };
                 }))[selectedStudent.affiliated_heads.heads.indexOf(studentHead)]
             };
@@ -90,9 +114,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                                 .filter((a:any) => selectedInstallments.includes(a.name))
                                                 .filter((a:any) => Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount)) !== 0)
                                                 .map((a:any) => {
+                                                    const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                                                    const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                                                     return {
                                                         name:a.name,
-                                                        value:Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount))
+                                                        value:Number(a.value),
+                                                        conc_amount:conc_amount,
+                                                        last_rec_amount:last_rec_amount + Number(a.paid_amount),
+                                                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                                                     };
                                                 })
                                         )[0].concat(
@@ -102,9 +132,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                                         h.amounts
                                                             .filter((a:any) => !selectedInstallments.includes(a.name))
                                                             .map((a:any) => {
+                                                                const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                                                                const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                                                                 return {
                                                                     name:a.name,
-                                                                    value:Number(a.value)
+                                                                    value:Number(a.value),
+                                                                    conc_amount:conc_amount,
+                                                                    last_rec_amount:last_rec_amount,
+                                                                    payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                                                    paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                                                                 };
                                                             })
                                                     )[0]
@@ -116,28 +152,65 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         };
 
         // Updating student
-        await ModifyStudentAffiliatedHeads({id:selectedStudent.id, affiliated_heads:newHeads});
+        await ModifyStudentAffiliatedHeads({
+            id:selectedStudent.id,
+            affiliated_heads:newHeads,
+        });
+
+
+        // Create payment
+        selectedInstallments.map(async (i:any) => {
+            let paymodeDetails;
+            switch (values.pay_mode) {
+                case 'Cheque':
+                    paymodeDetails = chequeDetails;
+                    break;
+                case 'DD':
+                    paymodeDetails = ddDetails;
+                    break;
+                case 'NEFT':
+                    paymodeDetails = neftDetails;
+                    break;
+                default:
+                    {}
+                    break;
+            }
+
+            await createPayment({
+                // Others
+                receipt_no:payments?.length || 0,
+                installment:i,
+                received_date:values.received_date,
+                remarks:values.remarks,
+                paymode:values.pay_mode || 'Cash',
+                paymode_details:paymodeDetails,
+            
+            
+                // Amounts
+                actual_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))))),
+                // concession_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount))))),
+                concession_amount:0,
+                paid_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))),
+            });
+        });
         
         // Toast
         toast({title:'Saved Successfully!'});
         
         // Reseting
         form.reset({
-            receipt_date:new Date(),
-            ref_no:'',
-            receipt_no:0,
-            pay_mode:'',
+            received_date:new Date(),
+            receipt_no:'',
             remarks:'',
-            is_adjust_advance:false,
-            adjust_advance:0,
-            fee_type:'All Fee Types',
+            installment:'',
+            pay_mode:'',
+            pay_mode_details:{},
+
+
+            // Form inputs
+            fee_type:'',
             bank_name:'',
-            installment:[''],
-            entry_mode:'School',
-            heads:[{
-                conc_amount:0,
-                paid_amount:0
-            }],
+            entry_mode:'',
             total_paid_amount:0,
             dues:0,
             advance_amt:0
@@ -171,10 +244,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                    className='w-full flex flex-col gap-4 p-2 overflow-scroll custom-sidebar-scrollbar'
                 >
-                    <div className='w-full flex flex-row gap-4 p-2 '>
-
+                    <div className='w-full flex flex-row gap-2'>
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}
@@ -197,8 +269,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setInstallments={setInstallments}
                             heads={heads}
                             setHeads={setHeads}
+                            chequeDetails={chequeDetails}
+                            setChequeDetails={setChequeDetails}
+                            ddDetails={ddDetails}
+                            setddDetails={setddDetails}
+                            neftDetails={neftDetails}
+                            setNeftDetails={setNeftDetails}
+                            totalNumberGenerator={totalNumberGenerator}
+                            payments={payments}
                         />
-
                     </div>
                 </form>
             </Form>

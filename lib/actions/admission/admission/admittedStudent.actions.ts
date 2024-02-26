@@ -756,8 +756,13 @@ export const fetchStudentsByClasses = async ({classes}:{classes:string[]}) => {
 
 
 
+// Modify student affiliated heads props
+interface ModifyStudentAffiliatedHeadsProps{
+    id:String;
+    affiliated_heads:any;
+};
 // Modify student affiliated heads
-export const ModifyStudentAffiliatedHeads = async ({id, affiliated_heads}:{id:String; affiliated_heads:any;}) => {
+export const ModifyStudentAffiliatedHeads = async ({id, affiliated_heads}:ModifyStudentAffiliatedHeadsProps) => {
     try {
 
         // Db connection

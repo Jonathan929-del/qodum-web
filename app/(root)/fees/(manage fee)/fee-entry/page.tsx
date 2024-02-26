@@ -2,6 +2,7 @@
 // Imports
 import {useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
@@ -44,6 +45,10 @@ const page = () => {
     const [students, setStudents] = useState([{}]);
 
 
+    // Payments
+    const [payments, setPayments] = useState<any>([]);
+
+
     // Selected student
     const [selectedStudent, setSelectedStudent] = useState({
         id:'',
@@ -69,9 +74,11 @@ const page = () => {
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
             const studentsRes = await fetchAdmittedStudents();
+            const paymentsRes = await fetchPayments();
             setClasses(classesRes);
             setSections(sectionsRes);
             setStudents(studentsRes);
+            setPayments(paymentsRes);
         };
         fetcher();
     }, []);
@@ -102,6 +109,7 @@ const page = () => {
                     setIsViewOpened={setIsViewOpened}
                     setInstallments={setInstallments}
                     setIsLoading={setIsLoading}
+                    payments={payments}
                 />
             )}
         </div>
