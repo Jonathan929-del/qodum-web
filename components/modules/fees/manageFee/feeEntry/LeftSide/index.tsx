@@ -9,7 +9,7 @@ import Image from 'next/image';
 // Main function
 const index = ({selectedStudent}:any) => {
     return (
-        <div className='w-[250px] flex flex-col px-2 gap-2 text-[11px] bg-[#F7F7F7]'>
+        <div className='w-[250px] min-w-[250px] flex flex-col px-2 gap-2 text-[11px] bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc]'>
             <div className='flex items-center justify-center mt-8'>
                 {selectedStudent.image === '' ? (
                     <div className='w-[125px] h-[125px] border-[0.5px] border-[#ccc] rounded-[5px]'/>

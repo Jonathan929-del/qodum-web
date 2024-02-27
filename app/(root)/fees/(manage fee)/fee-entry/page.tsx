@@ -85,7 +85,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white'>
+        <div className='h-screen flex flex-col items-center justify-start bg-white'>
             {isLoading ? (
                 <LoadingIcon />
             ) : isViewOpened ? (

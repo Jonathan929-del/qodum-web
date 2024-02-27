@@ -33,7 +33,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
         form.setValue('total_paid_amount', totalNumberGenerator(
             heads.map((head:any) => totalNumberGenerator(
-                head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.last_rec_amount || 0) + Number(a.conc_amount || 0)))
+                head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - ((Number(a.last_rec_amount || 0) + Number(a.conc_amount || 0))))
             ))
         ));
     };
@@ -44,9 +44,9 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = v);
         setHeads([...heads]);
         totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => {
-            if(Number(a.paid_amount) > Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0))){
+            if(Number(a.paid_amount) > Number(a.value) - ((Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)))){
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
-                a.paid_amount = Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount));
+                a.paid_amount = Number(a.value) - ((Number(a.conc_amount) + Number(a.last_rec_amount)));
                 setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             }else{
                 setTotalPaidAmount(totalNumberGenerator(heads.map((head:any) => totalNumberGenerator(head.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
@@ -63,8 +63,12 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.conc_amount = v);
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.payable_amount = a.value - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.paid_amount = a.value - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
+        const totalValueAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
+        const totalConcAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount)))));
+        const totalRecdAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.last_rec_amount)))));
+
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => {
-            if(Number(a.conc_amount) > Number(a.value) - Number(a.last_rec_amount)){
+            if(totalConcAmount > totalValueAmount - totalRecdAmount){
                 toast({title:'Concession amount cannot be greater than the total paid amount', variant:'alert'});
                 a.conc_amount = Number(a.value);
                 a.paid_amount = 0;
@@ -83,16 +87,19 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
     // Paid amount change hadler (for multiple installments)
     const paidAmountChangeHandlerForMultipleiInstallments = (h:any, v:any, i:any) => {
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.paid_amount = v);
+        const totalValueAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
+        const totalConcAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount)))));
+        const totalRecdAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.last_rec_amount)))));
         setHeads([...heads]);
-        totalNumberGenerator(heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => {
-            if(Number(a.paid_amount) > Number(a.value) - (Number(a.conc_amount || 0) + (Number(a.last_rec_amount || 0)))){
+        heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => {
+            if(Number(v) > totalValueAmount - (totalConcAmount + totalRecdAmount)){
                 toast({title:'Paid amount cannot be greater than payable amount', variant:'alert'});
                 a.paid_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0));
                 setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             }else{
                 setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
             };
-        }));
+        });
     };
 
 
@@ -267,7 +274,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
     useEffect(() => {
         const assignedHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => selectedInstallments.includes(h.installment) || h.installment === 'All installments')
         setHeads(assignedHeads);
-        form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))));
+        form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
     }, [selectedInstallments]);
     useEffect(() => {
@@ -276,7 +283,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
 
     return (
-        <div className='w-full border-[0.5px] border-[#ccc] rounded-[4px] overflow-x-scroll custom-sidebar-scrollbar bg-white'>
+        <div className='w-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px] border-[0.5px] border-[#ccc]'>
 
             <div className='w-full min-w-[750px] flex flex-col'>
                 {selectedInstallments.length === 1 ? (
@@ -427,7 +434,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                         {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.last_rec_amount))[0]).filter((n:any) => n))}
                                     </li>
                                     <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
-                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - Number(a.conc_amount))[0]).filter((n:any)  => n))}
+                                        {totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))[0]).filter((n:any)  => n))}
                                     </li>
                                     <li className='basis-[16.5%] text-center text-hash-color text-[11px] px-2 py-[2px]'>
                                         <Input
@@ -457,7 +464,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                     0
                                 </li>
                                 <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
-                                    {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))))}
+                                    {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))))}
                                 </li>
                                 <li className='basis-[16.5%] text-center text-hash-color text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}

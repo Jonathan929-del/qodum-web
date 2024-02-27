@@ -17,7 +17,7 @@ import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/ad
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, setPayments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments}: any) => {
 
 
     // Toast
@@ -102,7 +102,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 heads:
                     selectedStudent.affiliated_heads.heads
                         .filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name))
-                        .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount)) === 0))
+                        .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0))
                         .map((studentHead:any) => {
                             return {
                                 ...studentHead,
@@ -112,7 +112,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                         .map((h:any) =>
                                             h.amounts
                                                 .filter((a:any) => selectedInstallments.includes(a.name))
-                                                .filter((a:any) => Number(a.value) - (Number(a.paid_amount) + Number(a.conc_amount)) !== 0)
+                                                .filter((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0)
                                                 .map((a:any) => {
                                                     const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                                     const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
@@ -238,15 +238,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
     return (
-        <div className='w-[100%] max-w-[1200px] flex flex-col items-center p-4 overflow-y-scroll custom-sidebar-scrollbar'>
+        <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full flex flex-col gap-4 p-2 overflow-scroll custom-sidebar-scrollbar'
+                    className='h-full w-full flex flex-col gap-4 pt-4 overflow-scroll custom-sidebar-scrollbar'
                 >
-                    <div className='w-full flex flex-row gap-1'>
+                    <div className='h-full w-full flex flex-row gap-1'>
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}

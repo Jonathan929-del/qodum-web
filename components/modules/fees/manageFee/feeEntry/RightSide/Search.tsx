@@ -205,7 +205,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
 
 
     return (
-        <div className='flex flex-col p-2 bg-[#F7F7F7] gap-2 text-xs text-hash-color lg:flex-row lg:items-end'>
+        <div className='flex flex-col p-2 bg-[#F7F7F7] gap-2 text-xs text-hash-color rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row lg:items-end'>
             <div className='flex-1 flex flex-row gap-2'>
                 {/* Class */}
                 <div className='w-full flex flex-col items-center'>

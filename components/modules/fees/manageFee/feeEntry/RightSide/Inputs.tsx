@@ -54,7 +54,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
 
     return (
-        <div className='flex flex-col gap-2 p-4 rounded-[5px] bg-[#F7F7F7] lg:flex-row'>
+        <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
             <div className='flex-1 flex flex-col'>
                 <div className='flex flex-col gap-2 lg:flex-row'>
                     {/* Entry Mode */}
@@ -62,7 +62,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='entry_mode'
                         render={({field}) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='basis-[33.3%] min-w-[125px]'>
                                 <div className='flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Entry Mode</FormLabel>
                                     <Select
@@ -85,7 +85,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         )}
                     />
                     {/* Received Date */}
-                    <div className='w-full flex flex-col'>
+                    <div className='flex flex-col basis-[33.3%] min-w-[125px]'>
                         <p className='text-xs text-hash-color'>Received Date</p>
                         <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
                             <PopoverTrigger asChild className='h-7'>
@@ -116,7 +116,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='pay_mode'
                         render={({field}) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='basis-[33.3%]'>
                                 <div className='flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Pay Mode</FormLabel>
                                     <Select
@@ -145,7 +145,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='fee_type'
                         render={({field}) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='basis-[33.3%] min-w-[125px]'>
                                 <div className='flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Fees Type</FormLabel>
                                     <Select
@@ -170,7 +170,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='receipt_no'
                         render={({field}) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='basis-[33.3%]'>
                                 <div className='relative flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
                                     <FormControl>
@@ -190,7 +190,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='bank_name'
                         render={({field}) => (
-                            <FormItem className='w-full'>
+                            <FormItem className='basis-[33.3%]'>
                                 <div className='flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Bank Name</FormLabel>
                                     <Select
@@ -213,7 +213,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 </div>
                 <div className='flex flex-col gap-2 lg:flex-row'>
                     {/* Installment */}
-                    <FormItem className='basis-[33.3%]'>
+                    <FormItem className='basis-[33.3%] min-w-[125px]'>
                         <div className='flex flex-col'>
                             <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Installment</FormLabel>
                             <Select>
@@ -272,7 +272,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         control={form.control}
                         name='remarks'
                         render={({field}) => (
-                            <FormItem className='w-full basis-[66.6%]'>
+                            <FormItem className='basis-[66.6%]'>
                                 <div className='flex flex-col'>
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Remarks</FormLabel>
                                     <FormControl>
@@ -290,7 +290,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
             </div>
 
             {/* Paymode Details */}
-            <div className='w-[250px]'>
+            <div className='w-[200px]'>
                 {form.getValues().pay_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
                 {form.getValues().pay_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
                 {form.getValues().pay_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}

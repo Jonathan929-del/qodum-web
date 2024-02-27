@@ -1667,13 +1667,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
     }, [updateStudent]);
     useEffect(() => {
+        console.log('Change detected');
         if(valuesFromRegister.student.name !== ''){
             // Student
+            form.setValue('student.class', valuesFromRegister.student.class);
             form.setValue('student.image', valuesFromRegister.student.image);
             form.setValue('student.stream', valuesFromRegister.student.stream);
             form.setValue('student.subjects', valuesFromRegister.student.subjects);
             form.setValue('student.optional_subject', valuesFromRegister.student.optional_subject);
-            form.setValue('student.class', valuesFromRegister.student.class);
             form.setValue('student.board', valuesFromRegister.student.board);
             form.setValue('student.name', valuesFromRegister.student.name);
             form.setValue('student.middle_name', valuesFromRegister.student.middle_name);

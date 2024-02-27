@@ -11,7 +11,7 @@ import HeadsArea from './HeadsArea';
 // Main function
 const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments}:any) => {
     return (
-        <div className='basis-[70%] min-w-[400px] flex flex-col justify-between gap-3 px-2'>
+        <div className='w-full min-w-[400px] flex flex-col justify-between gap-3 px-2'>
 
 
 

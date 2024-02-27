@@ -16,21 +16,20 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
     // Total paid handler
     const totalPaidHandler = (e:any) => {
         setTotalPaidAmount(e.target.value)
-        const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount)))));
+        const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
             if(inputValue >= totalNumber){
-                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - Number(a.conc_amount)));
+                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))));
             }else{
 
                 const amountsValues = heads.map((h:any) => {
                     let array;
                     if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){
-                        const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - Number(a.conc_amount));
-                        // array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                        const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)));
                         array = singleAmount.map((a:any) => a[0][0]);
                     }else{
-                        array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                        array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)));
                     }
                     return array;
                 });
@@ -164,7 +163,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
 
     return (
-        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] lg:flex-row'>
+        <div className='flex flex-col items-center justify-between gap-3 p-2 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
 
 
             {/* Inputs */}

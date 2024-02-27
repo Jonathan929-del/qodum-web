@@ -424,6 +424,7 @@ const page = () => {
             const registeredStudentsRes = await fetchManualListStudents();
             setStudents(studentsRes);
             setRegisteredStudents(registeredStudentsRes);
+            setRegisteredStudents(registeredStudentsRes.filter((s:any) => !studentsRes.map((student) => student?.student?.name).includes(s?.student?.name)));
         };
         accountGroupsFetcher();
     }, [isViewOpened, updateStudent]);

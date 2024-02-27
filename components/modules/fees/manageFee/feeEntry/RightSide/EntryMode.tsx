@@ -20,7 +20,7 @@ const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, s
 
 
     return (
-        <div className='flex flex-col gap-2 p-2 rounded-[5px] lg:flex-row lg:justify-between bg-[#F7F7F7]'>
+        <div className='flex flex-col gap-2 p-2 lg:flex-row lg:justify-between bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc]'>
             {/* Today's Collection */}
             <div className='h-full flex flex-row items-center gap-2 text-sm text-hash-color font-semibold'>
                 Today's Collection : 0
