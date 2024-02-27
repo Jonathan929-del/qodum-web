@@ -18,8 +18,8 @@ export const connectToDb = async (dbName:String) => {
 
 
     // Selected Database
-    const mongo_url = 'mongodb://localhost:27017/sms';
-    // const mongo_url = process.env.MONGO_ACCOUNTS_URL;
+    // const mongo_url = 'mongodb://localhost:27017/sms';
+    const mongo_url = process.env.MONGO_ACCOUNTS_URL;
 
 
     if(!mongo_url) return console.log('MONGO_URL not found');
