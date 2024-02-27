@@ -278,24 +278,24 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
     return (
         <div className='w-full border-[0.5px] border-[#ccc] rounded-[4px] overflow-x-scroll custom-sidebar-scrollbar bg-white'>
 
-            <div className='w-full min-w-[800px] flex flex-col'>
+            <div className='w-full min-w-[750px] flex flex-col'>
                 {selectedInstallments.length === 1 ? (
                     <>
                         {/* Headers */}
                         <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                            <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Head
                             </li>
-                            <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Actual Amt.
                             </li>
-                            <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Conc. Amt.
                             </li>
-                            <li className='basis-[15%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Last Rec. Amt.
                             </li>
-                            <li className='basis-[13.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Payable Amt.
                             </li>
                             <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
@@ -314,24 +314,24 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                 <p className='pl-2 text-[11px] text-hash-color font-semibold'>No Fees</p>
                             ) : selectedInstallments.length > 0 && heads.map((h:any) => (
                                 <ul className={`flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#EFF8FF]' : 'bg-white'}`}>
-                                    <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2 max-w-[90px]'>
+                                    <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {h.head_name}
                                     </li>
-                                    <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
+                                    <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))}
                                     </li>
-                                    <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
+                                    <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
                                         <Input
                                             type='number'
                                             value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount)[0]}
                                             onChange={(e:any) => concAmountChangeHandler(h, e.target.value)}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                         />
                                     </li>
-                                    <li className='basis-[15%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
+                                    <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.last_rec_amount)))}
                                     </li>
-                                    <li className='basis-[13.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
+                                    <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.payable_amount)))}
                                     </li>
                                     <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
@@ -339,7 +339,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                             type='number'
                                             value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount)[0]}
                                             onChange={(e:any) => paidAmountChangeHandler(h, e.target.value)}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                         />
                                     </li>
                                     <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
@@ -355,19 +355,19 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                         {/* Total */}
                         {heads.length > 0 && (
                             <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                                <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Total
                                 </li>
-                                <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))))}
                                 </li>
-                                <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount)))))}
                                 </li>
-                                <li className='basis-[15%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.last_rec_amount)))))}
                                 </li>
-                                <li className='basis-[13.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.payable_amount)))))}
                                 </li>
                                 <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
@@ -420,7 +420,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                             type='number'
                                             onChange={(e:any) => installmentConcAmountChangeHandler(i, e.target.value)}
                                             value={totalNumberGenerator(heads.filter((h:any) => h.amounts.map((a:any) => a.name === i)).map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount))[0]).filter((n:any) => n))}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                         />
                                     </li>
                                     <li className='basis-[20%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
@@ -434,7 +434,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                             type='number'
                                             value={totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount)))))}
                                             onChange={(e:any) => installmentPaidAmountChangeHandler(i, e.target.value)}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                         />
                                     </li>
                                 </ul>

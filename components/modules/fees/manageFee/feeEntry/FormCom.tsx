@@ -246,7 +246,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full flex flex-col gap-4 p-2 overflow-scroll custom-sidebar-scrollbar'
                 >
-                    <div className='w-full flex flex-row gap-2'>
+                    <div className='w-full flex flex-row gap-1'>
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}

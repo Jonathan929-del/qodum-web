@@ -178,7 +178,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                                 type='number'
                                 value={totalPaidAmount}
                                 onChange={(e:any) => totalPaidHandler(e)}
-                                className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                             />
                         </FormControl>
                         <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
@@ -234,16 +234,16 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                 {/* Save */}
                 <Button
                     type='submit'
-                    className='px-3 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#90f7c5]'
                 >
                     Save
                 </Button>
                 {/* Cancel */}
                 <span
                     onClick={cancel}
-                    className='flex items-center justify-center px-3 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#FDCD88] rounded-[4px] transition cursor-pointer hover:opacity-80'
+                    // className='flex items-center justify-center px-3 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                    //         hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                 >
                     Cancel
                 </span>
