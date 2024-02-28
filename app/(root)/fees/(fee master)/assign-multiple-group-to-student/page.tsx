@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import FormCom from '@/components/modules/fees/feeMaster/assignMultipleGroupToStudent/FormCom';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { fetchAdmittedStudents } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
