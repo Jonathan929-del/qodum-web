@@ -156,42 +156,42 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             id:selectedStudent.id,
             affiliated_heads:newHeads,
         });
-
-
+        
+        
         // Create payment
-        selectedInstallments.map(async (i:any) => {
-            let paymodeDetails;
-            switch (values.pay_mode) {
-                case 'Cheque':
-                    paymodeDetails = chequeDetails;
-                    break;
-                case 'DD':
-                    paymodeDetails = ddDetails;
-                    break;
-                case 'NEFT':
-                    paymodeDetails = neftDetails;
-                    break;
-                default:
-                    {}
-                    break;
-            }
+        const paidHeads = heads.filter((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount) > 0)[0]);
+        let paymodeDetails;
+        switch (values.pay_mode) {
+            case 'Cheque':
+                paymodeDetails = chequeDetails;
+                break;
+            case 'DD':
+                paymodeDetails = ddDetails;
+                break;
+            case 'NEFT':
+                paymodeDetails = neftDetails;
+                break;
+            default:
+                {}
+                break;
+        }
+        await createPayment({
+            // Others
+            student:selectedStudent.name,
+            receipt_no:payments?.length + 1 || '0',
+            installments:selectedInstallments,
+            received_date:values.received_date,
+            remarks:values.remarks,
+            paymode:values.pay_mode || 'Cash',
+            paymode_details:paymodeDetails,
+        
+        
+            // Amounts
+            actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
+            concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
+            paid_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))),
 
-            await createPayment({
-                // Others
-                receipt_no:payments?.length + 1 || 0,
-                installment:i,
-                received_date:values.received_date,
-                remarks:values.remarks,
-                paymode:values.pay_mode || 'Cash',
-                paymode_details:paymodeDetails,
-            
-            
-                // Amounts
-                actual_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))))),
-                // concession_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount))))),
-                concession_amount:0,
-                paid_amount:totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.paid_amount))))),
-            });
+            paid_heads:paidHeads
         });
         
         // Toast

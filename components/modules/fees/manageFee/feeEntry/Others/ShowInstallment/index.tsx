@@ -19,8 +19,10 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
 
 
     return (
-        <Draggable>
-            <div className='absolute min-w-[900px] z-10 flex flex-col pb-6 bg-white border-[0.5px] border-[#ccc] overflow-scroll custom-sidebar-scrollbar'>
+        <Draggable
+            defaultPosition={{x:-250, y:-250}}
+        >
+            <div className='absolute min-w-[900px] max-h-[500px] z-10 flex flex-col pb-6 bg-white border-[0.5px] border-[#ccc] overflow-scroll custom-sidebar-scrollbar'>
                 {/* Header */}
                 <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7]'>
                     <h2>Paid and Unpaid Installment Details</h2>

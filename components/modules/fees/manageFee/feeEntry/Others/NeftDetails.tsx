@@ -19,7 +19,7 @@ const NeftDetails = ({neftDetails, setNeftDetails}:any) => {
                         <Input
                             value={neftDetails.neft_name}
                             onChange={(e:any) => setNeftDetails({...neftDetails, neft_name:e.target.value})}
-                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                         />
                     </FormControl>
                     <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>

@@ -338,7 +338,15 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
-                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
+                    console.log(student);
+                    if(!student.affiliated_heads.group_name){
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    }else{
+                        selectedHeads.map(async (h:any) => {
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} - ${group_name}`,  $push:{'affiliated_heads.heads':h}});
+                        });
+                    }
                 } catch (err:any) {
                     console.log(err);
                 }
@@ -348,7 +356,14 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             students.map(async (s:any) => {
                 try {
-                    await AdmittedStudent.updateMany({'student.name':s.student.name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
+                    if(!student.affiliated_heads.group_name){
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    }else{
+                        selectedHeads.map(async (h:any) => {
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} - ${group_name}`, $push:{'affiliated_heads.heads':h}});
+                        });
+                    }
                 } catch (err:any) {
                     console.log(err);
                 }

@@ -12,7 +12,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {ClassValidation} from '@/lib/validations/fees/globalMasters/defineClassDetails/class.validation';
-import { createClass, deleteClass, modifyClass } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {createClass, deleteClass, modifyClass} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 
 
 
@@ -31,20 +31,18 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
         class_name:updateClass.class_name,
         wing_name:updateClass.wing_name,
         school:updateClass.school,
-        order:updateClass.order,
-        sections:['']
+        order:updateClass.order
     };
 
 
     // Form
-    const form:any = useForm({
+    const form = useForm({
         resolver:zodResolver(ClassValidation),
         defaultValues:{
             class_name:updateClass.id === '' ? '' : updateClass.class_name,
             wing_name:updateClass.id === '' ? '' : updateClass.wing_name,
             school:updateClass.id === '' ? '' : updateClass.school,
-            order:updateClass.id === '' ? '' : updateClass.order,
-            sections:['']
+            order:updateClass.id === '' ? 0 : updateClass.order
         }
     });
 
@@ -94,14 +92,14 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
             class_name:'',
             wing_name:'',
             school:'',
-            order:'',
+            order:0
         });
         // Reseting form
         form.reset({
             class_name:'',
             wing_name:'',
             school:'',
-            order:'',
+            order:0
         });
     };
 

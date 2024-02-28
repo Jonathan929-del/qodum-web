@@ -17,7 +17,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
 
     return (
         <div className='flex flex-col gap-2'>
-            {selectedStudent.name && (
+            {selectedStudent.affiliated_heads?.heads?.length > 0 && (
                 <HeadsList
                     selectedStudent={selectedStudent}
                     selectedInstallments={selectedInstallments}

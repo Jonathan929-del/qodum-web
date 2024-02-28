@@ -9,8 +9,9 @@ import mongoose from 'mongoose';
 const PaymentSchema = new mongoose.Schema(
     {
         // Others
-        receipt_no:{type:String},
-        installment:{type:String},
+        student:{type:String},
+        receipt_no:{type:String, unique:true},
+        installments:{type:Array},
         received_date:{type:Date},
         remarks:{type:String},
         paymode:{type:String},
@@ -20,7 +21,9 @@ const PaymentSchema = new mongoose.Schema(
         // Amounts
         actual_amount:{type:Number},
         concession_amount:{tyoe:Number},
-        paid_amount:{type:Number}
+        paid_amount:{type:Number},
+
+        paid_heads:{type:Array}
     },
     {
         timestamps:true

@@ -47,7 +47,7 @@ const ChequeDetails = ({chequeDetails, setChequeDetails}:any) => {
                         <Input
                             value={chequeDetails.cheque_no}
                             onChange={(e:any) => setChequeDetails({...chequeDetails, cheque_no:e.target.value})}
-                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                         />
                     </FormControl>
                     <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
@@ -60,7 +60,7 @@ const ChequeDetails = ({chequeDetails, setChequeDetails}:any) => {
                     <PopoverTrigger asChild className='h-7'>
                         <Button
                             variant='outline'
-                            className='flex flex-row items-center w-full text-[11px] bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            className='flex flex-row items-center w-full text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                         >
                             <CalendarIcon className='mr-2 h-4 w-4' />
                             {
@@ -88,7 +88,7 @@ const ChequeDetails = ({chequeDetails, setChequeDetails}:any) => {
                         value={chequeDetails.cheque_bank}
                         onValueChange={(v:any) => setChequeDetails({...chequeDetails, cheque_bank:v})}
                     >
-                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                             <ChevronDown className="h-4 w-4 opacity-50" />
                         </SelectTrigger>
@@ -106,7 +106,7 @@ const ChequeDetails = ({chequeDetails, setChequeDetails}:any) => {
                         <Input
                             value={chequeDetails.branch_name}
                             onChange={(e:any) => setChequeDetails({...chequeDetails, branch_name:e.target.value})}
-                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                         />
                     </FormControl>
                     <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
@@ -120,7 +120,7 @@ const ChequeDetails = ({chequeDetails, setChequeDetails}:any) => {
                         value={chequeDetails.deposit_bank}
                         onValueChange={(v:any) => setChequeDetails({...chequeDetails, deposit_bank:v})}
                     >
-                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                             <ChevronDown className="h-4 w-4 opacity-50" />
                         </SelectTrigger>

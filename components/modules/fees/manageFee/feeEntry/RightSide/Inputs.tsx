@@ -70,7 +70,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
@@ -91,7 +91,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                             <PopoverTrigger asChild className='h-7'>
                                 <Button
                                     variant='outline'
-                                    className='flex flex-row items-center w-full text-[11px] bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                    className='flex flex-row items-center w-full text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                                 >
                                     <CalendarIcon className='mr-2 h-4 w-4' />
                                     {
@@ -124,7 +124,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
@@ -153,7 +153,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
@@ -177,7 +177,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         <Input
                                             value={payments?.length + 1 || 0}
                                             readOnly
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                     <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
@@ -198,7 +198,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
@@ -217,7 +217,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         <div className='flex flex-col'>
                             <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Installment</FormLabel>
                             <Select>
-                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                     <SelectValue
                                         className='text-[11px]'
                                         placeholder={selectedInstallments.length < 1 ? 'Please Select' : selectedInstallments.length === 1 ? '1 installment selected' : `${selectedInstallments.length} installments selected`}
@@ -279,7 +279,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         <Input
                                             value={field.value}
                                             onChange={field.onChange}
-                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
                                 </div>
@@ -288,6 +288,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                     />
                 </div>
             </div>
+
 
             {/* Paymode Details */}
             <div className='w-[200px]'>
@@ -305,48 +306,3 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
 // Export
 export default Inputs;
-
-
-
-
-
-
-
-{/* <div className='w-full flex flex-row items-end gap-2'> */}
-{/* Is Adjust Advance */}
-{/* <FormField
-    control={form.control}
-    name='is_adjust_advance'
-    render={({field}) => (
-        <FormItem>
-            <FormControl>
-                <Checkbox
-                    checked={form.getValues().is_adjust_advance}
-                    onClick={() => form.setValue('is_adjust_advance', !form.getValues().is_adjust_advance)}
-                    className='rounded-[2px] text-hash-color'
-                />
-            </FormControl>
-        </FormItem>
-    )}
-/> */}
-{/* Adjust Advance */}
-{/* <FormField
-    control={form.control}
-    name='adjust_advance'
-    render={({field}) => (
-        <FormItem className='w-full max-w-[200px]'>
-            <div className='flex flex-col'>
-                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Adjust Advance</FormLabel>
-                <FormControl>
-                    <Input
-                        disabled
-                        value={field.value}
-                        onChange={field.onChange}
-                        className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                    />
-                </FormControl>
-            </div>
-        </FormItem>
-    )}
-/> */}
-{/* </div> */}

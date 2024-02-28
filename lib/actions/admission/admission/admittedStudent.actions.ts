@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 
 
 
@@ -209,6 +210,10 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
         };
 
 
+        // Class fees
+        const theClass = await Class.findOne({class_name:student.class});
+
+
         // Creating new student
         const newStudent = await AdmittedStudent.create({
             student,
@@ -221,7 +226,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:'', heads:[]}});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:theClass.affiliated_heads.group_name, heads:theClass.affiliated_heads.heads}});
         });
 
 
@@ -466,8 +471,12 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
 
 
+        // Class fees
+        const theClass = await Class.findOne({class_name:student.class});
+
+
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
+        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
         
         
         // Subjects handling

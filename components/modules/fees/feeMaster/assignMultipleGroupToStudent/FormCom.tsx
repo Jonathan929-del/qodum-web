@@ -10,10 +10,11 @@ import {Check, ChevronDown, X} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {assignMultipleGroupsToStudents, fetchGroupsByTypes} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {modifyClassHeads} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentsByClasses} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {assignMultipleGroupsToStudents, fetchGroupsByTypes} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import {AssignMultipleGroupToStudentValidation} from '@/lib/validations/fees/feeMaster/assignMultipleGroupToStudent.validation';
 
 
@@ -48,7 +49,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const form = useForm({
         resolver: zodResolver(AssignMultipleGroupToStudentValidation),
         defaultValues:{
-            group_type:'Classes',
+            group_type:'Special',
             fees_group:'',
             fees_installment:'All installments',
             class:['']
@@ -67,12 +68,23 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                 students:selectedStudents
             });
 
+
+            // Assigning to classes
+            if(values.group_type === 'Classes'){
+                await modifyClassHeads({
+                    group_name:values.fees_group,
+                    installment:values.fees_installment,
+                    classes:selectedClasses.map((c:any) => c.class_name)
+                });
+            }
+
+
             // Toast
             toast({title:'Assigned Successfully!'});
 
             // Reseting
             form.reset({
-                group_type:'Classes',
+                group_type:'Special',
                 fees_group:'',
                 fees_installment:'All installments',
                 class:['']
@@ -273,9 +285,9 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
 
 
                         <div className='flex-1 flex flex-row gap-2'>
-                            {form.formState.dirtyFields.group_type && (
+                            {form.getValues().group_type && (
                                 <span
-                                    onClick={() => setStudents(selectedStudents)}
+                                    onClick={() => {setStudents(selectedStudents);setSelectedStudents(selectedStudents.filter((s:any) => s?.student?.is_new));}}
                                     className='flex items-center justify-center h-8 min-w-[120px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
                                 >

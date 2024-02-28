@@ -113,7 +113,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                 </ul>
                 {payments.length < 1 ? (
                     <p className='text-xs text-hash-color font-semibold'>No payments</p>
-                ) : !payments[0].installment ? (
+                ) : !payments[0].receipt_no ? (
                     <LoadingIcon />
                 ) : payments.map((p:any) => (
                     <ul className='flex flex-row text-[11px] border-b-[0.5px] border-[#ccc]'>
@@ -121,7 +121,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                             {p.receipt_no}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {p.installment}
+                            {p.installments.map((i:any) => i + '-')}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.actual_amount}

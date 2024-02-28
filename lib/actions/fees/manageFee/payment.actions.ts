@@ -10,8 +10,9 @@ import Payment from '@/lib/models/fees/manageFee/Payment.model';
 // Create payment props
 interface CreateAdmittedStudentProps{
         // Others
+        student:String;
         receipt_no:String;
-        installment:String;
+        installments:any;
         received_date:Date;
         remarks:String;
         paymode:String;
@@ -21,9 +22,11 @@ interface CreateAdmittedStudentProps{
         actual_amount:Number;
         concession_amount:Number;
         paid_amount:Number;
+
+        paid_heads:any;
 };
 // Create payment
-export const createPayment = async ({receipt_no, installment, received_date, remarks, paymode, paymode_details, actual_amount, concession_amount, paid_amount}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, actual_amount, concession_amount, paid_amount, paid_heads}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -33,8 +36,8 @@ export const createPayment = async ({receipt_no, installment, received_date, rem
         // Payment
         const payment = await Payment.create({
             // Others
+            student,
             receipt_no,
-            installment,
             received_date,
             remarks,
             paymode,
@@ -45,7 +48,9 @@ export const createPayment = async ({receipt_no, installment, received_date, rem
             concession_amount,
             paid_amount
         });
-        payment.save();
+        payment.save().then(async() => {
+            await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads});
+        });
 
 
         // Return
@@ -61,8 +66,8 @@ export const createPayment = async ({receipt_no, installment, received_date, rem
 
 
 
-// Fetch payments
-export const fetchPayments = async () => {
+// Fetch student payments
+export const fetchStudentPayments = async ({student}:{student:String}) => {
     try {
 
         // Database connection
@@ -70,7 +75,7 @@ export const fetchPayments = async () => {
 
     
         // Payments
-        const payments = await Payment.find();
+        const payments = await Payment.find({student});
 
 
         // Return
@@ -78,6 +83,6 @@ export const fetchPayments = async () => {
 
 
     } catch (err:any) {
-        console.log(`Error fetching payment: ${err.message}`);
+        console.log(`Error fetching payments: ${err.message}`);
     };
 };

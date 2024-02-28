@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 
 
 
@@ -91,7 +92,7 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
 
 
         // Updating class
-        const updatedClass = await Class.findByIdAndUpdate(id, {class_name, wing_name, school, order}, {new:true});
+        const updatedClass = await Class.findByIdAndUpdate(id, {class_name, wing_name, school, order, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
 
 
         // Return
@@ -173,5 +174,53 @@ export const deleteClass = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting class: ${err}`);      
+    };
+};
+
+
+
+
+
+// Modify class heads props
+interface ModifyClassHeadsProps{
+    group_name:String;
+    installment:String;
+    classes:any;
+};
+// Modify Class heads
+export const modifyClassHeads = async ({group_name, installment, classes}:ModifyClassHeadsProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+        console.log(classes);
+
+
+        if(installment === 'All installments'){
+            // Fetching
+            const group = await Group.findOne({name:group_name});
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
+            classes.map(async (c:any) => {
+                try {
+                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                } catch (err:any) {
+                    console.log(err);
+                }
+            });
+        }else{
+            const group = await Group.findOne({name:group_name});
+            const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
+            classes.map(async (c:any) => {
+                try {
+                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                } catch (err:any) {
+                    console.log(err);
+                }
+            });
+        };
+
+
+    } catch (err) {
+        throw new Error(`Error updating class heads: ${err}`);
     };
 };

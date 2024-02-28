@@ -2,9 +2,9 @@
 // Imports
 import {useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
+import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
@@ -61,10 +61,7 @@ const page = () => {
         admission_no:'',
         bill_no:'',
         class:'',
-        affiliated_heads:{
-            group_name:'',
-            heads:[]
-        }
+        affiliated_heads:[]
     });
 
 
@@ -74,14 +71,19 @@ const page = () => {
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
             const studentsRes = await fetchAdmittedStudents();
-            const paymentsRes = await fetchPayments();
             setClasses(classesRes);
             setSections(sectionsRes);
             setStudents(studentsRes);
-            setPayments(paymentsRes);
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        const fetcher = async () => {
+            const paymentsRes = await fetchStudentPayments({student:selectedStudent.name});
+            setPayments(paymentsRes);
+        };
+        fetcher();
+    }, [selectedStudent]);
 
 
     return (

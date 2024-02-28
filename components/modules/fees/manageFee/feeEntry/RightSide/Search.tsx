@@ -79,7 +79,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
             const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
             setInstallments(filteredInstallments);
-            setSelectedInstallments([filteredInstallments[0]]);
+            installments.length > 0 &&  setSelectedInstallments([filteredInstallments[0]]);
         }else{
             setIsViewOpened(true);
         }
@@ -125,7 +125,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
         const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
         const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
         setInstallments(filteredInstallments);
-        setSelectedInstallments([filteredInstallments[0]]);
+        installments.length > 0 && setSelectedInstallments([filteredInstallments[0]]);
         setSearch('');
     };
 
@@ -215,7 +215,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                 <Select
                                     onValueChange={(v:any) => setSelectedClass(v)}
                                 >
-                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                         <SelectValue placeholder='Select Class' className='text-[11px]' />
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </SelectTrigger>
@@ -242,7 +242,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                 <Select
                                     onValueChange={(v:any) => setSelectedSection(v)}
                                 >
-                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                         <SelectValue placeholder='Select Section' className='text-[11px]' />
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </SelectTrigger>
