@@ -23,7 +23,8 @@ const PaymentSchema = new mongoose.Schema(
         concession_amount:{tyoe:Number},
         paid_amount:{type:Number},
 
-        paid_heads:{type:Array}
+        paid_heads:{type:Array},
+        concession_reason:{type:String}
     },
     {
         timestamps:true

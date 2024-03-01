@@ -9,7 +9,7 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchAffiliatedHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {fetchAffiliatedHeads, isGroupRelatedToStudent} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {assignFeeGroupToFeeHead, fetchGroupByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
@@ -82,6 +82,12 @@ const FormCom = ({groups}: any) => {
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof AssignFeeGroupToFeeHeadValidation>) => {
+
+        const isGroupAffiliatedToStudent = await isGroupRelatedToStudent({group_name:values.group_name});
+        if(isGroupAffiliatedToStudent){
+            toast({title:'Fee group is assigned to students', variant:'alert'});
+            return;  
+        };
 
         if(selectedHeads.filter((head:any) => head.installment === '').length > 0 || selectedHeads.filter((head:any) => head.account === '').length > 0 || selectedHeads.filter((head:any) => head.post_account === '').length > 0){
             if(selectedHeads.filter((head:any) => head.installment === '')){

@@ -6,6 +6,7 @@ import {FormControl, FormItem} from '@/components/ui/form';
 import {ChevronDown, Search as SearchIcon} from 'lucide-react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStudentByAdmNo, fetchStudentsByAllData, fetchStudentsCountByClassAndSection} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -37,6 +38,10 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
 
     // Search Students
     const [searchStudents, setSearchStudents] = useState<any>([]);
+
+
+    // All installments
+    const [allInstallments, setAllInstallments] = useState<any>([]);
 
 
     // Handle Search Click
@@ -78,8 +83,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             });
             const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
             const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-            setInstallments(filteredInstallments);
-            installments.length > 0 &&  setSelectedInstallments([filteredInstallments[0]]);
+            const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+            setInstallments(sortedInstallments);
+            setSelectedInstallments([sortedInstallments[0]]);
         }else{
             setIsViewOpened(true);
         }
@@ -124,8 +130,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
         });
         const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
         const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-        setInstallments(filteredInstallments);
-        installments.length > 0 && setSelectedInstallments([filteredInstallments[0]]);
+        const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+        setInstallments(sortedInstallments);
+        setSelectedInstallments([sortedInstallments[0]]);
         setSearch('');
     };
 
@@ -202,6 +209,14 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             fetcher();
         };
     }, [selectedClass, selectedSection]);
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const res = await fetchInstallments();
+            setAllInstallments(res);
+        };
+        fetcher();
+    }, []);
 
 
     return (

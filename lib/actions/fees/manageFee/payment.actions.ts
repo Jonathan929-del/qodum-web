@@ -24,9 +24,10 @@ interface CreateAdmittedStudentProps{
         paid_amount:Number;
 
         paid_heads:any;
+        concession_reason:String;
 };
 // Create payment
-export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, actual_amount, concession_amount, paid_amount, paid_heads}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -46,7 +47,9 @@ export const createPayment = async ({student, receipt_no, installments, received
             // Amounts
             actual_amount,
             concession_amount,
-            paid_amount
+            paid_amount,
+            
+            concession_reason
         });
         payment.save().then(async() => {
             await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads});

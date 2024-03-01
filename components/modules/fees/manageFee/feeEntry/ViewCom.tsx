@@ -1,9 +1,11 @@
 // Imports
+import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
+import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -11,6 +13,10 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 // Main Function
 const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
+
+
+    // All installments
+    const [allInstallments, setAllInstallments] = useState<any>([]);
 
 
     // Select handler
@@ -49,10 +55,21 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
         });
         const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
         const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-        setInstallments(filteredInstallments);
-        setSelectedInstallments([filteredInstallments[0]]);
+        const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+        setInstallments(sortedInstallments);
+        setSelectedInstallments([sortedInstallments[0]]);
         setIsViewOpened(false);
     };
+
+
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const res = await fetchInstallments();
+            setAllInstallments(res);
+        };
+        fetcher();
+    }, []);
 
 
     return (

@@ -13,6 +13,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
 import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeadsByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import { isGroupRelatedToStudent } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 
@@ -50,6 +51,15 @@ const FormCom = ({groups, installments}: any) => {
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AssignAmountGroupValidation>) => {
+
+
+        const isGroupAffiliatedToStudent = await isGroupRelatedToStudent({group_name:values.group_name});
+        if(isGroupAffiliatedToStudent){
+            toast({title:'Fee group is assigned to students', variant:'alert'});
+            return;
+        };
+
+    
         await assignAmountGroup({
             group_name:values.group_name,
             installment:values.installment,

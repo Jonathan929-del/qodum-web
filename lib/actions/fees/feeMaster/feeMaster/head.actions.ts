@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
@@ -174,6 +175,35 @@ export const fetchAffiliatedHeads = async () => {
         return filteredHeads;
 
     } catch (err) {
-        throw new Error(`Error deleting head: ${err}`);      
+        throw new Error(`Error deleting head: ${err}`);
+    }
+};
+
+
+
+
+
+// Is group related to student
+export const isGroupRelatedToStudent = async ({group_name}) => {
+    try {
+        
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Group name reg ex
+        // @ts-ignore
+        const groupNameRegex = new RegExp(group_name, 'i');
+
+    
+        // Checking
+        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}});
+
+
+        // Return
+        return students.length > 1;
+
+    } catch (err) {
+        throw new Error(`Error checking group relation: ${err}`);
     }
 };

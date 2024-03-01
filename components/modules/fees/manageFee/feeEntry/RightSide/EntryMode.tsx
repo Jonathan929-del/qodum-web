@@ -8,7 +8,7 @@ import ShowInstallment from '../Others/ShowInstallment';
 
 
 // Main function
-const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments}:any) => {
+const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, showButtonClick}:any) => {
 
 
     // Toast
@@ -23,7 +23,7 @@ const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, s
         <div className='flex flex-col gap-2 p-2 lg:flex-row lg:justify-between bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc]'>
             {/* Today's Collection */}
             <div className='h-full flex flex-row items-center gap-2 text-sm text-hash-color font-semibold'>
-                Today's Collection : 0
+                Today's Collection : {payments.length}
             </div>
             {/* Buttons */}
             <div className='flex flex-row gap-2'>
@@ -31,6 +31,7 @@ const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, s
                 <span
                     className='flex items-center justify-center px-3 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    onClick={showButtonClick}
                 >
                     Show
                 </span>

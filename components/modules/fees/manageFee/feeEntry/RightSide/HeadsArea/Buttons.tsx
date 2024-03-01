@@ -3,14 +3,14 @@ import {useEffect} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {FormControl, FormItem, FormLabel, FormField, FormMessage} from '@/components/ui/form';
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
 
 
 
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads}:any) => {
-
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit}:any) => {
 
 
     // Total paid handler
@@ -20,16 +20,27 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
             if(inputValue >= totalNumber){
-                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))));
+                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
             }else{
 
+                // const amountsValues = heads.map((h:any) => {
+                //     let array;
+                //     array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                //     if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){
+                //         const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                //         array = singleAmount.map((a:any) => a[0][0]);
+                //     }else{
+                //         array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
+                //     }
+                //     return array;
+                // });
                 const amountsValues = heads.map((h:any) => {
                     let array;
                     if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){
-                        const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)));
-                        array = singleAmount.map((a:any) => a[0][0]);
+                        const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))[0];
+                        array = singleAmount;
                     }else{
-                        array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)));
+                        array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))[0];
                     }
                     return array;
                 });
@@ -105,6 +116,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         };
     };
 
+
     // Cancel button
     const cancel = () => {
         setSelectedStudent({
@@ -148,6 +160,11 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
     };
 
 
+    // Handle submit
+    const handleSubmit = () => form.handleSubmit(onSubmit)();
+
+
+    // Use effect
     useEffect(() => {
         if(totalPaidAmount && selectedStudent?.name){
             if(form.getValues().total_paid_amount < totalPaidAmount){
@@ -163,7 +180,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
 
     return (
-        <div className='flex flex-col items-center justify-between gap-3 p-2 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
+        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] lg:flex-row'>
 
 
             {/* Inputs */}
@@ -231,12 +248,42 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             {/* Buttons */}
             <div className='h-full flex flex-row items-end gap-2'>
                 {/* Save */}
-                <Button
-                    type='submit'
-                    className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#90f7c5]'
-                >
-                    Save
-                </Button>
+                {isConcession ? (
+                    <AlertDialog>
+                        <AlertDialogTrigger>
+                            <span className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'>
+                                Save
+                            </span>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className='sm:max-w-[425px]'>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Concession Reason</AlertDialogTitle>
+                            </AlertDialogHeader>
+                                <Input
+                                    placeholder='Enter reason'
+                                    onChange={(e:any) => setConcessionReason(e.target.value)}
+                                />
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>
+                                    <Button
+                                        type='submit'
+                                        onClick={() => {handleSubmit();setIsConcession(false)}}
+                                    >
+                                        Submit
+                                    </Button>
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                ) : (
+                    <Button
+                        type='submit'
+                        className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7]'
+                    >
+                        Save
+                    </Button>
+                )}
                 {/* Cancel */}
                 <span
                     onClick={cancel}

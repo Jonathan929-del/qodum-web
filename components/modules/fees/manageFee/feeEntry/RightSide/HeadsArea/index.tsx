@@ -8,11 +8,11 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator}:any) => {
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount}:any) => {
 
 
-    // Total paid amount
-    const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
+    // Is concession
+    const [isConcession, setIsConcession] = useState(false);
 
 
     return (
@@ -27,6 +27,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                     heads={heads}
                     setHeads={setHeads}
                     totalNumberGenerator={totalNumberGenerator}
+                    setIsConcession={setIsConcession}
                     
                 />
             )}
@@ -41,6 +42,9 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 setTotalPaidAmount={setTotalPaidAmount}
                 totalNumberGenerator={totalNumberGenerator}
                 heads={heads}
+                setConcessionReason={setConcessionReason}
+                isConcession={isConcession}
+                setIsConcession={setIsConcession}
             />
         </div>
     );

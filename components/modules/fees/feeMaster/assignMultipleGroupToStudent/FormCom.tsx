@@ -49,7 +49,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const form = useForm({
         resolver: zodResolver(AssignMultipleGroupToStudentValidation),
         defaultValues:{
-            group_type:'Special',
+            group_type:'Classes',
             fees_group:'',
             fees_installment:'All installments',
             class:['']
@@ -84,7 +84,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
 
             // Reseting
             form.reset({
-                group_type:'Special',
+                group_type:'Classes',
                 fees_group:'',
                 fees_installment:'All installments',
                 class:['']
@@ -117,6 +117,9 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
         };
         fetcher();
     }, [selectedClasses]);
+    useEffect(() => {
+        setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+    }, [form.watch('fees_group')]);
 
 
     return (

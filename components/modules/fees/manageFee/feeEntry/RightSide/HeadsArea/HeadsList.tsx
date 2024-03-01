@@ -8,7 +8,7 @@ import {useToast} from '@/components/ui/use-toast';
 
 
 // Main function
-const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, form, heads, setHeads, totalNumberGenerator}:any) => {
+const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, form, heads, setHeads, totalNumberGenerator, setIsConcession}:any) => {
 
 
     // Toast
@@ -17,6 +17,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
     // Conc amount change hadler
     const concAmountChangeHandler = (h:any, v:any) => {
+        Number(v) > 0 && setIsConcession(true);
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.conc_amount = v);
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.payable_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
         heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
@@ -106,6 +107,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
     // Installmemt conc amount change hadler
     const installmentConcAmountChangeHandler = (i:any, v:any) => {
         const inputValue = Number(v);
+        inputValue > 0 && setIsConcession(true);
         if(inputValue !== undefined){
             const filteredHeads = heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i));
             const installmentValues = filteredHeads.map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))[0]).filter((n:any) => n);
@@ -272,7 +274,14 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
     // Use effects
     useEffect(() => {
-        const assignedHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => selectedInstallments.includes(h.installment) || h.installment === 'All installments')
+        const assignedHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
+            if(h.amounts.length === 1){
+                return selectedInstallments.includes(h.installment);
+            }else{
+                const amounts = h.amounts;
+                return h.installment === 'All installments' && amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 0;
+            };
+        });
         setHeads(assignedHeads);
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));

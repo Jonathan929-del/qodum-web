@@ -40,6 +40,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const [neftDetails, setNeftDetails] = useState({});
 
 
+    // Concession reason
+    const [concessionReason, setConcessionReason] = useState('');
+
+
     // Total number generator
     const totalNumberGenerator = (array:any) => {
         let sum = 0;
@@ -151,6 +155,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         .filter((h:any) => h.amounts.length !== 0)
         };
 
+    
         // Updating student
         await ModifyStudentAffiliatedHeads({
             id:selectedStudent.id,
@@ -159,7 +164,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         
         
         // Create payment
-        const paidHeads = heads.filter((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount) > 0)[0]);
+        const paidHeads = heads.filter((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && Number(a.paid_amount) > 0).map((a:any) => Number(a.paid_amount))[0]);
         let paymodeDetails;
         switch (values.pay_mode) {
             case 'Cheque':
@@ -191,9 +196,11 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
             paid_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))),
 
-            paid_heads:paidHeads
+            paid_heads:paidHeads,
+            concession_reason:concessionReason
         });
-        
+
+
         // Toast
         toast({title:'Saved Successfully!'});
         
@@ -233,6 +240,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         });
         setInstallments([]);
         setSelectedInstallments([]);
+        setConcessionReason('');
         setIsLoading(false);
     };
 
@@ -277,6 +285,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setNeftDetails={setNeftDetails}
                             totalNumberGenerator={totalNumberGenerator}
                             payments={payments}
+                            setConcessionReason={setConcessionReason}
                         />
                     </div>
                 </form>

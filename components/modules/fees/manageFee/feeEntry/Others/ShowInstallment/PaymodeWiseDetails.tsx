@@ -43,12 +43,12 @@ const PaymodeWiseDetails = ({payments}:any) => {
                     </li>
                 </ul>
                 {cashPayments?.length > 0 ? cashPayments.map((p:any) => (
-                    <ul className='flex flex-row text-[11px]'>
+                    <ul className='flex flex-row text-[11px] border-b-[0.5px] border-[#ccc]'>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.receipt_no}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {p.installment}
+                            {p.installments.map((i:any) => i + '-')}
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             Cash
@@ -102,12 +102,12 @@ const PaymodeWiseDetails = ({payments}:any) => {
                     </li>
                 </ul>
                 {chequePayments?.length > 0 ? chequePayments.map((p:any) => (
-                    <ul className='flex flex-row text-[11px]'>
+                    <ul className='flex flex-row text-[11px] border-b-[0.5px] border-[#ccc]'>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.receipt_no}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {p.installment}
+                            {p.installments.map((i:any) => i + '-')}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p?.paymode_details?.cheque_no}
@@ -167,12 +167,12 @@ const PaymodeWiseDetails = ({payments}:any) => {
                     </li>
                 </ul>
                 {ddPayments?.length > 0 ? ddPayments.map((p:any) => (
-                    <ul className='flex flex-row text-[11px]'>
+                    <ul className='flex flex-row text-[11px] border-b-[0.5px] border-[#ccc]'>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.receipt_no}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {p.installment}
+                            {p.installments.map((i:any) => i + '-')}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p?.paymode_details?.cheque_no}
@@ -226,12 +226,12 @@ const PaymodeWiseDetails = ({payments}:any) => {
                     </li>
                 </ul>
                 {neftPayments?.length > 0 ? neftPayments.map((p:any) => (
-                    <ul className='flex flex-row text-[11px]'>
+                    <ul className='flex flex-row text-[11px] border-b-[0.5px] border-[#ccc]'>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.receipt_no}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {p.installment}
+                            {p.installments.map((i:any) => i + '-')}
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p?.paymode_details?.neft_name}
