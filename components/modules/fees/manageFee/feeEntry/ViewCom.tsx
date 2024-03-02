@@ -3,20 +3,16 @@ import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
-import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
-
-
-    // All installments
-    const [allInstallments, setAllInstallments] = useState<any>([]);
+const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments, allInstallments}:any) => {
 
 
     // Select handler
@@ -60,16 +56,6 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
         setSelectedInstallments([sortedInstallments[0]]);
         setIsViewOpened(false);
     };
-
-
-    // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-            const res = await fetchInstallments();
-            setAllInstallments(res);
-        };
-        fetcher();
-    }, []);
 
 
     return (

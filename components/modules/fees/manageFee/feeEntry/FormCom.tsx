@@ -1,31 +1,27 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 import {useForm} from 'react-hook-form';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {createPayment} from '@/lib/actions/fees/manageFee/payment.actions';
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
-import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {createPayment, fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, showButtonClick, heads, setHeads, totalNumberGenerator, allInstallments}: any) => {
 
 
     // Toast
     const {toast} = useToast();
-
-
-    // Heads
-    const [heads, setHeads] = useState<any>([]);
 
 
     // Cheuqe details
@@ -44,12 +40,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const [concessionReason, setConcessionReason] = useState('');
 
 
-    // Total number generator
-    const totalNumberGenerator = (array:any) => {
-        let sum = 0;
-        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
-        return sum;
-    };
+    // ALl payments
+    const [allPaymentsCount, setAllPaymentsCount] = useState<any>();
 
 
     // Form
@@ -183,7 +175,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         await createPayment({
             // Others
             student:selectedStudent.name,
-            receipt_no:payments?.length + 1 || '0',
+            receipt_no:allPaymentsCount,
             installments:selectedInstallments,
             received_date:values.received_date,
             remarks:values.remarks,
@@ -203,8 +195,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
         // Toast
         toast({title:'Saved Successfully!'});
-        
+
+
         // Reseting
+        setHeads([]);
         form.reset({
             received_date:new Date(),
             receipt_no:'',
@@ -241,8 +235,62 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         setInstallments([]);
         setSelectedInstallments([]);
         setConcessionReason('');
+
+
+        // Fetching student again
+        const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
+        setSelectedStudent({
+            id:student._id,
+            image:student.student.image,
+            name:student.student.name,
+            address:student.student.h_no_and_streets,
+            father_name:student.parents.father.father_name,
+            mother_name:student.parents.mother.mother_name,
+            contact_no:student.student.contact_person_mobile,
+            admission_no:student.student.adm_no,
+            bill_no:student.student.bill_no,
+            class:student.student.class,
+            affiliated_heads:{
+                group_name:student.affiliated_heads.group_name,
+                heads:student.affiliated_heads.heads.map((h:any) => {
+                    return {
+                        ...h,
+                        amounts:h.amounts.map((a:any) => {
+                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
+                            return {
+                                name:a.name,
+                                value:Number(a.value),
+                                conc_amount:conc_amount,
+                                last_rec_amount:last_rec_amount,
+                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                            };
+                        })
+                    };
+                })
+            }
+        });
+        const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+        setInstallments(sortedInstallments);
+        setSelectedInstallments([sortedInstallments[0]]);
+
+    
+        // Loading end
         setIsLoading(false);
     };
+
+
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const res = await fetchPayments();
+            setAllPaymentsCount(res.length + 1);
+        };
+        fetcher();
+    }, []);
 
 
     return (
@@ -286,6 +334,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             totalNumberGenerator={totalNumberGenerator}
                             payments={payments}
                             setConcessionReason={setConcessionReason}
+                            showButtonClick={showButtonClick}
+                            allInstallments={allInstallments}
+                            allPaymentsCount={allPaymentsCount}
                         />
                     </div>
                 </form>

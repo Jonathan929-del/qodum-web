@@ -6,8 +6,9 @@ import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchAdmittedStudents, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -61,8 +62,40 @@ const page = () => {
         admission_no:'',
         bill_no:'',
         class:'',
-        affiliated_heads:[]
+        affiliated_heads:{
+            group_name:'',
+            heads:[]
+        }
     });
+
+
+    // Heads
+    const [heads, setHeads] = useState<any>([]);
+
+
+    // All installments
+    const [allInstallments, setAllInstallments] = useState<any>([]);
+
+
+    // Total number generator
+    const totalNumberGenerator = (array:any) => {
+        let sum = 0;
+        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+        return sum;
+    };
+
+
+    // Show button click
+    const showButtonClick = async () => {
+        const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
+        setSelectedStudent({
+            ...selectedStudent,
+            affiliated_heads:{
+                group_name:selectedStudent.affiliated_heads.group_name,
+                heads:student.affiliated_heads.heads
+            }
+        });
+    };
 
 
     // Use effect
@@ -71,9 +104,11 @@ const page = () => {
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
             const studentsRes = await fetchAdmittedStudents();
+            const installmentsRes = await fetchInstallments();
             setClasses(classesRes);
             setSections(sectionsRes);
             setStudents(studentsRes);
+            setAllInstallments(installmentsRes);
         };
         fetcher();
     }, []);
@@ -97,6 +132,7 @@ const page = () => {
                     setSelectedStudent={setSelectedStudent}
                     setInstallments={setInstallments}
                     setSelectedInstallments={setSelectedInstallments}
+                    allInstallments={allInstallments}
                 />
             ) : (
                 <FormCom
@@ -112,6 +148,11 @@ const page = () => {
                     setInstallments={setInstallments}
                     setIsLoading={setIsLoading}
                     payments={payments}
+                    showButtonClick={showButtonClick}
+                    heads={heads}
+                    setHeads={setHeads}
+                    totalNumberGenerator={totalNumberGenerator}
+                    allInstallments={allInstallments}
                 />
             )}
         </div>

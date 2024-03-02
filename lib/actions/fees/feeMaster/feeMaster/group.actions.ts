@@ -332,11 +332,16 @@ interface assignMultipleGroupsToStudentsProps{
 export const assignMultipleGroupsToStudents = async ({group_name, installment, students}:assignMultipleGroupsToStudentsProps) => {
     try {
 
+
+        const filteredStudents = students
+            .filter((s:any) => !s?.affiliated_heads?.group_name || s?.affiliated_heads?.group_name?.split(' ')[0] !== group_name)
+
+
         if(installment === 'All installments'){
             // Fetching
             const group = await Group.findOne({name:group_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
-            students.map(async (s:any) => {
+            filteredStudents.map(async (s:any) => {
                 try {
                     const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
                     console.log(student);
@@ -344,7 +349,7 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
                         await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} - ${group_name}`,  $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {
@@ -354,14 +359,14 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
         }else{
             const group = await Group.findOne({name:group_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
-            students.map(async (s:any) => {
+            filteredStudents.map(async (s:any) => {
                 try {
                     const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
                     if(!student.affiliated_heads.group_name){
                         await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} - ${group_name}`, $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name}  (${group_name})`, $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {

@@ -69,6 +69,31 @@ export const createPayment = async ({student, receipt_no, installments, received
 
 
 
+// Fetch payments
+export const fetchPayments = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payments = await Payment.find();
+
+
+        // Return
+        return payments;
+
+
+    } catch (err:any) {
+        console.log(`Error fetching payments: ${err.message}`);
+    };
+};
+
+
+
+
+
 // Fetch student payments
 export const fetchStudentPayments = async ({student}:{student:String}) => {
     try {

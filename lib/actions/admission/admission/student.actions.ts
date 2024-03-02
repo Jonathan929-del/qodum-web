@@ -294,6 +294,7 @@ interface ModifyStudentProps{
     // Student
     student:{
         // 1
+        is_up_for_admission:Boolean;
         is_online:Boolean;
         image:String;
         enquiry_no:String;

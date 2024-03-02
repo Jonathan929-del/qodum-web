@@ -11,10 +11,10 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
-import {applyStudentForAdmission, fetchClassStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {applyStudentForAdmission, fetchClassStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {ManualListGenerationValidation} from '@/lib/validations/admission/admission/entranceTest/manualListGeneration.validation';
 
@@ -91,6 +91,7 @@ function FormCom() {
     // Get students
     const getStudents = async (class_name:any) => {
         const classStudents = await fetchClassStudents({class_name});
+        console.log(classStudents);
         if(classStudents.length > 0){
             setStudents(classStudents);
             // @ts-ignore

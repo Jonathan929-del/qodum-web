@@ -1,12 +1,13 @@
 // Imports
+import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {FormControl, FormItem} from '@/components/ui/form';
 import {ChevronDown, Search as SearchIcon} from 'lucide-react';
+import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStudentByAdmNo, fetchStudentsByAllData, fetchStudentsCountByClassAndSection} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -157,14 +158,14 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                     <div>
                         <div className='ml-4 mt-2 rounded-[4px] border-[0.5px] border-[#E4E4E4] h-[75px] w-[75px]'>
                             {s?.student?.image && (
-                                // <Image
-                                //     src={s?.student?.image}
-                                //     alt='Student image'
-                                //     height={75}
-                                //     width={75}
-                                //     className='rounded-[4px] h-full'
-                                // />
-                                <div />
+                                <Image
+                                    src={s?.student?.image}
+                                    alt='Student image'
+                                    height={75}
+                                    width={75}
+                                    className='rounded-[4px] h-full'
+                                />
+                                // <div />
                             )}
                         </div>
                     </div>
@@ -187,7 +188,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search});
+                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:selectedClass, section_name:selectedSection});
                 setSearchStudents(res);
                 setIsLoadingSearchedStudents(false);
             };
@@ -296,10 +297,10 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                     {searchedStudents}
                 </div>
             </div>
-            {studentsCount > -1 && (
+            {studentsCount && (
                 <div className='h-full flex flex-row items-center justify-center'>
                     <p>Total students: </p>
-                    <p>{studentsCount}</p>
+                    <p>{studentsCount || 0}</p>
                 </div>
             )}
         </div>

@@ -10,29 +10,11 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPaymentsCount}:any) => {
 
 
     // Total paid amount
     const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
-
-
-    // Show button click
-    const showButtonClick = () => {
-        setHeads([]);
-        const assignedHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
-            if(h.amounts.length === 1){
-                return selectedInstallments.includes(h.installment);
-            }else{
-                const amounts = h.amounts;
-                return h.installment === 'All installments' && amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 0;
-            };
-        });
-        console.log(assignedHeads);
-        setHeads(assignedHeads);
-        form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
-        setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
-    };
     
 
     return (
@@ -69,7 +51,8 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setddDetails={setddDetails}
                     neftDetails={neftDetails}
                     setNeftDetails={setNeftDetails}
-                    payments={payments}
+                    allPaymentsCount={allPaymentsCount}
+                    allInstallments={allInstallments}
                 />
 
 

@@ -61,6 +61,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const onSubmit = async (values: z.infer<typeof AssignMultipleGroupToStudentValidation>) => {
         try {
 
+
             // Assigning
             await assignMultipleGroupsToStudents({
                 group_name:values.fees_group,
@@ -76,7 +77,7 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                     installment:values.fees_installment,
                     classes:selectedClasses.map((c:any) => c.class_name)
                 });
-            }
+            };
 
 
             // Toast
@@ -118,7 +119,9 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
         fetcher();
     }, [selectedClasses]);
     useEffect(() => {
-        setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+        if(form.getValues().fees_group !== ''){
+            setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+        };
     }, [form.watch('fees_group')]);
 
 

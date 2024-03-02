@@ -193,7 +193,6 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
 
         // Db connection
         connectToDb('accounts');
-        console.log(classes);
 
 
         if(installment === 'All installments'){

@@ -2,8 +2,8 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
-import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
@@ -653,9 +653,11 @@ interface fetchStudentsByAllDataProps{
     father_name:String;
     adm_no:String;
     mobile:String;
+    class_name:String;
+    section_name:String;
 };
 // Fetch students by all data
-export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}:fetchStudentsByAllDataProps) => {
+export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile, class_name, section_name}:fetchStudentsByAllDataProps) => {
     try {
 
         // Db connection
@@ -696,10 +698,22 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}
                     var k = key(item);
                     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
                 })
-            }
+            };
             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
 
-            students = filteredAllRes;
+            if(class_name !== '' || section_name !== ''){
+                if(class_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.class === class_name);
+                };
+                if(section_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.section === section_name);
+                };
+                if(class_name !== '' && section_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
+                };
+            }else{
+                students = filteredAllRes;
+            };
         }else{
 
             // Name res
@@ -719,9 +733,22 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile}
                     var k = key(item);
                     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
                 })
-            }
+            };
             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
-            students = filteredAllRes;
+
+            if(class_name !== '' || section_name !== ''){
+                if(class_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.class === class_name);
+                };
+                if(section_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.section === section_name);
+                };
+                if(class_name !== '' && section_name !== ''){
+                    students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
+                };
+            }else{
+                students = filteredAllRes;
+            };
         }
 
 
@@ -821,7 +848,7 @@ export const fetchStudentsCountByClassAndSection = async ({class_name, section}:
 
 
         // Return
-        return res;
+        return res || [0];
 
     } catch (err) {
         throw new Error(`Error fetching students count: ${err}`);

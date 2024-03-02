@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 
 // Main function
-const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc}:any) => {
+const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc, valuesFromRegister}:any) => {
 
 
     // Handle on change
@@ -42,6 +42,14 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc}:any) => {
                         <Image
                             alt='image'
                             src={updateStudent.student.image}
+                            width={100}
+                            height={100}
+                            className='w-full h-full rounded-[5px]'
+                        />
+                    ) : valuesFromRegister.student.image ? (
+                        <Image
+                            alt='image'
+                            src={valuesFromRegister.student.image}
                             width={100}
                             height={100}
                             className='w-full h-full rounded-[5px]'

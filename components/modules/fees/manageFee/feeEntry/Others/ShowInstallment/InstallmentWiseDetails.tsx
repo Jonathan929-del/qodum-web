@@ -289,7 +289,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {totalNumberGenerator(
-                                selectedStudent.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.last_rec_amount))))
+                                selectedStudent.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))
                             )}
                         </li>
                         <li className='basis-[20%] flex items-center justify-center'>

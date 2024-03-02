@@ -468,7 +468,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.adm_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]});
             };
             await createAdmittedStudent({
                 // Student
@@ -494,7 +494,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     doj:values.student.doj,
                     admitted_class:values.student.admitted_class,
                     // 1
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.adm_no}` : '',
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]}` : '',
                     // 2
                     stream:values.student.stream,
                     subjects:selectedSubjects,
@@ -681,7 +681,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.adm_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]});
             };
             // Update
             await modifyAdmittedStudent({
@@ -709,7 +709,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     doj:values.student.doj,
                     admitted_class:values.student.admitted_class,
                     // 1
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.adm_no}` : comparisonObject.student.image,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]}` : comparisonObject.student.image,
                     // 2
                     stream:values.student.stream,
                     subjects:selectedSubjects,
@@ -1667,7 +1667,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
     }, [updateStudent]);
     useEffect(() => {
-        console.log('Change detected');
         if(valuesFromRegister.student.name !== ''){
             // Student
             form.setValue('student.class', valuesFromRegister.student.class);

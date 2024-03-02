@@ -19,7 +19,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, payments}:any) => {
+const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, allInstallments, allPaymentsCount}:any) => {
 
 
     // Date states
@@ -175,7 +175,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
                                     <FormControl>
                                         <Input
-                                            value={payments?.length + 1 || 0}
+                                            value={allPaymentsCount}
                                             readOnly
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                                         />
@@ -225,9 +225,9 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {installments.length === 0 ? (
+                                    {allInstallments.length === 0 ? (
                                         <p className='text-xs font-semibold'>No installments</p>
-                                    ) : installments[0] === '' ? (
+                                    ) : allInstallments[0] === '' ? (
                                         <LoadingIcon />
                                     ) : (
                                         <>
@@ -248,15 +248,15 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                                 </div>
                                             </div>
                                             <ul className='mt-2'>
-                                                {installments.map((i:any) => (
-                                                    <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={i}>
+                                                {allInstallments.map((i:any) => (
+                                                    <li className={`flex flex-row items-center space-x-[2px] mt-[2px] ${!installments.includes(i.name) && 'cursor-not-allowed text-hash-color opacity-50'}`} key={i._id}>
                                                         <Checkbox
-                                                            className='rounded-[3px] text-hash-color font-semibold'
-                                                            checked={selectedInstallments.map((s:any) => s).includes(i)}
-                                                            onClick={() => selectedInstallments.includes(i) ? setSelectedInstallments(selectedInstallments.filter((s:any) => s !== i)) : setSelectedInstallments([...selectedInstallments, i])}
+                                                            className={`rounded-[3px] text-hash-color font-semibold ${!installments.includes(i.name) && 'cursor-not-allowed'}`}
+                                                            checked={installments.includes(i.name) && selectedInstallments.map((s:any) => s).includes(i.name)}
+                                                            onClick={() => installments.includes(i.name) ? selectedInstallments.includes(i.name) ? setSelectedInstallments(selectedInstallments.filter((s:any) => s !== i.name)) : setSelectedInstallments([...selectedInstallments, i.name]) : ''}
                                                         />
                                                         <div className='w-full flex flex-row'>
-                                                            <p className='basis-[70%] text-[11px]'>{i}</p>
+                                                            <p className='basis-[70%] text-[11px]'>{i.name}</p>
                                                         </div>
                                                     </li>
                                                 ))}

@@ -24,10 +24,10 @@ import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.ac
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchClass, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
@@ -35,7 +35,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admissi
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister}:any) => {
 
 
     // Date states
@@ -92,6 +92,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Search Students
     const [searchStudents, setSearchStudents] = useState<any>([]);
+
+
+    // Class sections
+    const [classSections, setClassSections] = useState<any>([]);
 
 
     // Handle Search Click
@@ -1380,6 +1384,18 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setSearchStudents([]);
         }
     }, [search]);
+    useEffect(() => {
+        if(form.getValues().student.class !== ''){
+            const fetcher = async () => {
+                const res = await fetchClass({class_name:form.getValues().student.class});
+                setClassSections(res.sections);
+            };
+            fetcher();
+        }else{
+            setClassSections([]);
+        }
+    }, [form.watch('student.class')]);
+
 
 
     return (
@@ -1424,14 +1440,16 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {sections?.length < 1 ? (
-                                                <p>No sections</p>
-                                                // @ts-ignore
-                                            ) : !sections[0]?.section_name ? (
-                                                <LoadingIcon />
-                                            ) : sections?.map((item:any) => (
-                                                <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
-                                            ))}
+                                            {
+                                                sections?.length < 1 ? (
+                                                    <p>No sections</p>
+                                                ) : // @ts-ignore
+                                                !sections[0]?.section_name ? (
+                                                    <LoadingIcon />
+                                                ) : sections?.map((item:any) => (
+                                                    <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
+                                                ))
+                                            }
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -1479,6 +1497,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         imageSrc={imageSrc}
                         setImageSrc={setImageSrc}
                         updateStudent={updateStudent}
+                        valuesFromRegister={valuesFromRegister}
                     />
 
 
@@ -1542,14 +1561,22 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {sections?.length < 1 ? (
-                                                        <p>No sections</p>
-                                                        // @ts-ignore
-                                                    ) : !sections[0]?.section_name ? (
-                                                        <LoadingIcon />
-                                                    ) : sections?.map((item:any) => (
-                                                        <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
-                                                    ))}
+                                                    {
+                                                        classSections.length > 0
+                                                            ?
+                                                                classSections?.map((item:any) => (
+                                                                    <SelectItem value={item} key={item}>{item}</SelectItem>
+                                                                ))
+                                                            :
+                                                                sections?.length < 1 ? (
+                                                                    <p>No sections</p>
+                                                                    // @ts-ignore
+                                                                ) : !sections[0]?.section_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : sections?.map((item:any) => (
+                                                                    <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
+                                                                ))
+                                                    }
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>

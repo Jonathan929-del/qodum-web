@@ -452,14 +452,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]});
             };
             await createStudent({
                 // Student
                 student:{
                     // 1
                     is_online:values.student.is_online,
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : '',
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]}` : '',
                     enquiry_no:values.student.enquiry_no,
                     reg_no:values.student.reg_no,
                     pros_no:values.student.pros_no,
@@ -659,7 +659,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.reg_no});
+                await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]});
             };
             // Update
             await modifyStudent({
@@ -667,8 +667,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Student
                 student:{
                     // 1
+                    is_up_for_admission:false,
                     is_online:values.student.is_online,
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.reg_no}` : comparisonObject.student.image,
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]}` : comparisonObject.student.image,
                     enquiry_no:values.student.enquiry_no,
                     reg_no:values.student.reg_no,
                     pros_no:values.student.pros_no,

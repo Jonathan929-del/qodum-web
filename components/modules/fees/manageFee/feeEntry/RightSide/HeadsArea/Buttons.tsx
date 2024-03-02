@@ -180,7 +180,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
 
     return (
-        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] lg:flex-row'>
+        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] border-[#ccc] border-[0.5px] lg:flex-row'>
 
 
             {/* Inputs */}
@@ -266,12 +266,11 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction>
-                                    <Button
-                                        type='submit'
+                                    <span
                                         onClick={() => {handleSubmit();setIsConcession(false)}}
                                     >
                                         Submit
-                                    </Button>
+                                    </span>
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
