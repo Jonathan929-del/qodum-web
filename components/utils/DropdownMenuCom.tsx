@@ -25,7 +25,7 @@ const DropdownMenuCom = () => {
                     <Link
                         href={`/${module.moduleName.toLowerCase().replace(/\s+/g,"-")}`}
                     >
-                        <DropdownMenuItem className='cursor-pointer'>
+                        <DropdownMenuItem className='cursor-pointer h-full py-0'>
                             <div
                                 className={`group w-full flex flex-row justify-between rounded-[8px] px-4 py-2 mt-2 transition hover:bg-[#195382] text-xs`}
                             >

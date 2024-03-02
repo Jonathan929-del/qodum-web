@@ -1,5 +1,4 @@
 // Imports
-import Image from 'next/image';
 
 
 
@@ -30,28 +29,21 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc, valuesFrom
                     className='flex items-center justify-center h-full w-full cursor-pointer text-xs font-semibold'
                 >
                     {imageSrc !== '' ? (
-                        <Image
-                            alt='image'
-                            // @ts-ignore
+                        <img
+                            alt="Student's image"
                             src={imageSrc}
-                            width={100}
-                            height={100}
                             className='w-full h-full rounded-[5px]'
                         />
                     ) : updateStudent.student.image ? (
-                        <Image
-                            alt='image'
+                        <img
+                            alt="Student's image"
                             src={updateStudent.student.image}
-                            width={100}
-                            height={100}
                             className='w-full h-full rounded-[5px]'
                         />
                     ) : valuesFromRegister.student.image ? (
-                        <Image
-                            alt='image'
+                        <img
+                            alt="Student's image"
                             src={valuesFromRegister.student.image}
-                            width={100}
-                            height={100}
                             className='w-full h-full rounded-[5px]'
                         />
                     ) : (

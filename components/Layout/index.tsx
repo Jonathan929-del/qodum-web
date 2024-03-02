@@ -8,7 +8,7 @@ import {Toaster} from '../ui/toaster';
 import PagesList from './Pages/PagesList';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
-import { fetchAcademicYears, modifyAcademicYearWithYearName } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 

@@ -332,9 +332,9 @@ interface assignMultipleGroupsToStudentsProps{
 export const assignMultipleGroupsToStudents = async ({group_name, installment, students}:assignMultipleGroupsToStudentsProps) => {
     try {
 
-
         const filteredStudents = students
-            .filter((s:any) => !s?.affiliated_heads?.group_name || s?.affiliated_heads?.group_name?.split(' ')[0] !== group_name)
+            .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (').length < 2 || !s?.affiliated_heads?.group_name)
+            .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (')[0] !== group_name);
 
 
         if(installment === 'All installments'){

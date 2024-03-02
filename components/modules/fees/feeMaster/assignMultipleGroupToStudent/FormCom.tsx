@@ -293,7 +293,12 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                         <div className='flex-1 flex flex-row gap-2'>
                             {form.getValues().group_type === 'Special' && (
                                 <span
-                                    onClick={() => {setStudents(selectedStudents);setSelectedStudents(selectedStudents.filter((s:any) => s?.student?.is_new));}}
+                                    onClick={() => {
+                                        setStudents(selectedStudents);
+                                        setSelectedStudents(selectedStudents.filter((s:any) =>
+                                            s?.affiliated_heads?.group_name?.split('(')[1]?.split(')')[0] === form.getValues().fees_group
+                                        ));
+                                    }}
                                     className='flex items-center justify-center h-8 min-w-[120px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
                                 >

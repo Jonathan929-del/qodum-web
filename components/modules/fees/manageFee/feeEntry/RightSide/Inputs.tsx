@@ -19,7 +19,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, allInstallments, allPaymentsCount}:any) => {
+const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, allInstallments, allPayments}:any) => {
 
 
     // Date states
@@ -175,7 +175,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                     <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
                                     <FormControl>
                                         <Input
-                                            value={allPaymentsCount}
+                                            value={allPayments.length + 1}
                                             readOnly
                                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                                         />

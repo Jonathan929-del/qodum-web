@@ -98,6 +98,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     const [classSections, setClassSections] = useState<any>([]);
 
 
+    // Selectted class
+    const [selectedClass, setSelectedClass] = useState('');
+
+
+    // Selectted section
+    const [selectedSection, setSelectedSection] = useState('');
+
+
     // Handle Search Click
     const searchClick = async () => {
         setIsLoading(true);
@@ -1375,7 +1383,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:'', section_name:''});
+                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:selectedClass, section_name:selectedSection});
                 setSearchStudents(res);
                 setIsLoadingSearchedStudents(false);
             };
@@ -1408,7 +1416,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                             <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
                                 <FormControl>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(v:any) => setSelectedClass(v)}
+                                    >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Select Class' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
@@ -1434,7 +1444,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                             <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
                                 <FormControl>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(v:any) => setSelectedSection(v)}
+                                    >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Select Section' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />

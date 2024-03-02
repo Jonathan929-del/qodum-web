@@ -41,7 +41,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
     // ALl payments
-    const [allPaymentsCount, setAllPaymentsCount] = useState<any>();
+    const [allPayments, setAllPayments] = useState<any>([]);
 
 
     // Form
@@ -175,7 +175,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         await createPayment({
             // Others
             student:selectedStudent.name,
-            receipt_no:allPaymentsCount,
+            receipt_no:allPayments.length + 1,
             installments:selectedInstallments,
             received_date:values.received_date,
             remarks:values.remarks,
@@ -287,7 +287,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     useEffect(() => {
         const fetcher = async () => {
             const res = await fetchPayments();
-            setAllPaymentsCount(res.length + 1);
+            setAllPayments(res);
         };
         fetcher();
     }, []);
@@ -336,7 +336,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setConcessionReason={setConcessionReason}
                             showButtonClick={showButtonClick}
                             allInstallments={allInstallments}
-                            allPaymentsCount={allPaymentsCount}
+                            allPayments={allPayments}
                         />
                     </div>
                 </form>
