@@ -1375,7 +1375,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search});
+                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:'', section_name:''});
                 setSearchStudents(res);
                 setIsLoadingSearchedStudents(false);
             };
