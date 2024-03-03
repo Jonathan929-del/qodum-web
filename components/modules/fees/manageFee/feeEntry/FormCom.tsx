@@ -311,9 +311,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             }else if(res.length >= 999999){
                 substringValue = 6;
             }
-            const prefix = localStorage.getItem('receipt_prefix');
-            const leadZero = localStorage.getItem('receipt_lead_zero');
-            const suffix = localStorage.getItem('receipt_suffix');
+            const prefix = localStorage.getItem('receipt_prefix') ? localStorage.getItem('receipt_prefix') : '';
+            const leadZero = localStorage.getItem('receipt_lead_zero') ? localStorage.getItem('receipt_lead_zero') : '';
+            const suffix = localStorage.getItem('receipt_suffix') ? localStorage.getItem('receipt_suffix') : '';
             setPaymentReceiptNo(`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`);
         };
         fetcher();
