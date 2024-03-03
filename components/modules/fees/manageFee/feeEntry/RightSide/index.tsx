@@ -10,7 +10,7 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo}:any) => {
 
 
     // Total paid amount
@@ -39,6 +39,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
 
 
 
+
                 {/* Inputs */}
                 <Inputs
                     form={form}
@@ -51,8 +52,8 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setddDetails={setddDetails}
                     neftDetails={neftDetails}
                     setNeftDetails={setNeftDetails}
-                    allPayments={allPayments}
                     allInstallments={allInstallments}
+                    paymentsReceiptNo={paymentsReceiptNo}
                 />
 
 
@@ -90,6 +91,8 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 setConcessionReason={setConcessionReason}
                 totalPaidAmount={totalPaidAmount}
                 setTotalPaidAmount={setTotalPaidAmount}
+                isLoadingHeads={isLoadingHeads}
+                installments={installments}
             />
         </div>
     );

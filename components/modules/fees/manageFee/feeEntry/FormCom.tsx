@@ -1,10 +1,10 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useEffect, useState} from 'react';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 import {useForm} from 'react-hook-form';
+import {useEffect, useState} from 'react';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -17,7 +17,7 @@ import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/a
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, showButtonClick, heads, setHeads, totalNumberGenerator, allInstallments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, showButtonClick, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads}: any) => {
 
 
     // Toast
@@ -42,6 +42,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
     // ALl payments
     const [allPayments, setAllPayments] = useState<any>([]);
+
+
+    // Payment receipt mo.
+    const [paymentsReceiptNo, setPaymentReceiptNo] = useState('');
 
 
     // Form
@@ -175,7 +179,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         await createPayment({
             // Others
             student:selectedStudent.name,
-            receipt_no:allPayments.length + 1,
+            receipt_no:paymentsReceiptNo,
             installments:selectedInstallments,
             received_date:values.received_date,
             remarks:values.remarks,
@@ -235,6 +239,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         setInstallments([]);
         setSelectedInstallments([]);
         setConcessionReason('');
+        setPaymentReceiptNo('');
 
 
         // Fetching student again
@@ -288,6 +293,28 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         const fetcher = async () => {
             const res = await fetchPayments();
             setAllPayments(res);
+
+            // Receipt no creation
+            let substringValue;
+            if(res.length < 9){
+                substringValue = 0;
+            }else if(res.length >= 9){
+                substringValue = 1;
+            }else if(res.length >= 99){
+                substringValue = 2;
+            }else if(res.length >= 999){
+                substringValue = 3;
+            }else if(res.length >= 9999){
+                substringValue = 4;
+            }else if(res.length >= 99999){
+                substringValue = 5;
+            }else if(res.length >= 999999){
+                substringValue = 6;
+            }
+            const prefix = localStorage.getItem('receipt_prefix');
+            const leadZero = localStorage.getItem('receipt_lead_zero');
+            const suffix = localStorage.getItem('receipt_suffix');
+            setPaymentReceiptNo(`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`);
         };
         fetcher();
     }, []);
@@ -337,6 +364,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             showButtonClick={showButtonClick}
                             allInstallments={allInstallments}
                             allPayments={allPayments}
+                            isLoadingHeads={isLoadingHeads}
+                            paymentsReceiptNo={paymentsReceiptNo}
                         />
                     </div>
                 </form>

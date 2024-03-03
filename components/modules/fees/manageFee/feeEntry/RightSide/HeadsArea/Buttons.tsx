@@ -2,6 +2,7 @@
 import {useEffect} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
+import {useToast} from '@/components/ui/use-toast';
 import {FormControl, FormItem, FormLabel, FormField, FormMessage} from '@/components/ui/form';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
 
@@ -10,30 +11,57 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, installments, setHeads}:any) => {
+
+
+    // Toast
+    const {toast} = useToast();
 
 
     // Total paid handler
     const totalPaidHandler = (e:any) => {
-        setTotalPaidAmount(e.target.value)
+
+
+        // Less than zero validation
+        if(Number(e.target.value) < 0){
+            toast({title:'Please enter a number greater than zero ', variant:'alert'});
+            heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
+            const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
+            setTotalPaidAmount(totalNumber);
+            return;
+        };
+
+
+        // Amount Handling
+        setTotalPaidAmount(e.target.value);
         const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
+        // const totalNumberOfAllHeads
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
+            // Number greater than total amount
             if(inputValue >= totalNumber){
-                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
-            }else{
 
-                // const amountsValues = heads.map((h:any) => {
-                //     let array;
-                //     array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
-                //     if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){
-                //         const singleAmount = h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && h.amounts.length === 1).map((a:any) => Number(a.value) - Number(a.conc_amount));
-                //         array = singleAmount.map((a:any) => a[0][0]);
+                // // Getting next installment heads
+                // const availableAmount = inputValue - totalNumber;
+                // const nextInstallmentHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
+                //     if(h.amounts.length === 1){
+                //         return selectedInstallments.includes(h.installment);
                 //     }else{
-                //         array = h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - Number(a.conc_amount));
-                //     }
-                //     return array;
+                //         const amounts = h.amounts;
+                //         return h.installment === 'All installments' && amounts.filter((a:any) => [...selectedInstallments, installments[selectedInstallments.length + 1]].includes(a.name)).length > 0;
+                //     };
                 // });
+
+                // setHeads([...heads, ...nextInstallmentHeads]);
+                // // setSelectedInstallments([...selectedInstallments, installments[selectedInstallments.length]]);
+                // console.log('Next installment heads: ', nextInstallmentHeads);
+
+
+                // Setting all heads to paid
+                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
+            }
+            // Number smaller than total amount
+            else{
                 const amountsValues = heads.map((h:any) => {
                     let array;
                     if(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 1){

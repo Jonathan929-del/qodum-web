@@ -6,18 +6,12 @@ import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {Button} from '@/components/ui/button';
-import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {ChevronDown, ChevronsUpDown} from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {Form, FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
+import {fetchSchoolsNames} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 import {FeeEntrySettingValidation} from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
-import {fetchClass, modifyClassSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {RelateClassValidation} from '@/lib/validations/fees/globalMasters/defineClassDetails/relateClass.validation';
-import { fetchSchoolsNames } from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 
 
 
@@ -76,8 +70,12 @@ const FormCom = () => {
     const onSubmit = async (values:z.infer<typeof FeeEntrySettingValidation>) => {
         try {
 
+            // Values
+            localStorage.setItem('receipt_prefix', values.single_prefix);
+            localStorage.setItem('receipt_lead_zero', values.single_lead_zero);
+            localStorage.setItem('receipt_suffix', values.single_suffix);
 
-
+            // Toast
             toast({title:'Updated Successfully'});
 
             // Reseting form

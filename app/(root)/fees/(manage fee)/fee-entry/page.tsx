@@ -26,6 +26,10 @@ const page = () => {
     const [isLoading, setIsLoading] = useState(false);
 
 
+    // Is loading heads
+    const [isLoadingHeads, setIsLoadingHeads] = useState(false);
+
+
     // Installments
     const [installments, setInstallments] = useState([]);
     
@@ -87,14 +91,47 @@ const page = () => {
 
     // Show button click
     const showButtonClick = async () => {
+        setIsLoadingHeads(true);
         const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
         setSelectedStudent({
-            ...selectedStudent,
+            id:student._id,
+            image:student.student.image,
+            name:student.student.name,
+            address:student.student.h_no_and_streets,
+            father_name:student.parents.father.father_name,
+            mother_name:student.parents.mother.mother_name,
+            contact_no:student.student.contact_person_mobile,
+            admission_no:student.student.adm_no,
+            bill_no:student.student.bill_no,
+            class:student.student.class,
             affiliated_heads:{
-                group_name:selectedStudent.affiliated_heads.group_name,
-                heads:student.affiliated_heads.heads
+                group_name:student.affiliated_heads.group_name,
+                heads:student.affiliated_heads.heads.map((h:any) => {
+                    return {
+                        ...h,
+                        amounts:h.amounts.map((a:any) => {
+                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
+                            return {
+                                name:a.name,
+                                value:Number(a.value),
+                                conc_amount:conc_amount,
+                                last_rec_amount:last_rec_amount,
+                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
+                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                            };
+                        })
+                    };
+                })
             }
         });
+        const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+        setInstallments(sortedInstallments);
+        setSelectedInstallments([sortedInstallments[0]]);
+        setIsViewOpened(false);
+        setIsLoadingHeads(false);
     };
 
 
@@ -153,6 +190,7 @@ const page = () => {
                     setHeads={setHeads}
                     totalNumberGenerator={totalNumberGenerator}
                     allInstallments={allInstallments}
+                    isLoadingHeads={isLoadingHeads}
                 />
             )}
         </div>

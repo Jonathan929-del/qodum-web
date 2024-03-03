@@ -1,4 +1,16 @@
 // Imports
+import AccountsImage from '@/public/assets/Modules Icons/Accounts.png';
+import FessImage from '@/public/assets/Modules Icons/Fees.png';
+import AdmissionImage from '@/public/assets/Modules Icons/Admission.png';
+import PayrollImage from '@/public/assets/Modules Icons/Payroll.png';
+import StocksImage from '@/public/assets/Modules Icons/Stocks.png';
+import UsersImage from '@/public/assets/Modules Icons/Users.png';
+import AttendenceImage from '@/public/assets/Modules Icons/Attendance.png';
+import TimetableImage from '@/public/assets/Modules Icons/Time-Table.png';
+
+import ReportCardImage from '@/public/assets/Modules Icons/Time-Table.png';
+import LibraryImage from '@/public/assets/Modules Icons/Time-Table.png';
+import CBSEImage from '@/public/assets/Modules Icons/Time-Table.png';
 import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar, Flag, LibraryBig} from 'lucide-react';
 
 
@@ -10,7 +22,8 @@ const modules = [
     // Accounts
     {
         moduleName:'Accounts',
-        icon:FileStack,
+        // icon:FileStack,
+        icon:AccountsImage,
         pages:[
             // Global Masters
             {
@@ -186,7 +199,8 @@ const modules = [
     // Fees
     {
         moduleName:'Fees',
-        icon:CircleDollarSignIcon,
+        // icon:CircleDollarSignIcon,
+        icon:FessImage,
         pages:[
             // Global Masters
             {
@@ -626,7 +640,8 @@ const modules = [
     // Admission
     {
         moduleName:'Admission',
-        icon:GraduationCap,
+        // icon:GraduationCap,
+        icon:AdmissionImage,
         pages:[
             // Global Master
             {
@@ -863,7 +878,8 @@ const modules = [
     // Payroll
     {
         moduleName:'Payroll',
-        icon:Wallet,
+        // icon:Wallet,
+        icon:PayrollImage,
         pages:[
             // Global Masters
             {
@@ -1179,7 +1195,8 @@ const modules = [
     // Stocks
     {
         moduleName:'Stocks',
-        icon:Box,
+        // icon:Box,
+        icon:StocksImage,
         pages:[
             // Global Masters
             {
@@ -1343,7 +1360,8 @@ const modules = [
     // Users
     {
         moduleName:'Users',
-        icon:Users,
+        // icon:Users,
+        icon:UsersImage,
         pages:[
             // Global Master
             {
@@ -1404,7 +1422,8 @@ const modules = [
     // Attendance
     {
         moduleName:'Attendance',
-        icon:Megaphone,
+        // icon:Megaphone,
+        icon:AttendenceImage,
         pages:[
             // Global Masters
             {
@@ -1552,7 +1571,8 @@ const modules = [
     // Time Table
     {
         moduleName:'Time Table',
-        icon:Calendar,
+        icon:TimetableImage,
+        // icon:Calendar,
         pages:[
             // Global Masters
             {
@@ -1757,17 +1777,20 @@ const modules = [
     },
     {
         moduleName:'Report Card',
-        icon:Flag,
+        // icon:Flag,
+        // icon:TimetableImage,
         pages:[]
     },
     {
         moduleName:'Library',
-        icon:LibraryBig,
+        // icon:LibraryBig,
+        // icon:TimetableImage,
         pages:[]
     },
     {
         moduleName:'CBSE/DIOS',
-        icon:Flag,
+        // icon:Flag,
+        // icon:TimetableImage,
         pages:[]
     },
 ];

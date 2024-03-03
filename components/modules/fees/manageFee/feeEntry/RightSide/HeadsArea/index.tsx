@@ -8,7 +8,7 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount}:any) => {
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, installments}:any) => {
 
 
     // Is concession
@@ -28,6 +28,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                     setHeads={setHeads}
                     totalNumberGenerator={totalNumberGenerator}
                     setIsConcession={setIsConcession}
+                    isLoadingHeads={isLoadingHeads}
                     
                 />
             )}
@@ -45,6 +46,8 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 setConcessionReason={setConcessionReason}
                 isConcession={isConcession}
                 setIsConcession={setIsConcession}
+                installments={installments}
+                setHeads={setHeads}
             />
         </div>
     );
