@@ -41,7 +41,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             if(inputValue >= totalNumber){
 
                 // Setting all heads to paid
-                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
+                heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - ((Number(a.conc_amount) + Number(a.last_rec_amount)))));
             }
             // Number smaller than total amount
             else{
