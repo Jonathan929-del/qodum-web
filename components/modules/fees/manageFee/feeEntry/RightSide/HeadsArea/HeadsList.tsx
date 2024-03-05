@@ -357,12 +357,14 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
     }, [heads]);
 
 
-    return isLoadingHeads ? (
+    return selectedStudent.affiliated_heads?.heads?.length === 0 ? (
+        <div className='h-full w-full flex items-center justify-center'/>
+    ) : isLoadingHeads ? (
         <div className='h-full w-full flex items-center justify-center'>
             <LoadingIcon />
         </div>
     ) : (
-        <div className='w-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px] border-[0.5px] border-[#ccc]'>
+        <div className='w-full h-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px] border-[0.5px] border-[#ccc]'>
             <div className='w-full min-w-[750px] flex flex-col'>
                 {selectedInstallments.length === 1 ? (
                     <>

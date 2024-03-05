@@ -69,6 +69,7 @@ export const fetchClasses = async () => {
 
 
 
+
 // Modify Class Props
 interface ModifyClassProps{
     id:String;

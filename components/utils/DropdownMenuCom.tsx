@@ -1,10 +1,9 @@
 // Imports
 import Link from 'next/link';
+import Image from 'next/image';
 import {Menu} from 'lucide-react';
-import {createElement} from 'react';
 import modules from '@/constants/modules';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
-import Image from 'next/image';
 
 
 
@@ -20,7 +19,7 @@ const DropdownMenuCom = () => {
                 />
             </DropdownMenuTrigger>
             <DropdownMenuContent
-                className='bg-white rounded-[8px]'
+                className='bg-white rounded-[8px] w-[200px]'
             >
                 {modules.map(module => (
                     <Link

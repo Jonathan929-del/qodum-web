@@ -253,7 +253,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
 
 
     return (
-        <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] max-h-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] overflow-y-scroll custom-sidebar-scrollbar'>
             <h2 className='w-full text-center py-2 text-xs rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Fee Installment</h2>
             <Form
                 {...form}
@@ -560,7 +560,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                                         {months.map((month:any) => (
                                             <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
                                                 <Checkbox
-                                                    className='rounded-[2px] font-semibold'
+                                                    className='rounded-[2px] text-hash-color font-semibold'
                                                     checked={selectedMonths?.map((m:any) => m).includes(month)}
                                                     // @ts-ignore
                                                     onClick={() => selectedMonths?.includes(month) ? setSelectedMonths(selectedMonths?.filter((m:any) => m !== month)) : setSelectedMonths([...selectedMonths, month])}

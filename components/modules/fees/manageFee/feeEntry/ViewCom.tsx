@@ -49,9 +49,12 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
                 })
             }
         });
-        const installments = student?.affiliated_heads?.heads?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-        const filteredInstallments = installments.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-        const sortedInstallments = allInstallments.filter((i:any) => filteredInstallments.includes(i.name)).map((i:any) => i.name);
+        const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1).length > 0
+            ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1)?.map((h:any) => h.amounts.map((a:any) => a.name).concat(singleInstallments))[0]
+            : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
         setInstallments(sortedInstallments);
         setSelectedInstallments([sortedInstallments[0]]);
         setIsViewOpened(false);

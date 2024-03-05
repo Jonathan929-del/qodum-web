@@ -35,7 +35,7 @@ function FormCom() {
 
 
     // Students
-    const [students, setStudents] = useState([{}]);
+    const [students, setStudents] = useState<any>([]);
 
 
     // CLasses
@@ -68,7 +68,18 @@ function FormCom() {
     // Submit handler
     const onSubmit = async (values: z.infer<typeof ManualListGenerationValidation>) => {
         try {
-            const res = await applyStudentForAdmission({reg_nos:selectedStudents});
+
+
+            // No students validation
+            if(selectedStudents.length === 0){
+                toast({title:'Please select students', variant:'alert'});
+                return;
+            };
+
+            // Applying for admission
+            await applyStudentForAdmission({reg_nos:selectedStudents});
+
+            // Reseting
             form.reset({
                 class_name:'',
                 merit_list:'',
@@ -91,7 +102,6 @@ function FormCom() {
     // Get students
     const getStudents = async (class_name:any) => {
         const classStudents = await fetchClassStudents({class_name});
-        console.log(classStudents);
         if(classStudents.length > 0){
             setStudents(classStudents);
             // @ts-ignore
@@ -362,13 +372,14 @@ function FormCom() {
                         </div>
 
 
-                        {/* Update */}
-                        <span
-                            className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                        {/* Buttons */}
+                        <Button
+                            type='submit'
+                            className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                         >
                             Update
-                        </span>
+                        </Button>
                     </div>
 
 
@@ -378,15 +389,6 @@ function FormCom() {
                         setSelectedStudents={setSelectedStudents}
                     />
 
-
-                    {/* Buttons */}
-                    <Button
-                        type='submit'
-                        className='px-8 h-8 mb-4 mt-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
-                    >
-                        Save
-                    </Button>
                 </form>
             </Form>
         </div>

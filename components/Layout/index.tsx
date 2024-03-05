@@ -55,7 +55,7 @@ const index = ({children}:any) => {
         const academicYearsFetcher = async () => {
             const res:any = await fetchAcademicYears();
             setAcademicYears(res);
-            setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0].year_name);
+            setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
         };
         academicYearsFetcher();
     }, []);

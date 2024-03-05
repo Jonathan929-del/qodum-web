@@ -98,7 +98,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
 
 
                 {/* Search input */}
-                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-2 border-[#ccc]'>
+                <div className='w-full flex flex-row justify-end pr-4 py-2 border-b-[0.5px] border-[#ccc]'>
                     <CommandInput
                         placeholder='Search list'
                         className='h-full text-xs text-hash-color w-[250px] bg-white'
@@ -109,32 +109,32 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                 {/* installments */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-2 border-[#ccc]'>
+                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[14%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[14%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Installment Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Print Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Pref. No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Due Date
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-2 border-[#ccc]'>
+                        <li className='basis-[22%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Due On Date
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -147,7 +147,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                     <CommandList>
                         {
                             installments.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
+                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No installments yet
                                 </p>
                             ) : !installments[0]?.name ? (
@@ -155,23 +155,23 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
                                 ) : installments.map((installment:any) => (
                                     <CommandItem
                                         value={`${installments.indexOf(installment) + 1} ${installment.name} ${installment.print_name} ${installment.preference_no} ${installment?.due_date?.day}-${monthConverter(installment?.due_date?.month)}-${installment?.due_date?.year} ${installment?.due_on_date?.day}-${monthConverter(installment?.due_on_date?.month)}-${installment?.due_on_date?.year} ${moment(installment.updateAt).format('D-MMM-yy')}`}
-                                        className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
+                                        className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[10%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installments.indexOf(installment) + 1}</li>
-                                        <li className='basis-[14%] flex flex-row items-center justify-center px-2 border-r-2 border-[#ccc]'>
+                                        <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installments.indexOf(installment) + 1}</li>
+                                        <li className='basis-[14%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
-                                                className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
+                                                className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
                                                 onClick={() => selectHandler(installment)}
                                             >
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.name}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.print_name}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment.preference_no}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment?.due_date?.day}-{monthConverter(installment?.due_date?.month)}-{installment?.due_date?.year}</li>
-                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-2 border-[#ccc]'>{installment?.due_on_date?.day}-{monthConverter(installment?.due_on_date?.month)}-{installment?.due_on_date?.year}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installment.name}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installment.print_name}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installment.preference_no}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installment?.due_date?.day}-{monthConverter(installment?.due_date?.month)}-{installment?.due_date?.year}</li>
+                                        <li className='basis-[22%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{installment?.due_on_date?.day}-{monthConverter(installment?.due_on_date?.month)}-{installment?.due_on_date?.year}</li>
                                         <li className='basis-[22%] flex flex-row items-center px-2'>{moment(installment.updateAt).format('D-MMM-yy')}</li>
                                     </CommandItem>
                                 ))

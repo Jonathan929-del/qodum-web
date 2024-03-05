@@ -1,5 +1,15 @@
 // Imports
-import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar, Flag, LibraryBig} from 'lucide-react';
+import AccountsImage from '@/public/assets/Modules Icons/Accounts.png';
+import FessImage from '@/public/assets/Modules Icons/Fees.png';
+import AdmissionImage from '@/public/assets/Modules Icons/Admission.png';
+import PayrollImage from '@/public/assets/Modules Icons/Payroll.png';
+import StocksImage from '@/public/assets/Modules Icons/Stocks.png';
+import UsersImage from '@/public/assets/Modules Icons/Users.png';
+import AttendenceImage from '@/public/assets/Modules Icons/Attendance.png';
+import TimetableImage from '@/public/assets/Modules Icons/Users.png';
+import ExamanationImage from '@/public/assets/Modules Icons/Examination.png';
+import LibraryImage from '@/public/assets/Modules Icons/LIBRARY.png';
+import CBSEImage from '@/public/assets/Modules Icons/CBSE DIOS.png';
 
 
 
@@ -8,9 +18,8 @@ import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Mega
 // Modules
 const modules:any = [
     {
-        icon:CircleDollarSignIcon,
+        icon:FessImage,
         title:'Fees',
-        numberOfSections:7,
         sections:[
             'Fee Entry',
             'Student Fee Entry',
@@ -19,9 +28,8 @@ const modules:any = [
         ]
     },
     {
-        icon:Wallet,
+        icon:PayrollImage,
         title:'Payroll',
-        numberOfSections:7,
         sections:[
             'Define Staff',
             'Salary Sheets',
@@ -30,9 +38,8 @@ const modules:any = [
         ]
     },
     {
-        icon:Box,
+        icon:StocksImage,
         title:'Stocks',
-        numberOfSections:4,
         sections:[
             'Define Items',
             'Stock Issues',
@@ -41,9 +48,8 @@ const modules:any = [
         ]
     },
     {
-        icon:GraduationCap,
+        icon:AdmissionImage,
         title:'Admission',
-        numberOfSections:5,
         sections:[
             'TC Form',
             'Student Details',
@@ -52,9 +58,8 @@ const modules:any = [
         ]
     },
     {
-        icon:FileStack,
+        icon:AccountsImage,
         title:'Accounts',
-        numberOfSections:4,
         sections:[
             'Cheque Printing',
             'Session Transfer',
@@ -63,9 +68,8 @@ const modules:any = [
         ]
     },
     {
-        icon:Users,
+        icon:UsersImage,
         title:'Users',
-        numberOfSections:4,
         sections:[
             'User Role',
             'Create User',
@@ -74,9 +78,8 @@ const modules:any = [
         ]
     },
     {
-        icon:Megaphone,
+        icon:AttendenceImage,
         title:'Attendance',
-        numberOfSections:4,
         sections:[
             'Define Holiday',
             'Attendance Report',
@@ -85,8 +88,18 @@ const modules:any = [
         ]
     },
     {
-        icon:Calendar,
+        icon:TimetableImage,
         title:'Timetable',
+        sections:[
+            'Teacher Setting',
+            'Define Resource',
+            'Auto Generate Timetable',
+            'Class Timetable Details',
+        ]
+    },
+    {
+        icon:ExamanationImage,
+        title:'Examination',
         numberOfSections:7,
         sections:[
             'Teacher Setting',
@@ -96,18 +109,7 @@ const modules:any = [
         ]
     },
     {
-        icon:Flag,
-        title:'Report Card',
-        numberOfSections:7,
-        sections:[
-            'Teacher Setting',
-            'Define Resource',
-            'Auto Generate Timetable',
-            'Class Timetable Details',
-        ]
-    },
-    {
-        icon:LibraryBig,
+        icon:LibraryImage,
         title:'Library',
         numberOfSections:7,
         sections:[
@@ -118,7 +120,7 @@ const modules:any = [
         ]
     },
     {
-        icon:Flag,
+        icon:CBSEImage,
         title:'CBSE/DIOS',
         numberOfSections:7,
         sections:[

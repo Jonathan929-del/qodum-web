@@ -16,22 +16,20 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
 
 
     return (
-        <div className='flex flex-col gap-2'>
-            {selectedStudent.affiliated_heads?.heads?.length > 0 && (
-                <HeadsList
-                    selectedStudent={selectedStudent}
-                    selectedInstallments={selectedInstallments}
-                    setTotalPaidAmount={setTotalPaidAmount}
-                    totalPaidAmount={totalPaidAmount}
-                    form={form}
-                    heads={heads}
-                    setHeads={setHeads}
-                    totalNumberGenerator={totalNumberGenerator}
-                    setIsConcession={setIsConcession}
-                    isLoadingHeads={isLoadingHeads}
-                    
-                />
-            )}
+        <div className='h-full flex flex-col gap-2'>
+            <HeadsList
+                selectedStudent={selectedStudent}
+                selectedInstallments={selectedInstallments}
+                setTotalPaidAmount={setTotalPaidAmount}
+                totalPaidAmount={totalPaidAmount}
+                form={form}
+                heads={heads}
+                setHeads={setHeads}
+                totalNumberGenerator={totalNumberGenerator}
+                setIsConcession={setIsConcession}
+                isLoadingHeads={isLoadingHeads}
+                
+            />
             <Buttons
                 form={form}
                 onSubmit={onSubmit}

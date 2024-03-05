@@ -6,12 +6,10 @@ import PayrollImage from '@/public/assets/Modules Icons/Payroll.png';
 import StocksImage from '@/public/assets/Modules Icons/Stocks.png';
 import UsersImage from '@/public/assets/Modules Icons/Users.png';
 import AttendenceImage from '@/public/assets/Modules Icons/Attendance.png';
-import TimetableImage from '@/public/assets/Modules Icons/Time-Table.png';
-
-import ReportCardImage from '@/public/assets/Modules Icons/Time-Table.png';
-import LibraryImage from '@/public/assets/Modules Icons/Time-Table.png';
-import CBSEImage from '@/public/assets/Modules Icons/Time-Table.png';
-import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar, Flag, LibraryBig} from 'lucide-react';
+import TimetableImage from '@/public/assets/Modules Icons/Users.png';
+import ExamanationImage from '@/public/assets/Modules Icons/Examination.png';
+import LibraryImage from '@/public/assets/Modules Icons/LIBRARY.png';
+import CBSEImage from '@/public/assets/Modules Icons/CBSE DIOS.png';
 
 
 
@@ -1777,20 +1775,17 @@ const modules = [
     },
     {
         moduleName:'Report Card',
-        // icon:Flag,
-        // icon:TimetableImage,
+        icon:ExamanationImage,
         pages:[]
     },
     {
         moduleName:'Library',
-        // icon:LibraryBig,
-        // icon:TimetableImage,
+        icon:LibraryImage,
         pages:[]
     },
     {
         moduleName:'CBSE/DIOS',
-        // icon:Flag,
-        // icon:TimetableImage,
+        icon:CBSEImage,
         pages:[]
     },
 ];

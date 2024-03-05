@@ -34,6 +34,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     const [isLoading, setIsLoading] = useState(false);
 
 
+    // Selected tab
+    const [selectedTab, setSelectedTab] = useState('student');
+
+
     // File
     const [file, setFile] = useState(null);
 
@@ -1482,15 +1486,47 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         {/* Tabs */}
                         <Tabs
                             defaultValue='student'
-                            className='w-full h-[85%] pr-2 pl-2 border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
+                            className='w-full h-[85%] border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                         >
-                            <TabsList className='pl-10'>
-                                <TabsTrigger value='student'>Student</TabsTrigger>
-                                <TabsTrigger value='parent'>Parent</TabsTrigger>
-                                <TabsTrigger value='other'>Other</TabsTrigger>
-                                <TabsTrigger value='guardian'>Guardian</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value='student' className='w-full'>
+                            <div className='flex justify-center w-full p-[2px]'>
+                                <TabsList className='bg-[#F3F3F3] rounded-full'>
+                                    <TabsTrigger
+                                        value='student'
+                                        onClick={() => setSelectedTab('student')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Student
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value='parent'
+                                        onClick={() => setSelectedTab('parent')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Parent
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value='other'
+                                        onClick={() => setSelectedTab('other')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Other
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value='guardian'
+                                        onClick={() => setSelectedTab('guardian')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Guardian
+                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                    </TabsTrigger>
+                                </TabsList>
+                            </div>
+
+
+                            <TabsContent value='student' className='w-full px-2'>
                                 <Student
                                     form={form}
                                     setFile={setFile}
