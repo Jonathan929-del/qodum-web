@@ -151,6 +151,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         .filter((h:any) => h.amounts.length !== 0)
         };
 
+        console.log(values.advance_amt);
+
     
         // Updating student
         await ModifyStudentAffiliatedHeads({

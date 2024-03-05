@@ -35,33 +35,10 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         // Amount Handling
         setTotalPaidAmount(e.target.value);
         const totalNumber = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
-        // const totalNumberOfAllHeads
         const inputValue = Number(e.target.value);
         if(e.target.value !== undefined){
             // Number greater than total amount
             if(inputValue >= totalNumber){
-
-
-                // const totalNumberOfAllHeads = totalNumberGenerator(selectedStudent?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
-                // if(inputValue > totalNumberOfAllHeads){
-                //     toast({title:'Maximum reached', variant:'alert'});
-                //     return;
-                // };
-
-                // // Getting next installment heads
-                // const availableAmount = inputValue - totalNumber;
-                // console.log(totalNumberOfAllHeads);
-                // const nextInstallmentHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
-                //     if(h.amounts.length === 1){
-                //         return selectedInstallments.includes(h.installment);
-                //     }else{
-                //         const amounts = h.amounts;
-                //         return h.installment === 'All installments' && amounts.filter((a:any) => [...selectedInstallments, installments[selectedInstallments.length + 1]].includes(a.name)).length > 0;
-                //     };
-                // });
-
-                // setHeads([...heads, ...nextInstallmentHeads]);
-
 
                 // Setting all heads to paid
                 heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount) - Number(a.last_rec_amount))));
@@ -148,6 +125,8 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
             }
         };
+
+        
     };
 
 
