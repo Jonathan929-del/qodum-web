@@ -42,26 +42,25 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             if(inputValue >= totalNumber){
 
 
-                // Total number validation
-                const totalNumberOfAllHeads = totalNumberGenerator(selectedStudent?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
-                if(inputValue > totalNumberOfAllHeads){
-                    toast({title:'Maximum reached', variant:'alert'});
-                    return;
-                };
+                // const totalNumberOfAllHeads = totalNumberGenerator(selectedStudent?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
+                // if(inputValue > totalNumberOfAllHeads){
+                //     toast({title:'Maximum reached', variant:'alert'});
+                //     return;
+                // };
 
-                // Getting next installment heads
-                const availableAmount = inputValue - totalNumber;
-                console.log(totalNumberOfAllHeads);
-                const nextInstallmentHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
-                    if(h.amounts.length === 1){
-                        return selectedInstallments.includes(h.installment);
-                    }else{
-                        const amounts = h.amounts;
-                        return h.installment === 'All installments' && amounts.filter((a:any) => [...selectedInstallments, installments[selectedInstallments.length + 1]].includes(a.name)).length > 0;
-                    };
-                });
+                // // Getting next installment heads
+                // const availableAmount = inputValue - totalNumber;
+                // console.log(totalNumberOfAllHeads);
+                // const nextInstallmentHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
+                //     if(h.amounts.length === 1){
+                //         return selectedInstallments.includes(h.installment);
+                //     }else{
+                //         const amounts = h.amounts;
+                //         return h.installment === 'All installments' && amounts.filter((a:any) => [...selectedInstallments, installments[selectedInstallments.length + 1]].includes(a.name)).length > 0;
+                //     };
+                // });
 
-                setHeads([...heads, ...nextInstallmentHeads]);
+                // setHeads([...heads, ...nextInstallmentHeads]);
 
 
                 // Setting all heads to paid
