@@ -23,7 +23,7 @@ import {fetchEnquiryByEnquiryNo} from '@/lib/actions/admission/admission/enquiry
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {fetchClasses, fetchClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
