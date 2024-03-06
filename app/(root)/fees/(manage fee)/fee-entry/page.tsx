@@ -5,8 +5,8 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { fetchInstallments } from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchAdmittedStudents, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
 

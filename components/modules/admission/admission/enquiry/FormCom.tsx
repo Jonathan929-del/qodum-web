@@ -27,7 +27,7 @@ import {createEnquiry, deleteEnquiry, modifyEnquiry} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:any) => {
+const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, enquiryNo, setEnquiryNo}:any) => {
 
 
     // Toast
@@ -182,23 +182,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             setClasses(res);
         };
         fetcher();
-        // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
-        if(updateEnquiry.id !== ''){
-            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-        }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
-        };
     }, []);
-    useEffect(() => {
-        // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
-        if(updateEnquiry.id !== ''){
-            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-        }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
-        };
-    }, [enquiries, updateEnquiry]);
 
 
     return (
@@ -231,45 +215,35 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
                     {/* Enquiry No. */}
                     {enquiries.length < 1 ? (
-                        <FormField
-                            control={form.control}
-                            name='enquiry_no'
-                            render={({field}) => (
-                                <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Enquiry No.</FormLabel>
-                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
-                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                        </div>
-                                </FormItem>
-                            )}
-                        />                        
+                        <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                            <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Enquiry No.</FormLabel>
+                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            value={enquiryNo}
+                                            onChange={(e:any) => setEnquiryNo(e.target.value)}
+                                            disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
+                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                </div>
+                        </FormItem>                     
                     ) : enquiries[0]?.enquiry_no ? (
-                        <FormField
-                            control={form.control}
-                            name='enquiry_no'
-                            render={({field}) => (
-                                <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Enquiry No.</FormLabel>
-                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
-                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                />
-                                            </FormControl>
-                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                        </div>
-                                </FormItem>
-                            )}
-                        />
+                        <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                            <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Enquiry No.</FormLabel>
+                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            value={enquiryNo}
+                                            onChange={(e:any) => setEnquiryNo(e.target.value)}
+                                            disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
+                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                </div>
+                        </FormItem>
                     ) : (
                         <LoadingIcon />
                     )}

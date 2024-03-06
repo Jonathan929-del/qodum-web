@@ -249,7 +249,7 @@ const page = () => {
             const studentsRes = await fetchStudents();
             const enquiriesRes = await fetchAdmissionEnquiries();
             setStudents(studentsRes);
-            setAdmissionEnquiries(enquiriesRes);
+            setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
         };
         accountGroupsFetcher();
     }, [isViewOpened, updateStudent]);

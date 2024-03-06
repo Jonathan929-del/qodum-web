@@ -38,12 +38,23 @@ const page = () => {
         reference_details:''
     });
 
+
+    // Enquiry no
+    const [enquiryNo, setEnquiryNo] = useState<any>();
+
     
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
             const res = await fetchEnquiries();
             setEnquiries(res);
+            // @ts-ignore
+            const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero').substring(0, localStorage.getItem('lead_zero').length - 1)}${res.length + 1}${localStorage.getItem('suffix')}`;
+            if(updateEnquiry.id !== ''){
+                setEnquiryNo(updateEnquiry.enquiry_no);
+            }else{
+                setEnquiryNo(localStorage.getItem('setting_type') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            };
         };
         fetcher();
     }, [isViewOpened, updateEnquiry]);
@@ -65,6 +76,8 @@ const page = () => {
                         enquiries={enquiries}
                         updateEnquiry={updateEnquiry}
                         setUpdateEnquiry={setUpdateEnquiry}
+                        enquiryNo={enquiryNo}
+                        setEnquiryNo={setEnquiryNo}
                     />
                 )
             }

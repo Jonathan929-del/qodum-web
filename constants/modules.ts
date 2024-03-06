@@ -6,10 +6,11 @@ import PayrollImage from '@/public/assets/Modules Icons/Payroll.png';
 import StocksImage from '@/public/assets/Modules Icons/Stocks.png';
 import UsersImage from '@/public/assets/Modules Icons/Users.png';
 import AttendenceImage from '@/public/assets/Modules Icons/Attendance.png';
-import TimetableImage from '@/public/assets/Modules Icons/Users.png';
+import TimetableImage from '@/public/assets/Modules Icons/Time Table.png';
 import ExamanationImage from '@/public/assets/Modules Icons/Examination.png';
 import LibraryImage from '@/public/assets/Modules Icons/Library.png';
 import CBSEImage from '@/public/assets/Modules Icons/CBSE DIOS.png';
+import MarksImage from '@/public/assets/Modules Icons/Marks.png';
 
 
 
@@ -1786,6 +1787,11 @@ const modules = [
     {
         moduleName:'CBSE/DIOS',
         icon:CBSEImage,
+        pages:[]
+    },
+    {
+        moduleName:'Marks',
+        icon:MarksImage,
         pages:[]
     },
 ];

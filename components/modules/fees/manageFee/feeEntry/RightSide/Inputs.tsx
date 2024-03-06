@@ -10,7 +10,9 @@ import {Checkbox} from '@/components/ui/checkbox';
 import ChequeDetails from '../Others/ChequeDetails';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {CalendarIcon, Check, ChevronDown, X} from 'lucide-react';
+import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
@@ -27,7 +29,15 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
 
     // Pay modes
-    const [payModes, setPayModes] = useState(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
+    const [payModes, setPayModes] = useState(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
+
+
+    // Bank ledgers
+    const [bankLedgers, setBankLedgers] = useState<any>([]);
+
+
+    // Fee types
+    const [feeTypes, setFeeTypes] = useState<any>([]);
 
 
     // Use effects
@@ -35,22 +45,31 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
         switch (form.getValues().entry_mode) {
             case 'School':
                 form.setValue('pay_mode', 'Cash');
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
                 break;
             case 'Bank':
                 form.setValue('pay_mode', 'Cash');
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
                 break;
             case 'Online':
                 form.setValue('pay_mode', 'Net Banking');
-                setPayModes(['Net Banking', 'Debit Card', 'Credit Card']);
+                setPayModes(['Payment Gateway', 'Net Banking', 'Debit Card', 'Credit Card']);
                 break;
             default:
                 break;
-                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI', 'Payment Gateway']);
+                setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
         };
     }, [form.watch('entry_mode'), form.getValues().entry_mode]);
     useEffect(() => {}, [form.watch('pay_mode')]);
+    useEffect(() => {
+        const fetcher = async () => {
+            const bankLedgersRes = await fetchBankLedgers();
+            const feeTypesRes = await fetchTypes();
+            setBankLedgers(bankLedgersRes);
+            setFeeTypes(feeTypesRes);
+        };
+        fetcher();
+    }, []);
 
 
     return (
@@ -153,12 +172,18 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value='All Fee Types'>All Fee Types</SelectItem>
+                                            {feeTypes.length === 0 ? (
+                                                <p className='text-xs text-hash-color'>No fee types</p>
+                                            ) : !feeTypes[0].name ? (
+                                                <LoadingIcon />
+                                            ) : feeTypes.map((t:any) => (
+                                                <SelectItem value={t.name} key={t._id}>{t.name}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -198,12 +223,18 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         value={field.value}
                                         onValueChange={field.onChange}
                                     >
-                                        <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value='All Fee Types'>All Fee Types</SelectItem>
+                                            {bankLedgers.length === 0 ? (
+                                                <p className='text-xs text-hash-color'>No bank ledgers</p>
+                                            ) : !bankLedgers[0].account_name ? (
+                                                <LoadingIcon />
+                                            ) : bankLedgers.map((t:any) => (
+                                                <SelectItem value={t.account_name} key={t._id}>{t.account_name}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>

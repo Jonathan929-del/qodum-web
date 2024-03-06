@@ -152,6 +152,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         };
 
         console.log(values.advance_amt);
+        console.log(unChangedHeads);
 
     
         // Updating student
