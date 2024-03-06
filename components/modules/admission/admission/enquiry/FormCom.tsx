@@ -91,7 +91,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, e
                 return;
             };
             await createEnquiry({
-                enquiry_no:values.enquiry_no,
+                enquiry_no:enquiryNo,
                 enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
