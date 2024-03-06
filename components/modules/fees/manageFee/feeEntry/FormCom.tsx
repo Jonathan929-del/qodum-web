@@ -194,6 +194,12 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             paid_heads:paidHeads,
             concession_reason:concessionReason
         });
+        let advanceDuesNumber;
+        if(values.dues > 0){
+            advanceDuesNumber = - values.dues;
+        }else if (values.advance_amt > 0){
+            advanceDuesNumber = values.advance_amt;
+        };
         setReceiptPaymentData({
             ...res,
             installments:selectedInstallments,
@@ -202,7 +208,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             board:selectedStudent.board,
             adm_no:selectedStudent.admission_no,
             father_name:selectedStudent.father_name,
-            fee_type:values.fee_type
+            fee_type:values.fee_type,
+            advance_dues_number:advanceDuesNumber
         });
         setIsReceiptOpened(true);
 

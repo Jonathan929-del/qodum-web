@@ -8,7 +8,7 @@ import moment from 'moment';
 
 
 // Pdf file
-const PDF = ({pdfData}:any) => {
+const PDF = ({pdfData, totalNumberGenerator}:any) => {
 
 
     // Font
@@ -22,6 +22,18 @@ const PDF = ({pdfData}:any) => {
             height:'100%'
         }
     });
+
+
+    // Numbers to words
+    const numberToWords = (n:any) => {
+        var num = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
+        var tens = "twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
+        if (n < 20) return num[n];
+        var digit = n%10;
+        if (n < 100) return tens[~~(n/10)-2] + (digit? "-" + num[digit]: "");
+        if (n < 1000) return num[~~(n/100)] +" hundred" + (n%100 == 0? "": " " + numberToWords(n%100));
+        return numberToWords(~~(n/1000)) + " thousand" + (n%1000 != 0? " " + numberToWords(n%1000): "");
+    };
 
 
     return(
@@ -93,7 +105,7 @@ const PDF = ({pdfData}:any) => {
                     {/* Row Five */}
                     <View style={{width:'90%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
-                            <Text>Fatehr Name:</Text>
+                            <Text>Father Name:</Text>
                             <Text style={{marginLeft:4, fontSize:10}}>{pdfData.payment_data.father_name}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
@@ -123,12 +135,22 @@ const PDF = ({pdfData}:any) => {
                         <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>PAID AMOUNT</Text>
                     </View>
                     {/* Values */}
+                    {pdfData.payment_data.paid_heads.map((h:any) => (
+                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:1, borderBottomColor:'#C19859'}}>
+                            <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{h.head_name}</Text>
+                            <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))}</Text>
+                            <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(h.amounts.map((a:any) => Number(a.conc_amount)))}</Text>
+                            <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))}</Text>
+                            <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(h.amounts.map((a:any) => Number(a.paid_amount)))}</Text>
+                        </View>
+                    ))}
+                    {/* Total */}
                     <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff'}}>
-                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>TUITION FEE</Text>
-                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>1000</Text>
-                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>0</Text>
-                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>2</Text>
-                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>1</Text>
+                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>Total</Text>
+                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))}</Text>
+                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.conc_amount)))))}</Text>
+                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))))}</Text>
+                        <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:1, borderRightColor:'#C19859'}}>{totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.paid_amount)))))}</Text>
                     </View>
                 </View>
 
@@ -138,19 +160,19 @@ const PDF = ({pdfData}:any) => {
                         {/* Amount */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Amount (in words): </Text>
-                            <Text>ONE ONLY</Text>
+                            <Text>{numberToWords(totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.paid_amount))))))} ONLY</Text>
                         </View>
                         {/* Total Paid */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2, backgroundColor:'#C19859'}}>
                             <Text>Total Paid: </Text>
-                            <Text>1</Text>
+                            <Text>{totalNumberGenerator(pdfData.payment_data.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.paid_amount)))))}</Text>
                         </View>
                     </View>
                     <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-end', marginTop:4}}>
                         {/* Total Paid */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2, backgroundColor:'#C19859'}}>
                             <Text>Advance/Dues:</Text>
-                            <Text>1000</Text>
+                            <Text>{pdfData.payment_data.advance_dues_number}</Text>
                         </View>
                     </View>
                     <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-end', marginTop:4}}>
@@ -171,11 +193,12 @@ const PDF = ({pdfData}:any) => {
 
 
 // Pdf view
-const PDFView = ({pdfData}:any) => {
+const PDFView = ({pdfData, totalNumberGenerator}:any) => {
     return(
     <PDFViewer className='h-full w-[90%] mt-4 border-[0.5px] border-[#ccc]'>
         <PDF
             pdfData={pdfData}
+            totalNumberGenerator={totalNumberGenerator}
         />
     </PDFViewer>
     );

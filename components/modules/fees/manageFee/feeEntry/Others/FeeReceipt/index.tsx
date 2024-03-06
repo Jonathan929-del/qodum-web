@@ -10,7 +10,7 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 
 
 // Main function
-const index = ({setIsReceiptOpened, receiptPaymentData}:any) => {
+const index = ({setIsReceiptOpened, receiptPaymentData, totalNumberGenerator}:any) => {
 
 
     // Pdf data
@@ -49,6 +49,7 @@ const index = ({setIsReceiptOpened, receiptPaymentData}:any) => {
 
         <PdfView
             pdfData={pdfData}
+            totalNumberGenerator={totalNumberGenerator}
         />
 
         </div>

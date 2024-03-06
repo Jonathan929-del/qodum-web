@@ -147,7 +147,7 @@ const page = () => {
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         const fetcher = async () => {
             const classesRes = await fetchClasses();
@@ -178,6 +178,7 @@ const page = () => {
                 <FeeReceipt
                     receiptPaymentData={receiptPaymentData}
                     setIsReceiptOpened={setIsReceiptOpened}
+                    totalNumberGenerator={totalNumberGenerator}
                 />
             ) : isViewOpened ? (
                 <ViewCom
