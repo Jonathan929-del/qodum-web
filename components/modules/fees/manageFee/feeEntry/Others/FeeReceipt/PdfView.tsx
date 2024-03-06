@@ -14,10 +14,10 @@ const InvoicePDF = dynamic(() => import("./Pdf"), {ssr:false});
 
 
 // Main function
-const PdfView = ({pdfData, totalNumberGenerator}:any) => {
+const PdfView = ({receiptPaymentData, totalNumberGenerator}:any) => {
     return(
         <InvoicePDF
-            pdfData={pdfData}
+            receiptPaymentData={receiptPaymentData}
             totalNumberGenerator={totalNumberGenerator}
         />
     );

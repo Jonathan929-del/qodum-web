@@ -10,6 +10,7 @@ import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
 import {createPayment, fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
@@ -200,6 +201,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         }else if (values.advance_amt > 0){
             advanceDuesNumber = values.advance_amt;
         };
+
+        const schools = await fetchGlobalSchoolDetails();
         setReceiptPaymentData({
             ...res,
             installments:selectedInstallments,
@@ -209,7 +212,11 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             adm_no:selectedStudent.admission_no,
             father_name:selectedStudent.father_name,
             fee_type:values.fee_type,
-            advance_dues_number:advanceDuesNumber
+            advance_dues_number:advanceDuesNumber,
+            school_name:schools[0].school_name,
+            school_address:schools[0].school_address,
+            website:schools[0].website,
+            school_no:schools[0].school_no
         });
         setIsReceiptOpened(true);
 

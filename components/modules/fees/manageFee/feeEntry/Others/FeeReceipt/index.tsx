@@ -2,8 +2,6 @@
 // Improts
 import {X} from 'lucide-react';
 import PdfView from './PdfView';
-import {useEffect, useState} from 'react';
-import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -11,32 +9,6 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 
 // Main function
 const index = ({setIsReceiptOpened, receiptPaymentData, totalNumberGenerator}:any) => {
-
-
-    // Pdf data
-    const [pdfData, setPdfData] = useState({});
-
-
-    // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-            const schools = await fetchGlobalSchoolDetails();
-            setPdfData({
-                ...pdfData,
-                school_data:{
-                    school_name:schools[0].school_name,
-                    school_address:schools[0].school_address,
-                    website:schools[0].website,
-                    school_no:schools[0].school_no
-                },
-                payment_data:receiptPaymentData
-            })
-        };
-        fetcher();
-    }, []);
-    console.log(pdfData);
-
-
     return (
         <div className='w-[90%] h-[90%] flex flex-col items-center mt-6 pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
 
@@ -48,7 +20,7 @@ const index = ({setIsReceiptOpened, receiptPaymentData, totalNumberGenerator}:an
 
 
         <PdfView
-            pdfData={pdfData}
+            receiptPaymentData={receiptPaymentData}
             totalNumberGenerator={totalNumberGenerator}
         />
 
