@@ -29,7 +29,6 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
         setSelectedInstallments([i]);
         setIsShowInstallment(false);
     };
-    console.log(payments);
 
 
     return (

@@ -52,7 +52,7 @@ export const createPayment = async ({student, receipt_no, installments, received
             concession_reason
         });
         payment.save().then(async() => {
-            await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads});
+            await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads}, {new:true});
         });
 
 
@@ -112,5 +112,30 @@ export const fetchStudentPayments = async ({student}:{student:String}) => {
 
     } catch (err:any) {
         console.log(`Error fetching payments: ${err.message}`);
+    };
+};
+
+
+
+
+
+// Fetch payment by receipt no
+export const fetchPaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payment = await Payment.findOne({receipt_no});
+
+
+        // Return
+        return payment;
+
+
+    } catch (err:any) {
+        console.log(`Error fetching payment: ${err.message}`);
     };
 };

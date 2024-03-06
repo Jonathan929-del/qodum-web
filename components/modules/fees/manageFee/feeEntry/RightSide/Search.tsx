@@ -60,6 +60,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 admission_no:student?.student?.adm_no || '',
                 bill_no:student?.student?.bill_no || '',
                 class:student?.student?.class || '',
+                board:student?.student?.board || '',
                 fees_group:'',
                 affiliated_heads:{
                     group_name:student?.affiliated_heads?.group_name || '',
@@ -110,6 +111,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             admission_no:student?.student?.adm_no || '',
             bill_no:student?.student?.bill_no || '',
             class:student?.student?.class || '',
+            board:student?.student?.board || '',
             fees_group:'',
             affiliated_heads:{
                 group_name:student?.affiliated_heads?.group_name || '',

@@ -5,6 +5,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
@@ -79,6 +80,14 @@ const page = () => {
 
     // All installments
     const [allInstallments, setAllInstallments] = useState<any>([]);
+
+
+    // Is receipt opened
+    const [isReceiptOpened, setIsReceiptOpened] = useState(false);
+
+
+    // Receipt payment data
+    const [receiptPaymentData, setReceiptPaymentData] = useState({});
 
 
     // Total number generator
@@ -165,6 +174,11 @@ const page = () => {
         <div className='h-screen flex flex-col items-center justify-start bg-white'>
             {isLoading ? (
                 <LoadingIcon />
+            ) : isReceiptOpened ? (
+                <FeeReceipt
+                    receiptPaymentData={receiptPaymentData}
+                    setIsReceiptOpened={setIsReceiptOpened}
+                />
             ) : isViewOpened ? (
                 <ViewCom
                     students={students}
@@ -194,6 +208,8 @@ const page = () => {
                     totalNumberGenerator={totalNumberGenerator}
                     allInstallments={allInstallments}
                     isLoadingHeads={isLoadingHeads}
+                    setIsReceiptOpened={setIsReceiptOpened}
+                    setReceiptPaymentData={setReceiptPaymentData}
                 />
             )}
         </div>

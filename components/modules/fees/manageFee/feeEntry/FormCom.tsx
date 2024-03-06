@@ -17,7 +17,7 @@ import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/a
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, showButtonClick, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, showButtonClick, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData}: any) => {
 
 
     // Toast
@@ -61,9 +61,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
             // Form inputs
-            fee_type:'',
+            fee_type:'All fee types',
             bank_name:'',
-            entry_mode:'',
+            entry_mode:'School',
             total_paid_amount:0,
             dues:0,
             advance_amt:0
@@ -151,9 +151,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         .filter((h:any) => h.amounts.length !== 0)
         };
 
-        console.log(values.advance_amt);
-        console.log(unChangedHeads);
-
     
         // Updating student
         await ModifyStudentAffiliatedHeads({
@@ -178,8 +175,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             default:
                 {}
                 break;
-        }
-        await createPayment({
+        };
+        const res = await createPayment({
             // Others
             student:selectedStudent.name,
             receipt_no:paymentsReceiptNo,
@@ -189,7 +186,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             paymode:values.pay_mode || 'Cash',
             paymode_details:paymodeDetails,
         
-        
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
             concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
@@ -198,6 +194,17 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             paid_heads:paidHeads,
             concession_reason:concessionReason
         });
+        setReceiptPaymentData({
+            ...res,
+            installments:selectedInstallments,
+            paid_heads:paidHeads,
+            class_name:selectedStudent.class,
+            board:selectedStudent.board,
+            adm_no:selectedStudent.admission_no,
+            father_name:selectedStudent.father_name,
+            fee_type:values.fee_type
+        });
+        setIsReceiptOpened(true);
 
 
         // Toast
@@ -216,9 +223,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
             // Form inputs
-            fee_type:'',
+            fee_type:'All fee types',
             bank_name:'',
-            entry_mode:'',
+            entry_mode:'School',
             total_paid_amount:0,
             dues:0,
             advance_amt:0
@@ -258,6 +265,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             admission_no:student.student.adm_no,
             bill_no:student.student.bill_no,
             class:student.student.class,
+            board:student?.student?.board,
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
                 heads:student.affiliated_heads.heads.map((h:any) => {

@@ -177,6 +177,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
+                                            <SelectItem value='All fee types'>All fee types</SelectItem>
                                             {feeTypes.length === 0 ? (
                                                 <p className='text-xs text-hash-color'>No fee types</p>
                                             ) : !feeTypes[0].name ? (
