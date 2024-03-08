@@ -13,11 +13,23 @@ const VehicleDetailsSchema = new mongoose.Schema(
         vehicle_name:{type:String, required:true},
         vehicle_reg_no:{type:String, required:true},
         driver_name:{type:String},
+        attendent_name:{type:String},
+        fule_type:{type:String},
+        seating_capacity:{type:Number},
+        facility_in_bus:{
+            cctv:{type:Boolean},
+            wifi:{type:Boolean},
+            gps:{type:Boolean},
+            ac:{type:Boolean}
+        },
         driver_mobile_no:{type:String},
         gps_no:{type:String},
         service_due_date:{type:String},
         insurance_due_date:{type:String},
-        vendor:{type:String}
+        vendor:{type:String},
+
+        // Routes
+        routes:{type:Array}
     },
     {
         timestamps:true

@@ -9,57 +9,20 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, onSubmit, form, updateRoute, setUpdateRoute, vehicles, setSelectedRoutes}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting form
         form.reset({
-            vehicle_owner:'school',
-            vehicle_type:'',
             vehicle_name:'',
-            vehicle_reg_no:'',
-            driver_name:'',
-            attendent_name:'',
-            fule_type:'',
-            seating_capacity:0,
-            facility_in_bus:{
-                cctv:false,
-                wifi:false,
-                gps:false,
-                ac:false
-            },
-            driver_mobile_no:'',
-            gps_no:'',
-            service_due_date:'',
-            insurance_due_date:'',
-            vendor:''
+            vehicle_no:''
         });
-        // Reseting updte entity
-        setUpdateVehicleDetails({
-            id:'',
-            isDeleteClicked:false,
-            vehicle_owner:'school',
-            vehicle_type:'',
-            vehicle_name:'',
-            vehicle_reg_no:'',
-            driver_name:'',
-            attendent_name:'',
-            fule_type:'',
-            seating_capacity:0,
-            facility_in_bus:{
-                cctv:false,
-                wifi:false,
-                gps:false,
-                ac:false
-            },
-            driver_mobile_no:'',
-            gps_no:'',
-            service_due_date:'',
-            insurance_due_date:'',
-            vendor:''
+        setUpdateRoute({
+            id:''
         });
+        setSelectedRoutes([]);
     };
 
 
@@ -70,7 +33,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>
             {
-                updateVehicleDetails.id === '' ? (
+                updateRoute.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -114,7 +77,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateVehicleDetails({...updateVehicleDetails, isDeleteClicked:true})}
+                                onClick={() => setUpdateRoute({...updateRoute, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -124,7 +87,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateVehicleDetails({...updateVehicleDetails, isDeleteClicked:false})}
+                                        onClick={() => setUpdateRoute({...updateRoute, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -155,7 +118,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
 
             {/* Print button */}
-            <PrintButton vehiclesDetails={vehiclesDetails}/>
+            <PrintButton vehicles={vehicles}/>
 
 
             {/* Cancel button */}

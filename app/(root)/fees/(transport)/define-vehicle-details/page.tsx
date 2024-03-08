@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/fees/transport/vehicleDetails/FormCom';
 import ViewCom from '@/components/modules/fees/transport/vehicleDetails/ViewCom';
 import {fetchVehicleTypes} from '@/lib/actions/fees/transport/vehicleType.actions';
+import {fetchTravelMasters} from '@/lib/actions/fees/transport/travelMaster.actions';
 import {fetchVehiclesDetails} from '@/lib/actions/fees/transport/vehicleDetails.actions';
 
 
@@ -31,11 +32,20 @@ const page = () => {
     const [updateVehicleDetails, setUpdateVehicleDetails] = useState({
         id:'',
         isDeleteClicked:false,
-        vehicle_owner:'School',
+        vehicle_owner:'school',
         vehicle_type:'',
         vehicle_name:'',
         vehicle_reg_no:'',
         driver_name:'',
+        attendent_name:'',
+        fule_type:'',
+        seating_capacity:0,
+        facility_in_bus:{
+            cctv:false,
+            wifi:false,
+            gps:false,
+            ac:false
+        },
         driver_mobile_no:'',
         gps_no:'',
         service_due_date:moment(new Date()).format('D-MMM-yy'),
@@ -44,13 +54,19 @@ const page = () => {
     });
 
 
+    // Vendors
+    const [vendors, setVendors] = useState([{}]);
+
+
     // Use effect
     useEffect(() => {
         const vehicleDetailsFetcher = async () => {
             const vehiclesDetailsRes = await fetchVehiclesDetails();
             const vehicelesTypesRes = await fetchVehicleTypes();
+            const vendorsRes = await fetchTravelMasters();
             setVehiclesDetails(vehiclesDetailsRes);
             setVehiclesTypes(vehicelesTypesRes.map((v:any) => v.vehicle_name));
+            setVendors(vendorsRes);
         };
         vehicleDetailsFetcher();
     }, [isViewOpened, updateVehicleDetails]);
@@ -73,6 +89,7 @@ const page = () => {
                         vehiclesDetails={vehiclesDetails}
                         updateVehicleDetails={updateVehicleDetails}
                         setUpdateVehicleDetails={setUpdateVehicleDetails}
+                        vendors={vendors}
                     />
                 )
             }

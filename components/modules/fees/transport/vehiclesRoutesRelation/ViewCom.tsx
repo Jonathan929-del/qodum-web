@@ -1,45 +1,41 @@
 // Imports
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, vehiclesDetails, setUpdateVehicleDetails}:any) => {
+const ViewCom = ({setIsViewOpened, vehicles, setUpdateRoute, setSelectedVehicle}:any) => {
 
 
     // Select handler
-    const selectHandler = (vehicleDetails:any) => {
-        setUpdateVehicleDetails({
-            id:vehicleDetails._id,
-            isDeleteClicked:false,
-            vehicle_owner:vehicleDetails.vehicle_owner,
-            vehicle_type:vehicleDetails.vehicle_type,
-            vehicle_name:vehicleDetails.vehicle_name,
-            vehicle_reg_no:vehicleDetails.vehicle_reg_no,
-            driver_name:vehicleDetails.driver_name,
-            attendent_name:vehicleDetails.attendent_name,
-            fule_type:vehicleDetails.fule_type,
-            seating_capacity:vehicleDetails.seating_capacity,
-            facility_in_bus:{
-                cctv:vehicleDetails.facility_in_bus.cctv,
-                wifi:vehicleDetails.facility_in_bus.wifi,
-                gps:vehicleDetails.facility_in_bus.gps,
-                ac:vehicleDetails.facility_in_bus.ac
-            },
-            driver_mobile_no:vehicleDetails.driver_mobile_no,
-            gps_no:vehicleDetails.gps_no,
-            service_due_date:vehicleDetails.service_due_date,
-            insurance_due_date:vehicleDetails.insurance_due_date,
-            vendor:vehicleDetails.vendor
+    const selectHandler = (vehicle:any) => {
+        setUpdateRoute({
+            id:'id'
         });
+        setSelectedVehicle(vehicles.filter((v:any) => v.vehicle_name === vehicle.vehicle_name)[0]);
         setIsViewOpened(false);
     };
+
+
+    // Vehicle Routes
+    const vehiclesRoutes = vehicles.map((v:any) => {
+        const array = v?.routes?.map((r:any) => {
+            return{
+                route_no:r.route_no,
+                route_description:r.route_description,
+                vehicle_name:v.vehicle_name,
+                vehicle_reg_no:v.vehicle_reg_no,
+                vehicle_type:v.vehicle_type
+            }
+        });
+        return array;
+    }).flat();
 
 
     return (
@@ -49,7 +45,7 @@ const ViewCom = ({setIsViewOpened, vehiclesDetails, setUpdateVehicleDetails}:any
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Vehicles Details List</h2>
+                <h2>Route Vehicle Relation Details</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
@@ -67,8 +63,8 @@ const ViewCom = ({setIsViewOpened, vehiclesDetails, setUpdateVehicleDetails}:any
                 {/* Vehicle Details */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[1200px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[7.5%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
+                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12}/>
                         </li>
@@ -76,77 +72,62 @@ const ViewCom = ({setIsViewOpened, vehiclesDetails, setUpdateVehicleDetails}:any
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Transport For
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Vehicle Name
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Vehicle Type
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Vehicle No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Driver Name
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Vehicle Type
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Driver Mobile
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Route No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Agency Name
-                            <ChevronsUpDown size={12}/>
-                        </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2'>
-                            Agency Mobile No.
+                        <li className='basis-[25%] flex flex-row items-center justify-between px-2'>
+                            Route Description
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            vehiclesDetails.length < 1 ? (
-                                <p className='w-full min-w-[1200px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                            vehiclesRoutes.length < 1 ? (
+                                <p className='w-full min-w-[1000px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No vehicle details yet
                                 </p>
-                            ): !vehiclesDetails[0]?.vehicle_name ? (
+                            ): !vehiclesRoutes[0]?.route_no ? (
                                 <LoadingIcon />
-                            ) : vehiclesDetails.map((vehicleDetails:any) => (
+                            ) : vehiclesRoutes.map((v:any) => (
                                 <CommandItem
-                                    value={`${vehiclesDetails.indexOf(vehicleDetails) + 1} ${vehicleDetails?.vehicle_owner} ${vehicleDetails?.vehicle_name} ${vehicleDetails?.vehicle_type} ${vehicleDetails?.vehicle_reg_no} ${vehicleDetails?.driver_name} ${vehicleDetails?.driver_mobile_no}`}
-                                    className='w-full min-w-[1200px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    value={`${vehiclesRoutes.indexOf(v) + 1} ${v?.vehicle_name} ${v?.vehicle_reg_no} ${v?.vehicle_type} ${v?.route_no} ${v?.route_description}`}
+                                    className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[7.5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehiclesDetails.indexOf(vehicleDetails) + 1}</li>
+                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehiclesRoutes.indexOf(v) + 1}</li>
                                     <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                            onClick={() => selectHandler(vehicleDetails)}
+                                            onClick={() => selectHandler(v)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.vehicle_owner}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.vehicle_name}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.vehicle_type}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.vehicle_reg_no}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.driver_name || '-'}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{vehicleDetails?.driver_mobile_no || '-'}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>N/A</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2'>N/A</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{v?.vehicle_name}</li>
+                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{v?.vehicle_reg_no}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{v?.vehicle_type}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{v?.route_no}</li>
+                                    <li className='basis-[25%] flex flex-row items-center px-2'>{v?.route_description}</li>
                                 </CommandItem>
                             ))
                         }
                     </CommandList>
 
-                    {vehiclesDetails.length > 0 && <CommandEmpty>No results found</CommandEmpty>}
+                    {vehiclesRoutes.length > 0 && <CommandEmpty>No results found</CommandEmpty>}
                 </div>
 
 

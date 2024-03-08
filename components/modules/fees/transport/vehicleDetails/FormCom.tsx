@@ -2,12 +2,14 @@
 // Imports
 import * as z from 'zod';
 import moment from 'moment';
+import {useEffect} from 'react';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
+import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
@@ -22,7 +24,7 @@ import {createVehicleDetails, deleteVehicleDetails, modifyVehicleDetails} from '
 
 
 // Main function
-const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, vehiclesTypes}:any) => {
+const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, vehiclesTypes, vendors}:any) => {
 
 
     // Toast
@@ -36,6 +38,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
         vehicle_name:updateVehicleDetails.vehicle_name,
         vehicle_reg_no:updateVehicleDetails.vehicle_reg_no,
         driver_name:updateVehicleDetails.driver_name,
+        attendent_name:updateVehicleDetails.attendent_name,
+        fule_type:updateVehicleDetails.fule_type,
+        seating_capacity:updateVehicleDetails.seating_capacity,
+        facility_in_bus:{
+            cctv:updateVehicleDetails.facility_in_bus.cctv,
+            wifi:updateVehicleDetails.facility_in_bus.wifi,
+            gps:updateVehicleDetails.facility_in_bus.gps,
+            ac:updateVehicleDetails.facility_in_bus.ac
+        },
         driver_mobile_no:updateVehicleDetails.driver_mobile_no,
         gps_no:updateVehicleDetails.gps_no,
         service_due_date:updateVehicleDetails.service_due_date,
@@ -53,6 +64,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             vehicle_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.vehicle_name,
             vehicle_reg_no:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.vehicle_reg_no,
             driver_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.driver_name,
+            attendent_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.attendent_name,
+            fule_type:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.fule_type,
+            seating_capacity:updateVehicleDetails.id === '' ? 0 : updateVehicleDetails.seating_capacity,
+            facility_in_bus:{
+                cctv:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.cctv,
+                wifi:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.wifi,
+                gps:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.gps,
+                ac:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.ac
+            },
             driver_mobile_no:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.driver_mobile_no,
             gps_no:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.gps_no,
             service_due_date:updateVehicleDetails.id === '' ? moment(new Date()).format('D-MMM-yy') : updateVehicleDetails.service_due_date,
@@ -64,10 +84,12 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof VehicleDetailsValidation>) => {
+
+
         // Create vehicle details
         if(updateVehicleDetails.id === ''){
             // Ensuring that service and insurance due dates are not empty when the vehicle owner is a vendor
-            if(values.vehicle_owner === 'vendor' && values.service_due_date === '' || values.insurance_due_date === ''){
+            if(values.vehicle_owner === 'vendor' && values.service_due_date === '' || values.vehicle_owner === 'vendor' && values.insurance_due_date === ''){
                 if(values.service_due_date === '' && values.insurance_due_date === ''){
                     form.setError('service_due_date', {message:'*Service due date is required'});
                     form.setError('insurance_due_date', {message:'*Insurance due date is required'});
@@ -89,6 +111,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                     vehicle_name:values.vehicle_name,
                     vehicle_reg_no:values.vehicle_reg_no,
                     driver_name:values.driver_name,
+                    attendent_name:values.attendent_name,
+                    fule_type:values.fule_type,
+                    seating_capacity:values.seating_capacity,
+                    facility_in_bus:{
+                        cctv:values.facility_in_bus.cctv,
+                        wifi:values.facility_in_bus.wifi,
+                        gps:values.facility_in_bus.gps,
+                        ac:values.facility_in_bus.ac
+                    },
                     driver_mobile_no:values.driver_mobile_no,
                     gps_no:values.gps_no,
                     service_due_date:values.service_due_date,
@@ -124,6 +155,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                     vehicle_name:values.vehicle_name,
                     vehicle_reg_no:values.vehicle_reg_no,
                     driver_name:values.driver_name,
+                    attendent_name:values.attendent_name,
+                    fule_type:values.fule_type,
+                    seating_capacity:values.seating_capacity,
+                    facility_in_bus:{
+                        cctv:values.facility_in_bus.cctv,
+                        wifi:values.facility_in_bus.wifi,
+                        gps:values.facility_in_bus.gps,
+                        ac:values.facility_in_bus.ac
+                    },
                     driver_mobile_no:values.driver_mobile_no,
                     gps_no:values.gps_no,
                     service_due_date:values.service_due_date,
@@ -149,6 +189,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             vehicle_name:'',
             vehicle_reg_no:'',
             driver_name:'',
+            attendent_name:'',
+            fule_type:'',
+            seating_capacity:0,
+            facility_in_bus:{
+                cctv:false,
+                wifi:false,
+                gps:false,
+                ac:false
+            },
             driver_mobile_no:'',
             gps_no:'',
             service_due_date:moment(new Date()).format('D-MMM-yy'),
@@ -162,6 +211,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             vehicle_name:'',
             vehicle_reg_no:'',
             driver_name:'',
+            attendent_name:'',
+            fule_type:'',
+            seating_capacity:0,
+            facility_in_bus:{
+                cctv:false,
+                wifi:false,
+                gps:false,
+                ac:false
+            },
             driver_mobile_no:'',
             gps_no:'',
             service_due_date:moment(new Date()).format('D-MMM-yy'),
@@ -169,6 +227,10 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             vendor:''
         });
     };
+
+
+    // Use effect
+    useEffect(() => {}, [form.watch('facility_in_bus.cctv'), form.watch('facility_in_bus.wifi'), form.watch('facility_in_bus.gps'), form.watch('facility_in_bus.ac')]);
 
 
     return (
@@ -235,7 +297,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {vehiclesTypes.length < 1 ? (
-                                                    <p>No wings</p>
+                                                    <p>No vehicle types</p>
                                                 ) : vehiclesTypes[0] === '' ? (
                                                     <LoadingIcon />
                                                 ) : vehiclesTypes.map((v:any) => (
@@ -310,6 +372,79 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                             </FormItem>
                         )}
                     />
+
+                    {/* Attendent Name */}
+                    <FormField
+                        control={form.control}
+                        name='attendent_name'
+                        render={({field}) => (
+                            <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Attendant Name</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Fule Type */}
+                    <FormField
+                        control={form.control}
+                        name='fule_type'
+                        render={({field}) => (
+                            <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Fule Type</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Select
+                                            {...field}
+                                            value={field.value}
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                <SelectValue placeholder='Select'/>
+                                                <ChevronDown className='h-4 w-4 opacity-50'/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value='Petrol'>Petrol</SelectItem>
+                                                <SelectItem value='Diesel'>Diesel</SelectItem>
+                                                <SelectItem value='CNG'>CNG</SelectItem>
+                                                <SelectItem value='EV'>EV</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Seating Capacity */}
+                    <FormField
+                        control={form.control}
+                        name='seating_capacity'
+                        render={({field}) => (
+                            <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Seating Capacity</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='text-xs mt-[-20px]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
 
                     {/* Driver Mobile No. */}
                     <FormField
@@ -410,7 +545,13 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                                                 <ChevronDown className='h-4 w-4 opacity-50'/>
                                             </SelectTrigger>
                                             <SelectContent>
-                                                    <SelectItem value='Select'>Select</SelectItem>
+                                                {vendors.length < 1 ? (
+                                                    <p>No vendors</p>
+                                                ) : !vendors[0].travel_agency_name ? (
+                                                    <LoadingIcon />
+                                                ) : vendors.map((v:any) => (
+                                                    <SelectItem value={v.travel_agency_name} key={v._id}>{v.travel_agency_name}</SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
@@ -420,6 +561,75 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         )}
                     />
 
+
+                    {/* Bus Facilities */}
+                    <div className='flex flex-row items-center mt-1 gap-4'>
+
+                        {/* CCTV */}
+                        <div className='flex items-center space-x-[2px]'>
+                            <Checkbox
+                                id='cctv'
+                                checked={form.getValues().facility_in_bus.cctv}
+                                onClick={() => form.setValue('facility_in_bus.cctv', !form.getValues().facility_in_bus.cctv)}
+                                className='rounded-[2px] text-[#726E71]'
+                            />
+                            <label
+                                htmlFor='cctv'
+                                className='text-xs text-[#726E71]'
+                            >
+                                CCTV
+                            </label>
+                        </div>
+
+                        {/* Wi-fi */}
+                        <div className='flex items-center space-x-[2px]'>
+                            <Checkbox
+                                id='wifi'
+                                checked={form.getValues().facility_in_bus.wifi}
+                                onClick={() => form.setValue('facility_in_bus.wifi', !form.getValues().facility_in_bus.wifi)}
+                                className='rounded-[2px] text-[#726E71]'
+                            />
+                            <label
+                                htmlFor='wifi'
+                                className='text-xs text-[#726E71]'
+                            >
+                                Wi-fi
+                            </label>
+                        </div>
+
+                        {/* GPS */}
+                        <div className='flex items-center space-x-[2px]'>
+                            <Checkbox
+                                id='gps'
+                                checked={form.getValues().facility_in_bus.gps}
+                                onClick={() => form.setValue('facility_in_bus.gps', !form.getValues().facility_in_bus.gps)}
+                                className='rounded-[2px] text-[#726E71]'
+                            />
+                            <label
+                                htmlFor='gps'
+                                className='text-xs text-[#726E71]'
+                            >
+                                GPS
+                            </label>
+                        </div>
+
+                        {/* AC */}
+                        <div className='flex items-center space-x-[2px]'>
+                            <Checkbox
+                                id='ac'
+                                checked={form.getValues().facility_in_bus.ac}
+                                onClick={() => form.setValue('facility_in_bus.ac', !form.getValues().facility_in_bus.ac)}
+                                className='rounded-[2px] text-[#726E71]'
+                            />
+                            <label
+                                htmlFor='ac'
+                                className='text-xs text-[#726E71]'
+                            >
+                                AC
+                            </label>
+                        </div>
+
+                    </div>
 
 
                     {/* Buttons */}

@@ -14,6 +14,15 @@ interface CreateVehicleTDetailsProps{
     vehicle_name:String;
     vehicle_reg_no:String;
     driver_name:String;
+    attendent_name:String;
+    fule_type:String;
+    seating_capacity:Number;
+    facility_in_bus:{
+        cctv:Boolean;
+        wifi:Boolean;
+        gps:Boolean;
+        ac:Boolean;
+    };
     driver_mobile_no:String;
     gps_no:String;
     service_due_date:String;
@@ -21,7 +30,7 @@ interface CreateVehicleTDetailsProps{
     vendor:String;
 };
 // Create vehicle details
-export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}:CreateVehicleTDetailsProps) => {
+export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}:CreateVehicleTDetailsProps) => {
     try {
 
     
@@ -30,8 +39,10 @@ export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle
 
 
         // Creating new vehicle details
-        const newVehicleDetails = await VehicleDetails.create({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
-        newVehicleDetails.save();
+        const newVehicleDetails = await VehicleDetails.create({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
+        newVehicleDetails.save().then(async () => {
+            await VehicleDetails.findByIdAndUpdate(newVehicleDetails._id, {routes:[]});
+        });
 
 
         // Return
@@ -76,6 +87,15 @@ interface ModifyVehicleDetailsProps{
     vehicle_name:String;
     vehicle_reg_no:String;
     driver_name:String;
+    attendent_name:String;
+    fule_type:String;
+    seating_capacity:Number;
+    facility_in_bus:{
+        cctv:Boolean;
+        wifi:Boolean;
+        gps:Boolean;
+        ac:Boolean;
+    };
     driver_mobile_no:String;
     gps_no:String;
     service_due_date:String;
@@ -83,7 +103,7 @@ interface ModifyVehicleDetailsProps{
     vendor:String;
 }
 // Modify vehicle details
-export const modifyVehicleDetails = async ({id, vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}:ModifyVehicleDetailsProps) => {
+export const modifyVehicleDetails = async ({id, vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}:ModifyVehicleDetailsProps) => {
     try {
 
         // Db connection
@@ -91,7 +111,7 @@ export const modifyVehicleDetails = async ({id, vehicle_owner, vehicle_type, veh
 
 
         // Update vehicle details
-        const updatedVehicleDetails = await VehicleDetails.findByIdAndUpdate(id, {vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}, {new:true});
+        const updatedVehicleDetails = await VehicleDetails.findByIdAndUpdate(id, {vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}, {new:true});
 
 
         // Return 
@@ -120,5 +140,26 @@ export const deleteVehicleDetails = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting vehicle details: ${err}`);      
+    }
+};
+
+
+
+
+
+// Relate vehicle to route
+export const relateVehicleToRoute = async ({id, routes}:{id:String, routes:any}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Deleting vehicle details
+        await VehicleDetails.findByIdAndUpdate(id, {routes});
+        return 'Vehicle routes updated';
+
+    } catch (err) {
+        throw new Error(`Error updating vehicle routes: ${err}`);      
     }
 };

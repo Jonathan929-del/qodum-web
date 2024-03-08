@@ -1,0 +1,81 @@
+// Imports
+import {ChevronsUpDown} from 'lucide-react';
+import {Checkbox} from '@/components/ui/checkbox';
+import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Command, CommandItem, CommandList} from '@/components/ui/command';
+
+
+
+
+
+// Main Function
+const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
+    return (       
+        <Command
+            className='w-[100%] max-h-[90%] flex flex-col items-center mt-4 pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
+        >
+
+                {/* Heads */}
+                <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
+                    {/* Headers */}
+                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Sr. No.
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='basis-[60%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            {`Route No. => Description`} 
+                            <ChevronsUpDown size={12} />
+                        </li>
+                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Select
+                            <ChevronsUpDown size={12} />
+                        </li>
+                    </ul>
+                    {/* Values */}
+                    <CommandList>
+                        {routes?.length < 1 ? (
+                                <p className='w-full min-w-[600px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                    No Students
+                                </p>
+                            ) : !routes[0].route_no ? (
+                                <LoadingIcon />
+                            ) : routes?.map((r: any, index: number) => (
+                                <CommandItem
+                                    key={index}
+                                    className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                >
+                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{routes.indexOf(r) + 1}</li>
+                                    <li className='basis-[60%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                        {`${r.route_no} => ${r.route_description}`}
+                                    </li>
+                                    <li className='basis-[20%] flex items-center justify-center p-[2px]'>
+                                        <Checkbox
+                                            checked={selectedRoutes.map((s:any) => s.route_no).includes(r.route_no)}
+                                            onCheckedChange={() => {
+                                                selectedRoutes.map((s:any) => s.route_no).includes(r.route_no)
+                                                    ?
+                                                        setSelectedRoutes(selectedRoutes.filter((s:any) => s.route_no !== r.route_no))
+                                                    :
+                                                        setSelectedRoutes([...selectedRoutes, r])
+                                            }}
+                                            className='rounded-[2px] text-hash-color'
+                                        />
+                                    </li>
+
+                                </CommandItem>
+                            ))
+                        }
+                    </CommandList>
+                </div>
+
+        </Command>    
+    );
+};
+
+
+
+
+
+// Export
+export default RoutesList;
