@@ -127,7 +127,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                 {/* Table */}
                 <View style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center', fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
                     {/* Headers */}
-                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#F3F8FB', borderBottomWidth:0.5, borderBottomColor:'#ccc'}}>
+                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff',}}>
                         <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:0.5, borderRightColor:'#ccc'}}>HEAD NAME</Text>
                         <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:0.5, borderRightColor:'#ccc'}}>ACTUAL AMOUNT</Text>
                         <Text style={{flexBasis:'30%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:0.5, borderRightColor:'#ccc'}}>CONCESSION AMOUNT</Text>
@@ -156,7 +156,8 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         display:'flex',
                         flexDirection:'row',
                         alignItems:'center',
-                        backgroundColor:Math.floor((receiptPaymentData.paid_heads.length + 1) / 2) * 2 !== receiptPaymentData.paid_heads.length + 1 ? '#fff' : '#F3F8FB'
+                        color:'#fff',
+                        backgroundColor:'#435680'
                     }}>
                         <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:0.5, borderRightColor:'#ccc'}}>Total</Text>
                         <Text style={{flexBasis:'20%', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2,  borderRightWidth:0.5, borderRightColor:'#ccc'}}>{totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.value)))))}</Text>
@@ -180,18 +181,20 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                             <Text>{totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}</Text>
                         </View>
                     </View>
-                    <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-end', marginTop:4}}>
+                    <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginTop:4}}>
+                        {/* Total Paid */}
+                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2}}>
+                            <Text>Cashier</Text>
+                        </View>
                         {/* Total Paid */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2, backgroundColor:'#F3F8FB'}}>
                             <Text>Advance/Dues:</Text>
                             <Text>{receiptPaymentData.advance_dues_number}</Text>
                         </View>
                     </View>
-                    <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-end', marginTop:4}}>
-                        {/* Total Paid */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2}}>
-                            <Text>Cashier</Text>
-                        </View>
+                    <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-start', marginTop:4, gap:4}}>
+                        <Text style={{color:'#CF896E'}}>Remark:</Text>
+                        <Text style={{backgroundColor:'#FFFF00', padding:2, fontSize:14}}>{receiptPaymentData.remarks}</Text>
                     </View>
                 </View>
 

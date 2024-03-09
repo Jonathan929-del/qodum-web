@@ -563,71 +563,75 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
 
                     {/* Bus Facilities */}
-                    <div className='flex flex-row items-center mt-1 gap-4'>
+                    <div className='w-full flex flex-row items-center mt-1 gap-4'>
 
-                        {/* CCTV */}
-                        <div className='flex items-center space-x-[2px]'>
-                            <Checkbox
-                                id='cctv'
-                                checked={form.getValues().facility_in_bus.cctv}
-                                onClick={() => form.setValue('facility_in_bus.cctv', !form.getValues().facility_in_bus.cctv)}
-                                className='rounded-[2px] text-[#726E71]'
-                            />
-                            <label
-                                htmlFor='cctv'
-                                className='text-xs text-[#726E71]'
-                            >
-                                CCTV
-                            </label>
-                        </div>
+                        <p className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Bus Facilities</p>
+                        <div className='basis-auto flex flex-row items-center gap-2 sm:basis-[70%]'>
+                            {/* CCTV */}
+                            <div className='flex items-center space-x-[2px]'>
+                                <Checkbox
+                                    id='cctv'
+                                    checked={form.getValues().facility_in_bus.cctv}
+                                    onClick={() => form.setValue('facility_in_bus.cctv', !form.getValues().facility_in_bus.cctv)}
+                                    className='rounded-[2px] text-[#726E71]'
+                                />
+                                <label
+                                    htmlFor='cctv'
+                                    className='text-xs text-[#726E71]'
+                                >
+                                    CCTV
+                                </label>
+                            </div>
 
-                        {/* Wi-fi */}
-                        <div className='flex items-center space-x-[2px]'>
-                            <Checkbox
-                                id='wifi'
-                                checked={form.getValues().facility_in_bus.wifi}
-                                onClick={() => form.setValue('facility_in_bus.wifi', !form.getValues().facility_in_bus.wifi)}
-                                className='rounded-[2px] text-[#726E71]'
-                            />
-                            <label
-                                htmlFor='wifi'
-                                className='text-xs text-[#726E71]'
-                            >
-                                Wi-fi
-                            </label>
-                        </div>
+                            {/* Wi-fi */}
+                            <div className='flex items-center space-x-[2px]'>
+                                <Checkbox
+                                    id='wifi'
+                                    checked={form.getValues().facility_in_bus.wifi}
+                                    onClick={() => form.setValue('facility_in_bus.wifi', !form.getValues().facility_in_bus.wifi)}
+                                    className='rounded-[2px] text-[#726E71]'
+                                />
+                                <label
+                                    htmlFor='wifi'
+                                    className='text-xs text-[#726E71]'
+                                >
+                                    Wi-fi
+                                </label>
+                            </div>
 
-                        {/* GPS */}
-                        <div className='flex items-center space-x-[2px]'>
-                            <Checkbox
-                                id='gps'
-                                checked={form.getValues().facility_in_bus.gps}
-                                onClick={() => form.setValue('facility_in_bus.gps', !form.getValues().facility_in_bus.gps)}
-                                className='rounded-[2px] text-[#726E71]'
-                            />
-                            <label
-                                htmlFor='gps'
-                                className='text-xs text-[#726E71]'
-                            >
-                                GPS
-                            </label>
-                        </div>
+                            {/* GPS */}
+                            <div className='flex items-center space-x-[2px]'>
+                                <Checkbox
+                                    id='gps'
+                                    checked={form.getValues().facility_in_bus.gps}
+                                    onClick={() => form.setValue('facility_in_bus.gps', !form.getValues().facility_in_bus.gps)}
+                                    className='rounded-[2px] text-[#726E71]'
+                                />
+                                <label
+                                    htmlFor='gps'
+                                    className='text-xs text-[#726E71]'
+                                >
+                                    GPS
+                                </label>
+                            </div>
 
-                        {/* AC */}
-                        <div className='flex items-center space-x-[2px]'>
-                            <Checkbox
-                                id='ac'
-                                checked={form.getValues().facility_in_bus.ac}
-                                onClick={() => form.setValue('facility_in_bus.ac', !form.getValues().facility_in_bus.ac)}
-                                className='rounded-[2px] text-[#726E71]'
-                            />
-                            <label
-                                htmlFor='ac'
-                                className='text-xs text-[#726E71]'
-                            >
-                                AC
-                            </label>
+                            {/* AC */}
+                            <div className='flex items-center space-x-[2px]'>
+                                <Checkbox
+                                    id='ac'
+                                    checked={form.getValues().facility_in_bus.ac}
+                                    onClick={() => form.setValue('facility_in_bus.ac', !form.getValues().facility_in_bus.ac)}
+                                    className='rounded-[2px] text-[#726E71]'
+                                />
+                                <label
+                                    htmlFor='ac'
+                                    className='text-xs text-[#726E71]'
+                                >
+                                    AC
+                                </label>
+                            </div>
                         </div>
+                        
 
                     </div>
 

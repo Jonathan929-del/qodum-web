@@ -7,17 +7,17 @@ import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/for
 
 
 // Main function
-const NeftDetails = ({neftDetails, setNeftDetails}:any) => {
+const SwipedCardDetaila = ({swipedCardDetails, setSwipedCardDetails}:any) => {
     return (
         <div className='flex flex-col'>
-            {/* Neft Name */}
+            {/* Reference No. */}
             <FormItem className='w-full'>
                 <div className='relative flex flex-col'>
-                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Neft Name</FormLabel>
+                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Reference No.</FormLabel>
                     <FormControl>
                         <Input
-                            value={neftDetails.neft_name}
-                            onChange={(e:any) => setNeftDetails({...neftDetails, neft_name:e.target.value})}
+                            value={swipedCardDetails.neft_name}
+                            onChange={(e:any) => setSwipedCardDetails({...swipedCardDetails, reference_no:e.target.value})}
                             className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                         />
                     </FormControl>
@@ -33,4 +33,4 @@ const NeftDetails = ({neftDetails, setNeftDetails}:any) => {
 
 
 // Export
-export default NeftDetails;
+export default SwipedCardDetaila;

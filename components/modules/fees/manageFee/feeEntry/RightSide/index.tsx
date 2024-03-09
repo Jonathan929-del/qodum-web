@@ -10,7 +10,7 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails}:any) => {
 
 
     // Total paid amount
@@ -54,6 +54,10 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setNeftDetails={setNeftDetails}
                     allInstallments={allInstallments}
                     paymentsReceiptNo={paymentsReceiptNo}
+                    upiDetails={upiDetails}
+                    setUpiDetails={setUpiDetails}
+                    swipedCardDetails={swipedCardDetails}
+                    setSwipedCardDetails={setSwipedCardDetails}
                 />
 
 

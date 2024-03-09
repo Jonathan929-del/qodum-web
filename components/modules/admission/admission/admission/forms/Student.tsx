@@ -18,6 +18,7 @@ import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {fetchTravelMasters} from '@/lib/actions/fees/transport/travelMaster.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
@@ -88,6 +89,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Parishes
     const [parishes, setParishes] = useState([{}]);
+
+
+    // Transport mediums
+    const [travelMasters, setTravelMasters] = useState<any>([{}]);
 
 
     // Search Students
@@ -1314,6 +1319,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const optionalSubjectsRes  = await fetchOptionalSubjects();
             const streamsRes = await fetchStreams();
             const parishesRes = await fetchParishes();
+            const travelMastersRes = await fetchTravelMasters();
             setClasses(classesRes);
             setBoards(boardsRes);
             setReligions(religionsRes);
@@ -1324,6 +1330,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setOptionalSubjects(optionalSubjectsRes);
             setStreams(streamsRes);
             setParishes(parishesRes);
+            setTravelMasters(travelMastersRes);
         };
         fetcher();
     }, []);
@@ -2994,10 +3001,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='NA'>NA</SelectItem>
-                                                        <SelectItem value='School'>School</SelectItem>
-                                                        <SelectItem value='Self'>Self</SelectItem>
-                                                        <SelectItem value='Public'>Public</SelectItem>
+                                                        {travelMasters.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No transport mediums</p>
+                                                        ) : !travelMasters[0].travel_agency_name ? (
+                                                            <LoadingIcon />
+                                                        ) : travelMasters.map((t:any) => (
+                                                            <SelectItem value={t.travel_agency_name} id={t._id}>{t.travel_agency_name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

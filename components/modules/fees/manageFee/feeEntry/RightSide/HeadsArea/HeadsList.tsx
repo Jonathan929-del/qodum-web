@@ -364,34 +364,34 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             <LoadingIcon />
         </div>
     ) : (
-        <div className='w-full h-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px] border-[0.5px] border-[#ccc]'>
+        <div className='w-full h-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px]'>
             <div className='w-full min-w-[750px] flex flex-col'>
                 {selectedInstallments.length === 1 ? (
                     <>
                         {/* Headers */}
-                        <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                            <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                        <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-[#ccc] rounded-t-[4px]'>
+                            <li className='basis-[19.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Head
                             </li>
-                            <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[10%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Actual Amt.
                             </li>
-                            <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[10%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Conc. Amt.
                             </li>
-                            <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[12.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Last Rec. Amt.
                             </li>
-                            <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[11.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Payable Amt.
                             </li>
-                            <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[11.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Paid Amt.
                             </li>
-                            <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <li className='basis-[12.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                 Fees Type
                             </li>
-                            <li className='basis-[12.5%] text-center text-hash-color text-[11px] font-semibold py-2'>
+                            <li className='basis-[12.5%] text-center text-[11px] font-semibold py-2'>
                                 Pay Schedule
                             </li>
                         </ul>
@@ -402,7 +402,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                         ) : heads?.length < 1 ? (
                                 <p className='pl-2 text-[11px] text-hash-color font-semibold'>No Fees</p>
                             ) : selectedInstallments.length > 0 && heads.map((h:any) => (
-                                <ul className={`flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
+                                <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                                     <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {h.head_name}
                                     </li>
@@ -443,29 +443,29 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         
                         {/* Total */}
                         {heads.length > 0 && (
-                            <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                                <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px]'>
+                                <li className='basis-[19.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Total
                                 </li>
-                                <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[10%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))))}
                                 </li>
-                                <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[10%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount)))))}
                                 </li>
-                                <li className='basis-[12.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[12.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.last_rec_amount)))))}
                                 </li>
-                                <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[11.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.payable_amount)))))}
                                 </li>
-                                <li className='basis-[11.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[11.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}
                                 </li>
                                 <li className='basis-[12.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2 text-white'>
                                     
                                 </li>
-                                <li className='basis-[12.5%] text-center text-hash-color text-[11px] font-semibold py-2'>
+                                <li className='basis-[12.5%] text-center text-[11px] font-semibold py-2'>
                                     
                                 </li>
                             </ul>
@@ -473,30 +473,30 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                     </>
                 ) : (
                         <>
-                            <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                                <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                            <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-[#ccc] rounded-t-[4px]'>
+                                <li className='basis-[11%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Installment
                                 </li>
-                                <li className='basis-[16.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[16.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Actual Amt.
                                 </li>
-                                <li className='basis-[17.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[17.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Conc. Amt.
                                 </li>
-                                <li className='basis-[20%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[20%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Last Rec. Amt.
                                 </li>
-                                <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <li className='basis-[18.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Payable Amt.
                                 </li>
-                                <li className='basis-[16.5%] text-center text-hash-color text-[11px] font-semibold py-2'>
+                                <li className='basis-[16.5%] text-center text-[11px] font-semibold py-2'>
                                     Paid Amt.
                                 </li>
                             </ul>
             
                             {/* Values */}
                             {selectedInstallments.map((i:any) => (
-                                    <ul className={`flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc] ${Math.floor((selectedInstallments.indexOf(i) + 1) / 2) * 2 !== selectedInstallments.indexOf(i) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
+                                    <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] ${Math.floor((selectedInstallments.indexOf(i) + 1) / 2) * 2 !== selectedInstallments.indexOf(i) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                                         <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                             {i}
                                         </li>
@@ -531,23 +531,23 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
                             {/* Total */}
                             {heads.length > 0 && (
-                                <ul className='flex flex-row items-center justify-between border-b-[0.5px] border-b-[#ccc]'>
-                                    <li className='basis-[11%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px]'>
+                                    <li className='basis-[11%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         Total
                                     </li>
-                                    <li className='basis-[16.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                    <li className='basis-[16.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value)))))}
                                     </li>
-                                    <li className='basis-[17.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                    <li className='basis-[17.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount)))))}
                                     </li>
-                                    <li className='basis-[20%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                    <li className='basis-[20%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         0
                                     </li>
-                                    <li className='basis-[18.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
+                                    <li className='basis-[18.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))))}
                                     </li>
-                                    <li className='basis-[16.5%] text-center text-hash-color text-[11px] font-semibold py-2'>
+                                    <li className='basis-[16.5%] text-center text-[11px] font-semibold py-2'>
                                         {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}
                                     </li>
                                 </ul>

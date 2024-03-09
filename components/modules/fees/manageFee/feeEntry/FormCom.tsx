@@ -37,6 +37,14 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const [neftDetails, setNeftDetails] = useState({});
 
 
+    // Swiped Card details
+    const [swipedCardDetails, setSwipedCardDetails] = useState({});
+
+
+    // UPI details
+    const [upiDetails, setUpiDetails] = useState({});
+
+
     // Concession reason
     const [concessionReason, setConcessionReason] = useState('');
 
@@ -172,6 +180,12 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 break;
             case 'NEFT':
                 paymodeDetails = neftDetails;
+                break;
+            case 'UPI':
+                paymodeDetails = upiDetails;
+                break;
+            case 'Swiped Card':
+                paymodeDetails = swipedCardDetails;
                 break;
             default:
                 {}
@@ -394,6 +408,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             allPayments={allPayments}
                             isLoadingHeads={isLoadingHeads}
                             paymentsReceiptNo={paymentsReceiptNo}
+                            upiDetails={upiDetails}
+                            setUpiDetails={setUpiDetails}
+                            swipedCardDetails={swipedCardDetails}
+                            setSwipedCardDetails={setSwipedCardDetails}
                         />
                     </div>
                 </form>

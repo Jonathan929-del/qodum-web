@@ -18,7 +18,7 @@ const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
+                    <ul className='w-full min-w-[600px] flex flex-row text-[10px] text-white border-b-[0.5px] bg-[#435680] border-[#ccc] cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
@@ -35,7 +35,7 @@ const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
                     {/* Values */}
                     <CommandList>
                         {routes?.length < 1 ? (
-                                <p className='w-full min-w-[600px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
+                                <p className='w-full min-w-[600px] flex flex-row p-2 text-sm bg-[#fff] border-b-[0.5px] border-[#ccc]'>
                                     No Students
                                 </p>
                             ) : !routes[0].route_no ? (
@@ -43,7 +43,7 @@ const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
                             ) : routes?.map((r: any, index: number) => (
                                 <CommandItem
                                     key={index}
-                                    className='w-full min-w-[600px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                                    className={`w-full min-w-[600px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((routes.indexOf(r) + 1) / 2) * 2 !== routes.indexOf(r) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}
                                 >
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{routes.indexOf(r) + 1}</li>
                                     <li className='basis-[60%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
