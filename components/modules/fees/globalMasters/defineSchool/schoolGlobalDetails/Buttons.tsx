@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails, onSubmit, form, setImageSrc, setFile}:any) => {
 
 
     // Cancel click
@@ -19,6 +19,7 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             id:'',
             school_main:false,
             school_subheads:false,
+            logo:'',
             school_name:'',
             school_address:'',
             school_address_2:'',
@@ -47,8 +48,9 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         });
         // Reseting form
         form.reset({
-            school_main:Boolean,
-            school_subheads:Boolean,
+            school_main:true,
+            school_subheads:false,
+            logo:'',
             school_name:'',
             school_address:'',
             school_address_2:'',
@@ -74,6 +76,8 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             academic_year:'',
             financial_year:'',
         });
+        setImageSrc('');
+        setFile(null);
     };
 
 
@@ -82,7 +86,7 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
 
     return (
-        <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
+        <div className='flex flex-row items-center justify-center pb-4 mt-2 gap-2 ml-0'>
             {
                 updateSchoolDetails.id === '' ? (
                     <Button

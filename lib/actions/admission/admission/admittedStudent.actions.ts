@@ -4,6 +4,9 @@ import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
+import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
+import { fetchInstallments } from '../../fees/feeMaster/feeMaster/installment.actions';
 
 
 
@@ -223,6 +226,12 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             health_details:{
                 height:0,
                 weight:0
+            },
+            transport_details:{
+                route:'',
+                stop:'',
+                vehicle:'',
+                months:[]
             }
         });
         newStudent.save().then(async () => {
@@ -618,6 +627,37 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
 
 
 
+// Fetch students by class and section Transport
+export const fetchStudentsByClassAndSectionTransport = async ({class_name, section}:{class_name:String; section:String;}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        let students;
+
+
+        if(section || section !== ''){
+            students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section});
+        }else{
+            students = await AdmittedStudent.find({'student.class':class_name});
+        };
+
+
+        // Return
+        return students;
+
+    } catch (err) {
+        throw new Error(`Error fetching students: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify students' health details props
 interface ModifyStudentsHealthDetails{
     students:any
@@ -852,5 +892,63 @@ export const fetchStudentsCountByClassAndSection = async ({class_name, section}:
 
     } catch (err) {
         throw new Error(`Error fetching students count: ${err}`);
+    };
+};
+
+
+
+
+
+// Modify student transport details props
+interface ModifyStudentTransportDetailsProps{
+    adm_no:any;
+    transport_details:any;
+};
+// Modify students transport details
+export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}:ModifyStudentTransportDetailsProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching installments
+        const installments  = await fetchInstallments();
+
+
+        // Fetching transport fee
+        const transportFee = await Head.findOne({type:'transport'});
+        const submitTransporFee = {
+            type_name:transportFee.affiliated_fee_type,
+            head_name:transportFee.name,
+            schedule_type:transportFee.pay_schedule,
+            installment:'All installments',
+            account:'---',
+            post_account:'---',
+            fee_type:transportFee.type,
+            amounts:installments.map((i:any) => {
+                            return {
+                                name:i.name,
+                                value:1000
+                            }
+                        })
+        }
+
+
+        // Transport group amount
+        const transportGroup = await TransportGroup.findOne();
+
+
+        // Updating
+        await AdmittedStudent.findOneAndUpdate(
+            {'student.adm_no':adm_no},
+            {
+                transport_details,
+                $push:{'affiliated_heads.heads':submitTransporFee}
+            }
+        );
+
+    } catch (err) {
+        throw new Error(`Error updating student transport details: ${err}`);
     };
 };

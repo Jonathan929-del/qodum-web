@@ -5,6 +5,7 @@ import FormCom from '@/components/modules/fees/globalMasters/defineSchool/school
 import ViewCom from '@/components/modules/fees/globalMasters/defineSchool/schoolGlobalDetails/ViewCom';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -16,6 +17,10 @@ const page = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
+
+
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // Schools Details
@@ -30,6 +35,7 @@ const page = () => {
     const [updateSchoolDetails, setUpdateSchoolDetails] = useState({
         id:'',
         isDeleteClicked:false,
+        logo:'',
         school_main:false,
         school_subheads:false,
         school_name:'',
@@ -74,7 +80,9 @@ const page = () => {
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
-                isViewOpened ? (
+                isLoading ? (
+                    <LoadingIcon />
+                ) : isViewOpened ? (
                     <ViewCom
                         schoolsDetails={schoolsDetails}
                         setIsViewOpened={setIsViewOpened}
@@ -88,6 +96,7 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         updateSchoolDetails={updateSchoolDetails}
                         setUpdateSchoolDetails={setUpdateSchoolDetails}
+                        setIsLoading={setIsLoading}
                     />
                 )
             }

@@ -230,7 +230,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             school_name:schools[0].school_name,
             school_address:schools[0].school_address,
             website:schools[0].website,
-            school_no:schools[0].school_no
+            school_no:schools[0].school_no,
+            affiliation_no:schools[0].affiliation_no,
+            logo:schools[0].logo
         });
         setIsReceiptOpened(true);
 

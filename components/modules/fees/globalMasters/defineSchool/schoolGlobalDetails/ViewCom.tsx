@@ -18,6 +18,7 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
             id:schoolD._id,
             school_main:schoolD.school_main,
             school_subheads:schoolD.school_subheads,
+            logo:schoolD.logo,
             school_name:schoolD.school_name,
             school_address:schoolD.school_address,
             school_address_2:schoolD.school_address_2,

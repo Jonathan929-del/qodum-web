@@ -9,6 +9,7 @@ import GlobalSchoolDetails from '@/lib/models/fees/globalMasters/defineSchool/Sc
 
 // Create global school details Props
 interface CreateGlobalSchoolDetailsProps{
+    logo:String;
     school_main:Boolean,
     school_subheads:Boolean,
     school_name:String,
@@ -38,6 +39,7 @@ interface CreateGlobalSchoolDetailsProps{
 };
 // Create global school details
 export const createGlobalSchoolDetails = async ({
+    logo,
     school_main,
     school_subheads,
     school_name,
@@ -74,6 +76,7 @@ export const createGlobalSchoolDetails = async ({
 
         // Creating new global school details
         const newGlobalSchoolDetails = await GlobalSchoolDetails.create({
+            logo,
             school_main,
             school_subheads,
             school_name,
@@ -137,6 +140,7 @@ export const fetchGlobalSchoolDetails = async () => {
 // Modify global school details Props
 interface ModifyGlobalSchoolDetailsProps{
     id:String;
+    logo:String;
     school_main:Boolean,
     school_subheads:Boolean,
     school_name:String,
@@ -167,6 +171,7 @@ interface ModifyGlobalSchoolDetailsProps{
 // Modify global school details
 export const modifyGlobalSchoolDetails = async ({
     id,
+    logo,
     school_main,
     school_subheads,
     school_name,
@@ -204,6 +209,7 @@ export const modifyGlobalSchoolDetails = async ({
         const updatedGlobalSchoolDetails = await GlobalSchoolDetails.findByIdAndUpdate(
             id,
             {
+                logo,
                 school_main,
                 school_subheads,
                 school_name,

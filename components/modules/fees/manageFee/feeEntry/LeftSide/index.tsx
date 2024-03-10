@@ -61,11 +61,11 @@ const index = ({selectedStudent}:any) => {
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Route Name:</p>
-                <p></p>
+                <p>{selectedStudent?.route_name || ''}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px]'>
                 <p className='text-hash-color'>Stop Name:</p>
-                <p></p>
+                <p>{selectedStudent?.stop_name || ''}</p>
             </div>
         </div>
     );

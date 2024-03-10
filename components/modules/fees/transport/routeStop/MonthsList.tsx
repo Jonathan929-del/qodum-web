@@ -71,144 +71,6 @@ const MonthsList = ({form, transportGroups}:any) => {
                     <CommandList>
 
 
-                        {/* Jan transport group */}
-                        <CommandItem
-                            className='w-full flex flex-row text-[10px] bg-[#F3F8FB] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
-                        >
-                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>1</li>
-                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                Jan
-                            </li>
-                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
-                                {/* Meridiem */}
-                                <FormField
-                                    control={form.control}
-                                    name='transport_groups.jan'
-                                    render={({field}) => (
-                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                            <div className='w-full h-full flex flex-col items-start gap-4'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                                                            <SelectValue placeholder='Select'/>
-                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {transportGroups.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No transport groups</p>
-                                                            ) : !transportGroups[0]?.distance_name ? (
-                                                                <LoadingIcon />
-                                                            ) : transportGroups.map((t:any) => (
-                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage className='text-xs mt-[-20px]'/>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                            </li>
-                        </CommandItem>
-
-
-                        {/* Feb transport group */}
-                        <CommandItem
-                            className='w-full flex flex-row text-[10px] bg-[#fff] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
-                        >
-                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>2</li>
-                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                Feb
-                            </li>
-                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
-                                {/* Meridiem */}
-                                <FormField
-                                    control={form.control}
-                                    name='transport_groups.feb'
-                                    render={({field}) => (
-                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                            <div className='w-full h-full flex flex-col items-start gap-4'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#fff] border-[0.5px] border-[#E4E4E4]'>
-                                                            <SelectValue placeholder='Select'/>
-                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {transportGroups.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No transport groups</p>
-                                                            ) : !transportGroups[0]?.distance_name ? (
-                                                                <LoadingIcon />
-                                                            ) : transportGroups.map((t:any) => (
-                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage className='text-xs mt-[-20px]'/>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                            </li>
-                        </CommandItem>
-
-
-                        {/* Mar transport group */}
-                        <CommandItem
-                            className='w-full flex flex-row text-[10px] bg-[#F3F8FB] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
-                        >
-                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>3</li>
-                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                Mar
-                            </li>
-                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
-                                {/* Meridiem */}
-                                <FormField
-                                    control={form.control}
-                                    name='transport_groups.mar'
-                                    render={({field}) => (
-                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                            <div className='w-full h-full flex flex-col items-start gap-4'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                                                            <SelectValue placeholder='Select'/>
-                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {transportGroups.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No transport groups</p>
-                                                            ) : !transportGroups[0]?.distance_name ? (
-                                                                <LoadingIcon />
-                                                            ) : transportGroups.map((t:any) => (
-                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage className='text-xs mt-[-20px]'/>
-                                            </div>
-                                        </FormItem>
-                                    )}
-                                />
-                            </li>
-                        </CommandItem>
-
-
                         {/* Apr transport group */}
                         <CommandItem
                             className='w-full flex flex-row text-[10px] bg-[#fff] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
@@ -621,6 +483,145 @@ const MonthsList = ({form, transportGroups}:any) => {
                                 />
                             </li>
                         </CommandItem>
+                        
+
+                        {/* Jan transport group */}
+                        <CommandItem
+                            className='w-full flex flex-row text-[10px] bg-[#F3F8FB] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                        >
+                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>1</li>
+                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                Jan
+                            </li>
+                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
+                                {/* Meridiem */}
+                                <FormField
+                                    control={form.control}
+                                    name='transport_groups.jan'
+                                    render={({field}) => (
+                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                            <div className='w-full h-full flex flex-col items-start gap-4'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                            <SelectValue placeholder='Select'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {transportGroups.length < 1 ? (
+                                                                <p className='text-xs text-hash-color'>No transport groups</p>
+                                                            ) : !transportGroups[0]?.distance_name ? (
+                                                                <LoadingIcon />
+                                                            ) : transportGroups.map((t:any) => (
+                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='text-xs mt-[-20px]'/>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </li>
+                        </CommandItem>
+
+
+                        {/* Feb transport group */}
+                        <CommandItem
+                            className='w-full flex flex-row text-[10px] bg-[#fff] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                        >
+                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>2</li>
+                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                Feb
+                            </li>
+                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
+                                {/* Meridiem */}
+                                <FormField
+                                    control={form.control}
+                                    name='transport_groups.feb'
+                                    render={({field}) => (
+                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                            <div className='w-full h-full flex flex-col items-start gap-4'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#fff] border-[0.5px] border-[#E4E4E4]'>
+                                                            <SelectValue placeholder='Select'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {transportGroups.length < 1 ? (
+                                                                <p className='text-xs text-hash-color'>No transport groups</p>
+                                                            ) : !transportGroups[0]?.distance_name ? (
+                                                                <LoadingIcon />
+                                                            ) : transportGroups.map((t:any) => (
+                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='text-xs mt-[-20px]'/>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </li>
+                        </CommandItem>
+
+
+                        {/* Mar transport group */}
+                        <CommandItem
+                            className='w-full flex flex-row text-[10px] bg-[#F3F8FB] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
+                        >
+                            <li className='basis-[20%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>3</li>
+                            <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                Mar
+                            </li>
+                            <li className='basis-[60%] flex items-center justify-center py-[2px]'>
+                                {/* Meridiem */}
+                                <FormField
+                                    control={form.control}
+                                    name='transport_groups.mar'
+                                    render={({field}) => (
+                                        <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                            <div className='w-full h-full flex flex-col items-start gap-4'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className='h-8 m-auto w-[50%] flex flex-row items-center text-hash-color text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                            <SelectValue placeholder='Select'/>
+                                                            <ChevronDown className='h-4 w-4 opacity-50'/>
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {transportGroups.length < 1 ? (
+                                                                <p className='text-xs text-hash-color'>No transport groups</p>
+                                                            ) : !transportGroups[0]?.distance_name ? (
+                                                                <LoadingIcon />
+                                                            ) : transportGroups.map((t:any) => (
+                                                                <SelectItem value={t.distance_name} key={t._id}>{t.distance_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage className='text-xs mt-[-20px]'/>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </li>
+                        </CommandItem>
+
                     </CommandList>
                 </div>
 

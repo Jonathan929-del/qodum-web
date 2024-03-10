@@ -1,37 +1,60 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import {useState} from 'react';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
 import { Label } from "@/components/ui/label"
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import LoadingIcon from '@/components/utils/LoadingIcon';
+import {uploadSchoolLogo} from '@/lib/actions/image.actions';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {SchoolGlobalValidation} from '@/lib/validations/fees/globalMasters/defineSchool/schoolGlobalDetails';
 import {createGlobalSchoolDetails, modifyGlobalSchoolDetails, deleteGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ChevronDown } from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails, boards}:any) => {
+const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdateSchoolDetails, boards, setIsLoading}:any) => {
 
 
     // Toast
     const {toast} = useToast();
 
 
+    // File
+    const [file, setFile] = useState(null);
+
+
+    // Image source (For image preview)
+    const [imageSrc, setImageSrc] = useState('');
+
+
+    // Handle logo on change
+    const handleLogoOnChange = (e:any) => {
+        setFile(e.target.files[0])
+        const reader = new FileReader();
+        reader.onload = function(onLoadEvent) {
+            // @ts-ignore
+            setImageSrc(onLoadEvent.target.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+
     // Comparison object
     const comparisonObject = {
         school_main:updateSchoolDetails.school_main,
         school_subheads:updateSchoolDetails.school_subheads,
+        logo:updateSchoolDetails.logo,
         school_name:updateSchoolDetails.school_name,
         school_address:updateSchoolDetails.school_address,
         school_address_2:updateSchoolDetails.school_address_2,
@@ -60,11 +83,12 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
 
     // Form
-    const form:any = useForm({
+    const form = useForm({
         resolver:zodResolver(SchoolGlobalValidation),
         defaultValues:{
             school_main:updateSchoolDetails.id === '' ? false : updateSchoolDetails.school_main,
             school_subheads:updateSchoolDetails.id === '' ? false : updateSchoolDetails.school_subheads,
+            logo:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.logo,
             school_name:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_name,
             school_address:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_address,
             school_address_2:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_address_2,
@@ -95,9 +119,16 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof SchoolGlobalValidation>) => {
+        setIsLoading(true);
         // Create school details
         if(updateSchoolDetails.id === ''){
+            if(file){
+                const formData = new FormData();
+                formData.append('file', file);
+                await uploadSchoolLogo({data:formData, school_name:values.school_name.replace(/ /g, '-')});
+            };
             await createGlobalSchoolDetails({
+                logo:file !== null ? `https://qodum.s3.amazonaws.com/schools/${values.school_name.replace(/ /g, '-')}` : '',
                 school_main:values.school_main,
                 school_subheads:values.school_subheads,
                 school_name:values.school_name,
@@ -128,9 +159,15 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             toast({title:'Added Successfully!'});
         }
         // Modify school details
-        else if(!deepEqual(comparisonObject, values)){
+        else if(!deepEqual(comparisonObject, {...values, logo:comparisonObject.logo}) || file){
+            if(file){
+                const formData = new FormData();
+                formData.append('file', file);
+                await uploadSchoolLogo({data:formData, school_name:values.school_name.replace(/ /g, '-')});
+            };
             await modifyGlobalSchoolDetails({
                 id:updateSchoolDetails.id,
+                logo:file !== null ? `https://qodum.s3.amazonaws.com/schools/${values.school_name.replace(/ /g, '-')}` : comparisonObject.logo,
                 school_main:values.school_main,
                 school_subheads:values.school_subheads,
                 school_name:values.school_name,
@@ -171,6 +208,7 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         setUpdateSchoolDetails({
             id:'',
             school_main:false,
+            logo:'',
             school_subheads:false,
             school_name:'',
             school_address:'',
@@ -200,8 +238,9 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         });
         // Reseting form
         form.reset({
-            school_main:Boolean,
-            school_subheads:Boolean,
+            school_main:true,
+            school_subheads:false,
+            logo:'',
             school_name:'',
             school_address:'',
             school_address_2:'',
@@ -227,18 +266,21 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             academic_year:'',
             financial_year:'',
         });
+        setImageSrc('');
+        setFile(null);
+        setIsLoading(false);
     };
 
 
     return (
-        <div className='w-[90%] max-w-[900px] flex flex-col mt-[-30px] items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+        <div className='w-[90%] h-full max-w-[900px] flex flex-col mt-[-30px] items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>School Details</h2>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='w-full max-h-[450px] flex flex-col overflow-y-scroll px-2 sm:px-4 custom-sidebar-scrollbar'
+                    className='w-full flex flex-col overflow-y-scroll px-2 sm:px-4 custom-sidebar-scrollbar'
                 >
 
                     <div className='w-full flex flex-col mt-2 sm:flex-row sm:gap-20'>
@@ -538,9 +580,9 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                 name='affiliation_to'
                                 render={({field}) => (
                                     <FormItem className='w-full mt-[4px]'>
-                                    <div className='w-full h-6 gap-2 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                    <div className='w-full h-6 flex flex-row items-center justify-center sm:gap-2'>
                                         <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Affiliation To</FormLabel>
-                                        <div className='w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                        <div className='basis-[70%] flex flex-col items-start gap-4 sm:basis-[65%]'>
                                             <FormControl>
                                                 <Select
                                                     {...field}
@@ -576,7 +618,7 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                 render={({field}) => (
                                     <FormItem>
                                         <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
-                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Affiliation No.</FormLabel>
+                                            <FormLabel className='basis-[30%] h-full pr-2 flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Affiliation No.</FormLabel>
                                             <div className='basis-[70%] h-full sm:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -763,8 +805,44 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                     </div>
 
 
+                    {/* Logo */}
+                    <div className='w-full mt-2 flex items-center justify-center'>
+                        <div className='w-[125px] h-[125px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-full transition hover:opacity-90'>
+                            <label
+                                // @ts-ignore
+                                for='image'
+                                className='flex items-center justify-center h-full w-full cursor-pointer text-xs font-semibold'
+                            >
+                                {imageSrc !== '' ? (
+                                    <img
+                                        alt="Student's image"
+                                        src={imageSrc}
+                                        className='w-full h-full rounded-full'
+                                    />
+                                ) : updateSchoolDetails.logo ? (
+                                    <img
+                                        alt="Student's image"
+                                        src={updateSchoolDetails.logo}
+                                        className='w-full h-full rounded-full'
+                                    />
+                                ) : (
+                                    <p>Select Logo</p>
+                                )}
+                            </label>
+                            <input
+                                type='file'
+                                accept='image/*'
+                                name='image'
+                                id='image'
+                                className='hidden'
+                                onChange={(e:any) => {handleLogoOnChange(e)}}
+                            />
+                        </div>
+                    </div>
+
+
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} schoolsDetails={schoolsDetails} updateSchoolDetails={updateSchoolDetails} setUpdateSchoolDetails={setUpdateSchoolDetails} onSubmit={onSubmit} form={form}/>
+                    <Buttons setIsViewOpened={setIsViewOpened} schoolsDetails={schoolsDetails} updateSchoolDetails={updateSchoolDetails} setUpdateSchoolDetails={setUpdateSchoolDetails} onSubmit={onSubmit} form={form} setImageSrc={setImageSrc} setFile={setFile}/>
 
                     
                 </form>

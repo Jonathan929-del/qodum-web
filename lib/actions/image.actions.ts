@@ -42,6 +42,27 @@ const uploadFile = async (file:any, reg_no:any) => {
 
 
 
+// Upload school logo
+const uploadSchoolLogoFile = async (file:any, school_name:any) => {
+    const fileBuffer = file;
+    const params = {
+        Bucket:process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+        Key:`schools/${school_name}`,
+        Body:fileBuffer,
+        ContentType:'image'
+    };
+    const command = new PutObjectCommand(params);
+    await configs.send(command);
+    
+    
+    // Return
+    return school_name;
+};
+
+
+
+
+
 // Image
 export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) => {
     try {
@@ -52,6 +73,28 @@ export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) 
         };
         const buffer = Buffer.from(await file.arrayBuffer());
         const res = await uploadFile(buffer, reg_no);
+
+        // Return
+        return res;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+
+
+
+
+// Upload school logo
+export const uploadSchoolLogo = async ({data, school_name}:{data:any, school_name:any}) => {
+    try {
+        const formData = await data;
+        const file = formData.get('file');
+        if(!file){
+            throw new Error('No file was sent');
+        };
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const res = await uploadSchoolLogoFile(buffer, school_name);
 
         // Return
         return res;

@@ -1,9 +1,7 @@
 // Imports
-import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
 
@@ -29,6 +27,8 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
             bill_no:student.student.bill_no,
             class:student.student.class,
             board:student.student.board,
+            route_name:student?.transport_details?.route,
+            stop_name:student?.transport_details?.stop,
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
                 heads:student.affiliated_heads.heads.map((h:any) => {

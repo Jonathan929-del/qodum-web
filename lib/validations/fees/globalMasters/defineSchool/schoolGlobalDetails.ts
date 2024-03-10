@@ -9,6 +9,7 @@ import * as z from 'zod';
 export const SchoolGlobalValidation = z.object({
     school_main:z.boolean(),
     school_subheads:z.boolean(),
+    // logo:z.string(),
     school_name:z.string().nonempty({message:'School name required'}),
     school_address:z.string().nonempty({message:'School address required'}),
     school_address_2:z.string(),

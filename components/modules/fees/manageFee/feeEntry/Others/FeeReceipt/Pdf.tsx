@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import moment from 'moment';
-import {Document, Page, View, Text, Image, PDFViewer, StyleSheet, Font} from '@react-pdf/renderer';
+import {Document, Page, View, Text, PDFViewer, StyleSheet, Font, Image} from '@react-pdf/renderer';
 
 
 
@@ -12,7 +12,26 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
 
     // Font
-    Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
+    // Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
+
+
+    // Image
+    // const imageSrc = receiptPaymentData.logo;
+    const imageSrc = 'https://qodum.s3.amazonaws.com/schools/QODUM-TECH-SERVICE-PVT-LTD';
+
+
+
+    const getBase64Image = (img:any) => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
+    }
+
+    console.log(getBase64Image(imageSrc));
 
 
     // Styles
@@ -42,11 +61,20 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
 
                 {/* Top data */}
-                <View style={{display:'flex', flexDirection:'column', alignItems:'center', paddingTop:10, paddingBottom:4, marginHorizontal:4, fontSize:10, borderBottomWidth:1, borderBottomColor:'#ccc'}}>
-                    <Text style={{fontWeight:400, fontSize:16}}>{receiptPaymentData.school_name}</Text>
-                    <Text style={{marginTop:4}}>{receiptPaymentData.school_address}</Text>
-                    <Text style={{marginTop:2}}>Website:{receiptPaymentData.website} | Contact:{receiptPaymentData.school_no}</Text>
-                    <Text style={{marginTop:2}}>School Affiliation No : 0</Text>
+                <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingTop:10, paddingBottom:4, marginHorizontal:4, fontSize:10, borderBottomWidth:1, borderBottomColor:'#ccc'}}>
+                    <View>
+                        <Image
+                            style={{width:100, height:100}}    
+                            // source={imageSrc}
+                            src={{uri:'https://qodum.s3.amazonaws.com/schools/QODUM-TECH-SERVICE-PVT-LTD', method:'GET', headers:{'Cache-Control':'no-cache'}, body:''}} 
+                        />
+                    </View>
+                    <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center'}}>
+                        <Text style={{fontWeight:400, fontSize:16}}>{receiptPaymentData.school_name}</Text>
+                        <Text style={{marginTop:4}}>{receiptPaymentData.school_address}</Text>
+                        <Text style={{marginTop:2}}>Website:{receiptPaymentData.website} | Contact:{receiptPaymentData.school_no}</Text>
+                        <Text style={{marginTop:2}}>School Affiliation No : {receiptPaymentData.affiliation_no}</Text>
+                    </View>
                 </View>
 
 

@@ -200,6 +200,15 @@ const AdmittedStudentSchema = new mongoose.Schema(
         affiliated_heads:{
             group_name:{type:String},
             heads:{type:Array}
+        },
+
+
+        // Transport details
+        transport_details:{
+            route:{type:String},
+            stop:{type:String},
+            vehicle:{type:String},
+            months:{type:Array}
         }
 
     },
