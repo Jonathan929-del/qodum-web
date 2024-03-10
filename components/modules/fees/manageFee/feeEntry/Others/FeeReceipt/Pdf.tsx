@@ -16,22 +16,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
 
     // Image
-    // const imageSrc = receiptPaymentData.logo;
-    const imageSrc = 'https://qodum.s3.amazonaws.com/schools/QODUM-TECH-SERVICE-PVT-LTD';
-
-
-
-    const getBase64Image = (img:any) => {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
-    }
-
-    console.log(getBase64Image(imageSrc));
+    const imageSrc = receiptPaymentData.logo;
 
 
     // Styles
