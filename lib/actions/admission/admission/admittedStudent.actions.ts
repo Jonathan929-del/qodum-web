@@ -2,10 +2,10 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
-import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
-import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
+import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import { fetchInstallments } from '../../fees/feeMaster/feeMaster/installment.actions';
 
 
@@ -916,27 +916,27 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
         const installments  = await fetchInstallments();
 
 
+        // Transport group amount
+        const transportGroup = await TransportGroup.findOne({distance_name:transport_details.stop});
+
+
         // Fetching transport fee
         const transportFee = await Head.findOne({type:'transport'});
         const submitTransporFee = {
-            type_name:transportFee.affiliated_fee_type,
-            head_name:transportFee.name,
-            schedule_type:transportFee.pay_schedule,
+            type_name:transportFee.affiliated_fee_type || '',
+            head_name:transportFee.name || '',
+            schedule_type:transportFee.pay_schedule || '',
             installment:'All installments',
             account:'---',
             post_account:'---',
-            fee_type:transportFee.type,
+            fee_type:transportFee.type || '',
             amounts:installments.map((i:any) => {
                             return {
                                 name:i.name,
-                                value:1000
+                                value:transportGroup.distance_amount
                             }
                         })
-        }
-
-
-        // Transport group amount
-        const transportGroup = await TransportGroup.findOne();
+        };
 
 
         // Updating

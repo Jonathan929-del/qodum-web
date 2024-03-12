@@ -10,7 +10,7 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo}:any) => {
 
 
     // Total paid amount
@@ -74,6 +74,8 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     payments={payments}
                     showButtonClick={showButtonClick}
                     allPayments={allPayments}
+                    setIsReceiptOpened={setIsReceiptOpened}
+                    setReceiptPaymentData={setReceiptPaymentData}
                 />
             </div>
 
@@ -97,6 +99,9 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 setTotalPaidAmount={setTotalPaidAmount}
                 isLoadingHeads={isLoadingHeads}
                 installments={installments}
+                paymentsReceiptNo={paymentsReceiptNo}
+                setInstallments={setInstallments}
+                setPaymentReceiptNo={setPaymentReceiptNo}
             />
         </div>
     );

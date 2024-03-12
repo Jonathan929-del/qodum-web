@@ -12,7 +12,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
 
     // Font
-    // Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
+    Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
 
 
     // Image
@@ -47,11 +47,10 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
                 {/* Top data */}
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingTop:10, paddingBottom:4, marginHorizontal:4, fontSize:10, borderBottomWidth:1, borderBottomColor:'#ccc'}}>
-                    <View>
+                    <View style={{flex:1}}>
                         <Image
-                            style={{width:100, height:100}}    
-                            // source={imageSrc}
-                            src={{uri:'https://qodum.s3.amazonaws.com/schools/QODUM-TECH-SERVICE-PVT-LTD', method:'GET', headers:{'Cache-Control':'no-cache'}, body:''}} 
+                            style={{width:100, height:100}}
+                            src={{uri:imageSrc, method:'GET', headers:{'Cache-Control':'no-cache'}, body:''}}
                         />
                     </View>
                     <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center'}}>

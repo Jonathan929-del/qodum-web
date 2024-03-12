@@ -11,7 +11,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 
 
 // Main function
-const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments}:any) => {
+const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
 
     // Selected tab
@@ -59,6 +59,8 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
                             setIsShowInstallment={setIsShowInstallment}
                             setSelectedInstallments={setSelectedInstallments}
                             payments={payments}
+                            setIsReceiptOpened={setIsReceiptOpened}
+                            setReceiptPaymentData={setReceiptPaymentData}
                         />
                     </TabsContent>
                     <TabsContent value='paymode'>

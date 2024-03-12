@@ -56,7 +56,7 @@ const page = () => {
 
 
     // Selected student
-    const [selectedStudent, setSelectedStudent] = useState({
+    const [selectedStudent, setSelectedStudent] = useState<any>({
         id:'',
         image:'',
         name:'',
@@ -113,6 +113,10 @@ const page = () => {
             admission_no:student.student.adm_no,
             bill_no:student.student.bill_no,
             class:student.student.class,
+            board:student?.student?.board,
+            route_name:student?.transport_details?.route,
+            stop_name:student?.transport_details?.stop,
+            vehicle_name:student?.transport_details?.vehicle,
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
                 heads:student.affiliated_heads.heads.map((h:any) => {

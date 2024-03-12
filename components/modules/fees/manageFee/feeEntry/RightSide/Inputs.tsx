@@ -181,8 +181,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                         <SelectContent>
                                             <SelectItem value='All fee types'>All fee types</SelectItem>
                                             {feeTypes.length === 0 ? (
-                                                <p className='text-xs text-hash-color'>No fee types</p>
-                                            ) : !feeTypes[0].name ? (
+                                                <p className='text-xs text-hash-color'></p>
+                                            ) : feeTypes[0].name === '' ? (
                                                 <LoadingIcon />
                                             ) : feeTypes.map((t:any) => (
                                                 <SelectItem value={t.name} key={t._id}>{t.name}</SelectItem>

@@ -16,7 +16,21 @@ interface CreateAdmittedStudentProps{
         received_date:Date;
         remarks:String;
         paymode:String;
-        paymode_details:any,
+        paymode_details:any;
+        fee_type:String;
+        advance_dues_number:String;
+
+
+        class_name:String;
+        board:String;
+        adm_no:String;
+        father_name:String;
+        school_name:String;
+        school_address:String;
+        website:String;
+        school_no:String;
+        affiliation_no:String;
+        logo:String;
     
         // Amounts
         actual_amount:Number;
@@ -27,7 +41,7 @@ interface CreateAdmittedStudentProps{
         concession_reason:String;
 };
 // Create payment
-export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -43,6 +57,19 @@ export const createPayment = async ({student, receipt_no, installments, received
             remarks,
             paymode,
             paymode_details,
+            fee_type,
+            advance_dues_number,
+
+            class_name,
+            board,
+            adm_no,
+            father_name,
+            school_name,
+            school_address,
+            website,
+            school_no,
+            affiliation_no,
+            logo,
 
             // Amounts
             actual_amount,

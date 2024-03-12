@@ -11,7 +11,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, installments, setHeads}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo}:any) => {
 
 
     // Toast
@@ -132,6 +132,25 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
     // Cancel button
     const cancel = () => {
+        // Reseting
+        setHeads([]);
+        form.reset({
+            received_date:new Date(),
+            receipt_no:'',
+            remarks:'',
+            installment:'',
+            pay_mode:'',
+            pay_mode_details:{},
+
+
+            // Form inputs
+            fee_type:'All fee types',
+            bank_name:'',
+            entry_mode:'School',
+            total_paid_amount:0,
+            dues:0,
+            advance_amt:0
+        });
         setSelectedStudent({
             id:'',
             image:'',
@@ -144,32 +163,14 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             bill_no:'',
             class:'',
             affiliated_heads:{
-                group_name:'',
+                    group_name:'',
                 heads:[]
             }
         });
-        form.reset({
-            receipt_date:new Date(),
-            ref_no:'',
-            receipt_no:0,
-            pay_mode:'',
-            remarks:'',
-            is_adjust_advance:false,
-            adjust_advance:0,
-            fee_type:'All Fee Types',
-            bank_name:'',
-            installment:[''],
-            entry_mode:'School',
-            heads:[{
-                conc_amount:0,
-                paid_amount:0
-            }],
-            total_paid_amount:0,
-            dues:0,
-            advance_amt:0
-        });
+        setInstallments([]);
         setSelectedInstallments([]);
-        setTotalPaidAmount(0);
+        setConcessionReason('');
+        setPaymentReceiptNo('');
     };
 
 
@@ -278,12 +279,10 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                                 />
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>
-                                    <span
-                                        onClick={() => {handleSubmit();setIsConcession(false)}}
-                                    >
-                                        Submit
-                                    </span>
+                                <AlertDialogAction
+                                    onClick={() => {handleSubmit();setIsConcession(false)}}
+                                >
+                                    Submit
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>

@@ -94,9 +94,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.conc_amount = v);
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.payable_amount = a.value - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
         heads[heads.indexOf(h)].amounts.filter((a:any) => a.name === i).map((a:any) => a.paid_amount = a.value - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
-        // const totalValueAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount))))));
-        // const totalConcAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.conc_amount)))));
-        // const totalRecdAmount = totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.last_rec_amount)))));
         setHeads([...heads]);
         form.setValue('total_paid_amount', totalNumberGenerator(
             heads.map((head:any) => totalNumberGenerator(
@@ -340,18 +337,20 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
     // Use effects
     useEffect(() => {
-        const assignedHeads = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => {
-            if(h.amounts.length === 1){
-                return selectedInstallments.includes(h.installment);
-            }else{
-                const amounts = h.amounts;
-                return h.installment === 'All installments' && amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 0;
-            };
-        });
+        const assignedHeads = selectedStudent?.affiliated_heads?.heads
+            ?.filter((h:any) => h.type_name === form.getValues().fee_type || form.getValues().fee_type === 'All fee types')
+            ?.filter((h:any) => {
+                if(h.amounts.length === 1){
+                    return selectedInstallments.includes(h.installment);
+                }else{
+                    const amounts = h.amounts;
+                    return h.installment === 'All installments' && amounts.filter((a:any) => selectedInstallments.includes(a.name)).length > 0;
+                };
+            });
         setHeads(assignedHeads);
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
-    }, [selectedInstallments, selectedStudent]);
+    }, [selectedInstallments, selectedStudent, form.watch('fee_type')]);
     useEffect(() => {
         setTotalPaidAmount(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
     }, [heads]);

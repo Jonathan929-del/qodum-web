@@ -9,7 +9,7 @@ import moment from 'moment';
 
 
 // Main function
-const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, showButtonClick, allPayments}:any) => {
+const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, showButtonClick, allPayments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
 
     // Toast
@@ -45,7 +45,7 @@ const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, s
                     Show Installment
                 </span>
             </div>
-            {isShowInstallment && <ShowInstallment setIsShowInstallment={setIsShowInstallment} selectedStudent={selectedStudent} totalNumberGenerator={totalNumberGenerator} installments={installments} setSelectedInstallments={setSelectedInstallments} payments={payments}/>}
+            {isShowInstallment && <ShowInstallment setIsShowInstallment={setIsShowInstallment} selectedStudent={selectedStudent} totalNumberGenerator={totalNumberGenerator} installments={installments} setSelectedInstallments={setSelectedInstallments} payments={payments} setIsReceiptOpened={setIsReceiptOpened} setReceiptPaymentData={setReceiptPaymentData}/>}
         </div>
     );
 };

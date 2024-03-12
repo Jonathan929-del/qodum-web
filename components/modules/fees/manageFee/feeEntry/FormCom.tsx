@@ -169,6 +169,12 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         
         
         // Create payment
+        let advanceDuesNumber;
+        if(values.dues > 0){
+            advanceDuesNumber = - values.dues;
+        }else if (values.advance_amt > 0){
+            advanceDuesNumber = values.advance_amt;
+        };
         const paidHeads = heads.filter((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name) && Number(a.paid_amount) > 0).map((a:any) => Number(a.paid_amount))[0]);
         let paymodeDetails;
         switch (values.pay_mode) {
@@ -191,6 +197,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 {}
                 break;
         };
+        const schools = await fetchGlobalSchoolDetails();
         const res = await createPayment({
             // Others
             student:selectedStudent.name,
@@ -200,6 +207,18 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             remarks:values.remarks,
             paymode:values.pay_mode || 'Cash',
             paymode_details:paymodeDetails,
+            fee_type:values.fee_type,
+            advance_dues_number:advanceDuesNumber,
+            class_name:selectedStudent.class,
+            board:selectedStudent.board,
+            adm_no:selectedStudent.admission_no,
+            father_name:selectedStudent.father_name,
+            school_name:schools[0].school_name,
+            school_address:schools[0].school_address,
+            website:schools[0].website,
+            school_no:schools[0].school_no,
+            affiliation_no:schools[0].affiliation_no,
+            logo:schools[0].logo,
         
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
@@ -209,30 +228,13 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             paid_heads:paidHeads,
             concession_reason:concessionReason
         });
-        let advanceDuesNumber;
-        if(values.dues > 0){
-            advanceDuesNumber = - values.dues;
-        }else if (values.advance_amt > 0){
-            advanceDuesNumber = values.advance_amt;
-        };
 
-        const schools = await fetchGlobalSchoolDetails();
+
+        // Fee receipt
         setReceiptPaymentData({
             ...res,
             installments:selectedInstallments,
-            paid_heads:paidHeads,
-            class_name:selectedStudent.class,
-            board:selectedStudent.board,
-            adm_no:selectedStudent.admission_no,
-            father_name:selectedStudent.father_name,
-            fee_type:values.fee_type,
-            advance_dues_number:advanceDuesNumber,
-            school_name:schools[0].school_name,
-            school_address:schools[0].school_address,
-            website:schools[0].website,
-            school_no:schools[0].school_no,
-            affiliation_no:schools[0].affiliation_no,
-            logo:schools[0].logo
+            paid_heads:paidHeads
         });
         setIsReceiptOpened(true);
 
@@ -296,6 +298,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             bill_no:student.student.bill_no,
             class:student.student.class,
             board:student?.student?.board,
+            route_name:student?.transport_details?.route,
+            stop_name:student?.transport_details?.stop,
+            vehicle_name:student?.transport_details?.vehicle,
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
                 heads:student.affiliated_heads.heads.map((h:any) => {
@@ -414,6 +419,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setUpiDetails={setUpiDetails}
                             swipedCardDetails={swipedCardDetails}
                             setSwipedCardDetails={setSwipedCardDetails}
+                            setIsReceiptOpened={setIsReceiptOpened}
+                            setReceiptPaymentData={setReceiptPaymentData}
+                            setPaymentReceiptNo={setPaymentReceiptNo}
                         />
                     </div>
                 </form>

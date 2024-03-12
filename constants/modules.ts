@@ -419,7 +419,7 @@ const modules = [
                         subPageName:'Define Vehicle Route Relation'
                     },
                     {
-                        subPageName:'Define Transport Group'
+                        subPageName:'Define Transport Fare And Group'
                     },
                     {
                         subPageName:'Define Transport Medium'

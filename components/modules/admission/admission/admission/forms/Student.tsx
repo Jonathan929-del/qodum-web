@@ -11,18 +11,18 @@ import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {Calendar} from '@/components/ui/calendar';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
-import {fetchTravelMasters} from '@/lib/actions/fees/transport/travelMaster.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
 import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
@@ -92,7 +92,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
     // Transport mediums
-    const [travelMasters, setTravelMasters] = useState<any>([{}]);
+    const [transportMediums, setTransportMediums] = useState<any>([{}]);
 
 
     // Search Students
@@ -1319,7 +1319,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const optionalSubjectsRes  = await fetchOptionalSubjects();
             const streamsRes = await fetchStreams();
             const parishesRes = await fetchParishes();
-            const travelMastersRes = await fetchTravelMasters();
+            const transportMediumsRes = await fetchTransportMediums();
             setClasses(classesRes);
             setBoards(boardsRes);
             setReligions(religionsRes);
@@ -1330,7 +1330,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setOptionalSubjects(optionalSubjectsRes);
             setStreams(streamsRes);
             setParishes(parishesRes);
-            setTravelMasters(travelMastersRes);
+            setTransportMediums(transportMediumsRes);
         };
         fetcher();
     }, []);
@@ -3001,12 +3001,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {travelMasters.length < 1 ? (
+                                                        {transportMediums.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No transport mediums</p>
-                                                        ) : !travelMasters[0].travel_agency_name ? (
+                                                        ) : !transportMediums[0].transport_medium ? (
                                                             <LoadingIcon />
-                                                        ) : travelMasters.map((t:any) => (
-                                                            <SelectItem value={t.travel_agency_name} id={t._id}>{t.travel_agency_name}</SelectItem>
+                                                        ) : transportMediums.map((t:any) => (
+                                                            <SelectItem value={t.transport_medium} id={t._id}>{t.transport_medium}</SelectItem>
                                                         ))}
                                                     </SelectContent>
                                                 </Select>

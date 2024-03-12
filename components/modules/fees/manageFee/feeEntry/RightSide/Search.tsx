@@ -63,6 +63,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 board:student?.student?.board || '',
                 route_name:student?.transport_details?.route,
                 stop_name:student?.transport_details?.stop,
+                vehicle_name:student?.transport_details?.vehicle,
                 affiliated_heads:{
                     group_name:student?.affiliated_heads?.group_name || '',
                     heads:student?.affiliated_heads?.heads?.map((h:any) => {
@@ -115,6 +116,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             board:student?.student?.board || '',
             route_name:student?.transport_details?.route || '',
             stop_name:student?.transport_details?.stop || '',
+            vehicle_name:student?.transport_details?.vehicle || '',
             affiliated_heads:{
                 group_name:student?.affiliated_heads?.group_name || '',
                 heads:student?.affiliated_heads?.heads?.map((h:any) => {

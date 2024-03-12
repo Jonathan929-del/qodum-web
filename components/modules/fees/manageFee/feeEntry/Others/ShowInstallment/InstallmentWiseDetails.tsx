@@ -1,8 +1,8 @@
 // Imports
-
 import moment from 'moment';
 import {useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -10,7 +10,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 // Main function
-const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installments, setIsShowInstallment, setSelectedInstallments, payments}:any) => {
+const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installments, setIsShowInstallment, setSelectedInstallments, payments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
 
     // Show payment
@@ -22,6 +22,13 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
     const totalPaidAmount = totalNumberGenerator(payments.map((p:any) => Number(p.paid_amount)));
     const totalConcAmount = totalNumberGenerator(payments.map((p:any) => Number(p.conc_amount || 0)));
     const totalUnpaidAmount = totalActualAmount - (totalPaidAmount + totalConcAmount);
+
+
+    // Receipt no click
+    const receiptNoClick = async (p:any) => {
+        setReceiptPaymentData(p);
+        setIsReceiptOpened(true);
+    };
 
 
     // Select handler
@@ -91,7 +98,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
             <div className='flex flex-col border-[0.5px] border-[#ccc] rounded-[2px]'>
                 <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-xs py-2 px-2 rounded-[2px] border-b-[0.5px] border-[#ccc]'>Paid History</h2>
                 <ul className='flex flex-row text-[11px] font-semibold bg-[#EDF1F5]'>
-                    <li className='basis-[15%] flex items-center justify-center'>
+                    <li className='basis-[15%] flex items-center justify-center gap-2'>
                         Receipt No.
                     </li>
                     <li className='basis-[10%] flex items-center justify-center'>
@@ -129,7 +136,12 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                             >
                                 {showPayment?.receipt_no === p.receipt_no ? 'Hide' : 'Show'}
                             </span>
-                            {p.receipt_no}
+                            <span
+                                className='cursor-pointer'
+                                onClick={() => receiptNoClick(p)}
+                            >
+                                {p.receipt_no}
+                            </span>
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.installments.map((i:any) => i + '-')}

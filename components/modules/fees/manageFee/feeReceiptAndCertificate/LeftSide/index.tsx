@@ -36,20 +36,8 @@ const index = ({selectedStudent}:any) => {
                 <p>{selectedStudent.father_name}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
-                <p className='text-hash-color'>Mother Name:</p>
-                <p>{selectedStudent.mother_name}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
-                <p className='text-hash-color'>Contact No.:</p>
-                <p>{selectedStudent.contact_no}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Admission No.:</p>
                 <p>{selectedStudent.admission_no}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
-                <p className='text-hash-color'>Bill No.:</p>
-                <p>{selectedStudent.bill_no}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Class:</p>
@@ -58,18 +46,6 @@ const index = ({selectedStudent}:any) => {
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Fees Group:</p>
                 <p>{selectedStudent?.affiliated_heads.group_name}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
-                <p className='text-hash-color'>Route Name:</p>
-                <p>{selectedStudent?.route_name || ''}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
-                <p className='text-hash-color'>Stop Name:</p>
-                <p>{selectedStudent?.stop_name || ''}</p>
-            </div>
-            <div className='flex flex-row items-center gap-[4px] pb-[2px]'>
-                <p className='text-hash-color'>Vehicle Name:</p>
-                <p>{selectedStudent?.vehicle_name || ''}</p>
             </div>
         </div>
     );
