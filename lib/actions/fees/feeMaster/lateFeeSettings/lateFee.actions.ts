@@ -1,7 +1,11 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
+import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
+import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import LateFee from '@/lib/models/fees/feeMaster/lateFeeSettings/LateFee.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
 
 
 
@@ -23,6 +27,36 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
     
         // Database connection
         connectToDb('accounts');
+
+
+        // Late fee
+        const installments = await Installment.find();
+        const lateFee = await Head.findOne({type:'fine'});
+        const lateFeeHead = {
+            type_name:lateFee.affiliated_fee_type || '',
+            head_name:lateFee.name || '',
+            schedule_type:lateFee.pay_schedule || '',
+            installment:'All installments',
+            account:'---',
+            post_account:'---',
+            fee_type:lateFee.type || '',
+            due_date,
+            amounts:installments.map((i:any) => {
+                            return {
+                                name:i.name,
+                                value:amount
+                            }
+                        })
+        };
+
+
+        // Updating group and students
+        // @ts-ignore
+        const groupNameRegex = new RegExp(fee_group, 'i');
+        await AdmittedStudent.updateMany(
+            {'affiliated_heads.group_name':{$regex:groupNameRegex}},
+            {$push:{'affiliated_heads.heads':lateFeeHead}}
+        );
 
 
         // Creating new late fee
