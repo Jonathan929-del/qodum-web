@@ -166,3 +166,28 @@ export const fetchPaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) 
         console.log(`Error fetching payment: ${err.message}`);
     };
 };
+
+
+
+
+
+// delete payment by receipt no
+export const deletePaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payment = await Payment.findOneAndDelete({receipt_no});
+
+
+        // Return
+        return payment;
+
+
+    } catch (err:any) {
+        console.log(`Error deleting payment: ${err.message}`);
+    };
+};

@@ -19,7 +19,6 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
 
     // Heads
     const heads = selectedStudent.affiliated_heads.heads;
-    console.log(heads);
 
 
     // Cancel

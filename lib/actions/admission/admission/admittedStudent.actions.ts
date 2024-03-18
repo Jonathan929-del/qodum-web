@@ -7,6 +7,7 @@ import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import { fetchInstallments } from '../../fees/feeMaster/feeMaster/installment.actions';
+import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 
 
 
