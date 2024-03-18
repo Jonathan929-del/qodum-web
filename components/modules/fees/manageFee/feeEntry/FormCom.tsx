@@ -98,8 +98,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         value:Number(a.value),
                         conc_amount:conc_amount,
                         last_rec_amount:last_rec_amount,
-                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
+                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
                     };
                 }))[selectedStudent.affiliated_heads.heads.indexOf(studentHead)]
             };
@@ -130,8 +130,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                                         value:Number(a.value),
                                                         conc_amount:conc_amount,
                                                         last_rec_amount:last_rec_amount + Number(a.paid_amount),
-                                                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                                                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
+                                                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
                                                     };
                                                 })
                                         )[0].concat(
@@ -148,8 +148,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                                                     value:Number(a.value),
                                                                     conc_amount:conc_amount,
                                                                     last_rec_amount:last_rec_amount,
-                                                                    payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                                                    paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                                                                    payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
+                                                                    paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
                                                                 };
                                                             })
                                                     )[0]

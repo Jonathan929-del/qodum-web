@@ -125,8 +125,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
             }
         };
-
-        
     };
 
 

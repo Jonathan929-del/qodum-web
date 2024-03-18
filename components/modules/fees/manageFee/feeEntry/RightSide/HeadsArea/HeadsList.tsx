@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { fetchClassDueLimit } from '@/lib/actions/fees/masterSettings/dueLimit.actions';
+import {fetchClassDueLimit} from '@/lib/actions/fees/masterSettings/dueLimit.actions';
 
 
 
@@ -370,8 +370,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                         const dueAmount = Number(a.value) * diffDays;
                         const dueAmountLimit = await fetchClassDueLimit({class_name:selectedStudent.class});
                         const dueAmountNumber = dueAmountLimit.dues_amount;
-                        console.log(dueAmount);
-                        console.log(dueAmountLimit);
                         a.value = Number(dueAmount) < Number(dueAmountNumber) ? Number(dueAmount) : Number(dueAmountNumber);
                     });
 
