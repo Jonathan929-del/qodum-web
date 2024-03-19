@@ -13,8 +13,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {uploadSchoolLogo} from '@/lib/actions/image.actions';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {SchoolGlobalValidation} from '@/lib/validations/fees/globalMasters/defineSchool/schoolGlobalDetails';
 import {createGlobalSchoolDetails, modifyGlobalSchoolDetails, deleteGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
