@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 
 // Term Master Schema
-const TermMasterSchema = new mongoose.Schema(
+const TermSchema = new mongoose.Schema(
     {
         term_name:{type:String, required:true, unique:true}
     },
@@ -20,5 +20,5 @@ const TermMasterSchema = new mongoose.Schema(
 
 
 // Export
-const TermMaster = mongoose.models.TermMaster || mongoose.model('TermMaster', TermMasterSchema);
-export default TermMaster;
+const newTermMaster = mongoose.models.newTermMaster || mongoose.model('Term', TermSchema);
+export default newTermMaster;

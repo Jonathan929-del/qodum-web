@@ -657,7 +657,7 @@ const modules = [
                         subPageName:'Define TC Details',
                         threads:[
                             'Define TC Caste',
-                            'Team Master'
+                            'Term Master'
                         ]
                     },
                     {

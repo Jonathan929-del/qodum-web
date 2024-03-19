@@ -1,7 +1,7 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import TermMaster from '@/lib/models/admission/globalMasters/tcDetails/TermMaster.model';
+import Term from '@/lib/models/admission/globalMasters/tcDetails/TermMaster.model';
 
 
 
@@ -21,14 +21,14 @@ export const createTermMaster = async ({term_name}:CreateTermMasterProps) => {
 
 
         // Checking if the term name already exists
-        const existinTermMaster = await TermMaster.findOne({term_name});
+        const existinTermMaster = await Term.findOne({term_name});
         if(existinTermMaster){
             throw new Error('Term master already exists');
         };
 
 
         // Creating new term master
-        const newTermMaster = await TermMaster.create({term_name});
+        const newTermMaster = await Term.create({term_name});
         newTermMaster.save();
 
 
@@ -54,7 +54,7 @@ export const fetchTermMasters = async () => {
 
 
         // Fetching
-        const termMasters = await TermMaster.find();
+        const termMasters = await Term.find();
         return termMasters;
 
     } catch (err:any) {
@@ -80,13 +80,13 @@ export const modifyTermMaster = async ({id, term_name}:ModifyTermMasterProps) =>
 
 
         // Checking if the term name already exists
-        const termMasters = await TermMaster.find();
-        const existingTermMaster = await TermMaster.findById(id);
+        const termMasters = await Term.find();
+        const existingTermMaster = await Term.findById(id);
         if(existingTermMaster.term_name !== term_name && termMasters.map(termMaster => termMaster.term_name).includes(term_name)){throw new Error('Term master already exists')};
 
 
         // Updating term master
-        const updatedTermMaster = await TermMaster.findByIdAndUpdate(id, {term_name}, {new:true});
+        const updatedTermMaster = await Term.findByIdAndUpdate(id, {term_name}, {new:true});
 
 
         // Return
@@ -110,7 +110,7 @@ export const deleteTcTermMaster = async ({id}:{id:String}) => {
 
 
         // Deleting term master
-        await TermMaster.findByIdAndDelete(id);
+        await Term.findByIdAndDelete(id);
         return 'Term master deleted';
 
     } catch (err) {
