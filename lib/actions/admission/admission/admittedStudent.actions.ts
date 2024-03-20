@@ -4,10 +4,10 @@ import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
-import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
-import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
-import { fetchInstallments } from '../../fees/feeMaster/feeMaster/installment.actions';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
+import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
