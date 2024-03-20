@@ -1,43 +1,24 @@
 // Imports
-import moment from 'moment';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronsUpDown, X } from 'lucide-react';
+import {Checkbox} from '@/components/ui/checkbox';
+import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { useState } from 'react';
+import {Command, CommandItem, CommandList} from '@/components/ui/command';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 
 
 
 
 // Main Function
-const StudentsList = ({ form }: any) => {
-
-
-    const [students, setStudents] = useState([
-        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-        { admin_no: '1375', bill_no: '120120', name: 'mohad', father_name: 'father one', assigned_class: 'ass class', new_class: 'new class', assigned_section: 'ass section', new_section: 'new section' },
-
-    ])
-
-
-
-    // Form
-
+const StudentsList = ({students, classes, sections, isLoading, selectedStudents, setSelectedStudents}: any) => {
     return (
-
         <Command
-            className='w-[100%] max-h-[90%] flex flex-col items-center overflow-visible pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] lg:w-[100%]'
+            className='w-[100%] max-h-[90%] mt-4 flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
         >
 
             {/* Header */}
             <div className='flex flex-row items-center justify-center  w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Student List</h2>
+                <h2>Students List</h2>
             </div>
             <div className='w-full h-[90%] flex flex-col items-center bg-[#F1F1F1]'>
 
@@ -45,191 +26,162 @@ const StudentsList = ({ form }: any) => {
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
-                    <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-2 border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-
-                        <li className=' basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                    <ul className='w-full min-w-[1200px] flex flex-row text-[10px] bg-[#435680] border-b-[0.5px] border-[#ccc] text-white cursor-pointer sm:text-xs md:text-md'>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
                             Sr. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            Select
+                        <li className='basis-[5%] flex flex-row items-center justify-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            <Checkbox
+                                checked={students.length > 1 && students.length === selectedStudents.length}
+                                onClick={() => {
+                                    students.length === selectedStudents.length
+                                        ?
+                                            setSelectedStudents([])
+                                        :
+                                            setSelectedStudents(students);
+                                }}
+                                className='text-hash-color rounded-[2px] bg-[#fff] border-none data-[state=checked]:text-[#000]'
+                            />
+                        </li>
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Adm. No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[25%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            bill no
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Bill No.
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[25%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            admin no
+                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Student's Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            name
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Father's Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[25%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            father name
+                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Assigned Class
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[25%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            assigned class
+                        <li className='basis-[10%] flex flex-col items-start justify-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            New Class
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {classes.length === 0 ? (
+                                        <p className='text-xs text-hash-color'>No classes</p>
+                                    ) : classes.map((c:any) => (
+                                        <SelectItem value={c.class_name} key={c._id}>{c.class_name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </li>
+                        <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            Assigned Section
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className=' basis-[45%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            new class
-                            <div className="w-full  flex items-center justify-between lg:justify-start gap-1">
-                                <FormField
-                                    control={form.control}
-                                    name='new_class'
-                                    render={({ field }) => (
-                                        <FormItem className='w-auto md:max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field.value}
-                                                    onValueChange={field.onChange}
-                                                >
-                                                    <SelectTrigger className='w-[130px] h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Year' className='text-xs' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value='sp'>Special</SelectItem>
-                                                        <SelectItem value='cl'>Classes</SelectItem>
-                                                        <SelectItem value='sp2'>Special</SelectItem>
-                                                        <SelectItem value='sp3'>Special</SelectItem>
-                                                        <SelectItem value='sp5'>Special</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <ChevronsUpDown size={12} />
+                        <li className='basis-[10%] flex flex-col items-start justify-center px-2 py-[2px]'>
+                            New Section
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {sections.length === 0 ? (
+                                        <p className='text-xs text-hash-color'>No sections</p>
+                                    ) : sections.map((c:any) => (
+                                        <SelectItem value={c.section_name} key={c._id}>{c.section_name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </li>
-                        <li className=' basis-[25%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            assigned section
-                            <ChevronsUpDown size={12} />
-                        </li>
-                        <li className=' basis-[45%] flex flex-row items-center justify-between px-2 py-[2px]'>
-                            new section
-                            <div className="w-full  flex items-center justify-between lg:justify-start gap-1">
-                                <FormField
-                                    control={form.control}
-                                    name='new_class'
-                                    render={({ field }) => (
-                                        <FormItem className='w-auto md:max-w-[80px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field.value}
-                                                    onValueChange={field.onChange}
-                                                >
-                                                    <SelectTrigger className='w-[130px] h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Year' className='text-xs' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value='sp'>Special</SelectItem>
-                                                        <SelectItem value='cl'>Classes</SelectItem>
-                                                        <SelectItem value='sp2'>Special</SelectItem>
-                                                        <SelectItem value='sp3'>Special</SelectItem>
-                                                        <SelectItem value='sp5'>Special</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <ChevronsUpDown size={12} />
-                        </li>
-
                     </ul>
                     {/* Values */}
                     <CommandList>
-                        {
-                            students.length < 1 ? (
-                                <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-2 border-[#ccc]'>
-                                    No heads yet
-                                </p>
-                            ) : !students[0] ? (
-                                <LoadingIcon />
-                            ) : students.map((student: any, index: number) => (
-                                <CommandItem
-                                    key={index}
-                                    value={`${students.indexOf(student) + 1} ${student.bill_no}  ${student.admin_no}  ${student.name} ${student.father_name} ${student.assigned_class} ${student.new_class} ${student.assigned_section} ${student.new_section} `}
-                                    className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-2 border-[#ccc] sm:text-xs md:text-md'
-                                >
-                                    <li className=' basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{students.indexOf(student) + 1}</li>
-                                    <li className=' basis-[20%] text-center flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        <FormField
-                                            // control={form.control}
-                                            name="class"
-                                            render={({ field }: any) => {
-                                                return (
-                                                    <FormItem
-                                                        key={student.admin_no}
-                                                        className="flex flex-row items-start space-x-3 space-y-0"
-                                                    >
-                                                        <FormControl >
-
-                                                            <Checkbox
-                                                                checked={field.value?.includes(student)}
-                                                                onCheckedChange={(checked: any) => {
-                                                                    return checked
-                                                                        ? field.onChange([...field.value, student])
-                                                                        : field.onChange(
-                                                                            field.value?.filter(
-                                                                                (value: any) => value !== student
-                                                                            )
-                                                                        )
-                                                                }}
-                                                            />
-
-                                                        </FormControl>
-                                                    </FormItem>
-                                                )
-                                            }}
-                                        />
-                                    </li>
-                                    <li className=' basis-[25%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.admin_no}`}
-                                    </li>
-                                    <li className=' basis-[25%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.bill_no}`}
-                                    </li>
-                                    <li className=' basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.name}`}
-                                    </li>
-                                    <li className=' basis-[25%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.father_name}`}
-                                    </li>
-                                    <li className=' basis-[25%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.assigned_class}`}
-                                    </li>
-                                    <li className=' basis-[45%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.new_class}`}
-                                    </li>
-                                    <li className=' basis-[25%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {`${student.assigned_section}`}
-                                    </li>
-                                    <li className=' basis-[45%] flex-grow flex flex-row items-center px-2 '>
-                                        {`${student.new_section}`}
-                                    </li>
-
-                                </CommandItem>
-                            ))
-                        }
+                        {isLoading ? (
+                            <LoadingIcon />
+                        ) : students.length < 1 ? (
+                            <p className='text-xs text-hash-color ml-2'>No Students</p>
+                        ) : students.map((student: any, index: number) => (
+                            <CommandItem
+                                key={index}
+                                className={`w-full min-w-[1200px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((students.indexOf(student) + 1) / 2) * 2 !== students.indexOf(student) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}
+                            >
+                                <li className='basis-[10%] flex flex-row items-center px-2 py-2 border-r-[.5px] border-[#ccc]'>
+                                    {students.indexOf(student) + 1}
+                                </li>
+                                <li className='basis-[5%] flex flex-row items-center justify-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    <Checkbox
+                                        className='text-hash-color rounded-[2px]'
+                                        checked={selectedStudents.includes(student)}
+                                        onClick={() => {
+                                            selectedStudents.includes(student)
+                                                ?
+                                                    setSelectedStudents(selectedStudents.filter((s:any) => s !== student))
+                                                :
+                                                    setSelectedStudents([...selectedStudents, student]);
+                                        }}
+                                    />
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.student?.adm_no}
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.student?.bill_no}
+                                </li>
+                                <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.student?.name}
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.parents?.father?.father_name}
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.student?.class}
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    <Select>
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {classes.length === 0 ? (
+                                                <p className='text-xs text-hash-color'>No classes</p>
+                                            ) : classes.map((c:any) => (
+                                                <SelectItem value={c.class_name} key={c._id}>{c.class_name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </li>
+                                <li className='basis-[12.5%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {student?.student?.section}
+                                </li>
+                                <li className='basis-[10%] flex flex-row items-center px-2'>
+                                    <Select>
+                                        <SelectTrigger className='w-full h-6 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {sections.length === 0 ? (
+                                                <p className='text-xs text-hash-color'>No sections</p>
+                                            ) : sections.map((c:any) => (
+                                                <SelectItem value={c.section_name} key={c._id}>{c.section_name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </li>
+                            </CommandItem>
+                        ))}
                     </CommandList>
-                    <CommandEmpty>No results found</CommandEmpty>
                 </div>
-
-
             </div>
         </Command>
-
     );
 };
 

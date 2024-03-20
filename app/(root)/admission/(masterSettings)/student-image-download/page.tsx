@@ -1,6 +1,6 @@
 'use client';
 // Imports
-import FormCom from '@/components/modules/admission/masterSettings/updateStudentDetails/FormCom';
+import FormCom from '@/components/modules/admission/masterSettings/studentImageDownload/FormCom';
 
 
 

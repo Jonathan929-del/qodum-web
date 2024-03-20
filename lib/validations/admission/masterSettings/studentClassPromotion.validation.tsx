@@ -7,8 +7,8 @@ import * as z from 'zod';
 
 // Student class promotion validation
 export const StudentClassPromotionValidation = z.object({
-    class:z.string(),
-    section:z.boolean(),
-    current_session:z.string(),
-    next_session:z.string()
+    class_name:z.string().nonempty({message:'*Please select class'}),
+    section_name:z.string().nonempty({message:'*Please select section'}),
+    current_session:z.string().nonempty({message:'*Please select session'}),
+    next_session:z.string().nonempty({message:'*Please select next session'})
 });
