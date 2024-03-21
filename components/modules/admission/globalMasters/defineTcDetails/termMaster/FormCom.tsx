@@ -9,7 +9,7 @@ import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {TermMasterValidation} from '@/lib/validations/admission/globalMasters/defineTcDetails/termMaster.validation';
-import { createTerm, deleteTerm, modifyTerm } from '@/lib/actions/admission/globalMasters/studentHealthMaster/term.actions';
+import {createTerm, deleteTerm, modifyTerm} from '@/lib/actions/admission/globalMasters/studentHealthMaster/term.actions';
 
 
 

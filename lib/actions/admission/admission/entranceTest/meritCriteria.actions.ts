@@ -1,0 +1,121 @@
+'use server';
+// Imports
+import {connectToDb} from '@/lib/mongoose';
+import MeritCriteria from '@/lib/models/admission/admission/entranceTest/MeritCriteria.model';
+
+
+
+
+
+// Create merit criteria props
+interface CreateMeritCriteriaProps{
+    session:String;
+    name:String;
+    maximum_point:Number;
+};
+// Create merit criteria
+export const createMeritCriteria = async ({session, name, maximum_point}:CreateMeritCriteriaProps) => {
+    try {
+
+    
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Checking if the name name already exists
+        const existingMeritCriteria = await MeritCriteria.findOne({name});
+        if(existingMeritCriteria){
+            throw new Error('Criteria name already exists');
+        };
+
+
+        // Creating new merit criteria
+        const newMeritCriteria = await MeritCriteria.create({session, name, maximum_point});
+        newMeritCriteria.save();
+
+
+        // Return
+        return newMeritCriteria;
+
+
+    } catch (err:any) {
+        console.log(`Error creating merit criteria: ${err.message}`);
+    };
+};
+
+
+
+
+
+// Fetch merit criterias
+export const fetchMeritCriterias = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const meritCriterias = await MeritCriteria.find();
+        return meritCriterias;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching merit criterias: ${err}`);
+    };
+};
+
+
+
+
+
+// Modify merit criteria props
+interface ModifyMeritCriteriaProps{
+    id:String;
+    session:String;
+    name:String;
+    maximum_point:Number;
+}
+// Modify merit criteria
+export const modifyMeritCriteria = async ({id, session, name, maximum_point}:ModifyMeritCriteriaProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Checking if the criteria name already exists
+        const meritCriterias = await MeritCriteria.find();
+        const existingMeritCriteria = await MeritCriteria.findById(id);
+        if(existingMeritCriteria.name !== name && meritCriterias.map(c => c.name).includes(name)){throw new Error('Criteria name already exists')};
+
+
+        // Updating
+        const updatedMeritCriteria = await MeritCriteria.findByIdAndUpdate(id, {session, name, maximum_point}, {new:true});
+        return updatedMeritCriteria;
+
+
+    } catch (err) {
+        throw new Error(`Error updating merit criteria: ${err}`);
+    };
+};
+
+
+
+
+
+// Delete merit criteria
+export const deleteMeritCriteria = async ({id}:{id:String}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Deleting merit criteria
+        await MeritCriteria.findByIdAndDelete(id);
+        return 'Merit criteria Deleted';
+
+    } catch (err) {
+        throw new Error(`Error deleting merit criteria: ${err}`);      
+    };
+};

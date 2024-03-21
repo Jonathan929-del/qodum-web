@@ -8,8 +8,9 @@ import mongoose from 'mongoose';
 // Merit Criteria Schema
 const MeritCriteriaSchema = new mongoose.Schema(
     {
-        category_name:{type:String, required:true, unique:true},
-        is_default:{type:Boolean}
+        session:{type:String, required:true},
+        name:{type:String, required:true, unique:true},
+        maximum_point:{type:Number, required:true}
     },
     {
         timestamps:true
