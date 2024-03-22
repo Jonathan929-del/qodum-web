@@ -34,24 +34,24 @@ const LineCom = ({lineData}:any) => {
 
 
             {/* Side Label */}
-            <p className='absolute top-[50%] left-0 -rotate-90 text-xs text-hash-color lg:text-sm'>{lineData.sideLabel}</p>
+            <p className='absolute top-[50%] left-0 -rotate-90 text-xs text-hash-color lg:text-sm'>{lineData().sideLabel}</p>
 
 
             {/* Bottom Label */}
-            <p className='absolute bottom-2 left-[50%] text-xs text-hash-color lg:text-sm'>{lineData.bottomLabel}</p>
+            <p className='absolute bottom-2 left-[50%] text-xs text-hash-color lg:text-sm'>{lineData().bottomLabel}</p>
 
 
             {/* Bottom Note */}
-            <p className='absolute bottom-2 left-6 text-xs text-hash-color lg:text-sm'>{lineData.bottomNote}</p>
+            <p className='absolute bottom-2 left-6 text-xs text-hash-color lg:text-sm'>{lineData().bottomNote}</p>
 
 
             <div className='w-full flex flex-row items-center justify-between mb-2'>
                 <div className='flex flex-row items-center justify-center text-sm'>
-                    <p className='font-bold'>{lineData.title}</p>
-                    <span className='ml-[2px] text-hash-color text-xs'>{lineData.subTitle}</span>
+                    <p className='font-bold'>{lineData().title}</p>
+                    <span className='ml-[2px] text-hash-color text-xs'>{lineData().subTitle}</span>
                 </div>
                 <div className='flex flex-row gap-2 ml-8'>
-                    {lineData.categories.map((category:any) => (
+                    {lineData().categories.map((category:any) => (
                         <div className='flex flex-row items-center text-hash-color text-xs'>
                             <span className='w-2 h-2' style={{backgroundColor:category.color}}/>
                             <p className='pl-[2px]'>{category.name}</p>
@@ -60,7 +60,7 @@ const LineCom = ({lineData}:any) => {
                 </div>
             </div>
             <Line
-                data={lineData.data}
+                data={lineData().data}
                 options={options}
             />
         </div>
