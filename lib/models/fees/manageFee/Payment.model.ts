@@ -10,6 +10,7 @@ const PaymentSchema = new mongoose.Schema(
     {
         // Others
         student:{type:String},
+        image:{type:String},
         receipt_no:{type:String, unique:true},
         installments:{type:Array},
         received_date:{type:Date},
@@ -20,7 +21,7 @@ const PaymentSchema = new mongoose.Schema(
         advance_dues_number:{type:String},
 
 
-        
+
         class_name:{type:String},
         board:{type:String},
         adm_no:{type:String},

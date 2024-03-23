@@ -11,10 +11,9 @@ import {PersonStanding, Hourglass, Briefcase} from 'lucide-react';
 const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator}:any) => {
 
 
-    // All revenue
+    // Revenues
     const allRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))));
     const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount) || Number(a.value)))))));
-    // const receivedRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) || 0 + Number(a.conc_amount) || 0)))))));
     const receivedRevenue = allRevenue - outstandingRevenue;
 
 
