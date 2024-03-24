@@ -23,7 +23,7 @@ const RecentTransactionsCard = ({payments, students}:any) => {
                 image:students.filter((s:any) => s.student.name === p.student)[0].student.image
             };
         }));
-    });
+    }, []);
 
 
     return (

@@ -9,11 +9,11 @@ import FeesCardsOne from '@/components/dashboards/feesDashboard/FeesCardsOne';
 import CollectionSummary from '@/components/dashboards/feesDashboard/CollectionSummary';
 import PaymodeSummaryCard from '@/components/dashboards/feesDashboard/PaymodeSummaryCard';
 import EstimatedCollection from '@/components/dashboards/feesDashboard/EstimatedCollection';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
-import { fetchClasses } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 
 
 
@@ -77,7 +77,7 @@ const page = () => {
             setIsLoading(false);
         };
         fetcher();
-    }, []);
+    }, [window.onload]);
 
 
     return (
