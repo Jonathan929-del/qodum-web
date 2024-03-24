@@ -1,5 +1,6 @@
 // Imports
 import Image from 'next/image';
+import {useToast} from '@/components/ui/use-toast';
 
 
 
@@ -7,6 +8,10 @@ import Image from 'next/image';
 
 // Main function
 const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) => {
+    
+
+    // Toast
+    const {toast} = useToast();
 
 
     // Cancel handler
@@ -48,7 +53,12 @@ const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) =
             {/* Buttons */}
             <div className='h-full flex flex-row items-center gap-2'>
                 <span
-                    onClick={() => setIsCardOpened(true)}
+                    onClick={() => {
+
+                        selectedStudent.name === ''
+                            ? toast({title:'Please selected student', variant:'alert'})
+                            : setIsCardOpened(true);
+                    }}
                     className='flex items-center justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                 >

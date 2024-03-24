@@ -1,5 +1,5 @@
 'use client';
-// Improts
+// Imports
 import {X} from 'lucide-react';
 import PdfView from './PdfView';
 
