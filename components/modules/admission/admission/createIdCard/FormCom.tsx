@@ -16,6 +16,7 @@ const FormCom = ({selectedStudent, setSelectedStudent, students, setIsCardOpened
             {/* Search */}
             <Search
                 students={students}
+                selectedStudent={selectedStudent}
                 setSelectedStudent={setSelectedStudent}
             />
 

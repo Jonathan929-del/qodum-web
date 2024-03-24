@@ -12,14 +12,15 @@ const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) =
     // Cancel handler
     const cancelHandler = () => {
         setSelectedStudent({
+            ...selectedStudent,
             name:'',
             adm_no:'',
             father_name:'',
             dob:'',
             class_name:'',
             mother_name:'',
-            contact_person_name:'',
-            contact_person_mobile:'',
+            mobile:'',
+            address:'',
             image:''
         });
     };

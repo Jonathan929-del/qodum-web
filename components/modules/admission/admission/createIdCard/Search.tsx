@@ -13,7 +13,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admissi
 
 
 // Main function
-const Search = ({students, setSelectedStudent}:any) => {
+const Search = ({students, selectedStudent, setSelectedStudent}:any) => {
 
 
     // Toast
@@ -37,14 +37,15 @@ const Search = ({students, setSelectedStudent}:any) => {
         if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
             const student = await fetchStudentByAdmNo({adm_no:search});
             setSelectedStudent({
+                ...selectedStudent,
                 name:student?.student?.name || '',
                 adm_no:student?.student?.adm_no || '',
                 father_name:student?.parents?.father?.father_name || '',
                 dob:student?.student?.dob || '',
                 class_name:student?.student?.class || '',
                 mother_name:student?.parents?.mother?.mother_name || '',
-                contact_person_name:'',
-                contact_person_mobile:'',
+                mobile:student?.student?.mobile || '',
+                address:student?.student?.h_no_and_address || '',
                 image:student?.student?.image || ''
             });
         }else{
@@ -57,14 +58,15 @@ const Search = ({students, setSelectedStudent}:any) => {
     // Student search click
     const studentSearchClick = (student:any) => {
         setSelectedStudent({
+            ...selectedStudent,
             name:student?.student?.name || '',
             adm_no:student?.student?.adm_no || '',
             father_name:student?.parents?.father?.father_name || '',
             dob:student?.student?.dob || '',
             class_name:student?.student?.class || '',
             mother_name:student?.parents?.mother?.mother_name || '',
-            contact_person_name:student?.student?.contact_person_name || '',
-            contact_person_mobile:student?.student?.contact_person_mobile || '',
+            mobile:student?.student?.mobile || '',
+            address:student?.student?.h_no_and_address || '',
             image:student?.student?.image || ''
         });
         setSearch('');

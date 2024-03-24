@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react';
 import IdCard from '@/components/modules/admission/admission/createIdCard/IdCard';
 import FormCom from '@/components/modules/admission/admission/createIdCard/FormCom';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -24,21 +26,47 @@ const page = () => {
         dob:'',
         class_name:'',
         mother_name:'',
-        contact_person_name:'',
-        contact_person_mobile:'',
-        image:''
+        mobile:'',
+        address:'',
+        image:'',
+        session:'',
+        school_image:'',
+        school_name:'',
+        school_address:'',
+        school_phone:'',
+        school_mo:''
     });
 
 
     // Is card opened
-    const [isCardOpened, setIsCardOpened] = useState(true);
+    const [isCardOpened, setIsCardOpened] = useState(false);
 
 
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
+            const sessionsRes = await fetchAcademicYears();
+            const schoolsRes = await fetchGlobalSchoolDetails();
             const studentsRes = await fetchAdmittedStudents();
+            const activeSession = sessionsRes.filter((a:any) => a.is_active);
             setStudents(studentsRes);
+            setSelectedStudent({
+                name:'',
+                adm_no:'',
+                father_name:'',
+                dob:'',
+                class_name:'',
+                mother_name:'',
+                mobile:'',
+                address:'',
+                image:'',
+                session:activeSession[0].year_name,
+                school_image:schoolsRes[0].logo,
+                school_name:schoolsRes[0].school_name,
+                school_address:schoolsRes[0].school_address,
+                school_phone:schoolsRes[0].contact_no,
+                school_mo:schoolsRes[0].mobile
+            });
         };
         fetcher();
     }, []);

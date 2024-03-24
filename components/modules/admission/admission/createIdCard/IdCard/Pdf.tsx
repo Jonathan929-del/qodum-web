@@ -36,10 +36,74 @@ const PDF = ({studentData}:any) => {
                     paddingHorizontal:10,
                     justifyContent:'space-between'
                 }}>
-                    {/* <Image
-                        src='https://qodum.s3.amazonaws.com/students/AARAV+SINGH001'
-                        style={{width:100, height:100}}
-                    /> */}
+                    {/* <Text>STUDENT IMAGE</Text>
+                    <View style={{display:'flex', flexDirection:'row', gap:2}}> */}
+                        <View style={{
+                            gap:2,
+                            display:'flex',
+                            color:'#fff',
+                            alignItems:'center',
+                            flexDirection:'column'
+                        }}>
+                            <Text style={{fontSize:20}}>{studentData.school_name}</Text>
+                            <Text style={{fontSize:16}}>{studentData.school_address}</Text>
+                            <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:6, fontSize:10}}>
+                                <Text>Ph. No. : {studentData.school_phone}</Text>
+                                <Text>Mo. : {studentData.school_mo}</Text>
+                            </View>
+                        </View>
+                        <Text>SCHOOL IMAGE</Text>
+                    {/* </View> */}
+                </View>
+
+                <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', paddingHorizontal:10, paddingVertical:5, backgroundColor:'#FFFEFE', paddingTop:20, fontSize:16}}>
+                    <View style={{display:'flex', flexDirection:'row', gap:2}}>
+                        <View style={{display:'flex', flexDirection:'column', gap:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                            <Text style={{color:'#1C7EC1'}}>Student's Name: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Class: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Admission No.: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Father's Name: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Mother's Name: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Mobile: </Text>
+                            <Text style={{color:'#1C7EC1'}}>Address: </Text>
+                        </View>
+
+                        <View style={{display:'flex', flexDirection:'column', gap:2, marginLeft:10}}>
+                            <Text style={{color:'#f00'}}>{studentData.name}</Text>
+                            <Text>{studentData.class_name}</Text>
+                            <Text>{studentData.adm_no}</Text>
+                            <Text>Mr. {studentData.father_name}</Text>
+                            <Text>Mrs. {studentData.mother_name}</Text>
+                            <Text>{studentData.mobile}</Text>
+                            <Text>{studentData.address}</Text>
+                        </View>
+                    </View>
+
+                    <Text>QR CODE</Text>
+                </View>
+
+                <View style={{width:'100%', display:'flex', alignItems:'flex-end', paddingRight:10}}>
+                    <Text style={{
+                        color:'#fff',
+                        paddingVertical:2,
+                        paddingHorizontal:6,
+                        backgroundColor:'#1C7EC1',
+                    }}>
+                        2024-2025
+                    </Text>
+                </View>
+
+            </Page>
+            {/* <Page  style={styles.body}>
+
+                <View style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    backgroundColor:'#1C7EC1',
+                    paddingVertical:6,
+                    paddingHorizontal:10,
+                    justifyContent:'space-between'
+                }}>
                     <Text>STUDENT IMAGE</Text>
                     <View style={{display:'flex', flexDirection:'row', gap:2}}>
                         <View style={{
@@ -97,7 +161,7 @@ const PDF = ({studentData}:any) => {
                     </Text>
                 </View>
 
-            </Page>
+            </Page> */}
         </Document>
     );
 };
