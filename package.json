@@ -29,6 +29,8 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@react-pdf/renderer": "^3.4.0",
     "aws-sdk": "^2.1540.0",
+    "axios": "^1.6.8",
+    "base64-js": "^1.5.1",
     "chart.js": "^4.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

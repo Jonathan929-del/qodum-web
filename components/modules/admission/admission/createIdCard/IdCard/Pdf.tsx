@@ -1,6 +1,5 @@
 'use client';
 // Imports
-import moment from 'moment';
 import {Document, Page, View, Text, PDFViewer, StyleSheet, Font, Image} from '@react-pdf/renderer';
 
 
@@ -37,11 +36,11 @@ const PDF = ({studentData}:any) => {
                     paddingHorizontal:10,
                     justifyContent:'space-between'
                 }}>
-                    <Image
-                        src='https://example.com/image.jpg'
+                    {/* <Image
+                        src='https://qodum.s3.amazonaws.com/students/AARAV+SINGH001'
                         style={{width:100, height:100}}
-                    />
-                    {/* <Text>STUDENT IMAGE</Text> */}
+                    /> */}
+                    <Text>STUDENT IMAGE</Text>
                     <View style={{display:'flex', flexDirection:'row', gap:2}}>
                         <View style={{
                             gap:2,
