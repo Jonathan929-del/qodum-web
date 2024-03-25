@@ -114,7 +114,7 @@ const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator
                                 <p>₹ {outstandingRevenue}</p>
                                 <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({
                                     // @ts-ignore
-                                    parseFloat(outstandingRevenue / allRevenue * 100).toFixed(1)
+                                    parseFloat(outstandingRevenue / allRevenue * 100 || 0).toFixed(1)
                                 }%)</span>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator
                                 <p>₹ {receivedRevenue}</p>
                                 <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({
                                     // @ts-ignore
-                                    parseFloat(receivedRevenue / allRevenue * 100).toFixed(1)
+                                    parseFloat(receivedRevenue / allRevenue * 100 || 0).toFixed(1)
                                 }%)</span>
                             </div>
                         </div>

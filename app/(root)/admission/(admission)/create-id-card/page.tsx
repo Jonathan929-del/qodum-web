@@ -18,6 +18,7 @@ const page = () => {
     // Students
     const [students, setStudents] = useState<any>([]);
 
+
     // Selected student
     const [selectedStudent, setSelectedStudent] = useState({
         name:'',
@@ -34,7 +35,8 @@ const page = () => {
         school_name:'',
         school_address:'',
         school_phone:'',
-        school_mo:''
+        school_mo:'',
+        color:''
     });
 
 
@@ -65,7 +67,8 @@ const page = () => {
                 school_name:schoolsRes[0].school_name,
                 school_address:schoolsRes[0].school_address,
                 school_phone:schoolsRes[0].contact_no,
-                school_mo:schoolsRes[0].mobile
+                school_mo:schoolsRes[0].mobile,
+                color:''
             });
         };
         fetcher();

@@ -9,11 +9,11 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {isGroupRelatedToStudent} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
 import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeadsByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
-import { isGroupRelatedToStudent } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 

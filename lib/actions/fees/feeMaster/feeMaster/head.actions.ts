@@ -198,10 +198,11 @@ export const isGroupRelatedToStudent = async ({group_name}) => {
     
         // Checking
         const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}});
-
-
-        // Return
-        return students.length > 1;
+        if(students.length > 1){
+            const lastRecAmounts = students.map((s:any) => s.affiliated_heads.heads.filter((h:any) => h?.amounts?.filter((a:any) => a?.last_rec_amount)));
+            return lastRecAmounts.flat().length > 0;
+        };
+        return false;
 
     } catch (err) {
         throw new Error(`Error checking group relation: ${err}`);
