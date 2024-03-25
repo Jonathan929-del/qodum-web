@@ -19,10 +19,10 @@ const PDF = ({studentData}:any) => {
     // Styles
     const styles = StyleSheet.create({
         body:{
+            fontSize:8,
             width:'100%',
             height:'100%',
             paddingTop:20,
-            fontSize:8,
             display:'flex',
             alignItems:'center',
             fontFamily:'Antiqua',
@@ -68,7 +68,7 @@ const PDF = ({studentData}:any) => {
                         {/* Top area */}
                         <View style={{position:'relative', display:'flex', flexDirection:'row', justifyContent:'flex-end', paddingVertical:10, paddingHorizontal:10, backgroundColor:'#1C7EC1', color:'#fff'}}>
                             {/* Student image */}
-                            <View style={{position:'absolute', display:'flex', alignItems:'center', justifyContent:'center', width:85, height:90, top:5, left:10, borderWidth:0.5, borderColor:'#ccc', backgroundColor:'#fff', color:'#000', fontSize:10}}>
+                            <View style={{position:'absolute', display:'flex', alignItems:'center', justifyContent:'center', height:94.4882, width:82.677, top:5, left:10, borderWidth:0.5, borderColor:'#ccc', backgroundColor:'#fff', color:'#000', fontSize:10}}>
                                 {studentData.image === '' ? (
                                     <Text>No photo</Text>
                                 ) : (
@@ -87,13 +87,13 @@ const PDF = ({studentData}:any) => {
                             </View>
 
                             {/* School image */}
-                            <View style={{display:'flex', alignItems:'center', justifyContent:'center', width:40, height:40, borderWidth:0.5, borderColor:'#ccc', backgroundColor:'#fff', color:'#000', fontSize:7, borderRadius:'100%'}}>
-                                {studentData.image === '' ? (
+                            {studentData.image === '' ? (
+                                <View style={{display:'flex', alignItems:'center', justifyContent:'center', width:40, height:40, borderWidth:0.5, borderColor:'#ccc', backgroundColor:'#fff', color:'#000', fontSize:7, borderRadius:'100%'}}>
                                     <Text>No photo</Text>
-                                ) : (
-                                    <Image style={{height:'100%', width:'100%', borderRadius:'100%'}} src={studentData.school_image}/>
-                                )}
-                            </View>
+                                </View>
+                            ) : (
+                                <Image style={{height:40, width:40}} src={studentData.school_image}/>
+                            )}
                         </View>
 
                         {/* Bottom area */}
@@ -101,14 +101,14 @@ const PDF = ({studentData}:any) => {
                             <View style={{position:'relative', display:'flex', flexDirection:'row', width:200}}>
                                 <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605'}}>{studentData.name || '-'}</Text>
                                 <Text style={{position:'absolute', width:'100%', top:-20, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
-                                <View style={{display:'flex', flexDirection:'column', gap:2, color:'#129ADD', borderRightWidth:1, paddingRight:2, borderRightColor:'#000', borderRightStyle:'dashed'}}>
+                                <View style={{display:'flex', flexDirection:'column', gap:0, color:'#129ADD', borderRightWidth:1, paddingRight:2, borderRightColor:'#000', borderRightStyle:'dashed'}}>
                                     <Text>Adm No.</Text>
                                     <Text>Father's Name</Text>
                                     <Text>Mother's Name</Text>
                                     <Text>Mobile</Text>
                                     <Text>Address</Text>
                                 </View>
-                                <View style={{display:'flex', flexDirection:'column', gap:2, paddingLeft:2}}>
+                                <View style={{display:'flex', flexDirection:'column', gap:0, paddingLeft:2}}>
                                     <Text>{studentData.adm_no || '-'}</Text>
                                     <Text>Mr. {studentData.father_name || '-'}</Text>
                                     <Text>Mrs. {studentData.mother_name || '-'}</Text>
@@ -117,8 +117,8 @@ const PDF = ({studentData}:any) => {
                                 </View>
                             </View>
 
-                            <View style={{position:'relative', width:123.56}}>
-                                <View style={{position:'absolute', top:-30, right:-10, width:100, height:100}}>
+                            <View style={{position:'relative', height:'100%', width:123.56}}>
+                                <View style={{position:'absolute', top:-10, right:-10, width:80, height:80}}>
                                     <Image src={qrImage} />
                                 </View>
                                 <Text style={{position:'absolute', bottom:-14, right:-8, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:'#1C7EC1'}}>
