@@ -12,8 +12,8 @@ const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator
 
 
     // Revenues
-    const allRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))));
-    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount) || Number(a.value)))))));
+    const allRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value)))))));
+    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.payable_amount) || Number(a.value)))))));
     const receivedRevenue = allRevenue - outstandingRevenue;
 
 

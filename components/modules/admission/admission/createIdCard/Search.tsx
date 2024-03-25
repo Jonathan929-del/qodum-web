@@ -124,7 +124,6 @@ const Search = ({students, selectedStudent, setSelectedStudent}:any) => {
             const searchFetcher = async () => {
                 // ts-ignore
                 const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:'', section_name:''});
-                console.log(res);
                 setSearchStudents(res);
                 setIsLoadingSearchedStudents(false);
             };

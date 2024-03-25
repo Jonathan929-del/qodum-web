@@ -83,7 +83,7 @@ const TransactionHistoryOfLast30Days = ({paymentsRes, totalNumberGenerator}) => 
         const fetcher = async () => {
             const paymentsArray = last30Days.map((d:any) => {
                 return totalNumberGenerator(paymentsRes.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))));
+                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
                 }));
             });
             setPayments(paymentsArray);
