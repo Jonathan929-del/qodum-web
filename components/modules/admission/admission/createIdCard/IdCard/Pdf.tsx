@@ -13,7 +13,14 @@ const PDF = ({studentData}:any) => {
 
 
     // Font
-    Font.register({family:'Antiqua', src:'/fonts/Inknut_Antiqua/InknutAntiqua-Regular.ttf'});
+    Font.register({
+        family:'Antiqua',
+        src:'/fonts/Inknut_Antiqua/InknutAntiqua-Regular.ttf',
+        fonts:[
+            {src:'/fonts/Inknut_Antiqua/InknutAntiqua-Regular.ttf'},
+            {src:'/fonts/Inknut_Antiqua/InknutAntiqua-Bold.ttf', fontWeight:'bold'}
+        ]
+    });
 
 
     // Styles
@@ -99,7 +106,7 @@ const PDF = ({studentData}:any) => {
                         {/* Bottom area */}
                         <View style={{display:'flex', flexDirection:'row', paddingVertical:30, paddingHorizontal:10, fontSize:10}}>
                             <View style={{position:'relative', display:'flex', flexDirection:'row', width:200}}>
-                                <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605'}}>{studentData.name || '-'}</Text>
+                                <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605', fontWeight:'bold'}}>{studentData.name || 'Jonathan Adel'}</Text>
                                 <Text style={{position:'absolute', width:'100%', top:-20, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
                                 <View style={{position:'relative', display:'flex', flexDirection:'column', gap:0, color:studentData.color, paddingRight:2}}>
 
@@ -117,7 +124,7 @@ const PDF = ({studentData}:any) => {
                                     <Text>Mrs. {studentData.mother_name || '-'}</Text>
                                     <Text>{studentData.mobile || '-'}</Text>
                                     <Text style={{color:'#fff'}}>-</Text>
-                                    <Text style={{position:'absolute', width:200, display:'flex', flexWrap:'wrap', lineHeight:1, top:62, left:5}}>{studentData.address || '-'}</Text>
+                                    <Text style={{position:'absolute', width:200, display:'flex', flexWrap:'wrap', lineHeight:1, top:60, left:5}}>{studentData.address || '-'}</Text>
                                 </View>
                             </View>
 
@@ -127,8 +134,8 @@ const PDF = ({studentData}:any) => {
                                 </View>
 
                                 {/* Session */}
-                                <View style={{position:'absolute', height:16, width:110, bottom:-24, right:-4, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}} />
-                                <Text style={{position:'absolute', bottom:-28, right:0, gap:4, fontSize:10, color:'#fff'}}>
+                                <View style={{position:'absolute', height:16, width:110, bottom:-29, right:-4, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}} />
+                                <Text style={{position:'absolute', bottom:-33, right:0, gap:4, fontSize:10, color:'#fff'}}>
                                     Session {studentData.session}
                                 </Text>
                             </View>

@@ -36,12 +36,12 @@ const page = () => {
         school_address:'',
         school_phone:'',
         school_mo:'',
-        color:''
+        color:localStorage.getItem('id_card_theme_color') ? localStorage.getItem('id_card_theme_color') : ''
     });
 
 
     // Is card opened
-    const [isCardOpened, setIsCardOpened] = useState(false);
+    const [isCardOpened, setIsCardOpened] = useState(true);
 
 
     // Use effect
@@ -68,7 +68,7 @@ const page = () => {
                 school_address:schoolsRes[0].school_address,
                 school_phone:schoolsRes[0].contact_no,
                 school_mo:schoolsRes[0].mobile,
-                color:''
+                color:localStorage.getItem('id_card_theme_color') ? localStorage.getItem('id_card_theme_color') : ''
             });
         };
         fetcher();
