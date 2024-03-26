@@ -111,12 +111,13 @@ const PDF = ({studentData}:any) => {
                                     <Text>Mobile</Text>
                                     <Text>Address</Text>
                                 </View>
-                                <View style={{display:'flex', flexDirection:'column', gap:0, paddingLeft:6}}>
+                                <View style={{position:'relative', display:'flex', flexDirection:'column', gap:0, paddingLeft:6}}>
                                     <Text>{studentData.adm_no || '-'}</Text>
                                     <Text>Mr. {studentData.father_name || '-'}</Text>
                                     <Text>Mrs. {studentData.mother_name || '-'}</Text>
                                     <Text>{studentData.mobile || '-'}</Text>
-                                    <Text>{studentData.address || '-'}</Text>
+                                    <Text style={{color:'#fff'}}>-</Text>
+                                    <Text style={{position:'absolute', width:200, display:'flex', flexWrap:'wrap', lineHeight:1, top:62, left:5}}>{studentData.address || '-'}</Text>
                                 </View>
                             </View>
 
@@ -126,8 +127,8 @@ const PDF = ({studentData}:any) => {
                                 </View>
 
                                 {/* Session */}
-                                <View style={{position:'absolute', height:16, width:110, bottom:-14, right:-4, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}} />
-                                <Text style={{position:'absolute', bottom:-18, right:0, gap:4, fontSize:10, color:'#fff'}}>
+                                <View style={{position:'absolute', height:16, width:110, bottom:-24, right:-4, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}} />
+                                <Text style={{position:'absolute', bottom:-28, right:0, gap:4, fontSize:10, color:'#fff'}}>
                                     Session {studentData.session}
                                 </Text>
                             </View>

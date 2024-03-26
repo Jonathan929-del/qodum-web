@@ -45,7 +45,7 @@ const Search = ({students, selectedStudent, setSelectedStudent}:any) => {
                 class_name:student?.student?.class || '',
                 mother_name:student?.parents?.mother?.mother_name || '',
                 mobile:student?.student?.mobile || '',
-                address:student?.student?.h_no_and_address || '',
+                address:student?.student?.h_no_and_streets || '',
                 image:student?.student?.image || ''
             });
         }else{
@@ -66,7 +66,7 @@ const Search = ({students, selectedStudent, setSelectedStudent}:any) => {
             class_name:student?.student?.class || '',
             mother_name:student?.parents?.mother?.mother_name || '',
             mobile:student?.student?.mobile || '',
-            address:student?.student?.h_no_and_address || '',
+            address:student?.student?.h_no_and_streets || '',
             image:student?.student?.image || ''
         });
         setSearch('');
