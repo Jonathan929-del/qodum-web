@@ -101,14 +101,17 @@ const PDF = ({studentData}:any) => {
                             <View style={{position:'relative', display:'flex', flexDirection:'row', width:200}}>
                                 <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605'}}>{studentData.name || '-'}</Text>
                                 <Text style={{position:'absolute', width:'100%', top:-20, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
-                                <View style={{display:'flex', flexDirection:'column', gap:0, color:studentData.color, borderRightWidth:1, paddingRight:2, borderRightColor:'#000', borderRightStyle:'dashed'}}>
+                                <View style={{position:'relative', display:'flex', flexDirection:'column', gap:0, color:studentData.color, paddingRight:2}}>
+
+                                    {/* Line */}
+                                    <View style={{position:'absolute', top:10, right:0, height:75, width:1, backgroundColor:'#fff', borderRightWidth:1, borderRightColor:'#000', borderStyle:'dashed'}} />
                                     <Text>Adm No.</Text>
                                     <Text>Father's Name</Text>
                                     <Text>Mother's Name</Text>
                                     <Text>Mobile</Text>
                                     <Text>Address</Text>
                                 </View>
-                                <View style={{display:'flex', flexDirection:'column', gap:0, paddingLeft:2}}>
+                                <View style={{display:'flex', flexDirection:'column', gap:0, paddingLeft:6}}>
                                     <Text>{studentData.adm_no || '-'}</Text>
                                     <Text>Mr. {studentData.father_name || '-'}</Text>
                                     <Text>Mrs. {studentData.mother_name || '-'}</Text>
@@ -121,7 +124,10 @@ const PDF = ({studentData}:any) => {
                                 <View style={{position:'absolute', top:-10, right:-10, width:80, height:80}}>
                                     <Image src={qrImage} />
                                 </View>
-                                <Text style={{position:'absolute', bottom:-14, right:-8, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}}>
+
+                                {/* Session */}
+                                <View style={{position:'absolute', height:16, width:110, bottom:-14, right:-4, gap:4, fontSize:10, color:'#fff', paddingHorizontal:6, backgroundColor:studentData.color}} />
+                                <Text style={{position:'absolute', bottom:-18, right:0, gap:4, fontSize:10, color:'#fff'}}>
                                     Session {studentData.session}
                                 </Text>
                             </View>

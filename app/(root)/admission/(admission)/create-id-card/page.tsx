@@ -41,7 +41,7 @@ const page = () => {
 
 
     // Is card opened
-    const [isCardOpened, setIsCardOpened] = useState(false);
+    const [isCardOpened, setIsCardOpened] = useState(true);
 
 
     // Use effect
