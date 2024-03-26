@@ -58,6 +58,7 @@ const FormCom = ({groups, installments, setIsLoading}: any) => {
         const isGroupAffiliatedToStudent = await isGroupRelatedToStudent({group_name:values.group_name});
         if(isGroupAffiliatedToStudent){
             toast({title:'Fee group is assigned to students', variant:'alert'});
+            setIsLoading(false);
             return;
         };
 
