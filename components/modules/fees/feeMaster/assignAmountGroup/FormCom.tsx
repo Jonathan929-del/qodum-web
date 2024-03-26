@@ -20,7 +20,7 @@ import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeads
 
 
 // Main function
-const FormCom = ({groups, installments}: any) => {
+const FormCom = ({groups, installments, setIsLoading}: any) => {
 
 
     // Toast
@@ -53,6 +53,8 @@ const FormCom = ({groups, installments}: any) => {
     const onSubmit = async (values:z.infer<typeof AssignAmountGroupValidation>) => {
 
 
+        // Checking for students paid amounts
+        setIsLoading(true);
         const isGroupAffiliatedToStudent = await isGroupRelatedToStudent({group_name:values.group_name});
         if(isGroupAffiliatedToStudent){
             toast({title:'Fee group is assigned to students', variant:'alert'});
@@ -72,6 +74,7 @@ const FormCom = ({groups, installments}: any) => {
             installment:'Select All',
             affiliated_heads:[]
         });
+        setIsLoading(false);
     };
 
 

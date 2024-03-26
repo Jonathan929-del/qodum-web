@@ -219,12 +219,19 @@ export const assignAmountGroup = async ({group_name, affiliated_heads}:any) => {
         const newHeads = unAffectedHeads.concat(affiliated_heads);
     
 
-        // Assigning
+        // Assigning to group
         await Group.findOneAndUpdate(
             {name:group_name},
             {affiliated_heads:newHeads},
             {new:true}
         );
+
+
+        // Assigning to students
+        // @ts-ignore
+        const groupNameRegex = new RegExp(group_name, 'i');
+        await AdmittedStudent.updateMany({'affiliated_heads.group_name':groupNameRegex}, {'affiliated_heads.heads':newHeads});
+        
             
     } catch (err) {
         throw new Error(`Error assigning fee group amount: ${err}`);      
