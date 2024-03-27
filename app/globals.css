@@ -56,3 +56,10 @@
         -moz-appearance: textfield; 
     } 
 }
+
+
+@font-face {
+    font-family:'OldEnglish';
+    src: url('/fonts/Olde English Regular.ttf') format('truetype');
+    /* Add more src declarations for different font formats if necessary */
+}

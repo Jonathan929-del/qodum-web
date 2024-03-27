@@ -12,13 +12,18 @@ import {Document, Page, View, Text, PDFViewer, StyleSheet, Font, Image} from '@r
 const PDF = ({studentData}:any) => {
 
 
-    // Font
+    // Font registries
     Font.register({
         family:'Antiqua',
-        src:'/fonts/Inknut_Antiqua/InknutAntiqua-Regular.ttf',
         fonts:[
             {src:'/fonts/Inknut_Antiqua/InknutAntiqua-Regular.ttf'},
             {src:'/fonts/Inknut_Antiqua/InknutAntiqua-Bold.ttf', fontWeight:'bold'}
+        ]
+    });
+    Font.register({
+        family:'Poppins',
+        fonts:[
+            {src:'/fonts/Poppins/Poppins-Bold.ttf', fontWeight:'bold'}
         ]
     });
 
@@ -42,16 +47,41 @@ const PDF = ({studentData}:any) => {
     const [qrImage, setQRImage] = useState('');
 
 
+    // Schoo name
+    const [schoolName, setSchoolName] = useState<string>('');
+  
+
+    // Use effect
     useEffect(() => {
         const generateQRCode = async () => {
           try {
+
+            // Setting QR code
             const qrDataURL = await QRCodeLib.toDataURL(`Name:${studentData.name} - Admission No.: ${studentData.adm_no}`, {width:100});
             setQRImage(qrDataURL);
+
+
+            // School name font
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                const width = 400;
+                const height = 200;
+                canvas.width = width;
+                canvas.height = height;
+                ctx.imageSmoothingEnabled = true;
+                ctx.font = '40px OldEnglish, Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(studentData.school_name, width / 2, height / 2);
+                const dataUrl = canvas.toDataURL();
+                setSchoolName(dataUrl);
+            };
           } catch (error) {
             console.error('Error generating QR code:', error);
           }
         };
-    
         generateQRCode();
     }, []);
 
@@ -85,11 +115,22 @@ const PDF = ({studentData}:any) => {
 
                             {/* School data */}
                             <View style={{display:'flex', flexDirection:'column', alignItems:'center', gap:4}}>
-                                <Text style={{fontSize:9}}>{studentData.school_name || '-'}</Text>
+                                <View style={{position:'relative'}}>
+                                    <Text style={{color:studentData.color}}>-</Text>
+                                    <View style={{position:'absolute', top:-30, left:-95}}>
+                                        {schoolName && <Image src={schoolName} style={{width:190, height:80}} />}
+                                    </View>
+                                </View>
                                 <Text style={{fontSize:8}}>{studentData.school_address || '-'}</Text>
                                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:6, fontSize:8}}>
-                                    <Text>Ph. No. : {studentData.school_phone || '-'}</Text>
-                                    <Text>Mo. : {studentData.school_mo || '-'}</Text>
+                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:2}}>
+                                        <Text>Ph. No. :</Text>
+                                        <Text style={{fontFamily:'Poppins', paddingTop:2}}>{studentData.school_phone || '-'}</Text>
+                                    </View>
+                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:2}}>
+                                        <Text>Mo. :</Text>
+                                        <Text style={{fontFamily:'Poppins', paddingTop:2}}>{studentData.school_mo || '-'}</Text>
+                                    </View>
                                 </View>
                             </View>
 
@@ -106,7 +147,7 @@ const PDF = ({studentData}:any) => {
                         {/* Bottom area */}
                         <View style={{display:'flex', flexDirection:'row', paddingVertical:30, paddingHorizontal:10, fontSize:10}}>
                             <View style={{position:'relative', display:'flex', flexDirection:'row', width:200}}>
-                                <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605', fontWeight:'bold'}}>{studentData.name || 'Jonathan Adel'}</Text>
+                                <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605', fontWeight:'bold'}}>{studentData.name || '-'}</Text>
                                 <Text style={{position:'absolute', width:'100%', top:-20, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
                                 <View style={{position:'relative', display:'flex', flexDirection:'column', gap:0, color:studentData.color, paddingRight:2}}>
 
@@ -141,7 +182,6 @@ const PDF = ({studentData}:any) => {
                             </View>
                         </View>
                     </View>
-
                 </View>
             </Page>
         </Document>
