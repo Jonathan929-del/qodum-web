@@ -86,7 +86,7 @@ const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) =
                     <span
                         onClick={() => {
                             if(selectedStudent.name === ''){
-                                toast({title:'Please selected student', variant:'alert'})
+                                toast({title:'Please selected student', variant:'alert'});
                             }else{
                                 if(selectedStudent.color === ''){
                                     setColorValidation('Please enter theme color');

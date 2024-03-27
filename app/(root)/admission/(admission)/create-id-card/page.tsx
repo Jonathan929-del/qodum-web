@@ -41,7 +41,7 @@ const page = () => {
 
 
     // Is card opened
-    const [isCardOpened, setIsCardOpened] = useState(false);
+    const [isCardOpened, setIsCardOpened] = useState(true);
 
 
     // Use effect
@@ -70,6 +70,7 @@ const page = () => {
                 school_mo:schoolsRes[0].mobile,
                 color:localStorage.getItem('id_card_theme_color') ? localStorage.getItem('id_card_theme_color') : ''
             });
+            setIsCardOpened(false);
         };
         fetcher();
     }, []);

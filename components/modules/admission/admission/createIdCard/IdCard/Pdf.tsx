@@ -56,31 +56,31 @@ const PDF = ({studentData}:any) => {
         const generateQRCode = async () => {
           try {
 
-            // Setting QR code
-            const qrDataURL = await QRCodeLib.toDataURL(`Name:${studentData.name} - Admission No.: ${studentData.adm_no}`, {width:100});
-            setQRImage(qrDataURL);
+                // Setting QR code
+                const qrDataURL = await QRCodeLib.toDataURL(`Name:${studentData.name} - Admission No.: ${studentData.adm_no}`, {width:100});
+                setQRImage(qrDataURL);
 
 
-            // School name font
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-                const width = 400;
-                const height = 200;
-                canvas.width = width;
-                canvas.height = height;
-                ctx.imageSmoothingEnabled = true;
-                ctx.font = '40px OldEnglish, Arial';
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(studentData.school_name, width / 2, height / 2);
-                const dataUrl = canvas.toDataURL();
-                setSchoolName(dataUrl);
-            };
-          } catch (error) {
-            console.error('Error generating QR code:', error);
-          }
+                // School name font
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if(ctx){
+                    const width = 400;
+                    const height = 200;
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.font = '40px OldEnglish, Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(studentData.school_name, width / 2, height / 2);
+                    const dataUrl = canvas.toDataURL();
+                    setSchoolName(dataUrl);
+                };
+            } catch (error) {
+                console.error('Error generating QR code:', error);
+            }
         };
         generateQRCode();
     }, []);
@@ -140,15 +140,15 @@ const PDF = ({studentData}:any) => {
                                     <Text>No photo</Text>
                                 </View>
                             ) : (
-                                <Image style={{height:40, width:40}} src={studentData.school_image}/>
+                                <Image style={{height:50, width:45, marginRight:-5}} src={studentData.school_image}/>
                             )}
                         </View>
 
                         {/* Bottom area */}
                         <View style={{display:'flex', flexDirection:'row', paddingVertical:30, paddingHorizontal:10, fontSize:10}}>
                             <View style={{position:'relative', display:'flex', flexDirection:'row', width:200}}>
-                                <Text style={{position:'absolute', width:'100%', top:-35, left:90, fontSize:11, color:'#FF0605', fontWeight:'bold'}}>{studentData.name || '-'}</Text>
-                                <Text style={{position:'absolute', width:'100%', top:-20, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
+                                <Text style={{position:'absolute', width:'100%', top:-33, left:90, fontSize:11, color:'#FF0605', fontWeight:'bold'}}>{studentData.name || '-'}</Text>
+                                <Text style={{position:'absolute', width:'100%', top:-18, left:90, fontSize:11}}>{studentData.class_name || '-'}</Text>
                                 <View style={{position:'relative', display:'flex', flexDirection:'column', gap:0, color:studentData.color, paddingRight:2}}>
 
                                     {/* Line */}
