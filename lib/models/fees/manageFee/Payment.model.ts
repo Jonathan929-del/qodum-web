@@ -19,9 +19,6 @@ const PaymentSchema = new mongoose.Schema(
         paymode_details:{type:Object},
         fee_type:{type:String},
         advance_dues_number:{type:String},
-
-
-
         class_name:{type:String},
         board:{type:String},
         adm_no:{type:String},
@@ -32,13 +29,21 @@ const PaymentSchema = new mongoose.Schema(
         school_no:{type:String},
         affiliation_no:{type:String},
         logo:{type:String},
+        wing_name:{type:String},
+        entry_mode:{type:String},
+        is_new:{type:Boolean},
+        student_status:{type:String},
+        bank_name:{type:String},
+        fee_group:{type:String},
+        session:{type:String},
+
+
 
 
         // Amounts
         actual_amount:{type:Number},
         concession_amount:{tyoe:Number},
         paid_amount:{type:Number},
-
         paid_heads:{type:Array},
         concession_reason:{type:String}
     },

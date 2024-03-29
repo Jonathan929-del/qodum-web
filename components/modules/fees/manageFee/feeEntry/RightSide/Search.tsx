@@ -64,6 +64,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 route_name:student?.transport_details?.route,
                 stop_name:student?.transport_details?.stop,
                 vehicle_name:student?.transport_details?.vehicle,
+                wing_name:student?.student?.wing || '',
+                is_new:student?.student?.is_new || false,
+                student_status:student?.student?.student_status || '',
                 affiliated_heads:{
                     group_name:student?.affiliated_heads?.group_name || '',
                     heads:student?.affiliated_heads?.heads?.map((h:any) => {
@@ -117,6 +120,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             route_name:student?.transport_details?.route || '',
             stop_name:student?.transport_details?.stop || '',
             vehicle_name:student?.transport_details?.vehicle || '',
+            wing_name:student?.student?.wing || '',
+            is_new:student?.student?.is_new || false,
+            student_status:student?.student?.student_status || '',
             affiliated_heads:{
                 group_name:student?.affiliated_heads?.group_name || '',
                 heads:student?.affiliated_heads?.heads?.map((h:any) => {

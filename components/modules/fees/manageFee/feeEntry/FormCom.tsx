@@ -219,7 +219,12 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             school_no:schools[0].school_no,
             affiliation_no:schools[0].affiliation_no,
             logo:schools[0].logo,
-        
+            wing_name:selectedStudent.wing_name,
+            entry_mode:values.entry_mode,
+            is_new:selectedStudent.is_new,
+            student_status:selectedStudent.student_status,
+            bank_name:values.bank_name,
+            fee_group:selectedStudent.affiliated_heads.group_name,
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
             concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
@@ -301,6 +306,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             route_name:student?.transport_details?.route,
             stop_name:student?.transport_details?.stop,
             vehicle_name:student?.transport_details?.vehicle,
+            wing_name:selectedStudent?.student?.wing || '',
+            is_new:selectedStudent?.student?.is_new || false,
+            student_status:selectedStudent?.student?.student_status || '',
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
                 heads:student.affiliated_heads.heads.map((h:any) => {
