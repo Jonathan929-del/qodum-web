@@ -131,167 +131,196 @@ const PDF = ({pdfData}:any) => {
 
 
 
+                {pdfData.payments.length > 0 ? (
+                    <>
 
-                {/* Blank preview */}
-                {pdfData.preview === '' && (
-                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
-
-
-                        {/* Headers */}
-                        <View style={{display:'flex', flexDirection:'column', gap:0, backgroundColor:'#435680'}}>
-                            <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', paddingLeft:5, color:'#fff'}}>
-                                <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc', color:'#435680'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
-                                    <Text>-</Text>
-                                </View>
-                                {pdfData.paymodes?.map((p:any) => paymodeFeeTypeFilter(p).length > 0 && (
-                                    <View style={{width:paymodeFeeTypeFilter(p).length * 75, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2, borderRightWidth:1, borderBottomWidth:0.5, borderColor:'#ccc'}}>
-                                        <Text>{p}</Text>
-                                    </View>
-                                ))}
-                                <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc', color:'#435680',}}>-</Text>
-                            </View>
-                            <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>REC. DATE</Text>
-                                </View>
-                                <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>SN</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>REC. NO.</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>REF. NO.</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>ADM NO.</Text>
-                                </View>
-                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>NAME</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>CLASS</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>INSTALLMENT</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>PAYMODE</Text>
-                                </View>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>CHQ. NO.</Text>
-                                </View>
-                                {pdfData.paymodes?.map((p:any) => paymodeFeeTypeFilter(p).map((h:any) => (
-                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text>{h}</Text>
-                                    </View>
-                                )))}
-                                <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
-                            </View>
-                        </View>
+                        {/* Blank preview */}
+                        {pdfData.preview === '' && (
+                            <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
 
 
-
-                        {/* Payments dates */}
-                        {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
-                            <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
-                                <View style={{
-                                    display:'flex',
-                                    flexDirection:'row',
-                                    alignItems:'center',
-                                    backgroundColor:'#F3F8FB'
-                                }}>
-                                    <View style={{width:805, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
-                                        <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
-                                    </View>
-                                </View>
-
-
-                                {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
-                                    <View style={{display:'flex', flexDirection:'row'}}>
-                                        <View style={{width:80, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) === 0 && moment(p.received_date).format('DD-MMM-YYYY')}</Text>
+                                {/* Headers */}
+                                <View style={{display:'flex', flexDirection:'column', gap:0, backgroundColor:'#435680'}}>
+                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', paddingLeft:5, color:'#fff'}}>
+                                        <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc', color:'#435680'}}>
+                                            <Text>-</Text>
                                         </View>
+                                        <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, color:'#435680', borderRightColor:'#ccc'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                        {pdfData.paymodes?.map((p:any) => paymodeFeeTypeFilter(p).length > 0 && (
+                                            <View style={{width:paymodeFeeTypeFilter(p).length * 75, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center', paddingVertical:2, borderRightWidth:1, borderBottomWidth:0.5, borderColor:'#ccc'}}>
+                                                <Text>{p}</Text>
+                                            </View>
+                                        ))}
+                                        <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc', color:'#435680',}}>-</Text>
+                                    </View>
+                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>REC. DATE</Text>
+                                        </View>
+                                        <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>SN</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>REC. NO.</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>REF. NO.</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>ADM NO.</Text>
+                                        </View>
+                                        <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>NAME</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>CLASS</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>INSTALLMENT</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>PAYMODE</Text>
+                                        </View>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>CHQ. NO.</Text>
+                                        </View>
+                                        {pdfData.paymodes?.map((p:any) => paymodeFeeTypeFilter(p).map((h:any) => (
+                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                <Text>{h}</Text>
+                                            </View>
+                                        )))}
+                                        <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
+                                    </View>
+                                </View>
+
+
+                                {/* Payments dates */}
+                                {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
+                                    <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
+                                        <View style={{
+                                            display:'flex',
+                                            flexDirection:'row',
+                                            alignItems:'center',
+                                            backgroundColor:'#F3F8FB'
+                                        }}>
+                                            <View style={{width:805, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
+                                                <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                            </View>
+                                        </View>
+
+
+                                        {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
+                                            <View style={{display:'flex', flexDirection:'row'}}>
+                                                <View style={{width:80, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) === 0 && moment(p.received_date).format('DD-MMM-YYYY')}</Text>
+                                                </View>
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                                    <View style={{width:45, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) + 1}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.receipt_no}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>-</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.adm_no}</Text>
+                                                    </View>
+                                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.student}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.class_name}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.installments.map((i:any) => i + ' ')}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.paymode}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p?.paymode_details?.cheque_no || '-'}</Text>
+                                                    </View>
+                                                    {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
+                                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                            <Text>{
+                                                                totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.type_name === t && p.paymode === pm)?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                            }</Text>
+                                                        </View>
+                                                    )))}
+                                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                                        totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                    }</Text>
+                                                </View>
+                                            </View>
+                                        ))}
+
+
                                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                            <View style={{width:45, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) + 1}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.receipt_no}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>-</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.adm_no}</Text>
-                                            </View>
-                                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.student}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.class_name}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.installments.map((i:any) => i + ' ')}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.paymode}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p?.paymode_details?.cheque_no || '-'}</Text>
+                                            <View style={{width:750, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                                <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
                                             </View>
                                             {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
                                                 <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                     <Text>{
-                                                        totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.type_name === t && p.paymode === pm)?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                        totalNumberGenerator(
+                                                            pdfData.payments
+                                                                ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
+                                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                                        ?.filter((ph:any) => ph.type_name === t)
+                                                                        ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
+                                                                    )
+                                                                )
+                                                        )
                                                     }</Text>
                                                 </View>
                                             )))}
                                             <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                                totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
                                             }</Text>
                                         </View>
                                     </View>
                                 ))}
 
 
-                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                    <View style={{width:750, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                        <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                {/* Total */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
+                                    <View style={{width:755, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                        <Text>Grand Total</Text>
                                     </View>
                                     {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
                                         <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                             <Text>{
                                                 totalNumberGenerator(
                                                     pdfData.payments
-                                                        ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
+                                                        ?.filter((p:any) => p.paymode === pm)
                                                         ?.map((p:any) => totalNumberGenerator(p.paid_heads
                                                                 ?.filter((ph:any) => ph.type_name === t)
                                                                 ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
@@ -302,493 +331,470 @@ const PDF = ({pdfData}:any) => {
                                         </View>
                                     )))}
                                     <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                        totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
+                                        totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
                                     }</Text>
                                 </View>
-                            </View>
-                        ))}
 
 
-                        {/* Total */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
-                            <View style={{width:755, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                <Text>Grand Total</Text>
-                            </View>
-                            {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{
-                                        totalNumberGenerator(
-                                            pdfData.payments
-                                                ?.filter((p:any) => p.paymode === pm)
-                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                        ?.filter((ph:any) => ph.type_name === t)
-                                                        ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
-                                                    )
-                                                )
-                                        )
-                                    }</Text>
-                                </View>
-                            )))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
-                            }</Text>
-                        </View>
-
-
-                        {/* Cheque bounced amount */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
-                            <View style={{width:750, display:'flex', flexDirection:'row', gap:4}}>
-                                <Text>Cheque Bounced Amount</Text>
-                                <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
-                                <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
-                            </View>
-                            {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc', color:'#fff'}}>
-                                    <Text>-</Text>
-                                </View>
-                            )))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                0
-                            }</Text>
-                        </View>
-
-
-                    </View>
-                )}
-
-
-                {/* Student wise preview */}
-                {pdfData.preview === 'Student Wise' && (
-                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:1, borderColor:'#ccc'}}>
-
-
-                        {/* Headers */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>ADM NO.</Text>
-                            </View>
-                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>NAME</Text>
-                            </View>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>CLASS</Text>
-                            </View>
-                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>INSTALLMENT</Text>
-                            </View>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>PAYMODE</Text>
-                            </View>
-                            {pdfData.show_remark && (
-                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>Remark</Text>
-                                </View>
-                            )}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
-                        </View>
-
-
-
-                        {/* Payments dates */}
-                        {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
-                            <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
-                                <View style={{
-                                    display:'flex',
-                                    flexDirection:'row',
-                                    alignItems:'center',
-                                    backgroundColor:'#F3F8FB'
-                                }}>
-                                    <View style={{width:pdfData.show_remark ? 500 : 400, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
-                                        <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                {/* Cheque bounced amount */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
+                                    <View style={{width:750, display:'flex', flexDirection:'row', gap:4}}>
+                                        <Text>Cheque Bounced Amount</Text>
+                                        <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
+                                        <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
                                     </View>
+                                    {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc', color:'#fff'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                    )))}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                        0
+                                    }</Text>
                                 </View>
 
 
-                                {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
-                                    <View style={{display:'flex', flexDirection:'row'}}>
-                                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.adm_no}</Text>
+                            </View>
+                        )}
+
+
+                        {/* Student wise preview */}
+                        {pdfData.preview === 'Student Wise' && (
+                            <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:1, borderColor:'#ccc'}}>
+
+
+                                {/* Headers */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>ADM NO.</Text>
+                                    </View>
+                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>NAME</Text>
+                                    </View>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>CLASS</Text>
+                                    </View>
+                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>INSTALLMENT</Text>
+                                    </View>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>PAYMODE</Text>
+                                    </View>
+                                    {pdfData.show_remark && (
+                                        <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>Remark</Text>
+                                        </View>
+                                    )}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
+                                </View>
+
+
+
+                                {/* Payments dates */}
+                                {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
+                                    <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
+                                        <View style={{
+                                            display:'flex',
+                                            flexDirection:'row',
+                                            alignItems:'center',
+                                            backgroundColor:'#F3F8FB'
+                                        }}>
+                                            <View style={{width:pdfData.show_remark ? 500 : 400, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
+                                                <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
                                             </View>
-                                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.student}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.class_name}</Text>
-                                            </View>
-                                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.installments.map((i:any) => i + ' ')}</Text>
-                                            </View>
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.paymode}</Text>
-                                            </View>
-                                            {pdfData.show_remark && (
-                                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                    <Text>{p.remarks}</Text>
+                                        </View>
+
+
+                                        {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
+                                            <View style={{display:'flex', flexDirection:'row'}}>
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.adm_no}</Text>
+                                                    </View>
+                                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.student}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.class_name}</Text>
+                                                    </View>
+                                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.installments.map((i:any) => i + ' ')}</Text>
+                                                    </View>
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.paymode}</Text>
+                                                    </View>
+                                                    {pdfData.show_remark && (
+                                                        <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                            <Text>{p.remarks}</Text>
+                                                        </View>
+                                                    )}
+                                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                                        totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                    }</Text>
                                                 </View>
-                                            )}
+                                            </View>
+                                        ))}
+
+
+                                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                            <View style={{width:pdfData.show_remark ? 525 : 425, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                                <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                            </View>
                                             <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                                totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
+                                                totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
                                             }</Text>
                                         </View>
                                     </View>
                                 ))}
 
 
-                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                    <View style={{width:pdfData.show_remark ? 525 : 425, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                        <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                {/* Total */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
+                                    <View style={{width:pdfData.show_remark ? 530 : 430, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                        <Text>Grand Total</Text>
                                     </View>
                                     <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                        totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
+                                        totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
                                     }</Text>
                                 </View>
-                            </View>
-                        ))}
 
 
-                        {/* Total */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
-                            <View style={{width:pdfData.show_remark ? 530 : 430, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                <Text>Grand Total</Text>
-                            </View>
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
-                            }</Text>
-                        </View>
-
-
-                        {/* Cheque bounced amount */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
-                            <View style={{width:pdfData.show_remark ? 525 : 425, display:'flex', flexDirection:'row', gap:4}}>
-                                <Text>Cheque Bounced Amount</Text>
-                                <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
-                                <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
-                            </View>
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                0
-                            }</Text>
-                        </View>
-
-
-                    </View>
-                )}
-
-
-                {/* Head wise preview */}
-                {pdfData.preview === 'Head Wise' && (
-                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
-
-
-                        {/* Headers */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
-                            <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>SN</Text>
-                            </View>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>REC. NO.</Text>
-                            </View>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>ADM NO.</Text>
-                            </View>
-                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>NAME</Text>
-                            </View>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>CLASS</Text>
-                            </View>
-                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>INSTALLMENT</Text>
-                            </View>
-                            {pdfData.show_remark && (
-                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>Remark</Text>
-                                </View>
-                            )}
-                            {affectedHeads.map((h:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{h}</Text>
-                                </View>
-                            ))}
-                            {pdfData.paymodes.map((p:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{p}</Text>
-                                </View>
-                            ))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
-                        </View>
-
-
-                        {/* Payments dates */}
-                        {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
-                            <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
-                                <View style={{
-                                    display:'flex',
-                                    flexDirection:'row',
-                                    alignItems:'center',
-                                    backgroundColor:'#F3F8FB'
-                                }}>
-                                    <View style={{width:pdfData.show_remark ? 580 : 480, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
-                                        <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                {/* Cheque bounced amount */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
+                                    <View style={{width:pdfData.show_remark ? 525 : 425, display:'flex', flexDirection:'row', gap:4}}>
+                                        <Text>Cheque Bounced Amount</Text>
+                                        <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
+                                        <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
                                     </View>
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                        0
+                                    }</Text>
                                 </View>
 
 
-                                {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
-                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                        <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) + 1}</Text>
-                                        </View>
-                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{p.receipt_no}</Text>
-                                        </View>
-                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{p.adm_no}</Text>
-                                        </View>
+                            </View>
+                        )}
+
+
+                        {/* Head wise preview */}
+                        {pdfData.preview === 'Head Wise' && (
+                            <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
+
+
+                                {/* Headers */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                    <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>SN</Text>
+                                    </View>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>REC. NO.</Text>
+                                    </View>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>ADM NO.</Text>
+                                    </View>
+                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>NAME</Text>
+                                    </View>
+                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>CLASS</Text>
+                                    </View>
+                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>INSTALLMENT</Text>
+                                    </View>
+                                    {pdfData.show_remark && (
                                         <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{p.student}</Text>
+                                            <Text>Remark</Text>
                                         </View>
+                                    )}
+                                    {affectedHeads.map((h:any) => (
                                         <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{p.class_name}</Text>
+                                            <Text>{h}</Text>
                                         </View>
-                                        <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{p.installments.map((i:any) => i + ' ')}</Text>
+                                    ))}
+                                    {pdfData.paymodes.map((p:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{p}</Text>
                                         </View>
-                                        {pdfData.show_remark && (
-                                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{p.remarks}</Text>
+                                    ))}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
+                                </View>
+
+
+                                {/* Payments dates */}
+                                {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
+                                    <View style={{display:'flex', flexDirection:'column', borderBottomWidth:1, borderBottomColor:'#ccc'}}>
+                                        <View style={{
+                                            display:'flex',
+                                            flexDirection:'row',
+                                            alignItems:'center',
+                                            backgroundColor:'#F3F8FB'
+                                        }}>
+                                            <View style={{width:pdfData.show_remark ? 580 : 480, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:4, paddingLeft:5, fontSize:14}}>
+                                                <Text>Collection Statement: {moment(d).format('DD-MMM-YYYY')}</Text>
                                             </View>
-                                        )}
-                                        {affectedHeads.map((h:any) => (
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{
-                                                    totalNumberGenerator(p.paid_heads.filter((ph:any) => ph.head_name === h).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => p.installments?.includes(a.name))?.map((a:any) => Number(a.paid_amount))))) || '-'
+                                        </View>
+
+
+                                        {pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => (
+                                            <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                                <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).indexOf(p) + 1}</Text>
+                                                </View>
+                                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{p.receipt_no}</Text>
+                                                </View>
+                                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{p.adm_no}</Text>
+                                                </View>
+                                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{p.student}</Text>
+                                                </View>
+                                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{p.class_name}</Text>
+                                                </View>
+                                                <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{p.installments.map((i:any) => i + ' ')}</Text>
+                                                </View>
+                                                {pdfData.show_remark && (
+                                                    <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{p.remarks}</Text>
+                                                    </View>
+                                                )}
+                                                {affectedHeads.map((h:any) => (
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{
+                                                            totalNumberGenerator(p.paid_heads.filter((ph:any) => ph.head_name === h).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => p.installments?.includes(a.name))?.map((a:any) => Number(a.paid_amount))))) || '-'
+                                                        }</Text>
+                                                    </View>
+                                                ))}
+                                                {pdfData.paymodes.map((pm:any) => (
+                                                    <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>{
+                                                            p.paymode === pm ? p.paid_amount : 0
+                                                        }</Text>
+                                                    </View>
+                                                ))}
+                                                <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                                    totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
                                                 }</Text>
                                             </View>
                                         ))}
-                                        {pdfData.paymodes.map((pm:any) => (
-                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{
-                                                    p.paymode === pm ? p.paid_amount : 0
-                                                }</Text>
+
+
+                                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                            <View style={{width:pdfData.show_remark ? 575 : 475, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                                <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
                                             </View>
-                                        ))}
-                                        <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                            totalNumberGenerator(p.paid_heads?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))) || '-'
-                                        }</Text>
+                                            {affectedHeads.map((h:any) => (
+                                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{
+                                                        totalNumberGenerator(
+                                                            pdfData.payments
+                                                                ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY'))
+                                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                                        ?.filter((ph:any) => ph.head_name === h)
+                                                                        ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
+                                                                    )
+                                                                )
+                                                            )
+                                                    }</Text>
+                                                </View>
+                                            ))}
+                                            {pdfData.paymodes.map((pm:any) => (
+                                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <Text>{
+                                                        totalNumberGenerator(
+                                                            pdfData.payments
+                                                                ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
+                                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                                        ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
+                                                                    )
+                                                                )
+                                                            )
+                                                    }</Text>
+                                                </View>
+                                            ))}
+                                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                                totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
+                                            }</Text>
+                                        </View>
                                     </View>
                                 ))}
 
 
-                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                    <View style={{width:pdfData.show_remark ? 575 : 475, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                        <Text>Total fee on date: {moment(d).format('DD-MMM-YYYY')}</Text>
+                                {/* Total */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
+                                    <View style={{width:pdfData.show_remark ? 580 : 480, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
+                                        <Text>Grand Total</Text>
                                     </View>
                                     {affectedHeads.map((h:any) => (
                                         <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                             <Text>{
-                                                totalNumberGenerator(
-                                                    pdfData.payments
-                                                        ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY'))
-                                                        ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                                ?.filter((ph:any) => ph.head_name === h)
-                                                                ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
-                                                            )
-                                                        )
-                                                    )
+                                                totalNumberGenerator(pdfData.payments?.map((p:any) => totalNumberGenerator(p.paid_heads.filter((ph:any) => ph.head_name === h).map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))) || '-'
                                             }</Text>
                                         </View>
                                     ))}
                                     {pdfData.paymodes.map((pm:any) => (
                                         <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                             <Text>{
-                                                totalNumberGenerator(
-                                                    pdfData.payments
-                                                        ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
-                                                        ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                                ?.map((ph:any) => totalNumberGenerator(ph?.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))
-                                                            )
-                                                        )
-                                                    )
+                                                totalNumberGenerator(pdfData.payments?.filter((p:any) => p.paymode === pm)?.map((p:any) => totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))) || '-'
                                             }</Text>
                                         </View>
                                     ))}
                                     <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                        totalNumberGenerator(pdfData.payments.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
+                                        totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
                                     }</Text>
                                 </View>
-                            </View>
-                        ))}
 
 
-                        {/* Total */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', color:'#fff', backgroundColor:'#435680'}}>
-                            <View style={{width:pdfData.show_remark ? 580 : 480, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, fontSize:14, borderRightColor:'#ccc'}}>
-                                <Text>Grand Total</Text>
-                            </View>
-                            {affectedHeads.map((h:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{
-                                        totalNumberGenerator(pdfData.payments?.map((p:any) => totalNumberGenerator(p.paid_heads.filter((ph:any) => ph.head_name === h).map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))) || '-'
+                                {/* Cheque bounced amount */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
+                                    <View style={{width:pdfData.show_remark ? 575 : 475, display:'flex', flexDirection:'row', gap:4}}>
+                                        <Text>Cheque Bounced Amount</Text>
+                                        <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
+                                        <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
+                                    </View>
+                                    {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc', color:'#fff'}}>
+                                            <Text>-</Text>
+                                        </View>
+                                    )))}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                        0
                                     }</Text>
                                 </View>
-                            ))}
-                            {pdfData.paymodes.map((pm:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{
-                                        totalNumberGenerator(pdfData.payments?.filter((p:any) => p.paymode === pm)?.map((p:any) => totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => p.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))) || '-'
-                                    }</Text>
-                                </View>
-                            ))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                totalNumberGenerator(pdfData.payments.map((p:any) => Number(p.paid_amount)))
-                            }</Text>
-                        </View>
 
 
-                        {/* Cheque bounced amount */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', fontSize:14, backgroundColor:'#fff', marginLeft:5}}>
-                            <View style={{width:pdfData.show_remark ? 575 : 475, display:'flex', flexDirection:'row', gap:4}}>
-                                <Text>Cheque Bounced Amount</Text>
-                                <Text>From {moment(pdfData.date_from).format('DD-MMM-YYYY')}</Text>
-                                <Text>To {moment(pdfData.date_to).format('DD-MMM-YYYY')}</Text>
                             </View>
-                            {pdfData.paymodes?.map((pm:any) => paymodeFeeTypeFilter(pm).map((t:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc', color:'#fff'}}>
-                                    <Text>-</Text>
-                                </View>
-                            )))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                0
-                            }</Text>
-                        </View>
+                        )}
 
 
-                    </View>
-                )}
+                        {/* Date wise preview */}
+                        {pdfData.preview === 'Date Wise' && (
+                            <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
 
-
-                {/* Date wise preview */}
-                {pdfData.preview === 'Date Wise' && (
-                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:10, borderWidth:0.75, borderColor:'#ccc'}}>
-
-                        {/* Headers */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>REC. DATE</Text>
-                            </View>
-                            <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Slip(s)</Text>
-                            </View>
-                            {affectedHeads.map((h:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{h}</Text>
-                                </View>
-                            ))}
-                            {pdfData.paymodes.map((p:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{p}</Text>
-                                </View>
-                            ))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
-                        </View>
-
-
-                        {/* Payments Dates */}
-                        {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
-                            <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{moment(d).format('DD-MMM-YYYY')}</Text>
-                                </View>
-                                <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{0}</Text>
-                                </View>
-                                {affectedHeads.map((h:any) => (
+                                {/* Headers */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text>{
-                                            totalNumberGenerator(pdfData.payments
-                                                ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY'))
-                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                    ?.filter((ph:any) => ph.head_name === h)
-                                                    ?.map((ph:any) => totalNumberGenerator(ph.amounts
-                                                        ?.filter((a:any) => p.installments.includes(a.name))
-                                                        ?.map((a:any) => Number(a.paid_amount))
-                                                    ))    
-                                                ))
-                                            )
+                                        <Text>REC. DATE</Text>
+                                    </View>
+                                    <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>Slip(s)</Text>
+                                    </View>
+                                    {affectedHeads.map((h:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{h}</Text>
+                                        </View>
+                                    ))}
+                                    {pdfData.paymodes.map((p:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{p}</Text>
+                                        </View>
+                                    ))}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>TOTAL</Text>
+                                </View>
+
+
+                                {/* Payments Dates */}
+                                {getDatesBetween(pdfData.date_from, pdfData.date_to)?.map((d:any) => (
+                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#fff', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000'}}>
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{moment(d).format('DD-MMM-YYYY')}</Text>
+                                        </View>
+                                        <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{0}</Text>
+                                        </View>
+                                        {affectedHeads.map((h:any) => (
+                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                <Text>{
+                                                    totalNumberGenerator(pdfData.payments
+                                                        ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY'))
+                                                        ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                            ?.filter((ph:any) => ph.head_name === h)
+                                                            ?.map((ph:any) => totalNumberGenerator(ph.amounts
+                                                                ?.filter((a:any) => p.installments.includes(a.name))
+                                                                ?.map((a:any) => Number(a.paid_amount))
+                                                            ))    
+                                                        ))
+                                                    )
+                                                }</Text>
+                                            </View>
+                                        ))}
+                                        {pdfData.paymodes.map((pm:any) => (
+                                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                <Text>{
+                                                    totalNumberGenerator(pdfData.payments
+                                                        ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
+                                                        ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                            ?.map((ph:any) => totalNumberGenerator(ph.amounts
+                                                                ?.filter((a:any) => p.installments.includes(a.name))
+                                                                ?.map((a:any) => Number(a.paid_amount))
+                                                            ))    
+                                                        ))
+                                                    )
+                                                }</Text>
+                                            </View>
+                                        ))}
+                                        <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
+                                            totalNumberGenerator(pdfData.payments?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
                                         }</Text>
                                     </View>
                                 ))}
-                                {pdfData.paymodes.map((pm:any) => (
+
+
+                                {/* Grand Total */}
+                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text>{
-                                            totalNumberGenerator(pdfData.payments
-                                                ?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY') && p.paymode === pm)
-                                                ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                    ?.map((ph:any) => totalNumberGenerator(ph.amounts
-                                                        ?.filter((a:any) => p.installments.includes(a.name))
-                                                        ?.map((a:any) => Number(a.paid_amount))
-                                                    ))    
-                                                ))
-                                            )
-                                        }</Text>
+                                        <Text>Grand Total</Text>
                                     </View>
-                                ))}
-                                <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>{
-                                    totalNumberGenerator(pdfData.payments?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).map((p:any) => Number(p.paid_amount)))
-                                }</Text>
-                            </View>
-                        ))}
-
-
-                        {/* Grand Total */}
-                        <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
-                            <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Grand Total</Text>
-                            </View>
-                            <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>0</Text>
-                            </View>
-                            {affectedHeads.map((h:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{
-                                        totalNumberGenerator(pdfData.payments
-                                            ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                ?.filter((ph:any) => ph.head_name === h)
-                                                ?.map((ph:any) => totalNumberGenerator(ph.amounts
-                                                    ?.filter((a:any) => p.installments.includes(a.name))
-                                                    ?.map((a:any) => Number(a.paid_amount))
-                                                ))    
-                                            ))
-                                        )
-                                    }</Text>
+                                    <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text>0</Text>
+                                    </View>
+                                    {affectedHeads.map((h:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{
+                                                totalNumberGenerator(pdfData.payments
+                                                    ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                        ?.filter((ph:any) => ph.head_name === h)
+                                                        ?.map((ph:any) => totalNumberGenerator(ph.amounts
+                                                            ?.filter((a:any) => p.installments.includes(a.name))
+                                                            ?.map((a:any) => Number(a.paid_amount))
+                                                        ))    
+                                                    ))
+                                                )
+                                            }</Text>
+                                        </View>
+                                    ))}
+                                    {pdfData.paymodes.map((pm:any) => (
+                                        <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                            <Text>{
+                                                totalNumberGenerator(pdfData.payments
+                                                    ?.filter((p:any) => p.paymode === pm)
+                                                    ?.map((p:any) => totalNumberGenerator(p.paid_heads
+                                                        ?.map((ph:any) => totalNumberGenerator(ph.amounts
+                                                            ?.filter((a:any) => p.installments.includes(a.name))
+                                                            ?.map((a:any) => Number(a.paid_amount))
+                                                        ))    
+                                                    ))
+                                                )
+                                            }</Text>
+                                        </View>
+                                    ))}
+                                    <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>
+                                        {
+                                            totalNumberGenerator(pdfData.payments
+                                                ?.map((p:any) => p.paid_amount)
+                                            )
+                                        }
+                                    </Text>
                                 </View>
-                            ))}
-                            {pdfData.paymodes.map((pm:any) => (
-                                <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{
-                                        totalNumberGenerator(pdfData.payments
-                                            ?.filter((p:any) => p.paymode === pm)
-                                            ?.map((p:any) => totalNumberGenerator(p.paid_heads
-                                                ?.map((ph:any) => totalNumberGenerator(ph.amounts
-                                                    ?.filter((a:any) => p.installments.includes(a.name))
-                                                    ?.map((a:any) => Number(a.paid_amount))
-                                                ))    
-                                            ))
-                                        )
-                                    }</Text>
-                                </View>
-                            ))}
-                            <Text style={{width:50, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2,  borderRightWidth:1, paddingLeft:5, borderRightColor:'#ccc'}}>
-                                {
-                                    totalNumberGenerator(pdfData.payments
-                                        ?.map((p:any) => p.paid_amount)
-                                    )
-                                }
-                            </Text>
-                        </View>
 
-                    </View>
+                            </View>
+                        )}
+
+                    </>
+                ) : (
+                    <Text style={{fontSize:20, color:'#435680', marginLeft:20}}>No record found!</Text>
                 )}
 
 
