@@ -32,6 +32,7 @@ const PaymentSchema = new mongoose.Schema(
         wing_name:{type:String},
         entry_mode:{type:String},
         is_new:{type:Boolean},
+        is_active:{type:Boolean},
         student_status:{type:String},
         bank_name:{type:String},
         fee_group:{type:String},

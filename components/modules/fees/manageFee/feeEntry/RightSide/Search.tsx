@@ -66,6 +66,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 vehicle_name:student?.transport_details?.vehicle,
                 wing_name:student?.student?.wing || '',
                 is_new:student?.student?.is_new || false,
+                is_active:student?.student?.is_active || false,
                 student_status:student?.student?.student_status || '',
                 affiliated_heads:{
                     group_name:student?.affiliated_heads?.group_name || '',
@@ -122,6 +123,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             vehicle_name:student?.transport_details?.vehicle || '',
             wing_name:student?.student?.wing || '',
             is_new:student?.student?.is_new || false,
+            is_active:student?.student?.is_active || false,
             student_status:student?.student?.student_status || '',
             affiliated_heads:{
                 group_name:student?.affiliated_heads?.group_name || '',

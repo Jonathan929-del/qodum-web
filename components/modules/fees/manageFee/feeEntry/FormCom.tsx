@@ -222,6 +222,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             wing_name:selectedStudent.wing_name,
             entry_mode:values.entry_mode,
             is_new:selectedStudent.is_new,
+            is_active:selectedStudent.is_active,
             student_status:selectedStudent.student_status,
             bank_name:values.bank_name,
             fee_group:selectedStudent.affiliated_heads.group_name,
@@ -308,6 +309,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             vehicle_name:student?.transport_details?.vehicle,
             wing_name:selectedStudent?.student?.wing || '',
             is_new:selectedStudent?.student?.is_new || false,
+            is_active:selectedStudent?.student?.is_active || false,
             student_status:selectedStudent?.student?.student_status || '',
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,

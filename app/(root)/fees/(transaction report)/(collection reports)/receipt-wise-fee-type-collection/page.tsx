@@ -1,6 +1,6 @@
 'use client';
 // Imports
-import {useEffect, useState} from 'react';
+import ReceiptWiseFeeTypeCollection from '@/components/modules/fees/transactionReport/collectionReports/receiptWiseFeeTypeCollection';
 
 
 
@@ -9,9 +9,7 @@ import {useEffect, useState} from 'react';
 // Main function
 const page = () => {
     return (
-        <div className='h-screen w-full bg-red-500'>
-            test
-        </div>
+        <ReceiptWiseFeeTypeCollection />
     );
 };
 

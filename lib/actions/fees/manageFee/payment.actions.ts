@@ -33,6 +33,7 @@ interface CreateAdmittedStudentProps{
         wing_name:String;
         entry_mode:String;
         is_new:Boolean;
+        is_active:Boolean;
         student_status:String;
         bank_name:String;
         fee_group:String;
@@ -46,7 +47,7 @@ interface CreateAdmittedStudentProps{
         concession_reason:String;
 };
 // Create payment
-export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({student, receipt_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -81,6 +82,7 @@ export const createPayment = async ({student, receipt_no, installments, received
             wing_name,
             entry_mode,
             is_new,
+            is_active,
             student_status,
             bank_name,
             fee_group,
@@ -269,6 +271,81 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
             })
             // User filter
             .filter((p:any) => p)
+
+
+        // Return
+        return filteredPayments;
+
+
+    } catch (err:any) {
+        console.log(`Error fetching payments: ${err.message}`);
+    };
+};
+
+
+
+
+
+// Daily fee collection filter props
+interface ReceiptWiseFeeTypeCollectionProps{
+    school:String;
+    wing:String;
+    classes:any;
+    board:String;
+    fee_type:String;
+    installment:String;
+    pay_modes:any;
+    date_from:Date;
+    date_to:Date;
+    user:String;
+    banks:any;
+    new_student:String;
+    student_status:String;
+    is_active:String;
+};
+// Daily fee collection filter
+export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes, board, fee_type, installment, pay_modes, date_from, date_to, user, banks, new_student, student_status, is_active}:ReceiptWiseFeeTypeCollectionProps) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Fetching and filtering payments
+        const payments = await Payment.find();
+        const filteredPayments = payments
+            // Schools filter
+            .filter((p:any) => school === 'All Schools' ? p : p.school_name === school)
+            // Wings filter
+            .filter((p:any) => wing === 'All Wings' ? p : p.wing_name === wing)
+            // Classes filter
+            .filter((p:any) => classes.map((i:any) => i.class_name).includes(p.class_name))
+            // Board filter
+            .filter((p:any) => board === 'All Boards' ? p : p.board === board)
+            // Fee types filter
+            .filter((p:any) => p.fee_type === 'All fee types' ? p : p.fee_type === fee_type)
+            // Installments filter
+            .filter((p:any) => installment === 'All installments' ? p : p.installments.filter((i:any) => installment === i).length > 0)
+            // // Pay modes filter
+            .filter((p:any) => pay_modes.includes(p.paymode))
+            // // Dates filter
+            .filter((p:any) => p.received_date >= date_from && p.received_date <= date_to)
+            // // User filter
+            .filter((p:any) => p)
+            // // Bank filter
+            .filter((p:any) => banks.map((i:any) => i.account_name).includes(p.bank_name))
+            // New student filter
+            .filter((p:any) => {
+                const is_new = new_student === 'New';
+                return new_student === 'All' ? p : p.is_new === is_new;
+            })
+            // Status filter
+            .filter((p:any) => student_status === 'All' ? p : p.student_status === student_status)
+            // Active filter
+            .filter((p:any) => {
+                const is_student_active = is_active === 'Active';
+                return is_active === 'All' ? p : p.is_active === is_student_active;
+            })
 
 
         // Return
