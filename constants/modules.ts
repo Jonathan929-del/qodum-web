@@ -1,17 +1,16 @@
 // Imports
-import AccountsImage from '@/public/assets/Modules Icons/Accounts.png';
-import FessImage from '@/public/assets/Modules Icons/Fees.png';
-import AdmissionImage from '@/public/assets/Modules Icons/Admission.png';
-import PayrollImage from '@/public/assets/Modules Icons/Payroll.png';
-import StocksImage from '@/public/assets/Modules Icons/Stocks.png';
-import UsersImage from '@/public/assets/Modules Icons/Users.png';
-import AttendenceImage from '@/public/assets/Modules Icons/Attendance.png';
-import TimetableImage from '@/public/assets/Modules Icons/Time Table.png';
-import ExamanationImage from '@/public/assets/Modules Icons/Examination.png';
-import LibraryImage from '@/public/assets/Modules Icons/Library.png';
-import CBSEImage from '@/public/assets/Modules Icons/CBSE DIOS.png';
-import MarksImage from '@/public/assets/Modules Icons/Marks.png';
-
+import AccountsImage from '@/public/assets/Modules Icons/Sidebar icons/Accounts.png';
+import FessImage from '@/public/assets/Modules Icons/Sidebar icons/Fees.png';
+import AdmissionImage from '@/public/assets/Modules Icons/Sidebar icons/Admission.png';
+import PayrollImage from '@/public/assets/Modules Icons/Sidebar icons/Payroll.png';
+import StocksImage from '@/public/assets/Modules Icons/Sidebar icons/Stocks.png';
+import UsersImage from '@/public/assets/Modules Icons/Sidebar icons/Users.png';
+import AttendenceImage from '@/public/assets/Modules Icons/Sidebar icons/Attendance.png';
+import TimetableImage from '@/public/assets/Modules Icons/Sidebar icons/Time Table.png';
+import ExamanationImage from '@/public/assets/Modules Icons/Sidebar icons/Examination.png';
+import LibraryImage from '@/public/assets/Modules Icons/Sidebar icons/Library.png';
+import CBSEImage from '@/public/assets/Modules Icons/Sidebar icons/CBSE DIOS.png';
+import MarksImage from '@/public/assets/Modules Icons/Sidebar icons/Marks.png';
 
 
 

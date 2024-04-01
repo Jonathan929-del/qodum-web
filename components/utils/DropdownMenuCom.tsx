@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import {Menu} from 'lucide-react';
-import modules from '@/constants/modules';
+import modules from '@/constants/modulesHome';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
 
 
@@ -23,7 +23,7 @@ const DropdownMenuCom = () => {
             >
                 {modules.map(module => (
                     <Link
-                        href={`/${module.moduleName.toLowerCase().replace(/\s+/g,"-")}`}
+                        href={`/${module.title.toLowerCase().replace(/\s+/g,"-")}`}
                     >
                         <DropdownMenuItem className='h-full w-full py-0 px-0 cursor-pointer'>
                             <div
@@ -41,7 +41,7 @@ const DropdownMenuCom = () => {
                                             )}
                                         </div>
                                         <p className=''>
-                                            {module.moduleName}
+                                            {module.title}
                                         </p>
                                     </div>
                             </div>
@@ -49,35 +49,6 @@ const DropdownMenuCom = () => {
                     </Link>
                 ))}
             </DropdownMenuContent>
-            {/* <DropdownMenuTrigger className='outline-none flex justify-center items-center border-2 text-hash-color border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
-                <Menu
-                    size={18}
-                />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-                className='bg-white rounded-[8px]'
-            >
-                {modules.map(module => (
-                    <Link
-                        href={`/${module.moduleName.toLowerCase().replace(/\s+/g,"-")}`}
-                    >
-                        <DropdownMenuItem className='cursor-pointer h-full py-0'>
-                            <div
-                                className={`group w-full flex flex-row justify-between rounded-[8px] px-4 py-[2px] mt-2 transition hover:bg-[#195382] text-xs`}
-                            >
-                                    <div className={`flex flex-row w-full items-center gap-2 transition group-hover:text-white`}>
-                                        <div className='flex justify-center'>
-                                            {createElement(module.icon)}
-                                        </div>
-                                        <p className='font-semibold'>
-                                            {module.moduleName}
-                                        </p>
-                                    </div>
-                            </div>
-                        </DropdownMenuItem>
-                    </Link>
-                ))}
-            </DropdownMenuContent> */}
         </DropdownMenu>
     );
 };

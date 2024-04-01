@@ -1,12 +1,12 @@
 'use client';
 // Imports
 import Link from 'next/link';
+import Image from 'next/image';
 import modules from '@/constants/modules';
 import {useEffect, useState} from 'react';
 import {usePathname} from 'next/navigation';
 import {MoveRight, ChevronDown} from 'lucide-react';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
-import {CircleDollarSignIcon, Wallet, Box, GraduationCap, Users, FileStack, Megaphone, Calendar} from 'lucide-react';
 
 
 
@@ -22,10 +22,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
 
     // Currnet Module
     const [currentModule, setCurrentModule] = useState({});
-
-
-    // Icon
-    const [icon, setIcon] = useState<any>();
 
 
     // Select Module
@@ -88,35 +84,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
         setCurrentModule(module[0]);
 
 
-        // Module Icon
-        switch (pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)) {
-            case 'Time-table':
-                setIcon(<Calendar/>);
-                break;
-            case 'Accounts':
-                setIcon(<FileStack />);
-                break;
-            case 'Fees':
-                setIcon(<CircleDollarSignIcon />);
-                break;
-            case 'Admission':
-                setIcon(<GraduationCap />);
-                break;
-            case 'Payroll':
-                setIcon(<Wallet />);
-                break;
-            case 'Stocks':
-                setIcon(<Box />);
-                break;
-            case 'Users':
-                setIcon(<Users />);
-                break;
-            case 'Attendance':
-                setIcon(<Megaphone />);
-                break;
-        }
-
-
         // Window Resizing
         window.addEventListener('resize', updateDimensions);
         if(window.innerWidth > 768){
@@ -152,7 +119,14 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                     >
                         <div className='flex flex-row w-full items-center gap-2 transition'>
                             <div className={`${!isSidebarOpened ? 'w-full' : 'w-auto'} flex justify-center`}>
-                                {icon}
+                                <Image
+                                    // @ts-ignore
+                                    src={currentModule.icon}
+                                    width={35}
+                                    height={35}
+                                    alt='Icon'
+                                />
+                                {/* {icon} */}
                             </div>
                             <p
                                 className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}

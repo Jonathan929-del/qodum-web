@@ -56,6 +56,9 @@ const index = ({children}:any) => {
             const res:any = await fetchAcademicYears();
             setAcademicYears(res);
             setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
+            if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection'){
+                setIsSidebarOpened(false);
+            };
         };
         academicYearsFetcher();
     }, []);
