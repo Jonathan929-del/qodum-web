@@ -44,7 +44,7 @@ const index = () => {
 
 
             {/* PDF file */}
-            <div className={`flex-1 flex justify-center items-center overflow-hidden ${isOpened ? 'ml-[370px]' : 'ml-0'}`}>
+            <div className={`flex-1 flex justify-center items-center overflow-hidden ${isOpened ? 'ml-[250px]' : 'ml-0'}`}>
                 {isLoading ? (
                     <LoadingIcon />
                 ) : isShowClicked ? (

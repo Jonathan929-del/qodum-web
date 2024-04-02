@@ -202,6 +202,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             // Others
             student:selectedStudent.name,
             receipt_no:paymentsReceiptNo,
+            ref_no:'0',
             installments:selectedInstallments,
             received_date:values.received_date,
             remarks:values.remarks,

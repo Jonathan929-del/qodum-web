@@ -22,8 +22,6 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPag
         <aside
             className={`flex flex-col bg-[#FAFAFA] items-center transition z-10
                         absolute h-[100%] w-full md:left-0 ${isSidebarOpened ? 'left-0 px-4' : 'left-[-100%] px-1'} md:relative md:w-auto`}
-            // className={`flex flex-col bg-[#FAFAFA] items-center transition z-10
-            //             absolute h-[100%] w-full md:left-0 ${isSidebarOpened ? 'left-0 px-4' : 'left-[-100%] px-2'} md:relative md:w-auto`}
         >
 
             {/* Logo */}
@@ -31,8 +29,6 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPag
                 <Image
                     width={isSidebarOpened ? 125 : 50}
                     height={isSidebarOpened ? 125 : 50}
-                    // width={isSidebarOpened ? 125 : 100}
-                    // height={isSidebarOpened ? 125 : 100}
                     alt='Qodum logo'
                     src='/assets/logo.png'
                     className='p-[2px] rounded-[5px]'

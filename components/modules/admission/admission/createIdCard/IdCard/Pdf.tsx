@@ -21,13 +21,6 @@ const PDF = ({studentData}:any) => {
         ]
     });
     Font.register({
-        family:'Gentium',
-        fonts:[
-            {src:'/fonts/Gentium_Book_Plus/GentiumBookPlus-Regular.ttf'},
-            {src:'/fonts/Gentium_Book_Plus/GentiumBookPlus-Bold.ttf', fontWeight:'bold'}
-        ]
-    });
-    Font.register({
         family:'Poppins',
         fonts:[
             {src:'/fonts/Poppins/Poppins-Bold.ttf', fontWeight:'bold'}

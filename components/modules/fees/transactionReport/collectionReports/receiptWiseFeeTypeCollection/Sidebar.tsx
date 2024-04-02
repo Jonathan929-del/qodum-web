@@ -171,7 +171,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
     return (
-        <div className={`absolute top-0 left-0 h-full w-[370px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`absolute top-0 left-0 h-full w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
 
             {/* Toggling button */}
             <span
@@ -596,7 +596,55 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
                     {/* Bank Name */}
-                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                    <div className='w-full flex flex-col items-center justify-center'>
+                        <p className='w-full text-xs text-start text-[#726E71]'>Bank Name</p>
+                        <div className='w-full relative h-full flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedBankNames?.length === 0 ? 'Select Bank(s)' : selectedBankNames?.length === 1 ? '1 bank selected' : `${selectedBankNames?.length} banks selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedBankNames(bankNames)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedBankNames([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {bankNames.length < 1 ? (
+                                            <p className='text-xs text-hash-color'>No bank ledgers</p>
+                                        ) : // @ts-ignore
+                                        !bankNames[0].account_name ? (
+                                            <LoadingIcon />
+                                        ) : bankNames.map((c:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedBankNames?.map((m:any) => m).includes(c)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedBankNames?.includes(c) ? setSelectedBankNames(selectedBankNames?.filter((i:any) => i !== c)) : setSelectedBankNames([...selectedBankNames, c])}
+                                                />
+                                                <p className='text-xs font-semibold'>{c.account_name}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    {/* <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
                         <p className='basis-[30%] text-xs text-end text-[#726E71]'>Bank Name</p>
                         <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
                             <Select>
@@ -643,11 +691,42 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                                 </SelectContent>
                             </Select>
                         </div>
-                    </div>
+                    </div> */}
 
 
                     {/* New/Old Student */}
                     <FormField
+                        control={form.control}
+                        name='new_student'
+                        render={({field}) => (
+                            <FormItem className='w-full'>
+                            <div className='w-full flex flex-col items-center justify-center'>
+                                <FormLabel className='w-full flex justify-start items-center text-[#726E71] text-xs'>New/Old Student</FormLabel>
+                                <div className='w-full flex flex-col items-start gap-4'>
+                                    <FormControl>
+                                        <Select
+                                            {...field}
+                                            value={field.value}
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                <SelectValue placeholder='Select Board'/>
+                                                <ChevronDown className='h-4 w-4 opacity-50'/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value='All'>All</SelectItem>
+                                                <SelectItem value='New'>New</SelectItem>
+                                                <SelectItem value='Old'>Old</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-xs'/>
+                                </div>
+                            </div>
+                        </FormItem>
+                        )}
+                    />
+                    {/* <FormField
                         control={form.control}
                         name='new_student'
                         render={({field}) => (
@@ -677,11 +756,46 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             </div>
                         </FormItem>
                         )}
-                    />
+                    /> */}
 
 
                     {/* Student Status */}
                     <FormField
+                        control={form.control}
+                        name='student_status'
+                        render={({field}) => (
+                            <FormItem className='w-full'>
+                            <div className='w-full flex flex-col items-center justify-center'>
+                                <FormLabel className='w-full flex justify-start items-center text-[#726E71] text-xs'>Student Status</FormLabel>
+                                <div className='w-full flex flex-col items-start gap-4'>
+                                    <FormControl>
+                                        <Select
+                                            {...field}
+                                            value={field.value}
+                                            onValueChange={field.onChange}
+                                        >
+                                            <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
+                                                <SelectValue placeholder='Select Board'/>
+                                                <ChevronDown className='h-4 w-4 opacity-50'/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value='All'>All</SelectItem>
+                                                <SelectItem value='LEFT'>LEFT</SelectItem>
+                                                <SelectItem value='REPEATER'>REPEATER</SelectItem>
+                                                <SelectItem value='RUSTICATE'>RUSTICATE</SelectItem>
+                                                <SelectItem value='STUDYING'>STUDYING</SelectItem>
+                                                <SelectItem value='TC'>TC</SelectItem>
+                                                <SelectItem value='WITHDRAWN'>WITHDRAWN</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-xs'/>
+                                </div>
+                            </div>
+                        </FormItem>
+                        )}
+                    />
+                    {/* <FormField
                         control={form.control}
                         name='student_status'
                         render={({field}) => (
@@ -715,7 +829,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             </div>
                         </FormItem>
                         )}
-                    />
+                    /> */}
 
 
                     {/* With Settlment Date */}
@@ -849,9 +963,9 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                     {/* Preview */}
                     <RadioGroup
                         value={form.getValues().preview}
-                        className='flex flex-row items-center gap-1 mt-4'
+                        className='flex flex-row items-center gap-[2px] mt-4'
                     >
-                        <div className='flex items-center space-x-[2px]'>
+                        <div className='flex items-center space-x-[1px]'>
                             <RadioGroupItem
                                 value='Student Wise'
                                 id='Student Wise'
@@ -859,12 +973,12 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             />
                             <Label
                                 htmlFor='Student Wise'
-                                className='text-[11px]'
+                                className='text-[10px]'
                             >
                                 Student Wise
                             </Label>
                         </div>
-                        <div className='flex items-center space-x-[2px]'>
+                        <div className='flex items-center space-x-[1px]'>
                             <RadioGroupItem
                                 value='Head Wise'
                                 id='Head Wise'
@@ -872,12 +986,12 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             />
                             <Label
                                 htmlFor='Head Wise'
-                                className='text-[11px]'
+                                className='text-[10px]'
                             >
                                 Head Wise
                             </Label>
                         </div>
-                        <div className='flex items-center space-x-[2px]'>
+                        <div className='flex items-center space-x-[1px]'>
                             <RadioGroupItem
                                 value='Date Wise'
                                 id='Date Wise'
@@ -885,7 +999,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             />
                             <Label
                                 htmlFor='Date Wise'
-                                className='text-[11px]'
+                                className='text-[10px]'
                             >
                                 Date Wise
                             </Label>

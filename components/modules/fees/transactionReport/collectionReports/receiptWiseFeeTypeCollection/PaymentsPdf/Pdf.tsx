@@ -248,7 +248,7 @@ const PDF = ({pdfData}:any) => {
                                                         <Text>{p.receipt_no}</Text>
                                                     </View>
                                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                        <Text>-</Text>
+                                                        <Text>{p?.ref_no || '-'}</Text>
                                                     </View>
                                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                         <Text>{p.adm_no}</Text>
@@ -702,7 +702,7 @@ const PDF = ({pdfData}:any) => {
                                             <Text>{moment(d).format('DD-MMM-YYYY')}</Text>
                                         </View>
                                         <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                            <Text>{0}</Text>
+                                            <Text>{pdfData.payments?.filter((p:any) => moment(p.received_date).format('DD-MMM-YYYY') === moment(d).format('DD-MMM-YYYY')).length}</Text>
                                         </View>
                                         {affectedHeads.map((h:any) => (
                                             <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
@@ -748,7 +748,7 @@ const PDF = ({pdfData}:any) => {
                                         <Text>Grand Total</Text>
                                     </View>
                                     <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text>0</Text>
+                                        <Text>{pdfData.payments?.length}</Text>
                                     </View>
                                     {affectedHeads.map((h:any) => (
                                         <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>

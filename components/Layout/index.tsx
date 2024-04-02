@@ -62,6 +62,11 @@ const index = ({children}:any) => {
         };
         academicYearsFetcher();
     }, []);
+    useEffect(() => {
+        if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection'){
+            setIsSidebarOpened(false);
+        };
+    }, [window.location.pathname]);
 
 
     return (
