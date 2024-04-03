@@ -165,17 +165,6 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             const filteredHeads = heads.filter((h:any) => h.amounts.map((a:any) => a.name).includes(i));
             const installmentValues = filteredHeads.map((h:any) => h.amounts.filter((a:any) => a.name === i).map((a:any) => Number(a.value))[0]).filter((n:any) => n);
 
-
-            // Negative number validation
-            // if(inputValue < 0){
-            //     toast({title:'Please enter a number greater than zero ', variant:'alert'});
-            //     concAmountChangeHandlerForMultipleiInstallments(filteredHeads[0], 0, i);
-            //     filteredHeads[1] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[1], 0, i);
-            //     filteredHeads[2] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[2], 0, i);
-            //     filteredHeads[3] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[3], 0, i);
-            //     filteredHeads[4] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[4], 0, i);
-            //     filteredHeads[5] && concAmountChangeHandlerForMultipleiInstallments(filteredHeads[5], 0, i);
-            // };
             if(inputValue > totalNumberGenerator(installmentValues)){
                 filteredHeads.filter((h:any) => h.amounts.map((a:any) => a.name !== i)).map((h:any) => {
                     concAmountChangeHandlerForMultipleiInstallments(h, v, i);

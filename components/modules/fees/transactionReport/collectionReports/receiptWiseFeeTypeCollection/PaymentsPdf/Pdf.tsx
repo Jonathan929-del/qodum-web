@@ -20,6 +20,7 @@ const PDF = ({pdfData}:any) => {
         school_name:'',
         school_address:''
     });
+    console.log(pdfData.payments);
 
 
     // Active academic year
@@ -58,6 +59,32 @@ const PDF = ({pdfData}:any) => {
 
     // Affected heads
     const affectedHeads = pdfData.payments?.map((p:any) => p.paid_heads.map((ph:any) => ph.head_name)).flat()?.filter((value:any, index:any, self:any) => self.indexOf(value) === index);
+
+
+    
+    // Function to merge duplicate names into one row
+    const mergeDuplicateNames = (data:any) => {
+        const mergedData = [];
+        let previousName = null;
+        let mergedObject:any = {};
+    
+        data.forEach(obj => {
+            if (obj.name === previousName) {
+                mergedObject.payment += obj.payment;
+            } else {
+                if (Object.keys(mergedObject).length !== 0) {
+                mergedData.push(mergedObject);
+                }
+                mergedObject = { ...obj };
+            }
+            previousName = obj.name;
+        });
+        if (Object.keys(mergedObject).length !== 0) {
+            mergedData.push(mergedObject);
+        }
+    
+        return mergedData;
+    };
 
 
     // Page size
