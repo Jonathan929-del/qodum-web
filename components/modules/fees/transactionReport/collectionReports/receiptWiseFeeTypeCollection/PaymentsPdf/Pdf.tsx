@@ -20,7 +20,6 @@ const PDF = ({pdfData}:any) => {
         school_name:'',
         school_address:''
     });
-    console.log(pdfData.payments);
 
 
     // Active academic year

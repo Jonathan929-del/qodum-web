@@ -1,13 +1,14 @@
 'use server';
 // Imports
+import moment from 'moment';
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
-import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
 
 
 
@@ -951,5 +952,76 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
 
     } catch (err) {
         throw new Error(`Error updating student transport details: ${err}`);
+    };
+};
+
+
+
+
+
+// Fee defaulter list filter props
+interface FeeDefaulterListFilterProps{
+    school:String;
+    wing:String;
+    class_name:String;
+    section:String;
+    classes:any;
+    board:String;
+    fee_type:String;
+    installments:any;
+    from_date:Date;
+    till_date:Date;
+    heads:any;
+    range:String;
+    range_value:Number;
+};
+// Fee defaulter list filter
+export const FeeDefaulterListFilter = async ({school, wing, class_name, section, classes, board, fee_type, installments, from_date, till_date, heads, range, range_value}:FeeDefaulterListFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        const students = await AdmittedStudent.find();
+
+
+        // Installments
+        const installmentsRes = await Installment.find();
+        const pastDueDateInstallments = installmentsRes?.filter((i:any) => {
+            const installmentDueDate = moment(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`);
+            return installmentDueDate.isBetween(from_date, till_date, null, '[]');
+        }).map((i:any) => i.name).filter((i:any) => installments.map((item:any) => item.name).includes(i));
+
+
+        // Students filter
+        const filteredStudnets = students
+            // Installments filter
+            ?.filter((s:any) => s.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => a.name)).flat().filter((i:any) => pastDueDateInstallments.includes(i)).length > 0)
+            // Schools filter
+            ?.filter((s:any) => school === 'All Schools' ? s : s)
+            // Wing filter
+            ?.filter((s:any) => wing === 'All Wings' ? s : s)
+            // Class filter
+            ?.filter((s:any) => class_name === 'Select All' ? s : s.student.class === class_name)
+            // Section filter
+            ?.filter((s:any) => section === 'Select All' ? s : s.student.section === section)
+            // Classes filter
+            ?.filter((s:any) => classes.map((c:any) => c.class_name).includes(s.student.class))
+            // Board filter
+            ?.filter((s:any) => board === 'All Boards' ? s : s.student.board === board)
+            // Fee type filter
+            ?.filter((s:any) => fee_type === 'All fee types' ? s : s.affiliated_heads.heads.map((h:any) => h.type_name).includes(fee_type))
+            // Heads filter
+            ?.filter((s:any) => s.affiliated_heads.heads.filter((h:any) => heads.map((head:any) => head.name).includes(h.head_name)).length > 0)
+
+
+        // Return
+        return filteredStudnets;
+
+
+    } catch (err) {
+        throw new Error(`Error filtering defaulter list: ${err}`);
     };
 };

@@ -65,7 +65,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
             const uniquePagesNames = openedPages.filter((item:any, index:any) => openedPages.indexOf(item) === index);
             setOpenedPages([...uniquePagesNames, page]);
         };
-        if(page === 'Daily Fee Collection' || page === 'Receipt Wise Fee Type Collection'){
+        if(page === 'Daily Fee Collection' || page === 'Receipt Wise Fee Type Collection' || page === 'Fee Defaulter List'){
             setIsSidebarOpened(false);
         };
     };
