@@ -20,7 +20,7 @@ import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.a
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {FeeDefaulterListFilter} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {FeeDefaulterListFilter, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
@@ -132,12 +132,35 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             from_date:values.from_date,
             till_date:values.till_date,
             is_date_range:values.is_date_range,
+            fee_type:values.fee_type,
+            fee_types:feeTypes,
+            with_heads:values.with_head,
             heads:selectedHeads,
             installments:selectedInstallments,
-            students:res,
+            students:res
         });
         setIsLoading(false);
+    };
 
+
+    // Show dues click
+    const showDuesClick = async () => {
+        setIsShowClicked(true);
+        setIsLoading(true);
+        // Fetching students
+        const res = await fetchAdmittedStudents();
+        setPdfData({
+            from_date:form.getValues().from_date,
+            till_date:form.getValues().till_date,
+            is_date_range:form.getValues().is_date_range,
+            fee_type:form.getValues().fee_type,
+            fee_types:feeTypes,
+            with_heads:form.getValues().with_head,
+            heads:selectedHeads,
+            installments:selectedInstallments,
+            students:res
+        });
+        setIsLoading(false);
     };
 
 
@@ -905,20 +928,29 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
                     {/* Buttons */}
-                    <div className='flex flex-row justify-center items-center gap-2 mt-2'>
+                    <div className='flex flex-col gap-2 mt-2'>
+                        <div className='flex flex-row justify-center items-center gap-2'>
+                            <span
+                                className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Proceed To SMS
+                            </span>
+                            <Button
+                                type='submit'
+                                className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Show
+                            </Button>
+                        </div>
                         <span
+                            onClick={showDuesClick}
                             className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                         >
-                            Proceed To Sms
+                            Show Dues
                         </span>
-                        <Button
-                            type='submit'
-                            className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Show
-                        </Button>
                     </div>
 
 
