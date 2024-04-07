@@ -20,10 +20,8 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPag
 
     return (
         <aside
-            onMouseOver={() => setIsSidebarOpened(true)}
-            className={`flex flex-col bg-[#FAFAFA] items-center z-10 absolute h-full w-full transition-all duration-300 ${isSidebarOpened ? 'left-0 md:w-[300px] px-4' : 'left-[-100%] md:w-[75px] px-1'} md:relative md:left-0`}
-            // className={`flex flex-col bg-[#FAFAFA] items-center transition z-10
-            //             absolute h-[100%] w-full md:left-0 ${isSidebarOpened ? 'left-0 px-4' : 'left-[-100%] px-1'} md:relative md:w-auto`}
+            onMouseEnter={() => setIsSidebarOpened(true)}
+            className={`flex flex-col bg-[#FAFAFA] items-center z-10 absolute h-full w-full transition-all duration-300 ${isSidebarOpened ? 'left-0 md:w-[400px] px-4' : 'left-[-100%] md:w-[75px] px-1'} md:relative md:left-0`}
         >
 
             {/* Logo */}
