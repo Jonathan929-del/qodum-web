@@ -23,25 +23,64 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
     const payments = selectedStudent.payments;
 
 
+    // Total number generator
+    const totalNumberGenerator = (array:any) => {
+        let sum = 0;
+        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+        return sum;
+    };
+
+
     // Cancel receipt handler
     const cancelReceiptHandler = async (p:any) => {
 
+        // Deleted heads
+        const deletedHeads = p.paid_heads.filter((paymentHead:any) => !selectedStudent.affiliated_heads.heads.map((studentHead:any) => studentHead.head_name).includes(paymentHead.head_name)).map((paymentHead:any) => {
+            return{
+                ...paymentHead,
+                amounts:paymentHead.amounts.map((paymentAmount:any) => {
+                    return{
+                        ...paymentAmount,
+                        payable_amount:Number(paymentAmount.paid_amount),
+                        paid_amount:Number(paymentAmount.paid_amount),
+                        last_rec_amount:Number(paymentAmount.value) - (Number(paymentAmount.paid_amount) + Number(paymentAmount.conc_amount))
+                    };
+                })
+            };
+        });
+
+
         // Affected heads
         const affectedHeads = selectedStudent.affiliated_heads.heads.filter((h:any) => p.paid_heads.map((ph:any) => ph.head_name).includes(h.head_name)).map((h:any) => {
+
+            // Head amounts
+            const headAmounts = h.amounts.map((headAmount:any) => headAmount.name);
+
+            // Deleted heads amounts
+            const deletedHeadsAmounts = p.paid_heads.filter((paymentHead:any) => paymentHead.head_name === h.head_name).map((paymentHead:any) => paymentHead.amounts.filter((paymentAmount:any) => !headAmounts.includes(paymentAmount.name)).map((paymentAmount:any) => {
+                return{
+                    ...paymentAmount,
+                    payable_amount:Number(paymentAmount.paid_amount),
+                    paid_amount:Number(paymentAmount.paid_amount),
+                    last_rec_amount:Number(paymentAmount.value) - (Number(paymentAmount.paid_amount) + Number(paymentAmount.conc_amount))
+                };
+            }));
+
+            // Return
             return{
                 ...h,
                 amounts:h.amounts.map((a:any) => {
                     return {
                         name:a.name,
                         value:Number(a.value),
-                        conc_amount:0,
-                        last_rec_amount:0,
-                        payable_amount:0,
-                        paid_amount:0
+                        conc_amount:Number(a.conc_amount),
+                        last_rec_amount:Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))),
+                        payable_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount)))))),
+                        paid_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))))
                     };
-                })
+                }).concat(...deletedHeadsAmounts)
             }
-        });
+        }).concat(deletedHeads);
 
 
         // Unaffected heads
