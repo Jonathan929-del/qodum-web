@@ -89,6 +89,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             bank_name,
             fee_group,
             session:session.year_name,
+            is_canceled:false,
 
             // Amounts
             actual_amount,
@@ -352,6 +353,59 @@ export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes,
 
         // Return
         return filteredPayments;
+
+
+    } catch (err:any) {
+        console.log(`Error fetching payments: ${err.message}`);
+    };
+};
+
+
+
+
+
+
+
+// Cancel payment
+export const cancelPayment = async ({receipt_no}:{receipt_no:String}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payment = await Payment.findOneAndUpdate({receipt_no}, {is_canceled:true});
+
+
+        // Return
+        return payment;
+
+
+    } catch (err:any) {
+        console.log(`Error canceling payment: ${err.message}`);
+    };
+};
+
+
+
+
+
+
+// Fetch student canceled payments
+export const fetchStudentCanceledPayments = async ({student}:{student:String}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payments = await Payment.find({student, is_canceled:false});
+
+
+        // Return
+        return payments;
 
 
     } catch (err:any) {

@@ -105,7 +105,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             };
         });
 
-        // New student
+        // New student fee heads
         const newHeads = {
                 group_name:selectedStudent.affiliated_heads.group_name,
                 heads:
@@ -121,7 +121,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                         .map((h:any) =>
                                             h.amounts
                                                 .filter((a:any) => selectedInstallments.includes(a.name))
-                                                .filter((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0)
+                                                // .filter((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0)
                                                 .map((a:any) => {
                                                     const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                                     const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
@@ -159,6 +159,59 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         .concat(unChangedHeads)
                         .filter((h:any) => h?.amounts?.length !== 0)
         };
+        // const newHeads = {
+        //         group_name:selectedStudent.affiliated_heads.group_name,
+        //         heads:
+        //             selectedStudent.affiliated_heads.heads
+        //                 .filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name))
+        //                 .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0))
+        //                 .map((studentHead:any) => {
+        //                     return {
+        //                         ...studentHead,
+        //                         amounts:
+        //                             heads
+        //                                 .filter((h:any) => h.head_name === studentHead.head_name)
+        //                                 .map((h:any) =>
+        //                                     h.amounts
+        //                                         .filter((a:any) => selectedInstallments.includes(a.name))
+        //                                         .filter((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0)
+        //                                         .map((a:any) => {
+        //                                             const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+        //                                             const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
+        //                                             return {
+        //                                                 name:a.name,
+        //                                                 value:Number(a.value),
+        //                                                 conc_amount:conc_amount,
+        //                                                 last_rec_amount:last_rec_amount + Number(a.paid_amount),
+        //                                                 payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
+        //                                                 paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
+        //                                             };
+        //                                         })
+        //                                 )[0].concat(
+        //                                         heads
+        //                                             .filter((h:any) => h.head_name === studentHead.head_name)
+        //                                             .map((h:any) =>
+        //                                                 h.amounts
+        //                                                     .filter((a:any) => !selectedInstallments.includes(a.name))
+        //                                                     .map((a:any) => {
+        //                                                         const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+        //                                                         const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
+        //                                                         return {
+        //                                                             name:a.name,
+        //                                                             value:Number(a.value),
+        //                                                             conc_amount:conc_amount,
+        //                                                             last_rec_amount:last_rec_amount,
+        //                                                             payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
+        //                                                             paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
+        //                                                         };
+        //                                                     })
+        //                                             )[0]
+        //                                     )
+        //                     };
+        //                 })
+        //                 .concat(unChangedHeads)
+        //                 .filter((h:any) => h?.amounts?.length !== 0)
+        // };
 
     
         // Updating student
@@ -333,10 +386,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 })
             }
         });
-        const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h?.amounts?.length === 1)?.map((h:any) => h?.amounts?.map((a:any) => a.name)[0]);
-        const installments = student?.affiliated_heads?.heads?.filter((h:any) => h?.amounts?.length > 1).length > 0
-            ? student?.affiliated_heads?.heads?.filter((h:any) => h?.amounts?.length > 1)?.map((h:any) => h?.amounts?.map((a:any) => a.name).concat(singleInstallments))[0]
-            : student?.affiliated_heads?.heads?.filter((h:any) => h?.amounts?.length === 1)?.map((h:any) => h?.amounts?.map((a:any) => a.name)[0]);
+        const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
+        const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1).length > 0
+            ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name).concat(singleInstallments))[0]
+            : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
         const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
         const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
         setInstallments(sortedInstallments);

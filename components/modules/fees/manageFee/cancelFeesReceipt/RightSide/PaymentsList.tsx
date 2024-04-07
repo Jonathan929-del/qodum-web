@@ -3,7 +3,7 @@ import moment from 'moment';
 import {ChevronsUpDown} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {deletePaymentByReceiptNo} from '@/lib/actions/fees/manageFee/payment.actions';
+import {cancelPayment} from '@/lib/actions/fees/manageFee/payment.actions';
 import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
 
@@ -102,7 +102,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                 heads:newHeads
             }
         });
-        await deletePaymentByReceiptNo({receipt_no:p.receipt_no});
+        await cancelPayment({receipt_no:p.receipt_no});
         toast({title:'Canceled Successffuly!'});
 
 

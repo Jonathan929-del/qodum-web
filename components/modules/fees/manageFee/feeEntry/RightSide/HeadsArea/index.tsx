@@ -16,7 +16,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
 
 
     return (
-        <div className='h-full flex flex-col gap-2'>
+        <div className='h-full flex flex-col border-[0.5px] border-[#ccc] rounded-[8px]'>
             <HeadsList
                 selectedStudent={selectedStudent}
                 selectedInstallments={selectedInstallments}

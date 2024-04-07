@@ -58,8 +58,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 setPayModes(['Payment Gateway', 'Net Banking', 'Debit Card', 'Credit Card']);
                 break;
             default:
-                break;
                 setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
+                break;
         };
     }, [form.watch('entry_mode'), form.getValues().entry_mode]);
     useEffect(() => {}, [form.watch('pay_mode')]);
@@ -76,7 +76,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
     return (
         <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
-            <div className='flex-1 flex flex-col'>
+            <div className='flex-1 flex flex-col gap-3'>
                 <div className='flex flex-col gap-2 lg:flex-row'>
                     {/* Entry Mode */}
                     <FormField

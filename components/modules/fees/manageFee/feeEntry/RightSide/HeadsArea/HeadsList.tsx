@@ -383,8 +383,8 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
             <LoadingIcon />
         </div>
     ) : (
-        <div className='w-full h-full overflow-x-scroll custom-sidebar-scrollbar bg-white rounded-[4px]'>
-            <div className='w-full h-full min-w-[750px] flex flex-col bg-[#F2F8FA] rounded-[4px]'>
+        <div className='w-full h-full overflow-x-scroll custom-sidebar-scrollbar bg-[#F2F8FA] rounded-[4px]'>
+            <div className='w-full h-[110%] min-w-[750px] flex flex-col bg-[#F2F8FA] rounded-[4px]'>
                 {selectedInstallments.length === 1 ? (
                     <>
                         {/* Headers */}

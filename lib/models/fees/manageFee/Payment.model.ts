@@ -38,6 +38,7 @@ const PaymentSchema = new mongoose.Schema(
         bank_name:{type:String},
         fee_group:{type:String},
         session:{type:String},
+        is_canceled:{type:Boolean},
 
 
 
