@@ -4,8 +4,10 @@ import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
+import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
@@ -14,7 +16,11 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admissi
 
 
 // Main function
-const Search = ({classes, sections, students, setIsViewOpened, setSelectedStudent}:any) => {
+const Search = ({classes, sections, setIsViewOpened, setSelectedStudent, setPayments}:any) => {
+
+
+    // Toast
+    const {toast} = useToast();
 
 
     // Search
@@ -43,8 +49,9 @@ const Search = ({classes, sections, students, setIsViewOpened, setSelectedStuden
 
     // Handle Search Click
     const admissionSearchClick = async () => {
-        if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
-            const student = await fetchStudentByAdmNo({adm_no:search});
+        const student = await fetchStudentByAdmNo({adm_no:search});
+        if(student){
+            const studentPayments = await fetchStudentPayments({student:student.student.name});
             setSelectedStudent({
                 id:student?._id || '',
                 image:student?.student?.image || '',
@@ -77,15 +84,22 @@ const Search = ({classes, sections, students, setIsViewOpened, setSelectedStuden
                     })
                 }
             });
-        }else{
+            setPayments(studentPayments);
             setIsViewOpened(true);
+            setSearch('');
+        }else{
+            if(search === ''){
+                toast({title:'Please enter data for search', variant:'alert'});
+            }else{
+                toast({title:'No record found', variant:'alert'});
+            };
         }
-        setSearch('');
     };
 
 
     // Student search click
-    const studentSearchClick = (student:any) => {
+    const studentSearchClick = async (student:any) => {
+        const studentPayments = await fetchStudentPayments({student:student.student.name});
         setSelectedStudent({
             id:student?._id || '',
             image:student?.student?.image || '',
@@ -118,6 +132,8 @@ const Search = ({classes, sections, students, setIsViewOpened, setSelectedStuden
                 })
             }
         });
+        setPayments(studentPayments);
+        setIsViewOpened(true);
         setSearch('');
     };
 

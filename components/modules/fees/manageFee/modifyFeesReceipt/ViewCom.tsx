@@ -1,20 +1,23 @@
 // Imports
+import {format} from 'date-fns';
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
+import { fetchStudentByAdmNo } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
+const ViewCom = ({setIsViewOpened, payments, setSelectedStudent, setSelectedPayment}:any) => {
 
 
     // Select handler
-    const selectHandler = (student:any) => {
+    const selectHandler = async (payment:any) => {
+        const student = await fetchStudentByAdmNo({adm_no:payment.adm_no});
         setSelectedStudent({
             id:student._id,
             image:student.student.image,
@@ -47,16 +50,17 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
                 })
             }
         });
+        setSelectedPayment(payment);
         setIsViewOpened(false);
     };
 
 
     return (
-        <Command className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
+        <Command className='w-[90%] max-h-[90%] mt-6 flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Students List</h2>
+                <h2>Head Wise Fees Details</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
@@ -75,70 +79,70 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
-                            Sr. No.
-                            <ChevronsUpDown size={12}/>
-                        </li>
                         <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
                             Select
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Student Name
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Fees Type
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Class
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Receipt No.
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Father Name
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Receipt Date
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
-                            Mother Name
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Name
                             <ChevronsUpDown size={12}/>
                         </li>
-                        <li className='basis-[10%] flex flex-row items-center justify-between px-2'>
-                            Active
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Paid Amount
+                            <ChevronsUpDown size={12}/>
+                        </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
+                            Cheque
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            students.length < 1 ? (
+                            payments.length < 1 ? (
                                 <p className='w-full min-w-[1000px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
-                                    No students yet
+                                    No payments
                                 </p>
                             ):
-                            !students[0]?.student?.name ? (
+                            !payments[0]?.receipt_no ? (
                                 <LoadingIcon />
-                            ) : students.map((student:any) => (
+                            ) : payments.map((p:any) => (
                                 <CommandItem
-                                    value={`${students.indexOf(student) + 1} ${student?.student?.name} ${student?.student?.class} ${student?.parents?.father?.father_name} ${student?.parents?.mother?.mother_name} ${student?.student?.is_active ? 'True' : 'False'}`}
+                                    value={`${p.fee_type === 'All fee types' ? 'All' : p.fee_type} ${p.receipt_no} ${format(p.received_date, 'PPP')} ${p.student} ${p.paid_amount} ${p.paymode_details?.cheque_no}`}
                                     className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{students.indexOf(student) + 1}</li>
                                     <li className='basis-[10%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                         <Button
                                             className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF]
                                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-xs sm:px-4'
-                                            onClick={() => selectHandler(student)}
+                                            onClick={() => selectHandler(p)}
                                         >
                                             Select
                                         </Button>
                                     </li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.name}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.class}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.father?.father_name}</li>
-                                    <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.mother?.mother_name}</li>
-                                    <li className='basis-[10%] flex flex-row items-center px-2'>{student?.student?.is_active ? 'True' : 'False'}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{p.fee_type === 'All fee types' ? 'All' : p.fee_type}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{p.receipt_no}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{format(p.received_date, 'PPP')}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{p.student}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{p.paid_amount}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2'>{p?.paymode_details?.cheque_no || '-'}</li>
                                 </CommandItem>
                             ))
                         }
                     </CommandList>
-                    {students.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
+                    {payments.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
                 </div>
 
 

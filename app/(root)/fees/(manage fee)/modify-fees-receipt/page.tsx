@@ -5,7 +5,6 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import FormCom from '@/components/modules/fees/manageFee/modifyFeesReceipt/Form';
 import ViewCom from '@/components/modules/fees/manageFee/modifyFeesReceipt/ViewCom';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 
 
@@ -32,8 +31,8 @@ const page = () => {
     const [sections, setSections] = useState([{}]);
 
 
-    // Students
-    const [students, setStudents] = useState([{}]);
+    // Payments
+    const [payments, setPayments] = useState([{}]);
 
 
     // Selected student
@@ -55,6 +54,10 @@ const page = () => {
     });
 
 
+    // Selected payment
+    const [selectedPayment, setSelectedPayment] = useState({});
+
+
     // Total number generator
     const totalNumberGenerator = (array:any) => {
         let sum = 0;
@@ -68,10 +71,8 @@ const page = () => {
         const fetcher = async () => {
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
-            const studentsRes = await fetchAdmittedStudents();
             setClasses(classesRes);
             setSections(sectionsRes);
-            setStudents(studentsRes);
         };
         fetcher();
     }, []);
@@ -83,9 +84,10 @@ const page = () => {
                 <LoadingIcon />
             ) : isViewOpened ? (
                 <ViewCom
-                    students={students}
+                    payments={payments}
                     setIsViewOpened={setIsViewOpened}
                     setSelectedStudent={setSelectedStudent}
+                    setSelectedPayment={setSelectedPayment}
                 />
             ) : (
                 <FormCom
@@ -95,7 +97,9 @@ const page = () => {
                     totalNumberGenerator={totalNumberGenerator}
                     setSelectedStudent={setSelectedStudent}
                     setIsViewOpened={setIsViewOpened}
-                    students={students}
+                    setPayments={setPayments}
+                    selectedPayment={selectedPayment}
+                    setSelectedPayment={setSelectedPayment}
                 />
             )}
         </div>

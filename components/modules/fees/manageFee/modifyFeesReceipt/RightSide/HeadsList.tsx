@@ -2,7 +2,6 @@
 import {Input} from '@/components/ui/input';
 import {ChevronsUpDown} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
@@ -10,7 +9,7 @@ import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/ad
 
 
 // Main Function
-const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:any) => {
+const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, selectedPayment, setSelectedPayment}:any) => {
 
 
     // Toast
@@ -18,26 +17,33 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
 
 
     // Heads
-    const heads = selectedStudent.affiliated_heads.heads;
+    const heads = selectedPayment?.paid_heads;
+
+
+    // Student's heads
+    const studentHeads = selectedStudent.affiliated_heads.heads;
 
 
     // Cancel
-    const cancel = () => setSelectedStudent({
-        id:'',
-        image:'',
-        name:'',
-        address:'',
-        father_name:'',
-        mother_name:'',
-        contact_no:'',
-        admission_no:'',
-        bill_no:'',
-        class:'',
-        affiliated_heads:{
-            group_name:'',
-            heads:[]
-        }
-    });
+    const cancel = () => {
+        setSelectedStudent({
+            id:'',
+            image:'',
+            name:'',
+            address:'',
+            father_name:'',
+            mother_name:'',
+            contact_no:'',
+            admission_no:'',
+            bill_no:'',
+            class:'',
+            affiliated_heads:{
+                group_name:'',
+                heads:[]
+            }
+        });
+        setSelectedPayment({});
+    };
 
 
     // Amount change handler
@@ -263,7 +269,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
             ...selectedStudent,
             affiliated_heads:{
                 group_name:selectedStudent.affiliated_heads.group_name,
-                heads:heads
+                heads:studentHeads
             }
         });
     };
@@ -273,19 +279,13 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
     const submitHandler = async () => {
 
         // New heads
-        const newHeads = heads.map((h:any) => {
+        const newHeads = studentHeads.map((h:any) => {
             return{
                 ...h,
                 amounts:h.amounts.map((a:any) => {
-                    const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
-                    const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                     return {
-                        name:a.name,
-                        value:Number(a.value),
-                        conc_amount:conc_amount,
-                        last_rec_amount:last_rec_amount + Number(a.paid_amount),
-                        payable_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount)),
-                        paid_amount:Number(a.value) - (last_rec_amount + conc_amount + Number(a.paid_amount))
+                        ...a,
+                        payable_amount:Number(a.paid_amount)
                     };
                 })
             }
@@ -320,17 +320,18 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
                 heads:[]
             }
         });
+        setSelectedPayment({});
     };
 
 
     return (
-        <div className='w-full h-[90%] mt-10 flex flex-col items-center rounded-[4px] border-[0.5px] border-[#ccc]'>
+        <div className='w-full h-[90%] flex flex-col items-center rounded-[4px] border-[0.5px] border-[#ccc]'>
 
 
             {/* Heads */}
             <div className='w-full h-full flex flex-col rounded-[4px] bg-[#F7F7F7] overflow-x-scroll custom-sidebar-scrollbar'>
                 {/* Headers */}
-                <ul className='w-full min-w-[850px] flex flex-row text-[10px] bg-[#435680] text-white border-b-[0.5px] border-[#ccc] cursor-pointer sm:text-[10px] md:text-md'>
+                <ul className='w-full min-w-[750px] flex flex-row text-[10px] bg-[#435680] text-white border-b-[0.5px] border-[#ccc] cursor-pointer sm:text-[10px] md:text-md'>
                     <li className='basis-[19%] flex flex-row items-center justify-between px-2 py-2 border-r-[.5px] border-[#ccc]'>
                         Head
                         <ChevronsUpDown size={12} />
@@ -363,15 +364,13 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
                 {/* Values */}
                     {
                         heads?.length === 0 ? (
-                            <p className='w-full min-w-[850px] flex flex-row p-2 text-sm bg-[#F3F8FB]'>
+                            <p className='w-full min-w-[750px] flex flex-row p-2 text-sm bg-[#F3F8FB]'>
                                 No heads
                             </p>
-                        ) : !heads[0]?.head_name ? (
-                            <LoadingIcon />
                         ) : heads?.map((h:any, index:number) => (
                             <ul
                                 key={index}
-                                className={`w-full min-w-[850px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}
+                                className={`w-full min-w-[750px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}
                             >
                                 <li className='basis-[19%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     {h.head_name}
@@ -380,28 +379,28 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent}:a
                                     {totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))}
                                 </li>
                                 <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {totalNumberGenerator(h.amounts.map((a:any) => Number(a.conc_amount) || 0))}
+                                {totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.conc_amount) || 0))))}
                                 </li>
                                 <li className='basis-[13.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))}
+                                    {totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount) || 0))))}
                                 </li>
                                 <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                                    {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))}
+                                    {totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount))))))}
                                 </li>
                                 <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     <Input
-                                        defaultValue={totalNumberGenerator(h.amounts.map((a:any) => Number(a.paid_amount)))}
-                                        onChange={(e:any) => amountChangeHandler(h, e.target.value)}
+                                        defaultValue={totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.payable_amount)))))}
+                                        onChange={(e:any) => amountChangeHandler(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name)[0], e.target.value)}
                                         className='flex flex-row items-center h-[80%] text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </li>
-                                <li className='basis-[12.5%] flex-grow flex flex-row items-center justify-center px-2 py-[2px]]'>
-                                    {h.type_name}
+                                <li className='basis-[12.5%] flex-grow flex flex-row items-center justify-center px-2 py-[2px]'>
+                                    {selectedPayment?.installments?.map((i:any) => i)}
                                 </li>
                             </ul>
                         ))
                     }
-                    {heads.length !== 0 && (
+                    {heads?.length > 0 && (
                         <div className='w-full flex flex-row items-center justify-center gap-2 mt-4'>
                             {/* Save */}
                             <span
