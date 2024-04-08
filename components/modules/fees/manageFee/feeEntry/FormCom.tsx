@@ -330,8 +330,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                 value:Number(a.value),
                                 conc_amount:conc_amount,
                                 last_rec_amount:last_rec_amount,
-                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                                payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
+                                paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
                             };
                         })
                     };
@@ -394,7 +394,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='h-full w-full flex flex-col gap-4 pt-4 overflow-scroll custom-sidebar-scrollbar'
                 >
-                    <div className='h-full w-full flex flex-row gap-1'>
+                    <div className='h-full w-full flex flex-row gap-0'>
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}

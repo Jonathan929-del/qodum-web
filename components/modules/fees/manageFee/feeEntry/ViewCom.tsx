@@ -47,8 +47,8 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
                                 value:Number(a.value),
                                 conc_amount:conc_amount,
                                 last_rec_amount:last_rec_amount,
-                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                                payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
+                                paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
                             };
                         })
                     };
@@ -63,14 +63,6 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
         const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
         setInstallments(sortedInstallments);
         setSelectedInstallments([sortedInstallments[0]]);
-        // const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-        // const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1).length > 0
-        //     ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1)?.map((h:any) => h.amounts.map((a:any) => a.name).concat(singleInstallments))[0]
-        //     : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-        // const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-        // const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
-        // setInstallments(sortedInstallments);
-        // setSelectedInstallments([sortedInstallments[0]]);
         setIsViewOpened(false);
     };
 

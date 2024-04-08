@@ -81,8 +81,8 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                     value:Number(a.value),
                                     conc_amount:conc_amount,
                                     last_rec_amount:last_rec_amount,
-                                    payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                    paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
+                                    payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
+                                    paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
                                 };
                             })
                         };
@@ -140,8 +140,6 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                 last_rec_amount:last_rec_amount,
                                 payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
                                 paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
-                                // payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                // paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
                             };
                         })
                     };

@@ -462,7 +462,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
         
                         {/* Total */}
                         {heads.length > 0 && (
-                            <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px]'>
+                            <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px] ${Math.floor((heads.length + 1) / 2) * 2 !== heads.length + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                                 <li className='basis-[19.5%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                     Total
                                 </li>
@@ -550,7 +550,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
                             {/* Total */}
                             {heads.length > 0 && (
-                                <ul className='flex flex-row items-center justify-between bg-[#435680] text-white border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px]'>
+                                <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] rounded-b-[4px] ${Math.floor((selectedInstallments.length + 1) / 2) * 2 !== selectedInstallments.length + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                                     <li className='basis-[11%] text-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                                         Total
                                     </li>

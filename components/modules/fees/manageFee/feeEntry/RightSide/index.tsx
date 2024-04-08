@@ -18,8 +18,8 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
     
 
     return (
-        <div className='w-[70%] min-w-[400px] flex flex-col justify-between gap-3 px-2'>
-            <div className='flex flex-col gap-3'>
+        <div className='w-[70%] min-w-[400px] flex flex-col justify-between gap-1 px-2'>
+            <div className='flex flex-col gap-1'>
                 {/* Search */}
                 <Search
                     classes={classes}

@@ -192,7 +192,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
 
     return (
-        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#F7F7F7] border-[#ccc] border-[0.5px] lg:flex-row'>
+        <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#435680] border-[#ccc] border-[0.5px] lg:flex-row'>
 
 
             {/* Inputs */}
@@ -200,7 +200,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                 {/* Total Paid Amount */}
                 <FormItem className='w-full'>
                     <div className='relative flex flex-col'>
-                        <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Total Paid Amount</FormLabel>
+                        <FormLabel className='w-full text-start text-[11px] text-[#fff]'>Total Paid Amount</FormLabel>
                         <FormControl>
                             <Input
                                 type='number'
@@ -219,7 +219,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                     render={({field}) => (
                         <FormItem className='w-full'>
                             <div className='relative flex flex-col'>
-                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Dues</FormLabel>
+                                <FormLabel className='w-full text-start text-[11px] text-[#fff]'>Dues</FormLabel>
                                 <FormControl>
                                     <Input
                                         disabled
@@ -240,7 +240,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                     render={({field}) => (
                         <FormItem className='w-full'>
                             <div className='relative flex flex-col'>
-                                <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Advance Amt.(C/F)</FormLabel>
+                                <FormLabel className='w-full text-start text-[11px] text-[#fff]'>Advance Amt.(C/F)</FormLabel>
                                 <FormControl>
                                     <Input
                                         disabled
