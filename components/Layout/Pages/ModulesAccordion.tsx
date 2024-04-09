@@ -36,27 +36,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
     const [selectedThread, setSelectedThread] = useState('');
 
 
-    // Window Width
-    const [width, setWidth] = useState(window.innerWidth);
-    const updateDimensions = () => {
-        setWidth(window.innerWidth);
-        if(window.innerWidth > 768){
-            setIsSidebarOpened(true);
-        }else{
-            setIsSidebarOpened(false);
-        }
-    };
-
-
-    // Link Clicked
-    const linkClick = () => {
-        width < 768 && setIsSidebarOpened(false);
-    };
-
-
     // Thread click
     const pageClick = (page:any) => {
-        linkClick();
         setSelectedPage(page);
         setSelectedThread(page);
         if(openedPages.includes(page)){
@@ -65,15 +46,12 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
             const uniquePagesNames = openedPages.filter((item:any, index:any) => openedPages.indexOf(item) === index);
             setOpenedPages([...uniquePagesNames, page]);
         };
-        // if(page === 'Daily Fee Collection' || page === 'Receipt Wise Fee Type Collection' || page === 'Fee Defaulter List'){
-            setIsSidebarOpened(false);
-        // };
+        setIsSidebarOpened(false);
     };
 
 
     // Use Effect
     useEffect(() => {
-
 
         // Selected Module
         const threadName = pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
@@ -86,17 +64,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
         const module = modules.filter(module => module.moduleName === pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1));
         setCurrentModule(module[0]);
 
-
-        // Window Resizing
-        window.addEventListener('resize', updateDimensions);
-        if(window.innerWidth > 768){
-            setIsSidebarOpened(true);
-        }else{
-            setIsSidebarOpened(false);
-        }
-        return () => window.removeEventListener('resize', updateDimensions);
-
-    
     }, [pathname]);
 
 
@@ -129,7 +96,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                     height={35}
                                     alt='Icon'
                                 />
-                                {/* {icon} */}
                             </div>
                             <p
                                 className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
@@ -251,46 +217,3 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
 
 // Export
 export default ModulesAccordion;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* Home Link */}
-{/* <Link
-    onClick={() => {
-        linkClick();
-        setSelectedPage('');
-    }}
-    href='/'
->
-    <AccordionItem
-        value='Home'
-        onClick={() => setSelectedModule('Home')}
-    >
-        <AccordionTrigger
-            onClick={() => setIsSidebarOpened(true)}
-            className={`group w-full flex flex-row justify-between px-4 text-white rounded-[8px] mb-2 transition hover:bg-[#195382] ${selectedModule === 'Home' && 'bg-[#195382]'}`}
-        >
-            <div className={`flex flex-row items-center gap-2 transition group-hover:text-white ${selectedModule === 'Home' ? 'text-white' : 'text-black'}`}>
-                <div className={`${!isSidebarOpened && 'px-10'}`}>
-                    <Home />
-                </div>
-                <p
-                    className={`${isSidebarOpened ? 'block' : 'hidden'} text-[16px] text-bold`}
-                >
-                    Home
-                </p>
-            </div>
-        </AccordionTrigger>
-    </AccordionItem>
-</Link> */}

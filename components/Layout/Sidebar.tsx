@@ -22,7 +22,6 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPag
         <aside
             onMouseEnter={() => setIsSidebarOpened(true)}
             className={`flex flex-col bg-[#FAFAFA] items-center z-10 absolute h-full w-full transition-all duration-300 ${isSidebarOpened ? 'left-0 px-4' : 'left-[-100%] px-1'} md:relative md:w-auto md:left-0`}
-
         >
 
             {/* Logo */}

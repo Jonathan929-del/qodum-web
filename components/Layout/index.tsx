@@ -19,7 +19,7 @@ const index = ({children}:any) => {
 
 
     // Sidebar Toggler
-    const [isSidebarOpened, setIsSidebarOpened] = useState(true);
+    const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
 
     // Opened Pages
@@ -49,24 +49,24 @@ const index = ({children}:any) => {
         }
     };
 
-    
+
     // Use effect
     useEffect(() => {
         const academicYearsFetcher = async () => {
             const res:any = await fetchAcademicYears();
             setAcademicYears(res);
             setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
-            if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
-                setIsSidebarOpened(false);
-            };
+            // if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
+            //     setIsSidebarOpened(false);
+            // };
         };
         academicYearsFetcher();
     }, []);
-    useEffect(() => {
-        if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
-            setIsSidebarOpened(false);
-        };
-    }, [window.location.pathname]);
+    // useEffect(() => {
+    //     if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
+    //         setIsSidebarOpened(false);
+    //     };
+    // }, [window.location.pathname]);
 
 
     return (

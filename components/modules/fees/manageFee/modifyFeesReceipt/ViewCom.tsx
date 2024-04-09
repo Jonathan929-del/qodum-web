@@ -29,26 +29,7 @@ const ViewCom = ({setIsViewOpened, payments, setSelectedStudent, setSelectedPaym
             admission_no:student.student.adm_no,
             bill_no:student.student.bill_no,
             class:student.student.class,
-            affiliated_heads:{
-                group_name:student.affiliated_heads.group_name,
-                heads:student.affiliated_heads.heads.map((h:any) => {
-                    return {
-                        ...h,
-                        amounts:h.amounts.map((a:any) => {
-                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
-                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
-                            return {
-                                name:a.name,
-                                value:Number(a.value),
-                                conc_amount:conc_amount,
-                                last_rec_amount:last_rec_amount,
-                                payable_amount:Number(a.value) - (last_rec_amount + conc_amount),
-                                paid_amount:Number(a.value) - (last_rec_amount + conc_amount)
-                            };
-                        })
-                    };
-                })
-            }
+            affiliated_heads:student.affiliated_heads
         });
         setSelectedPayment(payment);
         setIsViewOpened(false);
