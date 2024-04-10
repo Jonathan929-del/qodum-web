@@ -38,6 +38,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
 
     // Thread click
     const pageClick = (page:any) => {
+        console.log(page);
+        setIsSidebarOpened(false);
         setSelectedPage(page);
         setSelectedThread(page);
         if(openedPages.includes(page)){
@@ -46,7 +48,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
             const uniquePagesNames = openedPages.filter((item:any, index:any) => openedPages.indexOf(item) === index);
             setOpenedPages([...uniquePagesNames, page]);
         };
-        setIsSidebarOpened(false);
     };
 
 

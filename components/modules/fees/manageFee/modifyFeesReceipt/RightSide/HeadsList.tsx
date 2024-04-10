@@ -62,198 +62,198 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         // loop
         if(inputValue > totalNumberGenerator(values)){
             toast({title:'To be paid amount should not be greater than Actual amount', variant:'alert'});
-            h.amounts.map((a:any) => a.payable_amount = Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)));
+            h.amounts.map((a:any) => a.to_be_paid_amount = Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)));
         }else{
             if(inputValue <= values[0]){
                 // First amount
-                if(h.amounts[0]) h.amounts[0].payable_amount = inputValue;
-                if(h.amounts[1]) h.amounts[1].payable_amount = 0;
-                if(h.amounts[2]) h.amounts[2].payable_amount = 0;
-                if(h.amounts[3]) h.amounts[3].payable_amount = 0;
-                if(h.amounts[4]) h.amounts[4].payable_amount = 0;
-                if(h.amounts[5]) h.amounts[5].payable_amount = 0;
-                if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                if(h.amounts[0]) h.amounts[0].to_be_paid_amount = inputValue;
+                if(h.amounts[1]) h.amounts[1].to_be_paid_amount = 0;
+                if(h.amounts[2]) h.amounts[2].to_be_paid_amount = 0;
+                if(h.amounts[3]) h.amounts[3].to_be_paid_amount = 0;
+                if(h.amounts[4]) h.amounts[4].to_be_paid_amount = 0;
+                if(h.amounts[5]) h.amounts[5].to_be_paid_amount = 0;
+                if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
             }else{
                 const availableAmount = inputValue - values[0];
                 if(availableAmount <= values[1]){
-                    if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
+                    if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
                     // Second value
-                    if(h.amounts[1]) h.amounts[1].payable_amount = availableAmount;
-                    if(h.amounts[2]) h.amounts[2].payable_amount = 0;
-                    if(h.amounts[3]) h.amounts[3].payable_amount = 0;
-                    if(h.amounts[4]) h.amounts[4].payable_amount = 0;
-                    if(h.amounts[5]) h.amounts[5].payable_amount = 0;
-                    if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                    if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                    if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                    if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                    if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                    if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                    if(h.amounts[1]) h.amounts[1].to_be_paid_amount = availableAmount;
+                    if(h.amounts[2]) h.amounts[2].to_be_paid_amount = 0;
+                    if(h.amounts[3]) h.amounts[3].to_be_paid_amount = 0;
+                    if(h.amounts[4]) h.amounts[4].to_be_paid_amount = 0;
+                    if(h.amounts[5]) h.amounts[5].to_be_paid_amount = 0;
+                    if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                    if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                    if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                    if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                    if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                    if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                 }else{
                     const availableAmount = inputValue - (values[0] + values[1]);
                     if(availableAmount <= values[2]){
-                        if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                        if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
+                        if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                        if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
                         // Third value
-                        if(h.amounts[2]) h.amounts[2].payable_amount = availableAmount;
-                        if(h.amounts[3]) h.amounts[3].payable_amount = 0;
-                        if(h.amounts[4]) h.amounts[4].payable_amount = 0;
-                        if(h.amounts[5]) h.amounts[5].payable_amount = 0;
-                        if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                        if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                        if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                        if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                        if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                        if(h.amounts[11]) h.amounts[11].payable_amount = 0;   
+                        if(h.amounts[2]) h.amounts[2].to_be_paid_amount = availableAmount;
+                        if(h.amounts[3]) h.amounts[3].to_be_paid_amount = 0;
+                        if(h.amounts[4]) h.amounts[4].to_be_paid_amount = 0;
+                        if(h.amounts[5]) h.amounts[5].to_be_paid_amount = 0;
+                        if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                        if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                        if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                        if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                        if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                        if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;   
                     }else{
                         const availableAmount = inputValue - (values[0] + values[1] + values[2]);
                         if(availableAmount <= values[3]){
-                            if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                            if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                            if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
+                            if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                            if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                            if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
                             // Fourth value
-                            if(h.amounts[3]) h.amounts[3].payable_amount = availableAmount;
-                            if(h.amounts[4]) h.amounts[4].payable_amount = 0;
-                            if(h.amounts[5]) h.amounts[5].payable_amount = 0;
-                            if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                            if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                            if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                            if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                            if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                            if(h.amounts[11]) h.amounts[11].payable_amount = 0;   
+                            if(h.amounts[3]) h.amounts[3].to_be_paid_amount = availableAmount;
+                            if(h.amounts[4]) h.amounts[4].to_be_paid_amount = 0;
+                            if(h.amounts[5]) h.amounts[5].to_be_paid_amount = 0;
+                            if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                            if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                            if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                            if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                            if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                            if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;   
                         }else{
                             const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3]);
                             if(availableAmount <= values[4]){
-                                if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
+                                if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
                                 // Fifth value
-                                if(h.amounts[4]) h.amounts[4].payable_amount = availableAmount;
-                                if(h.amounts[5]) h.amounts[5].payable_amount = 0;
-                                if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                                if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                                if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                                if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                                if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                if(h.amounts[11]) h.amounts[11].payable_amount = 0;      
+                                if(h.amounts[4]) h.amounts[4].to_be_paid_amount = availableAmount;
+                                if(h.amounts[5]) h.amounts[5].to_be_paid_amount = 0;
+                                if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                                if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                                if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                                if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                                if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;      
                             }else{
                                 const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4]);
                                 if(availableAmount <= values[5]){
-                                    if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                    if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                    if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                    if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                    if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
+                                    if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                    if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                    if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                    if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                    if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
                                     // Sixth value
-                                    if(h.amounts[5]) h.amounts[5].payable_amount = availableAmount;
-                                    if(h.amounts[6]) h.amounts[6].payable_amount = 0;
-                                    if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                                    if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                                    if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                                    if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                    if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                    if(h.amounts[5]) h.amounts[5].to_be_paid_amount = availableAmount;
+                                    if(h.amounts[6]) h.amounts[6].to_be_paid_amount = 0;
+                                    if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                                    if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                                    if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                                    if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                    if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                 }else{
                                     const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5]);
                                     if(availableAmount <= values[6]){
-                                        if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                        if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                        if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                        if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                        if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                        if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
+                                        if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                        if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                        if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                        if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                        if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                        if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
                                         // Seventh value
-                                        if(h.amounts[6]) h.amounts[6].payable_amount = availableAmount;
-                                        if(h.amounts[7]) h.amounts[7].payable_amount = 0;
-                                        if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                                        if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                                        if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                        if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                        if(h.amounts[6]) h.amounts[6].to_be_paid_amount = availableAmount;
+                                        if(h.amounts[7]) h.amounts[7].to_be_paid_amount = 0;
+                                        if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                                        if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                                        if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                        if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                     }else{
                                         const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6]);
                                         if(availableAmount <= values[7]){
-                                            if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                            if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                            if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                            if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                            if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                            if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
-                                            if(h.amounts[6]) h.amounts[6].payable_amount = values[6];
+                                            if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                            if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                            if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                            if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                            if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                            if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
+                                            if(h.amounts[6]) h.amounts[6].to_be_paid_amount = values[6];
                                             // Eight value
-                                            if(h.amounts[7]) h.amounts[7].payable_amount = availableAmount;
-                                            if(h.amounts[8]) h.amounts[8].payable_amount = 0;
-                                            if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                                            if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                            if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                            if(h.amounts[7]) h.amounts[7].to_be_paid_amount = availableAmount;
+                                            if(h.amounts[8]) h.amounts[8].to_be_paid_amount = 0;
+                                            if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                                            if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                            if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                         }else{
                                             const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7]);
                                             if(availableAmount <= values[8]){
-                                                if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                                if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                                if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                                if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                                if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                                if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
-                                                if(h.amounts[6]) h.amounts[6].payable_amount = values[6];
-                                                if(h.amounts[7]) h.amounts[7].payable_amount = values[7];
+                                                if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                                if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                                if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                                if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                                if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                                if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
+                                                if(h.amounts[6]) h.amounts[6].to_be_paid_amount = values[6];
+                                                if(h.amounts[7]) h.amounts[7].to_be_paid_amount = values[7];
                                                 // Nine value
-                                                if(h.amounts[8]) h.amounts[8].payable_amount = availableAmount;
-                                                if(h.amounts[9]) h.amounts[9].payable_amount = 0;
-                                                if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                                if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                                if(h.amounts[8]) h.amounts[8].to_be_paid_amount = availableAmount;
+                                                if(h.amounts[9]) h.amounts[9].to_be_paid_amount = 0;
+                                                if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                                if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                             }else{
                                                 const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7] + values[8]);
                                                 if(availableAmount <= values[9]){
-                                                    if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                                    if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                                    if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                                    if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                                    if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                                    if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
-                                                    if(h.amounts[6]) h.amounts[6].payable_amount = values[6];
-                                                    if(h.amounts[7]) h.amounts[7].payable_amount = values[7];
-                                                    if(h.amounts[8]) h.amounts[8].payable_amount = values[8];
+                                                    if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                                    if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                                    if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                                    if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                                    if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                                    if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
+                                                    if(h.amounts[6]) h.amounts[6].to_be_paid_amount = values[6];
+                                                    if(h.amounts[7]) h.amounts[7].to_be_paid_amount = values[7];
+                                                    if(h.amounts[8]) h.amounts[8].to_be_paid_amount = values[8];
                                                     // Ten value
-                                                    if(h.amounts[9]) h.amounts[9].payable_amount = availableAmount;
-                                                    if(h.amounts[10]) h.amounts[10].payable_amount = 0;
-                                                    if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                                    if(h.amounts[9]) h.amounts[9].to_be_paid_amount = availableAmount;
+                                                    if(h.amounts[10]) h.amounts[10].to_be_paid_amount = 0;
+                                                    if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                                 }else{
                                                     const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7] + values[8] + values[9]);
                                                     if(availableAmount <= values[10]){
-                                                        if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                                        if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                                        if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                                        if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                                        if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                                        if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
-                                                        if(h.amounts[6]) h.amounts[6].payable_amount = values[6];
-                                                        if(h.amounts[7]) h.amounts[7].payable_amount = values[7];
-                                                        if(h.amounts[8]) h.amounts[8].payable_amount = values[8];
-                                                        if(h.amounts[9]) h.amounts[9].payable_amount = values[9];
+                                                        if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                                        if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                                        if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                                        if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                                        if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                                        if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
+                                                        if(h.amounts[6]) h.amounts[6].to_be_paid_amount = values[6];
+                                                        if(h.amounts[7]) h.amounts[7].to_be_paid_amount = values[7];
+                                                        if(h.amounts[8]) h.amounts[8].to_be_paid_amount = values[8];
+                                                        if(h.amounts[9]) h.amounts[9].to_be_paid_amount = values[9];
                                                         // Eleven value
-                                                        if(h.amounts[10]) h.amounts[10].payable_amount = availableAmount;
-                                                        if(h.amounts[11]) h.amounts[11].payable_amount = 0;
+                                                        if(h.amounts[10]) h.amounts[10].to_be_paid_amount = availableAmount;
+                                                        if(h.amounts[11]) h.amounts[11].to_be_paid_amount = 0;
                                                     }else{
                                                         const availableAmount = inputValue - (values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7] + values[8] + values[9] + values[10]);
                                                         if(availableAmount <= values[11]){
-                                                            if(h.amounts[0]) h.amounts[0].payable_amount = values[0];
-                                                            if(h.amounts[1]) h.amounts[1].payable_amount = values[1];
-                                                            if(h.amounts[2]) h.amounts[2].payable_amount = values[2];
-                                                            if(h.amounts[3]) h.amounts[3].payable_amount = values[3];
-                                                            if(h.amounts[4]) h.amounts[4].payable_amount = values[4];
-                                                            if(h.amounts[5]) h.amounts[5].payable_amount = values[5];
-                                                            if(h.amounts[6]) h.amounts[6].payable_amount = values[6];
-                                                            if(h.amounts[7]) h.amounts[7].payable_amount = values[7];
-                                                            if(h.amounts[8]) h.amounts[8].payable_amount = values[8];
-                                                            if(h.amounts[9]) h.amounts[9].payable_amount = values[9];
-                                                            if(h.amounts[10]) h.amounts[10].payable_amount = values[10];
+                                                            if(h.amounts[0]) h.amounts[0].to_be_paid_amount = values[0];
+                                                            if(h.amounts[1]) h.amounts[1].to_be_paid_amount = values[1];
+                                                            if(h.amounts[2]) h.amounts[2].to_be_paid_amount = values[2];
+                                                            if(h.amounts[3]) h.amounts[3].to_be_paid_amount = values[3];
+                                                            if(h.amounts[4]) h.amounts[4].to_be_paid_amount = values[4];
+                                                            if(h.amounts[5]) h.amounts[5].to_be_paid_amount = values[5];
+                                                            if(h.amounts[6]) h.amounts[6].to_be_paid_amount = values[6];
+                                                            if(h.amounts[7]) h.amounts[7].to_be_paid_amount = values[7];
+                                                            if(h.amounts[8]) h.amounts[8].to_be_paid_amount = values[8];
+                                                            if(h.amounts[9]) h.amounts[9].to_be_paid_amount = values[9];
+                                                            if(h.amounts[10]) h.amounts[10].to_be_paid_amount = values[10];
                                                             // Twelve value
-                                                            if(h.amounts[11]) h.amounts[11].payable_amount = availableAmount;
+                                                            if(h.amounts[11]) h.amounts[11].to_be_paid_amount = availableAmount;
                                                         }
                                                     }
                                                 }
@@ -283,14 +283,19 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
     const submitHandler = async () => {
 
         // New heads
-        const newHeads = studentHeads.map((h:any) => {
+        const newHeads = selectedStudent.affiliated_heads.heads.map((h:any) => {
             return{
                 ...h,
                 amounts:h.amounts.map((a:any) => {
+
+                    const paid_amount = totalNumberGenerator(selectedPayment?.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts?.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount)))));
                     return {
                         ...a,
-                        paid_amount:Number(a.payable_amount)
+                        last_rec_amount:(Number(a.last_rec_amount) - paid_amount) + Number(a.to_be_paid_amount || 0),
+                        payable_amount:Number(a.value) - ((Number(a.last_rec_amount) - paid_amount) + Number(a.to_be_paid_amount || 0) + Number(a.conc_amount)),
+                        paid_amount:Number(a.value) - ((Number(a.last_rec_amount) - paid_amount) + Number(a.to_be_paid_amount || 0) + Number(a.conc_amount))
                     };
+                    
                 })
             }
         });
@@ -394,7 +399,6 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                                 </li>
                                 <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     <Input
-                                        defaultValue={totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.payable_amount)))))}
                                         onChange={(e:any) => amountChangeHandler(selectedStudent.affiliated_heads.heads.filter((af:any) => af.head_name === h.head_name)[0], e.target.value)}
                                         className='flex flex-row items-center h-[80%] text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
@@ -428,7 +432,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                                     {totalNumberGenerator(heads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount) || 0))))}
                                 </li>
                                 <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                                    {totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => heads.map((h:any) => h.head_name).includes(af.head_name)).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.payable_amount)))))}
+                                    {/* {totalNumberGenerator(selectedStudent.affiliated_heads.heads.filter((af:any) => heads.map((h:any) => h.head_name).includes(af.head_name)).map((af:any) => totalNumberGenerator(af.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.to_be_paid_amount)))))} */}
                                 </li>
                                 <li className='basis-[12.5%] flex flex-row items-center justify-between px-2'>
                                     {selectedPayment?.installments?.map((i:any) => i)}
