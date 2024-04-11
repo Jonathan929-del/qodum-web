@@ -38,7 +38,6 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
 
     // Thread click
     const pageClick = (page:any) => {
-        console.log(page);
         setIsSidebarOpened(false);
         setSelectedPage(page);
         setSelectedThread(page);

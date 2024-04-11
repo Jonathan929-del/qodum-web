@@ -88,6 +88,7 @@ const page = () => {
                     setIsViewOpened={setIsViewOpened}
                     setSelectedStudent={setSelectedStudent}
                     setSelectedPayment={setSelectedPayment}
+                    totalNumberGenerator={totalNumberGenerator}
                 />
             ) : (
                 <FormCom

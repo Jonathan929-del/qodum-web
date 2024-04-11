@@ -412,3 +412,28 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
         console.log(`Error fetching payments: ${err.message}`);
     };
 };
+
+
+
+
+
+
+// Modify payment paid heads
+export const modifyPaymentPaidHeads = async ({receipt_no, paid_amount, paid_heads}:{receipt_no:String, paid_amount:Number, paid_heads:any}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+    
+        // Payments
+        const payments = await Payment.findOneAndUpdate({receipt_no}, {paid_heads, paid_amount});
+
+
+        // Return
+        return payments;
+
+    } catch (err:any) {
+        console.log(`Error updating payment: ${err.message}`);
+    };
+};
