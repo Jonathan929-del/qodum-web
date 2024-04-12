@@ -1042,6 +1042,10 @@ export const uploadStudent = async (data:any) => {
         const students = await AdmittedStudent.insertMany(data);
 
 
+        // Return
+        return 'Added Successfully.';
+
+
     } catch (err:any) {
         throw new Error(`Error uploading student data: ${err}`);
     }

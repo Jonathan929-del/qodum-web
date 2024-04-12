@@ -66,6 +66,11 @@ const FormCom = ({}:any) => {
             };
             
             const data = await excelToJson(file);
+
+            const studentData = [
+                
+            ];
+            console.log(data);
             // await uploadStudent(formData);
             toast({title:'File uploaded successfully'});
 
