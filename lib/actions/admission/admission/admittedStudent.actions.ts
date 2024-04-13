@@ -1025,28 +1025,3 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
         throw new Error(`Error filtering defaulter list: ${err}`);
     };
 };
-
-
-
-
-
-// Upload student
-export const uploadStudent = async (data:any) => {
-    try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Importing students
-        const students = await AdmittedStudent.insertMany(data);
-
-
-        // Return
-        return 'Added Successfully.';
-
-
-    } catch (err:any) {
-        throw new Error(`Error uploading student data: ${err}`);
-    }
-}
