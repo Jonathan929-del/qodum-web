@@ -103,7 +103,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
             }
         });
         await deletePaymentByReceiptNo({receipt_no:p.receipt_no});
-        toast({title:'Canceled Successffuly!'});
+        toast({title:'Deleted Successffuly!'});
 
 
         // Reseting
