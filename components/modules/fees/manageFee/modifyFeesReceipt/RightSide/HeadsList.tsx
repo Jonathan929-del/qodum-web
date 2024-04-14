@@ -284,7 +284,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
     const submitHandler = async () => {
 
         // Student heads
-        const newStudentHeads = studentHeads.map((h:any) => {
+        const newStudentHeads = studentHeads.filter((h:any) => paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)).map((h:any) => {
             return{
                 ...h,
                 amounts:h.amounts.filter((a:any) => selectedPayment.installments.includes(a.name)).map((a:any) => {
@@ -299,6 +299,13 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                     };
                 }).concat(h.amounts.filter((a:any) => !selectedPayment.installments.includes(a.name)))
             }
+        }).concat(studentHeads.filter((h:any) => !paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)));
+
+
+        // Arranging the new student heads
+        const arrangedHeads = studentHeads.map((arrangedFee:any) => {
+            const foundFee = newStudentHeads.find((fee:any) => fee.head_name.toLowerCase() === arrangedFee.head_name.toLowerCase());
+            return foundFee ? {...foundFee} : null;
         });
 
 
@@ -330,7 +337,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
             id:selectedStudent.id,
             affiliated_heads:{
                 group_name:selectedStudent.affiliated_heads.group_name,
-                heads:newStudentHeads
+                heads:arrangedHeads
             }
         });
         await modifyPaymentPaidHeads({

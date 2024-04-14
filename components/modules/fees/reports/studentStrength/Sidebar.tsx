@@ -10,6 +10,7 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import Details from './Details';
 
 
 
@@ -17,6 +18,10 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfData}) => {
+
+
+    // Is draggable opened
+    const [isDraggableOpened, setIsDraggableOpened] = useState(false);
 
 
     // Schools
@@ -92,6 +97,9 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     // Designations
     const designations = ['N/A'];
     const [selectedDesignations, setSelectedDesignations] = useState(['N/A']);
+
+
+
 
 
     // Student details
@@ -230,6 +238,21 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     ];
 
 
+    // Filtered student details
+    const [filteredStudentDetails, setFilteredStudentDetails] = useState(['']);
+    const [selectedStudentDetails, setSelectedStudentDetails] = useState(['']);
+
+
+    // Filtered parents details
+    const [filteredParentsDetails, setFilteredParentsDetails] = useState(['']);
+    const [selectedParentsDetails, setSelectedParentsDetails] = useState(['']);
+
+
+    // Filtered guardian details
+    const [filteredGuardianDetails, setFilteredGuardianDetails] = useState(['']);
+    const [selectedGuardianDetails, setSelectedGuardianDetails] = useState(['']);
+
+
     // Onsubmit
     const onSubmit = async () => {
 
@@ -272,7 +295,15 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
     return (
-        <div className={`absolute top-0 left-0 h-full w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`absolute top-0 left-0 h-full pb-10 w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
+
+
+            {/* Details */}
+            {isDraggableOpened && (
+                <Details
+                    setIsDraggableOpened={setIsDraggableOpened}
+                />
+            )}
 
             {/* Toggling button */}
             <span
@@ -1003,6 +1034,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                 <div className='flex flex-col gap-2 mt-2'>
                     <div className='flex flex-row justify-center items-center gap-2'>
                         <span
+                            onClick={() => setIsDraggableOpened(true)}
                             className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                         >
