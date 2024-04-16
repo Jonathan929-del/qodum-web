@@ -1,16 +1,18 @@
 // Improts
+import Details from './Details';
 import {useState, useEffect} from 'react';
+import {Switch} from '@/components/ui/switch';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {ChevronRight, ChevronLeft, ChevronDown, Check, X,} from 'lucide-react';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
+import {studentDetailsFilter} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import Details from './Details';
 
 
 
@@ -26,7 +28,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
     // Schools
     const [schools, setSchools] = useState([{}]);
-    const [selectedSchool, setSelectedSchool] = useState('');
+    const [selectedSchool, setSelectedSchool] = useState('All schools');
 
 
     // Classes
@@ -60,8 +62,8 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
     // Statuses
-    const statuses = ['N/A', 'LEFT', 'REPEATER', 'RUSTICATE', 'STUDYING', 'TC', 'WITHDRAWN'];
-    const [selectedStatuses, setSelectedStatuses] = useState(['N/A', 'LEFT', 'REPEATER', 'RUSTICATE', 'STUDYING', 'TC', 'WITHDRAWN']);
+    const statuses = ['N/A', 'Left', 'Repeater', 'Rusticate', 'Studying', 'TC', 'Withdrawn'];
+    const [selectedStatuses, setSelectedStatuses] = useState(['N/A', 'Left', 'Repeater', 'Rusticate', 'Studying', 'TC', 'Withdrawn']);
 
 
     // Is Ews
@@ -90,16 +92,20 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
     // Professions
-    const professions = ['N/A'];
-    const [selectedProfessions, setSelectedProfessions] = useState(['N/A']);
+    const professions = ['N.A.'];
+    const [selectedProfessions, setSelectedProfessions] = useState(['N.A.']);
 
 
     // Designations
-    const designations = ['N/A'];
-    const [selectedDesignations, setSelectedDesignations] = useState(['N/A']);
+    const designations = ['N.A.', 'Teacher', 'Principal'];
+    const [selectedDesignations, setSelectedDesignations] = useState(['N.A.', 'Teacher', 'Principal']);
 
 
 
+
+
+    // Checked details
+    const [checkedDetails, setCheckedDetails] = useState<any>(localStorage.getItem('selectedDetails') === null ? [] : localStorage.getItem('selectedDetails')?.split('-'));
 
 
     // Student details
@@ -158,33 +164,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     ];
 
 
-    // Guardian details
-    const guardianDetails = [
-        'Guar. Name',
-        'Guar. Designation',
-        'Guar. Phone',
-        'Guar. DOB',
-        'Guar. Address',
-        'Guar. Office Address',
-        'Guar. Email 1',
-        'Guar. Email 2',
-        'Guar. Mobile',
-        'Guar. Profession',
-        'Guar. Comp. Name',
-        'Guar. Professional',
-        'Guar. Business Of',
-        'Guar. Others',
-        'Guar. Service In',
-        'Guar. Off. Phone',
-        'Guar. Off. Mobile',
-        'Guar. Off. Extension',
-        'Guar. Off. Email',
-        'Guar. Off. Website',
-        'Guar. Income',
-        'Guar. Other Info'
-    ];
-
-
     // Parent details
     const parentDetails = [
         'Father Full Name',
@@ -232,25 +211,57 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
         'Mother Off. Extension',
         'Mother Off. Email',
         'Mother Off. Website',
+
         'Date Of Anniversary',
         'Parent Status',
         'Mother Income'
     ];
 
 
+    // Guardian details
+    const guardianDetails = [
+        'Guar. Name',
+        'Guar. Designation',
+        'Guar. Phone',
+        'Guar. DOB',
+        'Guar. Address',
+        'Guar. Office Address',
+        'Guar. Email 1',
+        'Guar. Email 2',
+        'Guar. Mobile',
+        'Guar. Profession',
+        'Guar. Comp. Name',
+        'Guar. Professional',
+        'Guar. Business Of',
+        'Guar. Others',
+        'Guar. Service In',
+        'Guar. Off. Phone',
+        'Guar. Off. Mobile',
+        'Guar. Off. Extension',
+        'Guar. Off. Email',
+        'Guar. Off. Website',
+        'Guar. Income',
+        'Guar. Other Info'
+    ];
+
+
     // Filtered student details
-    const [filteredStudentDetails, setFilteredStudentDetails] = useState(['']);
-    const [selectedStudentDetails, setSelectedStudentDetails] = useState(['']);
+    const [filteredStudentDetails, setFilteredStudentDetails] = useState(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
+    const [selectedStudentDetails, setSelectedStudentDetails] = useState(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
 
 
     // Filtered parents details
-    const [filteredParentsDetails, setFilteredParentsDetails] = useState(['']);
-    const [selectedParentsDetails, setSelectedParentsDetails] = useState(['']);
+    const [filteredParentsDetails, setFilteredParentsDetails] = useState(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
+    const [selectedParentsDetails, setSelectedParentsDetails] = useState(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
 
 
     // Filtered guardian details
-    const [filteredGuardianDetails, setFilteredGuardianDetails] = useState(['']);
-    const [selectedGuardianDetails, setSelectedGuardianDetails] = useState(['']);
+    const [filteredGuardianDetails, setFilteredGuardianDetails] = useState(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
+    const [selectedGuardianDetails, setSelectedGuardianDetails] = useState(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
+
+
+    // Selected order by
+    const [selectedOrderBy, setSelectedOrderBy] = useState([]);
 
 
     // Onsubmit
@@ -258,13 +269,28 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
         setIsShowClicked(true);
         setIsLoading(true);
-        // Filter defaulter list
-        // const res = await FeeDefaulterListFilter({
-
-        // });
-        // setPdfData({
-        //     students:res
-        // });
+        // Student details filter
+        const res = await studentDetailsFilter({
+            school:selectedSchool,
+            classes:selectedClasses.map((c:any) => c.class_name),
+            genders:selectedGenders,
+            religions:selectedReligions.map((r:any) => r.religion_name),
+            categories:selectedCategories.map((c:any) => c.category_name),
+            seniorities:selectedSeniorities,
+            activities:selectedActivities,
+            statuses:selectedStatuses,
+            is_ews:selectedIsEws,
+            transports:selectedTransports,
+            is_sibling:selectedIsSibling,
+            streams:selectedStreams.map((s:any) => s.stream_name),
+            optional_subjects:selectedOptionalSubjects.map((s:any) => s.subject_name),
+            professions:selectedProfessions,
+            designations:selectedDesignations
+        });
+        setPdfData({
+            students:res,
+            fields:[...selectedStudentDetails, ...selectedParentsDetails, ...selectedGuardianDetails]
+        });
         setIsLoading(false);
     };
 
@@ -288,10 +314,19 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setStreams(streamsRes);
             setSelectedStreams(streamsRes);
             setOptionalSubjects(optionalSubjectsRes);
-            setSelectedOptionalSubjects(optionalSubjectsRes)
+            setSelectedOptionalSubjects(optionalSubjectsRes);
+            setCheckedDetails(localStorage.getItem('selectedDetails') === null ? [] : localStorage.getItem('selectedDetails')?.split('-'));
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        setFilteredStudentDetails(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
+        setSelectedStudentDetails(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
+        setFilteredParentsDetails(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
+        setSelectedParentsDetails(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
+        setFilteredGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
+        setSelectedGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
+    }, [isDraggableOpened]);
 
 
     return (
@@ -302,6 +337,8 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             {isDraggableOpened && (
                 <Details
                     setIsDraggableOpened={setIsDraggableOpened}
+                    checkedDetails={checkedDetails}
+                    setCheckedDetails={setCheckedDetails}
                 />
             )}
 
@@ -330,6 +367,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                         <p className='basis-[30%] h-full flex justify-end items-center text-[#726E71] text-xs'>School</p>
                         <div className='basis-[70%] flex flex-col items-start gap-4 sm:basis-[70%]'>
                             <Select
+                                value={selectedSchool}
                                 onValueChange={(v:any) => setSelectedSchool(v)}
                             >
                                 <SelectTrigger className='h-6 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
@@ -1027,6 +1065,198 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
                     {/* Header */}
                     <p className='w-full border-b-[0.5px] border-[#ccc] pb-[2px] mb-2 text-md font-bold text-hash-color text-center'>Details</p>
+
+
+                    {/* Student */}
+                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Student</p>
+                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedStudentDetails?.length === 0 ? 'Select Fields' : selectedStudentDetails?.length === 1 ? '1 field selected' : `${selectedStudentDetails?.length} fields selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedStudentDetails(filteredStudentDetails)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedStudentDetails([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {filteredStudentDetails.map((i:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedStudentDetails.includes(i)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedStudentDetails?.includes(i) ? setSelectedStudentDetails(selectedStudentDetails?.filter((item:any) => item !== i)) : setSelectedStudentDetails([...selectedStudentDetails, i])}
+                                                />
+                                                <p className='text-xs font-semibold'>{i}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    {/* Parent */}
+                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Parent</p>
+                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedParentsDetails?.length === 0 ? 'Select Fields' : selectedParentsDetails?.length === 1 ? '1 field selected' : `${selectedParentsDetails?.length} fields selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedParentsDetails(filteredParentsDetails)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedParentsDetails([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {filteredParentsDetails.map((i:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedParentsDetails.includes(i)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedParentsDetails?.includes(i) ? setSelectedParentsDetails(selectedParentsDetails?.filter((item:any) => item !== i)) : setSelectedParentsDetails([...selectedParentsDetails, i])}
+                                                />
+                                                <p className='text-xs font-semibold'>{i}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    {/* Guardian */}
+                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Guardian</p>
+                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedGuardianDetails?.length === 0 ? 'Select Fields' : selectedGuardianDetails?.length === 1 ? '1 field selected' : `${selectedGuardianDetails?.length} fields selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedGuardianDetails(filteredGuardianDetails)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedGuardianDetails([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {filteredGuardianDetails.map((i:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedGuardianDetails.includes(i)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedGuardianDetails?.includes(i) ? setSelectedGuardianDetails(selectedGuardianDetails?.filter((item:any) => item !== i)) : setSelectedGuardianDetails([...selectedGuardianDetails, i])}
+                                                />
+                                                <p className='text-xs font-semibold'>{i}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    {/* Order By */}
+                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Order By</p>
+                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedOrderBy?.length === 0 ? 'Select Fields' : selectedOrderBy?.length === 1 ? '1 field selected' : `${selectedOrderBy?.length} fields selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedOrderBy(filteredStudentDetails)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedOrderBy([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {filteredStudentDetails.map((i:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedOrderBy.includes(i)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedOrderBy?.includes(i) ? setSelectedOrderBy(selectedOrderBy?.filter((item:any) => item !== i)) : setSelectedOrderBy([...selectedOrderBy, i])}
+                                                />
+                                                <p className='text-xs font-semibold'>{i}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    {/* Group by class */}
+                    <div className='w-full flex flex-row items-center justify-start gap-2 mt-2'>
+                        <Switch/>
+                        <p className='text-xs text-hash-color'>Group by class</p>
+                    </div>
+
                 </div>
 
 

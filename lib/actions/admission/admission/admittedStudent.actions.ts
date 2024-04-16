@@ -1025,3 +1025,111 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
         throw new Error(`Error filtering defaulter list: ${err}`);
     };
 };
+
+
+
+
+
+// Student details filter props
+interface StudentDetailsFilterProps{
+    school:String;
+    classes:any;
+    genders:any;
+    religions:any;
+    categories:any;
+    seniorities:any;
+    activities:any;
+    statuses:any;
+    is_ews:any;
+    transports:any;
+    is_sibling:any;
+    streams:any;
+    optional_subjects:any;
+    professions:any;
+    designations:any;
+};
+// Student details filter
+export const studentDetailsFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects, professions, designations}:StudentDetailsFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        const students = await AdmittedStudent.find();
+
+
+        // Filtered students
+        const filteredStudents = students
+            // Schools filter
+            .filter((s:any) => school === 'All schools' ? s : s)
+            // Classes filter
+            .filter((s:any) => classes.includes(s.student.class))
+            // Genders filter
+            .filter((s:any) => genders.includes(s.student.gender))
+            // Religions filter
+            .filter((s:any) => religions.includes(s.student.religion))
+            // Categories filter
+            .filter((s:any) => categories.includes(s.student.category))
+            // Is new filter
+            .filter((s:any) => {
+                if(seniorities.includes('New') && seniorities.includes('Old')){
+                    return s;
+                }else if(seniorities.includes('New')){
+                    return s.student.is_new;
+                }else{
+                    return !s.student.is_new;
+                };
+            })
+            // Is active filter
+            .filter((s:any) => {
+                if(activities.includes('Yes') && activities.includes('No')){
+                    return s;
+                }else if(activities.includes('Yes')){
+                    return s.student.is_active;
+                }else{
+                    return !s.student.is_active;
+                };
+            })
+            // Status filter
+            .filter((s:any) => statuses.includes(s.student.student_status))
+            // Is ews filter
+            .filter((s:any) => {
+                if(is_ews.includes('Yes') && is_ews.includes('No')){
+                    return s;
+                }else if(is_ews.includes('Yes')){
+                    return s.student.is_ews;
+                }else{
+                    return !s.student.is_ews;
+                };
+            })
+            // Transport filter
+            .filter((s:any) => s)
+            // Is sibling filter
+            .filter((s:any) => {
+                if(is_sibling.includes('Yes') && is_sibling.includes('No')){
+                    return s;
+                }else if(is_sibling.includes('Yes')){
+                    return s.student.is_sibling;
+                }else{
+                    return !s.student.is_sibling;
+                };
+            })
+            // Streams filter
+            .filter((s:any) => streams.includes(s.student.stream))
+            // Optional subject filter
+            .filter((s:any) => optional_subjects.includes(s.student.optional_subject))
+            // Profession filter
+            .filter((s:any) => professions.includes(s.parents.father.profession))
+            // Designations filter
+            .filter((s:any) => designations.includes(s.parents.father.designation))
+
+
+        // Return
+        return filteredStudents;
+        
+    }catch (err){
+        throw new Error(`Error filtering student details: ${err}`);  
+    };
+};
