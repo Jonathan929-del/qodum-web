@@ -11,11 +11,43 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments}:any) => {
 
 
     // Toast
     const {toast} = useToast();
+
+
+    // Next installment pay handler
+    const nextInstallmentPayHandler = (advanceAmount:any) => {
+
+
+        // Next heads to pay
+        const nextInstallments = installments.slice(installments.indexOf(selectedInstallments[0]) + 1);
+        const nextHeadsToPay = nextInstallments.map((i:any) => selectedStudent.affiliated_heads.heads.filter((h:any) => h.installment === i || h.installment === 'All installments')).flat();
+        const filteredNewHeads = Object.values(nextHeadsToPay.reduce((acc:any, obj:any) => (acc[obj.head_name] = obj, acc), {}));
+        console.log('New heads: ', filteredNewHeads);
+
+
+        // Paying
+        filteredNewHeads.map((h:any) => {
+            h.amounts.filter((a:any) => nextInstallments.includes(a.name)).map((a:any) => a.paid_amount = advanceAmount);
+        });
+
+
+        // Merging the two arrays of heads and sorting them
+        const arrangeFeeHeads = (unarrangedOrder:any, arrangedOrder:any) => {
+            return arrangedOrder.map((arrangedItem:any) => {
+                const feeHead = unarrangedOrder.find((item:any) => item.head_name.toLowerCase() === arrangedItem.head_name.toLowerCase());
+                return feeHead ? feeHead : { head_name: arrangedItem.head_name };
+            });
+        };
+        const newHeads = heads.filter((h:any) => !nextHeadsToPay.map((head:any) => head.head_name).includes(h.head_name)).concat(filteredNewHeads);
+        const newSortedHeads = arrangeFeeHeads(newHeads, selectedStudent.affiliated_heads.heads);
+        setHeads(newSortedHeads);
+
+
+    };
 
 
     // Total paid handler
@@ -42,6 +74,11 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
 
                 // Setting all heads to paid
                 heads.map((h:any) => h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => a.paid_amount = Number(a.value) - ((Number(a.conc_amount) + Number(a.last_rec_amount)))));
+
+                // Setting advance amount to the next installment
+                const advanceAmount = inputValue - totalNumber;
+                nextInstallmentPayHandler(advanceAmount);
+
             }
             // Number smaller than total amount
             else{

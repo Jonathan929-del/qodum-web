@@ -1133,3 +1133,46 @@ export const studentDetailsFilter = async ({school, classes, genders, religions,
         throw new Error(`Error filtering student details: ${err}`);  
     };
 };
+
+
+
+
+
+// Class wise student strength filter props
+interface ClassWiseStudentStrengthFilterProps{
+    date_of_adm:Date;
+    class_name:String;
+    is_new_students:Boolean;
+    section:String;
+};
+// Class wise student strength filter
+export const classWiseStudentStrengthFilter = async ({date_of_adm, class_name, is_new_students, section}:ClassWiseStudentStrengthFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        const students = await AdmittedStudent.find();
+
+
+        // Filtered students
+        const filteredStudents = students
+            // Date of admission filter
+            .filter((s:any) => s.student.doa < date_of_adm)
+            // Class filter
+            .filter((s:any) => class_name === 'All classes' ? s : s.student.class === class_name)
+            // Is new filter
+            .filter((s:any) => is_new_students ? s.student.is_new : s)
+            // Section filter
+            .filter((s:any) => section === 'All sections' ? s : s.student.section === section)
+
+
+        // Return
+        return filteredStudents;
+        
+    }catch (err){
+        throw new Error(`Error filtering student details: ${err}`);  
+    };
+};

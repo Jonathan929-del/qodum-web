@@ -1,6 +1,6 @@
 'use client';
 // Imports
-import StudentDetails from '@/components/modules/fees/reports/studentDetails';
+import StudentDetails from '@/components/modules/fees/reports/studentStrength/classWiseStudentStrength';
 
 
 

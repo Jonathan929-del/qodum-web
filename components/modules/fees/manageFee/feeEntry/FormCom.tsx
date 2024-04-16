@@ -78,6 +78,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             advance_amt:0
         }
     });
+    console.log('THE HEADS', heads);
 
 
     // Submit handler
@@ -159,13 +160,14 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         .concat(unChangedHeads)
                         .filter((h:any) => h?.amounts?.length !== 0)
         };
+        console.log(newHeads);
 
     
         // Updating student
-        await ModifyStudentAffiliatedHeads({
-            id:selectedStudent.id,
-            affiliated_heads:newHeads,
-        });
+        // await ModifyStudentAffiliatedHeads({
+        //     id:selectedStudent.id,
+        //     affiliated_heads:newHeads,
+        // });
         
         
         // Create payment
@@ -181,6 +183,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 amounts:h.amounts.filter((a:any) => selectedInstallments.includes(a.name))
             };
         });
+        console.log(paidHeads);
         let paymodeDetails;
         switch (values.pay_mode) {
             case 'Cheque':
@@ -203,51 +206,51 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 break;
         };
         const schools = await fetchGlobalSchoolDetails();
-        const res = await createPayment({
-            // Others
-            student:selectedStudent.name,
-            receipt_no:paymentsReceiptNo,
-            ref_no:'0',
-            installments:selectedInstallments,
-            received_date:values.received_date,
-            remarks:values.remarks,
-            paymode:values.pay_mode || 'Cash',
-            paymode_details:paymodeDetails,
-            fee_type:values.fee_type,
-            advance_dues_number:advanceDuesNumber,
-            class_name:selectedStudent.class,
-            board:selectedStudent.board,
-            adm_no:selectedStudent.admission_no,
-            father_name:selectedStudent.father_name,
-            school_name:schools[0].school_name,
-            school_address:schools[0].school_address,
-            website:schools[0].website,
-            school_no:schools[0].school_no,
-            affiliation_no:schools[0].affiliation_no,
-            logo:schools[0].logo,
-            wing_name:selectedStudent.wing_name,
-            entry_mode:values.entry_mode,
-            is_new:selectedStudent.is_new,
-            is_active:selectedStudent.is_active,
-            student_status:selectedStudent.student_status,
-            bank_name:values.bank_name,
-            fee_group:selectedStudent.affiliated_heads.group_name,
-            // Amounts
-            actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
-            concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
-            paid_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))),
+        // const res = await createPayment({
+        //     // Others
+        //     student:selectedStudent.name,
+        //     receipt_no:paymentsReceiptNo,
+        //     ref_no:'0',
+        //     installments:selectedInstallments,
+        //     received_date:values.received_date,
+        //     remarks:values.remarks,
+        //     paymode:values.pay_mode || 'Cash',
+        //     paymode_details:paymodeDetails,
+        //     fee_type:values.fee_type,
+        //     advance_dues_number:advanceDuesNumber,
+        //     class_name:selectedStudent.class,
+        //     board:selectedStudent.board,
+        //     adm_no:selectedStudent.admission_no,
+        //     father_name:selectedStudent.father_name,
+        //     school_name:schools[0].school_name,
+        //     school_address:schools[0].school_address,
+        //     website:schools[0].website,
+        //     school_no:schools[0].school_no,
+        //     affiliation_no:schools[0].affiliation_no,
+        //     logo:schools[0].logo,
+        //     wing_name:selectedStudent.wing_name,
+        //     entry_mode:values.entry_mode,
+        //     is_new:selectedStudent.is_new,
+        //     is_active:selectedStudent.is_active,
+        //     student_status:selectedStudent.student_status,
+        //     bank_name:values.bank_name,
+        //     fee_group:selectedStudent.affiliated_heads.group_name,
+        //     // Amounts
+        //     actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
+        //     concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),
+        //     paid_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))),
 
-            paid_heads:paidHeads,
-            concession_reason:concessionReason
-        });
+        //     paid_heads:paidHeads,
+        //     concession_reason:concessionReason
+        // });
 
 
         // Fee receipt
-        setReceiptPaymentData({
-            ...res,
-            installments:selectedInstallments,
-            paid_heads:paidHeads
-        });
+        // setReceiptPaymentData({
+        //     ...res,
+        //     installments:selectedInstallments,
+        //     paid_heads:paidHeads
+        // });
         setIsReceiptOpened(true);
 
 
