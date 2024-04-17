@@ -26,7 +26,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         const nextInstallments = installments.slice(installments.indexOf(selectedInstallments[0]) + 1);
         const nextHeadsToPay = nextInstallments.map((i:any) => selectedStudent.affiliated_heads.heads.filter((h:any) => h.installment === i || h.installment === 'All installments')).flat();
         const filteredNewHeads = Object.values(nextHeadsToPay.reduce((acc:any, obj:any) => (acc[obj.head_name] = obj, acc), {}));
-        console.log('New heads: ', filteredNewHeads);
 
 
         // Paying
@@ -44,7 +43,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         };
         const newHeads = heads.filter((h:any) => !nextHeadsToPay.map((head:any) => head.head_name).includes(h.head_name)).concat(filteredNewHeads);
         const newSortedHeads = arrangeFeeHeads(newHeads, selectedStudent.affiliated_heads.heads);
-        setHeads(newSortedHeads);
+        // setHeads(newSortedHeads);
 
 
     };

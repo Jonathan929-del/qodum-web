@@ -58,7 +58,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
     // Onsubmit
     const onSubmit = async () => {
-
         setIsShowClicked(true);
         setIsLoading(true);
         // Class wise students strength filter
@@ -71,6 +70,28 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
         setPdfData({
             students:res,
             previewWise,
+            isSectionWise,
+            sections,
+            selectedSection
+        });
+        setIsLoading(false);
+    };
+
+
+    // Show students click
+    const showStudentsClick = async () => {
+        setIsShowClicked(true);
+        setIsLoading(true);
+        // Class wise students strength filter
+        const res = await classWiseStudentStrengthFilter({
+            date_of_adm:date,
+            class_name:selectedClass,
+            is_new_students:isNewStudents,
+            section:selectedSection
+        });
+        setPdfData({
+            students:res,
+            previewWise:'showStudents',
             isSectionWise,
             sections,
             selectedSection
@@ -278,10 +299,17 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                 <div className='flex items-center justify-center gap-2 mt-2'>
                     <span
                         onClick={onSubmit}
-                        className='flex items-center justify-center px-4 h-6 w-[50%] text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                        className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                     >
                         Show
+                    </span>
+                    <span
+                        onClick={showStudentsClick}
+                        className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    >
+                        Show Students
                     </span>
                 </div>
 
