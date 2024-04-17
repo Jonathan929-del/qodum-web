@@ -39,7 +39,6 @@ const PDF = ({pdfData}:any) => {
     // Student heads
     const studentHeads = pdfData.students.map((s:any) => s.affiliated_heads.heads.map((h:any) => h.head_name)).flat();
     const filteredHeads = studentHeads.filter((name:any, index:any) => studentHeads.indexOf(name) === index);
-    console.log(filteredHeads);
 
 
     // Defaulter students
@@ -86,7 +85,7 @@ const PDF = ({pdfData}:any) => {
 
                 return dateObject < new Date();
             }).map((i:any) => i.name);
-            const theDefaulterStudents = pdfData.students?.filter((s:any) => (s.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => a.name)).flat().filter((i:any) => pastDueDateInstallments.includes(i)).length > 0 && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0)) || s.affiliated_heads.heads.length === 0);
+            const theDefaulterStudents = pdfData.students?.filter((s:any) => (s.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => a.name)).flat().filter((i:any) => pastDueDateInstallments.includes(i)).length > 0 && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0)) || s.affiliated_heads.heads.length === 0);
             setDefaulterStudents(theDefaulterStudents);
         };
         fetcher();
@@ -248,7 +247,7 @@ const PDF = ({pdfData}:any) => {
                                 <View style={{width:'100%', height:'100%', display:'flex', flexDirection:'row', gap:10}}>
 
                                     {/* Classes table */}
-                                    <View style={{display:'flex', flexDirection:'column', flex:1}}>
+                                    <View style={{width:'50%', display:'flex', flexDirection:'column'}}>
                                         {/* Headers */}
                                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
                                             <View style={{width:'12.5%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
@@ -289,19 +288,19 @@ const PDF = ({pdfData}:any) => {
                                                     <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && s.student.is_new).length}</Text>
                                                 </View>
                                                 <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                                 </View>
                                                 <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                                 </View>
                                                 <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                     <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && !s.student.is_new).length}</Text>
                                                 </View>
                                                 <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                                 </View>
                                                 <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 || s.affiliated_heads.heads.length === 0)).length}</Text>
+                                                    <Text>{pdfData.students.filter((s:any) => s.student.class === c.class_name && !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 || s.affiliated_heads.heads.length === 0)).length}</Text>
                                                 </View>
                                             </View>
                                         ))}
@@ -319,19 +318,19 @@ const PDF = ({pdfData}:any) => {
                                                 <Text>{pdfData.students.filter((s:any) => s.student.is_new).length}</Text>
                                             </View>
                                             <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                <Text>{pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                             </View>
                                             <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                <Text>{pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                             </View>
                                             <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                 <Text>{pdfData.students.filter((s:any) => !s.student.is_new).length}</Text>
                                             </View>
                                             <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
+                                                <Text>{pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) === 0 && s.affiliated_heads.heads.length > 0)).length}</Text>
                                             </View>
                                             <View style={{width:'11.655%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                <Text>{pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 || s.affiliated_heads.heads.length === 0)).length}</Text>
+                                                <Text>{pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 || s.affiliated_heads.heads.length === 0)).length}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -341,7 +340,7 @@ const PDF = ({pdfData}:any) => {
 
 
                                     {/* Other tables */}
-                                    <View style={{flex:1, display:'flex', flexDirection:'row', gap:5}}>
+                                    <View style={{width:'50%', display:'flex', flexDirection:'row', gap:5}}>
                                         <View style={{display:'flex', flexDirection:'column', gap:5}}>
 
 
@@ -360,7 +359,10 @@ const PDF = ({pdfData}:any) => {
                                                         <Text>Old Admission</Text>
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                        <Text>{pdfData.students.filter((s:any) => !s.student.is_new).length}</Text>
+                                                        <Text style={{gap:2}}>
+                                                            {pdfData.students.filter((s:any) => !s.student.is_new).length}
+                                                            ({totalNumberGenerator(pdfData.students.filter((s:any) => !s.student.is_new).map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))))})
+                                                        </Text>
                                                     </View>
                                                 </View>
                                                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#000', backgroundColor:'#fff'}}>
@@ -368,7 +370,10 @@ const PDF = ({pdfData}:any) => {
                                                         <Text>New Admission</Text>
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                        <Text>{pdfData.students.filter((s:any) => s.student.is_new).length}</Text>
+                                                        <Text style={{gap:2}}>
+                                                            {pdfData.students.filter((s:any) => s.student.is_new).length}
+                                                            ({totalNumberGenerator(pdfData.students.filter((s:any) => s.student.is_new).map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))))})
+                                                        </Text>
                                                     </View>
                                                 </View>
 
@@ -378,7 +383,10 @@ const PDF = ({pdfData}:any) => {
                                                         <Text>Total Admission</Text>
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                        <Text>{pdfData.students.length}</Text>
+                                                        <Text style={{gap:2}}>
+                                                            {pdfData.students.length}
+                                                            ({totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value)))))))})
+                                                        </Text>
                                                     </View>
                                                 </View>
                                             </View>
@@ -400,7 +408,7 @@ const PDF = ({pdfData}:any) => {
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                         <Text style={{gap:2}}>
-                                                            {pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) === 0 && s.affiliated_heads.heads.length > 0)).length}
+                                                            {pdfData.students.filter((s:any) => !s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) === 0 && s.affiliated_heads.heads.length > 0)).length}
                                                             ({totalNumberGenerator(pdfData.students.filter((s:any) => !s.student.is_new).map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))))))})
                                                         </Text>
                                                     </View>
@@ -411,7 +419,7 @@ const PDF = ({pdfData}:any) => {
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                         <Text style={{gap:2}}>
-                                                            {pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}
+                                                            {pdfData.students.filter((s:any) => s.student.is_new && (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}
                                                             ({totalNumberGenerator(pdfData.students.filter((s:any) => s.student.is_new).map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))))))})
                                                         </Text>
                                                     </View>
@@ -424,7 +432,7 @@ const PDF = ({pdfData}:any) => {
                                                     </View>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                         <Text style={{gap:2}}>
-                                                            {pdfData.students.filter((s:any) => (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.payable_amount))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}
+                                                            {pdfData.students.filter((s:any) => (totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)))))) !== 0 && s.affiliated_heads.heads.length > 0)).length}
                                                             ({totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))))))})
                                                         </Text>
                                                     </View>
@@ -478,7 +486,9 @@ const PDF = ({pdfData}:any) => {
 
 
                                         </View>
-                                        <View>
+                                        <View style={{display:'flex', flexDirection:'column', gap:5}}>
+
+
                                             {/* Concession */}
                                             <View style={{display:'flex', flexDirection:'column'}}>
                                                 {/* Headers */}
@@ -490,13 +500,18 @@ const PDF = ({pdfData}:any) => {
 
                                                 {/* Heads */}
                                                 {filteredHeads.map((h:any) => (
-                                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#000', backgroundColor:'#F3F8FB'}}>
+                                                    <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#000', backgroundColor:Math.floor((filteredHeads.indexOf(h) + 1) / 2) * 2 !== filteredHeads.indexOf(h) + 1 ? '#F3F8FB' : '#fff'}}>
                                                         <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                             <Text>{h}</Text>
                                                         </View>
-                                                        <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <View style={{width:'25%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                             <Text style={{gap:2}}>
-                                                                1
+                                                                0
+                                                            </Text>
+                                                        </View>
+                                                        <View style={{width:'25%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                            <Text style={{gap:2}}>
+                                                                {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.filter((head:any) => head.head_name === h).map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.conc_amount)))))))}
                                                             </Text>
                                                         </View>
                                                     </View>
@@ -505,15 +520,97 @@ const PDF = ({pdfData}:any) => {
                                                 {/* Total */}
                                                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
                                                     <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                                        <Text>Total Collection</Text>
+                                                        <Text>Total</Text>
                                                     </View>
-                                                    <View style={{width:'50%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                    <View style={{width:'25%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                                         <Text>
-                                                            10
+                                                            0
+                                                        </Text>
+                                                    </View>
+                                                    <View style={{width:'25%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>
+                                                            {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.conc_amount)))))))}
                                                         </Text>
                                                     </View>
                                                 </View>
                                             </View>
+
+
+                                            {/* Estimated Collection */}
+                                            <View style={{display:'flex', flexDirection:'column'}}>
+                                                {/* Headers */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                                    <View style={{width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Estimated Collection</Text>
+                                                    </View>
+                                                </View>
+
+                                                {/* Fee */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#000', backgroundColor:'#F3F8FB'}}>
+                                                    <View style={{width:'70%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Fee</Text>
+                                                    </View>
+                                                    <View style={{width:'30%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text style={{gap:2}}>
+                                                            {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.value)))))))}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+
+                                                {/* Concession */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#000', backgroundColor:'#fff'}}>
+                                                    <View style={{width:'70%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Concession</Text>
+                                                    </View>
+                                                    <View style={{width:'30%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text style={{gap:2}}>
+                                                            {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.conc_amount)))))))}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+
+                                                {/* Total */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                                    <View style={{width:'70%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Total Estimated Collection</Text>
+                                                    </View>
+                                                    <View style={{width:'30%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>
+                                                            {
+                                                                totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.value)))))))
+                                                                    -
+                                                                totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((head:any) => totalNumberGenerator(head.amounts.map((a:any) => Number(a.conc_amount)))))))
+                                                            }
+                                                        </Text>
+                                                    </View>
+                                                </View>
+
+                                                {/* Received */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#4BB543', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                                    <View style={{width:'70%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Received</Text>
+                                                    </View>
+                                                    <View style={{width:'30%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>
+                                                            {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount)))))))}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+
+                                                {/* Defaulter (Dues) */}
+                                                <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#F0343A', borderBottomWidth:0.5, borderBottomColor:'#ccc', color:'#fff'}}>
+                                                    <View style={{width:'70%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>Defaulter (Dues)</Text>
+                                                    </View>
+                                                    <View style={{width:'30%', display:'flex', alignItems:'center', justifyContent:'center', paddingVertical:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                                        <Text>
+                                                            {totalNumberGenerator(pdfData.students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount))))))))}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+
+
                                         </View>
                                     </View>
 
