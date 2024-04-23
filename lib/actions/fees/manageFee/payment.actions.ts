@@ -419,7 +419,7 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
 
 
 // Modify payment paid heads
-export const modifyPaymentPaidHeads = async ({receipt_no, paid_amount, paid_heads}:{receipt_no:String, paid_amount:Number, paid_heads:any}) => {
+export const modifyPaymentPaidHeads = async ({receipt_no, actual_amount, paid_amount, paid_heads}:{receipt_no:String, paid_amount:Number, actual_amount:Number, paid_heads:any}) => {
     try {
 
         // Database connection
@@ -427,7 +427,7 @@ export const modifyPaymentPaidHeads = async ({receipt_no, paid_amount, paid_head
 
     
         // Payments
-        const payments = await Payment.findOneAndUpdate({receipt_no}, {paid_heads, paid_amount});
+        const payments = await Payment.findOneAndUpdate({receipt_no}, {paid_heads, actual_amount, paid_amount});
 
 
         // Return
