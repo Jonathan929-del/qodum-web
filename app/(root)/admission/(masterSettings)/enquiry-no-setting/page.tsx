@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
@@ -12,7 +12,9 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {EnquiryNoSettingValidation} from '@/lib/validations/admission/masterSettings/enquiryNoSetting.validation';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -21,7 +23,11 @@ const page = () => {
 
 
     // Toast
-    const { toast } = useToast();
+    const {toast} = useToast();
+
+
+    // Sessions
+    const [sessions, setSessions] = useState<any>([{}]);
 
 
     // Form
@@ -57,7 +63,14 @@ const page = () => {
 
 
 
-    // Use effect
+    // Use effects
+    useEffect(() => {
+        const fetcher = async () => {
+            const sessionsRes = await fetchAcademicYears();
+            setSessions(sessionsRes);
+        };
+        fetcher();
+    }, []);
     useEffect(() => {
     }, [form.watch('setting_type')]);
 
@@ -84,17 +97,19 @@ const page = () => {
                                 render={({ field }) => (
                                     <FormItem className='flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                         <FormControl>
-                                            <Select disabled>
+                                            <Select>
                                                 <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='2023-2024' className='text-xs' />
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='sp'>Special</SelectItem>
-                                                    <SelectItem value='cl'>Classes</SelectItem>
-                                                    <SelectItem value='sp2'>Special</SelectItem>
-                                                    <SelectItem value='sp3'>Special</SelectItem>
-                                                    <SelectItem value='sp5'>Special</SelectItem>
+                                                    {sessions.length < 1 ? (
+                                                        <p className='text-hash-color text-xs'>No sessions</p>
+                                                    ) : !sessions[0].year_name ? (
+                                                        <LoadingIcon />
+                                                    ) : sessions.map((s:any) => (
+                                                        <SelectItem value={s.year_name} key={s._id}>{s.year_name}</SelectItem>
+                                                    ))}
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>

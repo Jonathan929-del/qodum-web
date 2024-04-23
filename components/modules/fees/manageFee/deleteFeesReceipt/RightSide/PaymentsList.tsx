@@ -3,9 +3,9 @@ import moment from 'moment';
 import {ChevronsUpDown} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {deletePaymentByReceiptNo} from '@/lib/actions/fees/manageFee/payment.actions';
 import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
-import { deletePaymentByReceiptNo } from '@/lib/actions/fees/manageFee/payment.actions';
 
 
 
@@ -81,9 +81,41 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                 }).concat(...deletedHeadsAmounts)
             }
         }).concat(deletedHeads);
+        // // Affected heads
+        // const affectedHeads = selectedStudent.affiliated_heads.heads.filter((h:any) => p.paid_heads.map((ph:any) => ph.head_name).includes(h.head_name)).map((h:any) => {
+
+        //     // Head amounts
+        //     const headAmounts = h.amounts.map((headAmount:any) => headAmount.name);
+
+        //     // Deleted heads amounts
+        //     const deletedHeadsAmounts = p.paid_heads.filter((paymentHead:any) => paymentHead.head_name === h.head_name).map((paymentHead:any) => paymentHead.amounts.filter((paymentAmount:any) => !headAmounts.includes(paymentAmount.name)).map((paymentAmount:any) => {
+        //         return{
+        //             ...paymentAmount,
+        //             payable_amount:Number(paymentAmount.paid_amount),
+        //             paid_amount:Number(paymentAmount.paid_amount),
+        //             last_rec_amount:Number(paymentAmount.value) - (Number(paymentAmount.paid_amount) + Number(paymentAmount.conc_amount))
+        //         };
+        //     }));
+
+        //     // Return
+        //     return{
+        //         ...h,
+        //         amounts:h.amounts.map((a:any) => {
+        //             return {
+        //                 name:a.name,
+        //                 value:Number(a.value),
+        //                 conc_amount:Number(a.conc_amount),
+        //                 last_rec_amount:Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))),
+        //                 payable_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount)))))),
+        //                 paid_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))))
+        //             };
+        //         }).concat(...deletedHeadsAmounts)
+        //     }
+        // }).concat(deletedHeads);
 
 
         // Unaffected heads
+        
         const unAffectedHeads = selectedStudent.affiliated_heads.heads.filter((h:any) => !p.paid_heads.map((ph:any) => ph.head_name).includes(h.head_name));
 
 
@@ -94,15 +126,33 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
         ];
 
 
+        // Arrange heads function
+        const arrangeFeeHeads = (unarrangedArray:any, arrangedOrder:any) => {
+            return arrangedOrder.reduce((arranged:any, head:any) => {
+                const matchingHeadIndex = unarrangedArray.findIndex((item:any) => item.head_name === head.head_name);
+                if (matchingHeadIndex !== -1) {
+                    arranged.push(unarrangedArray[matchingHeadIndex]);
+                    unarrangedArray.splice(matchingHeadIndex, 1);
+                }
+                return arranged;
+            }, []);
+        };
+
+
+        // Arranged heads
+        const arrangedHeads = arrangeFeeHeads(newHeads, selectedStudent.affiliated_heads.heads);
+        console.log(arrangedHeads);
+
+
         // Modifying
-        await ModifyStudentAffiliatedHeads({
-            id:selectedStudent.id,
-            affiliated_heads:{
-                group_name:selectedStudent.affiliated_heads.group_name,
-                heads:newHeads
-            }
-        });
-        await deletePaymentByReceiptNo({receipt_no:p.receipt_no});
+        // await ModifyStudentAffiliatedHeads({
+        //     id:selectedStudent.id,
+        //     affiliated_heads:{
+        //         group_name:selectedStudent.affiliated_heads.group_name,
+        //         heads:arrangedHeads
+        //     }
+        // });
+        // await deletePaymentByReceiptNo({receipt_no:p.receipt_no});
         toast({title:'Deleted Successffuly!'});
 
 

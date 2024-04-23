@@ -15,10 +15,6 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
     Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
 
 
-    // Image
-    const imageSrc = receiptPaymentData.logo;
-
-
     // Styles
     const styles = StyleSheet.create({
         body: {
@@ -50,7 +46,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{flex:1}}>
                         <Image
                             style={{width:100, height:100}}
-                            src={{uri:imageSrc, method:'GET', headers:{'Cache-Control':'no-cache'}, body:''}}
+                            src={receiptPaymentData.logo}
                         />
                     </View>
                     <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center'}}>

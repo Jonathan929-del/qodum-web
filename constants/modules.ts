@@ -669,6 +669,9 @@ const modules = [
                         ]
                     },
                     {
+                        subPageName:'Define Blood Group'
+                    },
+                    {
                         subPageName:'Define Remark'
                     },
                     {
