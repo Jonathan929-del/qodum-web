@@ -30,6 +30,8 @@ import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optio
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchClass, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchBloodGroups } from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import { fetchCastes } from '@/lib/actions/admission/globalMasters/caste.actions';
 
 
 
@@ -93,6 +95,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Transport mediums
     const [transportMediums, setTransportMediums] = useState<any>([{}]);
+
+
+    // Blood groups
+    const [bloodGroups, setBloodGroups] = useState<any>([{}]);
+
+
+    // Casts
+    const [casts, setCasts] = useState<any>([{}]);
 
 
     // Search Students
@@ -1320,6 +1330,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const streamsRes = await fetchStreams();
             const parishesRes = await fetchParishes();
             const transportMediumsRes = await fetchTransportMediums();
+            const bloodGroupsRes = await fetchBloodGroups();
+            const castsRes = await fetchCastes();
             setClasses(classesRes);
             setBoards(boardsRes);
             setReligions(religionsRes);
@@ -1331,6 +1343,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setStreams(streamsRes);
             setParishes(parishesRes);
             setTransportMediums(transportMediumsRes);
+            setBloodGroups(bloodGroupsRes);
+            setCasts(castsRes);
         };
         fetcher();
     }, []);
@@ -2423,7 +2437,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value='NA'>NA</SelectItem>
+                                                            {casts.length < 1 ? (
+                                                                <p className='text-xs text-hash-color'>No castes</p>
+                                                            ) : !casts[0].caste_name ? (
+                                                                <LoadingIcon />
+                                                            ) : casts.map((i:any) => (
+                                                                <SelectItem value={i.caste_name} key={i._id}>{i.caste_name}</SelectItem>
+                                                            ))}
                                                         </SelectContent>
                                                     </Select>
                                                 </FormControl>
@@ -2460,7 +2480,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='NA'>NA</SelectItem>
+                                                        {bloodGroups.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No blood groups</p>
+                                                        ) : !bloodGroups[0].blood_group ? (
+                                                            <LoadingIcon />
+                                                        ) : bloodGroups.map((i:any) => (
+                                                            <SelectItem value={i.blood_group} key={i._id}>{i.blood_group}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
