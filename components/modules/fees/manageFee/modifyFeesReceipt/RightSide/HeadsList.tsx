@@ -293,9 +293,9 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                         name:a.name,
                         value:Number(a.value),
                         conc_amount:Number(a.conc_amount),
-                        last_rec_amount:(Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount !== undefined ? a.to_be_paid_amount : a.last_rec_amount) - paid_amount),
-                        payable_amount:Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount !== undefined ? a.to_be_paid_amount : a.last_rec_amount) - paid_amount)),
-                        paid_amount:Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount !== undefined ? a.to_be_paid_amount : a.last_rec_amount) - paid_amount))
+                        last_rec_amount:a.to_be_paid_amount !== undefined ? (Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount) : a.last_rec_amount,
+                        payable_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.payable_amount,
+                        paid_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.paid_amount
                     };
                 }).concat(h.amounts.filter((a:any) => !selectedPayment.installments.includes(a.name)))
             }

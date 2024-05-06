@@ -37,7 +37,7 @@ const HeadsList = ({heads, isDataFetching, installments, form}:any) => {
                 [{name:'', value:0}][0].value);
         let sum = 0;
         for (let i = 0; i < myNums?.length; i++ ) {sum += myNums[i];};
-        setTotalNumber(form.getValues().installment === 'Select All' ? 0 : sum);
+        setTotalNumber(sum);
     };
 
 
@@ -135,12 +135,7 @@ const HeadsList = ({heads, isDataFetching, installments, form}:any) => {
                                                                         :
                                                                             0
                                                     :
-                                                        0
-                                                        // heads[heads.indexOf(head)]?.amounts?.length > 1
-                                                        //     ?
-                                                        //         0
-                                                        //     :
-                                                        //         heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0] || 0
+                                                        heads[heads.indexOf(head)]?.amounts?.map((amount:any) => amount?.value)[0] || 0
                                                     
                                                 }
                                                 onChange={(v) => {

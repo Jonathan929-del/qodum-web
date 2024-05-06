@@ -17,7 +17,6 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admission.validation';
-import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {createAdmission, deleteAdmission, modifyAdmission} from '@/lib/actions/admission/masterSettings/admission.actions';
 
@@ -88,7 +87,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmissionSettingValidation>) => {
-        // Create admission setting
+        // Create setting
         if(updateAdmission.id === ''){
             if(values.prefix !== '' && admissions.map((a:any) => a.prefix).includes(values.prefix)){
                 toast({title:'Number already exists', variant:'error'});
@@ -108,7 +107,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             });
             toast({title:'Added Successfully!'});
         }
-        // Modify Category
+        // Modify setting
         else if(!deepEqual(comparisonObject, values)){
             if(values.prefix !== '' && comparisonObject.prefix !== values.prefix && admissions.map((a:any) => a.prefix).includes(values.prefix)){
                 toast({title:'Number already exists', variant:'error'});
@@ -129,7 +128,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             });
             toast({title:'Updated Successfully!'});
         }
-        // Delete remark
+        // Delete setting
         else if(updateAdmission.isDeleteClicked){
             await deleteAdmission({id:updateAdmission.id});
             toast({title:'Deleted Successfully!'});
@@ -141,7 +140,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             id:'',
             isDeleteClicked:false,
             school:'',
-            class_name:'',
+            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -154,7 +153,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         // Reseting form
         form.reset({
             school:'',
-            class_name:'',
+            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -196,6 +195,8 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         };
     }, [isAllClasses]);
     useEffect(() => {
+        // @ts-ignore
+        form.setValue('board', boards.filter((b:any) => b.is_default)[0]?.board);
         if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
             form.setValue('class_name', 'All Classes');
             const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
@@ -344,6 +345,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                         <Select
                                                             {...field}
                                                             value={field?.value}
+                                                            // value='CBSE'
                                                             onValueChange={field?.onChange}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -551,7 +553,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
                     
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} admissions={admissions} updateAdmission={updateAdmission} setUpdateAdmission={setUpdateAdmission} onSubmit={onSubmit} form={form}/>
+                    <Buttons setIsViewOpened={setIsViewOpened} admissions={admissions} updateAdmission={updateAdmission} setUpdateAdmission={setUpdateAdmission} onSubmit={onSubmit} isAllClasses={isAllClasses} form={form}/>
                 </form>
             </Form>
     )

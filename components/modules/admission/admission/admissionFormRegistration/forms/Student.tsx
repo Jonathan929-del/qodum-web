@@ -27,6 +27,8 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
+import { fetchBloodGroups } from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import { fetchCastes } from '@/lib/actions/admission/globalMasters/caste.actions';
 
 
 
@@ -66,6 +68,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Admission Accounts
     const [admissionAccounts, setAdmissionAccounts] = useState([{}]);
+
+
+    // Blood groups
+    const [bloodGroups, setBloodGroups] = useState([{}]);
+
+
+    // Casts
+    const [casts, setCasts] = useState([{}]);
 
 
     // Search
@@ -311,6 +321,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const categoriesRes = await fetchCategories();
             const bankLedgerRes = await fetchBankLedgers();
             const admissionAccountRes = await fetchGeneralLedgers();
+            const bloodGroupsRes = await fetchBloodGroups();
+            const castsRes = await fetchCastes();
             setClasses(classesRes);
             setBoards(boardsRes);
             setStreams(streamsRes);
@@ -320,9 +332,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setCategories(categoriesRes);
             setBankLedgers(bankLedgerRes);
             setAdmissionAccounts(admissionAccountRes);
+            setBloodGroups(bloodGroupsRes);
+            setCasts(castsRes);
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
+    }, [boards]);
     useEffect(() => {
         const numberGenerator = async () => {
             try {
@@ -1491,7 +1509,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='N?.A?.'>N?.A?.</SelectItem>
+                                                        {bloodGroups.length < 1 ? (
+                                                                <p>No blood groups</p>
+                                                            ) : // @ts-ignore
+                                                            !bloodGroups[0].blood_group ? (
+                                                                <LoadingIcon />
+                                                            ) : bloodGroups.map((ledger:any) => (
+                                                                <SelectItem value={ledger.blood_group} key={ledger._id}>{ledger.blood_group}</SelectItem>
+                                                            ))
+                                                        }
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
@@ -1522,7 +1548,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='N?.A?.'>N?.A?.</SelectItem>
+                                                        {casts.length < 1 ? (
+                                                                <p>No casts</p>
+                                                            ) : // @ts-ignore
+                                                            !casts[0].caste_name ? (
+                                                                <LoadingIcon />
+                                                            ) : casts.map((ledger:any) => (
+                                                                <SelectItem value={ledger.caste_name} key={ledger._id}>{ledger.caste_name}</SelectItem>
+                                                            ))
+                                                        }
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

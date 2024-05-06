@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmission, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmission, onSubmit, form, isAllClasses}:any) => {
 
 
     // Cancel click
@@ -19,7 +19,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             id:'',
             isDeleteClicked:false,
             school:'',
-            class_name:'',
+            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
             board:'',
             setting_type:'',
             should_be:'Automatic',
@@ -32,7 +32,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
         // Reseting form
         form.reset({
             school:'',
-            class_name:'',
+            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
             board:'',
             setting_type:'',
             should_be:'Automatic',

@@ -15,13 +15,14 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
+import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
 import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -30,15 +31,13 @@ import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optio
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchClass, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import { fetchBloodGroups } from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import { fetchCastes } from '@/lib/actions/admission/globalMasters/caste.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards}:any) => {
 
 
     // Date states
@@ -51,10 +50,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Classes
     const [classes, setClasses] = useState([{}]);
-
-
-    // Boards
-    const [boards, setBoards] = useState([{}]);
 
 
     // Religions
@@ -1320,7 +1315,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     useEffect(() => {
         const fetcher = async () => {
             const classesRes = await fetchClasses();
-            const boardsRes = await fetchBoards();
             const religionsRes = await fetchReligions();
             const categoriesRes = await fetchCategories();
             const sectionsRes = await fetchSections();
@@ -1333,7 +1327,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             const bloodGroupsRes = await fetchBloodGroups();
             const castsRes = await fetchCastes();
             setClasses(classesRes);
-            setBoards(boardsRes);
             setReligions(religionsRes);
             setCategories(categoriesRes);
             setSections(sectionsRes);
@@ -2366,10 +2359,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             {parishes?.length < 1 ? (
                                                                 <p>No parishes</p>
                                                                 // @ts-ignore
-                                                            ) : !parishes[0]?.parish_name ? (
+                                                            ) : !parishes[0]?.parish ? (
                                                                 <LoadingIcon />
                                                             ) : parishes?.map((item:any) => (
-                                                                <SelectItem value={item?.parish_name} key={item?._id}>{item?.parish_name}</SelectItem>
+                                                                <SelectItem value={item?.parish} key={item?._id}>{item?.parish}</SelectItem>
                                                             ))}
                                                         </SelectContent>
                                                     </Select>

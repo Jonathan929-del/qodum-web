@@ -17,6 +17,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
+import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {AdmittedStudentValidation} from '@/lib/validations/admission/admission/admittedStudent.validation';
 import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
@@ -46,6 +47,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('student');
+
+
+    // Boards
+    const [boards, setBoards] = useState([{}]);
 
 
     // Comparison object
@@ -1486,6 +1491,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Use Effects
     useEffect(() => {
+        const fetcher = async () => {
+            const boardsRes = await fetchBoards();
+            setBoards(boardsRes);
+        };
+        fetcher();
+    }, []);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
+    }, [window.onload]);
+    useEffect(() => {
         if(updateStudent.id !== ''){
             // Student
             form.setValue('student.section', updateStudent.student.section);
@@ -1913,6 +1929,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     selectedSubjects={selectedSubjects}
                                     setSelectedSubjects={setSelectedSubjects}
                                     setSelectedDocuments={setSelectedDocuments}
+                                    boards={boards}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
