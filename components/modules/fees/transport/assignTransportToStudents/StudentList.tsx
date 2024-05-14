@@ -3,10 +3,10 @@ import {useEffect, useState} from 'react';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Check, ChevronDown, ChevronsUpDown, X} from 'lucide-react';
+import {fetchRouteStops} from '@/lib/actions/fees/transport/routeStop.actions';
 import {fetchVehicleRoutes} from '@/lib/actions/fees/transport/vehicleRoute.actions';
 import {fetchVehiclesDetails} from '@/lib/actions/fees/transport/vehicleDetails.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchRouteStops } from '@/lib/actions/fees/transport/routeStop.actions';
 
 
 
@@ -186,7 +186,7 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {vehicles.length < 1 ? (
+                                                {vehicles?.filter((v:any) => v.routes?.map((r:any) => r.route_no).includes(students[students.indexOf(student)].route))?.length < 1 ? (
                                                     <p className='text-xs text-hash-color'>No vehicles</p>
                                                 ) : // @ts-ignore
                                                 !vehicles[0]?.vehicle_name ? (
@@ -213,6 +213,7 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                         onClick={() => {
                                                             students[students.indexOf(student)].months = months;
                                                             setStudents([...students]);
+                                                            setSelectedStudents([...selectedStudents, student]);
                                                         }}
                                                         className='group flex flex-row items-center justify-center cursor-pointer'
                                                     >
@@ -245,6 +246,9 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                                         student?.months.push(month);
                                                                     };
                                                                     setStudents([...students]);
+                                                                    if(student?.months?.length === 12){
+                                                                        setSelectedStudents([...selectedStudents, student]);
+                                                                    }
                                                                 }}
                                                             />
                                                             <p className='text-xs font-semibold'>{month}</p>

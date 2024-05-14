@@ -23,7 +23,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:0,
+            seating_capacity:'',
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -32,8 +32,8 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             },
             driver_mobile_no:'',
             gps_no:'',
-            service_due_date:'',
-            insurance_due_date:'',
+            service_due_date:new Date(),
+            insurance_due_date:new Date(),
             vendor:''
         });
         // Reseting updte entity
@@ -47,7 +47,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:0,
+            seating_capacity:'',
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -56,8 +56,8 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             },
             driver_mobile_no:'',
             gps_no:'',
-            service_due_date:'',
-            insurance_due_date:'',
+            service_due_date:new Date(),
+            insurance_due_date:new Date(),
             vendor:''
         });
     };

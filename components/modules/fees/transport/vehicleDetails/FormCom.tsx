@@ -2,18 +2,22 @@
 // Imports
 import * as z from 'zod';
 import moment from 'moment';
-import {useEffect} from 'react';
+import {format} from 'date-fns';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
-import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
+import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
+import {Calendar} from '@/components/ui/calendar';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {VehicleDetailsValidation} from '@/lib/validations/fees/transport/vehicelDetails.validation';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
@@ -29,6 +33,10 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
     // Toast
     const {toast} = useToast();
+
+
+    // Date states
+    const [isCalendarOpened, setIsCalendarOpened] = useState('');
 
 
     // Comparison object
@@ -66,7 +74,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.driver_name,
             attendent_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.attendent_name,
             fule_type:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.fule_type,
-            seating_capacity:updateVehicleDetails.id === '' ? 0 : updateVehicleDetails.seating_capacity,
+            seating_capacity:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.seating_capacity,
             facility_in_bus:{
                 cctv:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.cctv,
                 wifi:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.wifi,
@@ -75,8 +83,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             },
             driver_mobile_no:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.driver_mobile_no,
             gps_no:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.gps_no,
-            service_due_date:updateVehicleDetails.id === '' ? moment(new Date()).format('D-MMM-yy') : updateVehicleDetails.service_due_date,
-            insurance_due_date:updateVehicleDetails.id === '' ? moment(new Date()).format('D-MMM-yy') : updateVehicleDetails.insurance_due_date,
+            service_due_date:updateVehicleDetails.id === '' ? new Date() : updateVehicleDetails.service_due_date,
+            insurance_due_date:updateVehicleDetails.id === '' ? new Date() : updateVehicleDetails.insurance_due_date,
             vendor:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.vendor
         }
     });
@@ -88,20 +96,12 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
         // Create vehicle details
         if(updateVehicleDetails.id === ''){
-            // Ensuring that service and insurance due dates are not empty when the vehicle owner is a vendor
-            if(values.vehicle_owner === 'vendor' && values.service_due_date === '' || values.vehicle_owner === 'vendor' && values.insurance_due_date === ''){
-                if(values.service_due_date === '' && values.insurance_due_date === ''){
-                    form.setError('service_due_date', {message:'*Service due date is required'});
-                    form.setError('insurance_due_date', {message:'*Insurance due date is required'});
-                    return;                    
+            // Emptry vendor validation
+            if(values.vehicle_owner === 'vendor' && values.vendor === ''){
+                if(values.vendor === ''){
+                    form.setError('vendor', {message:'*Please select a vendor'});
                 }
-                if(values.service_due_date === ''){
-                    form.setError('service_due_date', {message:'*Service due date is required'});
-                    return;
-                }else{
-                    form.setError('insurance_due_date', {message:'*Insurance due date is required'});
-                    return;
-                }
+                return;
             }
             // Creating
             else{
@@ -131,20 +131,12 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
         }
         // Modify vehicle details
         else if(!deepEqual(comparisonObject, values)){
-            // Ensuring that service and insurance due dates are not empty when the vehicle owner is a vendor
-            if(values.vehicle_owner === 'vendor' && values.service_due_date === '' || values.insurance_due_date === ''){
-                if(values.service_due_date === '' && values.insurance_due_date === ''){
-                    form.setError('service_due_date', {message:'*Service due date is required'});
-                    form.setError('insurance_due_date', {message:'*Insurance due date is required'});
-                    return;                    
+            // Emptry vendor validation
+            if(values.vehicle_owner === 'vendor' && values.vendor === ''){
+                if(values.vendor === ''){
+                    form.setError('vendor', {message:'*Please select a vendor'});
                 }
-                if(values.service_due_date === ''){
-                    form.setError('service_due_date', {message:'*Service due date is required'});
-                    return;
-                }else{
-                    form.setError('insurance_due_date', {message:'*Insurance due date is required'});
-                    return;
-                }
+                return;
             }
             // Modifying
             else{
@@ -191,7 +183,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:0,
+            seating_capacity:'',
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -200,8 +192,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             },
             driver_mobile_no:'',
             gps_no:'',
-            service_due_date:moment(new Date()).format('D-MMM-yy'),
-            insurance_due_date:moment(new Date()).format('D-MMM-yy'),
+            service_due_date:new Date(),
+            insurance_due_date:new Date(),
             vendor:''
         });
         // Reseting form
@@ -213,7 +205,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:0,
+            seating_capacity:'',
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -222,8 +214,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             },
             driver_mobile_no:'',
             gps_no:'',
-            service_due_date:moment(new Date()).format('D-MMM-yy'),
-            insurance_due_date:moment(new Date()).format('D-MMM-yy'),
+            service_due_date:new Date(),
+            insurance_due_date:new Date(),
             vendor:''
         });
     };
@@ -393,13 +385,13 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         )}
                     />
 
-                    {/* Fule Type */}
+                    {/* Fuel Type */}
                     <FormField
                         control={form.control}
                         name='fule_type'
                         render={({field}) => (
                             <FormItem className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Fule Type</FormLabel>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Fuel Type</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Select
@@ -468,40 +460,68 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
                     {/* Service Due Date */}
                     <FormField
-                        control={form.control}
+                        control={form?.control}
                         name='service_due_date'
-                        render={({field}) => (
-                            <FormItem className={`w-full h-8 flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2 ${form.getValues().vehicle_owner === 'vendor' ? 'flex' : 'hidden'}`}>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Service Due Date</FormLabel>
-                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                        render={() => (
+                            <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
+                                <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Service Due Date</FormLabel>
+                                <Popover open={isCalendarOpened === 'service_due_date'} onOpenChange={() => isCalendarOpened === 'service_due_date' ? setIsCalendarOpened('') : setIsCalendarOpened('service_due_date')}>
+                                    <PopoverTrigger asChild className='h-7'>
+                                        <Button
+                                            variant='outline'
+                                            className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[70%]'
+                                        >
+                                            <CalendarIcon className='mr-2 h-4 w-4' />
+                                            {
+                                                form?.getValues()?.service_due_date
+                                                        ? <span>{format(form?.getValues()?.service_due_date, 'PPP')}</span>
+                                                        : <span>Pick a date</span>
+                                            }
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='w-auto p-0'>
+                                        <Calendar
+                                            mode='single'
+                                            selected={form?.getValues()?.service_due_date}
+                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('service_due_date', v)}}
+                                            initialFocus
                                         />
-                                    </FormControl>
-                                    <FormMessage className='text-xs mt-[-20px]'/>
-                                </div>
+                                    </PopoverContent>
+                                </Popover>
                             </FormItem>
                         )}
                     />
 
                     {/* Insurance Due Date */}
                     <FormField
-                        control={form.control}
+                        control={form?.control}
                         name='insurance_due_date'
-                        render={({field}) => (
-                            <FormItem className={`w-full h-8 flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2 ${form.getValues().vehicle_owner === 'vendor' ? 'flex' : 'hidden'}`}>
-                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Insurance Due Date</FormLabel>
-                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                        render={() => (
+                            <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
+                                <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Insurance Due Date</FormLabel>
+                                <Popover open={isCalendarOpened === 'insurance_due_date'} onOpenChange={() => isCalendarOpened === 'insurance_due_date' ? setIsCalendarOpened('') : setIsCalendarOpened('insurance_due_date')}>
+                                    <PopoverTrigger asChild className='h-7'>
+                                        <Button
+                                            variant='outline'
+                                            className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[70%]'
+                                        >
+                                            <CalendarIcon className='mr-2 h-4 w-4' />
+                                            {
+                                                form?.getValues()?.insurance_due_date
+                                                        ? <span>{format(form?.getValues()?.insurance_due_date, 'PPP')}</span>
+                                                        : <span>Pick a date</span>
+                                            }
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='w-auto p-0'>
+                                        <Calendar
+                                            mode='single'
+                                            selected={form?.getValues()?.insurance_due_date}
+                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('insurance_due_date', v)}}
+                                            initialFocus
                                         />
-                                    </FormControl>
-                                    <FormMessage className='text-xs mt-[-20px]'/>
-                                </div>
+                                    </PopoverContent>
+                                </Popover>
                             </FormItem>
                         )}
                     />
@@ -533,7 +553,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         render={({field}) => (
                             <FormItem className={`w-full h-8 flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2 ${form.getValues().vehicle_owner === 'vendor' ? 'flex' : 'hidden'}`}>
                                 <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Vendor</FormLabel>
-                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                <div className='relative w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Select
                                             {...field}
@@ -555,7 +575,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
-                                    <FormMessage className='text-xs mt-[-20px]'/>
+                                    <FormMessage className='absolute bottom-[-10px] text-xs mt-[-20px]'/>
                                 </div>
                             </FormItem>
                         )}

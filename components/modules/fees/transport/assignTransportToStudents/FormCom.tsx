@@ -11,8 +11,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {ModifyStudentsTransportDetails, fetchStudentsByClassAndSectionTransport} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AssignTransportToStudentsValidation} from '@/lib/validations/fees/transport/assignTransportToStudents.validation';
+import {ModifyStudentsTransportDetails, fetchStudentsByClassAndSectionTransport} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -201,7 +201,7 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
                     </div>
 
 
-                    <StudentsList selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} from={form} students={students} isStudentsLoading={isStudentsLoading} setStudents={setStudents}/>
+                    <StudentsList selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} students={students} isStudentsLoading={isStudentsLoading} setStudents={setStudents}/>
                 </form>
             </Form>
 

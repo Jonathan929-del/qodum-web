@@ -9,6 +9,7 @@ import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.mode
 import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
+import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
 
 
 
@@ -918,8 +919,12 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
         const installments  = await fetchInstallments();
 
 
+        // Fetching route stop
+        const routeStop = await RouteStop.findOne({stop_name:transport_details.stop})
+
+
         // Transport group amount
-        const transportGroup = await TransportGroup.findOne({distance_name:transport_details.stop});
+        const transportGroup = await TransportGroup.findOne({distance_name:routeStop.transport_groups.jan});
 
 
         // Fetching transport fee

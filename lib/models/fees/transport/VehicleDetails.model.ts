@@ -15,7 +15,7 @@ const VehicleDetailsSchema = new mongoose.Schema(
         driver_name:{type:String},
         attendent_name:{type:String},
         fule_type:{type:String},
-        seating_capacity:{type:Number},
+        seating_capacity:{type:String},
         facility_in_bus:{
             cctv:{type:Boolean},
             wifi:{type:Boolean},
@@ -24,8 +24,8 @@ const VehicleDetailsSchema = new mongoose.Schema(
         },
         driver_mobile_no:{type:String},
         gps_no:{type:String},
-        service_due_date:{type:String},
-        insurance_due_date:{type:String},
+        service_due_date:{type:Date},
+        insurance_due_date:{type:Date},
         vendor:{type:String},
 
         // Routes

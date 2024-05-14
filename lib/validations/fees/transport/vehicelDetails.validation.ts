@@ -14,7 +14,7 @@ export const VehicleDetailsValidation = z.object({
     driver_name:z.string(),
     attendent_name:z.string(),
     fule_type:z.string(),
-    seating_capacity:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+    seating_capacity:z.string(),
     facility_in_bus:z.object({
         cctv:z.boolean(),
         wifi:z.boolean(),
@@ -23,7 +23,7 @@ export const VehicleDetailsValidation = z.object({
     }),
     driver_mobile_no:z.string(),
     gps_no:z.string(),
-    service_due_date:z.string(),
-    insurance_due_date:z.string(),
+    service_due_date:z.date(),
+    insurance_due_date:z.date(),
     vendor:z.string()
 });

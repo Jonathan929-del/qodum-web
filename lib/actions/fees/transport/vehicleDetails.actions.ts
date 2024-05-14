@@ -16,7 +16,7 @@ interface CreateVehicleTDetailsProps{
     driver_name:String;
     attendent_name:String;
     fule_type:String;
-    seating_capacity:Number;
+    seating_capacity:String;
     facility_in_bus:{
         cctv:Boolean;
         wifi:Boolean;
@@ -25,8 +25,8 @@ interface CreateVehicleTDetailsProps{
     };
     driver_mobile_no:String;
     gps_no:String;
-    service_due_date:String;
-    insurance_due_date:String;
+    service_due_date:Date;
+    insurance_due_date:Date;
     vendor:String;
 };
 // Create vehicle details
@@ -89,7 +89,7 @@ interface ModifyVehicleDetailsProps{
     driver_name:String;
     attendent_name:String;
     fule_type:String;
-    seating_capacity:Number;
+    seating_capacity:String;
     facility_in_bus:{
         cctv:Boolean;
         wifi:Boolean;
@@ -98,8 +98,8 @@ interface ModifyVehicleDetailsProps{
     };
     driver_mobile_no:String;
     gps_no:String;
-    service_due_date:String;
-    insurance_due_date:String;
+    service_due_date:Date;
+    insurance_due_date:Date;
     vendor:String;
 }
 // Modify vehicle details
