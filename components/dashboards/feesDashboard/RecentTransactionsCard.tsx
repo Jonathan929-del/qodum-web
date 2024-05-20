@@ -20,7 +20,7 @@ const RecentTransactionsCard = ({payments, students}:any) => {
         setNewPayments(payments.map((p:any) => {
             return {
                 ...p,
-                image:students.filter((s:any) => s.student.name === p.student)[0].student.image
+                image:students.filter((s:any) => s.student.name === p.student)[0]?.student?.image
             };
         }));
     }, []);

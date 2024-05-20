@@ -50,8 +50,8 @@ const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator
                             <p>{boys}</p>
                             <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({
                                 // @ts-ignore
-                                parseFloat(boys / students.length * 100).toFixed(1)
-                            }%)</span>
+                                boys === 0 ? 0 : parseFloat(boys / students.length * 100).toFixed(1)
+                           }%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -77,7 +77,7 @@ const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator
                             <p>{girls}</p>
                             <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({
                                 // @ts-ignore
-                                parseFloat(girls / students.length * 100).toFixed(1)
+                                girls === 0 ? 0 : parseFloat(girls / students.length * 100).toFixed(1)
                             }%)</span>
                         </div>
                     </div>
