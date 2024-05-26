@@ -49,7 +49,7 @@ export const AdmittedStudentValidation = z.object({
         secondary_contact_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         h_no_and_streets:z.string(),
         locality:z.string(),
-        email:z.string(),
+        email:z.string().nonempty({message:'*Please enter email'}),
         city:z.string(),
         mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         state:z.string(),
