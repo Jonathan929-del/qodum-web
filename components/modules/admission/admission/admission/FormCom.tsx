@@ -499,7 +499,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     doj:values.student.doj,
                     admitted_class:values.student.admitted_class,
                     // 1
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]}` : '',
+                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]}` : valuesFromRegister.student.image || '',
                     // 2
                     stream:values.student.stream,
                     subjects:selectedSubjects,
