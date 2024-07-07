@@ -55,12 +55,16 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
                 toast({title:'Class name already exists', variant:'error'});
                 return;
             };
-            await createClass({
+            const res = await createClass({
                 class_name:values.class_name,
                 wing_name:values.wing_name,
                 school:values.school,
                 order:values.order
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify class

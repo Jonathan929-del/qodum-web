@@ -46,11 +46,15 @@ const FormCom = ({setIsViewOpened, travelMasters, updateTravelMaster, setUpdateT
     const onSubmit = async (values:z.infer<typeof TravelMasterValidation>) => {
         // Create travel master
         if(updateTravelMaster.id === ''){
-            await createTravelMaster({
+            const res = await createTravelMaster({
                 travel_agency_name:values.travel_agency_name,
                 mobile_no:values.mobile_no,
                 mail_id:values.mail_id
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify travel master

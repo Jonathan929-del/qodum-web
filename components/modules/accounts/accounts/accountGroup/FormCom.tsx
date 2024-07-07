@@ -59,12 +59,16 @@ const FormCom = ({setIsViewOpened, accountGroups, updateAccountGroup, setUpdateA
                 return;
             }
             else{
-                await createAccountGroup({
+                const res = await createAccountGroup({
                     group_name:values.group_name,
                     category:values.category,
                     group_type:values.group_type,
                     group_no:values.group_no
                 });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
                 toast({title:'Added Successfully!'});
             };
         }

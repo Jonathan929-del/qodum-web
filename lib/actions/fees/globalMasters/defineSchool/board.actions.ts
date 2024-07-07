@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Board from '@/lib/models/fees/globalMasters/defineSchool/Board.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -21,6 +22,11 @@ export const createBoard = async ({board, is_default}:CreateBoardProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the board already exists
         const existinBoard = await Board.findOne({board});
         if(existinBoard){
@@ -29,7 +35,7 @@ export const createBoard = async ({board, is_default}:CreateBoardProps) => {
 
 
         // Creating new board
-        const newBoard = await Board.create({board, is_default});
+        const newBoard = await Board.create({session:activeSession.year_name, board, is_default});
 
 
         // Checking if the board is default and setting all the other records to false if so

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -22,6 +23,11 @@ export const createSubject = async ({subject_name, available_seats, is_universit
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the subject name already exists
         const existingSubject = await Subject.findOne({subject_name});
         if(existingSubject){
@@ -30,7 +36,7 @@ export const createSubject = async ({subject_name, available_seats, is_universit
 
 
         // Creating new subject
-        const newSubject = await Subject.create({subject_name, available_seats, is_university});
+        const newSubject = await Subject.create({session:activeSession.year_name, subject_name, available_seats, is_university});
         newSubject.save();
 
 

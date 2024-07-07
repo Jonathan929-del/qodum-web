@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Wing from '@/lib/models/fees/globalMasters/defineClassDetails/Wing.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createWing = async ({wing}:CreateWingProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the wing already exists
         const existinWing = await Wing.findOne({wing});
         if(existinWing){
@@ -28,7 +34,7 @@ export const createWing = async ({wing}:CreateWingProps) => {
 
 
         // Creating new wing
-        const newWing = await Wing.create({wing});
+        const newWing = await Wing.create({session:activeSession.year_name, wing});
         newWing.save();
 
 

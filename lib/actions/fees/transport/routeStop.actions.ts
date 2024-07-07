@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -46,8 +47,13 @@ export const createRouteStop = async ({route_no, stop_no, stop_name, morning_arr
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Creating new route stop
-        const newRouteStop = await RouteStop.create({route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups});
+        const newRouteStop = await RouteStop.create({session:activeSession.year_name, route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups});
         newRouteStop.save();
 
 

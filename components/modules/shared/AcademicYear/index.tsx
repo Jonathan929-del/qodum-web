@@ -12,7 +12,6 @@ import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSes
 // Main function
 const page = () => {
 
-
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
 

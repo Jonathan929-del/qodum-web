@@ -55,8 +55,9 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
         connectToDb('accounts');
 
 
-        // Active session
-        const session = await AcademicYear.findOne({is_active:true});
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
     
         // Payment
@@ -88,7 +89,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             student_status,
             bank_name,
             fee_group,
-            session:session.year_name,
+            session:activeSession.year_name,
             is_canceled:false,
 
             // Amounts

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -27,6 +28,11 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the head name already exists
         const existingHead = await Head.findOne({name});
         if(existingHead){
@@ -36,6 +42,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
         // Creating new head
         const newHead = await Head.create({
+            session:activeSession.year_name,
             name,
             print_name,
             pay_schedule,

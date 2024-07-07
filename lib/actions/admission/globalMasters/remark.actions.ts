@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Remark from '@/lib/models/admission/globalMasters/Remark.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createRemark = async ({remark}:CreateRemarkProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the remark already exists
         const existinRemark = await Remark.findOne({remark});
         if(existinRemark){
@@ -28,7 +34,7 @@ export const createRemark = async ({remark}:CreateRemarkProps) => {
 
 
         // Creating new remark
-        const newRemark = await Remark.create({remark});
+        const newRemark = await Remark.create({session:activeSession.year_name, remark});
         newRemark.save();
 
 

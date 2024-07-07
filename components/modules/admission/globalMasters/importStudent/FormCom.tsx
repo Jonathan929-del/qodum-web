@@ -384,7 +384,7 @@ const FormCom = ({}:any) => {
 
             // Submitting data
             dataAsStudentModel.map(async (s:any) => {
-                await createAdmittedStudent({
+                const res = await createAdmittedStudent({
                     // Student
                     student:{
                         // Admission data
@@ -567,6 +567,10 @@ const FormCom = ({}:any) => {
                     // Documents
                     documents:s.documents
                 });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
             });
             toast({title:'File uploaded successfully'});
             setIsLoading(false);

@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Vehicle Type Schema
 const VehicleTypeSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         vehicle_name:{type:String, required:true, unique:true}
     },
     {

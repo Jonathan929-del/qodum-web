@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogAction} from '@/components/ui/alert-dialog';
@@ -9,7 +10,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankLedger, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankLedger, onSubmit, form, setAssignDate}:any) => {
 
 
     // Cancel click
@@ -44,6 +45,7 @@ const Buttons = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
             opening_balance_type:'Debit',
             assign_date:new Date()
         });
+        setAssignDate(moment())
     };
 
 

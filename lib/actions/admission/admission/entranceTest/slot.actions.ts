@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Slot from '@/lib/models/admission/admission/entranceTest/Slot.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -26,6 +27,11 @@ export const createSlot = async ({session, class_name, slot_name, slot_date, sta
     
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Creating new slot

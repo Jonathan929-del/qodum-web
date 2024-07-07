@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import VehicleType from '@/lib/models/fees/transport/VehicleType.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -15,9 +16,13 @@ interface CreateVehicleTypeProps{
 export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Checking if the vehicle type already exists
@@ -28,7 +33,7 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
         // Creating new vehicle type
-        const newVehicleType = await VehicleType.create({vehicle_name});
+        const newVehicleType = await VehicleType.create({session:activeSession.year_name, vehicle_name});
         newVehicleType.save();
 
 

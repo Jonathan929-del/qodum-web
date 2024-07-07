@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import LateFeeHeadWise from '@/lib/models/fees/feeMaster/lateFeeSettings/LateFeeHeadWise.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -26,8 +27,13 @@ export const createLateFeeHeadWise = async ({fee_group, fee_type, installment, h
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Creating new late fee
-        const newLateFeeHeadWise = await LateFeeHeadWise.create({fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
+        const newLateFeeHeadWise = await LateFeeHeadWise.create({session:activeSession.year_name, fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
         newLateFeeHeadWise.save();
 
 

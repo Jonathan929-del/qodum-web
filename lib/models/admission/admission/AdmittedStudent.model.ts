@@ -9,6 +9,9 @@ import mongoose from 'mongoose';
 const AdmittedStudentSchema = new mongoose.Schema(
     {
 
+        // Session
+        session:{type:String, required:true},
+
 
         // Student
         student:{

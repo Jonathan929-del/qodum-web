@@ -172,7 +172,7 @@ const FormCom = ({setIsViewOpened, layouts, updateLayout, setUpdateLayout, setIs
                 setIsLoading(false);
                 return;
             };
-            await createLayout({
+            const res = await createLayout({
                 // Report setting
                 report_setting:{
                     report_name:values.report_setting.report_name,
@@ -230,6 +230,10 @@ const FormCom = ({setIsViewOpened, layouts, updateLayout, setUpdateLayout, setIs
                     header_line_margin_top:values.margin_setting.header_line_margin_top
                 }
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify layout

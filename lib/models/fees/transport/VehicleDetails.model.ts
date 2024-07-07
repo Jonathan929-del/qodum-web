@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Vehicle Details Schema
 const VehicleDetailsSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         vehicle_owner:{type:String},
         vehicle_type:{type:String, required:true},
         vehicle_name:{type:String, required:true},

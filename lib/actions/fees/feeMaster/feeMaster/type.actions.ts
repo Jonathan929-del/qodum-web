@@ -1,8 +1,9 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import FeeType from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeType.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
+import FeeType from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeType.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -23,6 +24,11 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the type name already exists
         const existingType = await FeeType.findOne({name});
         if(existingType){
@@ -39,6 +45,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
         // Creating new type
         const newType = await FeeType.create({
+            session:activeSession.year_name,
             name,
             preference_no
         });

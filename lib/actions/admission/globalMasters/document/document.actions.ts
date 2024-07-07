@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Document from '@/lib/models/admission/globalMasters/document/Document.model';
 import DocumentType from '@/lib/models/admission/globalMasters/document/DocumentType.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -22,6 +23,11 @@ export const createDocument = async ({document_type, document_name}:CreateDocume
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the document already exists
         const existingDocument = await Document.findOne({document_name});
         if(existingDocument){
@@ -30,7 +36,7 @@ export const createDocument = async ({document_type, document_name}:CreateDocume
 
 
         // Creating new document
-        const newDocument = await Document.create({document_type, document_name});
+        const newDocument = await Document.create({session:activeSession.year_name, document_type, document_name});
         newDocument.save();
 
 

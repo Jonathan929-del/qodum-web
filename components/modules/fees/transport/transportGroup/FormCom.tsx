@@ -4,9 +4,11 @@ import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {TransportGroupValidation} from '@/lib/validations/fees/transport/transportlGroup.validation';
 import {createTransportGroup, deleteTransportGroup, modifyTransportGroup} from '@/lib/actions/fees/transport/transportGroup.actions';
@@ -18,7 +20,6 @@ import {createTransportGroup, deleteTransportGroup, modifyTransportGroup} from '
 // Main function
 const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpdateTransportGroup}:any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -28,7 +29,8 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
         distance_name:updateTransportGroup.distance_name,
         distance_amount:updateTransportGroup.distance_amount,
         distance_from:updateTransportGroup.distance_from,
-        distance_to:updateTransportGroup.distance_to
+        distance_to:updateTransportGroup.distance_to,
+        transport_term:updateTransportGroup.transport_term
     };
     
     
@@ -39,7 +41,8 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
             distance_name:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_name,
             distance_amount:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_amount,
             distance_from:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_from,
-            distance_to:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_to
+            distance_to:updateTransportGroup.id === '' ? '' : updateTransportGroup.distance_to,
+            transport_term:updateTransportGroup.id === '' ? 'Monthly' : updateTransportGroup.transport_term
         }
     });
 
@@ -52,12 +55,17 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
                 toast({title:'Distance name already exists', variant:'error'});
                 return;
             };
-            await createTransportGroup({
+            const res = await createTransportGroup({
                 distance_name:values.distance_name,
                 distance_amount:values.distance_amount,
                 distance_from:values.distance_from,
-                distance_to:values.distance_to
+                distance_to:values.distance_to,
+                transport_term:values.transport_term
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify transport group
@@ -71,7 +79,8 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
                 distance_name:values.distance_name,
                 distance_amount:values.distance_amount,
                 distance_from:values.distance_from,
-                distance_to:values.distance_to
+                distance_to:values.distance_to,
+                transport_term:values.transport_term
             });
             toast({title:'Updated Successfully!'});
         }
@@ -89,17 +98,18 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
             distance_name:'',
             distance_amount:'',
             distance_from:'',
-            distance_to:''
+            distance_to:'',
+            transport_term:''
         });
         // Reseting form
         form.reset({
             distance_name:'',
             distance_amount:'',
             distance_from:'',
-            distance_to:''
+            distance_to:'',
+            transport_term:''
         });
     };
-
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
@@ -192,6 +202,41 @@ const FormCom = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
                             </FormItem>
                         )}
                     />
+
+
+                    {/* Transport Term */}
+                    <div className='w-full flex flex-row gap:2'>
+                        <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Distance To (K.M.)</FormLabel>
+                        <RadioGroup
+                            defaultValue={form.getValues().transport_term}
+                            className='flex flex-row items-center'
+                        >
+                            <div className='flex items-center space-x-[2px]'>
+                                <RadioGroupItem
+                                    value='Monthly'
+                                    id='Monthly'
+                                    onClick={() => form.setValue('transport_term', 'Monthly')}
+                                />
+                                <Label
+                                    htmlFor='Monthly'
+                                >
+                                    Monthly
+                                </Label>
+                            </div>
+                            <div className='flex items-center space-x-[2px]'>
+                                <RadioGroupItem
+                                    value='Quarterly'
+                                    id='Quarterly'
+                                    onClick={() => form.setValue('transport_term', 'Quarterly')}
+                                />
+                                <Label
+                                    htmlFor='Quarterly'
+                                >
+                                    Quarterly
+                                </Label>
+                            </div>
+                        </RadioGroup>
+                    </div>
 
 
                     {/* Buttons */}

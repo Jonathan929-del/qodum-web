@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, wings, updateWing, setUpdateWing}:any) => {
                 toast({title:'Wing name already exists', variant:'error'});
                 return;
             };
-            await createWing({
+            const res = await createWing({
                 wing:values.wing
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify wing

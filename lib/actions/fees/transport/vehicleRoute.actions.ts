@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import VehicleRoute from '@/lib/models/fees/transport/VehicleRoute.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -23,6 +24,11 @@ export const createVehicleRoute = async ({route_no, route_description, route_in_
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the route no. already exists
         const existingVehicleRoute = await VehicleRoute.findOne({route_no});
         if(existingVehicleRoute){
@@ -31,7 +37,7 @@ export const createVehicleRoute = async ({route_no, route_description, route_in_
 
 
         // Creating new vehicle route
-        const newVehicleRoute = await VehicleRoute.create({route_no, route_description, route_in_charge_name, route_in_charge_mobile_no});
+        const newVehicleRoute = await VehicleRoute.create({session:activeSession.year_name, route_no, route_description, route_in_charge_name, route_in_charge_mobile_no});
         newVehicleRoute.save();
 
 

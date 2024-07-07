@@ -12,7 +12,6 @@ import {fetchTransportGroups} from '@/lib/actions/fees/transport/transportGroup.
 // Main function
 const page = () => {
 
-
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
 
@@ -28,7 +27,8 @@ const page = () => {
         distance_name:'',
         distance_amount:'',
         distance_from:'',
-        distance_to:''
+        distance_to:'',
+        transport_term:'Monthly'
     });
 
 
@@ -40,7 +40,6 @@ const page = () => {
         };
         TransportGroupFetcher();
     }, [isViewOpened, updateTransportGroup]);
-
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>

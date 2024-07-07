@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import TravelMaster from '@/lib/models/fees/transport/TravelMaster.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -22,8 +23,13 @@ export const createTravelMaster = async ({travel_agency_name, mobile_no, mail_id
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Creating new travel master
-        const newTravelMaster = await TravelMaster.create({travel_agency_name, mobile_no, mail_id});
+        const newTravelMaster = await TravelMaster.create({session:activeSession.year_name, travel_agency_name, mobile_no, mail_id});
         newTravelMaster.save();
 
 

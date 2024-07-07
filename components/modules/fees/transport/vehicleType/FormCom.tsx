@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, vehicleTypes, updateVehicleType, setUpdateVeh
                 toast({title:'Vehicle type already exists', variant:'error'});
                 return;
             };
-            await createVehicleType({
+            const res = await createVehicleType({
                 vehicle_name:values.vehicle_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify vehicle type

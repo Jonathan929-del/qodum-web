@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, terms, updateTerm, setUpdateTerm}:any) => {
                 toast({title:'Term name already exists', variant:'error'});
                 return;
             };
-            await createTerm({
+            const res = await createTerm({
                 term_name:values.term_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify term

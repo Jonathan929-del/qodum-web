@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -33,6 +34,11 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the installment name already exists
         const existingInstallment = await Installment.findOne({name});
         if(existingInstallment){
@@ -49,6 +55,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
 
         // Creating new installment
         const newInstallment = await Installment.create({
+            session:activeSession.year_name,
             name,
             print_name,
             preference_no,

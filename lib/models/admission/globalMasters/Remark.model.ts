@@ -8,7 +8,8 @@ import mongoose from 'mongoose';
 // Remark Schema
 const RemarkSchema = new mongoose.Schema(
     {
-        remark:{type:String, required:true, unique:true},
+        session:{type:String, required:true},
+        remark:{type:String, required:true, unique:true}
     },
     {
         timestamps:true

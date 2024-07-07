@@ -51,10 +51,14 @@ const FormCom = ({ setIsViewOpened, groups, updateGroup, setUpdateGroup }: any) 
                 toast({ title: 'Group name already exists', variant: 'error' });
                 return;
             };
-            await createGroup({
+            const res = await createGroup({
                 name: values.name,
                 is_special: values.is_special
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({ title: 'Added Successfully!' });
         }
 

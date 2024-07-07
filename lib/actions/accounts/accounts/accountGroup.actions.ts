@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import AccountGroup from '@/lib/models/accounts/accounts/AccountGroup.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -23,15 +24,21 @@ export const createAccountGroup = async ({group_name, category, group_type, grou
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if account group already exists
         const existingAccountGroup = await AccountGroup.findOne({group_name});
         if(existingAccountGroup){
-            throw new Error('Account group already exists');
+            throw new Error('Account group already exists.');
         };
 
 
         // Creating new account group
         const newAccountGroup = await AccountGroup.create({
+            session:activeSession.year_name,
             group_name,
             category,
             group_type,

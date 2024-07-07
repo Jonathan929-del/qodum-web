@@ -1,29 +1,28 @@
 // Improts
 import * as z from 'zod';
-import {format} from 'date-fns';
+import moment from 'moment';
 import {useForm} from 'react-hook-form';
 import {useState, useEffect} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
 import {Checkbox} from '@/components/ui/checkbox';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {ChevronRight, ChevronLeft, ChevronDown, Check, X,} from 'lucide-react';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {FeeDefaulterListFilter, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import {FeeDefaulterListFilter, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {FeeDefaulterListValidation} from '@/lib/validations/fees/transactionReport/defaulterReports/feeDefaulterList.validation';
 
 
@@ -33,9 +32,9 @@ import {FeeDefaulterListValidation} from '@/lib/validations/fees/transactionRepo
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData, setPdfData}) => {
 
-
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [fromDate, setFromDate] = useState(moment());
+    const [tillDate, setTillDate] = useState(moment());
 
 
     // Schools
@@ -195,7 +194,18 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
         }
     }, [form.watch('class_name')]);
     useEffect(() => {}, [form.watch('preview')]);
-
+    useEffect(() => {
+        if(fromDate){
+            // @ts-ignore
+            form.setValue('from_date', fromDate._d);
+        };
+    }, [fromDate]);
+    useEffect(() => {
+        if(tillDate){
+            // @ts-ignore
+            form.setValue('till_date', tillDate._d);
+        };
+    }, [tillDate]);
 
     return (
         <div className={`absolute top-0 left-0 h-full w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -632,57 +642,19 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                         {form.getValues().is_date_range && (
                             <div className='flex-1 flex flex-col'>
                                 <p className='text-xs text-hash-color'>From Date</p>
-                                <Popover open={isCalendarOpened === 'from_date'} onOpenChange={() => isCalendarOpened === 'from_date' ? setIsCalendarOpened('') : setIsCalendarOpened('from_date')}>
-                                    <PopoverTrigger asChild className='h-7'>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                                        >
-                                            {/* <CalendarIcon className='mr-2 h-4 w-4' /> */}
-                                            {
-                                                form.getValues().from_date
-                                                        ? <span>{format(form.getValues().from_date, 'P')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto bg-[#fff]'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form.getValues().from_date}
-                                            onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('from_date', v)}}
-                                            initialFocus
-                                        />
-                                    </PopoverContent>
-                                </Popover>
+                                <MyDatePicker
+                                    selectedDate={fromDate}
+                                    setSelectedDate={setFromDate}
+                                />
                             </div>
                         )}
                         {/* Till Date */}
                         <div className='flex-1 flex flex-col'>
                             <p className='text-xs text-hash-color'>Till Date</p>
-                            <Popover open={isCalendarOpened === 'till_date'} onOpenChange={() => isCalendarOpened === 'till_date' ? setIsCalendarOpened('') : setIsCalendarOpened('till_date')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                                    >
-                                        {/* <CalendarIcon className='mr-2 h-4 w-4' /> */}
-                                        {
-                                            form.getValues().till_date
-                                                    ? <span>{format(form.getValues().till_date, 'P')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto bg-[#fff]'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().till_date}
-                                        onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('till_date', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <MyDatePicker
+                                selectedDate={tillDate}
+                                setSelectedDate={setTillDate}
+                            />
                         </div>
                     </div>
 

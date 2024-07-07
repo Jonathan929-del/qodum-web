@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Due Limit Schema
 const DueLimitSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         class_name:{type:String},
         fee_type:{type:String},
         late_fee_on_due:{type:Boolean},

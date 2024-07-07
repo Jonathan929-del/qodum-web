@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import House from '@/lib/models/admission/globalMasters/House.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the house already exists
         const existinHouse = await House.findOne({house_name});
         if(existinHouse){
@@ -28,7 +34,7 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
 
 
         // Creating new house
-        const newHouse = await House.create({house_name});
+        const newHouse = await House.create({session:activeSession.year_name, house_name});
         newHouse.save();
 
 

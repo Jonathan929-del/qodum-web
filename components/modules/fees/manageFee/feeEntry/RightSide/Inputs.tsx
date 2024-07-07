@@ -1,19 +1,17 @@
 // Imports
-import {format} from 'date-fns';
+import moment from 'moment';
 import {useEffect, useState} from 'react';
 import DDDetails from '../Others/DDDetails';
 import {Input} from '@/components/ui/input';
 import UPIDetails from '../Others/UPIDetails';
-import {Button} from '@/components/ui/button';
 import NeftDetails from '../Others/NeftDetails';
-import {Calendar} from '@/components/ui/calendar';
 import {Checkbox} from '@/components/ui/checkbox';
 import ChequeDetails from '../Others/ChequeDetails';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import SwipedCardDetaila from '../Others/SwipedCardDetails';
-import {CalendarIcon, Check, ChevronDown, X} from 'lucide-react';
+import {Check, ChevronDown, X} from 'lucide-react';
+import CustomDatePicker from '@/components/utils/CustomDatePicker';
 import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
@@ -25,9 +23,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 // Main function
 const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails}:any) => {
 
-
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [selectedDate, setSelectedDate] = useState(moment());
 
 
     // Pay modes
@@ -72,12 +69,19 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        if(selectedDate){
+            // @ts-ignore
+            form.setValue('received_date', selectedDate?._d);
+        };
+    }, [selectedDate]);
 
 
     return (
         <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
             <div className='flex-1 flex flex-col gap-3'>
                 <div className='flex flex-col gap-2 lg:flex-row'>
+
                     {/* Entry Mode */}
                     <FormField
                         control={form.control}
@@ -105,32 +109,12 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                             </FormItem>
                         )}
                     />
-                    {/* Received Date */}
                     <div className='flex flex-col basis-[33.3%] min-w-[125px]'>
                         <p className='text-xs text-hash-color'>Received Date</p>
-                        <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                            <PopoverTrigger asChild className='h-7'>
-                                <Button
-                                    variant='outline'
-                                    className='flex flex-row items-center w-full text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                                >
-                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                    {
-                                        form.getValues().received_date
-                                                ? <span>{format(form.getValues().received_date, 'PPP')}</span>
-                                                : <span>Pick a date</span>
-                                    }
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className='w-auto'>
-                                <Calendar
-                                    mode='single'
-                                    selected={form.getValues().received_date}
-                                    onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('received_date', v)}}
-                                    initialFocus
-                                />
-                            </PopoverContent>
-                        </Popover>
+                        <CustomDatePicker
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
                     </div>
                     {/* Pay Mode */}
                     <FormField

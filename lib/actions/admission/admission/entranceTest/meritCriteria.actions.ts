@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import MeritCriteria from '@/lib/models/admission/admission/entranceTest/MeritCriteria.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createMeritCriteria = async ({session, name, maximum_point}:CreateM
     
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Checking if the name name already exists

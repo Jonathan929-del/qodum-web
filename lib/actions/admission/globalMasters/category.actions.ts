@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Category from '@/lib/models/admission/globalMasters/Category.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -21,6 +22,11 @@ export const createCategory:any = async ({category_name, is_default}:CreateCateg
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the category name already exists
         const existingCategory = await Category.findOne({category_name, is_default});
         if(existingCategory){
@@ -29,7 +35,7 @@ export const createCategory:any = async ({category_name, is_default}:CreateCateg
 
 
         // Creating new category
-        const newCategory = await Category.create({category_name, is_default});
+        const newCategory = await Category.create({session:activeSession.year_name, category_name, is_default});
 
 
         // Checking if the is default is true and setting all the other records to false if so

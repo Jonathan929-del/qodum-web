@@ -5,17 +5,17 @@ import {useState} from 'react';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
+import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
+import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {StationaryDetailsValidation} from '@/lib/validations/admission/globalMasters/stationaryDetails.validation';
 import {createStationaryDetails, deleteStationaryDetails, modifyStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ChevronDown } from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 
 
 
@@ -66,7 +66,7 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                 toast({title:`${values.is_online ? 'Online' : 'Offline'} data already exists`, variant:'error'});
                 return;
             };
-            await createStationaryDetails({
+            const res = await createStationaryDetails({
                 stationary_name:values.stationary_name,
                 amount:values.amount,
                 account_name:values.account_name,
@@ -74,6 +74,10 @@ const FormCom = ({setIsViewOpened, stationaryDetails, updateStationaryDetails, s
                 session:values.session,
                 is_online:values.is_online,
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify stationary details

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import PartyLedger from '@/lib/models/accounts/accounts/PartyLedger.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -32,6 +33,11 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if party ledger already exists
         const existingPartyLedger = await PartyLedger.findOne({account_name});
         if(existingPartyLedger){
@@ -41,6 +47,7 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
 
         // Creating new party ledger
         const newPartyLedger = await PartyLedger.create({
+            session:activeSession.year_name,
             account_name,
             group,
             account_type,

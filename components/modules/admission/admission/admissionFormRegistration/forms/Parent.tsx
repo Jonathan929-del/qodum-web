@@ -1,11 +1,8 @@
 // Imports
-import {useState} from 'react';
-import {format} from 'date-fns';
+import {useEffect} from 'react';
+import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
-import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
-import {CalendarIcon, ChevronDown} from 'lucide-react';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
@@ -14,12 +11,27 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main function
-const Parent = ({form}:any) => {
+const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniversaryDate, setAnniversaryDate}:any) => {
 
-
-    // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
-
+    // Use effects
+    useEffect(() => {
+        if(fatherDob){
+            // @ts-ignore
+            form.setValue('parents.father.dob', fatherDob._d);
+        };
+    }, [fatherDob]);
+    useEffect(() => {
+        if(motherDob){
+            // @ts-ignore
+            form.setValue('parents.mother.dob', motherDob._d);
+        };
+    }, [motherDob]);
+    useEffect(() => {
+        if(anniversaryDate){
+            // @ts-ignore
+            form.setValue('parents.mother.anniversary_date', anniversaryDate._d);
+        };
+    }, [anniversaryDate]);
 
     return (
         <div className='flex flex-row justify-between gap-2'>
@@ -242,29 +254,12 @@ const Parent = ({form}:any) => {
                     render={() => (
                         <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
                             <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>DOB</FormLabel>
-                            <Popover open={isCalendarOpened === 'father'} onOpenChange={() => isCalendarOpened === 'father' ? setIsCalendarOpened('') : setIsCalendarOpened('father')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[65%]'
-                                    >
-                                        <CalendarIcon className='mr-2 h-4 w-4' />
-                                        {
-                                            form.getValues().parents.father.dob
-                                                    ? <span>{format(form.getValues().parents.father.dob, 'PPP')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto p-0'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().parents.father.dob}
-                                        onSelect={v => {setIsCalendarOpened(''); form.setValue('parents.father.dob', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <div className='basis-[65%]'>
+                                <MyDatePicker
+                                    selectedDate={fatherDob}
+                                    setSelectedDate={setFatherDob}
+                                />
+                            </div>
                         </FormItem>
                     )}
                 />
@@ -777,29 +772,12 @@ const Parent = ({form}:any) => {
                     render={() => (
                         <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
                             <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>DOB</FormLabel>
-                            <Popover open={isCalendarOpened === 'mother'} onOpenChange={() => isCalendarOpened === 'mother' ? setIsCalendarOpened('') : setIsCalendarOpened('mother')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[65%]'
-                                    >
-                                        <CalendarIcon className='mr-2 h-4 w-4' />
-                                        {
-                                            form.getValues().parents.mother.dob
-                                                    ? <span>{format(form.getValues().parents.mother.dob, 'PPP')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto p-0'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().parents.mother.dob}
-                                        onSelect={v => {setIsCalendarOpened(''); form.setValue('parents.mother.dob', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <div className='basis-[65%]'>
+                                <MyDatePicker
+                                    selectedDate={motherDob}
+                                    setSelectedDate={setMotherDob}
+                                />
+                            </div>
                         </FormItem>
                     )}
                 />
@@ -1055,36 +1033,19 @@ const Parent = ({form}:any) => {
                         </FormItem>
                     )}
                 />
-                {/* DOB */}
+                {/* Anniversary Date */}
                 <FormField
                     control={form.control}
                     name='parents.mother.anniversary_date'
                     render={() => (
                         <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
-                            <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>DOB</FormLabel>
-                            <Popover open={isCalendarOpened === 'anniversary_date'} onOpenChange={() => isCalendarOpened === 'anniversary_date' ? setIsCalendarOpened('') : setIsCalendarOpened('anniversary_date')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[65%]'
-                                    >
-                                        <CalendarIcon className='mr-2 h-4 w-4' />
-                                        {
-                                            form.getValues().parents.mother.anniversary_date
-                                                    ? <span>{format(form.getValues().parents.mother.anniversary_date, 'PPP')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto p-0'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().parents.mother.anniversary_date}
-                                        onSelect={v => {setIsCalendarOpened(''); form.setValue('parents.mother.anniversary_date', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Anniversary Date</FormLabel>
+                            <div className='basis-[65%]'>
+                                <MyDatePicker
+                                    selectedDate={anniversaryDate}
+                                    setSelectedDate={setAnniversaryDate}
+                                />
+                            </div>
                         </FormItem>
                     )}
                 />

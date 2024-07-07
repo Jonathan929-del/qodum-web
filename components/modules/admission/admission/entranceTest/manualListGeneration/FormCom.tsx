@@ -14,9 +14,11 @@ import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {applyStudentForAdmission, fetchClassStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {ManualListGenerationValidation} from '@/lib/validations/admission/admission/entranceTest/manualListGeneration.validation';
+import {applyStudentForAdmission, fetchClassStudents, fetchClassesStudents} from '@/lib/actions/admission/admission/student.actions';
+import moment from 'moment';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 
 
@@ -25,13 +27,14 @@ import {ManualListGenerationValidation} from '@/lib/validations/admission/admiss
 // Main function
 function FormCom() {
 
-
     // Toast
     const {toast} = useToast();
 
 
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [date, setDate] = useState(moment());
+    const [admissionDate, setAdmissionDate] = useState(moment());
+    const [admissionDateTo, setAdmissionDateTo] = useState(moment());
 
 
     // Students
@@ -91,6 +94,9 @@ function FormCom() {
             });
             setStudents([{}]);
             setSelectedStudents([]);
+            setDate(moment());
+            setAdmissionDate(moment());
+            setAdmissionDateTo(moment());
             toast({title:'Updated Successfully!'});
 
         } catch (err: any) {
@@ -101,13 +107,25 @@ function FormCom() {
 
     // Get students
     const getStudents = async (class_name:any) => {
-        const classStudents = await fetchClassStudents({class_name});
-        if(classStudents.length > 0){
-            setStudents(classStudents);
-            // @ts-ignore
-            setSelectedStudents(classStudents.map((s:any) => s?.student?.reg_no));
+        console.log(classes.map((c:any) => c.class_name));
+        if(class_name === 'All Classes'){
+            const classStudents = await fetchClassesStudents({classes_names:classes.map((c:any) => c.class_name)});
+            if(classStudents.length > 0){
+                setStudents(classStudents);
+                // @ts-ignore
+                setSelectedStudents(classStudents.map((s:any) => s?.student?.reg_no));
+            }else{
+                toast({title:'No students found', variant:'alert'});
+            }
         }else{
-            toast({title:'No students found', variant:'alert'});
+            const classStudents = await fetchClassStudents({class_name});
+            if(classStudents.length > 0){
+                setStudents(classStudents);
+                // @ts-ignore
+                setSelectedStudents(classStudents.map((s:any) => s?.student?.reg_no));
+            }else{
+                toast({title:'No students found', variant:'alert'});
+            }
         }
     };
 
@@ -122,7 +140,6 @@ function FormCom() {
         };
         fetcher();
     }, []);
-
 
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] overflow-y-scroll custom-sidebar-scrollbar'>
@@ -159,6 +176,7 @@ function FormCom() {
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
+                                                        <SelectItem value='All Classes'>All Classes</SelectItem>
                                                         {classes?.length < 1 ? (
                                                             <p>No classes</p>
                                                             // @ts-ignore
@@ -219,29 +237,12 @@ function FormCom() {
                             render={() => (
                                 <FormItem className='relative w-full flex flex-col'>
                                     <FormLabel className='pr-2 h-2 text-start text-[11px] text-[#726E71]'>Date</FormLabel>
-                                    <Popover open={isCalendarOpened === 'date'} onOpenChange={() => isCalendarOpened === 'date' ? setIsCalendarOpened('') : setIsCalendarOpened('date')}>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant='outline'
-                                                className='h-7 flex flex-row items-center w-full text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            >
-                                                <CalendarIcon className='mr-2 h-4 w-4' />
-                                                {
-                                                    form?.getValues().date
-                                                            ? <span>{format(form?.getValues().date, 'PPP')}</span>
-                                                            : <span>Pick a date</span>
-                                                }
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className='w-auto p-0'>
-                                            <Calendar
-                                                mode='single'
-                                                selected={form?.getValues().date}
-                                                onSelect={(v:any) => {setIsCalendarOpened(''); form?.setValue('date', v)}}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className='w-full'>
+                                        <MyDatePicker
+                                            selectedDate={date}
+                                            setSelectedDate={setDate}
+                                        />
+                                    </div>
                                 </FormItem>
                             )}
                         />
@@ -269,29 +270,12 @@ function FormCom() {
                             render={() => (
                                 <FormItem className='relative w-full flex flex-col'>
                                     <FormLabel className='pr-2 h-2 text-start text-[11px] text-[#726E71]'>Adm. Date From</FormLabel>
-                                    <Popover open={isCalendarOpened === 'admission_date_from'} onOpenChange={() => isCalendarOpened === 'admission_date_from' ? setIsCalendarOpened('') : setIsCalendarOpened('admission_date_from')}>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant='outline'
-                                                className='h-7 flex flex-row items-center w-full text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            >
-                                                <CalendarIcon className='mr-2 h-4 w-4' />
-                                                {
-                                                    form?.getValues().admission_date_from
-                                                            ? <span>{format(form?.getValues().admission_date_from, 'PPP')}</span>
-                                                            : <span>Pick a date</span>
-                                                }
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className='w-auto p-0'>
-                                            <Calendar
-                                                mode='single'
-                                                selected={form?.getValues().admission_date_from}
-                                                onSelect={(v:any) => {setIsCalendarOpened(''); form?.setValue('admission_date_from', v)}}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className='w-full'>
+                                        <MyDatePicker
+                                            selectedDate={admissionDate}
+                                            setSelectedDate={setAdmissionDate}
+                                        />
+                                    </div>
                                 </FormItem>
                             )}
                         />
@@ -304,29 +288,12 @@ function FormCom() {
                             render={() => (
                                 <FormItem className='relative w-full flex flex-col'>
                                     <FormLabel className='pr-2 h-2 text-start text-[11px] text-[#726E71]'>Adm. Date To</FormLabel>
-                                    <Popover open={isCalendarOpened === 'admission_date_to'} onOpenChange={() => isCalendarOpened === 'admission_date_to' ? setIsCalendarOpened('') : setIsCalendarOpened('admission_date_to')}>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant='outline'
-                                                className='h-7 flex flex-row items-center w-full text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            >
-                                                <CalendarIcon className='mr-2 h-4 w-4' />
-                                                {
-                                                    form?.getValues().admission_date_to
-                                                            ? <span>{format(form?.getValues().admission_date_to, 'PPP')}</span>
-                                                            : <span>Pick a date</span>
-                                                }
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className='w-auto p-0'>
-                                            <Calendar
-                                                mode='single'
-                                                selected={form?.getValues().admission_date_to}
-                                                onSelect={(v:any) => {setIsCalendarOpened(''); form?.setValue('admission_date_to', v)}}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className='w-full'>
+                                        <MyDatePicker
+                                            selectedDate={admissionDateTo}
+                                            setSelectedDate={setAdmissionDateTo}
+                                        />
+                                    </div>
                                 </FormItem>
                             )}
                         />
@@ -343,13 +310,16 @@ function FormCom() {
                                         <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                             <FormControl>
                                                 <Select
-                                                    disabled
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <SelectTrigger disabled className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue
+                                                            // @ts-ignore
+                                                            placeholder={sessions[0]?.year_name}
+                                                            className='text-[11px]'
+                                                        />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>

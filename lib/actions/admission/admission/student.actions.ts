@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Student from '@/lib/models/admission/admission/Student.model';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -184,6 +185,11 @@ export const createStudent = async ({student, parents, others, guardian_details}
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the register number already exists
         const existingStudent = await Student.findOne({'student.reg_no':student.reg_no});
         if(existingStudent){
@@ -193,6 +199,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
         // Creating new student
         const newStudent = await Student.create({
+            session:activeSession.year_name,
             student:{
                 // 1
                 is_up_for_admission:false,
@@ -561,6 +568,33 @@ export const fetchClassStudents = async ({class_name}:{class_name:String}) => {
     };
 };
 
+
+
+
+
+// Fetch classes students
+export const fetchClassesStudents = async ({classes_names}:{classes_names:any}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+        console.log(classes_names);
+
+
+        // Fetching students where 'student.class' is in the class_names array
+        const students = await Student.find({ 
+            'student.class':{$in:classes_names},
+            'student.is_up_for_admission':false
+        });
+
+
+        // Return
+        return students;
+
+    }catch(err){
+        throw new Error(`Error fetching students: ${err}`);
+    };
+};
 
 
 

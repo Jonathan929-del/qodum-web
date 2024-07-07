@@ -46,10 +46,14 @@ const FormCom = ({setIsViewOpened, narrations, updateNarration, setUpdateNarrati
     const onSubmit = async (values:z.infer<typeof NarrationMasterValidation>) => {
         // Create Narration
         if(updateNarration.id === ''){
-            await createNarrationMaster({
+            const res = await createNarrationMaster({
                 voucher_type:values.voucher_type,
                 narration:values.narration
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Narration

@@ -78,7 +78,7 @@ function FormCom({setIsViewOpened, slots, setSlots}:any) {
             setIsLoading(true);
             for (let i = 1; i < values.no_of_slot + 1; i++) {
                 const slotsCreator = async () => {
-                    await createSlot({
+                    const res = await createSlot({
                         session:values.session,
                         class_name:values.class_name,
                         slot_name:`Slot ${slots.length + i}`,
@@ -89,6 +89,10 @@ function FormCom({setIsViewOpened, slots, setSlots}:any) {
                         alloted:0,
                         students:[]
                     });
+                    if(res === 0){
+                        toast({title:'Please create a session first', variant:'alert'});
+                        return;
+                    };
                 };
                 slotsCreator();
             };

@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Head Schema
 const HeadSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         name:{type:String, required:true, unique:true},
         print_name:{type:String, required:true},
         pay_schedule:{type:String, required:true},

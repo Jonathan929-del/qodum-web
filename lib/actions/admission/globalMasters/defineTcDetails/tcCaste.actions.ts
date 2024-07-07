@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import TcCaste from '@/lib/models/admission/globalMasters/tcDetails/TcCaste.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,8 +21,13 @@ export const createTcCaste = async ({caste_name}:CreateTcCasteProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the caste name already exists
-        const existinTcCaste = await TcCaste.findOne({caste_name});
+        const existinTcCaste = await TcCaste.findOne({session:activeSession.year_name, caste_name});
         if(existinTcCaste){
             throw new Error('Tc caste already exists');
         };

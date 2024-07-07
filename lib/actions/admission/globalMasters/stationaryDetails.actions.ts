@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import StationaryDetails from '@/lib/models/admission/globalMasters/StationaryDetails.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -23,6 +24,11 @@ export const createStationaryDetails = async ({stationary_name, amount, account_
 
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Checking if online or offline data already exists

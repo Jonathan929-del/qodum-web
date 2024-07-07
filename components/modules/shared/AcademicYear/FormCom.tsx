@@ -467,7 +467,6 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                                                 value={field.value}
                                                 onCheckedChange={field.onChange}
                                                 checked={field.value}
-                                                disabled={updateAcademicYear.id === '' ? false : updateAcademicYear.is_active}
                                             />
                                             <Label
                                                 htmlFor='is_active'

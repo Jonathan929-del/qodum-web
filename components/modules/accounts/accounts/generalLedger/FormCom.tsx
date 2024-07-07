@@ -82,7 +82,7 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                 form.setError('depreciation', {message:'*Depreciation is required'})
                 return;
             }else{
-                await createGeneralLedger({
+                const res = await createGeneralLedger({
                     account_name:values.account_name,
                     group:values.group,
                     account_type:values.account_type,
@@ -93,6 +93,10 @@ const FormCom = ({setIsViewOpened, generalLedgers, updateGeneralLedger, setUpdat
                     is_fixed_asset:values.is_fixed_asset,
                     depreciation:values.depreciation
                 });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
                 toast({title:'Added Successfully!'});
             };
         }

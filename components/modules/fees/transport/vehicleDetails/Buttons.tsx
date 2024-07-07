@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
@@ -9,7 +10,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpdateVehicleDetails, onSubmit, form, setServiceDueDate, setInsuranceDueDate}:any) => {
 
 
     // Cancel click
@@ -60,6 +61,8 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             insurance_due_date:new Date(),
             vendor:''
         });
+        setServiceDueDate(moment());
+        setInsuranceDueDate(moment());
     };
 
 

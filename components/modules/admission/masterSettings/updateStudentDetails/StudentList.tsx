@@ -1,17 +1,15 @@
 // Imports
-import {useState} from 'react';
-import {format} from 'date-fns';
+import moment from 'moment';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
-import {Button} from '@/components/ui/button';
 import {Switch} from '@/components/ui/switch';
-import {Calendar} from '@/components/ui/calendar';
-import {CalendarIcon, ChevronDown, ChevronsUpDown} from 'lucide-react';
+import {ChevronDown, ChevronsUpDown} from 'lucide-react';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {Command, CommandEmpty, CommandItem, CommandList} from '@/components/ui/command';
-import { fetchReligions } from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
 import {fetchTcCasts} from '@/lib/actions/admission/globalMasters/defineTcDetails/tcCaste.actions';
@@ -25,9 +23,12 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 // Main Function
 const StudentsList = ({students, form, setStudents}: any) => {
 
-
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [date, setDate] = useState(moment());
+
+
+    // Clicked date student
+    const [clickedDateStudent, setClickedDateStudent] = useState({});
 
 
     // Changing value
@@ -44,15 +45,15 @@ const StudentsList = ({students, form, setStudents}: any) => {
             input = 'input';
             break;
         case 'Student DOB':
-            values = students.map((s:any) => s.student.dob);
+            values = students.map((s:any) => moment(s.student.dob));
             input = 'date';
             break;
         case 'Student DOA':
-            values = students.map((s:any) => s.student.doa);
+            values = students.map((s:any) => moment(s.student.doa));
             input = 'date';
             break;
         case 'Student DOJ':
-            values = students.map((s:any) => s.student.doj);
+            values = students.map((s:any) => moment(s.student.doj));
             input = 'date';
             break;
         case 'Student Address':
@@ -468,15 +469,6 @@ const StudentsList = ({students, form, setStudents}: any) => {
             case 'Student Name':
                 s.student.name = v;
                 break;
-            case 'Student DOB':
-                s.student.dob = v;
-                break;
-            case 'Student DOA':
-                s.student.doa = v;
-                break;
-            case 'Student DOJ':
-                s.student.doj = v;
-                break;
             case 'Student Address':
                 s.student.h_no_and_streets = v;
                 break;
@@ -570,9 +562,6 @@ const StudentsList = ({students, form, setStudents}: any) => {
             case 'Father Phone':
                 s.parents.father.phone = v;
                 break;
-            case 'Father DOB':
-                s.parents.father.dob = v;
-                break;
             case 'Father R Address':
                 s.parents.father.residence_address = v;
                 break;
@@ -631,9 +620,6 @@ const StudentsList = ({students, form, setStudents}: any) => {
             case 'Mother Phone':
                 s.parents.mother.phone = v;
                 break;
-            case 'Mother DOB':
-                s.parents.mother.dob = v;
-                break;
             case 'Mother R Address':
                 s.parents.mother.residence_address = v;
                 break;
@@ -679,9 +665,6 @@ const StudentsList = ({students, form, setStudents}: any) => {
                 break;
             case 'Mother Office Website':
                 s.parents.mother.office_website = v;
-                break;
-            case 'Anniversary Date':
-                s.parents.mother.anniversary = v;
                 break;
             case 'Father Income':
                 s.parents.father.annual_income = v;
@@ -739,6 +722,39 @@ const StudentsList = ({students, form, setStudents}: any) => {
         setStudents([...students]);
     };
 
+
+    // Use effect
+    useEffect(() => {
+        const s = students.filter((s:any) => s === clickedDateStudent)[0];
+        if(s){
+            switch (form.getValues().field){
+                case 'Student DOB':
+                    // @ts-ignore
+                    s.student.dob = date?._d;
+                    break;
+                case 'Student DOA':
+                    // @ts-ignore
+                    s.student.doa = date?._d;
+                    break;
+                case 'Student DOJ':
+                    // @ts-ignore
+                    s.student.doj = date?._d;
+                    break;
+                case 'Father DOB':
+                    // @ts-ignore
+                    s.parents.father.dob = date?._d;
+                    break;
+                case 'Mother DOB':
+                    // @ts-ignore
+                    s.parents.mother.dob = date?._d;
+                    break;
+                case 'Anniversary Date':
+                    // @ts-ignore
+                    s.parents.mother.anniversary = date?._d;
+                    break;
+            };
+        };
+    }, [date]);
 
     return (
         <Command
@@ -808,32 +824,12 @@ const StudentsList = ({students, form, setStudents}: any) => {
 
                                     {input === 'date' && (
                                         <div className='relative w-full h-[80%] flex flex-col'>
-                                            <Popover
-                                                open={isCalendarOpened === JSON.stringify(values[students.indexOf(student)])}
-                                                onOpenChange={() => isCalendarOpened === JSON.stringify(values[students.indexOf(student)]) ? setIsCalendarOpened('') : setIsCalendarOpened(JSON.stringify(values[students.indexOf(student)]))}
-                                            >
-                                                <PopoverTrigger asChild>
-                                                    <Button
-                                                        variant='outline'
-                                                        className='flex flex-row items-center w-full text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    >
-                                                        <CalendarIcon className='mr-2 h-4 w-4' />
-                                                        {
-                                                            values[students.indexOf(student)]
-                                                                    ? <span>{format(values[students.indexOf(student)], 'PPP')}</span>
-                                                                    : <span>Pick a date</span>
-                                                        }
-                                                    </Button>
-                                                </PopoverTrigger>
-                                                <PopoverContent className='w-auto p-0'>
-                                                    <Calendar
-                                                        mode='single'
-                                                        selected={values[students.indexOf(student)]}
-                                                        onSelect={(v:any) => {setIsCalendarOpened(''); valueChangeHandler(student, v)}}
-                                                        initialFocus
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
+                                            <div onClick={() => setClickedDateStudent(student)}>
+                                                <MyDatePicker
+                                                    setSelectedDate={setDate}
+                                                    selectedDate={values[students.indexOf(student)]}
+                                                />
+                                            </div>
                                         </div>
                                     )}
 

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import GeneralLedger from '@/lib/models/accounts/accounts/GeneralLedger.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -28,6 +29,11 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if general ledger already exists
         const existingGeneralLedger = await GeneralLedger.findOne({account_name});
         if(existingGeneralLedger){
@@ -37,6 +43,7 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
 
         // Creating new general ledger
         const newGeneralLedger = await GeneralLedger.create({
+            session:activeSession.year_name,
             account_name,
             group,
             account_type,

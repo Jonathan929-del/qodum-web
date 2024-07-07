@@ -1,11 +1,11 @@
 // Imports
+import {useEffect, useState} from 'react';
 import {ChevronsUpDown} from 'lucide-react';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {FormControl, FormField, FormItem} from '@/components/ui/form';
 import {Command, CommandItem, CommandList} from '@/components/ui/command';
-import { useEffect, useState } from 'react';
-import { fetchHeads } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 
@@ -17,8 +17,8 @@ const HeadsList = ({heads, updateType, form}: any) => {
 
     // All heads
     const [allHeads, setAllHeads] = useState([{}]);
-
-
+    
+    
     // Use effect
     useEffect(() => {
         const headsFetcher = async () => {
@@ -27,6 +27,7 @@ const HeadsList = ({heads, updateType, form}: any) => {
         };
         headsFetcher();
     }, []);
+    useEffect(() => {}, [form.watch('heads')]);
 
 
     return (
@@ -53,9 +54,33 @@ const HeadsList = ({heads, updateType, form}: any) => {
                             Head Name
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[30%] flex flex-row items-center justify-between px-2'>
+                        <li className='basis-[30%] flex flex-row items-center justify-center gap-4 px-2'>
                             Select
-                            <ChevronsUpDown size={12} />
+                            {updateType.id === '' ? heads.length > 0 && (
+                                <Checkbox
+                                    checked={form.getValues().heads.length === allHeads.length}
+                                    onClick={() => {
+                                        if(form.getValues().heads.length === allHeads.length){
+                                            form.setValue('heads', []);
+                                        }else{
+                                            form.setValue('heads', allHeads);
+                                        };
+                                    }}
+                                    className='rounded-[2px] text-hash-color my-[2px]'
+                                />
+                            ) : allHeads.length > 0 && (
+                                <Checkbox
+                                    checked={form.getValues().heads.length === allHeads.length}
+                                    onClick={() => {
+                                        if(form.getValues().heads.length === allHeads.length){
+                                            form.setValue('heads', []);
+                                        }else{
+                                            form.setValue('heads', allHeads);
+                                        };
+                                    }}
+                                    className='rounded-[2px] text-hash-color my-[2px]'
+                                />
+                            )}
                         </li>
 
                     </ul>
@@ -90,8 +115,7 @@ const HeadsList = ({heads, updateType, form}: any) => {
                                                         key={head}
                                                             className="flex flex-row items-start space-x-3 space-y-0"
                                                         >
-                                                            <FormControl >
-                                                
+                                                            <FormControl>
                                                                 <Checkbox
                                                                     checked={field.value?.includes(head)}
                                                                     onCheckedChange={(checked: any) => {
@@ -105,7 +129,6 @@ const HeadsList = ({heads, updateType, form}: any) => {
                                                                     }}
                                                                     className='rounded-[2px] text-hash-color my-[2px]'
                                                                 />
-
                                                             </FormControl>
                                                         </FormItem>
                                                     )

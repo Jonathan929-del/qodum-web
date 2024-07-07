@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Installment Schema
 const InstallmentSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         name:{type:String, required:true, unique:true},
         print_name:{type:String, required:true},
         preference_no:{type:Number, required:true, unique:true},

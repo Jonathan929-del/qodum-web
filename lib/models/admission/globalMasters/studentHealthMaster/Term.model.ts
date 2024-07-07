@@ -8,7 +8,8 @@ import mongoose from 'mongoose';
 // Term Schema
 const TermSchema = new mongoose.Schema(
     {
-        term_name:{type:String, required:true, unique:true},
+        session:{type:String, required:true},
+        term_name:{type:String, required:true, unique:true}
     },
     {
         timestamps:true

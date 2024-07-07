@@ -11,7 +11,6 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 // Main Function
 const Buttons = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpdateTransportGroup, onSubmit, form}:any) => {
 
-
     // Cancel click
     const cancelClick = () => {
         // Reseting form
@@ -19,7 +18,8 @@ const Buttons = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
             distance_name:'',
             distance_amount:'',
             distance_from:'',
-            distance_to:''
+            distance_to:'',
+            transport_term:'Monthly'
         });
         // Reseting updte entity
         setUpdateTransportGroup({
@@ -28,14 +28,14 @@ const Buttons = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
             distance_name:'',
             distance_amount:'',
             distance_from:'',
-            distance_to:''
+            distance_to:'',
+            transport_term:'Monthly'
         });
     };
 
 
     // Handle submit
     const handleSubmit = () => form.handleSubmit(onSubmit)();
-
 
     return (
         <div className='flex flex-row items-center justify-between pb-4 pt-8 gap-2 ml-0'>

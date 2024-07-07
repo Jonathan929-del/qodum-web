@@ -22,6 +22,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {VehicleDetailsValidation} from '@/lib/validations/fees/transport/vehicelDetails.validation';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createVehicleDetails, deleteVehicleDetails, modifyVehicleDetails} from '@/lib/actions/fees/transport/vehicleDetails.actions';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 
 
@@ -36,7 +37,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
 
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [serviceDueDate, setServiceDueDate] = useState(moment());
+    const [insuranceDueDate, setInsuranceDueDate] = useState(moment());
 
 
     // Comparison object
@@ -93,7 +95,6 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
     // Submit handler
     const onSubmit = async (values:z.infer<typeof VehicleDetailsValidation>) => {
 
-
         // Create vehicle details
         if(updateVehicleDetails.id === ''){
             // Emptry vendor validation
@@ -105,7 +106,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             }
             // Creating
             else{
-                await createVehicleDetails({
+                const res = await createVehicleDetails({
                     vehicle_owner:values.vehicle_owner,
                     vehicle_type:values.vehicle_type,
                     vehicle_name:values.vehicle_name,
@@ -126,11 +127,15 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                     insurance_due_date:values.insurance_due_date,
                     vendor:values.vendor
                 });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
                 toast({title:'Added Successfully!'});
             }
         }
         // Modify vehicle details
-        else if(!deepEqual(comparisonObject, values)){
+        else if(!deepEqual(comparisonObject, values) || moment(values.service_due_date).format('DD-MM-YYYY') !== moment(comparisonObject.service_due_date).format('DD-MM-YYYY') || moment(values.insurance_due_date).format('DD-MM-YYYY') !== moment(comparisonObject.insurance_due_date).format('DD-MM-YYYY')){
             // Emptry vendor validation
             if(values.vehicle_owner === 'vendor' && values.vendor === ''){
                 if(values.vendor === ''){
@@ -218,11 +223,32 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             insurance_due_date:new Date(),
             vendor:''
         });
+        setServiceDueDate(moment());
+        setInsuranceDueDate(moment());
+
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {}, [form.watch('facility_in_bus.cctv'), form.watch('facility_in_bus.wifi'), form.watch('facility_in_bus.gps'), form.watch('facility_in_bus.ac')]);
+    useEffect(() => {
+        if(updateVehicleDetails.id !== ''){
+            setServiceDueDate(moment(updateVehicleDetails.service_due_date));
+            setInsuranceDueDate(moment(updateVehicleDetails.insurance_due_date));
+        };
+    }, []);
+    useEffect(() => {
+        if(serviceDueDate){
+            // @ts-ignore
+            form.setValue('service_due_date', serviceDueDate._d);
+        };
+    }, [serviceDueDate]);
+    useEffect(() => {
+        if(insuranceDueDate){
+            // @ts-ignore
+            form.setValue('insurance_due_date', insuranceDueDate._d);
+        };
+    }, [insuranceDueDate]);
 
 
     return (
@@ -465,29 +491,14 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         render={() => (
                             <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
                                 <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Service Due Date</FormLabel>
-                                <Popover open={isCalendarOpened === 'service_due_date'} onOpenChange={() => isCalendarOpened === 'service_due_date' ? setIsCalendarOpened('') : setIsCalendarOpened('service_due_date')}>
-                                    <PopoverTrigger asChild className='h-7'>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[70%]'
-                                        >
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                            {
-                                                form?.getValues()?.service_due_date
-                                                        ? <span>{format(form?.getValues()?.service_due_date, 'PPP')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form?.getValues()?.service_due_date}
-                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('service_due_date', v)}}
-                                            initialFocus
+                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <div className='w-full'>
+                                        <MyDatePicker
+                                            selectedDate={serviceDueDate}
+                                            setSelectedDate={setServiceDueDate}
                                         />
-                                    </PopoverContent>
-                                </Popover>
+                                    </div>
+                                </div>
                             </FormItem>
                         )}
                     />
@@ -499,29 +510,14 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         render={() => (
                             <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
                                 <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Insurance Due Date</FormLabel>
-                                <Popover open={isCalendarOpened === 'insurance_due_date'} onOpenChange={() => isCalendarOpened === 'insurance_due_date' ? setIsCalendarOpened('') : setIsCalendarOpened('insurance_due_date')}>
-                                    <PopoverTrigger asChild className='h-7'>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[70%]'
-                                        >
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                            {
-                                                form?.getValues()?.insurance_due_date
-                                                        ? <span>{format(form?.getValues()?.insurance_due_date, 'PPP')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form?.getValues()?.insurance_due_date}
-                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('insurance_due_date', v)}}
-                                            initialFocus
+                                <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                    <div className='w-full'>
+                                        <MyDatePicker
+                                            selectedDate={insuranceDueDate}
+                                            setSelectedDate={setInsuranceDueDate}
                                         />
-                                    </PopoverContent>
-                                </Popover>
+                                    </div>
+                                </div>
                             </FormItem>
                         )}
                     />
@@ -584,7 +580,6 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
 
                     {/* Bus Facilities */}
                     <div className='w-full flex flex-row items-center mt-1 gap-4'>
-
                         <p className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Bus Facilities</p>
                         <div className='basis-auto flex flex-row items-center gap-2 sm:basis-[70%]'>
                             {/* CCTV */}
@@ -651,14 +646,12 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                                 </label>
                             </div>
                         </div>
-                        
-
                     </div>
 
 
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} vehiclesDetails={vehiclesDetails} updateVehicleDetails={updateVehicleDetails} setUpdateVehicleDetails={setUpdateVehicleDetails} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} vehiclesDetails={vehiclesDetails} updateVehicleDetails={updateVehicleDetails} setUpdateVehicleDetails={setUpdateVehicleDetails} onSubmit={onSubmit} form={form} setServiceDueDate={setServiceDueDate} setInsuranceDueDate={setInsuranceDueDate}/>
                     </div>
                 </form>
             </Form>

@@ -50,10 +50,14 @@ const FormCom = ({setIsViewOpened, boards, updateBoard, setUpdateBoard}:any) => 
                 toast({title:'Board name already exists', variant:'error'});
                 return;
             };
-            await createBoard({
+            const res = await createBoard({
                 board:values.board,
                 is_default:values.is_default
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify board

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -23,6 +24,11 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the group name already exists
         const existingGroup = await Group.findOne({name});
         if(existingGroup){
@@ -32,6 +38,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
 
         // Creating new group
         const newGroup = await Group.create({
+            session:activeSession.year_name,
             name,
             is_special
         });

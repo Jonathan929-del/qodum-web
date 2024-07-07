@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import moment from 'moment';
 import {format} from 'date-fns';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
@@ -18,6 +19,7 @@ import {PartyLedgerValidation} from '@/lib/validations/accounts/accounts/partyLe
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createPartyLedger, deletePartyLedger, modifyPartyLedger} from '@/lib/actions/accounts/accounts/partyLedger.actions';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 
 
@@ -26,9 +28,8 @@ import {createPartyLedger, deletePartyLedger, modifyPartyLedger} from '@/lib/act
 // Main function
 const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePartyLedger, accountGroups}:any) => {
 
-
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState(false);
+    const [assignDate, setAssignDate] = useState(moment());
 
 
     // Toast
@@ -86,7 +87,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 toast({title:'Account name already exists', variant:'error'});
                 return;
             };
-            await createPartyLedger({
+            const res = await createPartyLedger({
                 account_name:values.account_name,
                 group:values.group,
                 account_type:accountType,
@@ -101,10 +102,14 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Party Ledger
-        else if(!deepEqual(comparisonObject, values) || form.getValues().assign_date > comparisonObject.assign_date || form.getValues().assign_date < comparisonObject.assign_date){
+        else if(!deepEqual(comparisonObject, values) || form.getValues().assign_date > comparisonObject.assign_date || form.getValues().assign_date < comparisonObject.assign_date || moment(values.assign_date).format('DD-MM-YYYY') !== moment(comparisonObject.assign_date).format('DD-MM-YYYY')){
             // Ensuring unique account name
             if(values.account_name !== comparisonObject.account_name && partyLedgers.map((ledger:any) => ledger.account_name).includes(values.account_name)){
                 toast({title:'Account name already exists', variant:'error'});
@@ -171,6 +176,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             assign_date:new Date()
         });
         setAccountType('');
+        setAssignDate(moment());
     };
 
 
@@ -183,6 +189,17 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             setAccountType('');
         }
     }, [form.watch('group')]);
+    useEffect(() => {
+        if(updatePartyLedger.id !== ''){
+            setAssignDate(moment(updatePartyLedger.assign_date));
+        };
+    }, []);
+    useEffect(() => {
+        if(assignDate){
+            // @ts-ignore
+            form.setValue('assign_date', assignDate._d);
+        };
+    }, [assignDate]);
 
 
     return (
@@ -470,29 +487,10 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                         render={() => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Assign Date</FormLabel>
-                                <Popover open={isCalendarOpened} onOpenChange={setIsCalendarOpened}>
-                                    <PopoverTrigger asChild>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center w-full h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none sm:basis-[70%]'
-                                        >
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                            {
-                                                form.getValues().assign_date
-                                                        ? <span>{format(form.getValues().assign_date, 'PPP')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form.getValues().assign_date}
-                                            onSelect={v => {setIsCalendarOpened(false); form.setValue('assign_date', v)}}
-                                            initialFocus
-                                        />
-                                    </PopoverContent>
-                                </Popover>
+                                <MyDatePicker
+                                    selectedDate={assignDate}
+                                    setSelectedDate={setAssignDate}
+                                />
                             </FormItem>
                         )}
                     />
@@ -500,7 +498,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
 
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} partyLedgers={partyLedgers} updatePartyLedger={updatePartyLedger} setUpdatePartyLedger={setUpdatePartyLedger} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} partyLedgers={partyLedgers} updatePartyLedger={updatePartyLedger} setUpdatePartyLedger={setUpdatePartyLedger} onSubmit={onSubmit} form={form} setAssignDate={setAssignDate}/>
                     </div>
                 </form>
             </Form>

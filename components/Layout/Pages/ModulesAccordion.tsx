@@ -1,11 +1,11 @@
 'use client';
 // Imports
-import Link from 'next/link';
 import Image from 'next/image';
 import modules from '@/constants/modules';
-import {useEffect, useState} from 'react';
 import {usePathname} from 'next/navigation';
 import {MoveRight, ChevronDown} from 'lucide-react';
+import {useContext, useEffect, useState} from 'react';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 
 
@@ -13,11 +13,15 @@ import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/co
 
 
 // Main function
-const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPages, setSelectedPage}:any) => {
+const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Router
     const pathname = usePathname();
+
+
+    // Opened pages
+    const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
 
 
     // Currnet Module
@@ -39,7 +43,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
     // Thread click
     const pageClick = (page:any) => {
         setIsSidebarOpened(false);
-        setSelectedPage(page);
+        setCurrentPage(page);
         setSelectedThread(page);
         if(openedPages.includes(page)){
             return;
@@ -80,8 +84,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                 }
             >
                 {/* Layer 1 */}
-                <Link
-                    href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}`}
+                <div
+                    className='cursor-pointer'
                 >
                     <AccordionTrigger
                         onClick={() => setIsSidebarOpened(true)}
@@ -108,13 +112,13 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                         </div>
                         <ChevronDown className={`h-4 w-4 ml-12 shrink-0 text-white transition-transform duration-200  ${isSidebarOpened ? 'block' : 'hidden'}`}/>
                     </AccordionTrigger>
-                </Link>
+                </div>
                 <AccordionContent
                     className={`${isSidebarOpened ? 'block' : 'hidden'} bg-[#F6F6F6] mt-2 ml-4`}
                 >
 
 
-                    {/* Module Pages Links */}
+                    {/* Module Pages */}
                     <Accordion
                         type="single"
                         collapsible
@@ -155,23 +159,17 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                                         <AccordionContent>
                                                                             {
                                                                                 subPage?.threads?.map((thread:any) => (
-                                                                                    <Link
-                                                                                        onClick={() => pageClick(thread)}
-                                                                                        href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${thread.toLowerCase().replace(/\s+/g,"-")}`}
-                                                                                    >
-                                                                                        {/* Layer 4 */}
-                                                                                        <div className='group flex flex-row items-center ml-8 py-1 pr-2 transition-transform hover:bg-white'>
-                                                                                            <p
-                                                                                                className={`text-[12px] transition ${selectedThread === thread && 'text-main-color'}`}
-                                                                                            >
-                                                                                                {thread}
-                                                                                            </p>
-                                                                                            <MoveRight
-                                                                                                size={18}
-                                                                                                className='hidden text-main-color ml-2 group-hover:block transition'
-                                                                                            />
-                                                                                        </div>
-                                                                                    </Link>
+                                                                                    <div onClick={() => pageClick(thread)} className='group flex flex-row items-center ml-8 py-1 pr-2 transition-transform hover:bg-white cursor-pointer'>
+                                                                                        <p
+                                                                                            className={`text-[12px] transition ${selectedThread === thread && 'text-main-color'}`}
+                                                                                        >
+                                                                                            {thread}
+                                                                                        </p>
+                                                                                        <MoveRight
+                                                                                            size={18}
+                                                                                            className='hidden text-main-color ml-2 group-hover:block transition'
+                                                                                        />
+                                                                                    </div>
                                                                                 ))
                                                                             }
                                                                         </AccordionContent>
@@ -180,26 +178,20 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened, openedPages, set
                                                             )
                                                             :
                                                             (
-                                                                <Link
-                                                                    onClick={() => pageClick(subPage.subPageName)}
-                                                                    href={`/${selectedModule.toLowerCase().replace(/\s+/g,"-")}/${subPage?.subPageName?.toLowerCase().replace(/\s+/g,"-")}`}
-                                                                >
-                                                                    {/* Layer 3 */}
-                                                                    <div className='group flex flex-row items-center ml-2 py-1 pr-2 transition hover:bg-white'>
-                                                                        <div className={`text-[12px] ml-2 flex flex-row items-center ${selectedThread === subPage.subPageName && 'text-main-color'}`}>
-                                                                            <p className='font-bold mr-2'>{page.subPages.indexOf(subPage) + 1}.</p>
-                                                                            <p>{subPage.subPageName}</p>
-                                                                        </div>
-                                                                        <MoveRight
-                                                                            size={18}
-                                                                            className='opacity-0 text-main-color ml-2 group-hover:opacity-100 transition'
-                                                                        />
+                                                                <div onClick={() => pageClick(subPage.subPageName)} className='group flex flex-row items-center ml-2 py-1 pr-2 transition hover:bg-white cursor-pointer'>
+                                                                    <div className={`text-[12px] ml-2 flex flex-row items-center ${selectedThread === subPage.subPageName && 'text-main-color'}`}>
+                                                                        <p className='font-bold mr-2'>{page.subPages.indexOf(subPage) + 1}.</p>
+                                                                        <p>{subPage.subPageName}</p>
                                                                     </div>
-                                                                </Link>
+                                                                    <MoveRight
+                                                                        size={18}
+                                                                        className='opacity-0 text-main-color ml-2 group-hover:opacity-100 transition'
+                                                                    />
+                                                                </div>
                                                             )
-                                                    }
-                                                )
-                                            }
+                                                        }
+                                                    )
+                                                }
                                         </AccordionContent>
                                     </AccordionItem>
                             ))

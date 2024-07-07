@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Route Stop Schema
 const RouteStopSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         route_no:{type:String, required:true},
         stop_no:{type:String, required:true},
         stop_name:{type:String, required:true},

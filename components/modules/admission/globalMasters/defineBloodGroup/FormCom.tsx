@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, bloodGroups, updateBloodGroup, setUpdateBlood
                 toast({title:'Blood group already exists', variant:'error'});
                 return;
             };
-            await createBloodGroup({
+            const res = await createBloodGroup({
                 blood_group:values.blood_group
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify blood group

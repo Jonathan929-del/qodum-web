@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Admission from '@/lib/models/admission/masterSettings/admissionSetting/Admission.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -28,6 +29,11 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the prefix already exists
         if(prefix !== ''){
             const existingAdmission = await Admission.findOne({prefix});
@@ -38,7 +44,7 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
 
 
         // Creating new admission
-        const newAdmission = await Admission.create({school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
+        const newAdmission = await Admission.create({session:activeSession.year_name, school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
 
 
         // Return

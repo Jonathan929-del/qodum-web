@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Caste Schema
 const CasteSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         caste_name:{type:String, required:true, unique:true}
     },
     {

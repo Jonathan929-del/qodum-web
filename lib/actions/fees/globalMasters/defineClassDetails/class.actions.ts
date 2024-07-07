@@ -1,8 +1,9 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
+import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -24,6 +25,11 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the class already exists
         const existinClass = await Class.findOne({class_name});
         if(existinClass){
@@ -32,7 +38,7 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
 
 
         // Creating new class
-        const newClass = await Class.create({class_name, wing_name, school, order});
+        const newClass = await Class.create({session:activeSession.year_name, class_name, wing_name, school, order});
         newClass.save();
 
 

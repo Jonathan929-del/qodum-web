@@ -8,11 +8,11 @@ import mongoose from 'mongoose';
 // Prospectus Schema
 const ProspectusSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         class_name:{type:String, required:true},
         board:{type:String},
         reg_no:{type:Number, required:true, unique:true},
         date:{type:Date},
-        session:{type:String},
         student_name:{type:String, required:true},
         student_middle_name:{type:String},
         student_last_name:{type:String},

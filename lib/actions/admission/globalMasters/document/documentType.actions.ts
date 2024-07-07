@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import DocumentType from '@/lib/models/admission/globalMasters/document/DocumentType.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createDocumentType = async ({document_type}:CreateDocumentProps) =>
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the document type already exists
         const existingDocument = await DocumentType.findOne({document_type});
         if(existingDocument){
@@ -28,7 +34,7 @@ export const createDocumentType = async ({document_type}:CreateDocumentProps) =>
 
 
         // Creating new document type
-        const newDocument = await DocumentType.create({document_type});
+        const newDocument = await DocumentType.create({session:activeSession.year_name, document_type});
         newDocument.save();
 
 

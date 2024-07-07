@@ -1,6 +1,7 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import HealthUnit from '@/lib/models/admission/globalMasters/studentHealthMaster/HealthUnit.model';
 
 
@@ -21,6 +22,11 @@ export const createHealthUnit = async ({unit_name, unit_type}:CreateHealthUnitPr
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the health unit name already exists
         const existinHealthUnit = await HealthUnit.findOne({unit_name});
         if(existinHealthUnit){
@@ -29,7 +35,7 @@ export const createHealthUnit = async ({unit_name, unit_type}:CreateHealthUnitPr
 
 
         // Creating new health unit
-        const newHealthUnit = await HealthUnit.create({unit_name, unit_type});
+        const newHealthUnit = await HealthUnit.create({session:activeSession.year_name, unit_name, unit_type});
         newHealthUnit.save();
 
 

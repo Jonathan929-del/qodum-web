@@ -1,6 +1,7 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import ConcessionType from '@/lib/models/fees/feeMaster/defineAndAssignConcession/ConcessionType.model';
 
 
@@ -20,6 +21,11 @@ export const createConcessionType = async ({type}:CreateConcessionTypeProps) => 
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the concession type already exists
         const existingConcessionType = await ConcessionType.findOne({type});
         if(existingConcessionType){
@@ -28,7 +34,7 @@ export const createConcessionType = async ({type}:CreateConcessionTypeProps) => 
 
 
         // Creating new concession type
-        const newConcessionType = await ConcessionType.create({type});
+        const newConcessionType = await ConcessionType.create({session:activeSession.year_name, type});
         newConcessionType.save();
 
 

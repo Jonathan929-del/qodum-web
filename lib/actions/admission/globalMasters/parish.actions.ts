@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Parish from '@/lib/models/admission/globalMasters/Parish.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -21,6 +22,11 @@ export const createParish = async ({parish, religion}:CreateParishProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the parish already exists
         const existinParish = await Parish.findOne({parish, religion});
         if(existinParish){
@@ -29,7 +35,7 @@ export const createParish = async ({parish, religion}:CreateParishProps) => {
 
 
         // Creating new parish
-        const newParish = await Parish.create({parish});
+        const newParish = await Parish.create({session:activeSession.year_name, parish});
         newParish.save().then(async () => {
             await Parish.findOneAndUpdate({parish}, {religion});
         });

@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import moment from 'moment';
 import Buttons from './Buttons';
 import Other from './forms/Others';
 import Parent from './forms/Parent';
@@ -25,9 +26,16 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 // Main function
 const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects}:any) => {
 
-
     // Toast
     const {toast} = useToast();
+
+
+    // Dates states
+    const [date, setDate] = useState(moment());
+    const [dob, setDob] = useState(moment());
+    const [fatherDob, setFatherDob] = useState(moment());
+    const [motherDob, setMotherDob] = useState(moment());
+    const [anniversaryDate, setAnniversaryDate] = useState(moment());
 
 
     // Is Loading
@@ -458,7 +466,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 formData.append('file', file);
                 await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]});
             };
-            await createStudent({
+            const res = await createStudent({
                 // Student
                 student:{
                     // 1
@@ -652,10 +660,23 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     }
                 }
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Student
-        else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects){
+        else if(
+            !deepEqual(comparisonObject, values)
+            || file
+            || comparisonObject.student.subjects !== selectedSubjects
+            || moment(values.student.date).format('DD-MM-YYYY') !== moment(comparisonObject.student.date).format('DD-MM-YYYY')
+            || moment(values.student.dob).format('DD-MM-YYYY') !== moment(comparisonObject.student.dob).format('DD-MM-YYYY')
+            || moment(values.parents.father.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.father.dob).format('DD-MM-YYYY')
+            || moment(values.parents.mother.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.dob).format('DD-MM-YYYY')
+            || moment(values.parents.mother.anniversary_date).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.anniversary_date).format('DD-MM-YYYY')
+        ){
             if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                 toast({title:'Register no. already exists', variant:'error'});
                 return;
@@ -1279,6 +1300,11 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setImageSrc('');
         setIsLoading(false);
         setSelectedSubjects([]);
+        setDate(moment());
+        setDob(moment());
+        setFatherDob(moment());
+        setMotherDob(moment());
+        setAnniversaryDate(moment());
     };
 
 
@@ -1467,7 +1493,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
     }, [valuesFromEnquiry]);
     useEffect(() => {}, [form.watch('others')]);
-
+    useEffect(() => {
+        if(updateStudent.id !== ''){
+            setDate(moment(updateStudent.student.date));
+            setDob(moment(updateStudent.student.dob));
+            setFatherDob(moment(updateStudent.parents.father.dob));
+            setMotherDob(moment(updateStudent.parents.mother.dob));
+            setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
+        };
+    }, []);
 
     return (
         <div className='w-[95%] h-full max-w-[1500px] flex flex-col items-center'>
@@ -1541,10 +1575,22 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setValuesFromEnquiry={setValuesFromEnquiry}
                                     selectedSubjects={selectedSubjects}
                                     setSelectedSubjects={setSelectedSubjects}
+                                    date={date}
+                                    setDate={setDate}
+                                    dob={dob}
+                                    setDob={setDob}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
-                                <Parent form={form}/>
+                                <Parent
+                                    form={form}
+                                    fatherDob={fatherDob}
+                                    setFatherDob={setFatherDob}
+                                    motherDob={motherDob}
+                                    setMotherDob={setMotherDob}
+                                    anniversaryDate={anniversaryDate}
+                                    setAnniversaryDate={setAnniversaryDate}
+                                />
                             </TabsContent>
                             <TabsContent value='other'>
                                 <Other
@@ -1560,7 +1606,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate}/>
                         </div>
                     </form>
                 )}

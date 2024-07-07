@@ -93,7 +93,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                 toast({title:'Number already exists', variant:'error'});
                 return;
             };
-            await createAdmission({
+            const res = await createAdmission({
                 school:values.school,
                 class_name:values.class_name,
                 board:values.board,
@@ -105,6 +105,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                 lead_zero:values.lead_zero,
                 suffix:values.suffix
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify setting

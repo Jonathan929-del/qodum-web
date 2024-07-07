@@ -8,6 +8,11 @@ import mongoose from 'mongoose';
 // Layout Schema
 const LayoutSchema = new mongoose.Schema(
     {
+
+        // Session
+        session:{type:String, required:true},
+
+
         // Report setting
         report_setting:{
             report_name:{type:String, required:true, unique:true},

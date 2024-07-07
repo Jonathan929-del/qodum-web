@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Party Ledger Schema
 const PartyLedgerSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         account_name:{type:String, required:true},
         group:{type:String, required:true},
         account_type:{type:String, required:true},

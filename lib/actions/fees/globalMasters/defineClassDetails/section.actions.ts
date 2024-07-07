@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Section from '@/lib/models/fees/globalMasters/defineClassDetails/Section.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -21,6 +22,11 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the section already exists
         const existinSection = await Section.findOne({section_name});
         if(existinSection){
@@ -29,7 +35,7 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
 
 
         // Creating new section
-        const newSection = await Section.create({section_name, order_no});
+        const newSection = await Section.create({session:activeSession.year_name, section_name, order_no});
         newSection.save();
 
 

@@ -47,9 +47,13 @@ const FormCom = ({setIsViewOpened, concessions, updateConcession, setUpdateConce
                 toast({title:'Concession name already exists', variant: 'error'});
                 return;
             };
-            await createConcession({
+            const res = await createConcession({
                 name:values.name,
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify concession

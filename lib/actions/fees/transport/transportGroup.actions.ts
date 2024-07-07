@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -13,14 +14,20 @@ interface CreateTransportGroupProps{
     distance_amount:Number;
     distance_from:Number;
     distance_to:Number;
+    transport_term:String;
 };
 // Create transport group
-export const createTransportGroup = async ({distance_name, distance_amount, distance_from, distance_to}:CreateTransportGroupProps) => {
+export const createTransportGroup = async ({distance_name, distance_amount, distance_from, distance_to, transport_term}:CreateTransportGroupProps) => {
     try {
 
     
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Checking if the distance name already exists
@@ -31,7 +38,7 @@ export const createTransportGroup = async ({distance_name, distance_amount, dist
 
 
         // Creating new transport group
-        const newTranportGroup = await TransportGroup.create({distance_name, distance_amount, distance_from, distance_to});
+        const newTranportGroup = await TransportGroup.create({session:activeSession.year_name, distance_name, distance_amount, distance_from, distance_to, transport_term});
         newTranportGroup.save();
 
 
@@ -75,9 +82,10 @@ interface ModifyTransportGroupProps{
     distance_amount:Number;
     distance_from:Number;
     distance_to:Number;
+    transport_term:String;
 };
 // Modify transport group
-export const modifyTransportGroup = async ({id, distance_name, distance_amount, distance_from, distance_to}:ModifyTransportGroupProps) => {
+export const modifyTransportGroup = async ({id, distance_name, distance_amount, distance_from, distance_to, transport_term}:ModifyTransportGroupProps) => {
     try {
 
         // Db connection
@@ -91,7 +99,7 @@ export const modifyTransportGroup = async ({id, distance_name, distance_amount, 
 
 
         // Updating transport group
-        const updatedTransports = await TransportGroup.findByIdAndUpdate(id, {distance_name, distance_amount, distance_from, distance_to}, {new:true});
+        const updatedTransports = await TransportGroup.findByIdAndUpdate(id, {distance_name, distance_amount, distance_from, distance_to, transport_term}, {new:true});
 
 
         // Return

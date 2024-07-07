@@ -240,6 +240,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             paid_heads:paidHeads,
             concession_reason:concessionReason
         });
+        if(res === 0){
+            toast({title:'Please create a session first', variant:'alert'});
+            return;
+        };
 
         // Fee receipt
         setReceiptPaymentData({

@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Section Schema
 const SectionSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         section_name:{type:String, required:true},
         order_no:{type:Number, required:true}
     },

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import BankLedger from '@/lib/models/accounts/accounts/BankLedger.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -30,6 +31,11 @@ export const createBankLedger = async ({account_name, group, account_type, accou
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if bank ledger already exists
         const existingBankLedger = await BankLedger.findOne({account_name});
         if(existingBankLedger){
@@ -39,6 +45,7 @@ export const createBankLedger = async ({account_name, group, account_type, accou
 
         // Creating new bank ledger
         const newBankLedger = await BankLedger.create({
+            session:activeSession.year_name,
             account_name,
             group,
             account_type,

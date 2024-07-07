@@ -96,7 +96,7 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                 toast({title:'Installment preference number already exists', variant:'error'});
                 return;
             };
-            await createInstallment({
+            const res = await createInstallment({
                 name:values.name,
                 print_name:values.print_name,
                 preference_no:values.preference_no,
@@ -112,6 +112,10 @@ const FormCom = ({setIsViewOpened, installments, updateInstallment, setUpdateIns
                 },
                 months:selectedMonths
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify installment

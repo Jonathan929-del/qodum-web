@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import moment from 'moment';
 import Buttons from './Buttons';
 import Other from './forms/Others';
 import Parent from './forms/Parent';
@@ -28,9 +29,17 @@ import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} fro
 // Main function
 const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments}:any) => {
 
-
     // Toast
     const {toast} = useToast();
+
+
+    // Date states
+    const [dob, setDob] = useState(moment());
+    const [doa, setDoa] = useState(moment());
+    const [doj, setDoj] = useState(moment());
+    const [fatherDob, setFatherDob] = useState(moment());
+    const [motherDob, setMotherDob] = useState(moment());
+    const [anniversaryDate, setAnniversaryDate] = useState(moment());
 
 
     // Is Loading
@@ -475,7 +484,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 formData.append('file', file);
                 await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]});
             };
-            await createAdmittedStudent({
+            const res = await createAdmittedStudent({
                 // Student
                 student:{
                     // Admission data
@@ -674,10 +683,25 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Documents
                 documents:selectedDocuments.filter((d:any) => d.document_name !== '')
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Student
-        else if(!deepEqual(comparisonObject, values) || file || comparisonObject.student.subjects !== selectedSubjects || comparisonObject.documents !== selectedDocuments){
+        else if(
+            !deepEqual(comparisonObject, values)
+            || file
+            || comparisonObject.student.subjects !== selectedSubjects
+            || comparisonObject.documents !== selectedDocuments
+            || moment(values.student.dob).format('DD-MM-YYYY') !== moment(comparisonObject.student.dob).format('DD-MM-YYYY')
+            || moment(values.student.doa).format('DD-MM-YYYY') !== moment(comparisonObject.student.doa).format('DD-MM-YYYY')
+            || moment(values.student.doj).format('DD-MM-YYYY') !== moment(comparisonObject.student.doj).format('DD-MM-YYYY')
+            || moment(values.parents.father.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.father.dob).format('DD-MM-YYYY')
+            || moment(values.parents.mother.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.dob).format('DD-MM-YYYY')
+            || moment(values.parents.mother.anniversary_date).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.anniversary_date).format('DD-MM-YYYY')
+        ){
             if(comparisonObject.student.adm_no !== values.student.adm_no && students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
                 toast({title:'Admission no. already exists', variant:'error'});
                 setIsLoading(false);
@@ -1485,12 +1509,26 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setSelectedDocuments([{
             document_type:'',
             document_name:''
-        }])
+        }]);
+        setDob(moment());
+        setDoa(moment());
+        setDoj(moment());
+        setFatherDob(moment());
+        setMotherDob(moment());
+        setAnniversaryDate(moment());
     };
 
 
     // Use Effects
     useEffect(() => {
+        if(updateStudent.id !== ''){
+            setDob(moment(updateStudent.student.dob));
+            setDoa(moment(updateStudent.student.doa));
+            setDoj(moment(updateStudent.student.doj));
+            setFatherDob(moment(updateStudent.parents.father.dob));
+            setMotherDob(moment(updateStudent.parents.mother.dob));
+            setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
+        };
         const fetcher = async () => {
             const boardsRes = await fetchBoards();
             setBoards(boardsRes);
@@ -1833,7 +1871,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     }, [valuesFromRegister]);
     useEffect(() => {}, [form.watch('others')]);
 
-
     return (
         <div className='w-[95%] h-full max-w-[1500px] flex flex-col items-center'>
             <Form
@@ -1930,10 +1967,24 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setSelectedSubjects={setSelectedSubjects}
                                     setSelectedDocuments={setSelectedDocuments}
                                     boards={boards}
+                                    dob={dob}
+                                    setDob={setDob}
+                                    doa={doa}
+                                    setDoa={setDoa}
+                                    doj={doj}
+                                    setDoj={setDoj}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
-                                <Parent form={form}/>
+                                <Parent
+                                    form={form}
+                                    fatherDob={fatherDob}
+                                    setFatherDob={setFatherDob}
+                                    motherDob={motherDob}
+                                    setMotherDob={setMotherDob}
+                                    anniversaryDate={anniversaryDate}
+                                    setAnniversaryDate={setAnniversaryDate}
+                                />
                             </TabsContent>
                             <TabsContent value='other'>
                                 <Other
@@ -1961,7 +2012,25 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromRegister={setValuesFromRegister} setSelectedSubjects={setSelectedSubjects} setSelectedDocuments={setSelectedDocuments}/>
+                            <Buttons
+                                setIsViewOpened={setIsViewOpened}
+                                students={students}
+                                updateStudent={updateStudent}
+                                setUpdateStudent={setUpdateStudent}
+                                onSubmit={onSubmit}
+                                form={form}
+                                setFile={setFile}
+                                setImageSrc={setImageSrc}
+                                setValuesFromRegister={setValuesFromRegister}
+                                setSelectedSubjects={setSelectedSubjects}
+                                setSelectedDocuments={setSelectedDocuments}
+                                setDob={setDob}
+                                setDoa={setDoa}
+                                setDoj={setDoj}
+                                setFatherDob={setFatherDob}
+                                setMotherDob={setMotherDob}
+                                setAnniversaryDate={setAnniversaryDate}
+                            />
                         </div>
                     </form>
                 )}

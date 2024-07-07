@@ -2,10 +2,10 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
-import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import LateFee from '@/lib/models/fees/feeMaster/lateFeeSettings/LateFee.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -27,6 +27,11 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
     
         // Database connection
         connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
 
 
         // Late fee
@@ -60,7 +65,7 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
 
 
         // Creating new late fee
-        const newLateFee = await LateFee.create({fee_group, fee_type, installment, due_date, late_fee_type, amount});
+        const newLateFee = await LateFee.create({session:activeSession.year_name, fee_group, fee_type, installment, due_date, late_fee_type, amount});
         newLateFee.save();
 
 

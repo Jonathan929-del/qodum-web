@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import DueLimit from '@/lib/models/fees/masterSettings/DueLimit.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -24,9 +25,14 @@ export const createDueLimit = async ({class_name, fee_type, late_fee_on_due, due
         // Database connection
         connectToDb('accounts');
 
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
     
         // Due limit
-        const dueLimit = await DueLimit.create({class_name, fee_type, late_fee_on_due, dues_amount, is_percent, heads, fine_waive_off_setting});
+        const dueLimit = await DueLimit.create({session:activeSession.year_name, class_name, fee_type, late_fee_on_due, dues_amount, is_percent, heads, fine_waive_off_setting});
         dueLimit.save();
 
 

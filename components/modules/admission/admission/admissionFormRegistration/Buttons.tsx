@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
@@ -10,7 +11,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate}:any) => {
 
 
     // Cancel click
@@ -422,6 +423,11 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
         setFile(null);
         setImageSrc('');
         setSelectedSubjects([]);
+        setDate(moment());
+        setDob(moment());
+        setFatherDob(moment());
+        setMotherDob(moment());
+        setAnniversaryDate(moment());
     };
 
 

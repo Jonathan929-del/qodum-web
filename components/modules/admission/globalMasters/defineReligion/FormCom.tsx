@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, religions, updateReligion, setUpdateReligion}
                 toast({title:'Religion name already exists', variant:'error'});
                 return;
             };
-            await createReligion({
+            const res = await createReligion({
                 religion_name:values.religion_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify religion

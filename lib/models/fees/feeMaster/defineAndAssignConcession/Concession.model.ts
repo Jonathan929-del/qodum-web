@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Concession Schema
 const ConcessionSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         name:{type:String, required:true, unique:true}
     },
     {

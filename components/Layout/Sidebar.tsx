@@ -11,7 +11,7 @@ import ModulesAccordion from './Pages/ModulesAccordion';
 
 
 // Main function
-const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPages, setSelectedPage}:any) => {
+const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Pathname
@@ -53,9 +53,6 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened, openedPages, setOpenedPag
                     <ModulesAccordion
                         isSidebarOpened={isSidebarOpened}
                         setIsSidebarOpened={setIsSidebarOpened}
-                        openedPages={openedPages}
-                        setOpenedPages={setOpenedPages}
-                        setSelectedPage={setSelectedPage}
                     />
                 )
             }

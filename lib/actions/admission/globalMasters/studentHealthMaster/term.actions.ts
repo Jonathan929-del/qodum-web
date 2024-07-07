@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Term from '@/lib/models/admission/globalMasters/studentHealthMaster/Term.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createTerm = async ({term_name}:CreateTermProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the term name already exists
         const existingTerm = await Term.findOne({term_name});
         if(existingTerm){
@@ -28,7 +34,7 @@ export const createTerm = async ({term_name}:CreateTermProps) => {
 
 
         // Creating new term
-        const newTerm = await Term.create({term_name});
+        const newTerm = await Term.create({session:activeSession.year_name, term_name});
         newTerm.save();
 
 

@@ -51,10 +51,14 @@ const FormCom = ({setIsViewOpened, healthMasters, updateHealthMaster, setUpdateH
                 toast({ title: 'Health paramater already exists', variant: 'error' });
                 return;
             };
-            await createHealthMaster({
+            const res = await createHealthMaster({
                 health_parameter: values.health_parameter,
                 unit: values.unit
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({ title: 'Added Successfully!' });
         }
         // Modify Health Master

@@ -5,9 +5,10 @@ import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
 import {Toaster} from '../ui/toaster';
 import PagesList from './Pages/PagesList';
-import {useEffect, useState} from 'react';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
+import {useContext, useEffect, useState} from 'react';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -17,14 +18,12 @@ import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/
 // Main function
 const index = ({children}:any) => {
 
-
     // Sidebar Toggler
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
 
-    // Opened Pages
-    const [openedPages, setOpenedPages] = useState([]);
-    const [selectedPage, setSelectedPage] = useState('');
+    // Context
+    const {openedPages, currentPage, setCurrentPage} = useContext(GlobalStateContext);
 
 
     // Pathname
@@ -56,27 +55,15 @@ const index = ({children}:any) => {
             const res:any = await fetchAcademicYears();
             setAcademicYears(res);
             setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
-            // if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
-            //     setIsSidebarOpened(false);
-            // };
         };
         academicYearsFetcher();
     }, []);
-    // useEffect(() => {
-    //     if(window.location.pathname.split('/')[2] === 'daily-fee-collection' || window.location.pathname.split('/')[2] === 'receipt-wise-fee-type-collection' || window.location.pathname.split('/')[2] === 'fee-defaulter-list'){
-    //         setIsSidebarOpened(false);
-    //     };
-    // }, [window.location.pathname]);
-
 
     return (
         <main className='w-full h-screen flex flex-row bg-[#ecedf0] font-Poppins'>
             <Sidebar
                 isSidebarOpened={isSidebarOpened}
                 setIsSidebarOpened={setIsSidebarOpened}
-                openedPages={openedPages}
-                setOpenedPages={setOpenedPages}
-                setSelectedPage={setSelectedPage}
             />
             <div className='relative flex flex-col flex-1 overflow-hidden'>
                 {
@@ -96,14 +83,8 @@ const index = ({children}:any) => {
                                 settingActiveAcademicYear={settingActiveAcademicYear}
                                 activeAcademicYearName={activeAcademicYearName}
                             />
-                            {/* <ConfigBar /> */}
-                            {pathname.split('/')[2] && (
-                                <PagesList
-                                    openedPages={openedPages}
-                                    selectedPage={selectedPage}
-                                    setOpenedPages={setOpenedPages}
-                                    setSelectedPage={setSelectedPage}
-                                />
+                            {openedPages?.length > 0 && (
+                                <PagesList />
                             )}
                         </>
                     )

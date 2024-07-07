@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Late fee schema
 const LateFeeSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         fee_group:{type:String, required:true},
         fee_type:{type:String},
         installment:{type:String},

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import NarrationMaster from '@/lib/models/accounts/globalMasters/NarrationMaster.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -21,6 +22,11 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if narration already exists
         const existingNarration = await NarrationMaster.findOne({narration});
         if(existingNarration){
@@ -30,6 +36,7 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
 
         // Creating new narration master
         const newNarrationMaster = await NarrationMaster.create({
+            session:activeSession.year_name,
             voucher_type,
             narration
         });

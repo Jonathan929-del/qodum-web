@@ -31,18 +31,14 @@ import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optio
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchClass, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards}:any) => {
-
-
-    // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
-
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -114,6 +110,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Selectted section
     const [selectedSection, setSelectedSection] = useState('');
+
+
+    // Is parish
+    const [isParish, setIsParish] = useState(false);
 
 
     // Handle Search Click
@@ -1417,8 +1417,31 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             setClassSections([]);
         }
     }, [form.watch('student.class')]);
-
-
+    useEffect(() => {
+        if(form.getValues().student.religion.trim() === 'Christianity' || form.getValues().student.religion.trim() === 'Christian'){
+            setIsParish(true);
+        }else{
+            setIsParish(false);
+        }
+    }, [form.watch('student.religion')]);
+    useEffect(() => {
+        if(dob){
+            // @ts-ignore
+            form.setValue('student.dob', dob._d);
+        };
+    }, [dob]);
+    useEffect(() => {
+        if(doa){
+            // @ts-ignore
+            form.setValue('student.doa', doa._d);
+        };
+    }, [doa]);
+    useEffect(() => {
+        if(doj){
+            // @ts-ignore
+            form.setValue('student.doj', doj._d);
+        };
+    }, [doj]);
 
     return (
         <div className='flex flex-col'>
@@ -1915,29 +1938,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
                                         <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOB</FormLabel>
-                                        <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                                            <PopoverTrigger asChild className='h-7'>
-                                                <Button
-                                                    variant='outline'
-                                                    className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[65%]'
-                                                >
-                                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                                    {
-                                                        form?.getValues()?.student?.dob
-                                                                ? <span>{format(form?.getValues()?.student?.dob, 'PPP')}</span>
-                                                                : <span>Pick a date</span>
-                                                    }
-                                                </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent className='w-auto p-0'>
-                                                <Calendar
-                                                    mode='single'
-                                                    selected={form?.getValues()?.student?.dob}
-                                                    onSelect={v => {setIsCalendarOpened(''); form?.setValue('student?.dob', v)}}
-                                                    initialFocus
-                                                />
-                                            </PopoverContent>
-                                        </Popover>
+                                        <div className='w-full'>
+                                            <MyDatePicker
+                                                selectedDate={dob}
+                                                setSelectedDate={setDob}
+                                            />
+                                        </div>
                                     </FormItem>
                                 )}
                             />
@@ -1950,29 +1956,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
                                         <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOA</FormLabel>
-                                        <Popover open={isCalendarOpened === 'doa'} onOpenChange={() => isCalendarOpened === 'doa' ? setIsCalendarOpened('') : setIsCalendarOpened('doa')}>
-                                            <PopoverTrigger asChild className='h-7'>
-                                                <Button
-                                                    variant='outline'
-                                                    className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[65%]'
-                                                >
-                                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                                    {
-                                                        form.getValues().student.doa
-                                                                ? <span>{format(form.getValues().student.doa, 'PPP')}</span>
-                                                                : <span>Pick a date</span>
-                                                    }
-                                                </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent className='w-auto p-0'>
-                                                <Calendar
-                                                    mode='single'
-                                                    selected={form?.getValues().student.doa}
-                                                    onSelect={v => {setIsCalendarOpened(''); form.setValue('student.doa', v)}}
-                                                    initialFocus
-                                                />
-                                            </PopoverContent>
-                                        </Popover>
+                                        <div className='w-full'>
+                                            <MyDatePicker
+                                                selectedDate={doa}
+                                                setSelectedDate={setDoa}
+                                            />
+                                        </div>
                                     </FormItem>
                                 )}
                             />
@@ -1985,29 +1974,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
                                         <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOJ</FormLabel>
-                                        <Popover open={isCalendarOpened === 'doj'} onOpenChange={() => isCalendarOpened === 'doj' ? setIsCalendarOpened('') : setIsCalendarOpened('doj')}>
-                                            <PopoverTrigger asChild className='h-7'>
-                                                <Button
-                                                    variant='outline'
-                                                    className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] lg:basis-[65%]'
-                                                >
-                                                    <CalendarIcon className='mr-2 h-4 w-4' />
-                                                    {
-                                                        form.getValues().student.doj
-                                                                ? <span>{format(form.getValues().student.doj, 'PPP')}</span>
-                                                                : <span>Pick a date</span>
-                                                    }
-                                                </Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent className='w-auto p-0'>
-                                                <Calendar
-                                                    mode='single'
-                                                    selected={form?.getValues().student.doj}
-                                                    onSelect={v => {setIsCalendarOpened(''); form.setValue('student.doj', v)}}
-                                                    initialFocus
-                                                />
-                                            </PopoverContent>
-                                        </Popover>
+                                        <div className='w-full'>
+                                            <MyDatePicker
+                                                selectedDate={doj}
+                                                setSelectedDate={setDoj}
+                                            />
+                                        </div>
                                     </FormItem>
                                 )}
                             />
@@ -2299,7 +2271,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Religion */}
-                            <div className='w-full flex flex-col items-center lg:flex-row'>
+                            <div className='w-[50%] flex flex-col items-center lg:flex-row'>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Religion</FormLabel>
                                 <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                                     <FormField
@@ -2337,41 +2309,43 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
                             {/* Parish */}
-                            <div className='w-full flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.parish'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {parishes?.length < 1 ? (
-                                                                <p>No parishes</p>
-                                                                // @ts-ignore
-                                                            ) : !parishes[0]?.parish ? (
-                                                                <LoadingIcon />
-                                                            ) : parishes?.map((item:any) => (
-                                                                <SelectItem value={item?.parish} key={item?._id}>{item?.parish}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
+                            {isParish && (
+                                <div className='w-[50%] flex flex-col items-center lg:flex-row'>
+                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.parish'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {parishes?.length < 1 ? (
+                                                                    <p>No parishes</p>
+                                                                    // @ts-ignore
+                                                                ) : !parishes[0]?.parish ? (
+                                                                    <LoadingIcon />
+                                                                ) : parishes?.map((item:any) => (
+                                                                    <SelectItem value={item?.parish} key={item?._id}>{item?.parish}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Category */}

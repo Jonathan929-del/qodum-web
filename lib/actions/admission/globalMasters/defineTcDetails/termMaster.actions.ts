@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Term from '@/lib/models/admission/globalMasters/tcDetails/TermMaster.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createTermMaster = async ({term_name}:CreateTermMasterProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the term name already exists
         const existinTermMaster = await Term.findOne({term_name});
         if(existinTermMaster){
@@ -28,7 +34,7 @@ export const createTermMaster = async ({term_name}:CreateTermMasterProps) => {
 
 
         // Creating new term master
-        const newTermMaster = await Term.create({term_name});
+        const newTermMaster = await Term.create({session:activeSession.year_name, term_name});
         newTermMaster.save();
 
 

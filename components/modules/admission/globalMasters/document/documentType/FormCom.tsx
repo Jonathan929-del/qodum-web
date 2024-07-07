@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, documentTypes, updateDocumentType, setUpdateD
                 toast({title:'Document type already exists', variant:'error'});
                 return;
             };
-            await createDocumentType({
+            const res = await createDocumentType({
                 document_type:values.document_type
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify document type

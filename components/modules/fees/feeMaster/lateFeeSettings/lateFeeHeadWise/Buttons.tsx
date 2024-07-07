@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '@/components/ui/button';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
@@ -9,7 +10,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, onSubmit, form, setDueDate}:any) => {
 
 
     // Cancel click
@@ -36,6 +37,7 @@ const Buttons = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, on
             late_fee_type:'',
             amount:0
         });
+        setDueDate(moment());
     };
 
 

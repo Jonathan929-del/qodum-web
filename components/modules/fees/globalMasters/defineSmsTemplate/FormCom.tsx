@@ -51,11 +51,15 @@ const FormCom = ({setIsViewOpened, smsTemplates, updateSmsTemplate, setUpdateSms
     const onSubmit = async (values:z.infer<typeof SmsTemplateValidation>) => {
         // Create sms template
         if(updateSmsTemplate.id === ''){
-            await createSmsTemplate({
+            const res = await createSmsTemplate({
                 sms_type:values.sms_type,
                 sms_template:values.sms_template,
                 is_enable:values.is_enable
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify sms template

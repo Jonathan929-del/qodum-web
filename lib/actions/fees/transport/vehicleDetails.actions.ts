@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import VehicleDetails from '@/lib/models/fees/transport/VehicleDetails.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -33,13 +34,17 @@ interface CreateVehicleTDetailsProps{
 export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}:CreateVehicleTDetailsProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Creating new vehicle details
-        const newVehicleDetails = await VehicleDetails.create({vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
+        const newVehicleDetails = await VehicleDetails.create({session:activeSession.year_name, vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
         newVehicleDetails.save().then(async () => {
             await VehicleDetails.findByIdAndUpdate(newVehicleDetails._id, {routes:[]});
         });

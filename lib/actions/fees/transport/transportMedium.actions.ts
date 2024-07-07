@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import TransportMedium from '@/lib/models/fees/transport/TransportMedium.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the transport medium already exists
         const existingTransportMedium = await TransportMedium.findOne({transport_medium});
         if(existingTransportMedium){
@@ -28,7 +34,7 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
 
 
         // Creating new transport medium
-        const newTranportMedium = await TransportMedium.create({transport_medium});
+        const newTranportMedium = await TransportMedium.create({session:activeSession.year_name, transport_medium});
         newTranportMedium.save();
 
 

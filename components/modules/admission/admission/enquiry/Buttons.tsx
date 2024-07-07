@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
@@ -10,7 +11,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, onSubmit, form}:any) => {
+const Buttons = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, onSubmit, form, setEnquiryDate}:any) => {
 
 
     // Cancel click
@@ -45,6 +46,7 @@ const Buttons = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, o
             contact_person:'',
             reference_details:''
         });
+        setEnquiryDate(moment())
     };
 
 

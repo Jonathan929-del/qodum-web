@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // BloodGroup Schema
 const BloodGroupSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         blood_group:{type:String, required:true, unique:true}
     },
     {

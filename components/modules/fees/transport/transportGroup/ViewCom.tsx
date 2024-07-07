@@ -1,9 +1,9 @@
 // Imports
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -11,7 +11,6 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 
 // Main Function
 const ViewCom = ({setIsViewOpened, transportGroups, setUpdateTransportGroup}:any) => {
-
 
     // Select handler
     const selectHandler = (transportGroup:any) => {
@@ -21,7 +20,8 @@ const ViewCom = ({setIsViewOpened, transportGroups, setUpdateTransportGroup}:any
             distance_name:transportGroup.distance_name,
             distance_amount:transportGroup.distance_amount,
             distance_from:transportGroup.distance_from,
-            distance_to:transportGroup.distance_to
+            distance_to:transportGroup.distance_to,
+            transport_term:transportGroup.transport_term
         });
         setIsViewOpened(false);
     };

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Caste from '@/lib/models/admission/globalMasters/Caste.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -19,6 +20,11 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the caste name already exists
         const existingCaste = await Caste.findOne({caste_name});
         if(existingCaste){
@@ -27,7 +33,7 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
 
 
         // Creating new caste
-        const newCaste = await Caste.create({caste_name});
+        const newCaste = await Caste.create({session:activeSession.year_name, caste_name});
         newCaste.save();
 
 

@@ -48,9 +48,13 @@ const FormCom = ({setIsViewOpened, streams, updateStream, setUpdateStream}:any) 
                 toast({title:'Stream name already exists', variant:'error'});
                 return;
             };
-            await createStream({
+            const res = await createStream({
                 stream_name:values.stream_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify stream

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import OptionalSubject from '@/lib/models/admission/globalMasters/OptionalSubject.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the optional subject already exists
         const existinOptionalSubject = await OptionalSubject.findOne({subject_name});
         if(existinOptionalSubject){
@@ -28,7 +34,7 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
 
 
         // Creating new optional subject
-        const newOptionalSubject = await OptionalSubject.create({subject_name});
+        const newOptionalSubject = await OptionalSubject.create({session:activeSession.year_name, subject_name});
         newOptionalSubject.save();
 
 

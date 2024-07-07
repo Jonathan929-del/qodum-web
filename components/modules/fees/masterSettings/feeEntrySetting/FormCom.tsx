@@ -1,17 +1,19 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import Buttons from './Buttons';
+import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
-import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormMessage} from '@/components/ui/form';
 import {fetchSchoolsNames} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 import {FeeEntrySettingValidation} from '@/lib/validations/fees/masterSettings/feeEntrySetting.validation';
+import {createFeeEntrySetting, deleteFeeEntrySetting, modifyFeeEntrySetting} from '@/lib/actions/fees/masterSettings/feeEntrySetting.actions';
 
 
 
@@ -19,8 +21,7 @@ import {FeeEntrySettingValidation} from '@/lib/validations/fees/masterSettings/f
 
 
 // Main function
-const FormCom = () => {
-
+const FormCom = ({feeEntrySettings, setIsViewOpened, updateFeeEntrySetting, setUpdateFeeEntrySetting}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -38,30 +39,25 @@ const FormCom = () => {
     const [selectedFormCom, setSelectedFormCom] = useState<any>();
 
 
+    // Comparison object
+    const comparisonObject = {
+        prefix:updateFeeEntrySetting.prefix,
+        lead_zero:updateFeeEntrySetting.lead_zero,
+        receipt_no_start:updateFeeEntrySetting.receipt_no_start,
+        suffix:updateFeeEntrySetting.suffix,
+        generate_type:updateFeeEntrySetting.generate_type
+    };
+
+
     // Form
     const form = useForm({
         resolver:zodResolver(FeeEntrySettingValidation),
         defaultValues:{
-            single_prefix:'',
-            single_lead_zero:'',
-            single_receipt_no:'',
-            single_suffix:'',
-            school_prefix:'',
-            school_lead_zero:'',
-            school_receipt_no:'',
-            school_suffix:'',
-            fee_school_prefix:'',
-            fee_transport_prefix:'',
-            fee_tution_prefix:'',
-            fee_school_lead_zero:'',
-            fee_transport_lead_zero:'',
-            fee_tution_lead_zero:'',
-            fee_school_receipt_no:'',
-            fee_transport_receipt_no:'',
-            fee_tution_receipt_no:'',
-            fee_school_suffix:'',
-            fee_transport_suffix:'',
-            fee_tution_suffix:''
+            prefix:updateFeeEntrySetting.id === '' ? '' : updateFeeEntrySetting.prefix,
+            lead_zero:updateFeeEntrySetting.id === '' ? '' : updateFeeEntrySetting.lead_zero,
+            receipt_no_start:updateFeeEntrySetting.id === '' ? '' : updateFeeEntrySetting.receipt_no_start,
+            suffix:updateFeeEntrySetting.id === '' ? '' : updateFeeEntrySetting.suffix,
+            generate_type:updateFeeEntrySetting.id === '' ? '' : updateFeeEntrySetting.generate_type,
         }
     });
 
@@ -71,39 +67,65 @@ const FormCom = () => {
         try {
 
             // Values
-            localStorage.setItem('receipt_prefix', values.single_prefix);
-            localStorage.setItem('receipt_lead_zero', values.single_lead_zero);
-            localStorage.setItem('receipt_suffix', values.single_suffix);
+            localStorage.setItem('receipt_prefix', values.prefix);
+            localStorage.setItem('receipt_lead_zero', values.lead_zero);
+            localStorage.setItem('receipt_suffix', values.suffix);
 
-            // Toast
-            toast({title:'Updated Successfully'});
+
+            // Create fee entry setting
+            if(updateFeeEntrySetting.id === ''){
+                const res = await createFeeEntrySetting({
+                    prefix:values.prefix,
+                    lead_zero:values.lead_zero,
+                    receipt_no_start:values.receipt_no_start,
+                    suffix:values.suffix,
+                    generate_type:values.generate_type
+                });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
+                toast({title:'Added Successfully!'});
+            }
+            // Modify fee entry setting
+            else if(!deepEqual(comparisonObject, values)){
+                await modifyFeeEntrySetting({
+                    id:updateFeeEntrySetting.id,
+                    prefix:values.prefix,
+                    lead_zero:values.lead_zero,
+                    receipt_no_start:values.receipt_no_start,
+                    suffix:values.suffix,
+                    generate_type:values.generate_type
+                });
+                toast({title:'Updated Successfully!'});
+            }
+            // Delete fee entry setting
+            else if(updateFeeEntrySetting.isDeleteClicked){
+                await deleteFeeEntrySetting({id:updateFeeEntrySetting.id});
+                toast({title:'Deleted Successfully!'});
+            };
+
 
             // Reseting form
+            setUpdateFeeEntrySetting({
+                id:'',
+                isDeleteClicked:false,
+                prefix:'',
+                lead_zero:'',
+                receipt_no_start:'',
+                suffix:'',
+                generate_type:'generate-single-receipt'
+            });
             form.reset({
-                single_prefix:'',
-                single_lead_zero:'',
-                single_receipt_no:'',
-                single_suffix:'',
-                school_prefix:'',
-                school_lead_zero:'',
-                school_receipt_no:'',
-                school_suffix:'',
-                fee_school_prefix:'',
-                fee_transport_prefix:'',
-                fee_tution_prefix:'',
-                fee_school_lead_zero:'',
-                fee_transport_lead_zero:'',
-                fee_tution_lead_zero:'',
-                fee_school_receipt_no:'',
-                fee_transport_receipt_no:'',
-                fee_tution_receipt_no:'',
-                fee_school_suffix:'',
-                fee_transport_suffix:'',
-                fee_tution_suffix:''
+                prefix:'',
+                lead_zero:'',
+                receipt_no_start:'',
+                suffix:'',
+                generate_type:'generate-single-receipt'
             });
 
         } catch (err:any) {
-            console.log(err.message);
+            console.log(err);
         }
     };
 
@@ -123,7 +145,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_school_prefix'
+                        name='prefix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -141,7 +163,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_transport_prefix'
+                        name='prefix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -159,7 +181,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_tution_prefix'
+                        name='prefix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -181,7 +203,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_school_lead_zero'
+                        name='lead_zero'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -199,7 +221,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_transport_lead_zero'
+                        name='lead_zero'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -217,7 +239,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_tution_lead_zero'
+                        name='lead_zero'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -239,7 +261,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_school_receipt_no'
+                        name='receipt_no_start'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -257,7 +279,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_transport_receipt_no'
+                        name='receipt_no_start'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -275,7 +297,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_tution_receipt_no'
+                        name='receipt_no_start'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -297,7 +319,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_school_suffix'
+                        name='suffix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -315,7 +337,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_transport_suffix'
+                        name='suffix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -333,7 +355,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='fee_tution_suffix'
+                        name='suffix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -354,16 +376,6 @@ const FormCom = () => {
     );
 
 
-    // Use Effect
-    useEffect(() => {
-        const schoolNameFetcher = async () => {
-            const res = await fetchSchoolsNames();
-            setSchoolName(res[0]);
-        };
-        schoolNameFetcher();
-    }, [openedFormName, selectedFormCom]);
-
-
     const two = (
         <div className='h-full flex flex-row overflow-x-scroll custom-scrollbar'>
             {/* School Type */}
@@ -377,7 +389,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='school_prefix'
+                        name='prefix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -399,7 +411,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='school_lead_zero'
+                        name='lead_zero'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -421,7 +433,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='school_receipt_no'
+                        name='receipt_no_start'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -443,7 +455,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='school_suffix'
+                        name='suffix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -471,7 +483,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='single_prefix'
+                        name='prefix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -493,7 +505,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='single_lead_zero'
+                        name='lead_zero'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -515,7 +527,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='single_receipt_no'
+                        name='receipt_no_start'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -537,7 +549,7 @@ const FormCom = () => {
                 <li className='flex-1 flex items-center px-2 border-[0.5px] border-[#ccc] bg-[#E2E4FF]'>
                     <FormField
                         control={form.control}
-                        name='single_suffix'
+                        name='suffix'
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
@@ -557,24 +569,33 @@ const FormCom = () => {
     );
 
 
-    // Use effect
+    // Use Effect
+    useEffect(() => {
+        const schoolNameFetcher = async () => {
+            const res = await fetchSchoolsNames();
+            setSchoolName(res[0]);
+        };
+        schoolNameFetcher();
+    }, [openedFormName, selectedFormCom]);
     useEffect(() => {
         switch (openedFormName){
             case 'generate-single-receipt':
                 setSelectedFormCom(one);
                 return;
             case 'generate-school-wise-receipt':
-                setSelectedFormCom(two);
+                // setSelectedFormCom(two);
+                setSelectedFormCom(one);
                 return;
             case 'generate-fee-type-wise-receipt':
-                setSelectedFormCom(threeAndFour);
+                // setSelectedFormCom(threeAndFour);
+                setSelectedFormCom(one);
                 return;
             case 'generate-school-with-fee-type-wise-receipt':
-                setSelectedFormCom(threeAndFour);
+                // setSelectedFormCom(threeAndFour);
+                setSelectedFormCom(one);
                 return;
         };
     }, [openedFormName]);
-
 
     return (
         <div className='w-[90%] max-w-[1100px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
@@ -613,14 +634,10 @@ const FormCom = () => {
                     </div>
 
 
-                    {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 mt-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Update
-                    </Button>
+                    {/* Buttons */}
+                    <div className='flex flex-col items-center mt-[-20px]'>
+                        <Buttons setIsViewOpened={setIsViewOpened} feeEntrySettings={feeEntrySettings} updateFeeEntrySetting={updateFeeEntrySetting} setUpdateFeeEntrySetting={setUpdateFeeEntrySetting} onSubmit={onSubmit} form={form} />
+                    </div>
 
 
                 </form>

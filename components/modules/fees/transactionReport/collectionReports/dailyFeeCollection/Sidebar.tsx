@@ -1,5 +1,6 @@
 // Improts
 import * as z from 'zod';
+import moment from 'moment';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
 import {useState, useEffect} from 'react';
@@ -24,6 +25,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {DailyFeeCollectionValidation} from '@/lib/validations/fees/transactionReport/collectionReports/dailyFeeCollection.validation';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 
 
@@ -32,9 +34,9 @@ import {DailyFeeCollectionValidation} from '@/lib/validations/fees/transactionRe
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData, setPdfData}) => {
 
-
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [dateFrom, setDateFrom] = useState(moment());
+    const [dateTo, setDateTo] = useState(moment());
 
 
     // Schools
@@ -169,6 +171,18 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('is_receipt_no_range'), form.watch('show_collection')]);
+    useEffect(() => {
+        if(dateFrom){
+            // @ts-ignore
+            form.setValue('date_from', dateFrom._d);
+        };
+    }, [dateFrom]);
+    useEffect(() => {
+        if(dateTo){
+            // @ts-ignore
+            form.setValue('date_to', dateTo._d);
+        };
+    }, [dateTo]);
 
 
     return (
@@ -575,56 +589,18 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                         {/* Date From */}
                         <div className='flex-1 flex flex-col'>
                             <p className='text-xs text-hash-color'>Date From</p>
-                            <Popover open={isCalendarOpened === 'date_from'} onOpenChange={() => isCalendarOpened === 'date_from' ? setIsCalendarOpened('') : setIsCalendarOpened('date_from')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                                    >
-                                        {/* <CalendarIcon className='mr-2 h-4 w-4' /> */}
-                                        {
-                                            form.getValues().date_from
-                                                    ? <span>{format(form.getValues().date_from, 'P')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto bg-[#fff]'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().date_from}
-                                        onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('date_from', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <MyDatePicker
+                                selectedDate={dateFrom}
+                                setSelectedDate={setDateFrom}
+                            />
                         </div>
                         {/* Date To */}
                         <div className='flex-1 flex flex-col'>
                             <p className='text-xs text-hash-color'>Date To</p>
-                            <Popover open={isCalendarOpened === 'date_to'} onOpenChange={() => isCalendarOpened === 'date_to' ? setIsCalendarOpened('') : setIsCalendarOpened('date_to')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center text-[11px] bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                                    >
-                                        {/* <CalendarIcon className='mr-2 h-4 w-4' /> */}
-                                        {
-                                            form.getValues().date_to
-                                                    ? <span>{format(form.getValues().date_to, 'P')}</span>
-                                                    : <span>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto bg-[#fff]'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form.getValues().date_to}
-                                        onSelect={(v:any) => {setIsCalendarOpened(''); form.setValue('date_to', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <MyDatePicker
+                                selectedDate={dateTo}
+                                setSelectedDate={setDateTo}
+                            />
                         </div>
                     </div>
 

@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, houses, updateHouse, setUpdateHouse}:any) => 
                 toast({title:'House name already exists', variant:'error'});
                 return;
             };
-            await createHouse({
+            const res = await createHouse({
                 house_name: values.house_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify House

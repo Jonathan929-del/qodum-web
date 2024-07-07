@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Bank Ledger Schema
 const BankLedgerSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         account_name:{type:String, required:true, unique:true},
         group:{type:String, required:true},
         account_type:{type:String},

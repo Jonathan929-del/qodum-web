@@ -50,10 +50,14 @@ const FormCom = ({setIsViewOpened, healthUnits, updateHealthUnit, setUpdateHealt
                 toast({title:'Health unit name already exists', variant:'error'});
                 return;
             };
-            await createHealthUnit({
+            const res = await createHealthUnit({
                 unit_name:values.unit_name,
                 unit_type:values.unit_type
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify remark

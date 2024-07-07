@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import BloodGroup from '@/lib/models/admission/globalMasters/BloodGroup.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -19,6 +20,11 @@ export const createBloodGroup = async ({blood_group}:CreateBloodGroupProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the blood group already exists
         const existingBloodGroup = await BloodGroup.findOne({blood_group});
         if(existingBloodGroup){
@@ -27,7 +33,7 @@ export const createBloodGroup = async ({blood_group}:CreateBloodGroupProps) => {
 
 
         // Creating new blood group
-        const newBloodGroup = await BloodGroup.create({blood_group});
+        const newBloodGroup = await BloodGroup.create({session:activeSession.year_name, blood_group});
         newBloodGroup.save();
 
 

@@ -50,10 +50,14 @@ const FormCom = ({setIsViewOpened, categories, updateCategory, setUpdateCategory
                 toast({title:'Category name already exists', variant:'error'});
                 return;
             };
-            await createCategory({
+            const res = await createCategory({
                 category_name:values.category_name,
                 is_default:values.is_default
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Category

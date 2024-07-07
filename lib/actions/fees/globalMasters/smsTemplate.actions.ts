@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import SmsTemplate from '@/lib/models/fees/globalMasters/SmsTemplate.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -22,8 +23,13 @@ export const createSmsTemplate = async ({sms_type, sms_template, is_enable}:Crea
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Creating new sms template
-        const newSmsTemplate = await SmsTemplate.create({sms_type, sms_template, is_enable});
+        const newSmsTemplate = await SmsTemplate.create({session:activeSession.year_name, sms_type, sms_template, is_enable});
         newSmsTemplate.save();
 
 

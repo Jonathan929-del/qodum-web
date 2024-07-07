@@ -1,18 +1,16 @@
 'use client';
 // Imports
-import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
 import StudentImage from './StudentImage';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
-import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Check, ChevronDown, Search, X} from 'lucide-react';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
@@ -20,6 +18,7 @@ import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.act
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchEnquiryByEnquiryNo} from '@/lib/actions/admission/admission/enquiry.actions';
+import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -27,20 +26,13 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
-import { fetchBloodGroups } from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import { fetchCastes } from '@/lib/actions/admission/globalMasters/caste.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects}:any) => {
-
-
-    // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
-
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob}:any) => {
 
     // Classes
     const [classes, setClasses] = useState([{}]);
@@ -435,7 +427,18 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         };
         fetcher();
     }, [form.watch('student.is_online'), window.onload]);
-
+    useEffect(() => {
+        if(date){
+            // @ts-ignore
+            form.setValue('student.date', date._d);
+        };
+    }, [date]);
+    useEffect(() => {
+        if(dob){
+            // @ts-ignore
+            form.setValue('student.dob', dob._d);
+        };
+    }, [dob]);
 
     return (
         <div className='flex flex-row'>
@@ -578,29 +581,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     render={() => (
                         <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
                             <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>Date</FormLabel>
-                            <Popover open={isCalendarOpened === 'date'} onOpenChange={() => isCalendarOpened === 'date' ? setIsCalendarOpened('') : setIsCalendarOpened('date')}>
-                                <PopoverTrigger asChild className='h-7'>
-                                    <Button
-                                        variant='outline'
-                                        className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[65%]'
-                                    >
-                                        <CalendarIcon className='mr-2 h-4 w-4' />
-                                        {
-                                            form?.getValues()?.student?.date
-                                                    ? <span className='text-[11px]'>{format(form?.getValues()?.student?.date, 'PPP')}</span>
-                                                    : <span className='text-[11px]'>Pick a date</span>
-                                        }
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto p-0'>
-                                    <Calendar
-                                        mode='single'
-                                        selected={form?.getValues()?.student?.date}
-                                        onSelect={v => {setIsCalendarOpened(''); form?.setValue('student?.date', v)}}
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
+                            <div className='basis-[65%]'>
+                                <MyDatePicker
+                                    selectedDate={date}
+                                    setSelectedDate={setDate}
+                                />
+                            </div>
                         </FormItem>
                     )}
                 />
@@ -1103,29 +1089,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             render={() => (
                                 <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
                                     <FormLabel className='basis-auto h-2 pr-[4px] text-end text-[11px] text-[#726E71] sm:basis-[35%]'>DOB</FormLabel>
-                                    <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                                        <PopoverTrigger asChild className='h-7'>
-                                            <Button
-                                                variant='outline'
-                                                className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[65%]'
-                                            >
-                                                <CalendarIcon className='mr-2 h-4 w-4' />
-                                                {
-                                                    form?.getValues()?.student?.dob
-                                                            ? <span>{format(form?.getValues()?.student?.dob, 'PPP')}</span>
-                                                            : <span>Pick a date</span>
-                                                }
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className='w-auto p-0'>
-                                            <Calendar
-                                                mode='single'
-                                                selected={form?.getValues()?.student?.dob}
-                                                onSelect={v => {setIsCalendarOpened(''); form?.setValue('student?.dob', v)}}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className='basis-[65%]'>
+                                        <MyDatePicker
+                                            selectedDate={dob}
+                                            setSelectedDate={setDob}
+                                        />
+                                    </div>
                                 </FormItem>
                             )}
                         />

@@ -48,10 +48,14 @@ const FormCom = ({setIsViewOpened, sections, updateSection, setUpdateSection}:an
                 toast({title:'Section name already exists', variant:'error'});
                 return;
             };
-            await createSection({
+            const res = await createSection({
                 section_name:values.section_name,
                 order_no:values.order_no
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify section

@@ -62,7 +62,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                 toast({ title: 'Head name already exists', variant: 'error' });
                 return;
             };
-            await createHead({
+            const res = await createHead({
                 name: values.name,
                 print_name: values.print_name,
                 pay_schedule: values.pay_schedule,
@@ -71,6 +71,10 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                 show_in_certificate: values.show_in_certificate,
                 fee_refundable: values.fee_refundable
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({ title: 'Added Successfully!' });
         }
 

@@ -1,11 +1,18 @@
 'use client';
 // Imports
-import BarCom from '@/components/dashboards/shared/BarCom';
-import DoughnutCom from '@/components/dashboards/shared/DoughnutCom';
-import LineCom from '@/components/dashboards/shared/LineCom';
-import AccountCards from '@/components/dashboards/accountsDashboard/AccountCards';
-import TodayVouchers from '@/components/dashboards/accountsDashboard/TodayVouchers';
-import {incomeAndExpenditureLineData, fundFlowBarData, categoryDoughnutData, entryTypeDoughnutData} from '@/constants/charts/accountsCharts';
+import {useContext, useEffect, useState} from 'react';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
+
+import Dashboard from '@/pages/admission/page';
+// @ts-ignore
+import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
+import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
+import DefineNarrationMaster from '@/pages/accounts/(global masters)/define-narration-master/page';
+import ChangeAcademic from '@/pages/accounts/(masterSettings)/change-academic/page';
+import DefineAccountGroup from '@/pages/accounts/(accounts)/define-account-group/page';
+import DefineBankLedger from '@/pages/accounts/(accounts)/define-bank-ledger/page';
+import DefinePartyLedger from '@/pages/accounts/(accounts)/define-party-ledger/page';
+import DefineGeneralLedger from '@/pages/accounts/(accounts)/define-general-ledger/page';
 
 
 
@@ -13,39 +20,59 @@ import {incomeAndExpenditureLineData, fundFlowBarData, categoryDoughnutData, ent
 
 
 // Main function
-const page = () => {
-    return (
-        <section className='flex flex-col w-full gap-4'>
+const Home = () => {
+
+  // Current page
+  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  
+  
+  // Opened pages components
+  const [openedPagesComponents, setOpenedPagesComponents] = useState([]);
 
 
-            {/* Cards */}
-            <AccountCards />
+  // Use effect
+  useEffect(() => {
 
+    if(openedPages.length === 0){
+      setCurrentPage('');
+      setOpenedPagesComponents([{name:'Dashboard', component:<Dashboard />}]);
+    };
+    if(openedPages.includes('Define Academic Year')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
+    };
+    if(openedPages.includes('Define Financial Year')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineFinancialYear />}]);
+    };
+    if(openedPages.includes('Define Narration Master')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Narration Master', component:<DefineNarrationMaster />}]);
+    };
+    if(openedPages.includes('Change Academic')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Change Academic', component:<ChangeAcademic />}]);
+    };
+    if(openedPages.includes('Define Account Group')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Account Group', component:<DefineAccountGroup />}]);
+    };
+    if(openedPages.includes('Define Bank Ledger')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Bank Ledger', component:<DefineBankLedger />}]);
+    };
+    if(openedPages.includes('Define Party Ledger')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Party Ledger', component:<DefinePartyLedger />}]);
+    };
+    if(openedPages.includes('Define General Ledger')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define General Ledger', component:<DefineGeneralLedger />}]);
+    };
 
-            {/* Income and Expenditure */}
-            <div className='flex flex-col justify-between mx-4 gap-4 lg:flex-row'>
-                <div className='lg:w-[calc(100%-400px)]'>
-                    <LineCom lineData={incomeAndExpenditureLineData}/>
-                </div>
-                <TodayVouchers />
-            </div>
+  }, [openedPages]);
 
-
-            {/* Fund Flow Bar */}
-            <div className='flex-1 flex flex-col justify-between mx-4 gap-4'>
-                <BarCom barData={fundFlowBarData}/>
-            </div>
-
-
-            {/* Doughnuts */}
-            <div className='flex-1 flex flex-col mx-4 gap-4 lg:flex-row'>
-                <DoughnutCom data={categoryDoughnutData} text='81.60 CR'/>
-                <DoughnutCom data={entryTypeDoughnutData} text='81.60 CR'/>
-            </div>
-
-
-        </section>
-    );
+  return(
+    <div className='relative h-full w-full'>
+      {openedPagesComponents?.map((component:any) => (
+        <div className={`absolute w-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+          {component.component}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 
@@ -53,4 +80,4 @@ const page = () => {
 
 
 // Export
-export default page;
+export default Home;

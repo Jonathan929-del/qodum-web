@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Parish Schema
 const ParishSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         parish:{type:String, required:true, unique:true},
         religion:[{type:String}]
     },

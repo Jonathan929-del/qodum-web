@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // General Ledger Schema
 const GeneralLedgerSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         account_name:{type:String, required:true},
         group:{type:String, required:true},
         account_type:{type:String, required:true},

@@ -1,21 +1,19 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {format} from 'date-fns';
+import moment from 'moment';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {Switch} from '@/components/ui/switch';
-import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.validation';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -29,7 +27,6 @@ import {createEnquiry, deleteEnquiry, modifyEnquiry} from '@/lib/actions/admissi
 // Main function
 const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -39,7 +36,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [enquiryDate, setEnquiryDate] = useState(moment());
 
 
     // Last number
@@ -90,7 +87,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 toast({title:'Enquiry number already exists', variant:'error'});
                 return;
             };
-            await createEnquiry({
+            const res = await createEnquiry({
                 enquiry_no:values.enquiry_no,
                 enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
@@ -103,10 +100,14 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 contact_person:values.contact_person,
                 reference_details:values.reference_details
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify enquiry
-        else if(!deepEqual(comparisonObject, values)){
+        else if(!deepEqual(comparisonObject, values) || moment(values.enquiry_date).format('DD-MM-YYYY') !== moment(comparisonObject.enquiry_date).format('DD-MM-YYYY')){
             if(comparisonObject.enquiry_no !== values.enquiry_no && enquiries.map((e:any) => e.enquiry_no).includes(values.enquiry_no)){
                 toast({title:'Enquiry number already exists', variant:'error'});
                 return;
@@ -165,6 +166,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             contact_person:'',
             reference_details:''
         });
+        setEnquiryDate(moment());
     };
 
 
@@ -177,6 +179,9 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
     // Use effect
     useEffect(() => {
+        if(updateEnquiry.id !== ''){
+            setEnquiryDate(moment(updateEnquiry.enquiry_date));
+        };
         const fetcher = async () => {
             const res = await fetchClasses();
             setClasses(res);
@@ -199,7 +204,12 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
         };
     }, [enquiries, updateEnquiry]);
-
+    useEffect(() => {
+        if(enquiryDate){
+            // @ts-ignore
+            form.setValue('enquiry_date', enquiryDate._d);
+        };
+    }, [enquiryDate]);
 
     return (
         <div className='w-[90%] max-w-[500px] max-h-[95%] flex flex-col items-center border-[0.5px] border-[##E8E8E8] rounded-[8px] sm:w-[70%] overflow-y-scroll custom-sidebar-scrollbar'>
@@ -282,29 +292,12 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                         render={() => (
                             <FormItem className='relative w-full h-10 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
                                 <FormLabel className='basis-auto h-2 pr-2 text-end text-[11px] text-[#726E71] sm:basis-[30%]'>Enquiry Date</FormLabel>
-                                <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                                    <PopoverTrigger asChild className='h-10'>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center w-full h-10 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[70%]'
-                                        >
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                            {
-                                                form?.getValues().enquiry_date
-                                                        ? <span>{format(form?.getValues().enquiry_date, 'PPP')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form?.getValues().enquiry_date}
-                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('enquiry_date', v)}}
-                                            initialFocus
-                                        />
-                                    </PopoverContent>
-                                </Popover>
+                                <div className='basis-[70%]'>
+                                    <MyDatePicker
+                                        selectedDate={enquiryDate}
+                                        setSelectedDate={setEnquiryDate}
+                                    />
+                                </div>
                             </FormItem>
                         )}
                     />
@@ -523,7 +516,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} enquiries={enquiries} updateEnquiry={updateEnquiry} setUpdateEnquiry={setUpdateEnquiry} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} enquiries={enquiries} updateEnquiry={updateEnquiry} setUpdateEnquiry={setUpdateEnquiry} onSubmit={onSubmit} form={form} setEnquiryDate={setEnquiryDate}/>
                     </div>
                 </form>
             </Form>

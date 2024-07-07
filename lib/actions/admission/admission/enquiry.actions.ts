@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
 import Student from '@/lib/models/admission/admission/Student.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -43,6 +44,11 @@ export const createEnquiry = async ({
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the enquiry already exists
         const existinEnquiry = await Enquiry.findOne({enquiry_no});
         if(existinEnquiry){
@@ -52,6 +58,7 @@ export const createEnquiry = async ({
 
         // Creating new enquiiry
         const newEnquiry = await Enquiry.create({
+            session:activeSession.year_name,
             enquiry_no,
             enquiry_date,
             visitor_name,

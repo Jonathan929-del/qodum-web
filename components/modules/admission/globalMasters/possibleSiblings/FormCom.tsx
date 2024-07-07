@@ -1,7 +1,6 @@
 // Imports
 import StudentsList from './StudentList';
 import {useEffect, useState} from 'react';
-import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 

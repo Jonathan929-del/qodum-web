@@ -98,7 +98,7 @@ const FormCom = ({setIsViewOpened, routeStops, updateRouteStop, setUpdateRouteSt
     const onSubmit = async (values:z.infer<typeof RouteStopValidation>) => {
         // Create transport group
         if(updateRouteStop.id === ''){
-            await createRouteStop({
+            const res = await createRouteStop({
                 route_no:values.route_no,
                 stop_no:values.stop_no,
                 stop_name:values.stop_name,
@@ -127,6 +127,10 @@ const FormCom = ({setIsViewOpened, routeStops, updateRouteStop, setUpdateRouteSt
                     dec:values.transport_groups.dec
                 }
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify transport group

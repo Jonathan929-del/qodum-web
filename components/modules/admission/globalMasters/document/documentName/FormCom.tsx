@@ -51,10 +51,14 @@ const FormCom = ({documentTypes, setIsViewOpened, documents, updateDocument, set
                 toast({title:'Document name already exists', variant:'error'});
                 return;
             };
-            await createDocument({
+            const res = await createDocument({
                 document_type:values.document_type,
                 document_name:values.document_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify document

@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Layout from '@/lib/models/admission/masterSettings/Layout.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -75,6 +76,11 @@ export const createLayout = async ({report_setting, header_and_footer_setting, f
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the report name already exists
         const existingLayou = await Layout.findOne({'report_setting.report_name':report_setting.report_name});
         if(existingLayou){
@@ -83,7 +89,7 @@ export const createLayout = async ({report_setting, header_and_footer_setting, f
 
 
         // Creating new layout
-        const newLayout = await Layout.create({report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting});
+        const newLayout = await Layout.create({session:activeSession.year_name, report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting});
         newLayout.save();
 
 

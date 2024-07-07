@@ -52,10 +52,14 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
                 toast({ title: 'Parish name already exists', variant: 'error' });
                 return;
             };
-            await createParish({
+            const res = await createParish({
                 parish: values.parish,
                 religion: selectedReligions
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({ title: 'Added Successfully!' });
         }
         // Modify Parish

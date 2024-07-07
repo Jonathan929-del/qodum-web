@@ -1,6 +1,7 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import HealthMaster from '@/lib/models/admission/globalMasters/studentHealthMaster/HealthMaster.model';
 
 
@@ -21,6 +22,11 @@ export const createHealthMaster = async ({health_parameter, unit}:CreateHealthMa
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the health master already exists
         const existinHealthMaster = await HealthMaster.findOne({health_parameter});
         if(existinHealthMaster){
@@ -29,7 +35,7 @@ export const createHealthMaster = async ({health_parameter, unit}:CreateHealthMa
 
 
         // Creating new health Master
-        const newHealthMaster = await HealthMaster.create({health_parameter, unit});
+        const newHealthMaster = await HealthMaster.create({session:activeSession.year_name, health_parameter, unit});
         newHealthMaster.save();
 
 

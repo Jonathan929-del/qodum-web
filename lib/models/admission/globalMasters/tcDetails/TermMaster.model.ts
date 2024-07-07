@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Term Master Schema
 const TermSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         term_name:{type:String, required:true, unique:true}
     },
     {

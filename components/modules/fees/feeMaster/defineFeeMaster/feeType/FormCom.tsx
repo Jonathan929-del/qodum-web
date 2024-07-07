@@ -35,7 +35,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
 
 
     // Form
-    const form: any = useForm({
+    const form = useForm({
         resolver: zodResolver(FeeTypeValidation),
         defaultValues: {
             name: updateType.id === '' ? '' : updateType.name,
@@ -54,11 +54,15 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                 toast({ title: 'Type name already exists', variant: 'error' });
                 return;
             };
-            await createType({
+            const res = await createType({
                 name: values.name,
                 preference_no: values.preference_no,
                 heads: values.heads
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({ title: 'Added Successfully!' });
         }
 

@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, transportMediums, updateTransportMedium, setU
                 toast({title:'Transport medium already exists', variant:'error'});
                 return;
             };
-            await createTransportMedium({
+            const res = await createTransportMedium({
                 transport_medium:values.transport_medium
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify transport Medium

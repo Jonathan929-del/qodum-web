@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Religion from '@/lib/models/admission/globalMasters/Religion.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the religion name already exists
         const existinReligion = await Religion.findOne({religion_name});
         if(existinReligion){
@@ -28,7 +34,7 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
 
 
         // Creating new religion
-        const newReligion = await Religion.create({religion_name});
+        const newReligion = await Religion.create({session:activeSession.year_name, religion_name});
         newReligion.save();
 
 

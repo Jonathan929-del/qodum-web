@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, remarks, updateRemark, setUpdateRemark}:any) 
                 toast({title:'Remark name already exists', variant:'error'});
                 return;
             };
-            await createRemark({
+            const res = await createRemark({
                 remark:values.remark
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify remark

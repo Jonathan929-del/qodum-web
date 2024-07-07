@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Label} from '@/components/ui/label';
@@ -11,6 +12,8 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FeeOpeningBalanceSettingValidation} from '@/lib/validations/fees/masterSettings/feeOpeningBalanceSetting.validation';
+import { fetchTypes } from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -25,7 +28,7 @@ const FormCom = () => {
 
 
     // Advance types
-    const advnace_types = ['Colleage fee', 'Plawat', 'Annual fee'];
+    const [feeTypes, setFeeTypes] = useState([{}]);
 
 
     // Form
@@ -56,6 +59,16 @@ const FormCom = () => {
             console.log(err.message);
         }
     };
+
+
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const feeTypesRes = await fetchTypes();
+            setFeeTypes(feeTypesRes);
+        };
+        fetcher();
+    }, []);
 
 
     return (
@@ -145,11 +158,17 @@ const FormCom = () => {
                                                     <ChevronDown className='h-4 w-4 opacity-50'/>
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {advnace_types.map((type:any, index: number) => (
-                                                        <SelectItem 
-                                                            value={type} 
-                                                            key={index}>{type}
-                                                        </SelectItem>
+                                                    {feeTypes.length === 0 ? (
+                                                        <p>No fee types</p>
+                                                    ) : !feeTypes[0].name ? (
+                                                        <LoadingIcon />
+                                                    ) : feeTypes.map((type:any, index: number) => (
+                                                            <SelectItem 
+                                                                value={type} 
+                                                                key={index}
+                                                            >
+                                                                {type.name}
+                                                            </SelectItem>
                                                     ))}
                                                 </SelectContent>
                                             </Select>

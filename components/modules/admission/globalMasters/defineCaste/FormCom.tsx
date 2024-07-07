@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, castes, updateCaste, setUpdateCaste}:any) => 
                 toast({title:'Caste name already exists', variant:'error'});
                 return;
             };
-            await createCaste({
+            const res = await createCaste({
                 caste_name:values.caste_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify caste

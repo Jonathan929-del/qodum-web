@@ -66,7 +66,7 @@ const FormCom = ({setIsViewOpened, dueLimits, updateDueLimit, setUpdateDueLimit,
                     toast({title:'Dues amount cannot be less than 0.1', variant:'alert'});
                     return;
                 };
-                await createDueLimit({
+                const res = await createDueLimit({
                     class_name:values.class_name,
                     fee_type:values.fee_type,
                     late_fee_on_due:values.late_fee_on_due,
@@ -75,6 +75,10 @@ const FormCom = ({setIsViewOpened, dueLimits, updateDueLimit, setUpdateDueLimit,
                     heads:values.heads,
                     fine_waive_off_setting:values.fine_waive_off_setting
                 });
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
                 toast({title:'Added Successfully!'});
             }
             // Modify due limit

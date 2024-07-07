@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Transport Medium Schema
 const TransportMediumSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         transport_medium:{type:String, required:true, unique:true}
     },
     {

@@ -52,12 +52,16 @@ const FormCom = ({setIsViewOpened, vehicleRoutes, updateVehicleRoute, setUpdateV
                 toast({title:'Route no. already exists', variant:'error'});
                 return;
             };
-            await createVehicleRoute({
+            const res = await createVehicleRoute({
                 route_no:values.route_no,
                 route_description:values.route_description,
                 route_in_charge_name:values.route_in_charge_name,
                 route_in_charge_mobile_no:values.route_in_charge_mobile_no
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify vehicle route

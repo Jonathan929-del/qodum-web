@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // School global details Schema
 const SchoolGlobalDetailsSchema = new mongoose.Schema(
         {
+            session:{type:String, required:true},
             logo:{type:String},
             school_main:{type:Boolean},
             school_subheads:{type:Boolean},

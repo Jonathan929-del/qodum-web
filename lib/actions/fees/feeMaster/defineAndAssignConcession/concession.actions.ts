@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Concession from '@/lib/models/fees/feeMaster/defineAndAssignConcession/Concession.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the concession name already exists
         const existingConcession = await Concession.findOne({name});
         if(existingConcession){
@@ -28,7 +34,7 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
 
 
         // Creating new concession
-        const newConcession = await Concession.create({name});
+        const newConcession = await Concession.create({session:activeSession.year_name, name});
         newConcession.save();
 
 

@@ -48,9 +48,13 @@ const FormCom = ({setIsViewOpened, subjects, updateSubject, setUpdateSubject}:an
                 toast({title:'Optional subject name already exists', variant:'error'});
                 return;
             };
-            await createOptionalSubject({
+            const res = await createOptionalSubject({
                 subject_name:values.subject_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify subject

@@ -127,7 +127,7 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 formData.append('file', file);
                 await uploadSchoolLogo({data:formData, school_name:values.school_name.replace(/ /g, '-')});
             };
-            await createGlobalSchoolDetails({
+            const res = await createGlobalSchoolDetails({
                 logo:file !== null ? `https://qodum.s3.amazonaws.com/schools/${values.school_name.replace(/ /g, '-')}` : '',
                 school_main:values.school_main,
                 school_subheads:values.school_subheads,
@@ -156,6 +156,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 academic_year:'',
                 financial_year:'',
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify school details

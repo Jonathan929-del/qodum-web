@@ -72,84 +72,61 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
                         {/* Modify */}
-                        {
-                            updateAcademicYear.is_active ? (
-                                <button
-                                    disabled
-                                    className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white cursor-not-allowed opacity-50
-                                             sm:text-[16px] sm:px-4'
-                                >
-                                    Modify
-                                </button>
-                            ):(
-                                <AlertDialog>
-                                    <AlertDialogTrigger
-                                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
-                                        hover:border-[#790AE0] hover:from-[#8f3cdd40] hover:to-[#8f3cdd40] hover:text-[#790AE0] sm:text-[16px] sm:px-4'
-                                    >
-                                        Modify
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>Are you sure you want  to modify this record?</AlertDialogTitle>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel>No</AlertDialogCancel>
-                                            <AlertDialogAction>
-                                                <Button
-                                                    className='border-[0.5px] border-black'
-                                                    onClick={handleSubmit}
-                                                >
-                                                    Yes
-                                                </Button>
-                                            </AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            )
-                        }
+                        <AlertDialog>
+                            <AlertDialogTrigger
+                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
+                                hover:border-[#790AE0] hover:from-[#8f3cdd40] hover:to-[#8f3cdd40] hover:text-[#790AE0] sm:text-[16px] sm:px-4'
+                            >
+                                Modify
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure you want  to modify this record?</AlertDialogTitle>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>No</AlertDialogCancel>
+                                    <AlertDialogAction>
+                                        <Button
+                                            className='border-[0.5px] border-black'
+                                            onClick={handleSubmit}
+                                        >
+                                            Yes
+                                        </Button>
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
 
 
                         {/* Delete button */}
-                        {
-                            updateAcademicYear.is_active ? (
-                                <button
-                                    disabled
-                                    className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white cursor-not-allowed opacity-50
-                                                sm:text-[16px] sm:px-4'                                
-                                >
-                                    Delete
-                                </button>
-                            ):(
-                                <AlertDialog>
-                                    <AlertDialogTrigger
-                                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
-                                        hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                        onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:true})}
+                        <AlertDialog>
+                            <AlertDialogTrigger
+                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
+                                hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
+                                onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:true})}
+                            >
+                                Delete
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure you want  to delete this record?</AlertDialogTitle>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel
+                                        onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:false})}
                                     >
-                                        Delete
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>Are you sure you want  to delete this record?</AlertDialogTitle>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel
-                                                onClick={() => setUpdateAcademicYear({...updateAcademicYear, isDeleteClicked:false})}
-                                            >
-                                                No
-                                            </AlertDialogCancel>
-                                            <Button
-                                                className='border-[0.5px] border-black'
-                                                onClick={handleSubmit}
-                                            >
-                                                Yes
-                                            </Button>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            )
-                        }
+                                        No
+                                    </AlertDialogCancel>
+                                    <Button
+                                        className='border-[0.5px] border-black'
+                                        onClick={handleSubmit}
+                                    >
+                                        Yes
+                                    </Button>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+
                     </>
                 )
             }

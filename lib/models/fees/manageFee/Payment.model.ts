@@ -8,6 +8,11 @@ import mongoose from 'mongoose';
 // Payment Schema
 const PaymentSchema = new mongoose.Schema(
     {
+
+        // Session
+        session:{type:String, required:true},
+
+
         // Others
         student:{type:String},
         image:{type:String},
@@ -37,7 +42,6 @@ const PaymentSchema = new mongoose.Schema(
         student_status:{type:String},
         bank_name:{type:String},
         fee_group:{type:String},
-        session:{type:String},
         is_canceled:{type:Boolean},
 
 

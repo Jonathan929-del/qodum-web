@@ -53,11 +53,15 @@ const FormCom = ({setIsViewOpened, meritCriterias, updateMeritCriteria, setUpdat
                 toast({title:'Criteria name already exists', variant:'error'});
                 return;
             };
-            await createMeritCriteria({
+            const res = await createMeritCriteria({
                 session:values.session,
                 name:values.name,
                 maximum_point:values.maximum_point
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify merit criteria

@@ -16,7 +16,6 @@ const ViewCom = ({ setIsViewOpened, types, setUpdateType }: any) => {
 
     // Select handler
     const selectHandler = (type: any) => {
-        console.log(type)
         setUpdateType({
             id: type._id,
             isDeleteClicked: false,

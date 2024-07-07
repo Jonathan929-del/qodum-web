@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, casts, updateCast, setUpdateCast}:any) => {
                 toast({title:'Caste name already exists', variant:'error'});
                 return;
             };
-            await createTcCaste({
+            const res = await createTcCaste({
                 caste_name:values.caste_name
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Category

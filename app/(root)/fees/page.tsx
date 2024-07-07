@@ -1,150 +1,229 @@
 'use client';
 // Imports
-import {useEffect, useState} from 'react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
-import BarCom from '@/components/dashboards/shared/BarCom';
-import {feeDefaultersBarData} from '@/constants/charts/feesChars';
-import {fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
-import FeesCardsOne from '@/components/dashboards/feesDashboard/FeesCardsOne';
-import CollectionSummary from '@/components/dashboards/feesDashboard/CollectionSummary';
-import PaymodeSummaryCard from '@/components/dashboards/feesDashboard/PaymodeSummaryCard';
-import EstimatedCollection from '@/components/dashboards/feesDashboard/EstimatedCollection';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
-import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
+import {useContext, useEffect, useState} from 'react';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 
+import Dashboard from '@/pages/fees/page';
+// @ts-ignore
+import DefineSchoolBoard from '@/pages/fees/(global masters)/(define-school)/define-school-board/page';
+import SchoolGlobalDetails from '@/pages/fees/(global masters)/(define-school)/school-global-details/page';
+import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
+import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
+import DefineWing from '@/pages/fees/(global masters)/(define-class-details)/define-wing/page';
+import DefineClass from '@/pages/fees/(global masters)/(define-class-details)/define-class/page';
+import DefineSection from '@/pages/fees/(global masters)/(define-class-details)/define-section/page';
+import RelateClassSection from '@/pages/fees/(global masters)/(define-class-details)/relate-class-section/page';
+import ChangeAcademic from '@/pages/fees/(master settings)/change-academic/page';
+import FeeEntrySetting from '@/pages/fees/(master settings)/fee-entry-setting/page';
+import FeeEntrySettingOthers from '@/pages/fees/(master settings)/fee-entry-setting-others/page';
+import SetDueLimit from '@/pages/fees/(master settings)/set-due-limit/page';
+import FeeOpeningBalanceSetting from '@/pages/fees/(master settings)/fee-opening-balance-setting/page';
+import BusIDSetting from '@/pages/fees/(master settings)/bus-id-setting/page';
+import ReportLayoutSetting from '@/pages/fees/(master settings)/report-layout-setting/page';
+import SessionTransfer from '@/pages/fees/(master settings)/session-transfer/page';
+import DefineFeeInstallment from '@/pages/fees/(fee master)/(define fee master)/define-fee-installment/page';
+import DefineFeeHead from '@/pages/fees/(fee master)/(define fee master)/define-fee-head/page';
+import DefineFeeType from '@/pages/fees/(fee master)/(define fee master)/define-fee-type/page';
+import DefineFeeGroup from '@/pages/fees/(fee master)/(define fee master)/define-fee-group/page';
+import AssignFeeGroupToFeeHead from '@/pages/fees/(fee master)/assign-fee-group-to-fee-head/page';
+import AssignAmountGroup from '@/pages/fees/(fee master)/assign-amount-group/page';
+import AssignMultipleGroupToStudent from '@/pages/fees/(fee master)/assign-multiple-group-to-student/page';
+import DefineConcession from '@/pages/fees/(fee master)/(define and assign concession)/define-concession/page';
+import DefineConcessionType from '@/pages/fees/(fee master)/(define and assign concession)/define-concession-type/page';
+import AssignConcession from '@/pages/fees/(fee master)/(define and assign concession)/assign-concession/page';
+import SetStudentStatus from '@/pages/fees/(fee master)/set-student-status/page';
+import LateFeeSetting from '@/pages/fees/(fee master)/(lateFeeSettings)/late-fee-setting/page';
+import LateFeeSettingHeadWise from '@/pages/fees/(fee master)/(lateFeeSettings)/late-fee-setting-head-wise/page';
+import FeeEntry from '@/pages/fees/(manage fee)/fee-entry/page';
+import PrintFeeReceiptAndCertificate from '@/pages/fees/(manage fee)/print-fee-receipt-&-certificate/page';
+import ModifyFeesReceipt from '@/pages/fees/(manage fee)/modify-fees-receipt/page';
+import CancelFeesReceipt from '@/pages/fees/(manage fee)/cancel-fees-receipt/page';
+import DeleteFeesReceipt from '@/pages/fees/(manage fee)/delete-fees-receipt/page';
+import TravelAgencyMaster from '@/pages/fees/(transport)/travel-agency-master/page';
+import DefineVehicleType from '@/pages/fees/(transport)/define-vehicle-type/page';
+import DefineVehicleDetails from '@/pages/fees/(transport)/define-vehicle-details/page';
+import DefineVehicleRoute from '@/pages/fees/(transport)/define-vehicle-route/page';
+import DefineVehicleRouteRelation from '@/pages/fees/(transport)/define-vehicle-route-relation/page';
+import DefineTransportFareAndGroup from '@/pages/fees/(transport)/define-transport-fare-and-group/page';
+import DefineTransportMedium from '@/pages/fees/(transport)/define-transport-medium/page';
+import DefineRouteStop from '@/pages/fees/(transport)/define-route-stop/page';
+import AssignTransportToStudents from '@/pages/fees/(transport)/assign-transport-to-students/page';
+import DailyFeeCollection from '@/pages/fees/(transaction report)/(collection reports)/daily-fee-collection/page';
+import ReceiptWiseFeeTypeCollection from '@/pages/fees/(transaction report)/(collection reports)/receipt-wise-fee-type-collection/page';
+import ClassWiseStudentStrength from '@/pages/fees/(reports)/(student-strength)/class-wise-student-strength/page';
 
 
 
 
 
 // Main function
-const page = () => {
+const Home = () => {
+
+  // Current page
+  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  
+  
+  // Opened pages components
+  const [openedPagesComponents, setOpenedPagesComponents] = useState([]);
 
 
-    // Is loading
-    const [isLoading, setIsLoading] = useState(true);
+  // Use effect
+  useEffect(() => {
 
-
-    // Students
-    const [students, setStudents] = useState<any>([]);
-    const [boys, setBoys] = useState<any>();
-    const [girls, setGirls] = useState<any>();
-
-
-    // Academic years
-    const [academicYear, setAcademicYear] = useState('');
-
-
-    // Payments
-    const [payments, setPayments] = useState<any>([]);
-
-
-    // Classes
-    const [classes, setClasses] = useState<any>([]);
-
-
-    // Total number generator
-    const totalNumberGenerator = (array:any) => {
-        let sum = 0;
-        for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
-        return sum;
+    if(openedPages.length === 0){
+      setCurrentPage('');
+      setOpenedPagesComponents([{name:'Dashboard', component:<Dashboard />}]);
+    };
+    if(openedPages.includes('Define School Board')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define School Board', component:<DefineSchoolBoard />}]);
+    };
+    if(openedPages.includes('School Global Details')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'School Global Details', component:<SchoolGlobalDetails />}]);
+    };
+    if(openedPages.includes('Define Academic Year')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
+    };
+    if(openedPages.includes('Define Financial Year')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineFinancialYear />}]);
+    };
+    if(openedPages.includes('Define Wing')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Wing', component:<DefineWing />}]);
+    };
+    if(openedPages.includes('Define Class')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Class', component:<DefineClass />}]);
+    };
+    if(openedPages.includes('Define Section')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Section', component:<DefineSection />}]);
+    };
+    if(openedPages.includes('Relate Class Section')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Relate Class Section', component:<RelateClassSection />}]);
+    };
+    if(openedPages.includes('Change Academic')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Change Academic', component:<ChangeAcademic />}]);
+    };
+    if(openedPages.includes('Fee Entry Setting')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry Setting', component:<FeeEntrySetting />}]);
+    };
+    if(openedPages.includes('Fee Entry Setting Others')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry Setting Others', component:<FeeEntrySettingOthers />}]);
+    };
+    if(openedPages.includes('Set Due Limit')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Set Due Limit', component:<SetDueLimit />}]);
+    };
+    if(openedPages.includes('Fee Opening Balance Setting')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Opening Balance Setting', component:<FeeOpeningBalanceSetting />}]);
+    };
+    if(openedPages.includes('Bus ID Setting')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Bus ID Setting', component:<BusIDSetting />}]);
+    };
+    if(openedPages.includes('Report Layout Setting')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Report Layout Setting', component:<ReportLayoutSetting />}]);
+    };
+    if(openedPages.includes('Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
+    };
+    if(openedPages.includes('Define Fee Installment')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Installment', component:<DefineFeeInstallment />}]);
+    };
+    if(openedPages.includes('Define Fee Head')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Head', component:<DefineFeeHead />}]);
+    };
+    if(openedPages.includes('Define Fee Type')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Type', component:<DefineFeeType />}]);
+    };
+    if(openedPages.includes('Define Fee Group')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Group', component:<DefineFeeGroup />}]);
+    };
+    if(openedPages.includes('Assign Fee Group to Fee Head')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Fee Group to Fee Head', component:<AssignFeeGroupToFeeHead />}]);
+    };
+    if(openedPages.includes('Assign Amount Group')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Amount Group', component:<AssignAmountGroup />}]);
+    };
+    if(openedPages.includes('Assign Multiple Group to Student')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Multiple Group to Student', component:<AssignMultipleGroupToStudent />}]);
+    };
+    if(openedPages.includes('Define Concession')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Concession', component:<DefineConcession />}]);
+    };
+    if(openedPages.includes('Define Concession Type')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Concession Type', component:<DefineConcessionType />}]);
+    };
+    if(openedPages.includes('Assign Concession')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Concession', component:<AssignConcession />}]);
+    };
+    if(openedPages.includes('Set Student Status')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Set Student Status', component:<SetStudentStatus />}]);
+    };
+    if(openedPages.includes('Late Fee Setting')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Late Fee Setting', component:<LateFeeSetting />}]);
+    };
+    if(openedPages.includes('Late Fee Setting Head Wise')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Late Fee Setting Head Wise', component:<LateFeeSettingHeadWise />}]);
+    };
+    if(openedPages.includes('Fee Entry')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry', component:<FeeEntry />}]);
+    };
+    if(openedPages.includes('Print Fee Receipt & Certificate')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Print Fee Receipt & Certificate', component:<PrintFeeReceiptAndCertificate />}]);
+    };
+    if(openedPages.includes('Modify Fees Receipt')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Modify Fees Receipt', component:<ModifyFeesReceipt />}]);
+    };
+    if(openedPages.includes('Cancel Fees Receipt')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Cancel Fees Receipt', component:<CancelFeesReceipt />}]);
+    };
+    if(openedPages.includes('Delete Fees Receipt')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Delete Fees Receipt', component:<DeleteFeesReceipt />}]);
+    };
+    if(openedPages.includes('Travel Agency Master')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Travel Agency Master', component:<TravelAgencyMaster />}]);
+    };
+    if(openedPages.includes('Define Vehicle Type')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Type', component:<DefineVehicleType />}]);
+    };
+    if(openedPages.includes('Define Vehicle Details')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Details', component:<DefineVehicleDetails />}]);
+    };
+    if(openedPages.includes('Define Vehicle Route')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Route', component:<DefineVehicleRoute />}]);
+    };
+    if(openedPages.includes('Define Vehicle Route Relation')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Route Relation', component:<DefineVehicleRouteRelation />}]);
+    };
+    if(openedPages.includes('Define Transport Fare And Group')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Transport Fare And Group', component:<DefineTransportFareAndGroup />}]);
+    };
+    if(openedPages.includes('Define Transport Medium')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Transport Medium', component:<DefineTransportMedium />}]);
+    };
+    if(openedPages.includes('Define Route Stop')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Route Stop', component:<DefineRouteStop />}]);
+    };
+    if(openedPages.includes('Assign Transport to Students')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Transport to Students', component:<AssignTransportToStudents />}]);
+    };
+    if(openedPages.includes('Daily Fee Collection')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Daily Fee Collection', component:<DailyFeeCollection />}]);
+    };
+    if(openedPages.includes('Receipt Wise Fee Type Collection')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Receipt Wise Fee Type Collection', component:<ReceiptWiseFeeTypeCollection />}]);
+    };
+    if(openedPages.includes('Class Wise Studnet Strength')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Class Wise Studnet Strength', component:<ClassWiseStudentStrength />}]);
     };
 
+  }, [openedPages]);
 
-    // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-
-            // Fetching
-            const studentsRes = await fetchAdmittedStudents();
-            const academicYearsRes = await fetchAcademicYears();
-            const paymentsRes = await fetchPayments();
-            const classesRes = await fetchClasses();
-
-            // Setting
-            setStudents(studentsRes);
-            setBoys(studentsRes.filter((s:any) => s.student.gender === 'Male').length);
-            setGirls(studentsRes.filter((s:any) => s.student.gender === 'Female').length);
-            setAcademicYear(academicYearsRes[0]?.year_name);
-            setPayments(paymentsRes);
-            setClasses(classesRes);
-
-
-            // Loading done
-            setIsLoading(false);
-        };
-        fetcher();
-    }, [window.onload]);
-
-
-    return (
-        <section className='flex flex-col w-full px-4 py-2 gap-4'>
-            {isLoading ? (
-                <div className='w-full h-full flex items-center justify-center'>
-                    <LoadingIcon />
-                </div>
-            ) : (
-                <>                
-                    {/* Cards Group One */}
-                    <FeesCardsOne
-                        students={students}
-                        boys={boys}
-                        girls={girls}
-                        academicYear={academicYear}
-                        totalNumberGenerator={totalNumberGenerator}
-                    />
-        
-        
-                    {/* Paymode Summary */}
-                    <PaymodeSummaryCard
-                        totalNumberGenerator={totalNumberGenerator}
-                        payments={payments}
-                    />
-        
-        
-                    {/* Transactions History */}
-                    <div>
-                        <TransactionHistoryOfLast30Days
-                            paymentsRes={payments}
-                            totalNumberGenerator={totalNumberGenerator}
-                        />
-                    </div>
-        
-        
-                    {/* Estimated collection and recent transactions */}
-                    <div className='flex flex-col gap-4 lg:flex-row'>
-                        <div className='w-full xl:w-2/3'>
-                            <EstimatedCollection
-                                students={students}
-                                totalNumberGenerator={totalNumberGenerator}
-                            />
-                        </div>
-                        <div className='w-full xl:w-1/3'>
-                            <RecentTransactionsCard
-                                payments={payments}
-                                students={students}
-                            />
-                        </div>
-                    </div>
-        
-        
-                    {/* Collection Summary Bar */}
-                    <CollectionSummary
-                        payments={payments}
-                        classes={classes}
-                        totalNumberGenerator={totalNumberGenerator}
-                    />
-        
-        
-                    {/* Fee Defaulters Bar */}
-                    <BarCom barData={feeDefaultersBarData}/>
-                </>
-            )}
-        </section>
-    );
+  return(
+    <div className='relative h-full w-full'>
+      {openedPagesComponents?.map((component:any) => (
+        <div className={`absolute w-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+          {component.component}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 
@@ -152,4 +231,4 @@ const page = () => {
 
 
 // Export
-export default page;
+export default Home;

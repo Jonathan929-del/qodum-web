@@ -46,9 +46,13 @@ const FormCom = ({setIsViewOpened, concessionsTypes, updateConcessionType, setUp
                 toast({title:'Concession type already exists', variant: 'error'});
                 return;
             };
-            await createConcessionType({
+            const res = await createConcessionType({
                 type:values.type,
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify concession type

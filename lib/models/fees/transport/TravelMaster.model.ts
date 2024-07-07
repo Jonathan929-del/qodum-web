@@ -8,9 +8,10 @@ import mongoose from 'mongoose';
 // Travel Master Schema
 const TravelMasterSchema = new mongoose.Schema(
     {
+        session:{type:String, required:true},
         travel_agency_name:{type:String, required:true},
         mobile_no:{type:Number, required:true},
-        mail_id:{type:String, required:true},
+        mail_id:{type:String, required:true}
     },
     {
         timestamps:true

@@ -1,15 +1,17 @@
 // Imports
-import React from 'react';
+import Modules from '@/components/utils/Modules';
 
 
 
 
 
 // Main function
-const page = () => {
-    return (
-        <div>Stocks page</div>
-    );
+const Home = () => {
+  return (
+    <>
+      Active page
+    </>
+  );
 };
 
 
@@ -17,4 +19,4 @@ const page = () => {
 
 
 // Export
-export default page;
+export default Home;

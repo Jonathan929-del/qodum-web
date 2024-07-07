@@ -2,6 +2,7 @@
 // Imports
 import moment from 'moment';
 import {connectToDb} from '@/lib/mongoose';
+import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
@@ -9,7 +10,7 @@ import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.mode
 import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
-import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -209,6 +210,11 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the admission number already exists
         const existingStudent = await AdmittedStudent.findOne({'student.adm_no':student.adm_no});
         if(existingStudent){
@@ -222,6 +228,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
         // Creating new student
         const newStudent = await AdmittedStudent.create({
+            session:activeSession.year_name,
             student,
             parents,
             others,

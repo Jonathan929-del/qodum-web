@@ -1,23 +1,21 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useState} from 'react';
-import {format} from 'date-fns';
+import moment from 'moment';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
-import {Button} from '@/components/ui/button';
+import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {CalendarIcon, ChevronDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {LateFeeValidation} from '@/lib/validations/fees/feeMaster/lateFeeSettings/lateFee.validation';
 import {createLateFee, deleteLateFee, modifyLateFee} from '@/lib/actions/fees/feeMaster/lateFeeSettings/lateFee.actions';
-import { Calendar } from '@/components/ui/calendar';
-import { Input } from '@/components/ui/input';
 
 
 
@@ -32,7 +30,7 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
 
 
     // Date states
-    const [isCalendarOpened, setIsCalendarOpened] = useState('');
+    const [dueDate, setDueDate] = useState(moment());
 
 
     // Comparison object
@@ -63,7 +61,7 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
     const onSubmit = async (values: z.infer<typeof LateFeeValidation>) => {
         // Create late fee
         if(updateLateFee.id === ''){
-            await createLateFee({
+            const res = await createLateFee({
                 fee_group:values.fee_group,
                 fee_type:values.fee_type,
                 installment:values.installment,
@@ -71,10 +69,15 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
                 late_fee_type:values.late_fee_type,
                 amount:values.amount
             });
+            if(res === 0){
+                toast({title:'Please create a session first', variant:'alert'});
+                return;
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify late fee
-        else if (!deepEqual(comparisonObject, values)) {
+        // @ts-ignore
+        else if (!deepEqual(comparisonObject, values) || moment(values.due_date).format('DD-MM-YYYY') !== moment(comparisonObject.due_date).format('DD-MM-YYYY')){
             await modifyLateFee({
                 id:updateLateFee.id,
                 fee_group:values.fee_group,
@@ -114,7 +117,22 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
             late_fee_type:'',
             amount:0
         });
+        setDueDate(moment());
     };
+
+
+    // Use effects
+    useEffect(() => {
+        if(updateLateFee.id !== ''){
+            setDueDate(moment(updateLateFee.due_date));
+        };
+    }, []);
+    useEffect(() => {
+        if(dueDate){
+            // @ts-ignore
+            form.setValue('due_date', dueDate._d);
+        };
+    }, [dueDate]);
 
 
     return (
@@ -241,38 +259,15 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
 
 
                     {/* Due Date */}
-                    <FormField
-                        control={form?.control}
-                        name='due_date'
-                        render={() => (
-                            <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto h-2 pr-2 text-end text-[11px] text-[#726E71] sm:basis-[30%]'>Due Date</FormLabel>
-                                <Popover open={isCalendarOpened === 'dob'} onOpenChange={() => isCalendarOpened === 'dob' ? setIsCalendarOpened('') : setIsCalendarOpened('dob')}>
-                                    <PopoverTrigger asChild className='h-7'>
-                                        <Button
-                                            variant='outline'
-                                            className='flex flex-row items-center w-full h-7 text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] sm:basis-[70%]'
-                                        >
-                                            <CalendarIcon className='mr-2 h-4 w-4' />
-                                            {
-                                                form?.getValues()?.due_date
-                                                        ? <span>{format(form?.getValues()?.due_date, 'PPP')}</span>
-                                                        : <span>Pick a date</span>
-                                            }
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0'>
-                                        <Calendar
-                                            mode='single'
-                                            selected={form?.getValues()?.due_date}
-                                            onSelect={v => {setIsCalendarOpened(''); form?.setValue('due_date', v)}}
-                                            initialFocus
-                                        />
-                                    </PopoverContent>
-                                </Popover>
-                            </FormItem>
-                        )}
-                    />
+                    <FormItem className='relative w-full pb-[8px] flex flex-col items-start justify-center mt-2 sm:mt-0 sm:flex-row sm:items-center'>
+                        <FormLabel className='basis-auto h-2 pr-2 text-end text-[11px] text-[#726E71] sm:basis-[30%]'>Due Date</FormLabel>
+                        <div className='basis-[70%]'>
+                            <MyDatePicker
+                                selectedDate={dueDate}
+                                setSelectedDate={setDueDate}
+                            />
+                        </div>
+                    </FormItem>
 
 
                     {/* Late Fee Type */}
@@ -333,7 +328,7 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
 
 
                     {/* Buttons */}
-                    <Buttons setIsViewOpened={setIsViewOpened} lateFees={lateFees} updateLateFee={updateLateFee} setUpdateLateFee={setUpdateLateFee} onSubmit={onSubmit} form={form} />
+                    <Buttons setIsViewOpened={setIsViewOpened} lateFees={lateFees} updateLateFee={updateLateFee} setUpdateLateFee={setUpdateLateFee} onSubmit={onSubmit} form={form} setDueDate={setDueDate}/>
 
 
                 </form>

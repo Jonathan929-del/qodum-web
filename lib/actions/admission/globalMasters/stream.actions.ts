@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Stream from '@/lib/models/admission/globalMasters/Stream.model';
+import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
@@ -20,6 +21,11 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
         // Checking if the stream already exists
         const existinStream = await Stream.findOne({stream_name});
         if(existinStream){
@@ -28,7 +34,7 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
 
 
         // Creating new stream
-        const newStream = await Stream.create({stream_name});
+        const newStream = await Stream.create({session:activeSession.year_name, stream_name});
         newStream.save();
 
 
