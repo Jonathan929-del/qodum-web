@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useContext, useEffect, useState} from 'react';
-import {GlobalStateContext} from '@/context/GlobalStateContext';
+// import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pages/admission/page';
 // @ts-ignore
@@ -23,7 +23,9 @@ import DefineGeneralLedger from '@/pages/accounts/(accounts)/define-general-ledg
 const Home = () => {
 
   // Current page
-  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  // const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  const [currentPage, setCurrentPage] = useState('');
+  const openedPages = [];
   
   
   // Opened pages components

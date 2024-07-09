@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useContext, useEffect, useState} from 'react';
-import {GlobalStateContext} from '@/context/GlobalStateContext';
+// import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pages/fees/page';
 // @ts-ignore
@@ -60,7 +60,9 @@ import ClassWiseStudentStrength from '@/pages/fees/(reports)/(student-strength)/
 const Home = () => {
 
   // Current page
-  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  // const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  const [currentPage, setCurrentPage] = useState('');
+  const openedPages = [];
   
   
   // Opened pages components
