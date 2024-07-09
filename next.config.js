@@ -13,10 +13,7 @@ const nextConfig = {
             }
         ],
         domains:['qodum.s3.amazonaws.com']
-    },
-    experimental: {
-        serverActions: true,
-    },
+    }
 }
 
 module.exports = nextConfig;
