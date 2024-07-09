@@ -13,7 +13,6 @@ import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger
 // Main function
 const page = () => {
 
-
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
 
@@ -52,7 +51,6 @@ const page = () => {
         };
         generalLedgersFetcher();
     }, [isViewOpened, updateGeneralLedger]);
-
 
     return (
         <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
