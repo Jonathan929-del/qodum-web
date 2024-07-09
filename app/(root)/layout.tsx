@@ -4,7 +4,7 @@ import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import {ClerkProvider} from '@clerk/nextjs';
 import Layout from '@/components/Layout/index';
-import {GlobalStateProvider} from '@/context/GlobalStateContext';
+// import {GlobalStateProvider} from '@/context/GlobalStateContext';
 
 
 
@@ -27,9 +27,9 @@ export default function RootLayout({children}:{children:React.ReactNode}) {
     <html lang="en">
       <body className={`${inter.className}`}>
           <ClerkProvider>
-            <GlobalStateProvider>
+            {/* <GlobalStateProvider> */}
               <Layout children={children} />
-            </GlobalStateProvider>
+            {/* </GlobalStateProvider> */}
           </ClerkProvider>
       </body>
     </html>

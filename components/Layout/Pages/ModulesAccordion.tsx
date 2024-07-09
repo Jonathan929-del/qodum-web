@@ -5,7 +5,7 @@ import modules from '@/constants/modules';
 import {usePathname} from 'next/navigation';
 import {MoveRight, ChevronDown} from 'lucide-react';
 import {useContext, useEffect, useState} from 'react';
-import {GlobalStateContext} from '@/context/GlobalStateContext';
+// import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 
 
@@ -21,7 +21,8 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Opened pages
-    const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
+    // const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
+    const [openedPages, setOpenedPages] = useState([]);
 
 
     // Currnet Module
@@ -43,7 +44,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     // Thread click
     const pageClick = (page:any) => {
         setIsSidebarOpened(false);
-        setCurrentPage(page);
+        // setCurrentPage(page);
         setSelectedThread(page);
         if(openedPages.includes(page)){
             return;

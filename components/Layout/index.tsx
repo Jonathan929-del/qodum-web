@@ -4,11 +4,10 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
 import {Toaster} from '../ui/toaster';
+import {useEffect, useState} from 'react';
 import PagesList from './Pages/PagesList';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
-import {useContext, useEffect, useState} from 'react';
-import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -20,10 +19,6 @@ const index = ({children}:any) => {
 
     // Sidebar Toggler
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
-
-
-    // Context
-    const {openedPages, currentPage, setCurrentPage} = useContext(GlobalStateContext);
 
 
     // Pathname
@@ -83,9 +78,7 @@ const index = ({children}:any) => {
                                 settingActiveAcademicYear={settingActiveAcademicYear}
                                 activeAcademicYearName={activeAcademicYearName}
                             />
-                            {openedPages?.length > 0 && (
-                                <PagesList />
-                            )}
+                            <PagesList />
                         </>
                     )
                 }
