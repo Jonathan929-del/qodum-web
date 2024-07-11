@@ -3,16 +3,16 @@
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 
-import Dashboard from '@/pages/admission/page';
+import Dashboard from '@/pagesComps/admission/page';
 // @ts-ignore
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
-import DefineNarrationMaster from '@/pages/accounts/(global masters)/define-narration-master/page';
-import ChangeAcademic from '@/pages/accounts/(masterSettings)/change-academic/page';
-import DefineAccountGroup from '@/pages/accounts/(accounts)/define-account-group/page';
-import DefineBankLedger from '@/pages/accounts/(accounts)/define-bank-ledger/page';
-import DefinePartyLedger from '@/pages/accounts/(accounts)/define-party-ledger/page';
-import DefineGeneralLedger from '@/pages/accounts/(accounts)/define-general-ledger/page';
+import DefineNarrationMaster from '@/pagesComps/accounts/(global masters)/define-narration-master/page';
+import ChangeAcademic from '@/pagesComps/accounts/(masterSettings)/change-academic/page';
+import DefineAccountGroup from '@/pagesComps/accounts/(accounts)/define-account-group/page';
+import DefineBankLedger from '@/pagesComps/accounts/(accounts)/define-bank-ledger/page';
+import DefinePartyLedger from '@/pagesComps/accounts/(accounts)/define-party-ledger/page';
+import DefineGeneralLedger from '@/pagesComps/accounts/(accounts)/define-general-ledger/page';
 
 
 
