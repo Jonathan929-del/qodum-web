@@ -72,7 +72,11 @@ const Home = () => {
 
     if(openedPages.length === 0){
       setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:<Dashboard />}]);
+      setOpenedPagesComponents([{name:'Dashboard', component:(
+        <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
+          <Dashboard />
+        </div>
+      )}]);
     };
     if(openedPages.includes('Define School Board')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Define School Board', component:<DefineSchoolBoard />}]);
@@ -218,7 +222,7 @@ const Home = () => {
   return(
     <div className='relative h-full w-full'>
       {openedPagesComponents?.map((component:any) => (
-        <div className={`absolute w-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+        <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
           {component.component}
         </div>
       ))}
