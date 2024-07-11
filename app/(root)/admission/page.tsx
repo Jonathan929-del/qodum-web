@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import {useContext, useEffect, useState} from 'react';
-// import {GlobalStateContext} from '@/context/GlobalStateContext';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pagesComps/admission/page';
 // @ts-ignore
@@ -51,9 +51,7 @@ import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
 const Home = () => {
 
   // Current page
-  // const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
-  const [currentPage, setCurrentPage] = useState('');
-  const openedPages = [];
+  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
   
   
   // Opened pages components

@@ -1,7 +1,7 @@
 // Imports
 import {X} from 'lucide-react';
 import {useContext, useState} from 'react';
-// import {GlobalStateContext} from '@/context/GlobalStateContext';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 
 
@@ -11,9 +11,8 @@ import {useContext, useState} from 'react';
 const PagesList = () => {
 
     // Opened pages
-    // const {openedPages, setOpenedPages, currentPage, setCurrentPage} = useContext(GlobalStateContext);
-    const [openedPages, setOpenedPages] = useState([]);
-    const [currentPage, setCurrentPage] = useState('');
+    const {openedPages, setOpenedPages, currentPage, setCurrentPage} = useContext(GlobalStateContext);
+
 
     // Removing an item from the opened pages
     const removeFromList = (page:any) => {

@@ -2,7 +2,7 @@
 import '../globals.css';
 import {Inter} from 'next/font/google';
 import {redirect} from 'next/navigation';
-import {ClerkProvider, currentUser} from '@clerk/nextjs';
+import {ClerkProvider, useUser} from '@clerk/nextjs';
 
 
 
@@ -24,7 +24,7 @@ export default async function RootLayout({children}:{children:React.ReactNode}) 
 
 
   // User check
-  const user = await currentUser();
+  const user = useUser().user;
   if(user) redirect('/');
 
 

@@ -205,6 +205,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                 {...form}
             >
                 <form
+                    // @ts-ignore
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='h-full flex flex-col py-4 px-2 gap-1 overflow-y-scroll custom-sidebar-scrollbar'
                 >

@@ -1,7 +1,7 @@
 // Imports
-import {useEffect, useState} from 'react';
 import {Input} from '../../ui/input';
-// import {UserButton} from '@clerk/nextjs';
+import {UserButton} from '@clerk/nextjs';
+import {useEffect, useState} from 'react';
 import DropdownMenuCom from '../../utils/DropdownMenuCom';
 import {Select, SelectContent, SelectItem, SelectTrigger} from '@/components/ui/select';
 import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft, Check, Shrink} from 'lucide-react';
@@ -160,13 +160,13 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                         />
                     </div>
                 </div>
-                {/* <UserButton
+                <UserButton
                     appearance={{
                         elements:{
                             avatarBox:'rounded-[8px] w-[35px] h-[35px]'
                         }
                     }}
-                /> */}
+                />
             </div>
 
 
