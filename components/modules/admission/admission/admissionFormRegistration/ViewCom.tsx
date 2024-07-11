@@ -281,7 +281,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                     {/* Values */}
                     <CommandList>
                         {
-                            students.length < 1 ? (
+                            students?.length < 1 ? (
                                 <p className='w-full min-w-[1300px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No students yet
                                 </p>

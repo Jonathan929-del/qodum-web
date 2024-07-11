@@ -9,7 +9,7 @@ import FormCom from '@/components/modules/admission/globalMasters/importStudent/
 // Main function
 const page = () => {
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
+        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             <FormCom />
         </div>
     );

@@ -2,9 +2,20 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
+import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
+import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
+import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
+import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
+import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
+import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
 
 
@@ -243,20 +254,86 @@ const page = () => {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
 
 
+    // Subjects
+    const [subjects, setSubjects] = useState([{}]);
+
+
+    // Optional subjects
+    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
+
+
+    // Classes
+    const [classes, setClasses] = useState([{}]);
+
+
+    // Boards
+    const [boards, setBoards] = useState([{}]);
+
+
+    // Streams
+    const [streams, setStreams] = useState([{}]);
+
+
+    // Religions
+    const [religions, setReligions] = useState([{}]);
+
+
+    // Categories
+    const [categories, setCategories] = useState([{}]);
+
+
+    // Bank Ledgers
+    const [bankLedgers, setBankLedgers] = useState([{}]);
+
+
+    // Admission Accounts
+    const [admissionAccounts, setAdmissionAccounts] = useState([{}]);
+
+
+    // Blood groups
+    const [bloodGroups, setBloodGroups] = useState([{}]);
+
+
+    // Casts
+    const [casts, setCasts] = useState([{}]);
+
+
     // Use effect
     useEffect(() => {
-        const accountGroupsFetcher = async () => {
+        const fetcher = async () => {
             const studentsRes = await fetchStudents();
             const enquiriesRes = await fetchAdmissionEnquiries();
+            const classesRes = await fetchClasses();
+            const boardsRes = await fetchBoards();
+            const streamsRes = await fetchStreams();
+            const subjectsRes = await fetchSubjects();
+            const optionalSubjectsRes = await fetchOptionalSubjects();
+            const religionsRes = await fetchReligions();
+            const categoriesRes = await fetchCategories();
+            const bankLedgerRes = await fetchBankLedgers();
+            const admissionAccountRes = await fetchGeneralLedgers();
+            const bloodGroupsRes = await fetchBloodGroups();
+            const castsRes = await fetchCastes();
+            setClasses(classesRes);
+            setBoards(boardsRes);
+            setStreams(streamsRes);
+            setSubjects(subjectsRes);
+            setOptionalSubjects(optionalSubjectsRes);
+            setReligions(religionsRes);
+            setCategories(categoriesRes);
+            setBankLedgers(bankLedgerRes);
+            setAdmissionAccounts(admissionAccountRes);
+            setBloodGroups(bloodGroupsRes);
+            setCasts(castsRes);
             setStudents(studentsRes);
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
         };
-        accountGroupsFetcher();
+        fetcher();
     }, [isViewOpened, updateStudent]);
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
+        <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
                 isViewOpened === 'admission' ? (
                     <ViewCom
@@ -286,6 +363,17 @@ const page = () => {
                         setValuesFromEnquiry={setValuesFromEnquiry}
                         selectedSubjects={selectedSubjects}
                         setSelectedSubjects={setSelectedSubjects}
+                        subjects={subjects}
+                        optionalSubjects={optionalSubjects}
+                        classes={classes}
+                        boards={boards}
+                        streams={streams}
+                        religions={religions}
+                        categories={categories}
+                        bankLedgers={bankLedgers}
+                        admissionAccounts={admissionAccounts}
+                        bloodGroups={bloodGroups}
+                        casts={casts}
                     />
                 )
             }

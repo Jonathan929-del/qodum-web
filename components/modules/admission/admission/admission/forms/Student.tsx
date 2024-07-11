@@ -1,99 +1,36 @@
 'use client';
 // Imports
 import Image from 'next/image';
-import {format} from 'date-fns';
 import {useEffect, useState} from 'react';
 import StudentImage from './StudentImage';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
-import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
-import {Calendar} from '@/components/ui/calendar';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {CalendarIcon, Check, ChevronDown, Search, X} from 'lucide-react';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
-import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
-import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
-import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
-import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
-import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
-import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
-import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
-import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
-import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
-import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {fetchClass, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {Check, ChevronDown, Search, X} from 'lucide-react';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
+import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
+import {fetchClass} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
 
 
-    // Classes
-    const [classes, setClasses] = useState([{}]);
-
-
-    // Religions
-    const [religions, setReligions] = useState([{}]);
-
-
-    // Categories
-    const [categories, setCategories] = useState([{}]);
-
-
-    // Sections
-    const [sections, setSections] = useState([{}]);
-
-
-    // Houses
-    const [houses, setHouses] = useState([{}]);
-
-
     // Search
     const [search, setSearch] = useState('');
-
-
-    // Subjects
-    const [subjects, setSubjects] = useState([{}]);
-
-
-    // Optional subjects
-    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
-
-
-    // Streams
-    const [streams, setStreams] = useState([{}]);
-
-
-    // Parishes
-    const [parishes, setParishes] = useState([{}]);
-
-
-    // Transport mediums
-    const [transportMediums, setTransportMediums] = useState<any>([{}]);
-
-
-    // Blood groups
-    const [bloodGroups, setBloodGroups] = useState<any>([{}]);
-
-
-    // Casts
-    const [casts, setCasts] = useState<any>([{}]);
 
 
     // Search Students
@@ -104,7 +41,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     const [classSections, setClassSections] = useState<any>([]);
 
 
-    // Selectted class
+    // Selected class
     const [selectedClass, setSelectedClass] = useState('');
 
 
@@ -1312,35 +1249,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
     // Use effects
-    useEffect(() => {
-        const fetcher = async () => {
-            const classesRes = await fetchClasses();
-            const religionsRes = await fetchReligions();
-            const categoriesRes = await fetchCategories();
-            const sectionsRes = await fetchSections();
-            const housesRes = await fetchHouses();
-            const subjectsRes = await fetchSubjects();
-            const optionalSubjectsRes  = await fetchOptionalSubjects();
-            const streamsRes = await fetchStreams();
-            const parishesRes = await fetchParishes();
-            const transportMediumsRes = await fetchTransportMediums();
-            const bloodGroupsRes = await fetchBloodGroups();
-            const castsRes = await fetchCastes();
-            setClasses(classesRes);
-            setReligions(religionsRes);
-            setCategories(categoriesRes);
-            setSections(sectionsRes);
-            setHouses(housesRes);
-            setSubjects(subjectsRes);
-            setOptionalSubjects(optionalSubjectsRes);
-            setStreams(streamsRes);
-            setParishes(parishesRes);
-            setTransportMediums(transportMediumsRes);
-            setBloodGroups(bloodGroupsRes);
-            setCasts(castsRes);
-        };
-        fetcher();
-    }, []);
     useEffect(() => {
         const numberGenerator = async () => {
             try {

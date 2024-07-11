@@ -77,7 +77,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-4 bg-white overflow-hidden lg:pt-10'>
+        <div className='h-full flex flex-col items-center justify-start pt-4 bg-white overflow-hidden lg:pt-10'>
             {
                 isCardOpened ? (
                     <IdCard

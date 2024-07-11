@@ -2,10 +2,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import {fetchFreeHeads, fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
-import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeType/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/feeType/ViewCom';
+import {fetchFreeHeads, fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 
 
 
@@ -59,7 +58,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white '>
+        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white '>
             {
                 isViewOpened ? (
                     <ViewCom

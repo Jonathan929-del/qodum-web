@@ -30,7 +30,7 @@ const index = () => {
 
 
     return (
-        <div className='relative flex flex-row h-screen overflow-hidden w-full'>
+        <div className='relative flex flex-row h-full overflow-hidden w-full'>
 
             {/* Sidebar */}
             <Sidebar

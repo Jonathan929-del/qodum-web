@@ -70,7 +70,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white '>
+        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white '>
             {
                 isViewOpened ? (
                     <ViewCom

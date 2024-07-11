@@ -1,10 +1,22 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
+import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
 import FormCom from '@/components/modules/admission/admission/admission/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admission/ViewCom';
+import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.actions';
+import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
+import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
+import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
 
 
@@ -417,7 +429,55 @@ const page = () => {
     const [selectedDocuments, setSelectedDocuments] = useState([]);
 
 
-    // Use effect
+    // Classes
+    const [classes, setClasses] = useState([{}]);
+
+
+    // Religions
+    const [religions, setReligions] = useState([{}]);
+
+
+    // Categories
+    const [categories, setCategories] = useState([{}]);
+
+
+    // Sections
+    const [sections, setSections] = useState([{}]);
+
+
+    // Houses
+    const [houses, setHouses] = useState([{}]);
+
+
+    // Subjects
+    const [subjects, setSubjects] = useState([{}]);
+
+
+    // Optional subjects
+    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
+
+
+    // Streams
+    const [streams, setStreams] = useState([{}]);
+
+
+    // Parishes
+    const [parishes, setParishes] = useState([{}]);
+
+
+    // Transport mediums
+    const [transportMediums, setTransportMediums] = useState<any>([{}]);
+
+
+    // Blood groups
+    const [bloodGroups, setBloodGroups] = useState<any>([{}]);
+
+
+    // Casts
+    const [casts, setCasts] = useState<any>([{}]);
+
+
+    // Use effects
     useEffect(() => {
         const accountGroupsFetcher = async () => {
             const studentsRes = await fetchAdmittedStudents();
@@ -428,10 +488,39 @@ const page = () => {
         };
         accountGroupsFetcher();
     }, [isViewOpened, updateStudent]);
+    useEffect(() => {
+        const fetcher = async () => {
+            const classesRes = await fetchClasses();
+            const religionsRes = await fetchReligions();
+            const categoriesRes = await fetchCategories();
+            const sectionsRes = await fetchSections();
+            const housesRes = await fetchHouses();
+            const subjectsRes = await fetchSubjects();
+            const optionalSubjectsRes  = await fetchOptionalSubjects();
+            const streamsRes = await fetchStreams();
+            const parishesRes = await fetchParishes();
+            const transportMediumsRes = await fetchTransportMediums();
+            const bloodGroupsRes = await fetchBloodGroups();
+            const castsRes = await fetchCastes();
+            setClasses(classesRes);
+            setReligions(religionsRes);
+            setCategories(categoriesRes);
+            setSections(sectionsRes);
+            setHouses(housesRes);
+            setSubjects(subjectsRes);
+            setOptionalSubjects(optionalSubjectsRes);
+            setStreams(streamsRes);
+            setParishes(parishesRes);
+            setTransportMediums(transportMediumsRes);
+            setBloodGroups(bloodGroupsRes);
+            setCasts(castsRes);
+        };
+        fetcher();
+    }, []);
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
+        <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
                 isViewOpened === 'admission' ? (
                     <ViewCom
@@ -464,7 +553,19 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         selectedSubjects={selectedSubjects}
                         setSelectedSubjects={setSelectedSubjects}
                         selectedDocuments={selectedDocuments}
-                        setSelectedDocuments={setSelectedDocuments}
+                        setSelectedDocuments={setSelectedDocuments}                        
+                        classes={classes}
+                        religions={religions}
+                        categories={categories}
+                        sections={sections}
+                        houses={houses}
+                        subjects={subjects}
+                        optionalSubjects={optionalSubjects}
+                        streams={streams}
+                        parishes={parishes}
+                        transportMediums={transportMediums}
+                        bloodGroups={bloodGroups}
+                        casts={casts}
                     />
                 )
             }

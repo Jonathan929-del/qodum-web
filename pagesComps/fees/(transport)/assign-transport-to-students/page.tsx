@@ -38,7 +38,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-2 bg-white lg:pt-10'>
+        <div className='h-full flex flex-col items-center justify-start pt-2 bg-white lg:pt-10'>
             <FormCom
                 sections={sections}
                 classes={classes}

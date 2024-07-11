@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {fetchGroups} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
-import {fetchLateFees} from '@/lib/actions/fees/feeMaster/lateFeeSettings/lateFee.actions';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import FormCom from '@/components/modules/fees/feeMaster/lateFeeSettings/lateFeeHeadWise/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/lateFeeSettings/lateFeeHeadWise/ViewCom';
@@ -79,7 +78,7 @@ const page = () => {
 
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start pt-10 bg-white '>
+        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white '>
             {
                 isViewOpened ? (
                     <ViewCom

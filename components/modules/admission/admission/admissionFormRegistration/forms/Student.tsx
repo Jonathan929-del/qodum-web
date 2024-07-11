@@ -10,20 +10,9 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Check, ChevronDown, Search, X} from 'lucide-react';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
-import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
-import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
-import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchEnquiryByEnquiryNo} from '@/lib/actions/admission/admission/enquiry.actions';
-import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admission.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
 
@@ -32,54 +21,10 @@ import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stat
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob}:any) => {
-
-    // Classes
-    const [classes, setClasses] = useState([{}]);
-
-
-    // Boards
-    const [boards, setBoards] = useState([{}]);
-
-
-    // Streams
-    const [streams, setStreams] = useState([{}]);
-
-
-    // Religions
-    const [religions, setReligions] = useState([{}]);
-
-
-    // Categories
-    const [categories, setCategories] = useState([{}]);
-
-
-    // Bank Ledgers
-    const [bankLedgers, setBankLedgers] = useState([{}]);
-
-
-    // Admission Accounts
-    const [admissionAccounts, setAdmissionAccounts] = useState([{}]);
-
-
-    // Blood groups
-    const [bloodGroups, setBloodGroups] = useState([{}]);
-
-
-    // Casts
-    const [casts, setCasts] = useState([{}]);
-
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts}:any) => {
 
     // Search
     const [search, setSearch] = useState('');
-
-
-    // Subjects
-    const [subjects, setSubjects] = useState([{}]);
-
-
-    // Optional subjects
-    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
 
 
     // Handle Search Click
@@ -302,33 +247,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
     // Use effects
-    useEffect(() => {
-        const fetcher = async () => {
-            const classesRes = await fetchClasses();
-            const boardsRes = await fetchBoards();
-            const streamsRes = await fetchStreams();
-            const subjectsRes = await fetchSubjects();
-            const optionalSubjectsRes = await fetchOptionalSubjects();
-            const religionsRes = await fetchReligions();
-            const categoriesRes = await fetchCategories();
-            const bankLedgerRes = await fetchBankLedgers();
-            const admissionAccountRes = await fetchGeneralLedgers();
-            const bloodGroupsRes = await fetchBloodGroups();
-            const castsRes = await fetchCastes();
-            setClasses(classesRes);
-            setBoards(boardsRes);
-            setStreams(streamsRes);
-            setSubjects(subjectsRes);
-            setOptionalSubjects(optionalSubjectsRes);
-            setReligions(religionsRes);
-            setCategories(categoriesRes);
-            setBankLedgers(bankLedgerRes);
-            setAdmissionAccounts(admissionAccountRes);
-            setBloodGroups(bloodGroupsRes);
-            setCasts(castsRes);
-        };
-        fetcher();
-    }, []);
     useEffect(() => {
         // @ts-ignore
         form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
@@ -650,10 +568,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {admissionAccounts.length < 1 ? (
+                                                {admissionAccounts?.length < 1 ? (
                                                         <p>No accounts yet</p>
                                                     ) : // @ts-ignore
-                                                    !admissionAccounts[0].account_name ? (
+                                                    !admissionAccounts[0]?.account_name ? (
                                                         <LoadingIcon />
                                                     ) : admissionAccounts.map((ledger:any) => (
                                                         <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
