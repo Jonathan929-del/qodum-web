@@ -3,54 +3,54 @@
 import {useContext, useEffect, useState} from 'react';
 // import {GlobalStateContext} from '@/context/GlobalStateContext';
 
-import Dashboard from '@/pages/fees/page';
+import Dashboard from '@/pagesComps/fees/page';
 // @ts-ignore
-import DefineSchoolBoard from '@/pages/fees/(global masters)/(define-school)/define-school-board/page';
-import SchoolGlobalDetails from '@/pages/fees/(global masters)/(define-school)/school-global-details/page';
+import DefineSchoolBoard from '@/pagesComps/fees/(global masters)/(define-school)/define-school-board/page';
+import SchoolGlobalDetails from '@/pagesComps/fees/(global masters)/(define-school)/school-global-details/page';
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
-import DefineWing from '@/pages/fees/(global masters)/(define-class-details)/define-wing/page';
-import DefineClass from '@/pages/fees/(global masters)/(define-class-details)/define-class/page';
-import DefineSection from '@/pages/fees/(global masters)/(define-class-details)/define-section/page';
-import RelateClassSection from '@/pages/fees/(global masters)/(define-class-details)/relate-class-section/page';
-import ChangeAcademic from '@/pages/fees/(master settings)/change-academic/page';
-import FeeEntrySetting from '@/pages/fees/(master settings)/fee-entry-setting/page';
-import FeeEntrySettingOthers from '@/pages/fees/(master settings)/fee-entry-setting-others/page';
-import SetDueLimit from '@/pages/fees/(master settings)/set-due-limit/page';
-import FeeOpeningBalanceSetting from '@/pages/fees/(master settings)/fee-opening-balance-setting/page';
-import BusIDSetting from '@/pages/fees/(master settings)/bus-id-setting/page';
-import ReportLayoutSetting from '@/pages/fees/(master settings)/report-layout-setting/page';
-import SessionTransfer from '@/pages/fees/(master settings)/session-transfer/page';
-import DefineFeeInstallment from '@/pages/fees/(fee master)/(define fee master)/define-fee-installment/page';
-import DefineFeeHead from '@/pages/fees/(fee master)/(define fee master)/define-fee-head/page';
-import DefineFeeType from '@/pages/fees/(fee master)/(define fee master)/define-fee-type/page';
-import DefineFeeGroup from '@/pages/fees/(fee master)/(define fee master)/define-fee-group/page';
-import AssignFeeGroupToFeeHead from '@/pages/fees/(fee master)/assign-fee-group-to-fee-head/page';
-import AssignAmountGroup from '@/pages/fees/(fee master)/assign-amount-group/page';
-import AssignMultipleGroupToStudent from '@/pages/fees/(fee master)/assign-multiple-group-to-student/page';
-import DefineConcession from '@/pages/fees/(fee master)/(define and assign concession)/define-concession/page';
-import DefineConcessionType from '@/pages/fees/(fee master)/(define and assign concession)/define-concession-type/page';
-import AssignConcession from '@/pages/fees/(fee master)/(define and assign concession)/assign-concession/page';
-import SetStudentStatus from '@/pages/fees/(fee master)/set-student-status/page';
-import LateFeeSetting from '@/pages/fees/(fee master)/(lateFeeSettings)/late-fee-setting/page';
-import LateFeeSettingHeadWise from '@/pages/fees/(fee master)/(lateFeeSettings)/late-fee-setting-head-wise/page';
-import FeeEntry from '@/pages/fees/(manage fee)/fee-entry/page';
-import PrintFeeReceiptAndCertificate from '@/pages/fees/(manage fee)/print-fee-receipt-&-certificate/page';
-import ModifyFeesReceipt from '@/pages/fees/(manage fee)/modify-fees-receipt/page';
-import CancelFeesReceipt from '@/pages/fees/(manage fee)/cancel-fees-receipt/page';
-import DeleteFeesReceipt from '@/pages/fees/(manage fee)/delete-fees-receipt/page';
-import TravelAgencyMaster from '@/pages/fees/(transport)/travel-agency-master/page';
-import DefineVehicleType from '@/pages/fees/(transport)/define-vehicle-type/page';
-import DefineVehicleDetails from '@/pages/fees/(transport)/define-vehicle-details/page';
-import DefineVehicleRoute from '@/pages/fees/(transport)/define-vehicle-route/page';
-import DefineVehicleRouteRelation from '@/pages/fees/(transport)/define-vehicle-route-relation/page';
-import DefineTransportFareAndGroup from '@/pages/fees/(transport)/define-transport-fare-and-group/page';
-import DefineTransportMedium from '@/pages/fees/(transport)/define-transport-medium/page';
-import DefineRouteStop from '@/pages/fees/(transport)/define-route-stop/page';
-import AssignTransportToStudents from '@/pages/fees/(transport)/assign-transport-to-students/page';
-import DailyFeeCollection from '@/pages/fees/(transaction report)/(collection reports)/daily-fee-collection/page';
-import ReceiptWiseFeeTypeCollection from '@/pages/fees/(transaction report)/(collection reports)/receipt-wise-fee-type-collection/page';
-import ClassWiseStudentStrength from '@/pages/fees/(reports)/(student-strength)/class-wise-student-strength/page';
+import DefineWing from '@/pagesComps/fees/(global masters)/(define-class-details)/define-wing/page';
+import DefineClass from '@/pagesComps/fees/(global masters)/(define-class-details)/define-class/page';
+import DefineSection from '@/pagesComps/fees/(global masters)/(define-class-details)/define-section/page';
+import RelateClassSection from '@/pagesComps/fees/(global masters)/(define-class-details)/relate-class-section/page';
+import ChangeAcademic from '@/pagesComps/fees/(master settings)/change-academic/page';
+import FeeEntrySetting from '@/pagesComps/fees/(master settings)/fee-entry-setting/page';
+import FeeEntrySettingOthers from '@/pagesComps/fees/(master settings)/fee-entry-setting-others/page';
+import SetDueLimit from '@/pagesComps/fees/(master settings)/set-due-limit/page';
+import FeeOpeningBalanceSetting from '@/pagesComps/fees/(master settings)/fee-opening-balance-setting/page';
+import BusIDSetting from '@/pagesComps/fees/(master settings)/bus-id-setting/page';
+import ReportLayoutSetting from '@/pagesComps/fees/(master settings)/report-layout-setting/page';
+import SessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/page';
+import DefineFeeInstallment from '@/pagesComps/fees/(fee master)/(define fee master)/define-fee-installment/page';
+import DefineFeeHead from '@/pagesComps/fees/(fee master)/(define fee master)/define-fee-head/page';
+import DefineFeeType from '@/pagesComps/fees/(fee master)/(define fee master)/define-fee-type/page';
+import DefineFeeGroup from '@/pagesComps/fees/(fee master)/(define fee master)/define-fee-group/page';
+import AssignFeeGroupToFeeHead from '@/pagesComps/fees/(fee master)/assign-fee-group-to-fee-head/page';
+import AssignAmountGroup from '@/pagesComps/fees/(fee master)/assign-amount-group/page';
+import AssignMultipleGroupToStudent from '@/pagesComps/fees/(fee master)/assign-multiple-group-to-student/page';
+import DefineConcession from '@/pagesComps/fees/(fee master)/(define and assign concession)/define-concession/page';
+import DefineConcessionType from '@/pagesComps/fees/(fee master)/(define and assign concession)/define-concession-type/page';
+import AssignConcession from '@/pagesComps/fees/(fee master)/(define and assign concession)/assign-concession/page';
+import SetStudentStatus from '@/pagesComps/fees/(fee master)/set-student-status/page';
+import LateFeeSetting from '@/pagesComps/fees/(fee master)/(lateFeeSettings)/late-fee-setting/page';
+import LateFeeSettingHeadWise from '@/pagesComps/fees/(fee master)/(lateFeeSettings)/late-fee-setting-head-wise/page';
+import FeeEntry from '@/pagesComps/fees/(manage fee)/fee-entry/page';
+import PrintFeeReceiptAndCertificate from '@/pagesComps/fees/(manage fee)/print-fee-receipt-&-certificate/page';
+import ModifyFeesReceipt from '@/pagesComps/fees/(manage fee)/modify-fees-receipt/page';
+import CancelFeesReceipt from '@/pagesComps/fees/(manage fee)/cancel-fees-receipt/page';
+import DeleteFeesReceipt from '@/pagesComps/fees/(manage fee)/delete-fees-receipt/page';
+import TravelAgencyMaster from '@/pagesComps/fees/(transport)/travel-agency-master/page';
+import DefineVehicleType from '@/pagesComps/fees/(transport)/define-vehicle-type/page';
+import DefineVehicleDetails from '@/pagesComps/fees/(transport)/define-vehicle-details/page';
+import DefineVehicleRoute from '@/pagesComps/fees/(transport)/define-vehicle-route/page';
+import DefineVehicleRouteRelation from '@/pagesComps/fees/(transport)/define-vehicle-route-relation/page';
+import DefineTransportFareAndGroup from '@/pagesComps/fees/(transport)/define-transport-fare-and-group/page';
+import DefineTransportMedium from '@/pagesComps/fees/(transport)/define-transport-medium/page';
+import DefineRouteStop from '@/pagesComps/fees/(transport)/define-route-stop/page';
+import AssignTransportToStudents from '@/pagesComps/fees/(transport)/assign-transport-to-students/page';
+import DailyFeeCollection from '@/pagesComps/fees/(transaction report)/(collection reports)/daily-fee-collection/page';
+import ReceiptWiseFeeTypeCollection from '@/pagesComps/fees/(transaction report)/(collection reports)/receipt-wise-fee-type-collection/page';
+import ClassWiseStudentStrength from '@/pagesComps/fees/(reports)/(student-strength)/class-wise-student-strength/page';
 
 
 
@@ -74,7 +74,11 @@ const Home = () => {
 
     if(openedPages.length === 0){
       setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:<Dashboard />}]);
+      setOpenedPagesComponents([{name:'Dashboard', component:(
+        <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
+          <Dashboard />
+        </div>
+      )}]);
     };
     if(openedPages.includes('Define School Board')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Define School Board', component:<DefineSchoolBoard />}]);
@@ -220,7 +224,7 @@ const Home = () => {
   return(
     <div className='relative h-full w-full'>
       {openedPagesComponents?.map((component:any) => (
-        <div className={`absolute w-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+        <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
           {component.component}
         </div>
       ))}

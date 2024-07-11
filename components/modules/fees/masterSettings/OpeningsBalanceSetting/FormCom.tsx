@@ -160,7 +160,8 @@ const FormCom = () => {
                                                 <SelectContent>
                                                     {feeTypes.length === 0 ? (
                                                         <p>No fee types</p>
-                                                    ) : !feeTypes[0].name ? (
+                                                    ) : // @ts-ignore
+                                                    !feeTypes[0].name ? (
                                                         <LoadingIcon />
                                                     ) : feeTypes.map((type:any, index: number) => (
                                                             <SelectItem 

@@ -3,45 +3,45 @@
 import {useContext, useEffect, useState} from 'react';
 // import {GlobalStateContext} from '@/context/GlobalStateContext';
 
-import Dashboard from '@/pages/admission/page';
+import Dashboard from '@/pagesComps/admission/page';
 // @ts-ignore
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
-import DefineTCCaste from '@/pages/admission/(globalMasters)/(define tc details)/define-tc-caste/page';
-import DefineTermMaster from '@/pages/admission/(globalMasters)/(define tc details)/term-master/page';
-import HealthUnitMaster from '@/pages/admission/(globalMasters)/(Student Health Master)/health-unit-master/page';
-import HealthMaster from '@/pages/admission/(globalMasters)/(Student Health Master)/health-master/page';
-import DefineTerm from '@/pages/admission/(globalMasters)/(Student Health Master)/define-term/page';
-import StudnetHealthEntry from '@/pages/admission/(globalMasters)/(Student Health Master)/student-health-entry/page';
-import DefineBloodGroup from '@/pages/admission/(globalMasters)/define-blood-group/page';
-import DefineRemark from '@/pages/admission/(globalMasters)/define-remark/page';
-import DefineCategory from '@/pages/admission/(globalMasters)/define-category/page';
-import DefineReligion from '@/pages/admission/(globalMasters)/define-religion/page';
-import DefineCaste from '@/pages/admission/(globalMasters)/define-caste/page';
-import PossibleSiblings from '@/pages/admission/(globalMasters)/possible-siblings/page';
-import StationaryDetails from '@/pages/admission/(globalMasters)/stationary-details/page';
-import DefineParish from '@/pages/admission/(globalMasters)/define-parish/page';
-import DefineHouse from '@/pages/admission/(globalMasters)/define-house/page';
-import DefineStream from '@/pages/admission/(globalMasters)/define-stream/page';
-import DefineSubject from '@/pages/admission/(globalMasters)/define-subject/page';
-import DefineOptionalSubject from '@/pages/admission/(globalMasters)/define-optional-subject/page';
-import DefineDocumentType from '@/pages/admission/(globalMasters)/define-document-type/page';
-import ImportStudent from '@/pages/admission/(globalMasters)/import-student/page';
-import ChangeAcademic from '@/pages/admission/(masterSettings)/change-academic/page';
-import EnquiryNoSetting from '@/pages/admission/(masterSettings)/enquiry-no-setting/page';
-import AdmissionSetting from '@/pages/admission/(masterSettings)/admission-setting/page';
-import StudentClassPromotion from '@/pages/admission/(masterSettings)/student-class-promotion/page';
-import UpdateStudentDetails from '@/pages/admission/(masterSettings)/update-student-details/page';
-import ReportLayoutSetting from '@/pages/admission/(masterSettings)/report-layout-setting/page';
-import SessionTransfer from '@/pages/fees/(master settings)/session-transfer/page';
-import Enquiry from '@/pages/admission/(admission)/enquiry/page';
-import AdmissionFormRegistration from '@/pages/admission/(admission)/admission-form-registration/page';
-import DefineMeritCriteria from '@/pages/admission/(admission)/(entrance test)/define-merit-criteria/page';
-import SlotCreation from '@/pages/admission/(admission)/(entrance test)/slot-creation/page';
-import ManualListGeneration from '@/pages/admission/(admission)/(entrance test)/manual-list-generation/page';
-import Admission from '@/pages/admission/(admission)/admission/page';
-import CreateIDCard from '@/pages/admission/(admission)/create-id-card/page';
-import SendSMS from '@/pages/admission/(admission)/send-sms/page';
+import DefineTCCaste from '@/pagesComps/admission/(globalMasters)/(define tc details)/define-tc-caste/page';
+import DefineTermMaster from '@/pagesComps/admission/(globalMasters)/(define tc details)/term-master/page';
+import HealthUnitMaster from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/health-unit-master/page';
+import HealthMaster from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/health-master/page';
+import DefineTerm from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/define-term/page';
+import StudnetHealthEntry from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/student-health-entry/page';
+import DefineBloodGroup from '@/pagesComps/admission/(globalMasters)/define-blood-group/page';
+import DefineRemark from '@/pagesComps/admission/(globalMasters)/define-remark/page';
+import DefineCategory from '@/pagesComps/admission/(globalMasters)/define-category/page';
+import DefineReligion from '@/pagesComps/admission/(globalMasters)/define-religion/page';
+import DefineCaste from '@/pagesComps/admission/(globalMasters)/define-caste/page';
+import PossibleSiblings from '@/pagesComps/admission/(globalMasters)/possible-siblings/page';
+import StationaryDetails from '@/pagesComps/admission/(globalMasters)/stationary-details/page';
+import DefineParish from '@/pagesComps/admission/(globalMasters)/define-parish/page';
+import DefineHouse from '@/pagesComps/admission/(globalMasters)/define-house/page';
+import DefineStream from '@/pagesComps/admission/(globalMasters)/define-stream/page';
+import DefineSubject from '@/pagesComps/admission/(globalMasters)/define-subject/page';
+import DefineOptionalSubject from '@/pagesComps/admission/(globalMasters)/define-optional-subject/page';
+import DefineDocumentType from '@/pagesComps/admission/(globalMasters)/define-document-type/page';
+import ImportStudent from '@/pagesComps/admission/(globalMasters)/import-student/page';
+import ChangeAcademic from '@/pagesComps/admission/(masterSettings)/change-academic/page';
+import EnquiryNoSetting from '@/pagesComps/admission/(masterSettings)/enquiry-no-setting/page';
+import AdmissionSetting from '@/pagesComps/admission/(masterSettings)/admission-setting/page';
+import StudentClassPromotion from '@/pagesComps/admission/(masterSettings)/student-class-promotion/page';
+import UpdateStudentDetails from '@/pagesComps/admission/(masterSettings)/update-student-details/page';
+import ReportLayoutSetting from '@/pagesComps/admission/(masterSettings)/report-layout-setting/page';
+import SessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/page';
+import Enquiry from '@/pagesComps/admission/(admission)/enquiry/page';
+import AdmissionFormRegistration from '@/pagesComps/admission/(admission)/admission-form-registration/page';
+import DefineMeritCriteria from '@/pagesComps/admission/(admission)/(entrance test)/define-merit-criteria/page';
+import SlotCreation from '@/pagesComps/admission/(admission)/(entrance test)/slot-creation/page';
+import ManualListGeneration from '@/pagesComps/admission/(admission)/(entrance test)/manual-list-generation/page';
+import Admission from '@/pagesComps/admission/(admission)/admission/page';
+import CreateIDCard from '@/pagesComps/admission/(admission)/create-id-card/page';
+import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
 
 
 
@@ -65,7 +65,11 @@ const Home = () => {
 
     if(openedPages.length === 0){
       setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:<Dashboard />}]);
+      setOpenedPagesComponents([{name:'Dashboard', component:(
+        <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
+          <Dashboard />
+        </div>
+      )}]);
     };
     if(openedPages.includes('Define Academic Year')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
@@ -187,7 +191,7 @@ const Home = () => {
   return(
     <div className='relative h-full w-full'>
       {openedPagesComponents?.map((component:any) => (
-        <div className={`absolute w-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+        <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
           {component.component}
         </div>
       ))}
