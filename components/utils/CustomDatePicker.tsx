@@ -17,7 +17,7 @@ const MyDatePicker = ({selectedDate, setSelectedDate}) => {
   return (
     <DatePicker
       value={selectedDate}
-      onChange={(date) => setSelectedDate(date)}
+      onChange={(date:any) => setSelectedDate(date)}
       timePicker={false}
       // @ts-ignore
       dateFormat="MMMM YYYY"
