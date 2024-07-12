@@ -257,8 +257,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
 
         // Return
-        return newStudent;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating admitted student: ${err.message}`);
@@ -522,8 +521,7 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Return
-        return updatedStudent;
-    
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating admitted student: ${err}`);
@@ -554,6 +552,9 @@ export const deleteAdmittedStudent = async ({id}:{id:String}) => {
 
         // Deleting student
         await AdmittedStudent.findByIdAndDelete(id);
+
+
+        // Return
         return 'Student Deleted';
 
     } catch (err) {
@@ -599,10 +600,14 @@ export const fetchStudentByAdmNo = async ({adm_no}:{adm_no:String}) => {
 
         // Fetching student
         const student = await AdmittedStudent.findOne({'student.adm_no':adm_no});
+        const studentRes = {
+            ...student._doc,
+            _id:student._doc._id.toString()
+        };
 
 
         // Return
-        return student;
+        return studentRes;
 
     } catch (err) {
         throw new Error(`Error fetching student: ${err}`);

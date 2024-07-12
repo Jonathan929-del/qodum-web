@@ -70,8 +70,7 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
 
 
         // Return
-        return newLateFee;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating late fee: ${err.message}`);
@@ -126,7 +125,7 @@ export const modifyLateFee = async ({id, fee_group, fee_type, installment, due_d
 
 
         // Return 
-        return updatedLateFee;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating late fee: ${err}`);

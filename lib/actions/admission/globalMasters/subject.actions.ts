@@ -17,7 +17,6 @@ interface CreateSubjectProps{
 // Create subject
 export const createSubject = async ({subject_name, available_seats, is_university}:CreateSubjectProps) => {
     try {
-
     
         // Database connection
         connectToDb('accounts');
@@ -41,8 +40,7 @@ export const createSubject = async ({subject_name, available_seats, is_universit
 
 
         // Return
-        return newSubject;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating subject: ${err.message}`);
@@ -100,7 +98,7 @@ export const modifySubject = async ({id, subject_name, available_seats, is_unive
 
 
         // Return
-        return updatedSubject;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating subject: ${err}`);

@@ -2,7 +2,6 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
-import Student from '@/lib/models/admission/admission/Student.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
@@ -75,8 +74,7 @@ export const createEnquiry = async ({
 
 
         // Return
-        return newEnquiry;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating enquiry: ${err.message}`);
@@ -167,8 +165,7 @@ export const modifyEnquiry = async ({
 
 
         // Return
-        return updatedEnquiry;
-
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating enquiry: ${err}`);

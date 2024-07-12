@@ -39,8 +39,7 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
 
 
         // Return
-        return newOptionalSubject;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating optional subject: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyOptionalSubject = async ({id, subject_name}:ModifySubjectProp
 
 
         // Return
-        return updatedSubject;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating optional subject: ${err}`);

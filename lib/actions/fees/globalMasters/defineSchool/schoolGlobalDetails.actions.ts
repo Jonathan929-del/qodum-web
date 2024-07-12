@@ -112,8 +112,10 @@ export const createGlobalSchoolDetails = async ({
             financial_year
         });
         newGlobalSchoolDetails.save();
-        return newGlobalSchoolDetails;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating global school details: ${err.message}`);
@@ -134,7 +136,16 @@ export const fetchGlobalSchoolDetails = async () => {
 
         // Fetching
         const globalSchoolDetails = await GlobalSchoolDetails.find();
-        return globalSchoolDetails;
+        const globalSchoolDetailsRes = globalSchoolDetails.map((g:any) => {
+            return{
+                ...g._doc,
+                _id:g._doc._id.toString()
+            };
+        });
+
+
+        // Return
+        return globalSchoolDetailsRes;
 
     } catch (err:any) {
         throw new Error(`Error fetching global school details: ${err}`);
@@ -246,7 +257,10 @@ export const modifyGlobalSchoolDetails = async ({
             },
             {new:true}
         );
-        return updatedGlobalSchoolDetails;
+
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating global school details: ${err}`);

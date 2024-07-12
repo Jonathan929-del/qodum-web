@@ -23,7 +23,6 @@ import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboar
 // Main function
 const page = () => {
 
-
     // Is loading
     const [isLoading, setIsLoading] = useState(true);
 
@@ -78,7 +77,6 @@ const page = () => {
         };
         fetcher();
     }, [window.onload]);
-
 
     return (
         <section className='flex flex-col w-full px-4 py-2 gap-4'>

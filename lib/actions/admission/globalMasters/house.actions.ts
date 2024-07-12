@@ -39,8 +39,7 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
 
 
         // Return
-        return newHouse;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating house: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyHouse = async ({id, house_name}:ModifyHouseProps) => {
 
 
         // Return
-        return updatedHouse;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating house: ${err}`);

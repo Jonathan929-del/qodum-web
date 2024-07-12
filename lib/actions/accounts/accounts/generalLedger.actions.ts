@@ -55,8 +55,10 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
             depreciation
         });
         newGeneralLedger.save();
-        return newGeneralLedger;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating General Ledger: ${err.message}`);
@@ -116,9 +118,11 @@ export const modifyGeneralLedger = async ({id, account_name, group, account_type
 
 
         // Update General Ledger
-        const updatedGeneralLedger = await GeneralLedger.findByIdAndUpdate(id, {account_name, group, account_type, opening_balance, opening_balance_type, assign_date, is_cash_book, is_fixed_asset, depreciation}, {new:true});
-        return updatedGeneralLedger;
+        await GeneralLedger.findByIdAndUpdate(id, {account_name, group, account_type, opening_balance, opening_balance_type, assign_date, is_cash_book, is_fixed_asset, depreciation}, {new:true});
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating general ledger: ${err}`);

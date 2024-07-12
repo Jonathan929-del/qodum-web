@@ -42,8 +42,7 @@ export const createParish = async ({parish, religion}:CreateParishProps) => {
 
 
         // Return
-        return newParish;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating parish: ${err.message}`);
@@ -99,7 +98,7 @@ export const modifyParish = async ({id, parish, religion}:ModifyParishProps) => 
 
 
         // Return
-        return updatedParish;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating parish: ${err}`);

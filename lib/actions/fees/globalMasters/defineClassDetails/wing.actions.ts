@@ -16,7 +16,6 @@ interface CreateWingProps{
 export const createWing = async ({wing}:CreateWingProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -39,8 +38,7 @@ export const createWing = async ({wing}:CreateWingProps) => {
 
 
         // Return
-        return newWing;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating wing: ${err.message}`);
@@ -95,7 +93,7 @@ export const modifyWing = async ({id, wing}:ModifyWingProps) => {
 
 
         // Return
-        return updatedWing;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating wing: ${err}`);

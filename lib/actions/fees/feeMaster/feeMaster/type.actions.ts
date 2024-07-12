@@ -59,8 +59,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Return
-        return newType;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating Tpe: ${err.message}`);
@@ -137,7 +136,7 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
 
         // Return 
-        return updatedType;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating type: ${err}`);

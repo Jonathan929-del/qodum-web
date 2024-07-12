@@ -34,8 +34,7 @@ export const createSmsTemplate = async ({sms_type, sms_template, is_enable}:Crea
 
 
         // Return
-        return newSmsTemplate;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating sms template: ${err.message}`);
@@ -87,7 +86,7 @@ export const modifySmsTemplate = async ({id, sms_type, sms_template, is_enable}:
 
 
         // Return 
-        return updatedSmsTemplates;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating sms template: ${err}`);

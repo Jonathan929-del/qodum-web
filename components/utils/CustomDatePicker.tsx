@@ -1,6 +1,6 @@
 // Imports
 import moment from 'moment';
-import 'moment/locale/en-gb'; 
+import 'moment/locale/en-gb';
 import './CustomDatePickerStyles.css';
 import DatePicker from 'react-datepicker2';
 

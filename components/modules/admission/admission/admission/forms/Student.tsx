@@ -1267,7 +1267,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     substringValue = 5;
                 }else if(students?.length >= 999999){
                     substringValue = 6;
-                }
+                };
                 if(form.getValues().student.class !== '' && updateStudent.id === ''){
                     const admissionNumbers = localStorage.getItem('all_classes') === 'true'
                         ? await fetchClassNumbers({class_name:'All Classes'})

@@ -10,12 +10,11 @@ import {PersonStanding, Hourglass, Briefcase} from 'lucide-react';
 // Main function
 const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator}:any) => {
 
-
     // Revenues
-    const allRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value)))))));
-    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.payable_amount) || Number(a.value)))))));
+    const allRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value || 0)))))));
+    // const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.payable_amount) || Number(a.value) || 0))))));
+    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => (Number(a.value) - Number(a.last_rec_amount)) || 0))))));
     const receivedRevenue = allRevenue - outstandingRevenue;
-
 
     return (
         <div className='flex flex-col gap-4 md:flex-row'>

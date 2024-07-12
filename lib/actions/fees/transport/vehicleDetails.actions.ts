@@ -51,8 +51,7 @@ export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle
 
 
         // Return
-        return newVehicleDetails;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating Vehicle Details: ${err.message}`);
@@ -120,7 +119,7 @@ export const modifyVehicleDetails = async ({id, vehicle_owner, vehicle_type, veh
 
 
         // Return 
-        return updatedVehicleDetails;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating vehicle name: ${err}`);

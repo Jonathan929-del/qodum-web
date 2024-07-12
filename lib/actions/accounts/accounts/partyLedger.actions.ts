@@ -28,7 +28,6 @@ interface CreatePartyLedgerProps{
 export const createPartyLedger = async ({account_name, group, account_type, account_address, account_city, pin_code, email, mobile, pan, tin, opening_balance, opening_balance_type, assign_date}:CreatePartyLedgerProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -62,8 +61,10 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
             assign_date
         });
         newPartyLedger.save();
-        return newPartyLedger;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Party Ledger: ${err.message}`);
@@ -127,9 +128,11 @@ export const modifyPartyLedger = async ({id, account_name, group, account_type, 
 
 
         // Update Party Ledger
-        const updatedPartyLedger = await PartyLedger.findByIdAndUpdate(id, {account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
-        return updatedPartyLedger;
+        await PartyLedger.findByIdAndUpdate(id, {account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
 
+
+        // Return
+        return 'Created';
 
     } catch (err) {
         throw new Error(`Error updating party ledger: ${err}`);

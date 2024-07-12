@@ -56,8 +56,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
 
         // Return
-        return newHead;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Head: ${err.message}`);
@@ -131,7 +130,7 @@ export const modifyHead = async ({id, name, print_name, pay_schedule, priority_n
 
 
         // Return 
-        return updatedHead;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating heads: ${err}`);

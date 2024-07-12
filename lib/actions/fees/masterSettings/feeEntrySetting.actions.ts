@@ -35,7 +35,7 @@ export const createFeeEntrySetting = async ({prefix, lead_zero, receipt_no_start
 
 
         // Return
-        return feeEntrySetting;
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating fee entry setting: ${err.message}`);
@@ -93,7 +93,7 @@ export const modifyFeeEntrySetting = async ({id, prefix, lead_zero, receipt_no_s
 
 
         // Return 
-        return updateFeeEntrySetting;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating fee entry setting: ${err}`);

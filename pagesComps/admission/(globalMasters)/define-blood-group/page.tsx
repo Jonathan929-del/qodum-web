@@ -10,7 +10,7 @@ import ViewCom from '@/components/modules/admission/globalMasters/defineBloodGro
 
 
 // Main function
-const page = () => {
+const index = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
@@ -65,4 +65,4 @@ const page = () => {
 
 
 // Export
-export default page;
+export default index;

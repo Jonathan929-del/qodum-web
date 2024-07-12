@@ -43,8 +43,7 @@ export const createTransportGroup = async ({distance_name, distance_amount, dist
 
 
         // Return
-        return newTranportGroup;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating transport group: ${err.message}`);
@@ -103,7 +102,7 @@ export const modifyTransportGroup = async ({id, distance_name, distance_amount, 
 
 
         // Return
-        return updatedTransports;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating transport group: ${err}`);

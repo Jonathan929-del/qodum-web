@@ -94,7 +94,7 @@ export const createLayout = async ({report_setting, header_and_footer_setting, f
 
 
         // Return
-        return newLayout;
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating layout: ${err.message}`);
@@ -202,8 +202,10 @@ export const modifyLayout = async ({id, report_setting, header_and_footer_settin
 
         // Update layout
         const updateLayout = await Layout.findByIdAndUpdate(id, {report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting}, {new:true});
-        return updateLayout;
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating layout: ${err}`);

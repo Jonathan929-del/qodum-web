@@ -41,8 +41,10 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
             narration
         });
         newNarrationMaster.save();
-        return newNarrationMaster;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Narration Master: ${err.message}`);
@@ -63,38 +65,10 @@ export const fetchNarrationMasters = async (pageNumber = 1, pageSize=20) => {
 
         // Fetching
         const narrations = await NarrationMaster.find();
+
+
+        // Return
         return {narrations};
-
-
-        // // Skip amount
-        // const skipAmount = (pageNumber - 1) * pageSize;
-        
-        // // Threads fetching
-        // const threadsQuery = Thread
-        //     .find({parentId:{$in:[null, undefined]}})
-        //     .sort({createdAt:'desc'})
-        //     .skip(skipAmount)
-        //     .limit(pageSize)
-        //     .populate({
-        //         path:'author',
-        //         model:User
-        //     })
-        //     .populate({
-        //         path:'community',
-        //         model:Community,
-        //     })
-        //     .populate({
-        //         path:'children',
-        //         populate:{
-        //             path:'author',
-        //             model:User,
-        //             select:'_id name parentId image'
-        //         }
-        //     });
-        // const totalThreadsCount = await Thread.countDocuments({parentId:{$in:[null, undefined]}});
-        // const threads = await threadsQuery.exec();
-        // const isNext = totalThreadsCount > skipAmount + threads.length;
-
         
     } catch (err:any) {
         throw new Error(`Error fetching narration masters: ${err}`);
@@ -125,9 +99,11 @@ export const modifyNarrationMaster = async ({id, narration, voucher_type}:Modify
 
 
         // Update Narration
-        const updatedNarration = await NarrationMaster.findByIdAndUpdate(id, {narration, voucher_type}, {new:true});
-        return updatedNarration;
+        await NarrationMaster.findByIdAndUpdate(id, {narration, voucher_type}, {new:true});
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating narration master: ${err}`);

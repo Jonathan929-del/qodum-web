@@ -29,7 +29,6 @@ interface CreateInstallmentProps{
 export const createInstallment = async ({name, print_name, preference_no, due_on_date, due_date, months}:CreateInstallmentProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -76,8 +75,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
 
 
         // Return
-        return newInstallment;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating Installment: ${err.message}`);
@@ -168,7 +166,7 @@ export const modifyInstallment = async ({id, name, print_name, preference_no, du
 
 
         // Return 
-        return updatedInstallment;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating installment: ${err}`);

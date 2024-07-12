@@ -39,7 +39,7 @@ export const createDocumentType = async ({document_type}:CreateDocumentProps) =>
 
 
         // Return
-        return newDocument;
+        return 'Created';
 
 
     } catch (err:any) {
@@ -96,7 +96,7 @@ export const modifyDocumentType = async ({id, document_type}:ModifyDocumentTypeP
 
 
         // Return
-        return updatedDocument;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating document type: ${err}`);

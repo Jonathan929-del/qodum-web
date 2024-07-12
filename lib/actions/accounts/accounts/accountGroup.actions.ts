@@ -45,8 +45,10 @@ export const createAccountGroup = async ({group_name, category, group_type, grou
             group_no
         });
         newAccountGroup.save();
-        return newAccountGroup;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Account Group: ${err.message}`);
@@ -102,8 +104,10 @@ export const modifyAccountGroup = async ({id, group_name, category, group_type, 
 
         // Update Account Group
         const updatedAccountGroup = await AccountGroup.findByIdAndUpdate(id, {group_name, category, group_type, group_no}, {new:true});
-        return updatedAccountGroup;
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating account group: ${err}`);

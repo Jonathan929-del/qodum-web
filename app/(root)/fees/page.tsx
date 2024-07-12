@@ -1,5 +1,6 @@
 'use client';
 // Imports
+import moment from 'moment';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 
@@ -62,6 +63,10 @@ import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/sessio
 
 // Main function
 const Home = () => {
+
+  // Setting moment local to english
+  moment.locale('en-gb');
+
 
   // Current page
   const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);

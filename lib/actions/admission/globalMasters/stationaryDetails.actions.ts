@@ -21,7 +21,6 @@ interface CreateStationaryDetailsProps{
 export const createStationaryDetails = async ({stationary_name, amount, account_name, school_name, session, is_online}:CreateStationaryDetailsProps) => {
     try {
 
-
         // Database connection
         connectToDb('accounts');
 
@@ -51,8 +50,7 @@ export const createStationaryDetails = async ({stationary_name, amount, account_
 
 
         // Return
-        return newStationaryDetails;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating stationary details: ${err.message}`);
@@ -121,7 +119,7 @@ export const modifyStationaryDetails = async ({id, stationary_name, amount, acco
 
 
         // Return
-        return updatedStationaryDetails;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating stationary details: ${err}`);

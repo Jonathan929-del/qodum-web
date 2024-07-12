@@ -40,8 +40,7 @@ export const createHealthUnit = async ({unit_name, unit_type}:CreateHealthUnitPr
 
 
         // Return
-        return newHealthUnit;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating health unit: ${err.message}`);
@@ -98,7 +97,7 @@ export const modifyHealthUnit = async ({id, unit_name, unit_type}:ModifyHealthUn
 
 
         // Return
-        return updatedHealthUnit;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating health unit: ${err}`);

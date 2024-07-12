@@ -42,8 +42,7 @@ export const createSlot = async ({session, class_name, slot_name, slot_date, sta
 
 
         // Return
-        return newSlot;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating slot: ${err.message}`);
@@ -97,8 +96,7 @@ export const modifySlot = async ({id, slot_date, start_time, end_time, applicant
 
 
         // Return
-        return updateSlot;
-
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating slot: ${err}`);

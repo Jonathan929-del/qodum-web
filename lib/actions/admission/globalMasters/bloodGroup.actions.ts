@@ -38,8 +38,7 @@ export const createBloodGroup = async ({blood_group}:CreateBloodGroupProps) => {
 
 
         // Return
-        return newBloodGroup;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating blood group: ${err.message}`);
@@ -90,11 +89,11 @@ export const modifyBloodGroup = async ({id, blood_group}:ModifyBloodGroupProps) 
 
 
         // Updating blood group
-        const updatedBloodGroup = await BloodGroup.findByIdAndUpdate(id, {blood_group}, {new:true});
+        await BloodGroup.findByIdAndUpdate(id, {blood_group}, {new:true});
 
 
         // Return
-        return updatedBloodGroup;
+        return 'Modified';
 
     } catch (err) {
         throw new Error(`Error updating blood group: ${err}`);

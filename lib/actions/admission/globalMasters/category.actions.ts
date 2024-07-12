@@ -48,8 +48,7 @@ export const createCategory:any = async ({category_name, is_default}:CreateCateg
 
 
         // Return
-        return newCategory;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating category: ${err.message}`);
@@ -103,18 +102,18 @@ export const modifyCategory = async ({id, category_name, is_default}:ModifyCateg
 
         if(is_default === true){
             // Update category
-            const updatedCategory = await Category.findByIdAndUpdate(id, {category_name, is_default}, {new:true}).then(async () => {
+            await Category.findByIdAndUpdate(id, {category_name, is_default}, {new:true}).then(async () => {
                 try {
                     await Category.updateMany({'_id': {$ne:id}}, {is_default:false});
                 } catch (err:any) {
                     console.log(`Error updating other categories: ${err.message}`);
                 }
             });;
-            return updatedCategory;
+            return 'Updated';
         }else{
             // Update category with setting other categories is default to false
-            const updatedCategory = await Category.findByIdAndUpdate(id, {category_name, is_default}, {new:true});
-            return updatedCategory;
+            await Category.findByIdAndUpdate(id, {category_name, is_default}, {new:true});
+            return 'Updated';
         };
 
 

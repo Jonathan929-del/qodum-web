@@ -39,8 +39,7 @@ export const createTcCaste = async ({caste_name}:CreateTcCasteProps) => {
 
 
         // Return
-        return newTcCaste;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating tc caste: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyTcCaste = async ({id, caste_name}:ModifyTcCasteProps) => {
 
 
         // Return
-        return updatedTcCaste;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating tc caste: ${err}`);

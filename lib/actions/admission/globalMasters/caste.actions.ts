@@ -38,8 +38,7 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
 
 
         // Return
-        return newCaste;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating caste: ${err.message}`);
@@ -94,7 +93,7 @@ export const modifyCaste = async ({id, caste_name}:ModifyCasteProps) => {
 
 
         // Return
-        return updatedCaste;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating caste: ${err}`);

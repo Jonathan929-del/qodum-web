@@ -65,8 +65,7 @@ export const createAcademicYear = async ({year_name, start_date, end_date, is_ac
 
 
         // Return
-        return newAcademicYear;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Academic Year: ${err.message}`);
@@ -132,7 +131,7 @@ export const modifyAcademicYears = async ({id, year_name, start_date, end_date, 
 
         if(is_active === true){
             // Update Academic Year
-            const updatedAcademicYear = await AcademicYear.findByIdAndUpdate(
+            await AcademicYear.findByIdAndUpdate(
                 id,
                 {
                     year_name,
@@ -156,10 +155,10 @@ export const modifyAcademicYears = async ({id, year_name, start_date, end_date, 
                     console.log(`Error updating other years: ${err.message}`);
                 }
             });;
-            return updatedAcademicYear;
+            return 'Updated';
         }else{
             // Update Academic Year with setting other years is active to false
-            const updatedAcademicYear = await AcademicYear.findByIdAndUpdate(
+            await AcademicYear.findByIdAndUpdate(
                 id,
                 {
                     year_name,
@@ -177,7 +176,7 @@ export const modifyAcademicYears = async ({id, year_name, start_date, end_date, 
                 },
                 {new:true}
             );
-            return updatedAcademicYear;
+            return 'Updated';
         };
 
     } catch (err) {
@@ -219,7 +218,8 @@ export const modifyAcademicYearWithYearName = async ({year_name}:ModifyAcademicY
         });
 
 
-        return updatedAcademicYear;
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating academic year: ${err}`);

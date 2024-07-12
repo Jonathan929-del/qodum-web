@@ -38,8 +38,7 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
         // Return
-        return newVehicleType;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating Vehicle Type: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyVehicleType = async ({id, vehicle_name}:ModifyVehicleTypesPro
 
 
         // Return 
-        return updatedVehicleType;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating vehicle name: ${err}`);

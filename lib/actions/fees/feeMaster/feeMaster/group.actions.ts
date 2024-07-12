@@ -16,9 +16,7 @@ interface CreateGroupProps{
 };
 // Create Group Year
 export const createGroup = async ({name, is_special}:CreateGroupProps) => {
-
     try {
-
     
         // Database connection
         connectToDb('accounts');
@@ -46,8 +44,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
 
 
         // Return
-        return newGroup;
-
+        return 'Created';
         
     } catch (err:any) {
         throw new Error(`Error Creating Group: ${err.message}`);
@@ -100,7 +97,7 @@ export const modifyGroup = async ({id, name, is_special}:ModifyGroupProps) => {
 
 
         // Update group
-        const updatedGroup = await Group.findByIdAndUpdate(
+        await Group.findByIdAndUpdate(
             id,
             {
                 name,
@@ -111,7 +108,7 @@ export const modifyGroup = async ({id, name, is_special}:ModifyGroupProps) => {
 
 
         // Return 
-        return updatedGroup;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating groups: ${err}`);

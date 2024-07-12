@@ -37,7 +37,7 @@ export const createDueLimit = async ({class_name, fee_type, late_fee_on_due, due
 
 
         // Return
-        return dueLimit;
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating due limit: ${err.message}`);
@@ -97,7 +97,7 @@ export const modifyDueLimit = async ({id, class_name, fee_type, late_fee_on_due,
 
 
         // Return 
-        return updateDueLimit;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating due limit: ${err}`);

@@ -145,8 +145,7 @@ export const createProspectus = async ({
 
 
         // Return
-        return newProspectus;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating prospectus: ${err.message}`);
@@ -306,8 +305,10 @@ export const modifyProspectus = async ({
             },
             is_online
         }, {new:true});
-        return updatedProspectus;
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating prospectus: ${err}`);

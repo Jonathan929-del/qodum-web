@@ -19,7 +19,6 @@ interface CreateClassProps{
 // Create Class
 export const createClass = async ({class_name, wing_name, school, order}:CreateClassProps) => {
     try {
-
     
         // Database connection
         connectToDb('accounts');
@@ -43,8 +42,7 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
 
 
         // Return
-        return newClass;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating class: ${err.message}`);
@@ -103,7 +101,7 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
 
 
         // Return
-        return updatedClass;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating class: ${err}`);
@@ -153,10 +151,14 @@ export const fetchClass = async ({class_name}:{class_name:String}) => {
 
         // Fetching class
         const c = await Class.findOne({class_name});
+        const classRes = {
+            ...c._doc,
+            _id:c._doc._id.toString()
+        };
 
 
         // Return
-        return c;
+        return classRes;
 
     } catch (err) {
         throw new Error(`Error updating class sections: ${err}`);

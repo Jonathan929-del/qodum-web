@@ -39,8 +39,7 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
 
 
         // Return
-        return newConcession;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Concession: ${err.message}`);
@@ -102,7 +101,7 @@ export const modifyConcession = async ({id, name}:ModifyConcessionProps) => {
 
 
         // Return 
-        return updatedConcession;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating concession: ${err}`);

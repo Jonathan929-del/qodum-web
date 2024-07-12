@@ -39,8 +39,7 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
 
 
         // Return
-        return newTranportMedium;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating transport medium: ${err.message}`);
@@ -96,7 +95,7 @@ export const modifyTransportMedium = async ({id, transport_medium}:ModifyTranspo
 
 
         // Return
-        return updatedTransportMedium;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating transport medium: ${err}`);

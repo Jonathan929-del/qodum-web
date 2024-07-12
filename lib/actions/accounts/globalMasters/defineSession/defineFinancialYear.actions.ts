@@ -65,8 +65,7 @@ export const createFinancialYear = async ({year_name, start_date, end_date, is_a
 
 
         // Return
-        return newFinancialYear;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Financial Year: ${err.message}`);
@@ -153,7 +152,7 @@ export const modifyFinancialYears = async ({id, year_name, start_date, end_date,
                     console.log(`Error updating other years: ${err.message}`);
                 }
             });;
-            return updatedFinancialYear;
+            return 'Created';
         }else{
             // Update Financial Year with setting other years is active to false
             const updatedFinancialYear = await FinancialYear.findByIdAndUpdate(
@@ -174,7 +173,7 @@ export const modifyFinancialYears = async ({id, year_name, start_date, end_date,
                 },
                 {new:true}
             );
-            return updatedFinancialYear;
+            return 'Created';
         }
 
     } catch (err) {

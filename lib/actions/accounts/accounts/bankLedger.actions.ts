@@ -58,8 +58,10 @@ export const createBankLedger = async ({account_name, group, account_type, accou
             assign_date
         });
         newBankLedger.save();
-        return newBankLedger;
 
+
+        // Return
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error Creating Bank Ledger: ${err.message}`);
@@ -122,8 +124,10 @@ export const modifyBankLedger = async ({id, account_name, group, account_type, a
 
         // Update Bank Ledger
         const updatedBankLedger = await BankLedger.findByIdAndUpdate(id, {account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
-        return updatedBankLedger;
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating bank ledger: ${err}`);

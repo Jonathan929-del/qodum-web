@@ -358,7 +358,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                     h?.amounts?.map(async (a:any) => {
                         const dueAmount = Number(a.value) * diffDays;
                         const dueAmountLimit = await fetchClassDueLimit({class_name:selectedStudent.class});
-                        const dueAmountNumber = dueAmountLimit.dues_amount;
+                        const dueAmountNumber = dueAmountLimit?.dues_amount;
                         a.value = Number(dueAmount) < Number(dueAmountNumber) ? Number(dueAmount) : Number(dueAmountNumber);
                     });
 

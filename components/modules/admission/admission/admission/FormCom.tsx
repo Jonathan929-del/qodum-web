@@ -1536,10 +1536,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         fetcher();
     }, []);
     useEffect(() => {
-        // @ts-ignore
-        form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
-    }, [window.onload]);
-    useEffect(() => {
         if(updateStudent.id !== ''){
             // Student
             form.setValue('student.section', updateStudent.student.section);
@@ -1869,6 +1865,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('guardian_details.if_single_parent.separation_reason', valuesFromRegister.guardian_details.if_single_parent.separation_reason);
         }
     }, [valuesFromRegister]);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
+    }, [window.onload]);
     useEffect(() => {}, [form.watch('others')]);
 
     return (

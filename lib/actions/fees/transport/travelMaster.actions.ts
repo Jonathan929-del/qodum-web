@@ -17,7 +17,6 @@ interface CreateTravelMasterProps{
 // Create travel master
 export const createTravelMaster = async ({travel_agency_name, mobile_no, mail_id}:CreateTravelMasterProps) => {
     try {
-
     
         // Database connection
         connectToDb('accounts');
@@ -34,8 +33,7 @@ export const createTravelMaster = async ({travel_agency_name, mobile_no, mail_id
 
 
         // Return
-        return newTravelMaster;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating travel master: ${err.message}`);
@@ -86,7 +84,7 @@ export const modifyTravelMaster = async ({id, travel_agency_name, mobile_no, mai
 
 
         // Return
-        return updatedTravelMaster;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating travel master: ${err}`);

@@ -17,7 +17,6 @@ interface CreateSectionProps{
 export const createSection = async ({section_name, order_no}:CreateSectionProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -40,9 +39,8 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
 
 
         // Return
-        return newSection;
+        return 'Created';
 
-        
     } catch (err:any) {
         console.log(`Error creating section: ${err.message}`);
     };
@@ -98,7 +96,7 @@ export const modifySection = async ({id, section_name, order_no}:ModifySectionPr
 
 
         // Return
-        return updatedSection;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating section: ${err}`);

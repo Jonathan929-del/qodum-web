@@ -42,6 +42,7 @@ import ManualListGeneration from '@/pagesComps/admission/(admission)/(entrance t
 import Admission from '@/pagesComps/admission/(admission)/admission/page';
 import CreateIDCard from '@/pagesComps/admission/(admission)/create-id-card/page';
 import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
+import moment from 'moment';
 
 
 
@@ -49,6 +50,10 @@ import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
 
 // Main function
 const Home = () => {
+
+  // Setting moment local to english
+  moment.locale('en-gb');
+
 
   // Current page
   const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);

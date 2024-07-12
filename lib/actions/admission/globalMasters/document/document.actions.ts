@@ -41,8 +41,7 @@ export const createDocument = async ({document_type, document_name}:CreateDocume
 
 
         // Return
-        return newDocument;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating document: ${err.message}`);
@@ -99,7 +98,7 @@ export const modifyDocument = async ({id, document_type, document_name}:ModifyDo
 
 
         // Return
-        return updatedDocument;
+        return 'Modified';
 
     } catch (err) {
         throw new Error(`Error updating document: ${err}`);

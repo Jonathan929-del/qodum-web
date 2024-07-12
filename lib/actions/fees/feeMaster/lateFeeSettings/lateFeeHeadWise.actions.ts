@@ -38,8 +38,7 @@ export const createLateFeeHeadWise = async ({fee_group, fee_type, installment, h
 
 
         // Return
-        return newLateFeeHeadWise;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating late fee head wise: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyLateFeeHeadWise = async ({id, fee_group, fee_type, installmen
 
 
         // Return 
-        return updatedLateFeeHeadWise;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating late fee head wise: ${err}`);

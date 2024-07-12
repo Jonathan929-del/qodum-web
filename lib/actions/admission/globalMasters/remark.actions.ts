@@ -16,7 +16,6 @@ interface CreateRemarkProps{
 export const createRemark = async ({remark}:CreateRemarkProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -39,8 +38,7 @@ export const createRemark = async ({remark}:CreateRemarkProps) => {
 
 
         // Return
-        return newRemark;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating remark: ${err.message}`);
@@ -95,7 +93,7 @@ export const modifyRemark = async ({id, remark}:ModifyRemarkProps) => {
 
 
         // Return
-        return updatedRemark;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating remark: ${err}`);

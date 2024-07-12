@@ -39,9 +39,8 @@ export const createTermMaster = async ({term_name}:CreateTermMasterProps) => {
 
 
         // Return
-        return newTermMaster;
+        return 'Created';
 
-        
     } catch (err:any) {
         console.log(`Error creating term master: ${err.message}`);
     };
@@ -96,7 +95,7 @@ export const modifyTermMaster = async ({id, term_name}:ModifyTermMasterProps) =>
 
 
         // Return
-        return updatedTermMaster;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating term master: ${err}`);

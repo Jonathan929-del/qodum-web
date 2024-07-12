@@ -44,12 +44,11 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
 
 
         // Creating new admission
-        const newAdmission = await Admission.create({session:activeSession.year_name, school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
+        await Admission.create({session:activeSession.year_name, school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
 
 
         // Return
-        return newAdmission;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating admission: ${err.message}`);
@@ -112,9 +111,11 @@ export const modifyAdmission = async ({id, school, class_name, board, setting_ty
 
 
         // Update admission
-        const updatedAdmission = await Admission.findByIdAndUpdate(id, {school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix}, {new:true});
-        return updatedAdmission;
+        await Admission.findByIdAndUpdate(id, {school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix}, {new:true});
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating admission: ${err}`);
@@ -156,6 +157,9 @@ export const fetchClassNumbers = async ({class_name}:{class_name:String}) => {
 
         // Fetching admission
         const numbers = await Admission.find({class_name});
+
+
+        // Return
         return numbers;
 
     } catch (err) {

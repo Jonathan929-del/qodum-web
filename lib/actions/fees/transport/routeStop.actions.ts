@@ -58,8 +58,7 @@ export const createRouteStop = async ({route_no, stop_no, stop_name, morning_arr
 
 
         // Return
-        return newRouteStop;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating route stop: ${err.message}`);
@@ -135,7 +134,7 @@ export const modifyRouteStop = async ({id, route_no, stop_no, stop_name, morning
 
 
         // Return 
-        return updateRouteStop;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating route stop: ${err}`);

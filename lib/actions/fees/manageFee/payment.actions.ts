@@ -102,11 +102,14 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
         payment.save().then(async() => {
             await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads}, {new:true});
         });
+        const paymentRes = {
+            ...payment._doc,
+            _id:payment._doc._id.toString()
+        };
 
 
         // Return
-        return payment;
-
+        return paymentRes;
 
     } catch (err:any) {
         console.log(`Error creating payment: ${err.message}`);

@@ -48,8 +48,7 @@ export const createBoard = async ({board, is_default}:CreateBoardProps) => {
 
 
         // Return
-        return newBoard;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating board: ${err.message}`);
@@ -102,18 +101,18 @@ export const modifyBoard = async ({id, board, is_default}:ModifyBoardProps) => {
 
         if(is_default === true){
             // Update Board
-            const updatedBoard = await Board.findByIdAndUpdate(id, {board, is_default},{new:true}).then(async () => {
+            await Board.findByIdAndUpdate(id, {board, is_default},{new:true}).then(async () => {
                 try {
                     await Board.updateMany({'_id': {$ne:id}}, {is_default:false});
                 } catch (err:any) {
                     console.log(`Error updating other boards: ${err.message}`);
                 }
             });;
-            return updatedBoard;
+            return 'Updated';
         }else{
             // Update board with setting other board is defailt to false
-            const updatedBoard = await Board.findByIdAndUpdate(id, {board, is_default}, {new:true});
-            return updatedBoard;
+            await Board.findByIdAndUpdate(id, {board, is_default}, {new:true});
+            return 'Updated';
         };
 
     } catch (err) {

@@ -39,8 +39,7 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
 
 
         // Return
-        return newStream;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating stream: ${err.message}`);
@@ -95,7 +94,7 @@ export const modifyStream = async ({id, stream_name}:ModifyStreamProps) => {
 
 
         // Return
-        return updatedStream;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating stream: ${err}`);

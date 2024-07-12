@@ -40,7 +40,7 @@ export const createHealthMaster = async ({health_parameter, unit}:CreateHealthMa
 
 
         // Return
-        return newHealthMaster;
+        return 'Updated';
 
         
     } catch (err:any) {
@@ -98,7 +98,7 @@ export const modifyHealthMaster = async ({id, health_parameter, unit}:ModifyHeal
 
 
         // Return
-        return updatedHealthMaster;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating health master: ${err}`);

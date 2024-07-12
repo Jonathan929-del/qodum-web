@@ -262,7 +262,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
         // Return
-        return newStudent;
+        return 'Created';
 
 
     } catch (err:any) {
@@ -505,8 +505,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
 
         // Return
-        return updatedStudent;
-    
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating student: ${err}`);

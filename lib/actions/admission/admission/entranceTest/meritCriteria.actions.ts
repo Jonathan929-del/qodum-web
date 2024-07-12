@@ -41,8 +41,7 @@ export const createMeritCriteria = async ({session, name, maximum_point}:CreateM
 
 
         // Return
-        return newMeritCriteria;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error creating merit criteria: ${err.message}`);
@@ -63,6 +62,9 @@ export const fetchMeritCriterias = async () => {
 
         // Fetching
         const meritCriterias = await MeritCriteria.find();
+
+
+        // Return
         return meritCriterias;
 
     } catch (err:any) {
@@ -97,8 +99,10 @@ export const modifyMeritCriteria = async ({id, session, name, maximum_point}:Mod
 
         // Updating
         const updatedMeritCriteria = await MeritCriteria.findByIdAndUpdate(id, {session, name, maximum_point}, {new:true});
-        return updatedMeritCriteria;
 
+
+        // Return
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating merit criteria: ${err}`);

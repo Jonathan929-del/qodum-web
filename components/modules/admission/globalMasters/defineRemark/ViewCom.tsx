@@ -16,7 +16,6 @@ const ViewCom = ({setIsViewOpened, remarks, setUpdateRemark}:any) => {
 
     // Select handler
     const selectHandler = (remark:any) => {
-        console.log(remark)
         setUpdateRemark({
             id:remark._id,
             isDeleteClicked:false,

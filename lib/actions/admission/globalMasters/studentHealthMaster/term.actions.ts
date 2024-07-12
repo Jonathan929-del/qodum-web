@@ -39,8 +39,7 @@ export const createTerm = async ({term_name}:CreateTermProps) => {
 
 
         // Return
-        return newTerm;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating term: ${err.message}`);
@@ -92,11 +91,11 @@ export const modifyTerm = async ({id, term_name}:ModifyTermProps) => {
 
 
         // Updating term
-        const updatedTerm = await Term.findByIdAndUpdate(id, {term_name}, {new:true});
+        await Term.findByIdAndUpdate(id, {term_name}, {new:true});
 
 
         // Return
-        return updatedTerm;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating term: ${err}`);

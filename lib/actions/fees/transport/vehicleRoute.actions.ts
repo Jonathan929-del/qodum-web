@@ -42,8 +42,7 @@ export const createVehicleRoute = async ({route_no, route_description, route_in_
 
 
         // Return
-        return newVehicleRoute;
-
+        return 'Created';
 
     } catch (err:any) {
         console.log(`Error Creating Vehicle Route: ${err.message}`);
@@ -102,7 +101,7 @@ export const modifyVehicleRoute = async ({id, route_no, route_description, route
 
 
         // Return 
-        return updatedVehicleRoute;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating vehicle route: ${err}`);

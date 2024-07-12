@@ -16,7 +16,6 @@ interface CreateReligionProps{
 export const createReligion = async ({religion_name}:CreateReligionProps) => {
     try {
 
-    
         // Database connection
         connectToDb('accounts');
 
@@ -39,8 +38,7 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
 
 
         // Return
-        return newReligion;
-
+        return 'Created';
         
     } catch (err:any) {
         console.log(`Error creating religion: ${err.message}`);
@@ -95,7 +93,7 @@ export const modifyReligion = async ({id, religion_name}:ModifyReligionProps) =>
 
 
         // Return
-        return updatedReligion;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating religion: ${err}`);
