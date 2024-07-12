@@ -51,6 +51,10 @@ import AssignTransportToStudents from '@/pagesComps/fees/(transport)/assign-tran
 import DailyFeeCollection from '@/pagesComps/fees/(transaction report)/(collection reports)/daily-fee-collection/page';
 import ReceiptWiseFeeTypeCollection from '@/pagesComps/fees/(transaction report)/(collection reports)/receipt-wise-fee-type-collection/page';
 import ClassWiseStudentStrength from '@/pagesComps/fees/(reports)/(student-strength)/class-wise-student-strength/page';
+import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/account/page';
+import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
+import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
+import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 
 
 
@@ -215,6 +219,18 @@ const Home = () => {
     };
     if(openedPages.includes('Class Wise Studnet Strength')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Class Wise Studnet Strength', component:<ClassWiseStudentStrength />}]);
+    };
+    if(openedPages.includes('Account Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+    };
+    if(openedPages.includes('Fee Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+    };
+    if(openedPages.includes('Payroll Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+    };
+    if(openedPages.includes('Admission Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
     };
 
   }, [openedPages]);

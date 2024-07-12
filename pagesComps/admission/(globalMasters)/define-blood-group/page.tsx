@@ -12,7 +12,6 @@ import ViewCom from '@/components/modules/admission/globalMasters/defineBloodGro
 // Main function
 const page = () => {
 
-
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
 
@@ -37,7 +36,6 @@ const page = () => {
         };
         fetcher();
     }, [isViewOpened, setUpdateBloodGroup]);
-
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>

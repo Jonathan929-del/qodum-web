@@ -1,7 +1,8 @@
 'use client';
 // Imports
-import Link from 'next/link';
 import Image from 'next/image';
+import {useContext} from 'react';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 import FessImage from '@/public/assets/Modules Icons/Menu icons/Fees.png';
 import PayrollImage from '@/public/assets/Modules Icons/Menu icons/Payroll.png';
 import AccountsImage from '@/public/assets/Modules Icons/Menu icons/Accounts.png';
@@ -14,6 +15,9 @@ import AdmissionImage from '@/public/assets/Modules Icons/Menu icons/Admission.p
 // Main function
 const page = () => {
 
+    // Opened pages
+    const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
+
 
     // Boxes
     const boxes = [
@@ -23,15 +27,17 @@ const page = () => {
         {name:'Admission Manager', image:AdmissionImage}
     ];
 
-
     return (
-        <div className='h-full flex flex-row flex-wrap items-start justify-center pt-10 gap-6 bg-white'>
+        <div className='h-full flex flex-row flex-wrap items-start justify-center pt-10 gap-6 bg-[#fff]'>
                 
             {/* Boxes */}
             {boxes.map((b:any) => (
-                <Link
-                    href={`/fees/session-transfer/${(b.name + ' Session transfer').toLowerCase().replace(/\s+/g, '-')}`}
-                    className='w-[185px] h-[185px] flex flex-col items-center justify-center gap-2 rounded-[8px] border-[0.5px] border-[#ccc] transition hover:scale-105'
+                <div
+                    onClick={() => {
+                        setCurrentPage(`${b.name.split(' ')[0]} Manager Session Transfer`);
+                        setOpenedPages([...openedPages, `${b.name.split(' ')[0]} Manager Session Transfer`])
+                    }}
+                    className='w-[200px] h-[200px] flex flex-col items-center justify-center gap-2 rounded-[8px] border-[0.5px] border-[#ccc] transition cursor-pointer hover:scale-105'
                 >
                     <Image
                         alt={b.name}
@@ -40,7 +46,7 @@ const page = () => {
                         height={50}
                     />
                     <p>{b.name}</p>
-                </Link>
+                </div>
             ))}
 
         </div>

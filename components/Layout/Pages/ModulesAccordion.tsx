@@ -21,7 +21,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Opened pages
-    const {openedPages, setOpenedPages} = useContext(GlobalStateContext);
+    const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
 
 
     // Currnet Module
@@ -43,7 +43,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     // Thread click
     const pageClick = (page:any) => {
         setIsSidebarOpened(false);
-        // setCurrentPage(page);
+        setCurrentPage(page);
         setSelectedThread(page);
         if(openedPages.includes(page)){
             return;
