@@ -164,8 +164,12 @@ export const fetchProspectuses = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const prospectuses = await Prospectus.find();
+        const prospectuses = await Prospectus.find({session:activeSession.year_name});
         return prospectuses;
 
     } catch (err:any) {

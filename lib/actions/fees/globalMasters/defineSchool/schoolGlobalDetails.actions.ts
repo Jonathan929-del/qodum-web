@@ -134,8 +134,12 @@ export const fetchGlobalSchoolDetails = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const globalSchoolDetails = await GlobalSchoolDetails.find();
+        const globalSchoolDetails = await GlobalSchoolDetails.find({session:activeSession.year_name});
         const globalSchoolDetailsRes = globalSchoolDetails.map((g:any) => {
             return{
                 ...g._doc,

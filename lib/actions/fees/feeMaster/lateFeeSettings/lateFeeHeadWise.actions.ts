@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isLateFeeHeadWiseSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await LateFeeHeadWise.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Late fee head wise session transfer
+export const lateFeeHeadWiseSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await LateFeeHeadWise.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create late fee head wise props
 interface CreateLateFeeHeadWiseProps{
     fee_group:String;
@@ -57,8 +109,12 @@ export const fetchLateFeesHeadWise = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching late fees
-        const lateFeesHeadWise = await LateFeeHeadWise.find();
+        const lateFeesHeadWise = await LateFeeHeadWise.find({session:activeSession.year_name});
         return lateFeesHeadWise;
 
     } catch (err:any) {

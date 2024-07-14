@@ -80,8 +80,12 @@ export const fetchBankLedgers = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const bankLedgers = await BankLedger.find();
+        const bankLedgers = await BankLedger.find({session:activeSession.year_name});
         return bankLedgers;
 
         

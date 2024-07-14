@@ -93,8 +93,12 @@ export const fetchEnquiries = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const enquiries = await Enquiry.find();
+        const enquiries = await Enquiry.find({session:activeSession.year_name});
         return enquiries;
 
     } catch (err:any) {

@@ -60,8 +60,12 @@ export const fetchDocuments = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const documents = await Document.find();
+        const documents = await Document.find({session:activeSession.year_name});
         return documents;
 
     } catch (err:any) {

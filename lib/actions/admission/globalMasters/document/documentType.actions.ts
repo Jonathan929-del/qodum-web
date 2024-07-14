@@ -59,8 +59,12 @@ export const fetchDocumentTypes = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const documentTypes = await DocumentType.find();
+        const documentTypes = await DocumentType.find({session:activeSession.year_name});
         return documentTypes;
 
     } catch (err:any) {

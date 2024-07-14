@@ -14,6 +14,7 @@ import DefineAccountGroup from '@/pagesComps/accounts/(accounts)/define-account-
 import DefineBankLedger from '@/pagesComps/accounts/(accounts)/define-bank-ledger/page';
 import DefinePartyLedger from '@/pagesComps/accounts/(accounts)/define-party-ledger/page';
 import DefineGeneralLedger from '@/pagesComps/accounts/(accounts)/define-general-ledger/page';
+import SessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/page';
 
 
 
@@ -69,6 +70,9 @@ const Home = () => {
     };
     if(openedPages.includes('Define General Ledger')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Define General Ledger', component:<DefineGeneralLedger />}]);
+    };
+    if(openedPages.includes('Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
     };
 
   }, [openedPages]);

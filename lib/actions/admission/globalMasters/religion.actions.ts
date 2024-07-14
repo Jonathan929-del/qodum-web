@@ -57,8 +57,12 @@ export const fetchReligions = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const religions = await Religion.find();
+        const religions = await Religion.find({session:activeSession.year_name});
         return religions;
 
     } catch (err:any) {

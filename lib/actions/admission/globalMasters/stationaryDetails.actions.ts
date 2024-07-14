@@ -69,8 +69,12 @@ export const fetchStationaryDetails = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const stationaryDetails = await StationaryDetails.find();
+        const stationaryDetails = await StationaryDetails.find({session:activeSession.year_name});
         return stationaryDetails;
 
     } catch (err:any) {

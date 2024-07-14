@@ -8,6 +8,58 @@ import ConcessionType from '@/lib/models/fees/feeMaster/defineAndAssignConcessio
 
 
 
+// Is session transfered
+export const isConcessionTypeSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await ConcessionType.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Concession type session transfer
+export const concessionTypeSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await ConcessionType.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create Concession Type Props
 interface CreateConcessionTypeProps{
     type:String;
@@ -58,8 +110,12 @@ export const fetchConcessionsTypes = async (pageNumber = 1, pageSize=20) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching concessions types
-        const concessionsTypes = await ConcessionType.find();
+        const concessionsTypes = await ConcessionType.find({session:activeSession.year_name});
         return concessionsTypes;
 
     } catch (err:any) {
@@ -91,7 +147,7 @@ export const modifyConcessionType = async ({id, type}:ModifyConcessionTypeProps)
 
 
         // Update concession type
-        const updatedConcessionType = await ConcessionType.findByIdAndUpdate(
+        await ConcessionType.findByIdAndUpdate(
             id,
             {
                 type

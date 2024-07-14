@@ -53,9 +53,13 @@ export const fetchFeeEntrySettings = async () => {
         // Database connection
         connectToDb('accounts');
 
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
     
         // Fee entry settings
-        const feeEntrSettings = await FeeEntrySetting.find();
+        const feeEntrSettings = await FeeEntrySetting.find({session:activeSession});
 
 
         // Return

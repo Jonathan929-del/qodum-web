@@ -58,8 +58,12 @@ export const fetchStreams = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const streams = await Stream.find();
+        const streams = await Stream.find({session:activeSession.year_name});
         return streams;
 
     } catch (err:any) {

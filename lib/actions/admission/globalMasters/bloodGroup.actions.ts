@@ -57,8 +57,12 @@ export const fetchBloodGroups = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const bloodGroups = await BloodGroup.find();
+        const bloodGroups = await BloodGroup.find({session:activeSession.year_name});
         return bloodGroups;
 
     } catch (err:any) {

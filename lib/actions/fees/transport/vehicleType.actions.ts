@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isVehicleTypeSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await VehicleType.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Vehicle type session transfer
+export const vehicleTypesSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await VehicleType.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create vehicle type props
 interface CreateVehicleTypeProps{
     vehicle_name:String;
@@ -57,8 +109,12 @@ export const fetchVehicleTypes = async (pageNumber = 1, pageSize=20) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching vehicle types
-        const vehicleTypes = await VehicleType.find();
+        const vehicleTypes = await VehicleType.find({session:activeSession.year_name});
         return vehicleTypes;
 
     } catch (err:any) {

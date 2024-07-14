@@ -83,8 +83,12 @@ export const fetchPartyLedgers = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const partyLedgers = await PartyLedger.find();
+        const partyLedgers = await PartyLedger.find({session:activeSession.year_name});
         return partyLedgers;
 
         

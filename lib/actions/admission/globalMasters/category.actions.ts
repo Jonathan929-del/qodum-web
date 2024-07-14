@@ -67,8 +67,12 @@ export const fetchCategories = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const categories = await Category.find();
+        const categories = await Category.find({session:activeSession.year_name});
         return categories;
 
     } catch (err:any) {

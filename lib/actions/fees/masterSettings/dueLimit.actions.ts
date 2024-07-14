@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isDueLimitsSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await DueLimit.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Due limit session transfer
+export const dueLimitsSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await DueLimit.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create due limit props
 interface CreateDueLimitProps{
     class_name:String;
@@ -55,9 +107,13 @@ export const fetchDueLimits = async () => {
         // Database connection
         connectToDb('accounts');
 
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
     
         // Due limits
-        const dueLimits = await DueLimit.find();
+        const dueLimits = await DueLimit.find({session:activeSession.year_name});
 
 
         // Return

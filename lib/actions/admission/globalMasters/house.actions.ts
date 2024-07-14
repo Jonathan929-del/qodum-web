@@ -58,8 +58,12 @@ export const fetchHouses = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const houses = await House.find();
+        const houses = await House.find({session:activeSession.year_name});
         return houses;
 
     } catch (err:any) {

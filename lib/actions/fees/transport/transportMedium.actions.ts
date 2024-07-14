@@ -58,8 +58,12 @@ export const fetchTransportMediums = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const transportMediums = await TransportMedium.find();
+        const transportMediums = await TransportMedium.find({session:activeSession.year_name});
         return transportMediums;
 
     } catch (err:any) {

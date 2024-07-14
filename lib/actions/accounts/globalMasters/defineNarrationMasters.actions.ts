@@ -63,8 +63,12 @@ export const fetchNarrationMasters = async (pageNumber = 1, pageSize=20) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const narrations = await NarrationMaster.find();
+        const narrations = await NarrationMaster.find({session:activeSession.year_name});
 
 
         // Return

@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isGroupSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await AccountGroup.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Group session transfer
+export const groupsSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await AccountGroup.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create account group props
 interface CreateAccountGroupProps{
     group_name:String;
@@ -67,8 +119,12 @@ export const fetchAccountGroups = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const accountGroups = await AccountGroup.find();
+        const accountGroups = await AccountGroup.find({session:activeSession.year_name});
         return accountGroups;
 
         
@@ -103,7 +159,7 @@ export const modifyAccountGroup = async ({id, group_name, category, group_type, 
 
 
         // Update Account Group
-        const updatedAccountGroup = await AccountGroup.findByIdAndUpdate(id, {group_name, category, group_type, group_no}, {new:true});
+        await AccountGroup.findByIdAndUpdate(id, {group_name, category, group_type, group_no}, {new:true});
 
 
         // Return

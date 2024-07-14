@@ -58,8 +58,12 @@ export const fetchTerms = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const terms = await Term.find();
+        const terms = await Term.find({session:activeSession.year_name});
         return terms;
 
     } catch (err:any) {

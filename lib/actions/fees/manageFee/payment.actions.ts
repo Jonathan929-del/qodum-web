@@ -152,9 +152,13 @@ export const fetchStudentPayments = async ({student}:{student:String}) => {
         // Database connection
         connectToDb('accounts');
 
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
     
         // Payments
-        const payments = await Payment.find({student});
+        const payments = await Payment.find({student, session:activeSession.year_name});
 
 
         // Return

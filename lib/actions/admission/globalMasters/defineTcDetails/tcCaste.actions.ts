@@ -58,8 +58,12 @@ export const fetchTcCasts = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const tcCasts = await TcCaste.find();
+        const tcCasts = await TcCaste.find({session:activeSession.year_name});
         return tcCasts;
 
     } catch (err:any) {

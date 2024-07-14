@@ -41,7 +41,7 @@ const FormCom = () => {
         try {
 
 
-            toast({ title: 'Saved Successfully' });
+            toast({title:'Saved Successfully'});
 
             // Reseting form
             form.reset({

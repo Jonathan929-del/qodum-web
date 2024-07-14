@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isTravelMasterSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await TravelMaster.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Travel masters session transfer
+export const travelMasterSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await TravelMaster.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create Travel Master Props
 interface CreateTravelMasterProps{
     travel_agency_name:String;
@@ -52,8 +104,12 @@ export const fetchTravelMasters = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const travelMasters = await TravelMaster.find();
+        const travelMasters = await TravelMaster.find({session:activeSession.year_name});
         return travelMasters;
 
     } catch (err:any) {
@@ -80,7 +136,7 @@ export const modifyTravelMaster = async ({id, travel_agency_name, mobile_no, mai
 
 
         // Updating travel master
-        const updatedTravelMaster = await TravelMaster.findByIdAndUpdate(id, {travel_agency_name, mobile_no, mail_id}, {new:true});
+        await TravelMaster.findByIdAndUpdate(id, {travel_agency_name, mobile_no, mail_id}, {new:true});
 
 
         // Return

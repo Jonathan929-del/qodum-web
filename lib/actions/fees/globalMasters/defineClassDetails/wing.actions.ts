@@ -57,8 +57,12 @@ export const fetchWings = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const wings = await Wing.find();
+        const wings = await Wing.find({session:activeSession.year_name});
         return wings;
 
     } catch (err:any) {

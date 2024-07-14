@@ -60,8 +60,12 @@ export const fetchHealthMasters = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const healthMasters = await HealthMaster.find();
+        const healthMasters = await HealthMaster.find({session:activeSession.year_name});
         return healthMasters;
 
     } catch (err:any) {

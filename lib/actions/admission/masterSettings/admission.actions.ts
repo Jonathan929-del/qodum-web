@@ -67,8 +67,12 @@ export const fetchAdmissions = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const admissions = await Admission.find();
+        const admissions = await Admission.find({session:activeSession.year_name});
         return admissions;
 
     } catch (err:any) {

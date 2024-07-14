@@ -67,8 +67,12 @@ export const fetchBoards = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const boards = await Board.find();
+        const boards = await Board.find({session:activeSession.year_name});
         return boards;
 
     } catch (err:any) {

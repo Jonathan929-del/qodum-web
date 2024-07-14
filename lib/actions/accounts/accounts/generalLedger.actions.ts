@@ -77,8 +77,12 @@ export const fetchGeneralLedgers = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const generalLedgers = await GeneralLedger.find();
+        const generalLedgers = await GeneralLedger.find({session:activeSession.year_name});
         return generalLedgers;
 
         

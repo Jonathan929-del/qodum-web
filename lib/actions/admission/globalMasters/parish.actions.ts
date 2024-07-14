@@ -61,8 +61,12 @@ export const fetchParishes = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const parishes = await Parish.find();
+        const parishes = await Parish.find({session:activeSession.year_name});
         return parishes;
 
     } catch (err:any) {

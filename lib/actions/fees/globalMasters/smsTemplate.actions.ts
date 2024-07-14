@@ -52,9 +52,13 @@ export const fetchSmsTemplates = async () => {
         // Db connection
         connectToDb('accounts');
 
+    
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
 
         // Fetching sms templates
-        const smsTemplates = await SmsTemplate.find();
+        const smsTemplates = await SmsTemplate.find({session:activeSession.year_name});
         return smsTemplates;
 
     } catch (err:any) {

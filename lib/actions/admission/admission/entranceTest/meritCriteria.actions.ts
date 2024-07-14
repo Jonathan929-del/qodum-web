@@ -60,8 +60,12 @@ export const fetchMeritCriterias = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const meritCriterias = await MeritCriteria.find();
+        const meritCriterias = await MeritCriteria.find({session:activeSession.year_name});
 
 
         // Return
@@ -98,7 +102,7 @@ export const modifyMeritCriteria = async ({id, session, name, maximum_point}:Mod
 
 
         // Updating
-        const updatedMeritCriteria = await MeritCriteria.findByIdAndUpdate(id, {session, name, maximum_point}, {new:true});
+        await MeritCriteria.findByIdAndUpdate(id, {session, name, maximum_point}, {new:true});
 
 
         // Return

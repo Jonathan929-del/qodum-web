@@ -282,8 +282,12 @@ export const fetchStudents = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const students = await Student.find();
+        const students = await Student.find({session:activeSession.year_name});
         return students;
 
     } catch (err:any) {

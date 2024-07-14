@@ -9,6 +9,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isTypesSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await FeeType.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Group session transfer
+export const typesSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await FeeType.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create type props
 interface CreateTypeProps{
     name:String;
@@ -78,8 +130,12 @@ export const fetchTypes = async (pageNumber = 1, pageSize=20) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching types
-        const types = await FeeType.find();
+        const types = await FeeType.find({session:activeSession.year_name});
         return types;
 
     } catch (err:any) {
@@ -120,7 +176,7 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
 
         // Update type
-        const updatedType = await FeeType.findByIdAndUpdate(
+        await FeeType.findByIdAndUpdate(
             id,
             {
                 name,
