@@ -15,6 +15,10 @@ import DefineBankLedger from '@/pagesComps/accounts/(accounts)/define-bank-ledge
 import DefinePartyLedger from '@/pagesComps/accounts/(accounts)/define-party-ledger/page';
 import DefineGeneralLedger from '@/pagesComps/accounts/(accounts)/define-general-ledger/page';
 import SessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/page';
+import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/account/page';
+import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
+import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
+import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 
 
 
@@ -73,6 +77,18 @@ const Home = () => {
     };
     if(openedPages.includes('Session Transfer')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
+    };
+    if(openedPages.includes('Account Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+    };
+    if(openedPages.includes('Fee Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+    };
+    if(openedPages.includes('Payroll Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+    };
+    if(openedPages.includes('Admission Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
     };
 
   }, [openedPages]);

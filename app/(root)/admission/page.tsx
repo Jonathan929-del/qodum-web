@@ -43,6 +43,10 @@ import ManualListGeneration from '@/pagesComps/admission/(admission)/(entrance t
 import Admission from '@/pagesComps/admission/(admission)/admission/page';
 import CreateIDCard from '@/pagesComps/admission/(admission)/create-id-card/page';
 import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
+import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/account/page';
+import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
+import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
+import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 
 
 
@@ -187,6 +191,18 @@ const Home = () => {
     };
     if(openedPages.includes('Send SMS')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Send SMS', component:<SendSMS />}]);
+    };
+    if(openedPages.includes('Account Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+    };
+    if(openedPages.includes('Fee Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+    };
+    if(openedPages.includes('Payroll Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+    };
+    if(openedPages.includes('Admission Manager Session Transfer')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
     };
 
   }, [openedPages]);
