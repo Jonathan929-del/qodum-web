@@ -2,15 +2,14 @@
 import Draggable from 'react-draggable';
 import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
+import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchUnTransferedClasses, studentsSesssionTransfer} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {fetchAdmittedStudents, studentsSesssionTransfer} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
-import { Checkbox } from '@/components/ui/checkbox';
 
 
 
@@ -68,7 +67,7 @@ const StudentTransfer = ({currentSession, nextSession, showDraggables, setShowDr
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const classesRes = await fetchClasses();
+            const classesRes = await fetchUnTransferedClasses({current_session:currentSession});
             const classesArray = classesRes.map((c:any) => {
                 return{
                     ...c,

@@ -53,10 +53,6 @@ export const studentsSesssionTransfer = async ({next_session, classes}:any) => {
 
 
         // Records
-        // students.map(async (s:any) => {
-        //     await AdmittedStudent.findOneAndUpdate({'student.adm_no':s.adm_no}, {'student.class':s.class, 'student.section':s.section, session:next_session});
-        // });
-        // Records
         classes.map(async (c:any) => {
             await AdmittedStudent.findOneAndUpdate({'student.class':c.class_name}, {'student.class':c.next_class, 'student.section':c.next_section, session:next_session})
         });
@@ -64,6 +60,35 @@ export const studentsSesssionTransfer = async ({next_session, classes}:any) => {
 
         // Return
         return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Fetching un transfered classes
+export const fetchUnTransferedClasses = async ({current_session, next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        const students = await AdmittedStudent.find({session:current_session});
+        const studentsClassesNames = students.map((s:any) => s.student.class);
+
+
+        // Classes
+        const classes = await Class.find({class_name:{$in:studentsClassesNames}});
+
+
+        // Return
+        return classes;
         
     }catch(err){
         throw new Error('Error');
