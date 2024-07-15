@@ -45,7 +45,7 @@ export const isStudentsSesssionTransfered = async () => {
 
 
 // Students session transfer
-export const studentsSesssionTransfer = async ({next_session}:any) => {
+export const studentsSesssionTransfer = async ({next_session, classes}:any) => {
     try {
 
         // Database connection
@@ -53,7 +53,13 @@ export const studentsSesssionTransfer = async ({next_session}:any) => {
 
 
         // Records
-        await AdmittedStudent.updateMany({session:next_session});
+        // students.map(async (s:any) => {
+        //     await AdmittedStudent.findOneAndUpdate({'student.adm_no':s.adm_no}, {'student.class':s.class, 'student.section':s.section, session:next_session});
+        // });
+        // Records
+        classes.map(async (c:any) => {
+            await AdmittedStudent.findOneAndUpdate({'student.class':c.class_name}, {'student.class':c.next_class, 'student.section':c.next_section, session:next_session})
+        });
 
 
         // Return

@@ -9,6 +9,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isClassesSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await Class.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Classes session transfer
+export const classesSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await Class.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create Class Props
 interface CreateClassProps{
     class_name:String;

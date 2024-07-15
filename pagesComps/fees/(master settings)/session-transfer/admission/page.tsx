@@ -6,11 +6,12 @@ import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import StudentTransfer from './draggables/StudentTransfer';
-import {isHeadsSesssionTransfered} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import ClassSectionRelation from './draggables/ClassSectionRelation';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {isStudentsSesssionTransfered} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {isClassesSesssionTransfered} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {fetchFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
-import { isStudentsSesssionTransfered } from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -69,7 +70,12 @@ const page = () => {
 
             // Is session transfered responses
             const isStudentsTransferedRes = await isStudentsSesssionTransfered();
+            const isClassSectionRelationTransferedRes = await isClassesSesssionTransfered();
             setValues([
+                {
+                    name:'Class Section Relation',
+                    isTransfered:isClassSectionRelationTransferedRes === 0 ? 'Not Transfered' : 'Already Transfered'
+                },
                 {
                     name:'Student Transfer',
                     isTransfered:isStudentsTransferedRes === 0 ? 'Not Transfered' : 'Already Transfered'
@@ -389,6 +395,16 @@ const page = () => {
             {/* Draggables */}
             {showDraggables.includes('Student Transfer') && (
                 <StudentTransfer
+                    currentSession={currentSession}
+                    showDraggables={showDraggables}
+                    setShowDraggables={setShowDraggables}
+                    nextSession={nextSession}
+                    state={state}
+                    setState={setState}
+                />
+            )}
+            {showDraggables.includes('Class Section Relation') && (
+                <ClassSectionRelation
                     currentSession={currentSession}
                     showDraggables={showDraggables}
                     setShowDraggables={setShowDraggables}

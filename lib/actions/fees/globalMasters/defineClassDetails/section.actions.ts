@@ -8,6 +8,58 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 
 
 
+// Is session transfered
+export const isSectionsSesssionTransfered = async () => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Records
+        const records = await Section.find({session:activeSession.year_name});
+
+
+        // Return
+        return records.length > 0 ? 0 : 1;
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
+// Sections session transfer
+export const sectionsSesssionTransfer = async ({next_session}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Records
+        await Section.updateMany({session:next_session});
+
+
+        // Return
+        return 'Transfered';
+        
+    }catch(err){
+        throw new Error('Error');
+    };
+};
+
+
+
+
+
 // Create Section Props
 interface CreateSectionProps{
     section_name:String;
