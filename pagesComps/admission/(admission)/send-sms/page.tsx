@@ -1,75 +1,58 @@
 'use client';
 // Imports
-import * as z from 'zod';
-import {Form} from '@/components/ui/form';
-import {useToast} from '@/components/ui/use-toast';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {useForm} from 'react-hook-form';
-import {useState} from 'react';
-import FormCom from '@/components/modules/admission/admission/sendSMS/FormCom';
-import StudentsList from '@/components/modules/admission/admission/sendSMS/StudentList';
-import {SendSmsValidation} from '@/lib/validations/admission/admission/sendSms.validation';
+import Image from 'next/image';
+import {useContext} from 'react';
+import NoticeImage from '@/public/assets/Notice.png';
+import ClassNoticeImage from '@/public/assets/ClassNotice.png';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
+
+
 
 
 
 // Main function
 const page = () => {
-    const [isVisible, setIsVisible] = useState(true)
 
-    // Toast
-    const { toast } = useToast();
-
-
-    // Form
-    const form = useForm({
-        resolver: zodResolver(SendSmsValidation),
-        defaultValues: {
-            session:'',
-            class_name: '',
-            special_group: '',
-            route: '',
-            stop: '',
-            vehicle: ''
-        }
-    });
+    // Opened pages
+    const {openedPages, setOpenedPages, setCurrentPage} = useContext(GlobalStateContext);
 
 
-    // Submit handler
-    const onSubmit = async (values: z.infer<typeof SendSmsValidation>) => {
-        try {
-
-
-            toast({ title: 'Group Assigned Successfully!' });
-
-        } catch (err: any) {
-            console.log(err);
-        }
-    };
-
-
-
-
+    // Boxes
+    const boxes = [
+        {name:'Notice', image:NoticeImage},
+        {name:'Class Notice', image:ClassNoticeImage},
+    ];
 
     return (
-        <div className="flex mx-auto py-4 w-full h-full bg-white">
-            <Form
-                {...form}
-            >
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative mx-auto w-full  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2 '
+        <div className='h-full flex flex-row flex-wrap items-start justify-center pt-10 gap-6 bg-[#fff]'>
+                
+            {/* Boxes */}
+            {boxes.map((b:any) => (
+                <div
+                    onClick={() => {
+                        setCurrentPage(b.name);
+                        if(openedPages.includes(b.name)){
+                            return;
+                        } else {
+                            const uniquePagesNames = openedPages.filter((item:any, index:any) => openedPages.indexOf(item) === index);
+                            setOpenedPages([...uniquePagesNames, b.name]);
+                        };
+                    }}
+                    className='w-[200px] h-[200px] flex flex-col items-center justify-center gap-2 rounded-[8px] border-[0.5px] border-[#ccc] transition cursor-pointer hover:scale-105'
                 >
+                    <Image
+                        alt={b.name}
+                        src={b.image}
+                        width={100}
+                        height={100}
+                    />
+                    <p>{b.name}</p>
+                </div>
+            ))}
 
-                    <FormCom form={form} />
-
-
-                    <StudentsList form={form} />
-
-                </form>
-            </Form>
         </div>
-    )
-}
+    );
+};
 
 
 

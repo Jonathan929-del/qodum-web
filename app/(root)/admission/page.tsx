@@ -47,6 +47,8 @@ import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
+import Notice from '@/pagesComps/admission/(admission)/send-sms/notice';
+import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
 
 
 
@@ -203,6 +205,12 @@ const Home = () => {
     };
     if(openedPages.includes('Admission Manager Session Transfer')){
       setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
+    };
+    if(openedPages.includes('Notice')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Notice', component:<Notice />}]);
+    };
+    if(openedPages.includes('Class Notice')){
+      setOpenedPagesComponents([...openedPagesComponents, {name:'Class Notice', component:<ClassNotice />}]);
     };
 
   }, [openedPages]);
