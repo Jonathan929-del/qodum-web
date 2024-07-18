@@ -47,7 +47,7 @@ import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
-import Notice from '@/pagesComps/admission/(admission)/send-sms/notice';
+import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
 
 

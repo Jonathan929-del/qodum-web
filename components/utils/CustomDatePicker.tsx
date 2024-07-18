@@ -20,7 +20,8 @@ const MyDatePicker = ({selectedDate, setSelectedDate}) => {
       onChange={(date:any) => setSelectedDate(date)}
       timePicker={false}
       // @ts-ignore
-      dateFormat="MMMM YYYY"
+      dateFormat='D/MM/YYYY'
+      inputFormat='DD/MM/YYYY'
     />
   );
 };
