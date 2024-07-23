@@ -28,7 +28,7 @@ export const createParish = async ({parish, religion}:CreateParishProps) => {
 
 
         // Checking if the parish already exists
-        const existinParish = await Parish.findOne({parish, religion});
+        const existinParish = await Parish.findOne({parish, religion, session:activeSession.year_name});
         if(existinParish){
             throw new Error('Parish already exists');
         };
@@ -37,7 +37,7 @@ export const createParish = async ({parish, religion}:CreateParishProps) => {
         // Creating new parish
         const newParish = await Parish.create({session:activeSession.year_name, parish});
         newParish.save().then(async () => {
-            await Parish.findOneAndUpdate({parish}, {religion});
+            await Parish.findOneAndUpdate({parish, session:activeSession.year_name}, {religion});
         });
 
 
@@ -91,14 +91,18 @@ export const modifyParish = async ({id, parish, religion}:ModifyParishProps) => 
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the parish already exists
-        const parishes = await Parish.find();
+        const parishes = await Parish.find({session:activeSession.year_name});
         const existingParish = await Parish.findById(id);
         if(existingParish.parish !== parish && parishes.map(p => p.parish).includes(parish)){throw new Error('Parish already exists')};
 
 
         // Updating parish
-        const updatedParish = await Parish.findByIdAndUpdate(id, {parish, religion}, {new:true});
+        await Parish.findByIdAndUpdate(id, {parish, religion}, {new:true});
 
 
         // Return

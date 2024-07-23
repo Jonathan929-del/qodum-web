@@ -186,7 +186,7 @@ export const modifyRouteStop = async ({id, route_no, stop_no, stop_name, morning
 
 
         // Update vehicle type
-        const updateRouteStop = await RouteStop.findByIdAndUpdate(id, {route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups}, {new:true});
+        await RouteStop.findByIdAndUpdate(id, {route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups}, {new:true});
 
 
         // Return 

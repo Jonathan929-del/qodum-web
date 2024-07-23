@@ -87,14 +87,18 @@ export const modifyTcCaste = async ({id, caste_name}:ModifyTcCasteProps) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the caste name already exists
-        const tcCasts = await TcCaste.find();
+        const tcCasts = await TcCaste.find({session:activeSession.year_name});
         const existingTcCaste = await TcCaste.findById(id);
         if(existingTcCaste.caste_name !== caste_name && tcCasts.map(tcCaste => tcCaste.caste_name).includes(caste_name)){throw new Error('Tc caste already exists')};
 
 
         // Updating tc caste
-        const updatedTcCaste = await TcCaste.findByIdAndUpdate(id, {caste_name}, {new:true});
+        await TcCaste.findByIdAndUpdate(id, {caste_name}, {new:true});
 
 
         // Return

@@ -27,7 +27,7 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
 
 
         // Checking if the optional subject already exists
-        const existinOptionalSubject = await OptionalSubject.findOne({subject_name});
+        const existinOptionalSubject = await OptionalSubject.findOne({subject_name, session:activeSession.year_name});
         if(existinOptionalSubject){
             throw new Error('Subject already exists');
         };
@@ -87,14 +87,18 @@ export const modifyOptionalSubject = async ({id, subject_name}:ModifySubjectProp
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the subject already exists
-        const subjects = await OptionalSubject.find();
+        const subjects = await OptionalSubject.find({session:activeSession.year_name});
         const existingSubject = await OptionalSubject.findById(id);
         if(existingSubject.subject_name !== subject_name && subjects.map(s => s.subject_name).includes(subject_name)){throw new Error('Optional subject already exists')};
 
 
         // Updating subject
-        const updatedSubject = await OptionalSubject.findByIdAndUpdate(id, {subject_name}, {new:true});
+        await OptionalSubject.findByIdAndUpdate(id, {subject_name}, {new:true});
 
 
         // Return

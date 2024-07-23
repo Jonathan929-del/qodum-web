@@ -82,7 +82,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Checking if the type name already exists
-        const existingType = await FeeType.findOne({name});
+        const existingType = await FeeType.findOne({name, session:activeSession.year_name});
         if(existingType){
             throw new Error('Fee type already exists');
         };
@@ -102,12 +102,12 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
             preference_no
         });
         newType.save().then(async () => {
-            await FeeType.findOneAndUpdate({name}, {heads});
+            await FeeType.findOneAndUpdate({name, session:activeSession.year_name}, {heads});
         });
 
 
         // Updating head
-        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
+        await Head.updateMany({'name':heads, session:activeSession.year_name}, {affiliated_fee_type:name});
 
 
         // Return
@@ -123,7 +123,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
 // Fetch typess
-export const fetchTypes = async (pageNumber = 1, pageSize=20) => {
+export const fetchTypes = async () => {
     try {
 
         // Db connection
@@ -162,8 +162,12 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the year name already exists
-        const types = await FeeType.find();
+        const types = await FeeType.find({session:activeSession.year_name});
         const existingType = await FeeType.findById(id);
         if(existingType.name !== name && types.map(i => i.name).includes(name)){throw new Error('Fee type name already exists')};
         // Checking if the preference number already exists
@@ -232,8 +236,12 @@ export const fetchFreeHeads = async () => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching
-        const heads = await Head.find();
+        const heads = await Head.find({session:activeSession.year_name});
         const freeHeads = heads.filter((head:any) => head.affiliated_fee_type === '' || !head.affiliated_fee_type);
 
 

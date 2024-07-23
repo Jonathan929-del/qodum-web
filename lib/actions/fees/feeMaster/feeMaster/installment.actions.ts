@@ -91,14 +91,14 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
 
 
         // Checking if the installment name already exists
-        const existingInstallment = await Installment.findOne({name});
+        const existingInstallment = await Installment.findOne({name, session:activeSession.year_name});
         if(existingInstallment){
             throw new Error('Installment name already exists');
         };
 
 
         // Checking if the preference no. already exists
-        const installments = await Installment.find();
+        const installments = await Installment.find({session:activeSession.year_name});
         if(installments.map((installment:any) => installment.preference_no).includes(preference_no)){
             throw new Error('Preference number already exists');
         };
@@ -122,7 +122,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
             }
         });
         newInstallment.save().then(async () => {
-            await Installment.findOneAndUpdate({name}, {months});
+            await Installment.findOneAndUpdate({name, session:activeSession.year_name}, {months});
         });
 
 
@@ -189,8 +189,12 @@ export const modifyInstallment = async ({id, name, print_name, preference_no, du
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the year name already exists
-        const installments = await Installment.find();
+        const installments = await Installment.find({session:activeSession.year_name});
         const existingInstallment = await Installment.findById(id);
         if(existingInstallment.name !== name && installments.map(i => i.name).includes(name)){throw new Error('Installment name already exists')};
 
@@ -199,7 +203,7 @@ export const modifyInstallment = async ({id, name, print_name, preference_no, du
 
 
         // Update installment
-        const updatedInstallment = await Installment.findByIdAndUpdate(
+        await Installment.findByIdAndUpdate(
             id,
             {
                 name,

@@ -86,7 +86,7 @@ export const modifySmsTemplate = async ({id, sms_type, sms_template, is_enable}:
 
 
         // Update sms template
-        const updatedSmsTemplates = await SmsTemplate.findByIdAndUpdate(id, {sms_type, sms_template, is_enable}, {new:true});
+        await SmsTemplate.findByIdAndUpdate(id, {sms_type, sms_template, is_enable}, {new:true});
 
 
         // Return 

@@ -27,7 +27,7 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
 
 
         // Checking if the house already exists
-        const existinHouse = await House.findOne({house_name});
+        const existinHouse = await House.findOne({house_name, session:activeSession.year_name});
         if(existinHouse){
             throw new Error('House already exists');
         };
@@ -87,14 +87,18 @@ export const modifyHouse = async ({id, house_name}:ModifyHouseProps) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the house already exists
-        const houses = await House.find();
+        const houses = await House.find({session:activeSession.year_name});
         const existingHouse = await House.findById(id);
         if(existingHouse.house_name !== house_name && houses.map(h => h.house_name).includes(house_name)){throw new Error('House already exists')};
 
 
         // Updating house
-        const updatedHouse = await House.findByIdAndUpdate(id, {house_name}, {new:true});
+        await House.findByIdAndUpdate(id, {house_name}, {new:true});
 
 
         // Return

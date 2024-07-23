@@ -36,7 +36,7 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
 
         // Checking if the prefix already exists
         if(prefix !== ''){
-            const existingAdmission = await Admission.findOne({prefix});
+            const existingAdmission = await Admission.findOne({prefix, session:activeSession.year_name});
             if(existingAdmission){
                 throw new Error('Prefix already exists');
             };
@@ -106,9 +106,13 @@ export const modifyAdmission = async ({id, school, class_name, board, setting_ty
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         if(prefix !== ''){
             // Checking if the prefix already exists
-            const admissions = await Admission.find();
+            const admissions = await Admission.find({session:activeSession.year_name});
             const existingAdmission = await Admission.findById(id);
             if(existingAdmission.prefix !== prefix && admissions.map(a => a.prefix).includes(prefix)){throw new Error('Prefix already exists')};
         }
@@ -159,8 +163,12 @@ export const fetchClassNumbers = async ({class_name}:{class_name:String}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching admission
-        const numbers = await Admission.find({class_name});
+        const numbers = await Admission.find({class_name, session:activeSession.year_name});
 
 
         // Return

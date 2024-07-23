@@ -191,7 +191,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
         // Checking if the register number already exists
-        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no});
+        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no, session:activeSession.year_name});
         if(existingStudent){
             throw new Error('Register no. already exists');
         };
@@ -250,14 +250,14 @@ export const createStudent = async ({student, parents, others, guardian_details}
             guardian_details
         });
         newStudent.save().then(async () => {
-            await Student.findOneAndUpdate({'student.reg_no':student.reg_no}, {'student.subjects':student.subjects});
+            await Student.findOneAndUpdate({'student.reg_no':student.reg_no, session:activeSession.year_name}, {'student.subjects':student.subjects});
         });
 
 
         // Updating subjects
-        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true});
+        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession.year_name});
         subjectsAffected.map(async s => {
-            await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
+            await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats - 1});
         });
 
 
@@ -475,26 +475,30 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the register no. already exists
-        const students = await Student.find();
+        const students = await Student.find({session:activeSession.year_name});
         const existingStudent = await Student.findById(id);
         if(existingStudent.student.reg_no !== student.reg_no && students.map(student => student.student.reg_no).includes(student.reg_no)){throw new Error('Register no. already exists')};
 
 
         // Update student
-        const updatedStudent = await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
+        await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
         
         
         // Subjects handling
-        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects, is_university:true});
-        const newSubjects = await Subject.find({subject_name:student.subjects, is_university:true});
+        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects, is_university:true, session:activeSession.year_name});
+        const newSubjects = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession.year_name});
         
 
         // Additional subjects
         const additionalSubjects = newSubjects.filter(s => !previousSubjects.map(subject => subject.subject_name).includes(s.subject_name));
         if(additionalSubjects.length > 0){
             additionalSubjects.map(async s => {
-                await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
+                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats - 1});
             });
         };
 
@@ -503,7 +507,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         const subtractedSubjects = previousSubjects.filter(s => !newSubjects.map(subject => subject.subject_name).includes(s.subject_name));
         if(subtractedSubjects.length > 0){
             subtractedSubjects.map(async s => {
-                await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
+                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats + 1});
             });
         };
 
@@ -559,8 +563,12 @@ export const fetchClassStudents = async ({class_name}:{class_name:String}) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching students
-        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false});
+        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false, session:activeSession.year_name});
 
 
         // Return
@@ -581,13 +589,17 @@ export const fetchClassesStudents = async ({classes_names}:{classes_names:any}) 
 
         // Db connection
         connectToDb('accounts');
-        console.log(classes_names);
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
 
 
         // Fetching students where 'student.class' is in the class_names array
         const students = await Student.find({ 
             'student.class':{$in:classes_names},
-            'student.is_up_for_admission':false
+            'student.is_up_for_admission':false,
+            session:activeSession.year_name
         });
 
 
@@ -615,9 +627,13 @@ export const applyStudentForAdmission = async ({reg_nos}:ApplyStudentForAdmissio
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Update student
         reg_nos.map(async no => {
-            const updatedStudents = await Student.updateMany({'student.reg_no':no}, {'student.is_up_for_admission':true}, {new:true});
+            const updatedStudents = await Student.updateMany({'student.reg_no':no, session:activeSession.year_name}, {'student.is_up_for_admission':true}, {new:true});
             return updatedStudents;
         });
     
@@ -639,8 +655,12 @@ export const fetchManualListStudents = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const students = await Student.find({'student.is_up_for_admission':true});
+        const students = await Student.find({'student.is_up_for_admission':true, session:activeSession.year_name});
         return students;
 
     } catch (err:any) {
@@ -660,8 +680,12 @@ export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching student
-        const student = await Student.findOne({'student.reg_no':reg_no});
+        const student = await Student.findOne({'student.reg_no':reg_no, session:activeSession.year_name});
 
 
         // Return

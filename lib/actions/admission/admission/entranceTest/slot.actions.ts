@@ -92,7 +92,7 @@ export const modifySlot = async ({id, slot_date, start_time, end_time, applicant
 
 
         // Update slot
-        const updateSlot = await Slot.findByIdAndUpdate(id, {slot_date, start_time, end_time, applicant, alloted}, {new:true});
+        await Slot.findByIdAndUpdate(id, {slot_date, start_time, end_time, applicant, alloted}, {new:true});
 
 
         // Return

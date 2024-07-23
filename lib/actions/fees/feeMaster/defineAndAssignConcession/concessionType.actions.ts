@@ -79,7 +79,7 @@ export const createConcessionType = async ({type}:CreateConcessionTypeProps) => 
 
 
         // Checking if the concession type already exists
-        const existingConcessionType = await ConcessionType.findOne({type});
+        const existingConcessionType = await ConcessionType.findOne({type, session:activeSession.year_name});
         if(existingConcessionType){
             throw new Error('Concession type already exists');
         };
@@ -140,8 +140,12 @@ export const modifyConcessionType = async ({id, type}:ModifyConcessionTypeProps)
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the concession type already exists
-        const concessionsTypes = await ConcessionType.find();
+        const concessionsTypes = await ConcessionType.find({session:activeSession.year_name});
         const existingConcessionType = await ConcessionType.findById(id);
         if(existingConcessionType.type !== type && concessionsTypes.map(i => i.type).includes(type)){throw new Error('Concession type already exists')};
 

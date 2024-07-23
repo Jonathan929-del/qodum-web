@@ -82,7 +82,7 @@ export const createVehicleRoute = async ({route_no, route_description, route_in_
 
 
         // Checking if the route no. already exists
-        const existingVehicleRoute = await VehicleRoute.findOne({route_no});
+        const existingVehicleRoute = await VehicleRoute.findOne({route_no, session:activeSession.year_name});
         if(existingVehicleRoute){
             throw new Error('Vehicle route already exists');
         };
@@ -146,8 +146,12 @@ export const modifyVehicleRoute = async ({id, route_no, route_description, route
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the route no. exists
-        const vehicleRoutes = await VehicleRoute.find();
+        const vehicleRoutes = await VehicleRoute.find({session:activeSession.year_name});
         const existingVehicleRoute = await VehicleRoute.findById(id);
         if(existingVehicleRoute.route_no !== route_no && vehicleRoutes.map(i => i.route_no).includes(route_no)){throw new Error('Vehicle route no. already exists')};
 

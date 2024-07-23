@@ -28,7 +28,7 @@ export const createHealthUnit = async ({unit_name, unit_type}:CreateHealthUnitPr
 
 
         // Checking if the health unit name already exists
-        const existinHealthUnit = await HealthUnit.findOne({unit_name});
+        const existinHealthUnit = await HealthUnit.findOne({unit_name, session:activeSession.year_name});
         if(existinHealthUnit){
             throw new Error('Health unit name already exists');
         };
@@ -90,8 +90,12 @@ export const modifyHealthUnit = async ({id, unit_name, unit_type}:ModifyHealthUn
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the health unit name already exists
-        const healthUnits = await HealthUnit.find();
+        const healthUnits = await HealthUnit.find({session:activeSession.year_name});
         const existingHealthUnit = await HealthUnit.findById(id);
         if(existingHealthUnit.unit_name !== unit_name && healthUnits.map(h => h.unit_name).includes(unit_name)){throw new Error('Health unit already exists')};
 

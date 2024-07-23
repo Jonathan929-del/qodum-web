@@ -14,7 +14,7 @@ interface CreateCategoryProps{
     is_default:Boolean;
 };
 // Create category
-export const createCategory:any = async ({category_name, is_default}:CreateCategoryProps) => {
+export const createCategory = async ({category_name, is_default}:CreateCategoryProps) => {
     try {
 
     
@@ -28,7 +28,7 @@ export const createCategory:any = async ({category_name, is_default}:CreateCateg
 
 
         // Checking if the category name already exists
-        const existingCategory = await Category.findOne({category_name, is_default});
+        const existingCategory = await Category.findOne({category_name, is_default, session:activeSession.year_name});
         if(existingCategory){
             throw new Error('Category name already exists');
         };
@@ -98,8 +98,12 @@ export const modifyCategory = async ({id, category_name, is_default}:ModifyCateg
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the category name already exists
-        const categories = await Category.find();
+        const categories = await Category.find({session:activeSession.year_name});
         const existingCategory = await Category.findById(id);
         if(existingCategory.category_name !== category_name && categories.map(category => category.category_name).includes(category_name)){throw new Error('Category already exists')};
 

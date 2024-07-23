@@ -27,7 +27,7 @@ export const createDocumentType = async ({document_type}:CreateDocumentProps) =>
 
 
         // Checking if the document type already exists
-        const existingDocument = await DocumentType.findOne({document_type});
+        const existingDocument = await DocumentType.findOne({document_type, session:activeSession.year_name});
         if(existingDocument){
             throw new Error('Document type already exists');
         };
@@ -89,8 +89,12 @@ export const modifyDocumentType = async ({id, document_type}:ModifyDocumentTypeP
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the document type already exists
-        const documents = await DocumentType.find();
+        const documents = await DocumentType.find({session:activeSession.year_name});
         const existingDocument = await DocumentType.findById(id);
         if(existingDocument.document_type !== document_type && documents.map(d => d.document_type).includes(document_type)){throw new Error('Document type already exists')};
 

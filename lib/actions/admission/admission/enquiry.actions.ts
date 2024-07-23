@@ -49,7 +49,7 @@ export const createEnquiry = async ({
 
 
         // Checking if the enquiry already exists
-        const existinEnquiry = await Enquiry.findOne({enquiry_no});
+        const existinEnquiry = await Enquiry.findOne({enquiry_no, session:activeSession.year_name});
         if(existinEnquiry){
             throw new Error('Enquiry already exists');
         };
@@ -146,8 +146,12 @@ export const modifyEnquiry = async ({
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the enquiry already exists
-        const enquiries = await Enquiry.find();
+        const enquiries = await Enquiry.find({session:activeSession.year_name});
         const existingEnquiry = await Enquiry.findById(id);
         if(existingEnquiry.enquiry_no !== enquiry_no && enquiries.map(e => e.enquiry_no).includes(enquiry_no)){throw new Error('Enquiry already exists')};
 
@@ -209,8 +213,12 @@ export const fetchAdmissionEnquiries = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const enquiries = await Enquiry.find({purpose_is_admission:true});
+        const enquiries = await Enquiry.find({purpose_is_admission:true, session:activeSession.year_name});
         return enquiries;
 
     } catch (err:any) {
@@ -230,8 +238,12 @@ export const fetchEnquiryByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) 
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching student
-        const enquiry = await Enquiry.findOne({enquiry_no});
+        const enquiry = await Enquiry.findOne({enquiry_no, session:activeSession.year_name});
 
 
         // Return

@@ -80,7 +80,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
 
 
         // Checking if the group name already exists
-        const existingGroup = await Group.findOne({name});
+        const existingGroup = await Group.findOne({name, session:activeSession.year_name});
         if(existingGroup){
             throw new Error('Head Group name already exists');
         };
@@ -108,7 +108,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
 
 
 // Fetch Groups
-export const fetchGroups = async (pageNumber = 1, pageSize=20) => {
+export const fetchGroups = async () => {
     try {
 
         // Db connection
@@ -146,8 +146,12 @@ export const modifyGroup = async ({id, name, is_special}:ModifyGroupProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the group name already exists
-        const groups = await Group.find();
+        const groups = await Group.find({session:activeSession.year_name});
         const existingGroup = await Group.findById(id);
         if(existingGroup.name !== name && groups.map(i => i.name).includes(name)){throw new Error('Group name already exists')};
 
@@ -217,9 +221,13 @@ export const assignFeeGroupToFeeHead = async ({group_name, affiliated_heads}:Ass
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Assigning
         await Group.findOneAndUpdate(
-            {name:group_name},
+            {name:group_name, session:activeSession.year_name},
             {affiliated_heads},
             {new:true}
         );
@@ -242,8 +250,12 @@ export const fetchGroupByName = async ({name}:{name:String}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching group
-        const group = await Group.findOne({name});
+        const group = await Group.findOne({name, session:activeSession.year_name});
         return group;
 
     } catch (err) {
@@ -263,8 +275,12 @@ export const assignAmountGroup = async ({group_name, affiliated_heads}:any) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Selected installment in group
-        const group = await Group.findOne({name:group_name});
+        const group = await Group.findOne({name:group_name, session:activeSession.year_name});
 
 
         // Affected heads
@@ -281,7 +297,7 @@ export const assignAmountGroup = async ({group_name, affiliated_heads}:any) => {
 
         // Assigning to group
         await Group.findOneAndUpdate(
-            {name:group_name},
+            {name:group_name, session:activeSession.year_name},
             {affiliated_heads:newHeads},
             {new:true}
         );
@@ -290,7 +306,7 @@ export const assignAmountGroup = async ({group_name, affiliated_heads}:any) => {
         // Assigning to students
         // @ts-ignore
         const groupNameRegex = new RegExp(group_name, 'i');
-        await AdmittedStudent.updateMany({'affiliated_heads.group_name':groupNameRegex}, {'affiliated_heads.heads':newHeads});
+        await AdmittedStudent.updateMany({'affiliated_heads.group_name':groupNameRegex, session:activeSession.year_name}, {'affiliated_heads.heads':newHeads});
         
             
     } catch (err) {
@@ -315,8 +331,12 @@ export const fetchGroupHeadWithInstallment = async ({group_name, installment}:Fe
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Selected installment in group
-        const group = await Group.findOne({name:group_name});
+        const group = await Group.findOne({name:group_name, session:activeSession.year_name});
         const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
 
 
@@ -340,8 +360,12 @@ export const fetchRegularGroupHeadsByName = async ({name}:{name:String}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching
-        const group = await Group.findOne({name:name});
+        const group = await Group.findOne({name:name, session:activeSession.year_name});
         const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
 
 
@@ -365,8 +389,12 @@ export const fetchGroupsByTypes = async ({is_special}:{is_special:Boolean}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching special groups
-        const specialGroups = await Group.find({is_special:true});
+        const specialGroups = await Group.find({is_special:true, session:activeSession.year_name});
 
 
         // Fetching unspecial groups
@@ -399,6 +427,10 @@ interface assignMultipleGroupsToStudentsProps{
 export const assignMultipleGroupsToStudents = async ({group_name, installment, students}:assignMultipleGroupsToStudentsProps) => {
     try {
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         const filteredStudents = students
             .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (').length < 2 || !s?.affiliated_heads?.group_name)
             .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (')[0] !== group_name);
@@ -406,17 +438,17 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
 
         if(installment === 'All installments'){
             // Fetching
-            const group = await Group.findOne({name:group_name});
+            const group = await Group.findOne({name:group_name, session:activeSession.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             filteredStudents.map(async (s:any) => {
                 try {
-                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
+                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no, session:activeSession.year_name});
                     console.log(student);
                     if(!student.affiliated_heads.group_name){
-                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession.year_name}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {
@@ -424,16 +456,16 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
                 }
             });
         }else{
-            const group = await Group.findOne({name:group_name});
+            const group = await Group.findOne({name:group_name, session:activeSession.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             filteredStudents.map(async (s:any) => {
                 try {
-                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no});
+                    const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no, session:activeSession.year_name});
                     if(!student.affiliated_heads.group_name){
-                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name}  (${group_name})`, $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession.year_name}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name}  (${group_name})`, $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {

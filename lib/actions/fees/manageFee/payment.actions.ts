@@ -100,7 +100,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             concession_reason
         });
         payment.save().then(async() => {
-            await Payment.findOneAndUpdate({receipt_no}, {installments, paid_heads}, {new:true});
+            await Payment.findOneAndUpdate({receipt_no, session:activeSession.year_name}, {installments, paid_heads}, {new:true});
         });
         const paymentRes = {
             ...payment._doc,
@@ -127,9 +127,13 @@ export const fetchPayments = async () => {
         // Database connection
         connectToDb('accounts');
 
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
     
         // Payments
-        const payments = await Payment.find();
+        const payments = await Payment.find({session:activeSession.year_name});
 
 
         // Return
@@ -181,9 +185,13 @@ export const fetchPaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) 
         // Database connection
         connectToDb('accounts');
 
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
     
         // Payments
-        const payment = await Payment.findOne({receipt_no});
+        const payment = await Payment.findOne({receipt_no, session:activeSession.year_name});
 
 
         // Return
@@ -206,9 +214,13 @@ export const deletePaymentByReceiptNo = async ({receipt_no}:{receipt_no:String})
         // Database connection
         connectToDb('accounts');
 
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
     
         // Payments
-        const payment = await Payment.findOneAndDelete({receipt_no});
+        const payment = await Payment.findOneAndDelete({receipt_no, session:activeSession.year_name});
 
 
         // Return
@@ -248,8 +260,12 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching and filtering payments
-        const payments = await Payment.find();
+        const payments = await Payment.find({session:activeSession.year_name});
         const filteredPayments = payments
             // Schools filter
             .filter((p:any) => school === 'All Schools' ? p : p.school_name === school)
@@ -322,8 +338,12 @@ export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes,
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching and filtering payments
-        const payments = await Payment.find();
+        const payments = await Payment.find({session:activeSession.year_name});
         const filteredPayments = payments
             // Schools filter
             .filter((p:any) => school === 'All Schools' ? p : p.school_name === school)
@@ -407,9 +427,13 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
         // Database connection
         connectToDb('accounts');
 
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
     
         // Payments
-        const payments = await Payment.find({student, is_canceled:false});
+        const payments = await Payment.find({student, is_canceled:false, session:activeSession.year_name});
 
 
         // Return

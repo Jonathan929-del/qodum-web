@@ -26,7 +26,7 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
 
 
         // Checking if the religion name already exists
-        const existinReligion = await Religion.findOne({religion_name});
+        const existinReligion = await Religion.findOne({religion_name, session:activeSession.year_name});
         if(existinReligion){
             throw new Error('Religion name already exists');
         };
@@ -86,14 +86,18 @@ export const modifyReligion = async ({id, religion_name}:ModifyReligionProps) =>
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the religion already exists
-        const religions = await Religion.find();
+        const religions = await Religion.find({session:activeSession.year_name});
         const existingReligion = await Religion.findById(id);
         if(existingReligion.religion_name !== religion_name && religions.map(r => r.religion_name).includes(religion_name)){throw new Error('Religion already exists')};
 
 
         // Updating religion
-        const updatedReligion = await Religion.findByIdAndUpdate(id, {religion_name}, {new:true});
+        await Religion.findByIdAndUpdate(id, {religion_name}, {new:true});
 
 
         // Return

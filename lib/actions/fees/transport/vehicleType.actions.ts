@@ -78,7 +78,7 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
         // Checking if the vehicle type already exists
-        const existingVehicleType = await VehicleType.findOne({vehicle_name});
+        const existingVehicleType = await VehicleType.findOne({vehicle_name, session:activeSession.year_name});
         if(existingVehicleType){
             throw new Error('Vehicle type already exists');
         };
@@ -102,7 +102,7 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
 // Fetch vehicle types
-export const fetchVehicleTypes = async (pageNumber = 1, pageSize=20) => {
+export const fetchVehicleTypes = async () => {
     try {
 
         // Db connection
@@ -139,14 +139,18 @@ export const modifyVehicleType = async ({id, vehicle_name}:ModifyVehicleTypesPro
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the vehicle name exists
-        const vehicleTypes = await VehicleType.find();
+        const vehicleTypes = await VehicleType.find({session:activeSession.year_name});
         const existingVehicleType = await VehicleType.findById(id);
         if(existingVehicleType.vehicle_name !== vehicle_name && vehicleTypes.map(i => i.vehicle_name).includes(vehicle_name)){throw new Error('Vehicle name already exists')};
 
 
         // Update vehicle type
-        const updatedVehicleType = await VehicleType.findByIdAndUpdate(id, {vehicle_name}, {new:true});
+        await VehicleType.findByIdAndUpdate(id, {vehicle_name}, {new:true});
 
 
         // Return 

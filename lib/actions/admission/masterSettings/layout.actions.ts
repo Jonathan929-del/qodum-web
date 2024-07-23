@@ -82,7 +82,7 @@ export const createLayout = async ({report_setting, header_and_footer_setting, f
 
 
         // Checking if the report name already exists
-        const existingLayou = await Layout.findOne({'report_setting.report_name':report_setting.report_name});
+        const existingLayou = await Layout.findOne({'report_setting.report_name':report_setting.report_name, session:activeSession.year_name});
         if(existingLayou){
             throw new Error('Report name already exists');
         };
@@ -198,14 +198,18 @@ export const modifyLayout = async ({id, report_setting, header_and_footer_settin
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the report name already exists
-        const layouts = await Layout.find();
+        const layouts = await Layout.find({session:activeSession.year_name});
         const existingLayout = await Layout.findById(id);
         if(existingLayout.report_setting.report_name !== report_setting.report_name && layouts.map(l => l.report_setting.report_name).includes(report_setting.report_name)){throw new Error('Report name already exists')};
 
 
         // Update layout
-        const updateLayout = await Layout.findByIdAndUpdate(id, {report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting}, {new:true});
+        await Layout.findByIdAndUpdate(id, {report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting}, {new:true});
 
 
         // Return

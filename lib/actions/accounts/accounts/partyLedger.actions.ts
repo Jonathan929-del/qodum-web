@@ -38,7 +38,7 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
 
 
         // Checking if party ledger already exists
-        const existingPartyLedger = await PartyLedger.findOne({account_name});
+        const existingPartyLedger = await PartyLedger.findOne({account_name, session:activeSession.year_name});
         if(existingPartyLedger){
             throw new Error('Party ledger already exists');
         };
@@ -125,8 +125,12 @@ export const modifyPartyLedger = async ({id, account_name, group, account_type, 
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the party ledger already exists
-        const partyLedgers = await PartyLedger.find();
+        const partyLedgers = await PartyLedger.find({session:activeSession.year_name});
         const existingPartyLedger = await PartyLedger.findById(id);
         if(existingPartyLedger.account_name !== account_name && partyLedgers.map(ledger => ledger.account_name).includes(account_name)){throw new Error('Party ledger already exists')};
 

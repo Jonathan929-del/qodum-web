@@ -79,7 +79,7 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
 
 
         // Checking if the section already exists
-        const existinSection = await Section.findOne({section_name});
+        const existinSection = await Section.findOne({section_name, session:activeSession.year_name});
         if(existinSection){
             throw new Error('Section name already exists');
         };
@@ -141,14 +141,18 @@ export const modifySection = async ({id, section_name, order_no}:ModifySectionPr
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the section already exists
-        const sections = await Section.find();
+        const sections = await Section.find({sessiom:activeSession.year_name});
         const existingSection = await Section.findById(id);
         if(existingSection.section_name !== section_name && sections.map(section => section.section_name).includes(section_name)){throw new Error('Section name already exists')};
 
 
         // Updating section
-        const updatedSection = await Section.findByIdAndUpdate(id, {section_name, order_no}, {new:true});
+        await Section.findByIdAndUpdate(id, {section_name, order_no}, {new:true});
 
 
         // Return

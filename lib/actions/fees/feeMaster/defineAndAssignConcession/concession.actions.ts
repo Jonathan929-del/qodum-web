@@ -79,7 +79,7 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
 
 
         // Checking if the concession name already exists
-        const existingConcession = await Concession.findOne({name});
+        const existingConcession = await Concession.findOne({name, session:activeSession.year_name});
         if(existingConcession){
             throw new Error('Concession name already exists');
         };
@@ -103,7 +103,7 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
 
 
 // Fetch concessions
-export const fetchConcessions = async (pageNumber = 1, pageSize=20) => {
+export const fetchConcessions = async () => {
     try {
 
         // Db connection
@@ -140,14 +140,18 @@ export const modifyConcession = async ({id, name}:ModifyConcessionProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the concession name already exists
-        const concessions = await Concession.find();
+        const concessions = await Concession.find({session:activeSession.year_name});
         const existingConcession = await Concession.findById(id);
         if(existingConcession.name !== name && concessions.map(i => i.name).includes(name)){throw new Error('Concession name already exists')};
 
 
         // Update concession
-        const updatedConcession = await Concession.findByIdAndUpdate(
+        await Concession.findByIdAndUpdate(
             id,
             {
                 name

@@ -26,7 +26,7 @@ export const createWing = async ({wing}:CreateWingProps) => {
 
 
         // Checking if the wing already exists
-        const existinWing = await Wing.findOne({wing});
+        const existinWing = await Wing.findOne({wing, session:activeSession.year_name});
         if(existinWing){
             throw new Error('Wing already exists');
         };
@@ -86,14 +86,18 @@ export const modifyWing = async ({id, wing}:ModifyWingProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the wing already exists
-        const wings = await Wing.find();
+        const wings = await Wing.find({session:activeSession.year_name});
         const existingWing = await Wing.findById(id);
         if(existingWing.wing !== wing && wings.map(wing => wing.wing).includes(wing)){throw new Error('Wing already exists')};
 
 
         // Updating wing
-        const updatedWing = await Wing.findByIdAndUpdate(id, {wing}, {new:true});
+        await Wing.findByIdAndUpdate(id, {wing}, {new:true});
 
 
         // Return

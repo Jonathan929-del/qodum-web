@@ -82,7 +82,7 @@ export const createAccountGroup = async ({group_name, category, group_type, grou
 
 
         // Checking if account group already exists
-        const existingAccountGroup = await AccountGroup.findOne({group_name});
+        const existingAccountGroup = await AccountGroup.findOne({group_name, session:activeSession.year_name});
         if(existingAccountGroup){
             throw new Error('Account group already exists.');
         };
@@ -152,8 +152,12 @@ export const modifyAccountGroup = async ({id, group_name, category, group_type, 
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the account group already exists
-        const accountGroups = await AccountGroup.find();
+        const accountGroups = await AccountGroup.find({session:activeSession.year_name});
         const existingAccountGroup = await AccountGroup.findById(id);
         if(existingAccountGroup.group_name !== group_name && accountGroups.map(accountGroup => accountGroup.group_name).includes(group_name)){throw new Error('Account group already exists')};
 

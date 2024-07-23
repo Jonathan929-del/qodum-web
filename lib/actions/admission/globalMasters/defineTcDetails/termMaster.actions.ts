@@ -27,7 +27,7 @@ export const createTermMaster = async ({term_name}:CreateTermMasterProps) => {
 
 
         // Checking if the term name already exists
-        const existinTermMaster = await Term.findOne({term_name});
+        const existinTermMaster = await Term.findOne({term_name, session:activeSession.year_name});
         if(existinTermMaster){
             throw new Error('Term master already exists');
         };
@@ -88,8 +88,12 @@ export const modifyTermMaster = async ({id, term_name}:ModifyTermMasterProps) =>
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the term name already exists
-        const termMasters = await Term.find();
+        const termMasters = await Term.find({session:activeSession.year_name});
         const existingTermMaster = await Term.findById(id);
         if(existingTermMaster.term_name !== term_name && termMasters.map(termMaster => termMaster.term_name).includes(term_name)){throw new Error('Term master already exists')};
 

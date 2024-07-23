@@ -31,14 +31,14 @@ export const createStationaryDetails = async ({stationary_name, amount, account_
 
 
         // Checking if online or offline data already exists
-        const existingData = await StationaryDetails.findOne({is_online});
+        const existingData = await StationaryDetails.findOne({is_online, session:activeSession.year_name});
         if(existingData){
             throw new Error(`${is_online ? 'Online' : 'Offline'} stationary details already exsist`);
         };
 
 
         // Checking if the stationary name already exists
-        const existinStationaryDetails = await StationaryDetails.findOne({stationary_name});
+        const existinStationaryDetails = await StationaryDetails.findOne({stationary_name, session:activeSession.year_name});
         if(existinStationaryDetails){
             throw new Error('Stationary name already exists');
         };
@@ -104,8 +104,12 @@ export const modifyStationaryDetails = async ({id, stationary_name, amount, acco
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if online or offline data already exists
-        const existingData = await StationaryDetails.findOne({is_online});
+        const existingData = await StationaryDetails.findOne({is_online, session:activeSession.year_name});
         if(existingData){
             throw new Error(`${is_online ? 'Online' : 'Offline'} stationary details already exsist`);
         };
@@ -113,13 +117,13 @@ export const modifyStationaryDetails = async ({id, stationary_name, amount, acco
 
 
         // Checking if the stationary details already exists
-        const stationaryDetails = await StationaryDetails.find();
+        const stationaryDetails = await StationaryDetails.find({session:activeSession.year_name});
         const existingStationaryDetails = await StationaryDetails.findById(id);
         if(existingStationaryDetails.stationary_name !== stationary_name && stationaryDetails.map(s => s.stationary_name).includes(stationary_name)){throw new Error('Stationary name already exists')};
 
 
         // Updating stationary details
-        const updatedStationaryDetails = await StationaryDetails.findByIdAndUpdate(id, {stationary_name, amount, account_name, school_name, session, is_online}, {new:true});
+        await StationaryDetails.findByIdAndUpdate(id, {stationary_name, amount, account_name, school_name, session, is_online}, {new:true});
 
 
         // Return

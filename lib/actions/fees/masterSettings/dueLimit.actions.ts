@@ -149,7 +149,7 @@ export const modifyDueLimit = async ({id, class_name, fee_type, late_fee_on_due,
 
 
         // Update due limit
-        const updateDueLimit = await DueLimit.findByIdAndUpdate(id, {class_name, fee_type, late_fee_on_due, is_percent, dues_amount, heads, fine_waive_off_setting}, {new:true});
+        await DueLimit.findByIdAndUpdate(id, {class_name, fee_type, late_fee_on_due, is_percent, dues_amount, heads, fine_waive_off_setting}, {new:true});
 
 
         // Return 
@@ -193,8 +193,12 @@ export const fetchClassDueLimit = async ({class_name}:{class_name:String}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching
-        const dueLimit = await DueLimit.findOne({class_name});
+        const dueLimit = await DueLimit.findOne({class_name, session:activeSession.year_name});
         return dueLimit;
 
     } catch (err) {

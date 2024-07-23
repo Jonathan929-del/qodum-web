@@ -146,7 +146,7 @@ export const modifyLateFeeHeadWise = async ({id, fee_group, fee_type, installmen
 
 
         // Updating late fee head wise
-        const updatedLateFeeHeadWise = await LateFeeHeadWise.findByIdAndUpdate(id, {fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
+        await LateFeeHeadWise.findByIdAndUpdate(id, {fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
 
 
         // Return 

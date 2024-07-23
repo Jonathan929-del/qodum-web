@@ -115,7 +115,7 @@ export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle
 
 
 // Fetch vehicles details
-export const fetchVehiclesDetails = async (pageNumber = 1, pageSize=20) => {
+export const fetchVehiclesDetails = async () => {
     try {
 
         // Db connection
@@ -171,7 +171,7 @@ export const modifyVehicleDetails = async ({id, vehicle_owner, vehicle_type, veh
 
 
         // Update vehicle details
-        const updatedVehicleDetails = await VehicleDetails.findByIdAndUpdate(id, {vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}, {new:true});
+        await VehicleDetails.findByIdAndUpdate(id, {vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor}, {new:true});
 
 
         // Return 

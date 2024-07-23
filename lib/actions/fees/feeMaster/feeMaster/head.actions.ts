@@ -86,7 +86,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
 
         // Checking if the head name already exists
-        const existingHead = await Head.findOne({name});
+        const existingHead = await Head.findOne({name, session:activeSession.year_name});
         if(existingHead){
             throw new Error('Head name already exists');
         };
@@ -120,7 +120,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
 
 // Fetch Heads
-export const fetchHeads = async (pageNumber = 1, pageSize=20) => {
+export const fetchHeads = async () => {
     try {
 
         // Db connection
@@ -163,14 +163,18 @@ export const modifyHead = async ({id, name, print_name, pay_schedule, priority_n
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the head name already exists
-        const heads = await Head.find();
+        const heads = await Head.find({session:activeSession.year_name});
         const existingHead = await Head.findById(id);
         if(existingHead.name !== name && heads.map(i => i.name).includes(name)){throw new Error('Head name already exists')};
 
 
         // Update head
-        const updatedHead = await Head.findByIdAndUpdate(
+        await Head.findByIdAndUpdate(
             id,
             {
                 name,
@@ -226,8 +230,12 @@ export const fetchAffiliatedHeads = async () => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Fetching
-        const heads = await Head.find();
+        const heads = await Head.find({session:activeSession.year_name});
         const filteredHeads = heads.filter((head:any) => {
             return head.affiliated_fee_type !== '';
         });
@@ -253,13 +261,17 @@ export const isGroupRelatedToStudent = async ({group_name}) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Group name reg ex
         // @ts-ignore
         const groupNameRegex = new RegExp(group_name, 'i');
 
     
         // Checking
-        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}});
+        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession.year_name});
         if(students.length > 1){
             const lastRecAmounts = students.map((s:any) => s?.affiliated_heads?.heads.map((h:any) => h?.amounts?.map((a:any) => a?.last_rec_amount).flat()).flat()).flat().filter((i:any) => i !== undefined);
             return lastRecAmounts.length > 0;

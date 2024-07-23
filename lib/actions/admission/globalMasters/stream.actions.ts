@@ -27,7 +27,7 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
 
 
         // Checking if the stream already exists
-        const existinStream = await Stream.findOne({stream_name});
+        const existinStream = await Stream.findOne({stream_name, session:activeSession.year_name});
         if(existinStream){
             throw new Error('Stream already exists');
         };
@@ -87,14 +87,18 @@ export const modifyStream = async ({id, stream_name}:ModifyStreamProps) => {
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the stream already exists
-        const streams = await Stream.find();
+        const streams = await Stream.find({session:activeSession.year_name});
         const existingStream = await Stream.findById(id);
         if(existingStream.stream_name !== stream_name && streams.map(s => s.stream_name).includes(stream_name)){throw new Error('Stream already exists')};
 
 
         // Updating stream
-        const updatedStream = await Stream.findByIdAndUpdate(id, {stream_name}, {new:true});
+        await Stream.findByIdAndUpdate(id, {stream_name}, {new:true});
 
 
         // Return

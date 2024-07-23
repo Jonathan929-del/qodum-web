@@ -26,7 +26,7 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
 
 
         // Checking if the caste name already exists
-        const existingCaste = await Caste.findOne({caste_name});
+        const existingCaste = await Caste.findOne({caste_name, session:activeSession.year_name});
         if(existingCaste){
             throw new Error('Caste name already exists');
         };
@@ -86,8 +86,12 @@ export const modifyCaste = async ({id, caste_name}:ModifyCasteProps) => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the caste already exists
-        const castes = await Caste.find();
+        const castes = await Caste.find({session:activeSession.year_name});
         const existingCaste = await Caste.findById(id);
         if(existingCaste.caste_name !== caste_name && castes.map(r => r.caste_name).includes(caste_name)){throw new Error('Caste already exists')};
 

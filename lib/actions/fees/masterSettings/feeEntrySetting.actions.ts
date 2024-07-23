@@ -93,7 +93,7 @@ export const modifyFeeEntrySetting = async ({id, prefix, lead_zero, receipt_no_s
 
 
         // Update fee entry setting
-        const updateFeeEntrySetting = await FeeEntrySetting.findByIdAndUpdate(id, {prefix, lead_zero, receipt_no_start, suffix, generate_type}, {new:true});
+        await FeeEntrySetting.findByIdAndUpdate(id, {prefix, lead_zero, receipt_no_start, suffix, generate_type}, {new:true});
 
 
         // Return 

@@ -83,7 +83,7 @@ export const createTransportGroup = async ({distance_name, distance_amount, dist
 
 
         // Checking if the distance name already exists
-        const existingTransportGroup = await TransportGroup.findOne({distance_name});
+        const existingTransportGroup = await TransportGroup.findOne({distance_name, session:activeSession.year_name});
         if(existingTransportGroup){
             throw new Error('Distance name already exists');
         };
@@ -147,14 +147,18 @@ export const modifyTransportGroup = async ({id, distance_name, distance_amount, 
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the distance name already exists
-        const transportGroups = await TransportGroup.find();
+        const transportGroups = await TransportGroup.find({session:activeSession.year_name});
         const existingTransportGroup = await TransportGroup.findById(id);
         if(existingTransportGroup.distance_name !== distance_name && transportGroups.map(i => i.distance_name).includes(distance_name)){throw new Error('Distance name already exists')};
 
 
         // Updating transport group
-        const updatedTransports = await TransportGroup.findByIdAndUpdate(id, {distance_name, distance_amount, distance_from, distance_to, transport_term}, {new:true});
+        await TransportGroup.findByIdAndUpdate(id, {distance_name, distance_amount, distance_from, distance_to, transport_term}, {new:true});
 
 
         // Return

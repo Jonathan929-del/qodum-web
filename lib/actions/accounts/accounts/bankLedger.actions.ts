@@ -37,7 +37,7 @@ export const createBankLedger = async ({account_name, group, account_type, accou
 
 
         // Checking if bank ledger already exists
-        const existingBankLedger = await BankLedger.findOne({account_name});
+        const existingBankLedger = await BankLedger.findOne({account_name, session:activeSession.year_name});
         if(existingBankLedger){
             throw new Error('Bank ledger already exists');
         };
@@ -117,11 +117,15 @@ export const modifyBankLedger = async ({id, account_name, group, account_type, a
     try {
 
         // Db connection
-        connectToDb('accounts');
+        connectToDb('accounts');  
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
 
 
         // Checking if the bank ledger already exists
-        const bankLedgers = await BankLedger.find();
+        const bankLedgers = await BankLedger.find({session:activeSession.year_name});
         const existingBankLedger = await BankLedger.findById(id);
         if(existingBankLedger.account_name !== account_name && bankLedgers.map(ledger => ledger.account_name).includes(account_name)){throw new Error('Bank ledger already exists')};
 

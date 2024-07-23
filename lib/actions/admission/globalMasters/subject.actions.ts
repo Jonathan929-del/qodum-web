@@ -28,7 +28,7 @@ export const createSubject = async ({subject_name, available_seats, is_universit
 
 
         // Checking if the subject name already exists
-        const existingSubject = await Subject.findOne({subject_name});
+        const existingSubject = await Subject.findOne({subject_name, session:activeSession.year_name});
         if(existingSubject){
             throw new Error('Subject name already exists');
         };
@@ -91,14 +91,18 @@ export const modifySubject = async ({id, subject_name, available_seats, is_unive
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the subject name already exists
-        const subjects = await Subject.find();
+        const subjects = await Subject.find({session:activeSession.year_name});
         const existingSubject = await Subject.findById(id);
         if(existingSubject.subject_name !== subject_name && subjects.map(s => s.subject_name).includes(subject_name)){throw new Error('Subject already exists')};
 
         
         // Update subject
-        const updatedSubject = await Subject.findByIdAndUpdate(id, {subject_name, available_seats, is_university}, {new:true});
+        await Subject.findByIdAndUpdate(id, {subject_name, available_seats, is_university}, {new:true});
 
 
         // Return

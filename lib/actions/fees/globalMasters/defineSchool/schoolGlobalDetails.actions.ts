@@ -228,7 +228,7 @@ export const modifyGlobalSchoolDetails = async ({
 
 
         // Update global school details
-        const updatedGlobalSchoolDetails = await GlobalSchoolDetails.findByIdAndUpdate(
+        await GlobalSchoolDetails.findByIdAndUpdate(
             id,
             {
                 logo,

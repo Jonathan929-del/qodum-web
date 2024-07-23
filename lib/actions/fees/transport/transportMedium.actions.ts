@@ -27,7 +27,7 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
 
 
         // Checking if the transport medium already exists
-        const existingTransportMedium = await TransportMedium.findOne({transport_medium});
+        const existingTransportMedium = await TransportMedium.findOne({transport_medium, session:activeSession.year_name});
         if(existingTransportMedium){
             throw new Error('Transport medium already exists');
         };
@@ -88,14 +88,18 @@ export const modifyTransportMedium = async ({id, transport_medium}:ModifyTranspo
         connectToDb('accounts');
 
 
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
         // Checking if the transport medium already exists
-        const transportMediums = await TransportMedium.find();
+        const transportMediums = await TransportMedium.find({session:activeSession.year_name});
         const existingTransportMedium = await TransportMedium.findById(id);
         if(existingTransportMedium.transport_medium !== transport_medium && transportMediums.map(i => i.transport_medium).includes(transport_medium)){throw new Error('Transport medium already exists')};
 
 
         // Updating transport medium
-        const updatedTransportMedium = await TransportMedium.findByIdAndUpdate(id, {transport_medium}, {new:true});
+        await TransportMedium.findByIdAndUpdate(id, {transport_medium}, {new:true});
 
 
         // Return

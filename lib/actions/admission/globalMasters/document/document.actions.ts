@@ -29,7 +29,7 @@ export const createDocument = async ({document_type, document_name}:CreateDocume
 
 
         // Checking if the document already exists
-        const existingDocument = await Document.findOne({document_name});
+        const existingDocument = await Document.findOne({document_name, session:activeSession.year_name});
         if(existingDocument){
             throw new Error('Document name already exists');
         };
@@ -91,14 +91,18 @@ export const modifyDocument = async ({id, document_type, document_name}:ModifyDo
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Checking if the document name already exists
-        const documents = await Document.find();
+        const documents = await Document.find({session:activeSession.year_name});
         const existingDocument = await Document.findById(id);
         if(existingDocument.document_name !== document_name && documents.map(d => d.document_name).includes(document_name)){throw new Error('Document name already exists')};
 
     
         // Update document
-        const updatedDocument = await Document.findByIdAndUpdate(id, {document_type, document_name}, {new:true});
+        await Document.findByIdAndUpdate(id, {document_type, document_name}, {new:true});
 
 
         // Return
@@ -142,9 +146,13 @@ export const fetchDocumentsForAdmission = async () => {
         connectToDb('accounts');
 
 
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
         // Fetching
-        const documents = await Document.find();
-        const documentTypes = await DocumentType.find();
+        const documents = await Document.find({session:activeSession.year_name});
+        const documentTypes = await DocumentType.find({session:activeSession.year_name});
 
         const filtered = documentTypes.map(dt => {
             return {
