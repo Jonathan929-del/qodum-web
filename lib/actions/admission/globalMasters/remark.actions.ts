@@ -26,14 +26,14 @@ export const createRemark = async ({remark}:CreateRemarkProps) => {
 
 
         // Checking if the remark already exists
-        const existinRemark = await Remark.findOne({remark, session:activeSession.year_name});
+        const existinRemark = await Remark.findOne({remark, session:activeSession?.year_name});
         if(existinRemark){
             throw new Error('Remark already exists');
         };
 
 
         // Creating new remark
-        const newRemark = await Remark.create({session:activeSession.year_name, remark});
+        const newRemark = await Remark.create({session:activeSession?.year_name, remark});
         newRemark.save();
 
 
@@ -62,7 +62,7 @@ export const fetchRemarks = async () => {
 
 
         // Fetching
-        const remarks = await Remark.find({session:activeSession.year_name});
+        const remarks = await Remark.find({session:activeSession?.year_name});
         return remarks;
 
     } catch (err:any) {
@@ -91,7 +91,7 @@ export const modifyRemark = async ({id, remark}:ModifyRemarkProps) => {
 
 
         // Checking if the remark already exists
-        const remarks = await Remark.find({session:activeSession.year_name});
+        const remarks = await Remark.find({session:activeSession?.year_name});
         const existingRemark = await Remark.findById(id);
         if(existingRemark.remark !== remark && remarks.map(remark => remark.remark).includes(remark)){throw new Error('Remark already exists')};
 

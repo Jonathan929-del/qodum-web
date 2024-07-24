@@ -27,14 +27,14 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
 
 
         // Checking if the optional subject already exists
-        const existinOptionalSubject = await OptionalSubject.findOne({subject_name, session:activeSession.year_name});
+        const existinOptionalSubject = await OptionalSubject.findOne({subject_name, session:activeSession?.year_name});
         if(existinOptionalSubject){
             throw new Error('Subject already exists');
         };
 
 
         // Creating new optional subject
-        const newOptionalSubject = await OptionalSubject.create({session:activeSession.year_name, subject_name});
+        const newOptionalSubject = await OptionalSubject.create({session:activeSession?.year_name, subject_name});
         newOptionalSubject.save();
 
 
@@ -63,7 +63,7 @@ export const fetchOptionalSubjects = async () => {
 
 
         // Fetching
-        const subjects = await OptionalSubject.find({session:activeSession.year_name});
+        const subjects = await OptionalSubject.find({session:activeSession?.year_name});
         return subjects;
 
     } catch (err:any) {
@@ -92,7 +92,7 @@ export const modifyOptionalSubject = async ({id, subject_name}:ModifySubjectProp
 
 
         // Checking if the subject already exists
-        const subjects = await OptionalSubject.find({session:activeSession.year_name});
+        const subjects = await OptionalSubject.find({session:activeSession?.year_name});
         const existingSubject = await OptionalSubject.findById(id);
         if(existingSubject.subject_name !== subject_name && subjects.map(s => s.subject_name).includes(subject_name)){throw new Error('Optional subject already exists')};
 

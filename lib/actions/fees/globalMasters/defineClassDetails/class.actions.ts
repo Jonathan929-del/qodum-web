@@ -22,7 +22,7 @@ export const isClassesSesssionTransfered = async () => {
 
 
         // Records
-        const records = await Class.find({session:activeSession.year_name});
+        const records = await Class.find({session:activeSession?.year_name});
 
 
         // Return
@@ -82,14 +82,14 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
 
 
         // Checking if the class already exists
-        const existinClass = await Class.findOne({class_name, session:activeSession.year_name});
+        const existinClass = await Class.findOne({class_name, session:activeSession?.year_name});
         if(existinClass){
             throw new Error('Class name already exists');
         };
 
 
         // Creating new class
-        const newClass = await Class.create({session:activeSession.year_name, class_name, wing_name, school, order});
+        const newClass = await Class.create({session:activeSession?.year_name, class_name, wing_name, school, order});
         newClass.save();
 
 
@@ -118,7 +118,7 @@ export const fetchClasses = async () => {
 
 
         // Fetching
-        const classes = await Class.find({session:activeSession.year_name});
+        const classes = await Class.find({session:activeSession?.year_name});
         return classes;
 
     } catch (err:any) {
@@ -151,7 +151,7 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
 
 
         // Checking if the class already exists
-        const classes = await Class.find({session:activeSession.year_name});
+        const classes = await Class.find({session:activeSession?.year_name});
         const existingClass = await Class.findById(id);
         if(existingClass.class_name !== class_name && classes.map(item => item.class_name).includes(class_name)){throw new Error('Class name already exists')};
 
@@ -190,7 +190,7 @@ export const modifyClassSections = async ({class_name, sections}:ModifyClassSect
 
 
         // Updating class
-        const updatedClass = await Class.findOneAndUpdate({class_name, session:activeSession.year_name}, {sections}, {new:true});
+        const updatedClass = await Class.findOneAndUpdate({class_name, session:activeSession?.year_name}, {sections}, {new:true});
 
 
         // Return
@@ -218,7 +218,7 @@ export const fetchClass = async ({class_name}:{class_name:String}) => {
 
 
         // Fetching class
-        const c = await Class.findOne({class_name, session:activeSession.year_name});
+        const c = await Class.findOne({class_name, session:activeSession?.year_name});
         const classRes = {
             ...c._doc,
             _id:c._doc._id.toString()
@@ -278,21 +278,21 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
 
         if(installment === 'All installments'){
             // Fetching
-            const group = await Group.findOne({name:group_name, session:activeSession.year_name});
+            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c, session:activeSession.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    await Class.updateMany({class_name:c, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }
             });
         }else{
-            const group = await Group.findOne({name:group_name, session:activeSession.year_name});
+            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c, session:activeSession.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    await Class.updateMany({class_name:c, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }

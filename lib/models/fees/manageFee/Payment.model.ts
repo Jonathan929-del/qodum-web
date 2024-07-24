@@ -16,7 +16,7 @@ const PaymentSchema = new mongoose.Schema(
         // Others
         student:{type:String},
         image:{type:String},
-        receipt_no:{type:String, unique:true},
+        receipt_no:{type:String},
         ref_no:{type:String},
         installments:{type:Array},
         received_date:{type:Date},

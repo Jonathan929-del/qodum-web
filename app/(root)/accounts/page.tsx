@@ -43,53 +43,57 @@ const Home = () => {
   // Use effect
   useEffect(() => {
 
+    let openedPagesArray = [];
+
     if(openedPages.length === 0){
-      setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:(
+      openedPagesArray.push({name:'Dashboard', component:(
         <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
           <Dashboard />
         </div>
-      )}]);
+      )});
+      setCurrentPage('');
     };
     if(openedPages.includes('Define Academic Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
+      openedPagesArray.push({name:'Define Academic Year', component:<DefineAcademicYear />});
     };
     if(openedPages.includes('Define Financial Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineFinancialYear />}]);
+      openedPagesArray.push({name:'Define Financial Year', component:<DefineFinancialYear />});
     };
     if(openedPages.includes('Define Narration Master')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Narration Master', component:<DefineNarrationMaster />}]);
+      openedPagesArray.push({name:'Define Narration Master', component:<DefineNarrationMaster />});
     };
     if(openedPages.includes('Change Academic')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Change Academic', component:<ChangeAcademic />}]);
+      openedPagesArray.push({name:'Change Academic', component:<ChangeAcademic />});
     };
     if(openedPages.includes('Define Account Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Account Group', component:<DefineAccountGroup />}]);
+      openedPagesArray.push({name:'Define Account Group', component:<DefineAccountGroup />});
     };
     if(openedPages.includes('Define Bank Ledger')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Bank Ledger', component:<DefineBankLedger />}]);
+      openedPagesArray.push({name:'Define Bank Ledger', component:<DefineBankLedger />});
     };
     if(openedPages.includes('Define Party Ledger')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Party Ledger', component:<DefinePartyLedger />}]);
+      openedPagesArray.push({name:'Define Party Ledger', component:<DefinePartyLedger />});
     };
     if(openedPages.includes('Define General Ledger')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define General Ledger', component:<DefineGeneralLedger />}]);
+      openedPagesArray.push({name:'Define General Ledger', component:<DefineGeneralLedger />});
     };
     if(openedPages.includes('Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
+      openedPagesArray.push({name:'Session Transfer', component:<SessionTransfer />});
     };
     if(openedPages.includes('Account Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+      openedPagesArray.push({name:'Account Manager Session Transfer', component:<AccountSessionTransfer />});
     };
     if(openedPages.includes('Fee Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+      openedPagesArray.push({name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />});
     };
     if(openedPages.includes('Payroll Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+      openedPagesArray.push({name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />});
     };
     if(openedPages.includes('Admission Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
+      openedPagesArray.push({name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />});
     };
+
+    setOpenedPagesComponents(openedPagesArray)
 
   }, [openedPages]);
 

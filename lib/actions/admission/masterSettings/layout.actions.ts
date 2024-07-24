@@ -82,14 +82,14 @@ export const createLayout = async ({report_setting, header_and_footer_setting, f
 
 
         // Checking if the report name already exists
-        const existingLayou = await Layout.findOne({'report_setting.report_name':report_setting.report_name, session:activeSession.year_name});
+        const existingLayou = await Layout.findOne({'report_setting.report_name':report_setting.report_name, session:activeSession?.year_name});
         if(existingLayou){
             throw new Error('Report name already exists');
         };
 
 
         // Creating new layout
-        const newLayout = await Layout.create({session:activeSession.year_name, report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting});
+        const newLayout = await Layout.create({session:activeSession?.year_name, report_setting, header_and_footer_setting, font_size_setting, page_orientation_and_layout_setting, height_and_width_setting, margin_setting});
         newLayout.save();
 
 
@@ -118,7 +118,7 @@ export const fetchLayouts = async () => {
 
 
         // Fetching
-        const layouts = await Layout.find({session:activeSession.year_name});
+        const layouts = await Layout.find({session:activeSession?.year_name});
         return layouts;
 
     } catch (err:any) {
@@ -203,7 +203,7 @@ export const modifyLayout = async ({id, report_setting, header_and_footer_settin
 
 
         // Checking if the report name already exists
-        const layouts = await Layout.find({session:activeSession.year_name});
+        const layouts = await Layout.find({session:activeSession?.year_name});
         const existingLayout = await Layout.findById(id);
         if(existingLayout.report_setting.report_name !== report_setting.report_name && layouts.map(l => l.report_setting.report_name).includes(report_setting.report_name)){throw new Error('Report name already exists')};
 

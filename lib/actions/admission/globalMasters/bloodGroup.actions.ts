@@ -26,14 +26,14 @@ export const createBloodGroup = async ({blood_group}:CreateBloodGroupProps) => {
 
 
         // Checking if the blood group already exists
-        const existingBloodGroup = await BloodGroup.findOne({blood_group, session:activeSession.year_name});
+        const existingBloodGroup = await BloodGroup.findOne({blood_group, session:activeSession?.year_name});
         if(existingBloodGroup){
             throw new Error('Blood group already exists');
         };
 
 
         // Creating new blood group
-        const newBloodGroup = await BloodGroup.create({session:activeSession.year_name, blood_group});
+        const newBloodGroup = await BloodGroup.create({session:activeSession?.year_name, blood_group});
         newBloodGroup.save();
 
 
@@ -62,7 +62,7 @@ export const fetchBloodGroups = async () => {
 
 
         // Fetching
-        const bloodGroups = await BloodGroup.find({session:activeSession.year_name});
+        const bloodGroups = await BloodGroup.find({session:activeSession?.year_name});
         return bloodGroups;
 
     } catch (err:any) {
@@ -91,7 +91,7 @@ export const modifyBloodGroup = async ({id, blood_group}:ModifyBloodGroupProps) 
 
 
         // Checking if the blood group already exists
-        const bloodGroups = await BloodGroup.find({session:activeSession.year_name});
+        const bloodGroups = await BloodGroup.find({session:activeSession?.year_name});
         const existingBloodGroup = await BloodGroup.findById(id);
         if(existingBloodGroup.blood_group !== blood_group && bloodGroups.map(r => r.blood_group).includes(blood_group)){throw new Error('Blood group already exists')};
 

@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const DocumentTypeSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        document_type:{type:String, required:true, unique:true}
+        document_type:{type:String, required:true}
     },
     {
         timestamps:true

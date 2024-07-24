@@ -21,7 +21,7 @@ export const isSectionsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await Section.find({session:activeSession.year_name});
+        const records = await Section.find({session:activeSession?.year_name});
 
 
         // Return
@@ -79,14 +79,14 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
 
 
         // Checking if the section already exists
-        const existinSection = await Section.findOne({section_name, session:activeSession.year_name});
+        const existinSection = await Section.findOne({section_name, session:activeSession?.year_name});
         if(existinSection){
             throw new Error('Section name already exists');
         };
 
 
         // Creating new section
-        const newSection = await Section.create({session:activeSession.year_name, section_name, order_no});
+        const newSection = await Section.create({session:activeSession?.year_name, section_name, order_no});
         newSection.save();
 
 
@@ -115,7 +115,7 @@ export const fetchSections = async () => {
 
 
         // Fetching
-        const sections = await Section.find({session:activeSession.year_name});
+        const sections = await Section.find({session:activeSession?.year_name});
         return sections;
 
     } catch (err:any) {
@@ -146,7 +146,7 @@ export const modifySection = async ({id, section_name, order_no}:ModifySectionPr
 
 
         // Checking if the section already exists
-        const sections = await Section.find({sessiom:activeSession.year_name});
+        const sections = await Section.find({sessiom:activeSession?.year_name});
         const existingSection = await Section.findById(id);
         if(existingSection.section_name !== section_name && sections.map(section => section.section_name).includes(section_name)){throw new Error('Section name already exists')};
 

@@ -49,7 +49,7 @@ export const createEnquiry = async ({
 
 
         // Checking if the enquiry already exists
-        const existinEnquiry = await Enquiry.findOne({enquiry_no, session:activeSession.year_name});
+        const existinEnquiry = await Enquiry.findOne({enquiry_no, session:activeSession?.year_name});
         if(existinEnquiry){
             throw new Error('Enquiry already exists');
         };
@@ -57,7 +57,7 @@ export const createEnquiry = async ({
 
         // Creating new enquiiry
         const newEnquiry = await Enquiry.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             enquiry_no,
             enquiry_date,
             visitor_name,
@@ -98,7 +98,7 @@ export const fetchEnquiries = async () => {
 
 
         // Fetching
-        const enquiries = await Enquiry.find({session:activeSession.year_name});
+        const enquiries = await Enquiry.find({session:activeSession?.year_name});
         return enquiries;
 
     } catch (err:any) {
@@ -151,7 +151,7 @@ export const modifyEnquiry = async ({
 
 
         // Checking if the enquiry already exists
-        const enquiries = await Enquiry.find({session:activeSession.year_name});
+        const enquiries = await Enquiry.find({session:activeSession?.year_name});
         const existingEnquiry = await Enquiry.findById(id);
         if(existingEnquiry.enquiry_no !== enquiry_no && enquiries.map(e => e.enquiry_no).includes(enquiry_no)){throw new Error('Enquiry already exists')};
 
@@ -218,7 +218,7 @@ export const fetchAdmissionEnquiries = async () => {
 
 
         // Fetching
-        const enquiries = await Enquiry.find({purpose_is_admission:true, session:activeSession.year_name});
+        const enquiries = await Enquiry.find({purpose_is_admission:true, session:activeSession?.year_name});
         return enquiries;
 
     } catch (err:any) {
@@ -243,7 +243,7 @@ export const fetchEnquiryByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) 
 
 
         // Fetching student
-        const enquiry = await Enquiry.findOne({enquiry_no, session:activeSession.year_name});
+        const enquiry = await Enquiry.findOne({enquiry_no, session:activeSession?.year_name});
 
 
         // Return

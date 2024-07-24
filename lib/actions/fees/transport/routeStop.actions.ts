@@ -21,7 +21,7 @@ export const isRouteStopsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await RouteStop.find({session:activeSession.year_name});
+        const records = await RouteStop.find({session:activeSession?.year_name});
 
 
         // Return
@@ -105,7 +105,7 @@ export const createRouteStop = async ({route_no, stop_no, stop_name, morning_arr
 
 
         // Creating new route stop
-        const newRouteStop = await RouteStop.create({session:activeSession.year_name, route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups});
+        const newRouteStop = await RouteStop.create({session:activeSession?.year_name, route_no, stop_no, stop_name, morning_arrival_time, afternoon_arrival_time, transport_groups});
         newRouteStop.save();
 
 
@@ -134,7 +134,7 @@ export const fetchRouteStops = async () => {
 
 
         // Fetching route stops
-        const routesStops = await RouteStop.find({session:activeSession.year_name});
+        const routesStops = await RouteStop.find({session:activeSession?.year_name});
         return routesStops;
 
     } catch (err:any) {

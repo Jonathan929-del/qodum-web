@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const HealthMasterSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        health_parameter:{type:String, required:true, unique:true},
+        health_parameter:{type:String, required:true},
         unit:{type:String, required:true}
     },
     {

@@ -21,7 +21,7 @@ export const isVehicleRoutesSesssionTransfered = async () => {
 
 
         // Records
-        const records = await VehicleRoute.find({session:activeSession.year_name});
+        const records = await VehicleRoute.find({session:activeSession?.year_name});
 
 
         // Return
@@ -82,14 +82,14 @@ export const createVehicleRoute = async ({route_no, route_description, route_in_
 
 
         // Checking if the route no. already exists
-        const existingVehicleRoute = await VehicleRoute.findOne({route_no, session:activeSession.year_name});
+        const existingVehicleRoute = await VehicleRoute.findOne({route_no, session:activeSession?.year_name});
         if(existingVehicleRoute){
             throw new Error('Vehicle route already exists');
         };
 
 
         // Creating new vehicle route
-        const newVehicleRoute = await VehicleRoute.create({session:activeSession.year_name, route_no, route_description, route_in_charge_name, route_in_charge_mobile_no});
+        const newVehicleRoute = await VehicleRoute.create({session:activeSession?.year_name, route_no, route_description, route_in_charge_name, route_in_charge_mobile_no});
         newVehicleRoute.save();
 
 
@@ -118,7 +118,7 @@ export const fetchVehicleRoutes = async (pageNumber = 1, pageSize=20) => {
 
 
         // Fetching vehicle routes
-        const vehicleRoutes = await VehicleRoute.find({session:activeSession.year_name});
+        const vehicleRoutes = await VehicleRoute.find({session:activeSession?.year_name});
         return vehicleRoutes;
 
     } catch (err:any) {
@@ -151,7 +151,7 @@ export const modifyVehicleRoute = async ({id, route_no, route_description, route
 
 
         // Checking if the route no. exists
-        const vehicleRoutes = await VehicleRoute.find({session:activeSession.year_name});
+        const vehicleRoutes = await VehicleRoute.find({session:activeSession?.year_name});
         const existingVehicleRoute = await VehicleRoute.findById(id);
         if(existingVehicleRoute.route_no !== route_no && vehicleRoutes.map(i => i.route_no).includes(route_no)){throw new Error('Vehicle route no. already exists')};
 

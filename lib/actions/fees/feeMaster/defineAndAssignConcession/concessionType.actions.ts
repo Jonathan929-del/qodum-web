@@ -21,7 +21,7 @@ export const isConcessionTypeSesssionTransfered = async () => {
 
 
         // Records
-        const records = await ConcessionType.find({session:activeSession.year_name});
+        const records = await ConcessionType.find({session:activeSession?.year_name});
 
 
         // Return
@@ -79,14 +79,14 @@ export const createConcessionType = async ({type}:CreateConcessionTypeProps) => 
 
 
         // Checking if the concession type already exists
-        const existingConcessionType = await ConcessionType.findOne({type, session:activeSession.year_name});
+        const existingConcessionType = await ConcessionType.findOne({type, session:activeSession?.year_name});
         if(existingConcessionType){
             throw new Error('Concession type already exists');
         };
 
 
         // Creating new concession type
-        const newConcessionType = await ConcessionType.create({session:activeSession.year_name, type});
+        const newConcessionType = await ConcessionType.create({session:activeSession?.year_name, type});
         newConcessionType.save();
 
 
@@ -115,7 +115,7 @@ export const fetchConcessionsTypes = async (pageNumber = 1, pageSize=20) => {
 
 
         // Fetching concessions types
-        const concessionsTypes = await ConcessionType.find({session:activeSession.year_name});
+        const concessionsTypes = await ConcessionType.find({session:activeSession?.year_name});
         return concessionsTypes;
 
     } catch (err:any) {
@@ -145,7 +145,7 @@ export const modifyConcessionType = async ({id, type}:ModifyConcessionTypeProps)
 
 
         // Checking if the concession type already exists
-        const concessionsTypes = await ConcessionType.find({session:activeSession.year_name});
+        const concessionsTypes = await ConcessionType.find({session:activeSession?.year_name});
         const existingConcessionType = await ConcessionType.findById(id);
         if(existingConcessionType.type !== type && concessionsTypes.map(i => i.type).includes(type)){throw new Error('Concession type already exists')};
 

@@ -27,14 +27,14 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
 
 
         // Checking if the transport medium already exists
-        const existingTransportMedium = await TransportMedium.findOne({transport_medium, session:activeSession.year_name});
+        const existingTransportMedium = await TransportMedium.findOne({transport_medium, session:activeSession?.year_name});
         if(existingTransportMedium){
             throw new Error('Transport medium already exists');
         };
 
 
         // Creating new transport medium
-        const newTranportMedium = await TransportMedium.create({session:activeSession.year_name, transport_medium});
+        const newTranportMedium = await TransportMedium.create({session:activeSession?.year_name, transport_medium});
         newTranportMedium.save();
 
 
@@ -63,7 +63,7 @@ export const fetchTransportMediums = async () => {
 
 
         // Fetching
-        const transportMediums = await TransportMedium.find({session:activeSession.year_name});
+        const transportMediums = await TransportMedium.find({session:activeSession?.year_name});
         return transportMediums;
 
     } catch (err:any) {
@@ -93,7 +93,7 @@ export const modifyTransportMedium = async ({id, transport_medium}:ModifyTranspo
 
 
         // Checking if the transport medium already exists
-        const transportMediums = await TransportMedium.find({session:activeSession.year_name});
+        const transportMediums = await TransportMedium.find({session:activeSession?.year_name});
         const existingTransportMedium = await TransportMedium.findById(id);
         if(existingTransportMedium.transport_medium !== transport_medium && transportMediums.map(i => i.transport_medium).includes(transport_medium)){throw new Error('Transport medium already exists')};
 

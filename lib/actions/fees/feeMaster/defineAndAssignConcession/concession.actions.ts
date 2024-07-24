@@ -21,7 +21,7 @@ export const isConcessionsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await Concession.find({session:activeSession.year_name});
+        const records = await Concession.find({session:activeSession?.year_name});
 
 
         // Return
@@ -79,14 +79,14 @@ export const createConcession = async ({name}:CreateConcessionProps) => {
 
 
         // Checking if the concession name already exists
-        const existingConcession = await Concession.findOne({name, session:activeSession.year_name});
+        const existingConcession = await Concession.findOne({name, session:activeSession?.year_name});
         if(existingConcession){
             throw new Error('Concession name already exists');
         };
 
 
         // Creating new concession
-        const newConcession = await Concession.create({session:activeSession.year_name, name});
+        const newConcession = await Concession.create({session:activeSession?.year_name, name});
         newConcession.save();
 
 
@@ -115,7 +115,7 @@ export const fetchConcessions = async () => {
 
 
         // Fetching concessions
-        const concessions = await Concession.find({session:activeSession.year_name});
+        const concessions = await Concession.find({session:activeSession?.year_name});
         return concessions;
 
     } catch (err:any) {
@@ -145,7 +145,7 @@ export const modifyConcession = async ({id, name}:ModifyConcessionProps) => {
 
 
         // Checking if the concession name already exists
-        const concessions = await Concession.find({session:activeSession.year_name});
+        const concessions = await Concession.find({session:activeSession?.year_name});
         const existingConcession = await Concession.findById(id);
         if(existingConcession.name !== name && concessions.map(i => i.name).includes(name)){throw new Error('Concession name already exists')};
 

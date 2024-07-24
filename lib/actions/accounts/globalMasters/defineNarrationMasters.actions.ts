@@ -28,7 +28,7 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
 
 
         // Checking if narration already exists
-        const existingNarration = await NarrationMaster.findOne({narration, session:activeSession.year_name});
+        const existingNarration = await NarrationMaster.findOne({narration, session:activeSession?.year_name});
         if(existingNarration){
             throw new Error('Narration already exists');
         };
@@ -36,7 +36,7 @@ export const createNarrationMaster = async ({voucher_type, narration}:CreateNarr
 
         // Creating new narration master
         const newNarrationMaster = await NarrationMaster.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             voucher_type,
             narration
         });
@@ -68,7 +68,7 @@ export const fetchNarrationMasters = async () => {
 
 
         // Fetching
-        const narrations = await NarrationMaster.find({session:activeSession.year_name});
+        const narrations = await NarrationMaster.find({session:activeSession?.year_name});
 
 
         // Return
@@ -101,7 +101,7 @@ export const modifyNarrationMaster = async ({id, narration, voucher_type}:Modify
 
 
         // Checking if the narration already exists
-        const narrations = await NarrationMaster.find({session:activeSession.year_name});
+        const narrations = await NarrationMaster.find({session:activeSession?.year_name});
         const existingNarration = await NarrationMaster.findById(id);
         if(existingNarration.narration !== narration && narrations.map(narration => narration.narration).includes(narration)){throw new Error('Narration already exists')};
 

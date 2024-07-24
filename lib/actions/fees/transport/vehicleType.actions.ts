@@ -21,7 +21,7 @@ export const isVehicleTypeSesssionTransfered = async () => {
 
 
         // Records
-        const records = await VehicleType.find({session:activeSession.year_name});
+        const records = await VehicleType.find({session:activeSession?.year_name});
 
 
         // Return
@@ -78,14 +78,14 @@ export const createVehicleType = async ({vehicle_name}:CreateVehicleTypeProps) =
 
 
         // Checking if the vehicle type already exists
-        const existingVehicleType = await VehicleType.findOne({vehicle_name, session:activeSession.year_name});
+        const existingVehicleType = await VehicleType.findOne({vehicle_name, session:activeSession?.year_name});
         if(existingVehicleType){
             throw new Error('Vehicle type already exists');
         };
 
 
         // Creating new vehicle type
-        const newVehicleType = await VehicleType.create({session:activeSession.year_name, vehicle_name});
+        const newVehicleType = await VehicleType.create({session:activeSession?.year_name, vehicle_name});
         newVehicleType.save();
 
 
@@ -114,7 +114,7 @@ export const fetchVehicleTypes = async () => {
 
 
         // Fetching vehicle types
-        const vehicleTypes = await VehicleType.find({session:activeSession.year_name});
+        const vehicleTypes = await VehicleType.find({session:activeSession?.year_name});
         return vehicleTypes;
 
     } catch (err:any) {
@@ -144,7 +144,7 @@ export const modifyVehicleType = async ({id, vehicle_name}:ModifyVehicleTypesPro
 
 
         // Checking if the vehicle name exists
-        const vehicleTypes = await VehicleType.find({session:activeSession.year_name});
+        const vehicleTypes = await VehicleType.find({session:activeSession?.year_name});
         const existingVehicleType = await VehicleType.findById(id);
         if(existingVehicleType.vehicle_name !== vehicle_name && vehicleTypes.map(i => i.vehicle_name).includes(vehicle_name)){throw new Error('Vehicle name already exists')};
 

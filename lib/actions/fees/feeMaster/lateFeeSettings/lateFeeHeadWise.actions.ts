@@ -21,7 +21,7 @@ export const isLateFeeHeadWiseSesssionTransfered = async () => {
 
 
         // Records
-        const records = await LateFeeHeadWise.find({session:activeSession.year_name});
+        const records = await LateFeeHeadWise.find({session:activeSession?.year_name});
 
 
         // Return
@@ -85,7 +85,7 @@ export const createLateFeeHeadWise = async ({fee_group, fee_type, installment, h
 
 
         // Creating new late fee
-        const newLateFeeHeadWise = await LateFeeHeadWise.create({session:activeSession.year_name, fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
+        const newLateFeeHeadWise = await LateFeeHeadWise.create({session:activeSession?.year_name, fee_group, fee_type, installment, head, due_date, late_fee_type, amount});
         newLateFeeHeadWise.save();
 
 
@@ -114,7 +114,7 @@ export const fetchLateFeesHeadWise = async () => {
 
 
         // Fetching late fees
-        const lateFeesHeadWise = await LateFeeHeadWise.find({session:activeSession.year_name});
+        const lateFeesHeadWise = await LateFeeHeadWise.find({session:activeSession?.year_name});
         return lateFeesHeadWise;
 
     } catch (err:any) {

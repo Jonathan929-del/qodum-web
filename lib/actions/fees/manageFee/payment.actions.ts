@@ -89,7 +89,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             student_status,
             bank_name,
             fee_group,
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             is_canceled:false,
 
             // Amounts
@@ -100,7 +100,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             concession_reason
         });
         payment.save().then(async() => {
-            await Payment.findOneAndUpdate({receipt_no, session:activeSession.year_name}, {installments, paid_heads}, {new:true});
+            await Payment.findOneAndUpdate({receipt_no, session:activeSession?.year_name}, {installments, paid_heads}, {new:true});
         });
         const paymentRes = {
             ...payment._doc,
@@ -133,7 +133,7 @@ export const fetchPayments = async () => {
 
     
         // Payments
-        const payments = await Payment.find({session:activeSession.year_name});
+        const payments = await Payment.find({session:activeSession?.year_name});
 
 
         // Return
@@ -162,7 +162,7 @@ export const fetchStudentPayments = async ({student}:{student:String}) => {
 
     
         // Payments
-        const payments = await Payment.find({student, session:activeSession.year_name});
+        const payments = await Payment.find({student, session:activeSession?.year_name});
 
 
         // Return
@@ -191,7 +191,7 @@ export const fetchPaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) 
 
     
         // Payments
-        const payment = await Payment.findOne({receipt_no, session:activeSession.year_name});
+        const payment = await Payment.findOne({receipt_no, session:activeSession?.year_name});
 
 
         // Return
@@ -220,7 +220,7 @@ export const deletePaymentByReceiptNo = async ({receipt_no}:{receipt_no:String})
 
     
         // Payments
-        const payment = await Payment.findOneAndDelete({receipt_no, session:activeSession.year_name});
+        const payment = await Payment.findOneAndDelete({receipt_no, session:activeSession?.year_name});
 
 
         // Return
@@ -265,7 +265,7 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
 
 
         // Fetching and filtering payments
-        const payments = await Payment.find({session:activeSession.year_name});
+        const payments = await Payment.find({session:activeSession?.year_name});
         const filteredPayments = payments
             // Schools filter
             .filter((p:any) => school === 'All Schools' ? p : p.school_name === school)
@@ -343,7 +343,7 @@ export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes,
 
 
         // Fetching and filtering payments
-        const payments = await Payment.find({session:activeSession.year_name});
+        const payments = await Payment.find({session:activeSession?.year_name});
         const filteredPayments = payments
             // Schools filter
             .filter((p:any) => school === 'All Schools' ? p : p.school_name === school)
@@ -433,7 +433,7 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
 
     
         // Payments
-        const payments = await Payment.find({student, is_canceled:false, session:activeSession.year_name});
+        const payments = await Payment.find({student, is_canceled:false, session:activeSession?.year_name});
 
 
         // Return

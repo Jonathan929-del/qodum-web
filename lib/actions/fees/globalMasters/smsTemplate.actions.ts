@@ -29,7 +29,7 @@ export const createSmsTemplate = async ({sms_type, sms_template, is_enable}:Crea
 
 
         // Creating new sms template
-        const newSmsTemplate = await SmsTemplate.create({session:activeSession.year_name, sms_type, sms_template, is_enable});
+        const newSmsTemplate = await SmsTemplate.create({session:activeSession?.year_name, sms_type, sms_template, is_enable});
         newSmsTemplate.save();
 
 
@@ -58,7 +58,7 @@ export const fetchSmsTemplates = async () => {
 
 
         // Fetching sms templates
-        const smsTemplates = await SmsTemplate.find({session:activeSession.year_name});
+        const smsTemplates = await SmsTemplate.find({session:activeSession?.year_name});
         return smsTemplates;
 
     } catch (err:any) {

@@ -37,7 +37,7 @@ export const createBankLedger = async ({account_name, group, account_type, accou
 
 
         // Checking if bank ledger already exists
-        const existingBankLedger = await BankLedger.findOne({account_name, session:activeSession.year_name});
+        const existingBankLedger = await BankLedger.findOne({account_name, session:activeSession?.year_name});
         if(existingBankLedger){
             throw new Error('Bank ledger already exists');
         };
@@ -45,7 +45,7 @@ export const createBankLedger = async ({account_name, group, account_type, accou
 
         // Creating new bank ledger
         const newBankLedger = await BankLedger.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             account_name,
             group,
             account_type,
@@ -85,7 +85,7 @@ export const fetchBankLedgers = async () => {
 
 
         // Fetching
-        const bankLedgers = await BankLedger.find({session:activeSession.year_name});
+        const bankLedgers = await BankLedger.find({session:activeSession?.year_name});
         return bankLedgers;
 
         
@@ -125,7 +125,7 @@ export const modifyBankLedger = async ({id, account_name, group, account_type, a
 
 
         // Checking if the bank ledger already exists
-        const bankLedgers = await BankLedger.find({session:activeSession.year_name});
+        const bankLedgers = await BankLedger.find({session:activeSession?.year_name});
         const existingBankLedger = await BankLedger.findById(id);
         if(existingBankLedger.account_name !== account_name && bankLedgers.map(ledger => ledger.account_name).includes(account_name)){throw new Error('Bank ledger already exists')};
 

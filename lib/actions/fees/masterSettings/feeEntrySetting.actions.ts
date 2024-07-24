@@ -30,7 +30,7 @@ export const createFeeEntrySetting = async ({prefix, lead_zero, receipt_no_start
 
     
         // Fee entry setting
-        const feeEntrySetting = await FeeEntrySetting.create({session:activeSession.year_name, prefix, lead_zero, receipt_no_start, suffix, generate_type});
+        const feeEntrySetting = await FeeEntrySetting.create({session:activeSession?.year_name, prefix, lead_zero, receipt_no_start, suffix, generate_type});
         feeEntrySetting.save();
 
 

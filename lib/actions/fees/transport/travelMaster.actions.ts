@@ -21,7 +21,7 @@ export const isTravelMasterSesssionTransfered = async () => {
 
 
         // Records
-        const records = await TravelMaster.find({session:activeSession.year_name});
+        const records = await TravelMaster.find({session:activeSession?.year_name});
 
 
         // Return
@@ -80,7 +80,7 @@ export const createTravelMaster = async ({travel_agency_name, mobile_no, mail_id
 
 
         // Creating new travel master
-        const newTravelMaster = await TravelMaster.create({session:activeSession.year_name, travel_agency_name, mobile_no, mail_id});
+        const newTravelMaster = await TravelMaster.create({session:activeSession?.year_name, travel_agency_name, mobile_no, mail_id});
         newTravelMaster.save();
 
 
@@ -109,7 +109,7 @@ export const fetchTravelMasters = async () => {
 
 
         // Fetching
-        const travelMasters = await TravelMaster.find({session:activeSession.year_name});
+        const travelMasters = await TravelMaster.find({session:activeSession?.year_name});
         return travelMasters;
 
     } catch (err:any) {

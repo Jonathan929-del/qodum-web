@@ -27,7 +27,7 @@ export const createTcCaste = async ({caste_name}:CreateTcCasteProps) => {
 
 
         // Checking if the caste name already exists
-        const existinTcCaste = await TcCaste.findOne({session:activeSession.year_name, caste_name});
+        const existinTcCaste = await TcCaste.findOne({session:activeSession?.year_name, caste_name});
         if(existinTcCaste){
             throw new Error('Tc caste already exists');
         };
@@ -63,7 +63,7 @@ export const fetchTcCasts = async () => {
 
 
         // Fetching
-        const tcCasts = await TcCaste.find({session:activeSession.year_name});
+        const tcCasts = await TcCaste.find({session:activeSession?.year_name});
         return tcCasts;
 
     } catch (err:any) {
@@ -92,7 +92,7 @@ export const modifyTcCaste = async ({id, caste_name}:ModifyTcCasteProps) => {
 
 
         // Checking if the caste name already exists
-        const tcCasts = await TcCaste.find({session:activeSession.year_name});
+        const tcCasts = await TcCaste.find({session:activeSession?.year_name});
         const existingTcCaste = await TcCaste.findById(id);
         if(existingTcCaste.caste_name !== caste_name && tcCasts.map(tcCaste => tcCaste.caste_name).includes(caste_name)){throw new Error('Tc caste already exists')};
 

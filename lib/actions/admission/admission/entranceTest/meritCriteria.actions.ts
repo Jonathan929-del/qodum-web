@@ -29,7 +29,7 @@ export const createMeritCriteria = async ({session, name, maximum_point}:CreateM
 
 
         // Checking if the name name already exists
-        const existingMeritCriteria = await MeritCriteria.findOne({name, session:activeSession.year_name});
+        const existingMeritCriteria = await MeritCriteria.findOne({name, session:activeSession?.year_name});
         if(existingMeritCriteria){
             throw new Error('Criteria name already exists');
         };
@@ -65,7 +65,7 @@ export const fetchMeritCriterias = async () => {
 
 
         // Fetching
-        const meritCriterias = await MeritCriteria.find({session:activeSession.year_name});
+        const meritCriterias = await MeritCriteria.find({session:activeSession?.year_name});
 
 
         // Return
@@ -100,7 +100,7 @@ export const modifyMeritCriteria = async ({id, session, name, maximum_point}:Mod
 
 
         // Checking if the criteria name already exists
-        const meritCriterias = await MeritCriteria.find({session:activeSession.year_name});
+        const meritCriterias = await MeritCriteria.find({session:activeSession?.year_name});
         const existingMeritCriteria = await MeritCriteria.findById(id);
         if(existingMeritCriteria.name !== name && meritCriterias.map(c => c.name).includes(name)){throw new Error('Criteria name already exists')};
 

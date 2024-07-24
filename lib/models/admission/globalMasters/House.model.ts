@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const HouseSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        house_name:{type:String, required:true, unique:true}
+        house_name:{type:String, required:true}
     },
     {
         timestamps:true

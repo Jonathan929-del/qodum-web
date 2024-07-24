@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const WingSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        wing:{type:String, required:true, unique:true}
+        wing:{type:String, required:true}
     },
     {
         timestamps:true

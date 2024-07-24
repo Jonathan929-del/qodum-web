@@ -191,7 +191,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
 
         // Checking if the register number already exists
-        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no, session:activeSession.year_name});
+        const existingStudent = await Student.findOne({'student.reg_no':student.reg_no, session:activeSession?.year_name});
         if(existingStudent){
             throw new Error('Register no. already exists');
         };
@@ -199,7 +199,7 @@ export const createStudent = async ({student, parents, others, guardian_details}
 
         // Creating new student
         const newStudent = await Student.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             student:{
                 // 1
                 is_up_for_admission:false,
@@ -250,14 +250,14 @@ export const createStudent = async ({student, parents, others, guardian_details}
             guardian_details
         });
         newStudent.save().then(async () => {
-            await Student.findOneAndUpdate({'student.reg_no':student.reg_no, session:activeSession.year_name}, {'student.subjects':student.subjects});
+            await Student.findOneAndUpdate({'student.reg_no':student.reg_no, session:activeSession?.year_name}, {'student.subjects':student.subjects});
         });
 
 
         // Updating subjects
-        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession.year_name});
+        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession?.year_name});
         subjectsAffected.map(async s => {
-            await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats - 1});
+            await Subject.updateMany({'subject_name':s.subject_name, session:activeSession?.year_name}, {available_seats:s.available_seats - 1});
         });
 
 
@@ -287,7 +287,7 @@ export const fetchStudents = async () => {
 
 
         // Fetching
-        const students = await Student.find({session:activeSession.year_name});
+        const students = await Student.find({session:activeSession?.year_name});
         return students;
 
     } catch (err:any) {
@@ -480,7 +480,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
 
         // Checking if the register no. already exists
-        const students = await Student.find({session:activeSession.year_name});
+        const students = await Student.find({session:activeSession?.year_name});
         const existingStudent = await Student.findById(id);
         if(existingStudent.student.reg_no !== student.reg_no && students.map(student => student.student.reg_no).includes(student.reg_no)){throw new Error('Register no. already exists')};
 
@@ -490,15 +490,15 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         
         
         // Subjects handling
-        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects, is_university:true, session:activeSession.year_name});
-        const newSubjects = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession.year_name});
+        const previousSubjects = await Subject.find({subject_name:existingStudent.student.subjects, is_university:true, session:activeSession?.year_name});
+        const newSubjects = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession?.year_name});
         
 
         // Additional subjects
         const additionalSubjects = newSubjects.filter(s => !previousSubjects.map(subject => subject.subject_name).includes(s.subject_name));
         if(additionalSubjects.length > 0){
             additionalSubjects.map(async s => {
-                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats - 1});
+                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession?.year_name}, {available_seats:s.available_seats - 1});
             });
         };
 
@@ -507,7 +507,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
         const subtractedSubjects = previousSubjects.filter(s => !newSubjects.map(subject => subject.subject_name).includes(s.subject_name));
         if(subtractedSubjects.length > 0){
             subtractedSubjects.map(async s => {
-                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession.year_name}, {available_seats:s.available_seats + 1});
+                await Subject.updateMany({'subject_name':s.subject_name, session:activeSession?.year_name}, {available_seats:s.available_seats + 1});
             });
         };
 
@@ -568,7 +568,7 @@ export const fetchClassStudents = async ({class_name}:{class_name:String}) => {
 
 
         // Fetching students
-        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false, session:activeSession.year_name});
+        const students = await Student.find({'student.class':class_name, 'student.is_up_for_admission':false, session:activeSession?.year_name});
 
 
         // Return
@@ -599,7 +599,7 @@ export const fetchClassesStudents = async ({classes_names}:{classes_names:any}) 
         const students = await Student.find({ 
             'student.class':{$in:classes_names},
             'student.is_up_for_admission':false,
-            session:activeSession.year_name
+            session:activeSession?.year_name
         });
 
 
@@ -633,7 +633,7 @@ export const applyStudentForAdmission = async ({reg_nos}:ApplyStudentForAdmissio
 
         // Update student
         reg_nos.map(async no => {
-            const updatedStudents = await Student.updateMany({'student.reg_no':no, session:activeSession.year_name}, {'student.is_up_for_admission':true}, {new:true});
+            const updatedStudents = await Student.updateMany({'student.reg_no':no, session:activeSession?.year_name}, {'student.is_up_for_admission':true}, {new:true});
             return updatedStudents;
         });
     
@@ -660,7 +660,7 @@ export const fetchManualListStudents = async () => {
 
 
         // Fetching
-        const students = await Student.find({'student.is_up_for_admission':true, session:activeSession.year_name});
+        const students = await Student.find({'student.is_up_for_admission':true, session:activeSession?.year_name});
         return students;
 
     } catch (err:any) {
@@ -685,7 +685,7 @@ export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
 
 
         // Fetching student
-        const student = await Student.findOne({'student.reg_no':reg_no, session:activeSession.year_name});
+        const student = await Student.findOne({'student.reg_no':reg_no, session:activeSession?.year_name});
 
 
         // Return

@@ -10,7 +10,7 @@ const NarrationMasterSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
         voucher_type:{type:String, required:true},
-        narration:{type:String, required:true, unique:true}
+        narration:{type:String, required:true}
     },
     {
         timestamps:true

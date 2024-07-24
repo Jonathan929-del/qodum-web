@@ -19,8 +19,8 @@ export const fetchAcademicYearsNames = async () => {
 
         // Fetching
         const academicYears = await AcademicYear.find();
-        const yearsNames = academicYears.map(year => year.year_name);
-        const activeAcademicYear = academicYears.filter(year => year.is_active)[0].year_name;
+        const yearsNames = academicYears.map(year => year?.year_name);
+        const activeAcademicYear = academicYears.filter(year => year.is_active)[0]?.year_name;
         return {yearsNames, activeAcademicYear};
 
     } catch (err:any) {
@@ -42,7 +42,7 @@ export const fetchFinancialYearsNames = async () => {
 
         // Fetching
         const financialYears = await FinancialYear.find();
-        const yearsNames = financialYears.map(year => year.year_name);
+        const yearsNames = financialYears.map(year => year?.year_name);
         const activeFinancialYear = financialYears.filter(year => year.is_active)[0]?.year_name;
         return {yearsNames, activeFinancialYear};
 

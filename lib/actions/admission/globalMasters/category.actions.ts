@@ -28,14 +28,14 @@ export const createCategory = async ({category_name, is_default}:CreateCategoryP
 
 
         // Checking if the category name already exists
-        const existingCategory = await Category.findOne({category_name, is_default, session:activeSession.year_name});
+        const existingCategory = await Category.findOne({category_name, is_default, session:activeSession?.year_name});
         if(existingCategory){
             throw new Error('Category name already exists');
         };
 
 
         // Creating new category
-        const newCategory = await Category.create({session:activeSession.year_name, category_name, is_default});
+        const newCategory = await Category.create({session:activeSession?.year_name, category_name, is_default});
 
 
         // Checking if the is default is true and setting all the other records to false if so
@@ -72,7 +72,7 @@ export const fetchCategories = async () => {
 
 
         // Fetching
-        const categories = await Category.find({session:activeSession.year_name});
+        const categories = await Category.find({session:activeSession?.year_name});
         return categories;
 
     } catch (err:any) {
@@ -103,7 +103,7 @@ export const modifyCategory = async ({id, category_name, is_default}:ModifyCateg
 
 
         // Checking if the category name already exists
-        const categories = await Category.find({session:activeSession.year_name});
+        const categories = await Category.find({session:activeSession?.year_name});
         const existingCategory = await Category.findById(id);
         if(existingCategory.category_name !== category_name && categories.map(category => category.category_name).includes(category_name)){throw new Error('Category already exists')};
 

@@ -26,14 +26,14 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
 
 
         // Checking if the religion name already exists
-        const existinReligion = await Religion.findOne({religion_name, session:activeSession.year_name});
+        const existinReligion = await Religion.findOne({religion_name, session:activeSession?.year_name});
         if(existinReligion){
             throw new Error('Religion name already exists');
         };
 
 
         // Creating new religion
-        const newReligion = await Religion.create({session:activeSession.year_name, religion_name});
+        const newReligion = await Religion.create({session:activeSession?.year_name, religion_name});
         newReligion.save();
 
 
@@ -62,7 +62,7 @@ export const fetchReligions = async () => {
 
 
         // Fetching
-        const religions = await Religion.find({session:activeSession.year_name});
+        const religions = await Religion.find({session:activeSession?.year_name});
         return religions;
 
     } catch (err:any) {
@@ -91,7 +91,7 @@ export const modifyReligion = async ({id, religion_name}:ModifyReligionProps) =>
 
 
         // Checking if the religion already exists
-        const religions = await Religion.find({session:activeSession.year_name});
+        const religions = await Religion.find({session:activeSession?.year_name});
         const existingReligion = await Religion.findById(id);
         if(existingReligion.religion_name !== religion_name && religions.map(r => r.religion_name).includes(religion_name)){throw new Error('Religion already exists')};
 

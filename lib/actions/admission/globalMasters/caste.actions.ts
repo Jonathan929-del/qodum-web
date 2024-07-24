@@ -26,14 +26,14 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
 
 
         // Checking if the caste name already exists
-        const existingCaste = await Caste.findOne({caste_name, session:activeSession.year_name});
+        const existingCaste = await Caste.findOne({caste_name, session:activeSession?.year_name});
         if(existingCaste){
             throw new Error('Caste name already exists');
         };
 
 
         // Creating new caste
-        const newCaste = await Caste.create({session:activeSession.year_name, caste_name});
+        const newCaste = await Caste.create({session:activeSession?.year_name, caste_name});
         newCaste.save();
 
 
@@ -62,7 +62,7 @@ export const fetchCastes = async () => {
 
 
         // Fetching
-        const castes = await Caste.find({session:activeSession.year_name});
+        const castes = await Caste.find({session:activeSession?.year_name});
         return castes;
 
     } catch (err:any) {
@@ -91,7 +91,7 @@ export const modifyCaste = async ({id, caste_name}:ModifyCasteProps) => {
 
 
         // Checking if the caste already exists
-        const castes = await Caste.find({session:activeSession.year_name});
+        const castes = await Caste.find({session:activeSession?.year_name});
         const existingCaste = await Caste.findById(id);
         if(existingCaste.caste_name !== caste_name && castes.map(r => r.caste_name).includes(caste_name)){throw new Error('Caste already exists')};
 

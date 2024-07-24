@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const ConcessionTypeSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        type:{type:String, required:true, unique:true}
+        type:{type:String, required:true}
     },
     {
         timestamps:true

@@ -9,9 +9,9 @@ import mongoose from 'mongoose';
 const InstallmentSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        name:{type:String, required:true, unique:true},
+        name:{type:String, required:true},
         print_name:{type:String, required:true},
-        preference_no:{type:Number, required:true, unique:true},
+        preference_no:{type:Number, required:true},
         due_on_date:{
             day:{type:String, required:true},
             month:{type:String, required:true},

@@ -27,14 +27,14 @@ export const createTerm = async ({term_name}:CreateTermProps) => {
 
 
         // Checking if the term name already exists
-        const existingTerm = await Term.findOne({term_name, session:activeSession.year_name});
+        const existingTerm = await Term.findOne({term_name, session:activeSession?.year_name});
         if(existingTerm){
             throw new Error('Term name already exists');
         };
 
 
         // Creating new term
-        const newTerm = await Term.create({session:activeSession.year_name, term_name});
+        const newTerm = await Term.create({session:activeSession?.year_name, term_name});
         newTerm.save();
 
 
@@ -63,7 +63,7 @@ export const fetchTerms = async () => {
 
 
         // Fetching
-        const terms = await Term.find({session:activeSession.year_name});
+        const terms = await Term.find({session:activeSession?.year_name});
         return terms;
 
     } catch (err:any) {
@@ -93,7 +93,7 @@ export const modifyTerm = async ({id, term_name}:ModifyTermProps) => {
 
 
         // Checking if the term name already exists
-        const terms = await Term.find({session:activeSession.year_name});
+        const terms = await Term.find({session:activeSession?.year_name});
         const existingTerm = await Term.findById(id);
         if(existingTerm.term_name !== term_name && terms.map(i => i.term_name).includes(term_name)){throw new Error('Term already exists')};
 

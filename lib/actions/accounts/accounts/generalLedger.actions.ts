@@ -35,7 +35,7 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
 
 
         // Checking if general ledger already exists
-        const existingGeneralLedger = await GeneralLedger.findOne({account_name, session:activeSession.year_name});
+        const existingGeneralLedger = await GeneralLedger.findOne({account_name, session:activeSession?.year_name});
         if(existingGeneralLedger){
             throw new Error('General ledger already exists');
         };
@@ -43,7 +43,7 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
 
         // Creating new general ledger
         const newGeneralLedger = await GeneralLedger.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             account_name,
             group,
             account_type,
@@ -82,7 +82,7 @@ export const fetchGeneralLedgers = async () => {
 
 
         // Fetching
-        const generalLedgers = await GeneralLedger.find({session:activeSession.year_name});
+        const generalLedgers = await GeneralLedger.find({session:activeSession?.year_name});
         return generalLedgers;
 
         
@@ -120,7 +120,7 @@ export const modifyGeneralLedger = async ({id, account_name, group, account_type
 
 
         // Checking if the general ledger already exists
-        const generalLedgers = await GeneralLedger.find({session:activeSession.year_name});
+        const generalLedgers = await GeneralLedger.find({session:activeSession?.year_name});
         const existingGeneralLedger = await GeneralLedger.findById(id);
         if(existingGeneralLedger.account_name !== account_name && generalLedgers.map(ledger => ledger.account_name).includes(account_name)){throw new Error('General ledger already exists')};
 

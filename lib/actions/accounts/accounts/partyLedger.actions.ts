@@ -38,7 +38,7 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
 
 
         // Checking if party ledger already exists
-        const existingPartyLedger = await PartyLedger.findOne({account_name, session:activeSession.year_name});
+        const existingPartyLedger = await PartyLedger.findOne({account_name, session:activeSession?.year_name});
         if(existingPartyLedger){
             throw new Error('Party ledger already exists');
         };
@@ -46,7 +46,7 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
 
         // Creating new party ledger
         const newPartyLedger = await PartyLedger.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             account_name,
             group,
             account_type,
@@ -88,7 +88,7 @@ export const fetchPartyLedgers = async () => {
 
 
         // Fetching
-        const partyLedgers = await PartyLedger.find({session:activeSession.year_name});
+        const partyLedgers = await PartyLedger.find({session:activeSession?.year_name});
         return partyLedgers;
 
         
@@ -130,7 +130,7 @@ export const modifyPartyLedger = async ({id, account_name, group, account_type, 
 
 
         // Checking if the party ledger already exists
-        const partyLedgers = await PartyLedger.find({session:activeSession.year_name});
+        const partyLedgers = await PartyLedger.find({session:activeSession?.year_name});
         const existingPartyLedger = await PartyLedger.findById(id);
         if(existingPartyLedger.account_name !== account_name && partyLedgers.map(ledger => ledger.account_name).includes(account_name)){throw new Error('Party ledger already exists')};
 

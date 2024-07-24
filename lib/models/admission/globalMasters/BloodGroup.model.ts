@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const BloodGroupSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        blood_group:{type:String, required:true, unique:true}
+        blood_group:{type:String, required:true}
     },
     {
         timestamps:true

@@ -21,7 +21,7 @@ export const isInstallmentsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await Installment.find({session:activeSession.year_name});
+        const records = await Installment.find({session:activeSession?.year_name});
 
 
         // Return
@@ -91,14 +91,14 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
 
 
         // Checking if the installment name already exists
-        const existingInstallment = await Installment.findOne({name, session:activeSession.year_name});
+        const existingInstallment = await Installment.findOne({name, session:activeSession?.year_name});
         if(existingInstallment){
             throw new Error('Installment name already exists');
         };
 
 
         // Checking if the preference no. already exists
-        const installments = await Installment.find({session:activeSession.year_name});
+        const installments = await Installment.find({session:activeSession?.year_name});
         if(installments.map((installment:any) => installment.preference_no).includes(preference_no)){
             throw new Error('Preference number already exists');
         };
@@ -106,7 +106,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
 
         // Creating new installment
         const newInstallment = await Installment.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             name,
             print_name,
             preference_no,
@@ -122,7 +122,7 @@ export const createInstallment = async ({name, print_name, preference_no, due_on
             }
         });
         newInstallment.save().then(async () => {
-            await Installment.findOneAndUpdate({name, session:activeSession.year_name}, {months});
+            await Installment.findOneAndUpdate({name, session:activeSession?.year_name}, {months});
         });
 
 
@@ -151,7 +151,7 @@ export const fetchInstallments = async (pageNumber = 1, pageSize=20) => {
 
 
         // Fetching installments
-        const installments = await Installment.find({session:activeSession.year_name});
+        const installments = await Installment.find({session:activeSession?.year_name});
         return installments;
 
     } catch (err:any) {
@@ -194,7 +194,7 @@ export const modifyInstallment = async ({id, name, print_name, preference_no, du
 
 
         // Checking if the year name already exists
-        const installments = await Installment.find({session:activeSession.year_name});
+        const installments = await Installment.find({session:activeSession?.year_name});
         const existingInstallment = await Installment.findById(id);
         if(existingInstallment.name !== name && installments.map(i => i.name).includes(name)){throw new Error('Installment name already exists')};
 

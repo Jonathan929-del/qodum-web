@@ -29,7 +29,7 @@ export const isStudentsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await AdmittedStudent.find({session:activeSession.year_name});
+        const records = await AdmittedStudent.find({session:activeSession?.year_name});
 
 
         // Return
@@ -299,7 +299,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
 
         // Checking if the admission number already exists
-        const existingStudent = await AdmittedStudent.findOne({'student.adm_no':student.adm_no, session:activeSession.year_name});
+        const existingStudent = await AdmittedStudent.findOne({'student.adm_no':student.adm_no, session:activeSession?.year_name});
         if(existingStudent){
             throw new Error('Admission no. already exists');
         };
@@ -311,7 +311,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
         // Creating new student
         const newStudent = await AdmittedStudent.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             student,
             parents,
             others,
@@ -333,7 +333,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
 
 
         // Updating subjects
-        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession.year_name});
+        const subjectsAffected = await Subject.find({subject_name:student.subjects, is_university:true, session:activeSession?.year_name});
         subjectsAffected.map(async s => {
             await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats - 1});
         });
@@ -364,7 +364,7 @@ export const fetchAdmittedStudents = async () => {
 
 
         // Fetching
-        const students = await AdmittedStudent.find({session:activeSession.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
         return students;
 
     } catch (err:any) {
@@ -575,13 +575,13 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
 
 
         // Checking if the admission no. already exists
-        const students = await AdmittedStudent.find({session:activeSession.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
         const existingStudent = await AdmittedStudent.findById(id);
         if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
 
 
         // Class fees
-        const theClass = await Class.findOne({class_name:student.class, session:activeSession.year_name});
+        const theClass = await Class.findOne({class_name:student.class, session:activeSession?.year_name});
 
 
         // Update student
@@ -670,7 +670,7 @@ export const siblingsSearch = async ({class_name, section, adm_no}:{class_name:S
 
 
         // Fetching student
-        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, 'student.adm_no':adm_no, session:activeSession.year_name});
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, 'student.adm_no':adm_no, session:activeSession?.year_name});
 
 
         // Returing
@@ -698,7 +698,7 @@ export const fetchStudentByAdmNo = async ({adm_no}:{adm_no:String}) => {
 
 
         // Fetching student
-        const student = await AdmittedStudent.findOne({'student.adm_no':adm_no, session:activeSession.year_name});
+        const student = await AdmittedStudent.findOne({'student.adm_no':adm_no, session:activeSession?.year_name});
         const studentRes = {
             ...student._doc,
             _id:student._doc._id.toString()
@@ -730,7 +730,7 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
 
 
         // Fetching student
-        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession.year_name});
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
 
 
         // Return
@@ -762,9 +762,9 @@ export const fetchStudentsByClassAndSectionTransport = async ({class_name, secti
 
 
         if(section || section !== ''){
-            students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession.year_name});
+            students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
         }else{
-            students = await AdmittedStudent.find({'student.class':class_name, session:activeSession.year_name});
+            students = await AdmittedStudent.find({'student.class':class_name, session:activeSession?.year_name});
         };
 
 
@@ -798,7 +798,7 @@ export const modifyStudentsHealthDetails = async ({students}:ModifyStudentsHealt
 
         // Updating students
         students.map(async (student:any) => {
-            await AdmittedStudent.updateMany({'student.adm_no':student.adm_no}, {'health_details.height':student.height, 'health_details.weight':student.weight, session:activeSession.year_name});
+            await AdmittedStudent.updateMany({'student.adm_no':student.adm_no}, {'health_details.height':student.height, 'health_details.weight':student.weight, session:activeSession?.year_name});
         });
 
         // Return
@@ -855,10 +855,10 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile,
         if(!containsAnyLetters(mobile)){
 
             // Mobile number
-            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession.year_name});
+            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession?.year_name});
 
             // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession.year_name});
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name});
 
             // All res
             const allRes = mobileRes.concat(admNoRes);
@@ -887,13 +887,13 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile,
         }else{
 
             // Name res
-            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession.year_name});
+            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession?.year_name});
 
             // // Father's name res
-            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession.year_name});
+            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession?.year_name});
 
             // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession.year_name});
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name});
 
 
             const allRes = nameRes.concat(fatherNameRes, admNoRes);
@@ -947,7 +947,7 @@ export const fetchStudentsByClasses = async ({classes}:{classes:string[]}) => {
 
 
         // Fetching students
-        const students = await AdmittedStudent.find({'student.class':{$in:classes}, session:activeSession.year_name});
+        const students = await AdmittedStudent.find({'student.class':{$in:classes}, session:activeSession?.year_name});
 
 
         // Return
@@ -1004,15 +1004,15 @@ export const fetchStudentsCountByClassAndSection = async ({class_name, section}:
 
 
         // Class res
-        const classRes = await AdmittedStudent.countDocuments({'student.class':class_name, session:activeSession.year_name});
+        const classRes = await AdmittedStudent.countDocuments({'student.class':class_name, session:activeSession?.year_name});
 
 
         // Section res
-        const sectionRes = await AdmittedStudent.countDocuments({'student.section':section === '' ? 'empty' : section, session:activeSession.year_name});
+        const sectionRes = await AdmittedStudent.countDocuments({'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name});
 
 
         // All res
-        const allRes = await AdmittedStudent.countDocuments({'student.class':class_name, 'student.section':section === '' ? 'empty' : section, session:activeSession.year_name});
+        const allRes = await AdmittedStudent.countDocuments({'student.class':class_name, 'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name});
 
 
         // All res
@@ -1059,15 +1059,15 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
 
 
         // Fetching route stop
-        const routeStop = await RouteStop.findOne({stop_name:transport_details.stop, session:activeSession.year_name})
+        const routeStop = await RouteStop.findOne({stop_name:transport_details.stop, session:activeSession?.year_name})
 
 
         // Transport group amount
-        const transportGroup = await TransportGroup.findOne({distance_name:routeStop.transport_groups.jan, session:activeSession.year_name});
+        const transportGroup = await TransportGroup.findOne({distance_name:routeStop.transport_groups.jan, session:activeSession?.year_name});
 
 
         // Fetching transport fee
-        const transportFee = await Head.findOne({type:'transport', session:activeSession.year_name});
+        const transportFee = await Head.findOne({type:'transport', session:activeSession?.year_name});
         const submitTransporFee = {
             type_name:transportFee.affiliated_fee_type || '',
             head_name:transportFee.name || '',
@@ -1087,7 +1087,7 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
 
         // Updating
         await AdmittedStudent.findOneAndUpdate(
-            {'student.adm_no':adm_no, session:activeSession.year_name},
+            {'student.adm_no':adm_no, session:activeSession?.year_name},
             {
                 transport_details,
                 $push:{'affiliated_heads.heads':submitTransporFee}
@@ -1132,11 +1132,11 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
 
 
         // Installments
-        const installmentsRes = await Installment.find({session:activeSession.year_name});
+        const installmentsRes = await Installment.find({session:activeSession?.year_name});
         const pastDueDateInstallments = installmentsRes?.filter((i:any) => {
             const installmentDueDate = moment(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`);
             return installmentDueDate.isBetween(from_date, till_date, null, '[]');
@@ -1209,7 +1209,7 @@ export const studentDetailsFilter = async ({school, classes, genders, religions,
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
 
 
         // Filtered students
@@ -1310,7 +1310,7 @@ export const classWiseStudentStrengthFilter = async ({date_of_adm, class_name, i
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
 
 
         // Filtered students

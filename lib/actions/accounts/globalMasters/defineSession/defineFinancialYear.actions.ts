@@ -123,7 +123,7 @@ export const modifyFinancialYears = async ({id, year_name, start_date, end_date,
         // Checking if the year name already exists
         const financialYears = await FinancialYear.find();
         const existingYear = await FinancialYear.findById(id);
-        if(existingYear.year_name !== year_name && financialYears.map(year => year.year_name).includes(year_name)){throw new Error('Financial year already exists')};
+        if(existingYear?.year_name !== year_name && financialYears.map(year => year?.year_name).includes(year_name)){throw new Error('Financial year already exists')};
 
 
         if(is_active === true){

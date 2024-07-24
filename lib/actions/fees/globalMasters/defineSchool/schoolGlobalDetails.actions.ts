@@ -82,7 +82,7 @@ export const createGlobalSchoolDetails = async ({
 
         // Creating new global school details
         const newGlobalSchoolDetails = await GlobalSchoolDetails.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             logo,
             school_main,
             school_subheads,
@@ -139,7 +139,7 @@ export const fetchGlobalSchoolDetails = async () => {
 
 
         // Fetching
-        const globalSchoolDetails = await GlobalSchoolDetails.find({session:activeSession.year_name});
+        const globalSchoolDetails = await GlobalSchoolDetails.find({session:activeSession?.year_name});
         const globalSchoolDetailsRes = globalSchoolDetails.map((g:any) => {
             return{
                 ...g._doc,

@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const VehicleRouteSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        route_no:{type:String, required:true, unique:true},
+        route_no:{type:String, required:true},
         route_description:{type:String},
         route_in_charge_name:{type:String},
         route_in_charge_mobile_no:{type:Number}

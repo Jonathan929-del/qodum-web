@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const CategorySchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        category_name:{type:String, required:true, unique:true},
+        category_name:{type:String, required:true},
         is_default:{type:Boolean}
     },
     {

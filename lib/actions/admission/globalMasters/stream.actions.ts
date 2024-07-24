@@ -27,14 +27,14 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
 
 
         // Checking if the stream already exists
-        const existinStream = await Stream.findOne({stream_name, session:activeSession.year_name});
+        const existinStream = await Stream.findOne({stream_name, session:activeSession?.year_name});
         if(existinStream){
             throw new Error('Stream already exists');
         };
 
 
         // Creating new stream
-        const newStream = await Stream.create({session:activeSession.year_name, stream_name});
+        const newStream = await Stream.create({session:activeSession?.year_name, stream_name});
         newStream.save();
 
 
@@ -63,7 +63,7 @@ export const fetchStreams = async () => {
 
 
         // Fetching
-        const streams = await Stream.find({session:activeSession.year_name});
+        const streams = await Stream.find({session:activeSession?.year_name});
         return streams;
 
     } catch (err:any) {
@@ -92,7 +92,7 @@ export const modifyStream = async ({id, stream_name}:ModifyStreamProps) => {
 
 
         // Checking if the stream already exists
-        const streams = await Stream.find({session:activeSession.year_name});
+        const streams = await Stream.find({session:activeSession?.year_name});
         const existingStream = await Stream.findById(id);
         if(existingStream.stream_name !== stream_name && streams.map(s => s.stream_name).includes(stream_name)){throw new Error('Stream already exists')};
 

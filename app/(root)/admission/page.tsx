@@ -72,146 +72,151 @@ const Home = () => {
   // Use effect
   useEffect(() => {
 
+    let openedPagesArray = [];
+
     if(openedPages.length === 0){
-      setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:(
+      openedPagesArray.push({name:'Dashboard', component:(
         <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
           <Dashboard />
         </div>
-      )}]);
+      )});
+      setCurrentPage('');
     };
     if(openedPages.includes('Define Academic Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
+      openedPagesArray.push({name:'Define Academic Year', component:<DefineAcademicYear />});
     };
     if(openedPages.includes('Define Financial Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineFinancialYear />}]);
+      openedPagesArray.push({name:'Define Financial Year', component:<DefineFinancialYear />});
     };
     if(openedPages.includes('Define TC Caste')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineTCCaste />}]);
+      openedPagesArray.push({name:'Define Financial Year', component:<DefineTCCaste />});
     };
     if(openedPages.includes('Define Term Master')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Term Master', component:<DefineTermMaster />}]);
+      openedPagesArray.push({name:'Define Term Master', component:<DefineTermMaster />});
     };
     if(openedPages.includes('Health Unit Master')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Health Unit Master', component:<HealthUnitMaster />}]);
+      openedPagesArray.push({name:'Health Unit Master', component:<HealthUnitMaster />});
     };
     if(openedPages.includes('Health Master')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Health Master', component:<HealthMaster />}]);
+      openedPagesArray.push( {name:'Health Master', component:<HealthMaster />});
     };
     if(openedPages.includes('Define Term')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Term', component:<DefineTerm />}]);
+      openedPagesArray.push( {name:'Define Term', component:<DefineTerm />});
     };
     if(openedPages.includes('Student Health Entry')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Student Health Entry', component:<StudnetHealthEntry />}]);
+      openedPagesArray.push({name:'Student Health Entry', component:<StudnetHealthEntry />});
     };
     if(openedPages.includes('Define Blood Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Blood Group', component:<DefineBloodGroup />}]);
+      openedPagesArray.push({name:'Define Blood Group', component:<DefineBloodGroup />});
     };
     if(openedPages.includes('Define Blood Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Blood Group', component:<DefineBloodGroup />}]);
+      openedPagesArray.push({name:'Define Blood Group', component:<DefineBloodGroup />});
     };
     if(openedPages.includes('Define Remark')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Remark', component:<DefineRemark />}]);
+      openedPagesArray.push({name:'Define Remark', component:<DefineRemark />});
     };
     if(openedPages.includes('Define Category')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Category', component:<DefineCategory />}]);
+      openedPagesArray.push({name:'Define Category', component:<DefineCategory />});
     };
     if(openedPages.includes('Define Religion')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Religion', component:<DefineReligion />}]);
+      openedPagesArray.push({name:'Define Religion', component:<DefineReligion />});
     };
     if(openedPages.includes('Define Caste')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Caste', component:<DefineCaste />}]);
+      openedPagesArray.push({name:'Define Caste', component:<DefineCaste />});
     };
     if(openedPages.includes('Possible Siblings')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Possible Siblings', component:<PossibleSiblings />}]);
+      openedPagesArray.push({name:'Possible Siblings', component:<PossibleSiblings />});
     };
     if(openedPages.includes('Stationary Details')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Stationary Details', component:<StationaryDetails />}]);
+      openedPagesArray.push({name:'Stationary Details', component:<StationaryDetails />});
     };
     if(openedPages.includes('Define Parish')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Parish', component:<DefineParish />}]);
+      openedPagesArray.push({name:'Define Parish', component:<DefineParish />});
     };
     if(openedPages.includes('Define House')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define House', component:<DefineHouse />}]);
+      openedPagesArray.push({name:'Define House', component:<DefineHouse />});
     };
     if(openedPages.includes('Define Stream')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Stream', component:<DefineStream />}]);
+      openedPagesArray.push({name:'Define Stream', component:<DefineStream />});
     };
     if(openedPages.includes('Define Subject')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Subject', component:<DefineSubject />}]);
+      openedPagesArray.push({name:'Define Subject', component:<DefineSubject />});
     };
     if(openedPages.includes('Define Optional Subject')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Optional Subject', component:<DefineOptionalSubject />}]);
+      openedPagesArray.push({name:'Define Optional Subject', component:<DefineOptionalSubject />});
     };
     if(openedPages.includes('Define Document Type')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Document Type', component:<DefineDocumentType />}]);
+      openedPagesArray.push({name:'Define Document Type', component:<DefineDocumentType />});
     };
     if(openedPages.includes('Import Student')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Import Student', component:<ImportStudent />}]);
+      openedPagesArray.push({name:'Import Student', component:<ImportStudent />});
     };
     if(openedPages.includes('Change Academic')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Change Academic', component:<ChangeAcademic />}]);
+      openedPagesArray.push({name:'Change Academic', component:<ChangeAcademic />});
     };
     if(openedPages.includes('Enquiry No Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Enquiry No Setting', component:<EnquiryNoSetting />}]);
+      openedPagesArray.push({name:'Enquiry No Setting', component:<EnquiryNoSetting />});
     };
     if(openedPages.includes('Admission Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Setting', component:<AdmissionSetting />}]);
+      openedPagesArray.push({name:'Admission Setting', component:<AdmissionSetting />});
     };
     if(openedPages.includes('Student Class Promotion')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Student Class Promotion', component:<StudentClassPromotion />}]);
+      openedPagesArray.push({name:'Student Class Promotion', component:<StudentClassPromotion />});
     };
     if(openedPages.includes('Update Student Details')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Update Student Details', component:<UpdateStudentDetails />}]);
+      openedPagesArray.push({name:'Update Student Details', component:<UpdateStudentDetails />});
     };
     if(openedPages.includes('Report Layout Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Report Layout Setting', component:<ReportLayoutSetting />}]);
+      openedPagesArray.push({name:'Report Layout Setting', component:<ReportLayoutSetting />});
     };
     if(openedPages.includes('Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
+      openedPagesArray.push({name:'Session Transfer', component:<SessionTransfer />});
     };
     if(openedPages.includes('Enquiry')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Enquiry', component:<Enquiry />}]);
+      openedPagesArray.push({name:'Enquiry', component:<Enquiry />});
     };
     if(openedPages.includes('Admission Form Registration')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Form Registration', component:<AdmissionFormRegistration />}]);
+      openedPagesArray.push({name:'Admission Form Registration', component:<AdmissionFormRegistration />});
     };
     if(openedPages.includes('Define Merit Criteria')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Merit Criteria', component:<DefineMeritCriteria />}]);
+      openedPagesArray.push({name:'Define Merit Criteria', component:<DefineMeritCriteria />});
     };
     if(openedPages.includes('Slot Creation')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Slot Creation', component:<SlotCreation />}]);
+      openedPagesArray.push({name:'Slot Creation', component:<SlotCreation />});
     };
     if(openedPages.includes('Manual List Generation')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Manual List Generation', component:<ManualListGeneration />}]);
+      openedPagesArray.push({name:'Manual List Generation', component:<ManualListGeneration />});
     };
     if(openedPages.includes('Admission')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission', component:<Admission />}]);
+      openedPagesArray.push({name:'Admission', component:<Admission />});
     };
     if(openedPages.includes('Create ID Card')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Create ID Card', component:<CreateIDCard />}]);
+      openedPagesArray.push({name:'Create ID Card', component:<CreateIDCard />});
     };
     if(openedPages.includes('Send SMS')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Send SMS', component:<SendSMS />}]);
+      openedPagesArray.push({name:'Send SMS', component:<SendSMS />});
     };
     if(openedPages.includes('Account Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+      openedPagesArray.push({name:'Account Manager Session Transfer', component:<AccountSessionTransfer />});
     };
     if(openedPages.includes('Fee Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+      openedPagesArray.push({name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />});
     };
     if(openedPages.includes('Payroll Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+      openedPagesArray.push({name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />});
     };
     if(openedPages.includes('Admission Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
+      openedPagesArray.push({name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />});
     };
     if(openedPages.includes('Notice')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Notice', component:<Notice />}]);
+      openedPagesArray.push({name:'Notice', component:<Notice />});
     };
     if(openedPages.includes('Class Notice')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Class Notice', component:<ClassNotice />}]);
+      openedPagesArray.push({name:'Class Notice', component:<ClassNotice />});
     };
+
+
+    setOpenedPagesComponents(openedPagesArray);
 
   }, [openedPages]);
 

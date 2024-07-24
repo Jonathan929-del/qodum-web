@@ -21,7 +21,7 @@ export const isDueLimitsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await DueLimit.find({session:activeSession.year_name});
+        const records = await DueLimit.find({session:activeSession?.year_name});
 
 
         // Return
@@ -84,7 +84,7 @@ export const createDueLimit = async ({class_name, fee_type, late_fee_on_due, due
 
     
         // Due limit
-        const dueLimit = await DueLimit.create({session:activeSession.year_name, class_name, fee_type, late_fee_on_due, dues_amount, is_percent, heads, fine_waive_off_setting});
+        const dueLimit = await DueLimit.create({session:activeSession?.year_name, class_name, fee_type, late_fee_on_due, dues_amount, is_percent, heads, fine_waive_off_setting});
         dueLimit.save();
 
 
@@ -113,7 +113,7 @@ export const fetchDueLimits = async () => {
 
     
         // Due limits
-        const dueLimits = await DueLimit.find({session:activeSession.year_name});
+        const dueLimits = await DueLimit.find({session:activeSession?.year_name});
 
 
         // Return
@@ -198,7 +198,7 @@ export const fetchClassDueLimit = async ({class_name}:{class_name:String}) => {
 
 
         // Fetching
-        const dueLimit = await DueLimit.findOne({class_name, session:activeSession.year_name});
+        const dueLimit = await DueLimit.findOne({class_name, session:activeSession?.year_name});
         return dueLimit;
 
     } catch (err) {

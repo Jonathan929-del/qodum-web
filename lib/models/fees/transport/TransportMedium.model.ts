@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const TransportMediumSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        transport_medium:{type:String, required:true, unique:true}
+        transport_medium:{type:String, required:true}
     },
     {
         timestamps:true

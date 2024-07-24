@@ -9,11 +9,11 @@ import mongoose from 'mongoose';
 const StationaryDetailsSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        stationary_name:{type:String, required:true, unique:true},
+        stationary_name:{type:String, required:true},
         amount:{type:Number, required:true},
         account_name:{type:String, required:true},
         school_name:{type:String, required:true},
-        is_online:{type:Boolean, unique:true}
+        is_online:{type:Boolean}
     },
     {
         timestamps:true

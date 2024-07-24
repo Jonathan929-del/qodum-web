@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const TcCasteSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        caste_name:{type:String, required:true, unique:true}
+        caste_name:{type:String, required:true}
     },
     {
         timestamps:true

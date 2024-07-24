@@ -24,7 +24,7 @@ export const isLateFeeSesssionTransfered = async () => {
 
 
         // Records
-        const records = await LateFee.find({session:activeSession.year_name});
+        const records = await LateFee.find({session:activeSession?.year_name});
 
 
         // Return
@@ -87,7 +87,7 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
 
 
         // Late fee
-        const installments = await Installment.find({session:activeSession.year_name});
+        const installments = await Installment.find({session:activeSession?.year_name});
         const lateFee = await Head.findOne({type:'fine'});
         const lateFeeHead = {
             type_name:lateFee.affiliated_fee_type || '',
@@ -111,13 +111,13 @@ export const createLateFee = async ({fee_group, fee_type, installment, due_date,
         // @ts-ignore
         const groupNameRegex = new RegExp(fee_group, 'i');
         await AdmittedStudent.updateMany(
-            {'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession.year_name},
+            {'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession?.year_name},
             {$push:{'affiliated_heads.heads':lateFeeHead}}
         );
 
 
         // Creating new late fee
-        const newLateFee = await LateFee.create({session:activeSession.year_name, fee_group, fee_type, installment, due_date, late_fee_type, amount});
+        const newLateFee = await LateFee.create({session:activeSession?.year_name, fee_group, fee_type, installment, due_date, late_fee_type, amount});
         newLateFee.save();
 
 
@@ -146,7 +146,7 @@ export const fetchLateFees = async () => {
 
 
         // Fetching late fees
-        const lateFees = await LateFee.find({session:activeSession.year_name});
+        const lateFees = await LateFee.find({session:activeSession?.year_name});
         return lateFees;
 
     } catch (err:any) {

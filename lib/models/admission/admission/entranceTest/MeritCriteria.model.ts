@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const MeritCriteriaSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        name:{type:String, required:true, unique:true},
+        name:{type:String, required:true},
         maximum_point:{type:Number, required:true}
     },
     {

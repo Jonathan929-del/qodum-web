@@ -15,7 +15,7 @@ const LayoutSchema = new mongoose.Schema(
 
         // Report setting
         report_setting:{
-            report_name:{type:String, required:true, unique:true},
+            report_name:{type:String, required:true},
             report_title:{type:String, required:true}
         },
 

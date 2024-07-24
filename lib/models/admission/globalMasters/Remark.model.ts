@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const RemarkSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        remark:{type:String, required:true, unique:true}
+        remark:{type:String, required:true}
     },
     {
         timestamps:true

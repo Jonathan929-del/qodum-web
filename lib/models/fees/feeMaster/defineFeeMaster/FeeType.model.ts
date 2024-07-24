@@ -9,8 +9,8 @@ import mongoose from 'mongoose';
 const FeeTypeSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        name:{type:String, required:true, unique:true},
-        preference_no:{type:Number, required:true, unique:true},
+        name:{type:String, required:true},
+        preference_no:{type:Number, required:true},
         heads:[{type:String}]
     },
     {

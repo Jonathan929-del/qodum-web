@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const VehicleTypeSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        vehicle_name:{type:String, required:true, unique:true}
+        vehicle_name:{type:String, required:true}
     },
     {
         timestamps:true

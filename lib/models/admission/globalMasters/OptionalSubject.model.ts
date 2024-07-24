@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const OptionalSubjectSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        subject_name:{type:String, required:true, unique:true}
+        subject_name:{type:String, required:true}
     },
     {
         timestamps:true

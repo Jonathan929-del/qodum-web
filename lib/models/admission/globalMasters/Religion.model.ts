@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const ReligionSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        religion_name:{type:String, required:true, unique:true}
+        religion_name:{type:String, required:true}
     },
     {
         timestamps:true

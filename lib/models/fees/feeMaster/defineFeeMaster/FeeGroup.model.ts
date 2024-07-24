@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const GroupSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        name:{type:String, required:true, unique:true},
+        name:{type:String, required:true},
         is_special:{type:Boolean},
         affiliated_heads:{type:Array}
     },

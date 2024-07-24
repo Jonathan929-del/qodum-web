@@ -22,7 +22,7 @@ export const isHeadsSesssionTransfered = async () => {
 
 
         // Records
-        const records = await Head.find({session:activeSession.year_name});
+        const records = await Head.find({session:activeSession?.year_name});
 
 
         // Return
@@ -86,7 +86,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
 
         // Checking if the head name already exists
-        const existingHead = await Head.findOne({name, session:activeSession.year_name});
+        const existingHead = await Head.findOne({name, session:activeSession?.year_name});
         if(existingHead){
             throw new Error('Head name already exists');
         };
@@ -94,7 +94,7 @@ export const createHead = async ({name, print_name, pay_schedule, priority_no, t
 
         // Creating new head
         const newHead = await Head.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             name,
             print_name,
             pay_schedule,
@@ -132,7 +132,7 @@ export const fetchHeads = async () => {
 
 
         // Fetching Heads
-        const heads = await Head.find({session:activeSession.year_name});
+        const heads = await Head.find({session:activeSession?.year_name});
         return heads;
 
     } catch (err:any) {
@@ -168,7 +168,7 @@ export const modifyHead = async ({id, name, print_name, pay_schedule, priority_n
 
 
         // Checking if the head name already exists
-        const heads = await Head.find({session:activeSession.year_name});
+        const heads = await Head.find({session:activeSession?.year_name});
         const existingHead = await Head.findById(id);
         if(existingHead.name !== name && heads.map(i => i.name).includes(name)){throw new Error('Head name already exists')};
 
@@ -235,7 +235,7 @@ export const fetchAffiliatedHeads = async () => {
 
 
         // Fetching
-        const heads = await Head.find({session:activeSession.year_name});
+        const heads = await Head.find({session:activeSession?.year_name});
         const filteredHeads = heads.filter((head:any) => {
             return head.affiliated_fee_type !== '';
         });
@@ -271,7 +271,7 @@ export const isGroupRelatedToStudent = async ({group_name}) => {
 
     
         // Checking
-        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession.year_name});
+        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession?.year_name});
         if(students.length > 1){
             const lastRecAmounts = students.map((s:any) => s?.affiliated_heads?.heads.map((h:any) => h?.amounts?.map((a:any) => a?.last_rec_amount).flat()).flat()).flat().filter((i:any) => i !== undefined);
             return lastRecAmounts.length > 0;

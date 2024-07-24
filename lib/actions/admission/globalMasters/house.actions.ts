@@ -27,14 +27,14 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
 
 
         // Checking if the house already exists
-        const existinHouse = await House.findOne({house_name, session:activeSession.year_name});
+        const existinHouse = await House.findOne({house_name, session:activeSession?.year_name});
         if(existinHouse){
             throw new Error('House already exists');
         };
 
 
         // Creating new house
-        const newHouse = await House.create({session:activeSession.year_name, house_name});
+        const newHouse = await House.create({session:activeSession?.year_name, house_name});
         newHouse.save();
 
 
@@ -63,7 +63,7 @@ export const fetchHouses = async () => {
 
 
         // Fetching
-        const houses = await House.find({session:activeSession.year_name});
+        const houses = await House.find({session:activeSession?.year_name});
         return houses;
 
     } catch (err:any) {
@@ -92,7 +92,7 @@ export const modifyHouse = async ({id, house_name}:ModifyHouseProps) => {
 
 
         // Checking if the house already exists
-        const houses = await House.find({session:activeSession.year_name});
+        const houses = await House.find({session:activeSession?.year_name});
         const existingHouse = await House.findById(id);
         if(existingHouse.house_name !== house_name && houses.map(h => h.house_name).includes(house_name)){throw new Error('House already exists')};
 

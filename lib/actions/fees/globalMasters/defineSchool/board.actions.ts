@@ -28,20 +28,20 @@ export const createBoard = async ({board, is_default}:CreateBoardProps) => {
 
 
         // Checking if the board already exists
-        const existinBoard = await Board.findOne({board, session:activeSession.year_name});
+        const existinBoard = await Board.findOne({board, session:activeSession?.year_name});
         if(existinBoard){
             throw new Error('Board already exists');
         };
 
 
         // Creating new board
-        const newBoard = await Board.create({session:activeSession.year_name, board, is_default});
+        const newBoard = await Board.create({session:activeSession?.year_name, board, is_default});
 
 
         // Checking if the board is default and setting all the other records to false if so
         if(is_default === true){
             newBoard.save();
-            await Board.updateMany({'_id': {$ne:newBoard._id}, session:activeSession.year_name}, {is_default:false});
+            await Board.updateMany({'_id': {$ne:newBoard._id}, session:activeSession?.year_name}, {is_default:false});
         }else{
             newBoard.save();
         };
@@ -72,7 +72,7 @@ export const fetchBoards = async () => {
 
 
         // Fetching
-        const boards = await Board.find({session:activeSession.year_name});
+        const boards = await Board.find({session:activeSession?.year_name});
         return boards;
 
     } catch (err:any) {
@@ -102,7 +102,7 @@ export const modifyBoard = async ({id, board, is_default}:ModifyBoardProps) => {
 
 
         // Checking if the board already exists
-        const boards = await Board.find({session:activeSession.year_name});
+        const boards = await Board.find({session:activeSession?.year_name});
         const existingBoard = await Board.findById(id);
         if(existingBoard.board !== board && boards.map(board => board.board).includes(board)){throw new Error('Board already exists')};
 
@@ -111,7 +111,7 @@ export const modifyBoard = async ({id, board, is_default}:ModifyBoardProps) => {
             // Update Board
             await Board.findByIdAndUpdate(id, {board, is_default},{new:true}).then(async () => {
                 try {
-                    await Board.updateMany({'_id': {$ne:id}, session:activeSession.year_name}, {is_default:false});
+                    await Board.updateMany({'_id': {$ne:id}, session:activeSession?.year_name}, {is_default:false});
                 } catch (err:any) {
                     console.log(`Error updating other boards: ${err.message}`);
                 }

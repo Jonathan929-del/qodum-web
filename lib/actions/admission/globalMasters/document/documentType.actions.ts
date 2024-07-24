@@ -27,14 +27,14 @@ export const createDocumentType = async ({document_type}:CreateDocumentProps) =>
 
 
         // Checking if the document type already exists
-        const existingDocument = await DocumentType.findOne({document_type, session:activeSession.year_name});
+        const existingDocument = await DocumentType.findOne({document_type, session:activeSession?.year_name});
         if(existingDocument){
             throw new Error('Document type already exists');
         };
 
 
         // Creating new document type
-        const newDocument = await DocumentType.create({session:activeSession.year_name, document_type});
+        const newDocument = await DocumentType.create({session:activeSession?.year_name, document_type});
         newDocument.save();
 
 
@@ -64,7 +64,7 @@ export const fetchDocumentTypes = async () => {
 
 
         // Fetching
-        const documentTypes = await DocumentType.find({session:activeSession.year_name});
+        const documentTypes = await DocumentType.find({session:activeSession?.year_name});
         return documentTypes;
 
     } catch (err:any) {
@@ -94,7 +94,7 @@ export const modifyDocumentType = async ({id, document_type}:ModifyDocumentTypeP
 
 
         // Checking if the document type already exists
-        const documents = await DocumentType.find({session:activeSession.year_name});
+        const documents = await DocumentType.find({session:activeSession?.year_name});
         const existingDocument = await DocumentType.findById(id);
         if(existingDocument.document_type !== document_type && documents.map(d => d.document_type).includes(document_type)){throw new Error('Document type already exists')};
 

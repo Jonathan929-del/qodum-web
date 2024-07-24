@@ -28,14 +28,14 @@ export const createHealthMaster = async ({health_parameter, unit}:CreateHealthMa
 
 
         // Checking if the health master already exists
-        const existinHealthMaster = await HealthMaster.findOne({health_parameter, session:activeSession.year_name});
+        const existinHealthMaster = await HealthMaster.findOne({health_parameter, session:activeSession?.year_name});
         if(existinHealthMaster){
             throw new Error('Health master already exists');
         };
 
 
         // Creating new health Master
-        const newHealthMaster = await HealthMaster.create({session:activeSession.year_name, health_parameter, unit});
+        const newHealthMaster = await HealthMaster.create({session:activeSession?.year_name, health_parameter, unit});
         newHealthMaster.save();
 
 
@@ -65,7 +65,7 @@ export const fetchHealthMasters = async () => {
 
 
         // Fetching
-        const healthMasters = await HealthMaster.find({session:activeSession.year_name});
+        const healthMasters = await HealthMaster.find({session:activeSession?.year_name});
         return healthMasters;
 
     } catch (err:any) {
@@ -96,7 +96,7 @@ export const modifyHealthMaster = async ({id, health_parameter, unit}:ModifyHeal
 
 
         // Checking if the health master already exists
-        const healthMasters = await HealthMaster.find({session:activeSession.year_name});
+        const healthMasters = await HealthMaster.find({session:activeSession?.year_name});
         const existingHealthMaster = await HealthMaster.findById(id);
         if(existingHealthMaster.health_parameter !== health_parameter && healthMasters.map(h => h.health_parameter).includes(health_parameter)){throw new Error('Health master already exists')};
 

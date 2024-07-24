@@ -96,7 +96,7 @@ export const createProspectus = async ({
 
 
         // Checking if the regsiter no. already exists
-        const prospectuses = await Prospectus.find({session:activeSession.year_name});
+        const prospectuses = await Prospectus.find({session:activeSession?.year_name});
         if(prospectuses.map((p:any) => p.reg_no).includes(reg_no)){
             throw new Error('Register number already exists');
         };
@@ -169,7 +169,7 @@ export const fetchProspectuses = async () => {
 
 
         // Fetching
-        const prospectuses = await Prospectus.find({session:activeSession.year_name});
+        const prospectuses = await Prospectus.find({session:activeSession?.year_name});
         return prospectuses;
 
     } catch (err:any) {
@@ -270,7 +270,7 @@ export const modifyProspectus = async ({
 
 
         // Checking if the register number already exists
-        const prospectuses = await Prospectus.find({session:activeSession.year_name});
+        const prospectuses = await Prospectus.find({session:activeSession?.year_name});
         const existingProspectus = await Prospectus.findById(id);
         if(existingProspectus.reg_no !== reg_no && prospectuses.map(p => p.reg_no).includes(reg_no)){throw new Error('Register number already exists')};
 

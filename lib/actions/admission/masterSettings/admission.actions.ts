@@ -36,7 +36,7 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
 
         // Checking if the prefix already exists
         if(prefix !== ''){
-            const existingAdmission = await Admission.findOne({prefix, session:activeSession.year_name});
+            const existingAdmission = await Admission.findOne({prefix, session:activeSession?.year_name});
             if(existingAdmission){
                 throw new Error('Prefix already exists');
             };
@@ -44,7 +44,7 @@ export const createAdmission = async ({school, class_name, board, setting_type, 
 
 
         // Creating new admission
-        await Admission.create({session:activeSession.year_name, school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
+        await Admission.create({session:activeSession?.year_name, school, class_name, board, setting_type, should_be, rec_no, prefix, start_from, lead_zero, suffix});
 
 
         // Return
@@ -72,7 +72,7 @@ export const fetchAdmissions = async () => {
 
 
         // Fetching
-        const admissions = await Admission.find({session:activeSession.year_name});
+        const admissions = await Admission.find({session:activeSession?.year_name});
         return admissions;
 
     } catch (err:any) {
@@ -112,7 +112,7 @@ export const modifyAdmission = async ({id, school, class_name, board, setting_ty
 
         if(prefix !== ''){
             // Checking if the prefix already exists
-            const admissions = await Admission.find({session:activeSession.year_name});
+            const admissions = await Admission.find({session:activeSession?.year_name});
             const existingAdmission = await Admission.findById(id);
             if(existingAdmission.prefix !== prefix && admissions.map(a => a.prefix).includes(prefix)){throw new Error('Prefix already exists')};
         }
@@ -168,7 +168,7 @@ export const fetchClassNumbers = async ({class_name}:{class_name:String}) => {
 
 
         // Fetching admission
-        const numbers = await Admission.find({class_name, session:activeSession.year_name});
+        const numbers = await Admission.find({class_name, session:activeSession?.year_name});
 
 
         // Return

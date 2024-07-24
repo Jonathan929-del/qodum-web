@@ -79,164 +79,168 @@ const Home = () => {
   // Use effect
   useEffect(() => {
 
+    let openedPagesArray = [];
+
     if(openedPages.length === 0){
       setCurrentPage('');
-      setOpenedPagesComponents([{name:'Dashboard', component:(
+      openedPagesArray.push({name:'Dashboard', component:(
         <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
           <Dashboard />
         </div>
-      )}]);
+      )})
     };
     if(openedPages.includes('Define School Board')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define School Board', component:<DefineSchoolBoard />}]);
+      openedPagesArray.push({name:'Define School Board', component:<DefineSchoolBoard />});
     };
     if(openedPages.includes('School Global Details')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'School Global Details', component:<SchoolGlobalDetails />}]);
+      openedPagesArray.push({name:'School Global Details', component:<SchoolGlobalDetails />});
     };
     if(openedPages.includes('Define Academic Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Academic Year', component:<DefineAcademicYear />}]);
+      openedPagesArray.push({name:'Define Academic Year', component:<DefineAcademicYear />});
     };
     if(openedPages.includes('Define Financial Year')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Financial Year', component:<DefineFinancialYear />}]);
+      openedPagesArray.push({name:'Define Financial Year', component:<DefineFinancialYear />});
     };
     if(openedPages.includes('Define Wing')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Wing', component:<DefineWing />}]);
+      openedPagesArray.push({name:'Define Wing', component:<DefineWing />});
     };
     if(openedPages.includes('Define Class')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Class', component:<DefineClass />}]);
+      openedPagesArray.push({name:'Define Class', component:<DefineClass />});
     };
     if(openedPages.includes('Define Section')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Section', component:<DefineSection />}]);
+      openedPagesArray.push({name:'Define Section', component:<DefineSection />});
     };
     if(openedPages.includes('Relate Class Section')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Relate Class Section', component:<RelateClassSection />}]);
+      openedPagesArray.push({name:'Relate Class Section', component:<RelateClassSection />});
     };
     if(openedPages.includes('Change Academic')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Change Academic', component:<ChangeAcademic />}]);
+      openedPagesArray.push({name:'Change Academic', component:<ChangeAcademic />});
     };
     if(openedPages.includes('Fee Entry Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry Setting', component:<FeeEntrySetting />}]);
+      openedPagesArray.push({name:'Fee Entry Setting', component:<FeeEntrySetting />});
     };
     if(openedPages.includes('Fee Entry Setting Others')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry Setting Others', component:<FeeEntrySettingOthers />}]);
+      openedPagesArray.push({name:'Fee Entry Setting Others', component:<FeeEntrySettingOthers />});
     };
     if(openedPages.includes('Set Due Limit')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Set Due Limit', component:<SetDueLimit />}]);
+      openedPagesArray.push({name:'Set Due Limit', component:<SetDueLimit />});
     };
     if(openedPages.includes('Fee Opening Balance Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Opening Balance Setting', component:<FeeOpeningBalanceSetting />}]);
+      openedPagesArray.push({name:'Fee Opening Balance Setting', component:<FeeOpeningBalanceSetting />});
     };
     if(openedPages.includes('Bus ID Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Bus ID Setting', component:<BusIDSetting />}]);
+      openedPagesArray.push({name:'Bus ID Setting', component:<BusIDSetting />});
     };
     if(openedPages.includes('Report Layout Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Report Layout Setting', component:<ReportLayoutSetting />}]);
+      openedPagesArray.push({name:'Report Layout Setting', component:<ReportLayoutSetting />});
     };
     if(openedPages.includes('Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Session Transfer', component:<SessionTransfer />}]);
+      openedPagesArray.push({name:'Session Transfer', component:<SessionTransfer />});
     };
     if(openedPages.includes('Define Fee Installment')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Installment', component:<DefineFeeInstallment />}]);
+      openedPagesArray.push({name:'Define Fee Installment', component:<DefineFeeInstallment />});
     };
     if(openedPages.includes('Define Fee Head')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Head', component:<DefineFeeHead />}]);
+      openedPagesArray.push({name:'Define Fee Head', component:<DefineFeeHead />});
     };
     if(openedPages.includes('Define Fee Type')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Type', component:<DefineFeeType />}]);
+      openedPagesArray.push({name:'Define Fee Type', component:<DefineFeeType />});
     };
     if(openedPages.includes('Define Fee Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Fee Group', component:<DefineFeeGroup />}]);
+      openedPagesArray.push({name:'Define Fee Group', component:<DefineFeeGroup />});
     };
     if(openedPages.includes('Assign Fee Group to Fee Head')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Fee Group to Fee Head', component:<AssignFeeGroupToFeeHead />}]);
+      openedPagesArray.push({name:'Assign Fee Group to Fee Head', component:<AssignFeeGroupToFeeHead />});
     };
     if(openedPages.includes('Assign Amount Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Amount Group', component:<AssignAmountGroup />}]);
+      openedPagesArray.push({name:'Assign Amount Group', component:<AssignAmountGroup />});
     };
     if(openedPages.includes('Assign Multiple Group to Student')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Multiple Group to Student', component:<AssignMultipleGroupToStudent />}]);
+      openedPagesArray.push({name:'Assign Multiple Group to Student', component:<AssignMultipleGroupToStudent />});
     };
     if(openedPages.includes('Define Concession')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Concession', component:<DefineConcession />}]);
+      openedPagesArray.push({name:'Define Concession', component:<DefineConcession />});
     };
     if(openedPages.includes('Define Concession Type')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Concession Type', component:<DefineConcessionType />}]);
+      openedPagesArray.push({name:'Define Concession Type', component:<DefineConcessionType />});
     };
     if(openedPages.includes('Assign Concession')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Concession', component:<AssignConcession />}]);
+      openedPagesArray.push({name:'Assign Concession', component:<AssignConcession />});
     };
     if(openedPages.includes('Set Student Status')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Set Student Status', component:<SetStudentStatus />}]);
+      openedPagesArray.push({name:'Set Student Status', component:<SetStudentStatus />});
     };
     if(openedPages.includes('Late Fee Setting')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Late Fee Setting', component:<LateFeeSetting />}]);
+      openedPagesArray.push({name:'Late Fee Setting', component:<LateFeeSetting />});
     };
     if(openedPages.includes('Late Fee Setting Head Wise')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Late Fee Setting Head Wise', component:<LateFeeSettingHeadWise />}]);
+      openedPagesArray.push({name:'Late Fee Setting Head Wise', component:<LateFeeSettingHeadWise />});
     };
     if(openedPages.includes('Fee Entry')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Entry', component:<FeeEntry />}]);
+      openedPagesArray.push({name:'Fee Entry', component:<FeeEntry />});
     };
     if(openedPages.includes('Print Fee Receipt & Certificate')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Print Fee Receipt & Certificate', component:<PrintFeeReceiptAndCertificate />}]);
+      openedPagesArray.push({name:'Print Fee Receipt & Certificate', component:<PrintFeeReceiptAndCertificate />});
     };
     if(openedPages.includes('Modify Fees Receipt')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Modify Fees Receipt', component:<ModifyFeesReceipt />}]);
+      openedPagesArray.push({name:'Modify Fees Receipt', component:<ModifyFeesReceipt />});
     };
     if(openedPages.includes('Cancel Fees Receipt')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Cancel Fees Receipt', component:<CancelFeesReceipt />}]);
+      openedPagesArray.push({name:'Cancel Fees Receipt', component:<CancelFeesReceipt />});
     };
     if(openedPages.includes('Delete Fees Receipt')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Delete Fees Receipt', component:<DeleteFeesReceipt />}]);
+      openedPagesArray.push({name:'Delete Fees Receipt', component:<DeleteFeesReceipt />});
     };
     if(openedPages.includes('Travel Agency Master')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Travel Agency Master', component:<TravelAgencyMaster />}]);
+      openedPagesArray.push({name:'Travel Agency Master', component:<TravelAgencyMaster />});
     };
     if(openedPages.includes('Define Vehicle Type')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Type', component:<DefineVehicleType />}]);
+      openedPagesArray.push({name:'Define Vehicle Type', component:<DefineVehicleType />});
     };
     if(openedPages.includes('Define Vehicle Details')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Details', component:<DefineVehicleDetails />}]);
+      openedPagesArray.push({name:'Define Vehicle Details', component:<DefineVehicleDetails />});
     };
     if(openedPages.includes('Define Vehicle Route')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Route', component:<DefineVehicleRoute />}]);
+      openedPagesArray.push({name:'Define Vehicle Route', component:<DefineVehicleRoute />});
     };
     if(openedPages.includes('Define Vehicle Route Relation')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Vehicle Route Relation', component:<DefineVehicleRouteRelation />}]);
+      openedPagesArray.push({name:'Define Vehicle Route Relation', component:<DefineVehicleRouteRelation />});
     };
     if(openedPages.includes('Define Transport Fare And Group')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Transport Fare And Group', component:<DefineTransportFareAndGroup />}]);
+      openedPagesArray.push({name:'Define Transport Fare And Group', component:<DefineTransportFareAndGroup />});
     };
     if(openedPages.includes('Define Transport Medium')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Transport Medium', component:<DefineTransportMedium />}]);
+      openedPagesArray.push({name:'Define Transport Medium', component:<DefineTransportMedium />});
     };
     if(openedPages.includes('Define Route Stop')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Define Route Stop', component:<DefineRouteStop />}]);
+      openedPagesArray.push({name:'Define Route Stop', component:<DefineRouteStop />});
     };
     if(openedPages.includes('Assign Transport to Students')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Assign Transport to Students', component:<AssignTransportToStudents />}]);
+      openedPagesArray.push({name:'Assign Transport to Students', component:<AssignTransportToStudents />});
     };
     if(openedPages.includes('Daily Fee Collection')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Daily Fee Collection', component:<DailyFeeCollection />}]);
+      openedPagesArray.push({name:'Daily Fee Collection', component:<DailyFeeCollection />});
     };
     if(openedPages.includes('Receipt Wise Fee Type Collection')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Receipt Wise Fee Type Collection', component:<ReceiptWiseFeeTypeCollection />}]);
+      openedPagesArray.push({name:'Receipt Wise Fee Type Collection', component:<ReceiptWiseFeeTypeCollection />});
     };
     if(openedPages.includes('Class Wise Studnet Strength')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Class Wise Studnet Strength', component:<ClassWiseStudentStrength />}]);
+      openedPagesArray.push({name:'Class Wise Studnet Strength', component:<ClassWiseStudentStrength />});
     };
     if(openedPages.includes('Account Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Account Manager Session Transfer', component:<AccountSessionTransfer />}]);
+      openedPagesArray.push({name:'Account Manager Session Transfer', component:<AccountSessionTransfer />});
     };
     if(openedPages.includes('Fee Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />}]);
+      openedPagesArray.push({name:'Fee Manager Session Transfer', component:<FeeSessionTransfer />});
     };
     if(openedPages.includes('Payroll Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />}]);
+      openedPagesArray.push({name:'Payroll Manager Session Transfer', component:<PayrollSessionTransfer />});
     };
     if(openedPages.includes('Admission Manager Session Transfer')){
-      setOpenedPagesComponents([...openedPagesComponents, {name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />}]);
+      openedPagesArray.push({name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />});
     };
+
+    setOpenedPagesComponents(openedPagesArray);
 
   }, [openedPages]);
 

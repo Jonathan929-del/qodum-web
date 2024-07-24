@@ -77,7 +77,7 @@ export const createAcademicYear = async ({year_name, start_date, end_date, is_ac
 
 
 // Fetch Academic Years
-export const fetchAcademicYears = async (pageNumber = 1, pageSize=20) => {
+export const fetchAcademicYears = async () => {
     try {
 
         // Db connection
@@ -126,7 +126,7 @@ export const modifyAcademicYears = async ({id, year_name, start_date, end_date, 
         // Checking if the year name already exists
         const academicYears = await AcademicYear.find();
         const existingYear = await AcademicYear.findById(id);
-        if(existingYear.year_name !== year_name && academicYears.map(year => year.year_name).includes(year_name)){throw new Error('Academic year already exists')};
+        if(existingYear?.year_name !== year_name && academicYears.map(year => year?.year_name).includes(year_name)){throw new Error('Academic year already exists')};
 
 
         if(is_active === true){

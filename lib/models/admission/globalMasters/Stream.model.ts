@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const StreamSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        stream_name:{type:String, required:true, unique:true}
+        stream_name:{type:String, required:true}
     },
     {
         timestamps:true

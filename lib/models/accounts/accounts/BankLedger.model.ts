@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const BankLedgerSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        account_name:{type:String, required:true, unique:true},
+        account_name:{type:String, required:true},
         group:{type:String, required:true},
         account_type:{type:String},
         account_address:{type:String},

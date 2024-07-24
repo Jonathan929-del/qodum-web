@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const TransportGroupSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        distance_name:{type:String, required:true, unique:true},
+        distance_name:{type:String, required:true},
         distance_amount:{type:Number, required:true},
         distance_from:{type:Number},
         distance_to:{type:Number},

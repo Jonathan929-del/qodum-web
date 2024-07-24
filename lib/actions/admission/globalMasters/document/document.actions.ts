@@ -29,14 +29,14 @@ export const createDocument = async ({document_type, document_name}:CreateDocume
 
 
         // Checking if the document already exists
-        const existingDocument = await Document.findOne({document_name, session:activeSession.year_name});
+        const existingDocument = await Document.findOne({document_name, session:activeSession?.year_name});
         if(existingDocument){
             throw new Error('Document name already exists');
         };
 
 
         // Creating new document
-        const newDocument = await Document.create({session:activeSession.year_name, document_type, document_name});
+        const newDocument = await Document.create({session:activeSession?.year_name, document_type, document_name});
         newDocument.save();
 
 
@@ -65,7 +65,7 @@ export const fetchDocuments = async () => {
 
 
         // Fetching
-        const documents = await Document.find({session:activeSession.year_name});
+        const documents = await Document.find({session:activeSession?.year_name});
         return documents;
 
     } catch (err:any) {
@@ -96,7 +96,7 @@ export const modifyDocument = async ({id, document_type, document_name}:ModifyDo
 
 
         // Checking if the document name already exists
-        const documents = await Document.find({session:activeSession.year_name});
+        const documents = await Document.find({session:activeSession?.year_name});
         const existingDocument = await Document.findById(id);
         if(existingDocument.document_name !== document_name && documents.map(d => d.document_name).includes(document_name)){throw new Error('Document name already exists')};
 
@@ -151,8 +151,8 @@ export const fetchDocumentsForAdmission = async () => {
 
 
         // Fetching
-        const documents = await Document.find({session:activeSession.year_name});
-        const documentTypes = await DocumentType.find({session:activeSession.year_name});
+        const documents = await Document.find({session:activeSession?.year_name});
+        const documentTypes = await DocumentType.find({session:activeSession?.year_name});
 
         const filtered = documentTypes.map(dt => {
             return {

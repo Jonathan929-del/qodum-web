@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const ParishSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        parish:{type:String, required:true, unique:true},
+        parish:{type:String, required:true},
         religion:[{type:String}]
     },
     {

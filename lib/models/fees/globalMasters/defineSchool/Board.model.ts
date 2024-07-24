@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 const BoardSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        board:{type:String, required:true, unique:true},
+        board:{type:String, required:true},
         is_default:{type:Boolean}
     },
     {

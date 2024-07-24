@@ -22,7 +22,7 @@ export const isTypesSesssionTransfered = async () => {
 
 
         // Records
-        const records = await FeeType.find({session:activeSession.year_name});
+        const records = await FeeType.find({session:activeSession?.year_name});
 
 
         // Return
@@ -82,7 +82,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Checking if the type name already exists
-        const existingType = await FeeType.findOne({name, session:activeSession.year_name});
+        const existingType = await FeeType.findOne({name, session:activeSession?.year_name});
         if(existingType){
             throw new Error('Fee type already exists');
         };
@@ -97,17 +97,17 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
         // Creating new type
         const newType = await FeeType.create({
-            session:activeSession.year_name,
+            session:activeSession?.year_name,
             name,
             preference_no
         });
         newType.save().then(async () => {
-            await FeeType.findOneAndUpdate({name, session:activeSession.year_name}, {heads});
+            await FeeType.findOneAndUpdate({name, session:activeSession?.year_name}, {heads});
         });
 
 
         // Updating head
-        await Head.updateMany({'name':heads, session:activeSession.year_name}, {affiliated_fee_type:name});
+        await Head.updateMany({'name':heads, session:activeSession?.year_name}, {affiliated_fee_type:name});
 
 
         // Return
@@ -135,7 +135,7 @@ export const fetchTypes = async () => {
 
 
         // Fetching types
-        const types = await FeeType.find({session:activeSession.year_name});
+        const types = await FeeType.find({session:activeSession?.year_name});
         return types;
 
     } catch (err:any) {
@@ -167,7 +167,7 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
 
         // Checking if the year name already exists
-        const types = await FeeType.find({session:activeSession.year_name});
+        const types = await FeeType.find({session:activeSession?.year_name});
         const existingType = await FeeType.findById(id);
         if(existingType.name !== name && types.map(i => i.name).includes(name)){throw new Error('Fee type name already exists')};
         // Checking if the preference number already exists
@@ -241,7 +241,7 @@ export const fetchFreeHeads = async () => {
 
 
         // Fetching
-        const heads = await Head.find({session:activeSession.year_name});
+        const heads = await Head.find({session:activeSession?.year_name});
         const freeHeads = heads.filter((head:any) => head.affiliated_fee_type === '' || !head.affiliated_fee_type);
 
 
