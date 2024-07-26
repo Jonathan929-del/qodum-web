@@ -23,6 +23,10 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
         connectToDb('accounts');
 
 
+        // Fetching classes
+        const classes = await Class.find();
+
+
         // Checking if the class already exists
         const existinClass = await Class.findOne({class_name});
         if(existinClass){
@@ -30,9 +34,22 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
         };
 
 
-        // Creating new class
-        const newClass = await Class.create({class_name, wing_name, school, order});
-        newClass.save();
+        // Checking if the order already exists
+        if(classes.map((c:any) => c.order).includes(order)){
+
+            // Affected classes
+            const affectedClasses = classes.filter((c:any) => c.order >= order);
+            affectedClasses.map(async (c:any) => {
+                await Class.updateMany({class_name:c.class_name}, {$inc:{order:1}});
+            });
+
+            // New class
+            const newClass = await Class.create({class_name, wing_name, school, order});
+            newClass.save();
+        }else{
+            const newClass = await Class.create({class_name, wing_name, school, order});
+            newClass.save();
+        };
 
 
         // Return
@@ -56,7 +73,7 @@ export const fetchClasses = async () => {
 
 
         // Fetching
-        const classes = await Class.find();
+        const classes = await Class.find().sort({order:1});
         return classes;
 
     } catch (err:any) {
@@ -90,8 +107,31 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
         if(existingClass.class_name !== class_name && classes.map(item => item.class_name).includes(class_name)){throw new Error('Class name already exists')};
 
 
-        // Updating class
-        await Class.findByIdAndUpdate(id, {class_name, wing_name, school, order, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
+        // Class to be updated
+        const updateClass = await Class.findById(id);
+
+
+        // Checking if the order already exists
+        if(updateClass.order !== order){
+            if(order > updateClass.order){
+                const affectedClasses = classes.filter((c:any) => c.order > updateClass.order && c.order <= order);
+                affectedClasses.map(async (c:any) => {
+                    await Class.updateMany({class_name:c.class_name}, {$inc:{order:-1}});
+                });
+            }else{
+                const affectedClasses = classes.filter((c:any) => c.order >= order && c.order < updateClass.order);
+                affectedClasses.map(async (c:any) => {
+                    await Class.updateMany({class_name:c.class_name}, {$inc:{order:1}});
+                });
+            };
+
+            // Updating class
+            await Class.findByIdAndUpdate(id, {class_name, wing_name, school, order, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
+        }else{
+            await Class.findByIdAndUpdate(id, {class_name, wing_name, school, order, affiliated_heads:{group_name:'', heads:[]}}, {new:true});
+        };
+
+
 
 
         // Return
@@ -171,8 +211,27 @@ export const deleteClass = async ({id}:{id:String}) => {
         connectToDb('accounts');
 
 
-        // Deleting board
-        await Class.findByIdAndDelete(id);
+        // Classes
+        const classes = await Class.find();
+
+
+        // Class to be deleted
+        const deleteClass = await Class.findById(id);
+
+
+        // Altering "order" value in the other classes
+        if(classes.filter((c:any) => c.order > deleteClass.order).length > 0){
+            const affectedClasses = classes.filter((c:any) => c.order > deleteClass.order);
+            affectedClasses.map(async (c:any) => {
+                await Class.updateMany({class_name:c.class_name}, {$inc:{order:-1}});
+            });
+            await Class.findByIdAndDelete(id);
+        }else{
+            await Class.findByIdAndDelete(id);
+        };
+
+
+        // Return
         return 'Class Deleted';
 
     } catch (err) {
