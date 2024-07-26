@@ -3,59 +3,6 @@
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
-import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
-
-
-
-
-
-// Is session transfered
-export const isClassesSesssionTransfered = async () => {
-    try {
-
-        // Database connection
-        connectToDb('accounts');
-
-
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
-        // Records
-        const records = await Class.find({session:activeSession?.year_name});
-
-
-        // Return
-        return records.length > 0 ? 0 : 1;
-        
-    }catch(err){
-        throw new Error('Error');
-    };
-};
-
-
-
-
-
-// Classes session transfer
-export const classesSesssionTransfer = async ({next_session}:any) => {
-    try {
-
-        // Database connection
-        connectToDb('accounts');
-
-
-        // Records
-        await Class.updateMany({session:next_session});
-
-
-        // Return
-        return 'Transfered';
-        
-    }catch(err){
-        throw new Error('Error');
-    };
-};
 
 
 
@@ -76,20 +23,15 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-        if(!activeSession) return 0;
-
-
         // Checking if the class already exists
-        const existinClass = await Class.findOne({class_name, session:activeSession?.year_name});
+        const existinClass = await Class.findOne({class_name});
         if(existinClass){
             throw new Error('Class name already exists');
         };
 
 
         // Creating new class
-        const newClass = await Class.create({session:activeSession?.year_name, class_name, wing_name, school, order});
+        const newClass = await Class.create({class_name, wing_name, school, order});
         newClass.save();
 
 
@@ -113,12 +55,8 @@ export const fetchClasses = async () => {
         connectToDb('accounts');
 
 
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
         // Fetching
-        const classes = await Class.find({session:activeSession?.year_name});
+        const classes = await Class.find();
         return classes;
 
     } catch (err:any) {
@@ -146,12 +84,8 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-
-
         // Checking if the class already exists
-        const classes = await Class.find({session:activeSession?.year_name});
+        const classes = await Class.find();
         const existingClass = await Class.findById(id);
         if(existingClass.class_name !== class_name && classes.map(item => item.class_name).includes(class_name)){throw new Error('Class name already exists')};
 
@@ -185,12 +119,8 @@ export const modifyClassSections = async ({class_name, sections}:ModifyClassSect
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-
-
         // Updating class
-        const updatedClass = await Class.findOneAndUpdate({class_name, session:activeSession?.year_name}, {sections}, {new:true});
+        const updatedClass = await Class.findOneAndUpdate({class_name}, {sections}, {new:true});
 
 
         // Return
@@ -213,12 +143,8 @@ export const fetchClass = async ({class_name}:{class_name:String}) => {
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-
-
         // Fetching class
-        const c = await Class.findOne({class_name, session:activeSession?.year_name});
+        const c = await Class.findOne({class_name});
         const classRes = {
             ...c._doc,
             _id:c._doc._id.toString()
@@ -272,27 +198,23 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-
-
         if(installment === 'All installments'){
             // Fetching
-            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
+            const group = await Group.findOne({name:group_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }
             });
         }else{
-            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
+            const group = await Group.findOne({name:group_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
                 } catch (err:any) {
                     console.log(err);
                 }

@@ -6,7 +6,7 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
 import {sectionsSesssionTransfer} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
-import {classesSesssionTransfer, fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
 
 
@@ -27,7 +27,6 @@ const ClassSectionRelation = ({currentSession, nextSession, showDraggables, setS
     // Transer handler
     const transerHandler = async () => {
         try {
-            await classesSesssionTransfer({next_session:nextSession});
             await sectionsSesssionTransfer({next_session:nextSession});
             setState({...state, isTransfered:true});
             setShowDraggables(showDraggables.filter((d:any) => d !== 'Class Section Relation'));

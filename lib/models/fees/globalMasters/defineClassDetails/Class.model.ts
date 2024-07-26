@@ -8,7 +8,6 @@ import mongoose from 'mongoose';
 // Class Schema
 const ClassSchema = new mongoose.Schema(
     {
-        session:{type:String, required:true},
         class_name:{type:String, required:true},
         wing_name:{type:String, required:true},
         school:{type:String, required:true},

@@ -156,10 +156,6 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 academic_year:'',
                 financial_year:'',
             });
-            if(res === 0){
-                toast({title:'Please create a session first', variant:'alert'});
-                return;
-            };
             toast({title:'Added Successfully!'});
         }
         // Modify school details

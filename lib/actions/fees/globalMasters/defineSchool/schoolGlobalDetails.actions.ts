@@ -1,7 +1,6 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import GlobalSchoolDetails from '@/lib/models/fees/globalMasters/defineSchool/SchoolGlobalDetails.model';
 
 
@@ -75,14 +74,8 @@ export const createGlobalSchoolDetails = async ({
         connectToDb('accounts');
 
 
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-        if(!activeSession) return 0;
-
-
         // Creating new global school details
         const newGlobalSchoolDetails = await GlobalSchoolDetails.create({
-            session:activeSession?.year_name,
             logo,
             school_main,
             school_subheads,
@@ -134,12 +127,8 @@ export const fetchGlobalSchoolDetails = async () => {
         connectToDb('accounts');
 
 
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
         // Fetching
-        const globalSchoolDetails = await GlobalSchoolDetails.find({session:activeSession?.year_name});
+        const globalSchoolDetails = await GlobalSchoolDetails.find();
         const globalSchoolDetailsRes = globalSchoolDetails.map((g:any) => {
             return{
                 ...g._doc,

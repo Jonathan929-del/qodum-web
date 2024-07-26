@@ -1,11 +1,11 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
+import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import FormCom from '@/components/modules/fees/globalMasters/defineSchool/schoolGlobalDetails/FormCom';
 import ViewCom from '@/components/modules/fees/globalMasters/defineSchool/schoolGlobalDetails/ViewCom';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 

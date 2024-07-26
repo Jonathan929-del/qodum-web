@@ -61,10 +61,6 @@ const FormCom = ({setIsViewOpened, wings, classes, schools, updateClass, setUpda
                 school:values.school,
                 order:values.order
             });
-            if(res === 0){
-                toast({title:'Please create a session first', variant:'alert'});
-                return;
-            };
             toast({title:'Added Successfully!'});
         }
         // Modify class

@@ -9,8 +9,8 @@ import StudentTransfer from './draggables/StudentTransfer';
 import ClassSectionRelation from './draggables/ClassSectionRelation';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {isStudentsSesssionTransfered} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import {isClassesSesssionTransfered} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {isSectionsSesssionTransfered} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 
 
@@ -70,11 +70,11 @@ const page = () => {
 
             // Is session transfered responses
             const isStudentsTransferedRes = await isStudentsSesssionTransfered();
-            const isClassSectionRelationTransferedRes = await isClassesSesssionTransfered();
+            const isSectionsRelationTransferedRes = await isSectionsSesssionTransfered();
             setValues([
                 {
                     name:'Class Section Relation',
-                    isTransfered:isClassSectionRelationTransferedRes === 0 ? 'Not Transfered' : 'Already Transfered'
+                    isTransfered:isSectionsRelationTransferedRes === 0 ? 'Not Transfered' : 'Already Transfered'
                 },
                 {
                     name:'Student Transfer',
