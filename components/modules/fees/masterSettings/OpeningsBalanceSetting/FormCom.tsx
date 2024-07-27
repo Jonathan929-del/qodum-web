@@ -165,7 +165,7 @@ const FormCom = () => {
                                                         <LoadingIcon />
                                                     ) : feeTypes.map((type:any, index: number) => (
                                                             <SelectItem 
-                                                                value={type} 
+                                                                value={type.name}
                                                                 key={index}
                                                             >
                                                                 {type.name}

@@ -398,7 +398,7 @@ export const fetchGroupsByTypes = async ({is_special}:{is_special:Boolean}) => {
 
 
         // Fetching unspecial groups
-        const unSpecialGroups = await Group.find({is_special:false});
+        const unSpecialGroups = await Group.find({is_special:false, session:activeSession?.year_name});
 
 
         if(is_special){

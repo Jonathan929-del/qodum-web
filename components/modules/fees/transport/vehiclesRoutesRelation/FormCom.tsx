@@ -158,7 +158,7 @@ const FormCom = ({setIsViewOpened, vehicles, routes, updateRoute, setUpdateRoute
                     {/* Vehicle No. */}
                     <FormField
                         control={form.control}
-                        disabled
+                        // disabled
                         name='vehicle_no'
                         render={({field}) => (
                             <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
@@ -166,6 +166,7 @@ const FormCom = ({setIsViewOpened, vehicles, routes, updateRoute, setUpdateRoute
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
+                                            disabled
                                             {...field}
                                             className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
                                         />

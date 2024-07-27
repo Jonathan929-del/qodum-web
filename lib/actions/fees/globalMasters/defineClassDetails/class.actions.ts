@@ -160,11 +160,11 @@ export const modifyClassSections = async ({class_name, sections}:ModifyClassSect
 
 
         // Updating class
-        const updatedClass = await Class.findOneAndUpdate({class_name}, {sections}, {new:true});
+        await Class.findOneAndUpdate({class_name}, {sections}, {new:true});
 
 
         // Return
-        return updatedClass;
+        return 'Updated';
 
     } catch (err) {
         throw new Error(`Error updating class sections: ${err}`);

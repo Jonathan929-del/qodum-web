@@ -21,10 +21,9 @@ import {RelateClassValidation} from '@/lib/validations/fees/globalMasters/define
 // Main function
 const FormCom = ({classes, sections}:any) => {
 
-
     // Toast
     const {toast} = useToast();
-    
+
     
     // Form
     const form = useForm({
@@ -69,13 +68,7 @@ const FormCom = ({classes, sections}:any) => {
         };
         selectedSectoinsFetcher();
     }, [form.watch('class_name')]);
-
-    useEffect(() => {
-        // form.setValue('sections', form.getValues().sections);
-        // console.log(form.getValues().sections);
-        console.log('use effect');
-    }, [form.watch('sections')]);
-
+    useEffect(() => {}, [form.watch('sections')]);
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>

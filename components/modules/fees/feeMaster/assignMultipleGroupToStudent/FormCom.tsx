@@ -24,7 +24,6 @@ import {AssignMultipleGroupToStudentValidation} from '@/lib/validations/fees/fee
 // Main function
 const FormCom = ({classes, installments, students, setStudents}:any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -123,7 +122,6 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
             setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
         };
     }, [form.watch('fees_group')]);
-
 
     return (
         <div className='w-[95%] max-w-[1100px] flex flex-col items-center rounded-[8px] sm:w-[95%]'>
