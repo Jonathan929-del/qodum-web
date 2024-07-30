@@ -256,7 +256,11 @@ export const fetchGroupByName = async ({name}:{name:String}) => {
 
         // Fetching group
         const group = await Group.findOne({name, session:activeSession?.year_name});
-        return group;
+        const groupRes = {
+            ...group._doc,
+            _id:JSON.stringify(group._doc._id)
+        };
+        return groupRes;
 
     } catch (err) {
         throw new Error(`Error fetching group: ${err}`);      

@@ -34,7 +34,7 @@ const FormCom = ({classes, sections}:any) => {
         }
     });
 
-    
+
     // Submit handler
     const onSubmit = async (values:z.infer<typeof RelateClassValidation>) => {
         try {
@@ -66,7 +66,9 @@ const FormCom = ({classes, sections}:any) => {
                 console.log(err);
             }
         };
-        selectedSectoinsFetcher();
+        if(form.getValues().class_name !== ''){
+            selectedSectoinsFetcher();
+        };
     }, [form.watch('class_name')]);
     useEffect(() => {}, [form.watch('sections')]);
 
@@ -79,8 +81,6 @@ const FormCom = ({classes, sections}:any) => {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='relative w-full flex flex-col py-4 items-center px-2 sm:px-4'
                 >
-
-
 
                     {/* Class Name */}
                     <FormField
@@ -123,7 +123,11 @@ const FormCom = ({classes, sections}:any) => {
                         <ul className='w-full flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                             <li className='basis-[40%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc]'>
                                 Select
-                                <ChevronsUpDown size={12}/>
+                                <Checkbox
+                                    checked={form.getValues().sections.length === sections.length}
+                                    onCheckedChange={() => form.getValues().sections.length === sections.length ? form.setValue('sections', []) : form.setValue('sections', sections.map(s => s.section_name))}
+                                    className='rounded-[2px] my-[2px] bg-white'
+                                />
                             </li>
                             <li className='basis-[60%] flex flex-row items-center justify-between px-2'>
                                 Section Name
@@ -159,7 +163,6 @@ const FormCom = ({classes, sections}:any) => {
                     >
                         Save
                     </Button>
-
                     
                 </form>
             </Form>
