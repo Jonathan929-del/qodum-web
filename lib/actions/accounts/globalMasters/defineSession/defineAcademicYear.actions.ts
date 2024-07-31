@@ -99,6 +99,34 @@ export const fetchAcademicYears = async () => {
 
 
 
+// Fetch active academic year
+export const fetchActiveAcademicYear = async () => {
+    try {
+
+        // Db connection
+        await connectToDb('accounts');
+
+
+        // Fetching
+        const academicYear = await AcademicYear.findOne({is_active:true});
+        const activeAcademicYearRes = {
+            ...academicYear._doc,
+            _id:academicYear._doc._id.toString()
+        };
+
+
+        // Return
+        return activeAcademicYearRes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching academic years: ${err}`);
+    }
+};
+
+
+
+
+
 // Modify Academic Years Props
 interface ModifyAcademicYearsProps{
     id:String;

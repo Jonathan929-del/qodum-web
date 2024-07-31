@@ -9,6 +9,7 @@ import PagesList from './Pages/PagesList';
 import HomeTopbar from './Home/HomeTopbar';
 import {usePathname} from 'next/navigation';
 import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import { fetchActiveFinancialYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 
 
 
@@ -29,6 +30,10 @@ const index = ({children}:any) => {
     const [academicYears, setAcademicYears] = useState([{}]);
 
 
+    // Active financial year
+    const [activeFinancialYear, setActiveFinancialYear] = useState('');
+
+
     // Active academic year
     const [activeAcademicYearName, setActiveAcademicYearName] = useState('');
 
@@ -47,9 +52,11 @@ const index = ({children}:any) => {
     // Use effect
     useEffect(() => {
         const academicYearsFetcher = async () => {
-            const res:any = await fetchAcademicYears();
+            const res = await fetchAcademicYears();
+            const activeFinancialYearRes = await fetchActiveFinancialYear();
             setAcademicYears(res);
             setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
+            setActiveFinancialYear(activeFinancialYearRes.year_name);
         };
         academicYearsFetcher();
     }, []);
@@ -88,6 +95,7 @@ const index = ({children}:any) => {
                 </div>
                 <Footer
                     activeAcademicYearName={activeAcademicYearName}
+                    activeFinancialYear={activeFinancialYear}
                 />
             </div>
         </main>

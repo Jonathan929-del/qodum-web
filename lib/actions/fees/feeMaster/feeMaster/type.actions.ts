@@ -107,7 +107,9 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Updating head
-        await Head.updateMany({'name':heads, session:activeSession?.year_name}, {affiliated_fee_type:name});
+        heads.map(async h => {
+            await Head.updateMany({'name':h, session:activeSession?.year_name}, {affiliated_fee_type:name});
+        });
 
 
         // Return
@@ -192,7 +194,9 @@ export const modifyType = async ({id, name, preference_no, heads}:ModifyTypeProp
 
 
         // Updating head
-        await Head.updateMany({'name':heads}, {affiliated_fee_type:name});
+        heads.map(async h => {
+            await Head.updateMany({'name':h}, {affiliated_fee_type:name});
+        });
 
 
         // Return 

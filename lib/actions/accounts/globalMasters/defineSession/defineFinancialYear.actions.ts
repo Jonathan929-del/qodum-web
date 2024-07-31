@@ -200,3 +200,31 @@ export const deleteFinancialYear = async ({id}:{id:String}) => {
         throw new Error(`Error deleting financial year: ${err}`);      
     };
 };
+
+
+
+
+
+// Fetch active financial year
+export const fetchActiveFinancialYear = async () => {
+    try {
+
+        // Db connection
+        await connectToDb('accounts');
+
+
+        // Fetching
+        const financialYear = await FinancialYear.findOne({is_active:true});
+        const activeFinancialYear = {
+            ...financialYear._doc,
+            _id:financialYear._doc._id.toString()
+        };
+
+
+        // Return
+        return activeFinancialYear;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching academic years: ${err}`);
+    }
+};

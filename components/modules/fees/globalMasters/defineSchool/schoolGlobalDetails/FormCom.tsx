@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
@@ -270,6 +270,11 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         setFile(null);
         setIsLoading(false);
     };
+
+
+    useEffect(() => {
+        form.setValue('affiliation_to', boards.find(b => b.is_default)?.board);
+    }, [boards]);
 
 
     return (

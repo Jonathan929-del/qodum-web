@@ -14,6 +14,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AcademicYearValidation} from '@/lib/validations/accounts/globalMasters/defineSession/academicYear';
+import {createFinancialYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 import {createAcademicYear, deleteAcademicYear, modifyAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -30,6 +31,10 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
     // Years error
     const [yearsError, setYearsError] = useState(false);
+
+
+    // Is create financial year
+    const [isCreateFinancialYear, setIsCreateFinancialYear] = useState(false);
 
 
     // Comparison object for updating
@@ -82,7 +87,7 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
 
 
     // Form
-    const form:any = useForm({
+    const form = useForm({
         resolver:zodResolver(AcademicYearValidation),
         defaultValues:{
             year_name:updateAcademicYear.id === '' ? '' : updateAcademicYear.year_name,
@@ -128,6 +133,22 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                 },
                 is_active:values.is_active,
             });
+            if(isCreateFinancialYear){
+                await createFinancialYear({
+                    year_name:values.year_name,
+                    start_date:{
+                        day:values.start_date.day,
+                        month:values.start_date.month,
+                        year:values.start_date.year,
+                    },
+                    end_date:{
+                        day:values.end_date.day,
+                        month:values.end_date.month,
+                        year:values.end_date.year,
+                    },
+                    is_active:values.is_active,
+                });
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Academic Year
@@ -197,10 +218,27 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             },
             is_active:false,
         });
+        setIsCreateFinancialYear(false);
     };
 
 
     // Use effects
+    useEffect(() => {
+        form.reset({
+          year_name: updateAcademicYear.id === '' ? '' : updateAcademicYear.year_name,
+          start_date: {
+            day: updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.day,
+            month: updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.month,
+            year: updateAcademicYear.id === '' ? '' : updateAcademicYear.start_date.year,
+          },
+          end_date: {
+            day: updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.day,
+            month: updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.month,
+            year: updateAcademicYear.id === '' ? '' : updateAcademicYear.end_date.year,
+          },
+          is_active: updateAcademicYear.id === '' ? false : updateAcademicYear.is_active,
+        });
+      }, [updateAcademicYear, form.reset]);
     useEffect(() => {
         if(form.getValues().start_date.year !== '' && form.getValues().start_date.month !== ''){
             const daysLoopFuncResult = daysLoop(form.getValues().start_date.year, form.getValues().start_date.month);
@@ -482,9 +520,31 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                     />
 
 
+                    {/* Create Financial Year */}
+                    <FormItem className='w-full flex-1 h-10 pb-2 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                        <>
+                            <FormControl>
+                                <div className='flex-1 flex items-center justify-end space-x-2'>
+                                    <Switch
+                                        id='is_create_financial_year'
+                                        onCheckedChange={setIsCreateFinancialYear}
+                                        checked={isCreateFinancialYear}
+                                    />
+                                    <Label
+                                        htmlFor='is_create_financial_year'
+                                        className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                    >
+                                        Create Financial Year
+                                    </Label>
+                                </div>
+                            </FormControl>
+                        </>
+                    </FormItem>
+
+
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} academicYears={academicYears} updateAcademicYear={updateAcademicYear} setUpdateAcademicYear={setUpdateAcademicYear} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} academicYears={academicYears} updateAcademicYear={updateAcademicYear} setUpdateAcademicYear={setUpdateAcademicYear} onSubmit={onSubmit} form={form} setIsCreateFinancialYear={setIsCreateFinancialYear}/>
                     </div>
 
 

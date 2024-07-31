@@ -42,7 +42,7 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const academicYearsFetcher = async () => {
-            const res:any = await fetchAcademicYears();
+            const res = await fetchAcademicYears();
             setAcademicYears(res);
         };
         academicYearsFetcher();
@@ -50,23 +50,23 @@ const page = () => {
 
 
     return (
-        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
-            {
-                isViewOpened ? (
-                    <ViewCom
-                        academicYears={academicYears}
-                        setIsViewOpened={setIsViewOpened}
-                        setUpdateAcademicYear={setUpdateAcademicYear}
-                    />
-                ) : (
-                    <FormCom
-                        academicYears={academicYears}
-                        setIsViewOpened={setIsViewOpened}
-                        updateAcademicYear={updateAcademicYear}
-                        setUpdateAcademicYear={setUpdateAcademicYear}
-                    />
-                )
-            }
+        <div className='relative h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
+
+            <div className={`absolute flex items-start justify-center w-full h-full bg-[#fff] ${isViewOpened ? 'z-10' : 'z-0'}`}>
+                <ViewCom
+                    academicYears={academicYears}
+                    setIsViewOpened={setIsViewOpened}
+                    setUpdateAcademicYear={setUpdateAcademicYear}
+                />
+            </div>
+            <div className={`absolute flex items-start justify-center w-full h-full bg-[#fff] ${isViewOpened ? 'z-0' : 'z-10'}`}>
+                <FormCom
+                    academicYears={academicYears}
+                    setIsViewOpened={setIsViewOpened}
+                    updateAcademicYear={updateAcademicYear}
+                    setUpdateAcademicYear={setUpdateAcademicYear}
+                />
+            </div>
         </div>
     );
 };

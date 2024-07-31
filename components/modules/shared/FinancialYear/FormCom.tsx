@@ -14,6 +14,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FinancialYearValidation} from '@/lib/validations/accounts/globalMasters/defineSession/financialYear';
+import {createAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {createFinancialYear, deleteFinancialYear, modifyFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 
 
@@ -30,6 +31,10 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
 
     // Years error
     const [yearsError, setYearsError] = useState(false);
+
+
+    // Is create academic year
+    const [isCreateAcedemicYear, setIsCreateAcademicYear] = useState(false);
 
 
     // Comparison object for updating
@@ -126,6 +131,22 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                 },
                 is_active:values.is_active,
             });
+            if(isCreateAcedemicYear){
+                await createAcademicYear({
+                    year_name:values.year_name,
+                    start_date:{
+                        day:values.start_date.day,
+                        month:values.start_date.month,
+                        year:values.start_date.year,
+                    },
+                    end_date:{
+                        day:values.end_date.day,
+                        month:values.end_date.month,
+                        year:values.end_date.year,
+                    },
+                    is_active:values.is_active,
+                });
+            };
             toast({title:'Added Successfully!'});
         }
         // Modify Financial Year
@@ -195,6 +216,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
             },
             is_active:false,
         });
+        setIsCreateAcademicYear(false);
     };
 
 
@@ -480,9 +502,31 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                     />
 
 
+                    {/* Create Academic Year */}
+                    <FormItem className='w-full flex-1 h-10 pb-2 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                        <>
+                            <FormControl>
+                                <div className='flex-1 flex items-center justify-end space-x-2'>
+                                    <Switch
+                                        id='is_create_financial_year'
+                                        onCheckedChange={setIsCreateAcademicYear}
+                                        checked={isCreateAcedemicYear}
+                                    />
+                                    <Label
+                                        htmlFor='is_create_financial_year'
+                                        className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                    >
+                                        Create Academic Year
+                                    </Label>
+                                </div>
+                            </FormControl>
+                        </>
+                    </FormItem>
+
+
                     {/* Buttons */}
                     <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} financialYears={financialYears} updateFinancialYear={updateFinancialYear} setUpdateFinancialYear={setUpdateFinancialYear} onSubmit={onSubmit} form={form}/>
+                        <Buttons setIsViewOpened={setIsViewOpened} financialYears={financialYears} updateFinancialYear={updateFinancialYear} setUpdateFinancialYear={setUpdateFinancialYear} onSubmit={onSubmit} form={form} setIsCreateAcademicYear={setIsCreateAcademicYear}/>
                     </div>
 
 

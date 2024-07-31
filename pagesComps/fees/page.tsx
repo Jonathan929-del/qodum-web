@@ -12,8 +12,8 @@ import EstimatedCollection from '@/components/dashboards/feesDashboard/Estimated
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
-import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
+import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -33,8 +33,12 @@ const page = () => {
     const [girls, setGirls] = useState<any>();
 
 
-    // Academic years
+    // Academic year
     const [academicYear, setAcademicYear] = useState('');
+
+
+    // Financial year
+    const [financialYear, setFinancialYear] = useState('');
 
 
     // Payments
@@ -59,7 +63,7 @@ const page = () => {
 
             // Fetching
             const studentsRes = await fetchAdmittedStudents();
-            const academicYearsRes = await fetchAcademicYears();
+            const activeAcademicYearRes = await fetchActiveAcademicYear();
             const paymentsRes = await fetchPayments();
             const classesRes = await fetchClasses();
 
@@ -67,7 +71,7 @@ const page = () => {
             setStudents(studentsRes);
             setBoys(studentsRes.filter((s:any) => s.student.gender === 'Male').length);
             setGirls(studentsRes.filter((s:any) => s.student.gender === 'Female').length);
-            setAcademicYear(academicYearsRes[0]?.year_name);
+            setAcademicYear(activeAcademicYearRes.year_name);
             setPayments(paymentsRes);
             setClasses(classesRes);
 
