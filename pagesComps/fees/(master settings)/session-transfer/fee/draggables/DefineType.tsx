@@ -6,8 +6,8 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
 import {fetchHeads, headsSesssionTransfer} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {fetchTypes, typesSesssionTransfer} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
-import { fetchTypes, typesSesssionTransfer } from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 
 
 

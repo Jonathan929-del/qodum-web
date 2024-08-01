@@ -3,16 +3,14 @@
 import * as z from 'zod';
 import Buttons from './Buttons';
 import HeadsList from './HeadsList';
-import { deepEqual } from '@/lib/utils';
-import { useForm } from 'react-hook-form';
-import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FeeTypeValidation } from '@/lib/validations/fees/feeMaster/feeMaster/type.validation';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { createType, deleteType, modifyType } from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import {deepEqual} from '@/lib/utils';
+import {useForm} from 'react-hook-form';
+import {Input} from '@/components/ui/input';
+import {useToast} from '@/components/ui/use-toast';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {FeeTypeValidation} from '@/lib/validations/fees/feeMaster/feeMaster/type.validation';
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {createType, deleteType, modifyType} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 
 
 

@@ -58,12 +58,12 @@ const HeadsList = ({heads, updateType, form}: any) => {
                             Select
                             {updateType.id === '' ? heads.length > 0 && (
                                 <Checkbox
-                                    checked={form.getValues().heads.length === allHeads.length}
+                                    checked={form.getValues().heads.length === heads.length}
                                     onClick={() => {
-                                        if(form.getValues().heads.length === allHeads.length){
+                                        if(form.getValues().heads.length === heads.length){
                                             form.setValue('heads', []);
                                         }else{
-                                            form.setValue('heads', allHeads);
+                                            form.setValue('heads', heads);
                                         };
                                     }}
                                     className='rounded-[2px] text-hash-color my-[2px]'
@@ -87,7 +87,7 @@ const HeadsList = ({heads, updateType, form}: any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            updateType.id === '' ? 
+                            updateType.id === '' ?
                                 // Free heads 
                                 heads.length < 1 ? (
                                     <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
