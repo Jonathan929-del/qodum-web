@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import { revalidatePath } from 'next/cache';
 
 
 
@@ -280,6 +281,8 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
             });
         };
 
+
+        return 'Modified';
 
     } catch (err) {
         throw new Error(`Error updating class heads: ${err}`);

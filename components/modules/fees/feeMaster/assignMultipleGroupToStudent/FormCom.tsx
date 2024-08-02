@@ -10,6 +10,8 @@ import {Check, ChevronDown, X} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentsByClasses} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {modifyClassHeads} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -22,10 +24,14 @@ import {AssignMultipleGroupToStudentValidation} from '@/lib/validations/fees/fee
 
 
 // Main function
-const FormCom = ({classes, installments, students, setStudents}:any) => {
+const FormCom = () => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // Is students loading
@@ -44,6 +50,28 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const [selectedStudents, setSelectedStudents] = useState([{}]);
 
 
+    // Installments
+    const [installments, setInstallments] = useState([{}]);
+
+
+    // Classes
+    const [classes, setClasses] = useState([{}]);
+
+
+    // Students
+    const [students, setStudents] = useState<any>([]);
+
+
+    // Fetcher
+    const fetcher = async () => {
+        const installmentsRes = await fetchInstallments();
+        const classesRes = await fetchClasses();
+        setInstallments(installmentsRes);
+        setClasses(classesRes);
+        setSelectedClasses(classesRes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+    };
+
+
     // Form
     const form = useForm({
         resolver: zodResolver(AssignMultipleGroupToStudentValidation),
@@ -60,7 +88,10 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     const onSubmit = async (values: z.infer<typeof AssignMultipleGroupToStudentValidation>) => {
         try {
 
+            // Set is loading to true
+            setIsLoading(true);
 
+    
             // Assigning
             await assignMultipleGroupsToStudents({
                 group_name:values.fees_group,
@@ -93,6 +124,10 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
             setSelectedStudents([{}]);
             setSelectedClasses([]);
 
+
+            // Set is loading to false
+            setIsLoading(false);
+
         } catch (err:any) {
             console.log(err);
         }
@@ -119,9 +154,15 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
     }, [selectedClasses]);
     useEffect(() => {
         if(form.getValues().fees_group !== ''){
-            setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+            fetcher();
+            // fetcher().then(() => {
+            //     setSelectedClasses(classes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+            // });
         };
     }, [form.watch('fees_group')]);
+    useEffect(() => {
+        fetcher();
+    }, []);
 
     return (
         <div className='w-[95%] max-w-[1100px] flex flex-col items-center rounded-[8px] sm:w-[95%]'>
@@ -309,7 +350,11 @@ const FormCom = ({classes, installments, students, setStudents}:any) => {
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
                             >
-                                Save
+                                {isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    'Save'
+                                )}
                             </Button>
                         </div>
 
