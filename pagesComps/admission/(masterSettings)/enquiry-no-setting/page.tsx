@@ -1,253 +1,73 @@
 'use client';
 // Imports
-import * as z from 'zod';
-import {useForm} from 'react-hook-form';
-import {ChevronDown} from 'lucide-react';
 import {useEffect, useState} from 'react';
-import {Label} from '@/components/ui/label';
-import {Input} from '@/components/ui/input';
-import {Button} from '@/components/ui/button';
-import {useToast} from '@/components/ui/use-toast';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import {EnquiryNoSettingValidation} from '@/lib/validations/admission/masterSettings/enquiryNoSetting.validation';
-import LoadingIcon from '@/components/utils/LoadingIcon';
+import FormCom from '@/components/modules/admission/masterSettings/enquiryNoSetting/FormCom';
+import ViewCom from '@/components/modules/admission/masterSettings/enquiryNoSetting/ViewCom';
+import {fetchEnquiryNoSettings} from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
+
+
 
 
 
 // Main function
-const page = () => {
+const index = () => {
+
+    // Is view component opened
+    const [isViewOpened, setIsViewOpened] = useState(false);
 
 
-    // Toast
-    const {toast} = useToast();
+    // Enquiry no settings
+    const [enquiryNoSettings, setEnquiryNoSettings] = useState([{}]);
 
 
-    // Sessions
-    const [sessions, setSessions] = useState<any>([{}]);
-
-
-    // Form
-    const form = useForm({
-        resolver: zodResolver(EnquiryNoSettingValidation),
-        defaultValues: {
-            session:'2023-2024',
-            setting_type:localStorage.getItem('setting_type') || 'Automatic',
-            prefix:localStorage.getItem('prefix') || '',
-            start_from:localStorage.getItem('start_from') || '',
-            lead_zero:localStorage.getItem('lead_zero') || '',
-            suffix:localStorage.getItem('suffix') || ''
-        }
+    // Update enquiry no setting
+    const [updateEnquiryNoSetting, setUpdateEnquiryNoSetting] = useState({
+        id:'',
+        isDeleteClicked:false,
+        session:'',
+        enquiry_no_setting_should_be:'Automatic',
+        prefix:'',
+        start_from:0,
+        lead_zero:0,
+        suffix:''
     });
 
-
-    // Submit handler
-    const onSubmit = async (values: z.infer<typeof EnquiryNoSettingValidation>) => {
-        try {
-
-            
-            localStorage.setItem('setting_type', values.setting_type);
-            localStorage.setItem('prefix', values.prefix);
-            localStorage.setItem('start_from', values.start_from);
-            localStorage.setItem('lead_zero', values.lead_zero);
-            localStorage.setItem('suffix', values.suffix);
-            toast({title:'Setting Saved Successfully!'});
-
-        } catch (err:any) {
-            console.log(err);
-        }
-    };
-
-
-
-    // Use effects
+    
+    // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const sessionsRes = await fetchAcademicYears();
-            setSessions(sessionsRes);
+            const res = await fetchEnquiryNoSettings();
+            setEnquiryNoSettings(res);
         };
         fetcher();
-    }, []);
-    useEffect(() => {
-    }, [form.watch('setting_type')]);
-
-
-
-
+    }, [isViewOpened, updateEnquiryNoSetting]);
 
     return (
-        <div className="flex mx-auto py-4 w-full h-full bg-white">
-            <Form
-                {...form}
-            >
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='relative mx-auto w-full sm:w-[1000px]  flex flex-col pt-4 items-center px-2 sm:px-4 sm:gap-2'
-                >
-
-                <div className="w-full flex gap-2 items-start bg-[#f0f0f0] py-4 px-5 lg:items-end flex-col lg:flex-row justify-between text-left">
-                        <div className='me-2 min-w-[150px] flex justify-between lg:justify-start gap-1'>
-                            <FormLabel className='text-xs text-[#726E71] mt-2'>Session</FormLabel>
-                            <FormField
-                                control={form.control}
-                                name='session'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select>
-                                                <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='2023-2024' className='text-xs' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {sessions.length < 1 ? (
-                                                        <p className='text-hash-color text-xs'>No sessions</p>
-                                                    ) : !sessions[0].year_name ? (
-                                                        <LoadingIcon />
-                                                    ) : sessions.map((s:any) => (
-                                                        <SelectItem value={s.year_name} key={s._id}>{s.year_name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="me-2 h-full w-full flex flex-row items-center lg:justify-start lg:w-auto gap-1">
-                            <FormLabel className='text-xs text-[#726E71]  me-3'>Enquiry No. setting should be</FormLabel>
-                            <FormField
-                                control={form.control}
-                                name='setting_type'
-                                render={({ field }) => (
-                                    <FormItem className='max-w-[180px] flex-1 flex flex-col items-center justify-center  sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            {/* @ts-ignore */}
-                                            <RadioGroup defaultValue={form.getValues().setting_type} className='flex gap-2'>
-                                                <RadioGroupItem
-                                                    value='Automatic'
-                                                    onClick={() => form.setValue('setting_type', 'Automatic')}
-                                                />
-                                                <Label className='text-xs text-[#726E71] '>Automatic</Label>
-                                                <RadioGroupItem
-                                                    value='Manual'
-                                                    onClick={() => form.setValue('setting_type', 'Manual')}
-                                                />
-                                                <Label className='text-xs text-[#726E71] '>Manual</Label>
-                                            </RadioGroup>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className='w-full flex item-end justify-end lg:w-auto'>
-                            <Button
-                                type='submit'
-                                className='w-24 px-[8px] mt-5 sm:mt-0 h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                            >
-                                Modify
-                            </Button>
-                        </div>
-
-
-                    </div>
-
-                    <div className="w-full mt-5 sm:mt-2 flex flex-col gap-2 items-center bg-[#f0f0f0] py-4 px-5 xl:flex-row justify-between text-left">
-                        { form.getValues().setting_type === 'Automatic' ? (
-                            <>
-                                <div className="me-2 flex items-center justify-between sm:justify-start gap-[2px]">
-                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Prefix</FormLabel>
-                                    <FormField
-                                        control={form.control}
-                                        name='prefix'
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-[90%] flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[1px] border-[#E4E4E4] placeholder:text-hash-color'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-xs' />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                                <div className="me-2 flex items-center justify-between sm:justify-start gap-1">
-                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Start From</FormLabel>
-                                    <FormField
-                                        control={form.control}
-                                        name='start_from'
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-[90%] flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[1px] border-[#E4E4E4] placeholder:text-hash-color'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-xs' />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                                <div className="me-2 flex items-center justify-between sm:justify-start gap-1">
-                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Lead Zero</FormLabel>
-                                    <FormField
-                                        control={form.control}
-                                        name='lead_zero'
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-[90%] flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[1px] border-[#E4E4E4] placeholder:text-hash-color'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-xs' />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                                <div className="me-2 flex items-center justify-between sm:justify-start gap-1">
-                                    <FormLabel className='text-xs w-[70px] text-[#726E71]'>Suffix</FormLabel>
-                                    <FormField
-                                        control={form.control}
-                                        name='suffix'
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-[90%] flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[1px] border-[#E4E4E4] placeholder:text-hash-color'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-xs' />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            </>
-                        ) : ''}
-
-
-
-
-                    </div>
-
-                </form>
-            </Form>
+        <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
+            {
+                isViewOpened ? (
+                    <ViewCom
+                        setIsViewOpened={setIsViewOpened}
+                        enquiryNoSettings={enquiryNoSettings}
+                        setUpdateEnquiryNoSetting={setUpdateEnquiryNoSetting}
+                    />
+                ) : (
+                    <FormCom
+                        isViewOpened={isViewOpened}
+                        setIsViewOpened={setIsViewOpened}
+                        enquiryNoSettings={enquiryNoSettings}
+                        updateEnquiryNoSetting={updateEnquiryNoSetting}
+                        setUpdateEnquiryNoSetting={setUpdateEnquiryNoSetting}
+                    />
+                )
+            }
         </div>
-    )
-}
+    );
+};
 
 
 
 
 
 // Export
-export default page;
+export default index;

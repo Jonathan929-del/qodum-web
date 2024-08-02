@@ -7,8 +7,8 @@ import * as z from 'zod';
 
 // Admission setting validation
 export const AdmissionSettingValidation = z.object({
-    school:z.string().nonempty({message:'*Please select school'}),
-    class_name:z.string().nonempty({message:'*Please select school'}),
+    school:z.string().nonempty({message:'*Please select a school'}),
+    class_name:z.string().nonempty({message:'*Please select a class'}),
     board:z.string(),
     setting_type:z.string(),
     should_be:z.string(),

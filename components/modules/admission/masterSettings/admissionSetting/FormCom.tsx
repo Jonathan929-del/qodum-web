@@ -300,13 +300,13 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                     <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
                                     <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                         <FormField
-                                            disabled={isAllClasses}
                                             control={form?.control}
                                             name='class_name'
                                             render={({ field }) => (
                                                 <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                                     <FormControl>
                                                         <Select
+                                                            disabled={isAllClasses}
                                                             {...field}
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
