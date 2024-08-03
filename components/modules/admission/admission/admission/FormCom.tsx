@@ -467,6 +467,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             documents:updateStudent.id === '' ? [{document_type:'', document_name:''}] : updateStudent.documents
         }
     });
+    console.log(form.formState.errors);
 
 
     // Submit handler

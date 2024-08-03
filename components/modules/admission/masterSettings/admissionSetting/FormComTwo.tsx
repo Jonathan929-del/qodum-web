@@ -45,11 +45,11 @@ function FormComTwo() {
         resolver:zodResolver(AdmissionSettingTwoValidation),
         defaultValues:{
             session:'',
-            paymode:'',
-            admission_account:'',
-            post_account:'',
-            send_sms_after_enquiry:false,
-            is_auto_roll_no:false
+            paymode:localStorage.getItem('pay_mode') ? localStorage.getItem('pay_mode') : '',
+            admission_account:localStorage.getItem('admission_account') ? localStorage.getItem('admission_account') : '',
+            post_account:localStorage.getItem('post_account') ? localStorage.getItem('post_account') : '',
+            send_sms_after_enquiry:localStorage.getItem('admission_setting_is_send_sms_after_enquiry') ? localStorage.getItem('admission_setting_is_send_sms_after_enquiry') === 'true' : false,
+            is_auto_roll_no:localStorage.getItem('admission_setting_is_auto_roll') ? localStorage.getItem('admission_setting_is_auto_roll') === 'true' : false
         }
     });
 
@@ -57,9 +57,14 @@ function FormComTwo() {
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmissionSettingTwoValidation>) => {
 
+        localStorage.setItem('admission_setting_session', values.session);
         localStorage.setItem('pay_mode', values.paymode);
         localStorage.setItem('admission_account', values.admission_account);
         localStorage.setItem('post_account', values.post_account);
+        // @ts-ignore
+        localStorage.setItem('admission_setting_is_send_sms_after_enquiry', values.send_sms_after_enquiry);
+        // @ts-ignore
+        localStorage.setItem('admission_setting_is_auto_roll', values.is_auto_roll_no);
 
         toast({title:'Saved Successfully!'});
     };

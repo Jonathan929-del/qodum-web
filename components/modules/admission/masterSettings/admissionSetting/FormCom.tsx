@@ -179,8 +179,14 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setSchools(schoolsRes);
             setBoards(boardsRes);
             setClasses(classesRes);
+            // @ts-ignore
+            form.setValue('board', boardsRes.filter((b:any) => b.is_default)[0]?.board);
             if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
                 form.setValue('class_name', 'All Classes');
+                const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
+                const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
+                const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
+                setNumbers(viewNumbers);
             };
         };
         fetcher();
@@ -198,17 +204,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setNumbers(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
         };
     }, [isAllClasses]);
-    useEffect(() => {
-        // @ts-ignore
-        form.setValue('board', boards.filter((b:any) => b.is_default)[0]?.board);
-        if(updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses){
-            form.setValue('class_name', 'All Classes');
-            const allClasses = admissions.filter((a:any) => a.class_name === 'All Classes');
-            const allClassesSetNumbers = allClasses.map((c:any) => c.setting_type);
-            const viewNumbers = numbers.filter((n:any) => !allClassesSetNumbers.includes(n));
-            setNumbers(viewNumbers);
-        };
-    }, [window.onload]);
 
 
     return (
@@ -349,7 +344,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                         <Select
                                                             {...field}
                                                             value={field?.value}
-                                                            // value='CBSE'
                                                             onValueChange={field?.onChange}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
