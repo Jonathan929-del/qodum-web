@@ -23,7 +23,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admissi
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -2937,8 +2937,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                            <SelectItem value='Indian'>Indian</SelectItem>
-                                                            <SelectItem value='British'>British</SelectItem>
+                                                        {nationalities.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No nationalities</p>
+                                                        ) : !nationalities[0].name ? (
+                                                            <LoadingIcon />
+                                                        ) : nationalities.map((t:any) => (
+                                                            <SelectItem value={t.name} id={t._id}>{t.name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

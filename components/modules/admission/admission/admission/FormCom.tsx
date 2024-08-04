@@ -27,7 +27,7 @@ import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} fro
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -467,7 +467,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             documents:updateStudent.id === '' ? [{document_type:'', document_name:''}] : updateStudent.documents
         }
     });
-    console.log(form.formState.errors);
 
 
     // Submit handler
@@ -634,32 +633,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         admission_number:values.others.is_alumni.admission_number
                     },
                     // 4
-                    previous_school_details:[
-                        {
-                            school_name:values.others.previous_school_details[0].school_name,
-                            board:values.others.previous_school_details[0].board,
-                            passing_year:values.others.previous_school_details[0].passing_year,
-                            total_marks:values.others.previous_school_details[0].total_marks,
-                            percentage:values.others.previous_school_details[0].percentage,
-                            result:values.others.previous_school_details[0].result
-                        },
-                        {
-                            school_name:values.others.previous_school_details[1].school_name,
-                            board:values.others.previous_school_details[1].board,
-                            passing_year:values.others.previous_school_details[1].passing_year,
-                            total_marks:values.others.previous_school_details[1].total_marks,
-                            percentage:values.others.previous_school_details[1].percentage,
-                            result:values.others.previous_school_details[1].result
-                        },
-                        {
-                            school_name:values.others.previous_school_details[2].school_name,
-                            board:values.others.previous_school_details[2].board,
-                            passing_year:values.others.previous_school_details[2].passing_year,
-                            total_marks:values.others.previous_school_details[2].total_marks,
-                            percentage:values.others.previous_school_details[2].percentage,
-                            result:values.others.previous_school_details[2].result
-                        }
-                    ]
+                    previous_school_details:previousSchoolsDetails
                 },
 
                 // Guardian details
@@ -702,6 +676,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             || moment(values.parents.father.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.father.dob).format('DD-MM-YYYY')
             || moment(values.parents.mother.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.dob).format('DD-MM-YYYY')
             || moment(values.parents.mother.anniversary_date).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.anniversary_date).format('DD-MM-YYYY')
+            || form.getValues().others.previous_school_details !== previousSchoolsDetails
         ){
             if(comparisonObject.student.adm_no !== values.student.adm_no && students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
                 toast({title:'Admission no. already exists', variant:'error'});
@@ -864,32 +839,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         admission_number:values.others.is_alumni.admission_number
                     },
                     // 4
-                    previous_school_details:[
-                        {
-                            school_name:values.others.previous_school_details[0].school_name,
-                            board:values.others.previous_school_details[0].board,
-                            passing_year:values.others.previous_school_details[0].passing_year,
-                            total_marks:values.others.previous_school_details[0].total_marks,
-                            percentage:values.others.previous_school_details[0].percentage,
-                            result:values.others.previous_school_details[0].result
-                        },
-                        {
-                            school_name:values.others.previous_school_details[1].school_name,
-                            board:values.others.previous_school_details[1].board,
-                            passing_year:values.others.previous_school_details[1].passing_year,
-                            total_marks:values.others.previous_school_details[1].total_marks,
-                            percentage:values.others.previous_school_details[1].percentage,
-                            result:values.others.previous_school_details[1].result
-                        },
-                        {
-                            school_name:values.others.previous_school_details[2].school_name,
-                            board:values.others.previous_school_details[2].board,
-                            passing_year:values.others.previous_school_details[2].passing_year,
-                            total_marks:values.others.previous_school_details[2].total_marks,
-                            percentage:values.others.previous_school_details[2].percentage,
-                            result:values.others.previous_school_details[2].result
-                        }
-                    ]
+                    previous_school_details:previousSchoolsDetails
                 },
 
                 // Guardian details
@@ -1517,6 +1467,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setFatherDob(moment());
         setMotherDob(moment());
         setAnniversaryDate(moment());
+        setPreviousSchoolsDetails([{
+            school_name:'',
+            board:'',
+            passing_year:'',
+            total_marks:'',
+            percentage:'',
+            result:''
+        }]);
     };
 
 
@@ -1868,8 +1826,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     }, [valuesFromRegister]);
     useEffect(() => {
         // @ts-ignore
-        form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
-    }, [window.onload]);
+        form.setValue('student.board', boards.find((b:any) => b.is_default)?.board || '');
+    }, []);
     useEffect(() => {}, [form.watch('others')]);
 
     return (
@@ -1986,6 +1944,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     transportMediums={transportMediums}
                                     bloodGroups={bloodGroups}
                                     casts={casts}
+                                    nationalities={nationalities}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -2003,6 +1962,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                 <Other
                                     form={form}
                                     updateStudent={updateStudent}
+                                    previousSchoolsDetails={previousSchoolsDetails}
+                                    setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='guardian'>
@@ -2043,6 +2004,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                 setFatherDob={setFatherDob}
                                 setMotherDob={setMotherDob}
                                 setAnniversaryDate={setAnniversaryDate}
+                                setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                             />
                         </div>
                     </form>

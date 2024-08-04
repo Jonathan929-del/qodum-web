@@ -15,6 +15,7 @@ import HealthMaster from '@/pagesComps/admission/(globalMasters)/(Student Health
 import DefineTerm from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/define-term/page';
 import StudnetHealthEntry from '@/pagesComps/admission/(globalMasters)/(Student Health Master)/student-health-entry/page';
 import DefineBloodGroup from '@/pagesComps/admission/(globalMasters)/define-blood-group/page';
+import DefineNationality from '@/pagesComps/admission/(globalMasters)/define-nationality/page';
 import DefineRemark from '@/pagesComps/admission/(globalMasters)/define-remark/page';
 import DefineCategory from '@/pagesComps/admission/(globalMasters)/define-category/page';
 import DefineReligion from '@/pagesComps/admission/(globalMasters)/define-religion/page';
@@ -109,8 +110,8 @@ const Home = () => {
     if(openedPages.includes('Define Blood Group')){
       openedPagesArray.push({name:'Define Blood Group', component:<DefineBloodGroup />});
     };
-    if(openedPages.includes('Define Blood Group')){
-      openedPagesArray.push({name:'Define Blood Group', component:<DefineBloodGroup />});
+    if(openedPages.includes('Define Nationality')){
+      openedPagesArray.push({name:'Define Nationality', component:<DefineNationality />});
     };
     if(openedPages.includes('Define Remark')){
       openedPagesArray.push({name:'Define Remark', component:<DefineRemark />});
@@ -221,7 +222,7 @@ const Home = () => {
   }, [openedPages]);
 
   return(
-    <div className='relative h-full w-full'>
+    <div className='relative h-full w-full overflow-hidden'>
       {openedPagesComponents?.map((component:any) => (
         <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
           {component.component}

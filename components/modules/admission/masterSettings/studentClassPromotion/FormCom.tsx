@@ -70,16 +70,16 @@ function FormCom() {
 
 
             // Modifying
-            // students.map(async (s:any) => {
-            //     await modifyAdmittedStudent({
-            //         id:s._id,
-            //         student:s.student,
-            //         parents:s.parents,
-            //         others:s.others,
-            //         guardian_details:s.guardian_details,
-            //         documents:s.documents
-            //     });
-            // });
+            students.map(async (s:any) => {
+                await modifyAdmittedStudent({
+                    id:s._id,
+                    student:s.student,
+                    parents:s.parents,
+                    others:s.others,
+                    guardian_details:s.guardian_details,
+                    documents:s.documents
+                });
+            });
 
             // Reseting
             form.reset({

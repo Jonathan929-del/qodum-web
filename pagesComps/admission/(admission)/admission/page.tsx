@@ -13,6 +13,7 @@ import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.ac
 import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
+import {fetchNationalities} from '@/lib/actions/admission/globalMasters/nationality.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
@@ -477,6 +478,21 @@ const page = () => {
     const [casts, setCasts] = useState<any>([{}]);
 
 
+    // Nationalities
+    const [nationalities, setNationalities] = useState<any>([{}]);
+
+
+    // Previous schools details
+    const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
+        school_name:'',
+        board:'',
+        passing_year:'',
+        total_marks:'',
+        percentage:'',
+        result:''
+    }]);
+
+
     // Use effects
     useEffect(() => {
         const accountGroupsFetcher = async () => {
@@ -502,6 +518,7 @@ const page = () => {
             const transportMediumsRes = await fetchTransportMediums();
             const bloodGroupsRes = await fetchBloodGroups();
             const castsRes = await fetchCastes();
+            const nationalitiesRes = await fetchNationalities();
             setClasses(classesRes);
             setReligions(religionsRes);
             setCategories(categoriesRes);
@@ -514,6 +531,7 @@ const page = () => {
             setTransportMediums(transportMediumsRes);
             setBloodGroups(bloodGroupsRes);
             setCasts(castsRes);
+            setNationalities(nationalitiesRes);
         };
         fetcher();
     }, []);
@@ -530,6 +548,7 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStudent={setUpdateStudent}
                         setValuesFromRegister={setValuesFromRegister}
+                        setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
                 ) : isViewOpened === 'register' ? (
                     <RegisteredStudentsViewCom
@@ -566,6 +585,9 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         transportMediums={transportMediums}
                         bloodGroups={bloodGroups}
                         casts={casts}
+                        nationalities={nationalities}
+                        previousSchoolsDetails={previousSchoolsDetails}
+                        setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
                 )
             }

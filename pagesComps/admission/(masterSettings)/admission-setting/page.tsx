@@ -50,7 +50,7 @@ const page = () => {
 
 
     return (
-        <div className='flex flex-col items-center justify-start pt-10 bg-white'>
+        <div className='h-full flex flex-col items-center justify-start pt-10 pb-10 bg-white overflow-y-scroll custom-sidebar-scrollbar'>
             {
                 isViewOpened ? (
                     <ViewCom
@@ -59,7 +59,7 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                     />
                 ) : (
-                    <div className='w-[90%] h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] mb-[100px] overflow-hidden'>
+                    <div className='w-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
                         <FormComTwo/>
                         <FormCom
                             admissions={admissions}

@@ -11,7 +11,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments, setDob, setDoa, setDoj, setFatherDob, setMotherDob, setAnniversaryDate}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments, setDob, setDoa, setDoj, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails}:any) => {
 
 
     // Cancel click
@@ -609,6 +609,14 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
         setFatherDob(moment());
         setMotherDob(moment());
         setAnniversaryDate(moment());
+        setPreviousSchoolsDetails([{
+            school_name:'',
+            board:'',
+            passing_year:'',
+            total_marks:'',
+            percentage:'',
+            result:''
+        }]);
     };
 
 

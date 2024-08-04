@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments, setPreviousSchoolsDetails}:any) => {
 
 
     // Select handler
@@ -392,6 +392,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects);
         setSelectedDocuments(student?.documents);
+        setPreviousSchoolsDetails(student.others.previous_school_details);
     };
 
 

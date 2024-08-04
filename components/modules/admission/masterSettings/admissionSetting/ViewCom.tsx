@@ -41,7 +41,7 @@ const ViewCom = ({setIsViewOpened, admissions, setUpdateAdmission}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Class Wise Prefix List</h2>
+                <h2>Admission Settings</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>

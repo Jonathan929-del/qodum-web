@@ -196,4 +196,5 @@ export const AdmittedStudentValidation = z.object({
         document_type:z.string(),
         document_name:z.string()
     }))
+
 });

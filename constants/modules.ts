@@ -672,6 +672,9 @@ const modules = [
                         subPageName:'Define Blood Group'
                     },
                     {
+                        subPageName:'Define Nationality'
+                    },
+                    {
                         subPageName:'Define Remark'
                     },
                     {
