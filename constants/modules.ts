@@ -675,6 +675,12 @@ const modules = [
                         subPageName:'Define Nationality'
                     },
                     {
+                        subPageName:'Define Cadet Type'
+                    },
+                    {
+                        subPageName:'Define Club'
+                    },
+                    {
                         subPageName:'Define Remark'
                     },
                     {

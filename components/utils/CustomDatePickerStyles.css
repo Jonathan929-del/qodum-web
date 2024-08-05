@@ -7,3 +7,15 @@ input{
     padding-left:8px;
     border:1px #E4E4E4 solid;
 }
+
+/* Current style for the date picker positioned below the input */
+.tether-element.tether-element-attached-top.tether-element-attached-center.tether-target-attached-bottom.tether-target-attached-center.tether-enabled {
+    position: absolute;
+    z-index: 10;
+}
+
+/* New style for the date picker positioned above the input */
+.tether-element.tether-element-attached-bottom.tether-element-attached-center.tether-target-attached-top.tether-target-attached-center.tether-enabled {
+    position: absolute;
+    z-index:10;
+}

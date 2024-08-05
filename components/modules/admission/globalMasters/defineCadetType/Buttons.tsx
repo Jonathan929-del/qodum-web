@@ -9,38 +9,20 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmission, onSubmit, form, isAllClasses, editableNumbers}:any) => {
+const Buttons = ({setIsViewOpened, cadetTypes, updateCadetType, setUpdateCadetType, onSubmit, form}:any) => {
 
 
     // Cancel click
     const cancelClick = () => {
         // Reseting update entity
-        setUpdateAdmission({
+        setUpdateCadetType({
             id:'',
             isDeleteClicked:false,
-            school:'',
-            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
-            board:'',
-            setting_type:'',
-            should_be:'Automatic',
-            rec_no:0,
-            prefix:'',
-            start_from:'',
-            lead_zero:'',
-            suffix:''
+            name:''
         });
         // Reseting form
         form.reset({
-            school:'',
-            class_name:updateAdmission.id === '' && localStorage.getItem('all_classes') === 'true' || isAllClasses ? 'All Classes' : '',
-            board:'',
-            setting_type:'',
-            should_be:'Automatic',
-            rec_no:0,
-            prefix:'',
-            start_from:'',
-            lead_zero:'',
-            suffix:''
+            name:''
         });
     };
 
@@ -52,7 +34,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     return (
         <div className='flex flex-row items-center justify-center pb-4 mt-10 gap-2 ml-0'>
             {
-                updateAdmission.id === '' ? (
+                updateCadetType.id === '' ? (
                     <Button
                         type='submit'
                         className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
@@ -67,7 +49,6 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                         {/* Modify button */}
                         <AlertDialog>
                             <AlertDialogTrigger
-                                disabled={!editableNumbers.includes(updateAdmission.setting_type)}
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
                                 hover:border-[#790AE0] hover:from-[#8f3cdd40] hover:to-[#8f3cdd40] hover:text-[#790AE0] sm:text-[16px] sm:px-4'
                             >
@@ -95,10 +76,9 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                         {/* Delete button */}
                         <AlertDialog>
                             <AlertDialogTrigger
-                                disabled={!editableNumbers.includes(updateAdmission.setting_type)}
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
-                                onClick={() => setUpdateAdmission({...updateAdmission, isDeleteClicked:true})}
+                                onClick={() => setUpdateCadetType({...updateCadetType, isDeleteClicked:true})}
                             >
                                 Delete
                             </AlertDialogTrigger>
@@ -108,7 +88,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel
-                                        onClick={() => setUpdateAdmission({...updateAdmission, isDeleteClicked:false})}
+                                        onClick={() => setUpdateCadetType({...updateCadetType, isDeleteClicked:false})}
                                     >
                                         No
                                     </AlertDialogCancel>
@@ -137,7 +117,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
 
             {/* Print button */}
-            <PrintButton admissions={admissions}/>
+            <PrintButton cadetTypes={cadetTypes}/>
 
 
             {/* Cancel button */}

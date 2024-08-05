@@ -172,8 +172,8 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
     // Last number handler
     const lastNumberHandler = () => {
-        const number = enquiries[enquiries.length - 1].enquiry_no;
-        setLastNumber(number);
+        const number = enquiries[enquiries.length - 1]?.enquiry_no;
+        setLastNumber(number || '');
     };
 
 

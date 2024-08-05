@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import EnquiryNoSetting from '@/lib/models/admission/masterSettings/EnquiryNoSetting.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
 
 
 
@@ -118,5 +119,28 @@ export const deleteEnquiryNoSetting = async ({id}:{id:String}) => {
 
     } catch (err) {
         throw new Error(`Error deleting enquiry no setting: ${err}`);      
+    };
+};
+
+
+
+
+
+// Is enquiry no editable
+export const isEnquiryNumberEditable = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching enquiries count
+        const enquiriesCount = await Enquiry.countDocuments();
+
+
+        return enquiriesCount > 0 ? 0 : 1;
+        
+    }catch(err){
+        console.log(err);  
     };
 };

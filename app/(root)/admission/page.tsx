@@ -26,6 +26,8 @@ import DefineParish from '@/pagesComps/admission/(globalMasters)/define-parish/p
 import DefineHouse from '@/pagesComps/admission/(globalMasters)/define-house/page';
 import DefineStream from '@/pagesComps/admission/(globalMasters)/define-stream/page';
 import DefineSubject from '@/pagesComps/admission/(globalMasters)/define-subject/page';
+import DefineCadetType from '@/pagesComps/admission/(globalMasters)/define-cadet-type/page';
+import DefineClub from '@/pagesComps/admission/(globalMasters)/define-club/page';
 import DefineOptionalSubject from '@/pagesComps/admission/(globalMasters)/define-optional-subject/page';
 import DefineDocumentType from '@/pagesComps/admission/(globalMasters)/define-document-type/page';
 import ImportStudent from '@/pagesComps/admission/(globalMasters)/import-student/page';
@@ -142,6 +144,12 @@ const Home = () => {
     };
     if(openedPages.includes('Define Subject')){
       openedPagesArray.push({name:'Define Subject', component:<DefineSubject />});
+    };
+    if(openedPages.includes('Define Cadet Type')){
+      openedPagesArray.push({name:'Define Cadet Type', component:<DefineCadetType />});
+    };
+    if(openedPages.includes('Define Club')){
+      openedPagesArray.push({name:'Define Club', component:<DefineClub />});
     };
     if(openedPages.includes('Define Optional Subject')){
       openedPagesArray.push({name:'Define Optional Subject', component:<DefineOptionalSubject />});

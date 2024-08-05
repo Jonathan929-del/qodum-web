@@ -23,7 +23,7 @@ import {createEnquiryNoSetting, deleteEnquiryNoSetting, modifyEnquiryNoSetting} 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, setUpdateEnquiryNoSetting}:any) => {
+const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, setUpdateEnquiryNoSetting, isEnquiryNoEditable}:any) => {
 
 
     // Toast
@@ -120,7 +120,10 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
     const modifyHandler = async () => {
         try {
 
-            
+            if(!isEnquiryNoEditable){
+                toast({title:"Can't edit enquiry number setting", variant:'alert'});
+                return;
+            };
             localStorage.setItem('enquiry_no_setting_should_be', form.getValues().enquiry_no_setting_should_be);
             localStorage.setItem('prefix', form.getValues().prefix);
             localStorage.setItem('start_from', form.getValues().start_from);

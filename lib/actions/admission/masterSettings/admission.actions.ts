@@ -1,6 +1,9 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
+import Student from '@/lib/models/admission/admission/Student.model';
+import Prospectus from '@/lib/models/admission/admission/Prospectus.model';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Admission from '@/lib/models/admission/masterSettings/admissionSetting/Admission.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
@@ -176,5 +179,44 @@ export const fetchClassNumbers = async ({class_name}:{class_name:String}) => {
 
     } catch (err) {
         throw new Error(`Error fetching admission: ${err}`);      
+    };
+};
+
+
+
+
+
+// Get editable numbers
+export const getEditableNumbers = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Editable numbers
+        let editableNumbers = [];
+
+
+        // Fetching students count
+        const studentsCount = await Student.countDocuments();
+        studentsCount < 1 && editableNumbers.push('Registration No. (Online)', 'Registration No.');
+
+
+        // Fetching admitted students count
+        const admittedStudentsCount = await AdmittedStudent.countDocuments();
+        admittedStudentsCount < 1 && editableNumbers.push('Admission No.');
+
+
+        // Prospectus count
+        const prospectusesCount = await Prospectus.countDocuments();
+        prospectusesCount < 1 && editableNumbers.push('Prospectus No.');
+
+
+        // Return
+        return editableNumbers;
+        
+    }catch(err){
+        console.log(`Error while fetching uneditable numbers`);
     };
 };

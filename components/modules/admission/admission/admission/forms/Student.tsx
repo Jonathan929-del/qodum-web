@@ -23,7 +23,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admissi
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, cadetTypes, clubs}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -2392,7 +2392,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='Type'>Type</SelectItem>
+                                                        {cadetTypes.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No cadet types</p>
+                                                        ) : !cadetTypes[0].name ? (
+                                                            <LoadingIcon />
+                                                        ) : cadetTypes.map((i:any) => (
+                                                            <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
@@ -2423,7 +2429,13 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='Club'>Club</SelectItem>
+                                                        {clubs.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No clubs</p>
+                                                        ) : !clubs[0].name ? (
+                                                            <LoadingIcon />
+                                                        ) : clubs.map((i:any) => (
+                                                            <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

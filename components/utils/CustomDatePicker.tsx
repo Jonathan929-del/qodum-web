@@ -15,14 +15,16 @@ const MyDatePicker = ({selectedDate, setSelectedDate}) => {
   moment.locale('en-gb');
 
   return (
-    <DatePicker
-      value={selectedDate}
-      onChange={(date:any) => setSelectedDate(date)}
-      timePicker={false}
-      // @ts-ignore
-      dateFormat='D/MM/YYYY'
-      inputFormat='DD/MM/YYYY'
-    />
+    <div className='relative'>
+      <DatePicker
+        value={selectedDate}
+        onChange={(date:any) => setSelectedDate(date)}
+        timePicker={false}
+        // @ts-ignore
+        dateFormat='D/MM/YYYY'
+        inputFormat='DD/MM/YYYY'
+      />
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 // Imports
 import * as z from 'zod';
 import moment from 'moment';
-import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
 import StudentsList from './StudentList';
 import {ChevronDown} from 'lucide-react';
@@ -286,7 +285,7 @@ function FormCom() {
                             render={() => (
                                 <FormItem className='relative w-full flex flex-col'>
                                     <FormLabel className='pr-2 h-2 text-start text-[11px] text-[#726E71]'>Adm. Date To</FormLabel>
-                                    <div className='w-full'>
+                                    <div className='w-full overflow-visible relative'>
                                         <MyDatePicker
                                             selectedDate={admissionDateTo}
                                             setSelectedDate={setAdmissionDateTo}

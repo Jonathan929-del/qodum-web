@@ -27,7 +27,7 @@ import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} fro
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails, cadetTypes, clubs}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -1945,6 +1945,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     bloodGroups={bloodGroups}
                                     casts={casts}
                                     nationalities={nationalities}
+                                    cadetTypes={cadetTypes}
+                                    clubs={clubs}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>

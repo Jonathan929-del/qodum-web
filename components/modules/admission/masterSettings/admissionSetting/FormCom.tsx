@@ -18,7 +18,7 @@ import {FormControl, Form, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admission.validation';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import {createAdmission, deleteAdmission, modifyAdmission} from '@/lib/actions/admission/masterSettings/admission.actions';
+import {createAdmission, deleteAdmission, getEditableNumbers, modifyAdmission} from '@/lib/actions/admission/masterSettings/admission.actions';
 
 
 
@@ -49,6 +49,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
     // Numbers
     const [numbers, setNumbers] = useState(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+
+
+    // Editable numbers
+    const [editableNumbers, setEditableNumbers] = useState(['']);
 
 
     // Comparison object
@@ -175,9 +179,11 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             const schoolsRes = await fetchGlobalSchoolDetails();
             const boardsRes = await fetchBoards();
             const classesRes = await fetchClasses();
+            const editableNumbersRes = await getEditableNumbers();
             setSchools(schoolsRes);
             setBoards(boardsRes);
             setClasses(classesRes);
+            setEditableNumbers(editableNumbersRes);
             // @ts-ignore
             form.setValue('board', boardsRes.filter((b:any) => b.is_default)[0]?.board);
         };
@@ -542,7 +548,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
                 
                 {/* Buttons */}
-                <Buttons setIsViewOpened={setIsViewOpened} admissions={admissions} updateAdmission={updateAdmission} setUpdateAdmission={setUpdateAdmission} onSubmit={onSubmit} isAllClasses={isAllClasses} form={form}/>
+                <Buttons setIsViewOpened={setIsViewOpened} admissions={admissions} updateAdmission={updateAdmission} setUpdateAdmission={setUpdateAdmission} onSubmit={onSubmit} isAllClasses={isAllClasses} form={form} editableNumbers={editableNumbers}/>
             </form>
         </Form>
     )

@@ -3,7 +3,7 @@
 import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/admission/masterSettings/enquiryNoSetting/FormCom';
 import ViewCom from '@/components/modules/admission/masterSettings/enquiryNoSetting/ViewCom';
-import {fetchEnquiryNoSettings} from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
+import {fetchEnquiryNoSettings, isEnquiryNumberEditable} from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
 
 
 
@@ -18,6 +18,10 @@ const index = () => {
 
     // Enquiry no settings
     const [enquiryNoSettings, setEnquiryNoSettings] = useState([{}]);
+
+
+    // Is enquiry number editable
+    const [isEnquiryNoEditable, setIsEnquiryNoEditable] = useState(true);
 
 
     // Update enquiry no setting
@@ -37,7 +41,9 @@ const index = () => {
     useEffect(() => {
         const fetcher = async () => {
             const res = await fetchEnquiryNoSettings();
+            const isEnquiryEditableRes = await isEnquiryNumberEditable();
             setEnquiryNoSettings(res);
+            setIsEnquiryNoEditable(isEnquiryEditableRes === 1);
         };
         fetcher();
     }, [isViewOpened, updateEnquiryNoSetting]);
@@ -53,6 +59,7 @@ const index = () => {
                     />
                 ) : (
                     <FormCom
+                        isEnquiryNoEditable={isEnquiryNoEditable}
                         isViewOpened={isViewOpened}
                         setIsViewOpened={setIsViewOpened}
                         enquiryNoSettings={enquiryNoSettings}

@@ -327,6 +327,8 @@ const page = () => {
             setCasts(castsRes);
             setStudents(studentsRes);
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
+            console.log(studentsRes.map((s:any) => s.student?.enquiry_no));
+            console.log(enquiriesRes);
         };
         fetcher();
     }, [isViewOpened, updateStudent]);

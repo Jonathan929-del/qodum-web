@@ -19,6 +19,8 @@ import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedS
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
+import { fetchCadetTypes } from '@/lib/actions/admission/globalMasters/cadetType.actions';
+import { fetchClubs } from '@/lib/actions/admission/globalMasters/club.actions';
 
 
 
@@ -482,6 +484,14 @@ const page = () => {
     const [nationalities, setNationalities] = useState<any>([{}]);
 
 
+    // Cadet types
+    const [cadetTypes, setCadetTypes] = useState<any>([{}]);
+
+
+    // Clubs
+    const [clubs, setClubs] = useState<any>([{}]);
+
+
     // Previous schools details
     const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
         school_name:'',
@@ -519,6 +529,8 @@ const page = () => {
             const bloodGroupsRes = await fetchBloodGroups();
             const castsRes = await fetchCastes();
             const nationalitiesRes = await fetchNationalities();
+            const cadetTypesRes = await fetchCadetTypes();
+            const clubsRes = await fetchClubs();
             setClasses(classesRes);
             setReligions(religionsRes);
             setCategories(categoriesRes);
@@ -532,6 +544,8 @@ const page = () => {
             setBloodGroups(bloodGroupsRes);
             setCasts(castsRes);
             setNationalities(nationalitiesRes);
+            setCadetTypes(cadetTypesRes);
+            setClubs(clubsRes);
         };
         fetcher();
     }, []);
@@ -588,6 +602,8 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         nationalities={nationalities}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                        cadetTypes={cadetTypes}
+                        clubs={clubs}
                     />
                 )
             }
