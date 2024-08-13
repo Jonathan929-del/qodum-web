@@ -17,6 +17,7 @@ import FormCom from '@/components/modules/admission/admission/admissionFormRegis
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
+import { fetchNationalities } from '@/lib/actions/admission/globalMasters/nationality.actions';
 
 
 
@@ -298,6 +299,10 @@ const page = () => {
     const [casts, setCasts] = useState([{}]);
 
 
+    // Nationalities
+    const [nationalities, setNationlaities] = useState([{}]);
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
@@ -314,6 +319,7 @@ const page = () => {
             const admissionAccountRes = await fetchGeneralLedgers();
             const bloodGroupsRes = await fetchBloodGroups();
             const castsRes = await fetchCastes();
+            const nationalitiesRes = await fetchNationalities();
             setClasses(classesRes);
             setBoards(boardsRes);
             setStreams(streamsRes);
@@ -327,8 +333,8 @@ const page = () => {
             setCasts(castsRes);
             setStudents(studentsRes);
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
-            console.log(studentsRes.map((s:any) => s.student?.enquiry_no));
-            console.log(enquiriesRes);
+            setNationlaities(nationalitiesRes);
+
         };
         fetcher();
     }, [isViewOpened, updateStudent]);
@@ -376,6 +382,7 @@ const page = () => {
                         admissionAccounts={admissionAccounts}
                         bloodGroups={bloodGroups}
                         casts={casts}
+                        nationalities={nationalities}
                     />
                 )
             }

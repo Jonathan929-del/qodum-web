@@ -65,14 +65,14 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             receipt_no:'',
             remarks:'',
             installment:'',
-            pay_mode:'',
+            pay_mode:localStorage.getItem('fee_pay_mode_used') ? localStorage.getItem('fee_pay_mode_used') : '',
             pay_mode_details:{},
 
 
             // Form inputs
             fee_type:'All fee types',
             bank_name:'',
-            entry_mode:'School',
+            entry_mode:localStorage.getItem('fee_entry_mode_used') ? localStorage.getItem('fee_entry_mode_used') : 'School',
             total_paid_amount:0,
             dues:0,
             advance_amt:0
@@ -83,9 +83,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     // Submit handler
     const onSubmit = async (values:z.infer<typeof FeeEntryValidation>) => {
 
-
         // Is loading
         setIsLoading(true);
+
         // Unchanged heads
         const unChangedHeads = selectedStudent.affiliated_heads.heads.filter((studentHead:any) => !heads.map((head:any) => head.head_name).includes(studentHead.head_name)).map((studentHead:any) => {
             return {
@@ -246,12 +246,14 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         };
 
         // Fee receipt
-        setReceiptPaymentData({
-            ...res,
-            installments:selectedInstallments,
-            paid_heads:paidHeads
-        });
-        setIsReceiptOpened(true);
+        if(localStorage.getItem('print_fee_receipt_after_save') ? localStorage.getItem('print_fee_receipt_after_save') === 'true' : false){
+            setReceiptPaymentData({
+                ...res,
+                installments:selectedInstallments,
+                paid_heads:paidHeads
+            });
+            setIsReceiptOpened(true);
+        };
 
 
         // Toast

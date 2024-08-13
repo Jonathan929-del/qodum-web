@@ -4,6 +4,8 @@ import Image from 'next/image';
 import {Menu} from 'lucide-react';
 import modules from '@/constants/modulesHome';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
+import { useContext } from 'react';
+import { GlobalStateContext } from '@/context/GlobalStateContext';
 
 
 
@@ -11,6 +13,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 // Main function
 const DropdownMenuCom = () => {
+
+    // Opened pages
+    const {setOpenedPages} = useContext(GlobalStateContext);
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className='outline-none flex justify-center items-center border-2 text-hash-color border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
@@ -24,6 +30,7 @@ const DropdownMenuCom = () => {
                 {modules.map(module => (
                     <Link
                         href={`/${module.title.toLowerCase().replace(/\s+/g,"-")}`}
+                        onClick={() => setOpenedPages([])}
                     >
                         <DropdownMenuItem className='h-full w-full py-0 px-0 cursor-pointer'>
                             <div

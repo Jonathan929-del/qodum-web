@@ -67,7 +67,6 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                         {/* Modify button */}
                         <AlertDialog>
                             <AlertDialogTrigger
-                                disabled={!editableNumbers.includes(updateAdmission.setting_type)}
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#790AE0] to-[#8f3cdd] rounded-full transition border-[1px] border-white
                                 hover:border-[#790AE0] hover:from-[#8f3cdd40] hover:to-[#8f3cdd40] hover:text-[#790AE0] sm:text-[16px] sm:px-4'
                             >
@@ -95,7 +94,6 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                         {/* Delete button */}
                         <AlertDialog>
                             <AlertDialogTrigger
-                                disabled={!editableNumbers.includes(updateAdmission.setting_type)}
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
                                 hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b] sm:text-[16px] sm:px-4'
                                 onClick={() => setUpdateAdmission({...updateAdmission, isDeleteClicked:true})}

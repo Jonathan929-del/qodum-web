@@ -31,7 +31,7 @@ const index = () => {
         session:'',
         enquiry_no_setting_should_be:'Automatic',
         prefix:'',
-        start_from:0,
+        start_from:'',
         lead_zero:0,
         suffix:''
     });

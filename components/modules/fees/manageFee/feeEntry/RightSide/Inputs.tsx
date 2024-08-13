@@ -43,15 +43,12 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
     useEffect(() => {
         switch (form.getValues().entry_mode) {
             case 'School':
-                form.setValue('pay_mode', 'Cash');
                 setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
                 break;
             case 'Bank':
-                form.setValue('pay_mode', 'Cash');
                 setPayModes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
                 break;
             case 'Online':
-                form.setValue('pay_mode', 'Net Banking');
                 setPayModes(['Payment Gateway', 'Net Banking', 'Debit Card', 'Credit Card']);
                 break;
             default:

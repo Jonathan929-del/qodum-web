@@ -90,6 +90,13 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmissionSettingValidation>) => {
+
+        // Checking if number is in use
+        if(!editableNumbers.includes(updateAdmission.setting_type)){
+            toast({title:"Can't edit number while in use", variant:'alert'});
+            return;
+        };
+
         // Create setting
         if(updateAdmission.id === ''){
             if(values.prefix !== '' && admissions.map((a:any) => a.prefix).includes(values.prefix)){
@@ -114,6 +121,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             };
             toast({title:'Added Successfully!'});
         }
+
         // Modify setting
         else if(!deepEqual(comparisonObject, values)){
             if(values.prefix !== '' && comparisonObject.prefix !== values.prefix && admissions.map((a:any) => a.prefix).includes(values.prefix)){
@@ -135,12 +143,12 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             });
             toast({title:'Updated Successfully!'});
         }
+
         // Delete setting
         else if(updateAdmission.isDeleteClicked){
             await deleteAdmission({id:updateAdmission.id});
             toast({title:'Deleted Successfully!'});
         };
-
 
         // Reseting update entity
         setUpdateAdmission({
@@ -170,6 +178,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             lead_zero:'',
             suffix:''
         });
+
     };
 
 
@@ -386,11 +395,14 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {numbers.length < 1 ? (
+                                                        {numbers.length < 1 && updateAdmission.id === '' ? (
                                                             <span>No numbers to set</span>
                                                         ) : numbers.map((n:any) => (
                                                             <SelectItem value={n}>{n}</SelectItem>
                                                         ))}
+                                                        {updateAdmission.id !== '' && (
+                                                            <SelectItem value={updateAdmission.setting_type}>{updateAdmission.setting_type}</SelectItem>
+                                                        )}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

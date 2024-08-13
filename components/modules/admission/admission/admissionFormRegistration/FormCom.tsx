@@ -24,7 +24,7 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts, nationalities}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -1590,6 +1590,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     bloodGroups={bloodGroups}
                                     casts={casts}
                                     subjects={subjects}
+                                    nationalities={nationalities}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>

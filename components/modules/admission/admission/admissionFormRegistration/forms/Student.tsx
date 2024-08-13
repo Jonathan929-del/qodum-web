@@ -21,7 +21,7 @@ import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stat
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts, nationalities}:any) => {
 
     // Search
     const [search, setSearch] = useState('');
@@ -1598,8 +1598,14 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                        <SelectItem value='Indian'>Indian</SelectItem>
-                                                        <SelectItem value='British'>British</SelectItem>
+                                                    {nationalities?.length < 1 ? (
+                                                        <p>No nationalities</p>
+                                                        // @ts-ignore
+                                                    ) : !nationalities[0]?.name ? (
+                                                        <LoadingIcon />
+                                                    ) : nationalities?.map((item:any) => (
+                                                        <SelectItem value={item?.name} key={item?._id}>{item?.name}</SelectItem>
+                                                    ))}
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>

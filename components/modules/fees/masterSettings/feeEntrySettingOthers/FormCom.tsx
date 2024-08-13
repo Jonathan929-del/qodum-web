@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
@@ -11,8 +11,8 @@ import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {Select, SelectContent, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
 
 
@@ -23,17 +23,16 @@ import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSett
 // Main function
 const FormCom = () => {
 
-
     // Toast
     const {toast} = useToast();
 
 
-    // Opened Form
-    const [openedFormName, setOpenedFormName] = useState('generate-single-receipt');
+    // Paymodes
+    const [paymodes, setPaymodes] = useState(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
 
 
-    // Selected Form Com
-    const [selectedFormCom, setSelectedFormCom] = useState<any>();
+    // Entry modes
+    const entryModes = ['School', 'Bank', 'Online'];
 
 
     // Form
@@ -42,8 +41,8 @@ const FormCom = () => {
         defaultValues:{
             // Page 1
             concession:'',
-            fee_entry_mode_used:'',
-            fee_pay_mode_used:'',
+            fee_entry_mode_used:localStorage.getItem('fee_entry_mode_used') ? localStorage.getItem('fee_entry_mode_used') : '',
+            fee_pay_mode_used:localStorage.getItem('fee_pay_mode_used') ? localStorage.getItem('fee_pay_mode_used') : '',
             cheque_bounce_fine:'',
             waive_off:false,
             waive_off_option:false,
@@ -61,7 +60,7 @@ const FormCom = () => {
             advance_receipt_acceptance:false,
             discount:false,
             reuse_fee_receipt_no:false,
-            print_fee_receipt_after_save:false,
+            print_fee_receipt_after_save:localStorage.getItem('print_fee_receipt_after_save') ? localStorage.getItem('print_fee_receipt_after_save') === 'true' : false,
             modify_cheque_details:false,
             sms_after_fee_entry:false,
             payment_from_mid_year:false,
@@ -97,15 +96,24 @@ const FormCom = () => {
     const onSubmit = async (values:z.infer<typeof FeeEntrySettingOthersValidation>) => {
         try {
 
-
+            // Setting local storage
+            if(values.print_fee_receipt_after_save){
+                localStorage.setItem('print_fee_receipt_after_save', JSON.stringify(values.print_fee_receipt_after_save));
+            };
+            if(values.fee_pay_mode_used){
+                localStorage.setItem('fee_pay_mode_used', values.fee_pay_mode_used);
+            };
+            if(values.fee_entry_mode_used){
+                localStorage.setItem('fee_entry_mode_used', values.fee_entry_mode_used);
+            };
             toast({title:'Saved Successfully'});
 
             // Reseting form
             form.reset({
                 // Page 1
                 concession:'',
-                fee_entry_mode_used:'',
-                fee_pay_mode_used:'',
+                fee_entry_mode_used:values.fee_entry_mode_used,
+                fee_pay_mode_used:values.fee_pay_mode_used,
                 cheque_bounce_fine:'',
                 waive_off:false,
                 waive_off_option:false,
@@ -123,7 +131,7 @@ const FormCom = () => {
                 advance_receipt_acceptance:false,
                 discount:false,
                 reuse_fee_receipt_no:false,
-                print_fee_receipt_after_save:false,
+                print_fee_receipt_after_save:values.print_fee_receipt_after_save,
                 modify_cheque_details:false,
                 sms_after_fee_entry:false,
                 payment_from_mid_year:false,
@@ -157,7 +165,6 @@ const FormCom = () => {
             console.log(err.message);
         }
     };
-
 
     // Dropdowns
     const dropdowns = (
@@ -205,15 +212,17 @@ const FormCom = () => {
                                 <FormControl>
                                     <Select
                                         {...field}
-                                        value=''
+                                        value={field.value}
                                         onValueChange={field.onChange}
                                     >
                                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                                            <SelectValue placeholder='School'/>
+                                            <SelectValue placeholder='Please Select'/>
                                             <ChevronDown className='h-4 w-4 opacity-50'/>
                                         </SelectTrigger>
                                         <SelectContent>
-
+                                            {entryModes.map((m:any) => (
+                                                <SelectItem value={m} key={m}>{m}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -235,15 +244,17 @@ const FormCom = () => {
                                 <FormControl>
                                     <Select
                                         {...field}
-                                        value=''
+                                        value={field.value}
                                         onValueChange={field.onChange}
                                     >
                                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                                            <SelectValue placeholder='Cash'/>
+                                            <SelectValue placeholder='Please Select'/>
                                             <ChevronDown className='h-4 w-4 opacity-50'/>
                                         </SelectTrigger>
                                         <SelectContent>
-
+                                            {paymodes.map((m:any) => (
+                                                <SelectItem value={m} key={m}>{m}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -1343,6 +1354,17 @@ const FormCom = () => {
         </>
     );
 
+
+    // Use effect
+    useEffect(() => {
+        if(form.getValues().fee_entry_mode_used === 'School' || form.getValues().fee_entry_mode_used === 'Bank'){
+            setPaymodes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
+            form.setValue('fee_pay_mode_used', 'Cash');
+        }else{
+            setPaymodes(['Payment Gateway', 'Net Banking', 'Debit Card', 'Credit Card']);
+            form.setValue('fee_pay_mode_used', 'Payment Gateway');
+        };
+    }, [form.watch('fee_entry_mode_used')]);
 
     return (
         <div className='w-[90%] h-[90%] max-w-[1100px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8]'>

@@ -115,7 +115,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             // Update
             await modifyEnquiry({
                 id:updateEnquiry.id,
-                enquiry_no:localStorage.getItem('setting_type') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
+                enquiry_no:localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
                 enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
@@ -188,20 +188,20 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         };
         fetcher();
         // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
+        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${Number(localStorage.getItem('start_from')) + enquiries.length}${localStorage.getItem('suffix')}`;
         if(updateEnquiry.id !== ''){
             form.setValue('enquiry_no', updateEnquiry.enquiry_no);
         }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
         };
     }, []);
     useEffect(() => {
         // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${enquiries.length + 1}${localStorage.getItem('suffix')}`;
+        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${Number(localStorage.getItem('start_from')) + enquiries.length}${localStorage.getItem('suffix')}`;
         if(updateEnquiry.id !== ''){
             form.setValue('enquiry_no', updateEnquiry.enquiry_no);
         }else{
-            form.setValue('enquiry_no', localStorage.getItem('setting_type') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
         };
     }, [enquiries, updateEnquiry]);
     useEffect(() => {
@@ -251,7 +251,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
+                                                    disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
                                                     className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>
@@ -271,7 +271,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    disabled={localStorage.getItem('setting_type') === 'Automatic' ? true : false}
+                                                    disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
                                                     className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>

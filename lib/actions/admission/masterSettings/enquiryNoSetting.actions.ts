@@ -1,9 +1,8 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import EnquiryNoSetting from '@/lib/models/admission/masterSettings/EnquiryNoSetting.model';
-import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import Enquiry from '@/lib/models/admission/admission/Enquiry.model';
+import EnquiryNoSetting from '@/lib/models/admission/masterSettings/EnquiryNoSetting.model';
 
 
 
@@ -15,7 +14,7 @@ interface CreateEnquiryNoProps{
     enquiry_no_setting_should_be:String;
     prefix:String;
     start_from:Number;
-    lead_zero:Number;
+    lead_zero:String;
     suffix:String;
 };
 // Create enquiry no setting
@@ -75,7 +74,7 @@ interface ModifyEnquiryNoProps{
     enquiry_no_setting_should_be:String;
     prefix:String;
     start_from:Number;
-    lead_zero:Number;
+    lead_zero:String;
     suffix:String;
 }
 // Modify enquiry no setting

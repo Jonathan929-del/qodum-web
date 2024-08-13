@@ -19,3 +19,17 @@ input{
     position: absolute;
     z-index:10;
 }
+
+
+/* Main container */
+.calendarContainer {
+    width: 240px !important;  /* Adjust the width */
+    padding: 10px !important; /* Adjust padding */
+    font-size: 0.9em !important; /* Scale down the entire component */
+}
+
+/* Adjust day button size */
+.calendarContainer .dayWrapper button {
+    width: 30px !important;  /* Adjust day button width */
+    height: 30px !important; /* Adjust day button height */
+}

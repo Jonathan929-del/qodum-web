@@ -15,7 +15,6 @@ const MyDatePicker = ({selectedDate, setSelectedDate}) => {
   moment.locale('en-gb');
 
   return (
-    <div className='relative'>
       <DatePicker
         value={selectedDate}
         onChange={(date:any) => setSelectedDate(date)}
@@ -24,7 +23,6 @@ const MyDatePicker = ({selectedDate, setSelectedDate}) => {
         dateFormat='D/MM/YYYY'
         inputFormat='DD/MM/YYYY'
       />
-    </div>
   );
 };
 

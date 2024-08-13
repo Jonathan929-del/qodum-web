@@ -26,6 +26,7 @@ const index = ({selectedStudent}:any) => {
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Name:</p>
                 <p>{selectedStudent.name}</p>
+                {selectedStudent.is_new && <span className='px-[2px] text-[11px] text-[#4CA7DE] rounded-[4px] border-[0.5px] border-[#4CA7DE]'>New</span>}
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p className='text-hash-color'>Address:</p>
