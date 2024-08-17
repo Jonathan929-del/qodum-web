@@ -186,12 +186,12 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
                         start_date:{
                             day:values.start_date.day,
                             month:values.start_date.month,
-                            year:JSON.stringify(Number(values.start_date.year) + 1),
+                            year:JSON.stringify(Number(values.start_date.year) + i),
                         },
                         end_date:{
                             day:values.end_date.day,
                             month:values.end_date.month,
-                            year:JSON.stringify(Number(values.end_date.year) + 1),
+                            year:JSON.stringify(Number(values.end_date.year) + i),
                         },
                         is_active:false,
                     });
@@ -296,12 +296,14 @@ const FormCom = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
         if(form.getValues().start_date.year !== '' && form.getValues().start_date.month !== ''){
             const daysLoopFuncResult = daysLoop(form.getValues().start_date.year, form.getValues().start_date.month);
             setStartDaysInTheMonth(daysLoopFuncResult);
+            form.setValue('start_date.day', updateAcademicYear.start_date.day);
         }
     }, [form.watch('start_date.year'), form.watch('start_date.month')]);
     useEffect(() => {
         if(form.getValues().end_date.year !== '' && form.getValues().end_date.month !== ''){
             const daysLoopFuncResult = daysLoop(form.getValues().end_date.year, form.getValues().end_date.month);
             setEndDaysInTheMonth(daysLoopFuncResult);
+            form.setValue('end_date.day', updateAcademicYear.end_date.day);
         }
     }, [form.watch('end_date.year'), form.watch('end_date.month')]);
     useEffect(() => {
