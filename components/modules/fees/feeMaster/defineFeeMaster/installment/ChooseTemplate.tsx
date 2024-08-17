@@ -307,25 +307,25 @@ const ChooseTemplate = ({setIsTemplatesOpened}:any) => {
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center pb-2 gap-10'>
             <p>Choose installments structure:</p>
-            <ul className='w-[50%] flex flex-row items-center justify-between'>
+            <ul className='w-[60%] flex flex-row items-center justify-between'>
                 <li
                     onClick={() => clickHandler('Monthly')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#51B272] rounded-full transition border-[1px] border-white cursor-pointer
-                            hover:opacity-70 sm:text-[16px] sm:px-4'
+                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#6BCDFD] rounded-full transition border-[1px] border-white cursor-pointer
+                            hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Monthly
                 </li>
                 <li
                     onClick={() => clickHandler('Quarterly')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#51B272] rounded-full transition border-[1px] border-white cursor-pointer
-                            hover:opacity-70 sm:text-[16px] sm:px-4'
+                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#699CFC] rounded-full transition border-[1px] border-white cursor-pointer
+                            hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Quarterly
                 </li>
                 <li
                     onClick={() => clickHandler('Custom')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#51B272] rounded-full transition border-[1px] border-white cursor-pointer
-                            hover:opacity-70 sm:text-[16px] sm:px-4'
+                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#6DFD9C] rounded-full transition border-[1px] border-white cursor-pointer
+                            hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Custom
                 </li>
