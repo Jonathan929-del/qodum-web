@@ -253,3 +253,53 @@ export const deleteInstallment = async ({id}:{id:String}) => {
         throw new Error(`Error deleting installment: ${err}`);      
     }
 };
+
+
+
+
+
+// Create installments
+export const createInstallments = async ({installments}:any) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
+        // Installments insert array
+        const installmentsInsertArray = installments.map((i:any) => {
+            return{
+                session:activeSession.year_name,
+                ...i,
+                due_on_date:{
+                    ...i.due_on_date,
+                    year:installments.length === 11
+                        ? installments.indexOf(i) <= 8 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
+                        : installments.indexOf(i) <= 2 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
+                },
+                due_date:{
+                    ...i.due_date,
+                    year:installments.length === 11
+                        ? installments.indexOf(i) <= 8 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
+                        : installments.indexOf(i) <= 2 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
+                },
+            };
+        });
+
+
+        // Creating new installment
+        await Installment.insertMany(installmentsInsertArray);
+
+
+        // Return
+        return 'Created';
+
+    } catch (err:any) {
+        console.log(`Error Creating Installment: ${err.message}`);
+    }
+};

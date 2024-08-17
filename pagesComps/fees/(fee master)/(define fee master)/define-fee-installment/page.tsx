@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import FormCom from '@/components/modules/fees/feeMaster/defineFeeMaster/installment/FormCom';
 import ViewCom from '@/components/modules/fees/feeMaster/defineFeeMaster/installment/ViewCom';
+import ChooseTemplate from '@/components/modules/fees/feeMaster/defineFeeMaster/installment/ChooseTemplate';
 
 
 
@@ -15,6 +16,10 @@ const page = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
+
+
+    // Is templates opened
+    const [isTemplatesOpened, setIsTemplatesOpened] = useState(false);
 
 
     // States
@@ -51,6 +56,9 @@ const page = () => {
         const installmentsFetcher = async () => {
             const res = await fetchInstallments();
             setInstallments(res);
+            if(res.length === 0){
+                setIsTemplatesOpened(true);
+            };
         };
         installmentsFetcher();
     }, [isViewOpened, updateInstallment]);
@@ -59,7 +67,9 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
             {
-                isViewOpened ? (
+                isTemplatesOpened ? (
+                    <ChooseTemplate setIsTemplatesOpened={setIsTemplatesOpened}/>
+                ) : isViewOpened ? (
                     <ViewCom
                         installments={installments}
                         setIsViewOpened={setIsViewOpened}
