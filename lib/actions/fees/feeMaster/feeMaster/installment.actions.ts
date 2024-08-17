@@ -278,13 +278,13 @@ export const createInstallments = async ({installments}:any) => {
                 ...i,
                 due_on_date:{
                     ...i.due_on_date,
-                    year:installments.length === 11
+                    year:installments.length > 4
                         ? installments.indexOf(i) <= 8 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
                         : installments.indexOf(i) <= 2 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
                 },
                 due_date:{
                     ...i.due_date,
-                    year:installments.length === 11
+                    year:installments.length > 4
                         ? installments.indexOf(i) <= 8 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
                         : installments.indexOf(i) <= 2 ? activeSession.year_name.split('-')[0] : activeSession.year_name.split('-')[1]
                 },
