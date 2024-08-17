@@ -228,3 +228,28 @@ export const fetchActiveFinancialYear = async () => {
         throw new Error(`Error fetching academic years: ${err}`);
     }
 };
+
+
+
+
+
+// Create Financial Years
+export const createFinancialYears = async ({financial_years}:any) => {
+    try {
+
+    
+        // Database connection
+        await connectToDb('accounts');
+
+
+        // Creating new financial years
+        await FinancialYear.insertMany(financial_years);
+
+
+        // Return
+        return 'Created';
+        
+    } catch (err:any) {
+        console.log(`Error Creating Financial Years: ${err.message}`);
+    }
+};

@@ -9,7 +9,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateAcademicYear, onSubmit, form, setIsCreateFinancialYear}:any) => {
+const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateAcademicYear, onSubmit, form, setIsCreateFinancialYear, setIsUpcomingSessions, setIsNumberOfSessionsErr, setNumberOfSessions}:any) => {
 
 
     // Cancel click
@@ -47,6 +47,9 @@ const Buttons = ({setIsViewOpened, academicYears, updateAcademicYear, setUpdateA
             isDeleteClicked:false
         });
         setIsCreateFinancialYear(false);
+        setIsUpcomingSessions(false);
+        setIsNumberOfSessionsErr('');
+        setNumberOfSessions(null);
     };
 
 

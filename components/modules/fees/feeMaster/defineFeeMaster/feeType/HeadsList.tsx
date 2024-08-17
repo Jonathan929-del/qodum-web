@@ -23,7 +23,7 @@ const HeadsList = ({heads, updateType, form}: any) => {
     useEffect(() => {
         const headsFetcher = async () => {
             const res = await fetchHeads();
-            setAllHeads(res.map((h) => h.name));
+            setAllHeads(res.filter((h:any) => h.affiliated_fee_type === '' || h.affiliated_fee_type === updateType.name).map((h) => h.name));
         };
         headsFetcher();
     }, []);

@@ -89,7 +89,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
 
 
         // Checking if the preference no. already exists
-        const types = await FeeType.find();
+        const types = await FeeType.find({session:activeSession?.year_name});
         if(types.map((type:any) => type.preference_no).includes(preference_no)){
             throw new Error('Preference number already exists');
         };
@@ -116,7 +116,7 @@ export const createType = async ({name, preference_no, heads}:CreateTypeProps) =
         return 'Created';
 
     } catch (err:any) {
-        console.log(`Error Creating Tpe: ${err.message}`);
+        console.log(`Error Creating Type: ${err.message}`);
     }
 };
 

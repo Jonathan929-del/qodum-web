@@ -40,7 +40,6 @@ const FormCom = ({ setIsViewOpened, groups, updateGroup, setUpdateGroup }: any) 
             is_special: updateGroup.id === '' ? false : updateGroup.is_special,
         }
     });
-    console.log(form.getValues());
 
 
     // Submit handler

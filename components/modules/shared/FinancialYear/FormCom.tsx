@@ -14,8 +14,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FinancialYearValidation} from '@/lib/validations/accounts/globalMasters/defineSession/financialYear';
-import {createAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import {createFinancialYear, deleteFinancialYear, modifyFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
+import {createAcademicYear, createAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {createFinancialYear, createFinancialYears, deleteFinancialYear, modifyFinancialYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 
 
 
@@ -27,6 +27,18 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
 
     // Toast
     const {toast} = useToast();
+
+
+    // Is upcoming sessions
+    const [isUpcomingSessions, setIsUpcomingSessions] = useState(false);
+
+
+    // Number of sessions
+    const [numberOfSessions, setNumberOfSessions] = useState();
+
+
+    // Is number of sessions error
+    const [isNumberOfSessionsErr, setIsNumberOfSessionsErr] = useState('');
 
 
     // Years error
@@ -109,6 +121,12 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
     const onSubmit = async (values:z.infer<typeof FinancialYearValidation>) => {
         // Create Financial Year
         if(updateFinancialYear.id === ''){
+            // Checking for next sessions number errors
+            if(isNumberOfSessionsErr !== '') return;
+            if(!numberOfSessions){
+                setIsNumberOfSessionsErr('Please enter the number of the upcoming sessions');
+                return;
+            };
             if(values.start_date.year > values.end_date.year){
                 toast({title:'End year cannot be earlier than start year', variant:'error'});
                 return;
@@ -146,6 +164,39 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                     },
                     is_active:values.is_active,
                 });
+            };
+            if(isUpcomingSessions){
+                const getNextSession = ({session, number}:any) => {
+
+                    // Split the session string into two parts based on the hyphen
+                    const [startYear, endYear] = session.split('-').map(Number);
+                    
+                    // Calculate the next session's years
+                    const nextStartYear = startYear + number;
+                    const nextEndYear = endYear + number;
+                    
+                    // Return the new session string
+                    return `${nextStartYear}-${nextEndYear}`;
+                }
+                let upcomingSessionsArray = [];
+                for(let i = 1; i < numberOfSessions; i++){
+                    upcomingSessionsArray.push({
+                        year_name:getNextSession({session:values.year_name, number:i}),
+                        start_date:{
+                            day:values.start_date.day,
+                            month:values.start_date.month,
+                            year:JSON.stringify(Number(values.start_date.year) + 1),
+                        },
+                        end_date:{
+                            day:values.end_date.day,
+                            month:values.end_date.month,
+                            year:JSON.stringify(Number(values.end_date.year) + 1),
+                        },
+                        is_active:false,
+                    });
+                };
+                await createAcademicYears({academic_years:upcomingSessionsArray});
+                await createFinancialYears({financial_years:upcomingSessionsArray});
             };
             toast({title:'Added Successfully!'});
         }
@@ -217,6 +268,9 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
             is_active:false,
         });
         setIsCreateAcademicYear(false);
+        setIsUpcomingSessions(false);
+        setIsUpcomingSessions(null);
+        setNumberOfSessions(null);
     };
 
 
@@ -480,7 +534,7 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                                         yearsError && <p className='text-xs text-[#FF5939]'>Years data missing</p>
                                     }
                                     <FormControl>
-                                        <div className='flex-1 flex items-center justify-end space-x-2'>
+                                        <div className='flex-1 flex items-center justify-start space-x-2'>
                                             <Switch
                                                 id='is_active'
                                                 {...field}
@@ -503,10 +557,10 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
 
 
                     {/* Create Academic Year */}
-                    <FormItem className='w-full flex-1 h-10 pb-2 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                    <FormItem className='w-full flex-1 h-10 pb-2 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-2'>
                         <>
                             <FormControl>
-                                <div className='flex-1 flex items-center justify-end space-x-2'>
+                                <div className='flex-1 flex items-center justify-start space-x-2'>
                                     <Switch
                                         id='is_create_financial_year'
                                         onCheckedChange={setIsCreateAcademicYear}
@@ -524,9 +578,64 @@ const FormCom = ({setIsViewOpened, financialYears, updateFinancialYear, setUpdat
                     </FormItem>
 
 
+                    {/* Create upcoming sessions */}
+                    {updateFinancialYear.id === '' && (
+                        <FormItem className='w-full flex-1 h-10 pb-2 flex flex-row items-start justify-between sm:items-center sm:gap-2 sm:mt-0'>
+                            <>
+                                <FormControl>
+                                    <div className='flex-1 flex items-center justify-start space-x-2'>
+                                        <Switch
+                                            id='is_create_upcoming_sessions'
+                                            onCheckedChange={() => {
+                                                if(isUpcomingSessions){
+                                                    setIsNumberOfSessionsErr('');
+                                                    setNumberOfSessions(null);
+                                                };
+                                                setIsUpcomingSessions(!isUpcomingSessions);
+                                            }}
+                                            checked={isUpcomingSessions}
+                                        />
+                                        <Label
+                                            htmlFor='is_create_upcoming_sessions'
+                                            className='text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                                        >
+                                            Create upcoming sessions
+                                        </Label>
+                                    </div>
+                                </FormControl>
+                            </>
+                        </FormItem>
+                    )}
+
+
+                    {/* Number of sessions */}
+                    {updateFinancialYear.id === '' && isUpcomingSessions && (
+                        <div className='relative w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
+                            <p className='basis-auto pr-2 text-start text-xs text-[#726E71] sm:basis-[30%]'>Number of sessions</p>
+                            <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                <Input
+                                    value={numberOfSessions}
+                                    onChange={(e:any) => {
+                                        setNumberOfSessions(e.target.value);
+                                        if(/[a-zA-Z]/.test(e.target.value)){
+                                            setIsNumberOfSessionsErr('Please enter a number');
+                                        }else{
+                                            setIsNumberOfSessionsErr('');
+                                        }
+                                    }}
+                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                />
+                            </div>
+                            {isNumberOfSessionsErr && (
+                                <p className='absolute top-[100%] left-[30%] text-[11px] text-red-500'>{isNumberOfSessionsErr}</p>
+                            )}
+                        </div>
+                    )}
+
+
                     {/* Buttons */}
-                    <div className='sm:px-10'>
-                        <Buttons setIsViewOpened={setIsViewOpened} financialYears={financialYears} updateFinancialYear={updateFinancialYear} setUpdateFinancialYear={setUpdateFinancialYear} onSubmit={onSubmit} form={form} setIsCreateAcademicYear={setIsCreateAcademicYear}/>
+                    <div className='mt-4 sm:px-10'>
+                        <Buttons setIsViewOpened={setIsViewOpened} financialYears={financialYears} updateFinancialYear={updateFinancialYear} setUpdateFinancialYear={setUpdateFinancialYear} onSubmit={onSubmit} form={form} setIsCreateAcademicYear={setIsCreateAcademicYear} setIsUpcomingSessions={setIsUpcomingSessions} setIsNumberOfSessionsErr={setIsNumberOfSessionsErr} setNumberOfSessions={setNumberOfSessions}/>
                     </div>
 
 

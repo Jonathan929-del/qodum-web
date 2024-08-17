@@ -274,3 +274,28 @@ export const deleteAcademicYear = async ({id}:{id:String}) => {
         throw new Error(`Error deleting academic year: ${err}`);      
     }
 };
+
+
+
+
+
+// Create Academic Years
+export const createAcademicYears = async ({academic_years}:any) => {
+    try {
+
+    
+        // Database connection
+        await connectToDb('accounts');
+
+
+        // Creating new academic years
+        await AcademicYear.insertMany(academic_years);
+
+
+        // Return
+        return 'Created';
+        
+    } catch (err:any) {
+        console.log(`Error Creating Academic Year: ${err.message}`);
+    }
+};
