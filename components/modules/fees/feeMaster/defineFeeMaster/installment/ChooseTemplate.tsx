@@ -256,8 +256,8 @@ const ChooseTemplate = ({setIsTemplatesOpened}:any) => {
                         months:['July', 'August', 'September']
                     },
                     {
-                        name:'Quarter-IV',
-                        print_name:'Quarter-IV',
+                        name:'Quarter-III',
+                        print_name:'Quarter-III',
                         preference_no:3,
                         due_on_date:{
                             day:'1',
@@ -272,8 +272,8 @@ const ChooseTemplate = ({setIsTemplatesOpened}:any) => {
                         months:['Oct', 'Nov', 'Dec']
                     },
                     {
-                        name:'Quarter-V',
-                        print_name:'Quarter-V',
+                        name:'Quarter-IV',
+                        print_name:'Quarter-IV',
                         preference_no:4,
                         due_on_date:{
                             day:'1',
