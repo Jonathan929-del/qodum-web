@@ -305,7 +305,7 @@ const ChooseTemplate = ({setIsTemplatesOpened}:any) => {
     };
 
     return (
-        <div className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center pb-2 gap-10'>
+        <div className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center py-10 gap-10 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
             <p>Choose installments structure:</p>
             <ul className='w-[60%] flex flex-row items-center justify-between'>
                 <li

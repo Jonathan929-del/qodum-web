@@ -86,7 +86,7 @@ const ViewCom = ({setIsViewOpened, installments, setUpdateInstallment, setSelect
 
     return (
         <Command
-            className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8] '
+            className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
         >
 
             {/* Header */}
