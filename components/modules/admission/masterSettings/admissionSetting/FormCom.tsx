@@ -91,12 +91,6 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmissionSettingValidation>) => {
 
-        // Checking if number is in use
-        if(!editableNumbers.includes(updateAdmission.setting_type)){
-            toast({title:"Can't edit number while in use", variant:'alert'});
-            return;
-        };
-
         // Create setting
         if(updateAdmission.id === ''){
             if(values.prefix !== '' && admissions.map((a:any) => a.prefix).includes(values.prefix)){
@@ -124,6 +118,11 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
         // Modify setting
         else if(!deepEqual(comparisonObject, values)){
+            // Checking if number is in use
+            if(!editableNumbers.includes(updateAdmission.setting_type)){
+                toast({title:"Can't edit number while in use", variant:'alert'});
+                return;
+            };
             if(values.prefix !== '' && comparisonObject.prefix !== values.prefix && admissions.map((a:any) => a.prefix).includes(values.prefix)){
                 toast({title:'Number already exists', variant:'error'});
                 return;
