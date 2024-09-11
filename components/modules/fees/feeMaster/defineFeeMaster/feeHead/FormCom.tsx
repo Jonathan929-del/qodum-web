@@ -86,6 +86,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
             };
             await modifyHead({
                 id: updateHead.id,
+                previous_name:updateHead.name,
                 name: values.name,
                 print_name: values.print_name,
                 pay_schedule: values.pay_schedule,

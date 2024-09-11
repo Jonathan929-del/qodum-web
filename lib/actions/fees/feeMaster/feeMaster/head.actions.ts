@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
+import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
@@ -147,6 +148,7 @@ export const fetchHeads = async () => {
 // Modify Head Props
 interface ModifyHeadProps{
     id:String;
+    previous_name:String;
     name:String;
     print_name:String;
     pay_schedule:String;
@@ -156,7 +158,7 @@ interface ModifyHeadProps{
     fee_refundable:Boolean;
 }
 // Modify head with id
-export const modifyHead = async ({id, name, print_name, pay_schedule, priority_no, type, show_in_certificate, fee_refundable}:ModifyHeadProps) => {
+export const modifyHead = async ({id, previous_name, name, print_name, pay_schedule, priority_no, type, show_in_certificate, fee_refundable}:ModifyHeadProps) => {
     try {
 
         // Db connection
@@ -189,7 +191,19 @@ export const modifyHead = async ({id, name, print_name, pay_schedule, priority_n
         );
 
 
-        // Return 
+        // Updating group
+        await Group.updateMany(
+            {'affiliated_heads':{$elemMatch:{head_name:previous_name}}, session:activeSession?.year_name},
+            {$set:{
+                'affiliated_heads.$[elem].head_name':name,
+                'affiliated_heads.$[elem].schedule_type':pay_schedule,
+                'affiliated_heads.$[elem].fee_type':type
+            }},
+            {arrayFilters:[{'elem.head_name':previous_name}]}
+        )
+
+
+        // Return
         return 'Updated';
 
     } catch (err) {
