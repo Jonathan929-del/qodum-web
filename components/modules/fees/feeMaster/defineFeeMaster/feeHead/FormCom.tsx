@@ -226,7 +226,7 @@ const FormCom = ({ setIsViewOpened, heads, updateHead, setUpdateHead }: any) => 
                         render={({ field }) => (
                             <FormItem className='w-full mt-4 sm:mt-0'>
                                 <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Priority Nmber</FormLabel>
+                                    <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Priority Number</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                         <FormControl>
                                             <Input
