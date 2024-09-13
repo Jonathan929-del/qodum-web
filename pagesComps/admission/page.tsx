@@ -1,13 +1,15 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import BarCom from '@/components/dashboards/shared/BarCom';
 import DoughnutCom from '@/components/dashboards/shared/DoughnutCom';
 import AdmissionCards from '@/components/dashboards/admissionDashboard/AdmissionCards';
+import NewAdmissionsIn from '@/components/dashboards/admissionDashboard/NewAdmissionsIn';
 import {fetchStudentsOnlineAndOfflineRegistrations} from '@/lib/actions/admission/admission/student.actions';
-import {newStudentsAndGendersCounts, studentsAndGendersCounts} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import {studentStrengthBarData, studentComparisionBarData, newAdmissionDoughnutData, standardStatisticsDoughnutData, transferDoughnutData, categoryDoughnutData, religionDoughnutData} from '@/constants/charts/admissionCharts';
-import LoadingIcon from '@/components/utils/LoadingIcon';
+import ReligionWiseStudentStrength from '@/components/dashboards/admissionDashboard/ReligionWiseStudentStrength';
+import {admissionDashboardStudentsReligionsData, newStudentsAndGendersCounts, studentsAndGendersCounts} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {studentStrengthBarData, studentComparisionBarData, standardStatisticsDoughnutData, transferDoughnutData, categoryDoughnutData} from '@/constants/charts/admissionCharts';
 
 
 
@@ -47,6 +49,16 @@ const page = () => {
     });
 
 
+    // Students religions data
+    const [studentsReligionsData, setStudentsReligionsData] = useState<any>({
+        all_students_count:0,
+        hindu_students_count:0,
+        christian_students_count:0,
+        muslim_students_count:0,
+        jewish_students_count:0
+    });
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
@@ -54,9 +66,11 @@ const page = () => {
             const studentsCountRes = await studentsAndGendersCounts();
             const newStudentsCountRes = await newStudentsAndGendersCounts();
             const studentsOnlineAndOfflineCountRes = await fetchStudentsOnlineAndOfflineRegistrations();
+            const studentsReligionsDataRes = await admissionDashboardStudentsReligionsData();
             setStudentsCount(studentsCountRes);
             setNewStudentsCount(newStudentsCountRes);
             setStudentsOnlineAndOfflineCount(studentsOnlineAndOfflineCountRes);
+            setStudentsReligionsData(studentsReligionsData);
             setIsLoading(false);
         };
         fetcher();
@@ -85,21 +99,25 @@ const page = () => {
                     </div>
 
 
-                    {/* Student Comparision Bar Data */}
                     <div className='flex flex-col gap-4 xl:flex-row'>
+                        {/* Student Comparision Bar Data */}
                         <div className='w-full xl:w-3/5'>
                             <BarCom barData={studentComparisionBarData}/>
                         </div>
+
+                        {/* New Admissions In */}
                         <div className='w-full xl:w-2/5'>
-                            <DoughnutCom data={newAdmissionDoughnutData} text='40'/>
+                            <NewAdmissionsIn newStudentsCount={newStudentsCount}/>
                         </div>
                     </div>
 
 
-                    {/* Doughnuts Group 1 */}
                     <div className='flex flex-col gap-4 sm:flex-row'>
+                        {/* Standard Wise Statistics */}
                         <DoughnutCom data={standardStatisticsDoughnutData} text='296'/>
-                        <DoughnutCom data={religionDoughnutData} text='3850'/>
+
+                        {/* Religion Wise Student Strength */}
+                        <ReligionWiseStudentStrength studentsReligionsData={studentsReligionsData}/>
                     </div>
 
 

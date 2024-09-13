@@ -34,7 +34,7 @@ const AdmissionCards = ({studentsCount, newStudentsCount, studentsOnlineAndOffli
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
                             <p>{studentsCount.boys_count}</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.boys_count / studentsCount.all_students_count) * 100}%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.boys_count / studentsCount.all_students_count) * 100 || 0}%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -52,7 +52,7 @@ const AdmissionCards = ({studentsCount, newStudentsCount, studentsOnlineAndOffli
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
                             <p>{studentsCount.girls_count}</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.girls_count / studentsCount.all_students_count) * 100}%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.girls_count / studentsCount.all_students_count) * 100 || 0}%)</span>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@ const AdmissionCards = ({studentsCount, newStudentsCount, studentsOnlineAndOffli
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
                             <p>{studentsOnlineAndOfflineCount.online_count}</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.online_count / studentsOnlineAndOfflineCount.all_students_count * 100}%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.online_count / studentsOnlineAndOfflineCount.all_students_count * 100 || 0}%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -93,7 +93,7 @@ const AdmissionCards = ({studentsCount, newStudentsCount, studentsOnlineAndOffli
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
                             <p>{studentsOnlineAndOfflineCount.offline_count}</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.offline_count / studentsOnlineAndOfflineCount.all_students_count * 100}%)</span>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.offline_count / studentsOnlineAndOfflineCount.all_students_count * 100 || 0}%)</span>
                         </div>
                     </div>
                 </div>

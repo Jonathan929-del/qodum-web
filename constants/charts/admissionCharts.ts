@@ -120,61 +120,6 @@ const studentComparisionBarData = () => {
 
 
 
-// New Admission Doughnut Data
-const newAdmissionDoughnutData = () => {
-    return{
-        labels:{
-            title:'New Admissions In',
-            subTitle:'',
-            tabs:['Last 7 Days', 'Last 15 Days', 'Last 30 Days'],
-            polls:[
-                {
-                    name:'Boys',
-                    color:'#15ABDE'
-                },
-                {
-                    name:'Girls',
-                    color:'#FF7779'
-                }
-            ]
-        },
-        doughnutData:{
-            labels:[24, 16],
-            datasets: [
-                {
-                    label:'%',
-                    data:[60, 40],
-                    backgroundColor:['#15ABDE', '#FF7779'],
-                    borderColor:['#15ABDE', '#FF7779'],
-                    datalabels:{
-                        labels:{
-                            labels:{
-                                color:'#000',
-                                font:{size:14, weight:800},
-                                backgroudColor:'#ccc',
-                                formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
-                                align:'end',
-                                anchor:'end',
-                            },
-                            percentage:{
-                                color:'#fff',
-                                font:{size:12},
-                                formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
-                                align:'center',
-                                anchor:'center',
-                            },
-                        },
-                    },
-                }
-            ]
-        }
-    };
-};
-
-
-
-
-
 // Standard Statistics Doughnut Data
 const standardStatisticsDoughnutData = () => {
     return{
@@ -217,68 +162,6 @@ const standardStatisticsDoughnutData = () => {
                     data:[25, 12, 63],
                     backgroundColor:['#15ABDE', '#FEC133', '#FE8125'],
                     borderColor:['#15ABDE', '#FEC133', '#FE8125'],
-                    datalabels:{
-                        labels:{
-                            labels:{
-                                color:'#000',
-                                font:{size:14, weight:800},
-                                backgroudColor:'#ccc',
-                                formatter:(val:any, ctx:any) => ctx.chart.data.labels[ctx.dataIndex],
-                                align:'end',
-                                anchor:'end',
-                            },
-                            percentage:{
-                                color:'#fff',
-                                font:{size:12},
-                                formatter:(val:any, ctx:any) => `${ctx.chart.data.datasets[0].data[ctx.dataIndex]}%`,
-                                align:'center',
-                                anchor:'center',
-                            },
-                        },
-                    }
-                }
-            ]
-        }
-    };
-};
-
-
-
-
-
-// Standard Statistics Doughnut Data
-const religionDoughnutData = () => {
-    return{
-        labels:{
-            title:'Religion Wise Student Strength',
-            subTitle:'',
-            polls:[
-                {
-                    name:'Hinduism',
-                    color:'#FE8125'
-                },
-                {
-                    name:'Islam',
-                    color:'#009D24'
-                },
-                {
-                    name:'Christianity',
-                    color:'#0C7EFA'
-                },
-                {
-                    name:'Judaism',
-                    color:'#7F5CB0'
-                },
-            ]
-        },
-        doughnutData:{
-            labels:[2445, 462, 578, 375],
-            datasets: [
-                {
-                    label:'%',
-                    data:[63.5, 12, 15, 9.5],
-                    backgroundColor:['#FE8125', '#009D24', '#0C7EFA', '#7F5CB0'],
-                    borderColor:['#FE8125', '#009D24', '#0C7EFA', '#7F5CB0'],
                     datalabels:{
                         labels:{
                             labels:{
@@ -425,4 +308,4 @@ const categoryDoughnutData = () => {
 
 
 // Export
-export {studentStrengthBarData, studentComparisionBarData, newAdmissionDoughnutData, standardStatisticsDoughnutData, transferDoughnutData, categoryDoughnutData, religionDoughnutData};
+export {studentStrengthBarData, studentComparisionBarData, standardStatisticsDoughnutData, transferDoughnutData, categoryDoughnutData};

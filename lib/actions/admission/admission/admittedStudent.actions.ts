@@ -6,6 +6,7 @@ import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
+import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
@@ -1493,5 +1494,55 @@ export const feesDashboardDefaulterStudentsData = async () => {
         
     }catch (err){
         throw new Error(`Error fetching fee dashboard defaulter students data: ${err}`);
+    };
+};
+
+
+
+
+
+// Admission dashboard students religions data
+export const admissionDashboardStudentsReligionsData = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students
+        const allStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name});
+
+
+        // Hindu students
+        const hinduStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Hinduism'});
+
+
+        // Christian students
+        const christianStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Christianity'});
+
+
+        // Muslim students
+        const muslimStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Islam'});
+
+
+        // Jewish students
+        const jewishStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Judaism'});
+
+
+        // Return
+        return {
+            all_students_count:allStudents,
+            hindu_students_count:hinduStudents,
+            christian_students_count:christianStudents,
+            muslim_students_count:muslimStudents,
+            jewish_students_count:jewishStudents
+        };
+        
+    }catch (err){
+        throw new Error(`Error fetching admission dashboard students religions data: ${err}`);
     };
 };
