@@ -303,6 +303,22 @@ const page = () => {
     const [nationalities, setNationlaities] = useState([{}]);
 
 
+    // Previous schools details
+    const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
+        school_name:'',
+        board:'',
+        passing_year:'',
+        total_marks:'',
+        percentage:'',
+        result:'',
+        is_alumni:'',
+        father_name:'',
+        father_passing_year:'',
+        mother_name:'',
+        mother_passing_year:''
+    }]);
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
@@ -350,6 +366,7 @@ const page = () => {
                         setUpdateStudent={setUpdateStudent}
                         setValuesFromEnquiry={setValuesFromEnquiry}
                         setSelectedSubjects={setSelectedSubjects}
+                        setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
                 ) : isViewOpened === 'enquiry' ? (
                     <EnquiryViewCom
@@ -383,6 +400,8 @@ const page = () => {
                         bloodGroups={bloodGroups}
                         casts={casts}
                         nationalities={nationalities}
+                        previousSchoolsDetails={previousSchoolsDetails}
+                        setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
                 )
             }

@@ -695,3 +695,43 @@ export const fetchStudentByRegNo = async ({reg_no}:{reg_no:String}) => {
         throw new Error(`Error deleting student: ${err}`);
     };
 };
+
+
+
+
+
+// Fetch students online and offline registrations
+export const fetchStudentsOnlineAndOfflineRegistrations = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students count
+        const allStudentsCount = await Student.countDocuments({session:activeSession?.year_name});
+
+
+        // Online count
+        const onlineCount = await Student.countDocuments({session:activeSession?.year_name, 'student.is_online':true});
+
+
+        // Offline count
+        const offlineCount = await Student.countDocuments({session:activeSession?.year_name, 'student.is_online':false});
+
+
+        // Return
+        return {
+            all_students_count:allStudentsCount,
+            online_count:onlineCount,
+            offline_count:offlineCount
+        };
+        
+    }catch (err){
+        throw new Error(`Error fetching students online and offline counts: ${err}`);
+    };
+};

@@ -1,9 +1,9 @@
 // Imports
-import {ChevronDown, Trash} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import {Switch} from '@/components/ui/switch';
+import {ChevronDown, Trash} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
@@ -15,7 +15,7 @@ import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSes
 
 
 // Main function
-const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
+const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
 
     // Sessions
     const [sessions, setSessions] = useState([{}]);

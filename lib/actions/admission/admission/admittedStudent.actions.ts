@@ -580,12 +580,8 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
 
 
-        // Class fees
-        const theClass = await Class.findOne({class_name:student.class, session:activeSession?.year_name});
-
-
         // Update student
-        const updatedStudent = await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
+        await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
         
         
         // Subjects handling
@@ -1329,6 +1325,173 @@ export const classWiseStudentStrengthFilter = async ({date_of_adm, class_name, i
         return filteredStudents;
         
     }catch (err){
-        throw new Error(`Error filtering student details: ${err}`);  
+        throw new Error(`Error filtering student details: ${err}`);
+    };
+};
+
+
+
+
+
+
+// Fetch students count and genders counts
+export const studentsAndGendersCounts = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students count
+        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name});
+
+
+        // Boys count
+        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Male'});
+
+
+        // Girls count
+        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Female'});
+
+
+        // Return
+        return {
+            all_students_count:allStudentsCount,
+            boys_count:boysCount,
+            girls_count:girlsCount
+        };
+        
+    }catch (err){
+        throw new Error(`Error fetching students and genders counts: ${err}`);
+    };
+};
+
+
+
+
+
+
+// Fetch new students count and genders counts
+export const newStudentsAndGendersCounts = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students count
+        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true});
+
+
+        // Boys count
+        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.gender':'Male'});
+
+
+        // Girls count
+        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.gender':'Female'});
+
+
+        // Previous year boys
+        const previousYearBoys = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.gender':'Male'});
+
+
+        // Previous year girls
+        const previousYearGirls = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.gender':'Female'});
+
+
+        // Return
+        return {
+            all_students_count:allStudentsCount,
+            boys_count:boysCount,
+            girls_count:girlsCount,
+            previous_boys_count:previousYearBoys,
+            previous_girls_count:previousYearGirls
+        };
+        
+    }catch (err){
+        throw new Error(`Error fetching students and genders counts: ${err}`);
+    };
+};
+
+
+
+
+
+
+// Fees dashboard defaulter students data
+export const feesDashboardDefaulterStudentsData = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // CLasses
+        const classes = await Class.find({session:activeSession?.year_name});
+
+
+        // Installments
+        const installments = await Installment.find({session:activeSession?.year_name});
+
+
+        // Installments overdues
+        const installmentsOverdues = installments.filter((i:any) => new Date() > new Date(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`)).map((i:any) => i.name);
+
+
+        // Students
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
+
+
+        // Defaulter students
+        const defaulterStudents = students.filter((s:any) => s.affiliated_heads.heads.filter((h:any) => h.amounts.filter((a:any) => installmentsOverdues.includes(a.name) && Number(a.last_rec_amount) + Number(a.conc_amount) < Number(a.value)).length).length > 0);
+
+
+        // Total students count
+        const totalStudentsCount = students.length;
+
+
+        // Classes and defaulter
+        const classesNames = classes.map((c:any) => c.class_name);
+
+
+        // Classes number of defaulters
+        const classesNumberOfDefaulters = classesNames.map((c:any) => defaulterStudents.filter((s:any) => s.student.class === c).length);
+
+
+        // Total number generator
+        const totalNumberGenerator = (array:any) => {
+            let sum = 0;
+            for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+            return sum;
+        };
+
+
+        // Defaulter amount
+        const defaulterAmount = totalNumberGenerator(defaulterStudents.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => installmentsOverdues.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.last_rec_amount + a.conc_amount))))))));
+
+
+        // Return
+        return {
+            defaulter_students_count:defaulterStudents.length,
+            total_students_count:totalStudentsCount,
+            classes_names:classesNames,
+            classes_number_of_defaulters:classesNumberOfDefaulters,
+            defaulter_amount:defaulterAmount
+        };
+        
+    }catch (err){
+        throw new Error(`Error fetching fee dashboard defaulter students data: ${err}`);
     };
 };

@@ -2,18 +2,17 @@
 // Imports
 import {useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import BarCom from '@/components/dashboards/shared/BarCom';
-import {feeDefaultersBarData} from '@/constants/charts/feesChars';
 import {fetchPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import FeesCardsOne from '@/components/dashboards/feesDashboard/FeesCardsOne';
 import CollectionSummary from '@/components/dashboards/feesDashboard/CollectionSummary';
 import PaymodeSummaryCard from '@/components/dashboards/feesDashboard/PaymodeSummaryCard';
 import EstimatedCollection from '@/components/dashboards/feesDashboard/EstimatedCollection';
+import DefaulterStatistics from '@/components/dashboards/feesDashboard/DefaulterStastistics';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
 import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
 import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {feesDashboardDefaulterStudentsData, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -37,16 +36,16 @@ const page = () => {
     const [academicYear, setAcademicYear] = useState('');
 
 
-    // Financial year
-    const [financialYear, setFinancialYear] = useState('');
-
-
     // Payments
     const [payments, setPayments] = useState<any>([]);
 
 
     // Classes
     const [classes, setClasses] = useState<any>([]);
+
+
+    // Defaulter students data
+    const [defaulterStudentsData, setDefaulterStudentsData] = useState<any>({});
 
 
     // Total number generator
@@ -66,6 +65,7 @@ const page = () => {
             const activeAcademicYearRes = await fetchActiveAcademicYear();
             const paymentsRes = await fetchPayments();
             const classesRes = await fetchClasses();
+            const defaulterStudentsDataRes = await feesDashboardDefaulterStudentsData();
 
             // Setting
             setStudents(studentsRes);
@@ -74,6 +74,7 @@ const page = () => {
             setAcademicYear(activeAcademicYearRes.year_name);
             setPayments(paymentsRes);
             setClasses(classesRes);
+            setDefaulterStudentsData(defaulterStudentsDataRes);
 
 
             // Loading done
@@ -142,7 +143,10 @@ const page = () => {
         
         
                     {/* Fee Defaulters Bar */}
-                    <BarCom barData={feeDefaultersBarData}/>
+                    <DefaulterStatistics
+                        defaulterStudentsData={defaulterStudentsData}
+                    />
+
                 </>
             )}
         </section>

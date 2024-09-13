@@ -137,7 +137,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                                 {showPayment?.receipt_no === p.receipt_no ? 'Hide' : 'Show'}
                             </span>
                             <span
-                                className='cursor-pointer'
+                                className='text-[#6767FF] cursor-pointer'
                                 onClick={() => receiptNoClick(p)}
                             >
                                 {p.receipt_no}

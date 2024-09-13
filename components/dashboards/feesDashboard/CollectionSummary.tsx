@@ -65,7 +65,6 @@ const CollectionSummary = ({payments, classes, totalNumberGenerator}) => {
             labels:classes.map((c:any) => c.class_name),
             datasets: [
                 {
-                    // data:[250, 210, 300, 240, 400, 100, 170, 250, 170, 320, 290, 500, 100, 300],
                     data:values,
                     borderWidth:2,
                     backgroundColor:'#2EABE5',
@@ -130,42 +129,42 @@ const CollectionSummary = ({payments, classes, totalNumberGenerator}) => {
         switch (selectedTab) {
             case "Today's":
                 setCollectionSummary(totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM')).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                 })));
                 setValues(classes.map((c:any) => totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM') && p.class_name === c.class_name).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                 })) / 1000));
                 break;
             case "Last 7 Days":
                 setCollectionSummary(totalNumberGenerator(last7Days.map((d:any) => {
                     return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
-                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                     }));
                 })));
                 setValues(classes.map((c:any) => totalNumberGenerator(last7Days.map((d:any) => {
                     return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
-                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                     }));
                 })) / 1000));
                 break;
             case "Last 30 Days":
                 setCollectionSummary(totalNumberGenerator(last30Days.map((d:any) => {
                     return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
-                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                     }));
                 })));
                 setValues(classes.map((c:any) => totalNumberGenerator(last30Days.map((d:any) => {
                     return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
-                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                     }));
                 })) / 1000));
                 break;
             default:
                 setCollectionSummary(totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM')).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                 })));
                 setValues(classes.map((c:any) => totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM') && p.class_name === c.class_name).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.last_rec_amount)))));
+                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
                 })) / 1000));
                 break;
         }

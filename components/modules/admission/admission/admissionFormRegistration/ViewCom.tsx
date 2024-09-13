@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects, setPreviousSchoolsDetails}:any) => {
 
 
     // Select handler
@@ -37,9 +37,9 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                 pros_no:student?.student?.pros_no || '',
                 amount:student?.student?.amount || 0,
                 date:student?.student?.date || new Date(),
-                payment_mode:student?.student?.payment_mode || localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
-                admission_account:student?.student?.admission_account || localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
-                post_account:student?.student?.post_account || localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
+                payment_mode:student?.student?.payment_mode ? student?.student.payment_mode : localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
+                admission_account:student?.student?.admission_account ? student?.student.admission_account : localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
+                post_account:student?.student?.post_account ? student?.student.post_account : localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                 // 2
                 class:student?.student?.class || '',
                 board:student?.student?.board || '',
@@ -222,6 +222,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
         });
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects || []);
+        setPreviousSchoolsDetails(student.others.previous_school_details);
     };
 
 

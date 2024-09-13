@@ -1,3 +1,51 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Imports
 import {X} from 'lucide-react';
 import {useState} from 'react';
@@ -19,10 +67,12 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
 
 
     return (
-        <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center z-10' style={{backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
-            <div className='w-[80%] h-[80%] flex flex-col pb-6 bg-white border-[0.5px] border-[#ccc] rounded-[8px] overflow-scroll custom-sidebar-scrollbar'>
+        <Draggable
+            defaultPosition={{x:-250, y:-250}}
+        >
+            <div className='absolute min-w-[900px] max-h-[500px] z-10 flex flex-col pb-6 bg-white border-[0.5px] border-[#ccc] overflow-scroll custom-sidebar-scrollbar'>
                 {/* Header */}
-                <div className='flex flex-row items-center justify-between w-full px-4 py-3 text-sm font-bold text-main-color bg-[#e7f0f7]'>
+                <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7]'>
                     <h2>Paid and Unpaid Installment Details</h2>
                     <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsShowInstallment(false)}/>
                 </div>
@@ -68,7 +118,7 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
                     </TabsContent>
                 </Tabs>
             </div>
-        </div>
+        </Draggable>
     );
 };
 

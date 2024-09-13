@@ -1,5 +1,5 @@
 // Imports
-import {ChevronDown} from 'lucide-react';
+import {ChevronDown, Trash} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
@@ -15,7 +15,7 @@ import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSes
 
 
 // Main function
-const Other = ({form, updateStudent}:any) => {
+const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
 
 
     // Sessions
@@ -40,10 +40,6 @@ const Other = ({form, updateStudent}:any) => {
 
     return (
         <div className='flex flex-col gap-2'>
-
-
-
-
 
             {/* Student Other Details */}
             <div className='flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
@@ -527,250 +523,225 @@ const Other = ({form, updateStudent}:any) => {
             <div className='w-full flex flex-col border-[0.5px] border-[#EDF1F5] rounded-[5px]'>
                 <h2 className='bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Previous School Details</h2>
                 <div className='w-full overflow-x-scroll custom-sidebar-scrollbar'>
-                    {updateStudent.others.previous_school_details.map((school:any) => (
-                        <div className='flex flex-row min-w-[1600px] px-4 py-2 gap-2'>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {previousSchoolsDetails.map((school:any) => (
+                        <div className='flex flex-row items-center min-w-[1600px] px-4 py-2 gap-2'>
+
                             {/* School Name */}
                             <div className='w-full flex flex-col items-center'>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School Name</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.school_name`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.school_name}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].school_name = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Board */}
                             <div className='w-full flex flex-col items-center'>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Board</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.board`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.board}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].board = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Passing Year */}
                             <div className='w-full flex flex-col items-center'>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.passing_year`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.passing_year}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].passing_year = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Total Marks */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.total_marks`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.total_marks}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].total_marks = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Percentage */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.percentage`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.percentage}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].percentage = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Result */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.result`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.result}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].result = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Is Alumni */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Is Alumni</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Is Alumni</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.is_alumni`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field.value}
-                                                        onValueChange={field.onChange}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectItem value='All Staff'>Name</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.is_alumni}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].is_alumni = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Father Name */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Father Name</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Father Name</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.father_name`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.father_name}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].father_name = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Passing Year */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.father_passing_year`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.father_passing_year}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].father_passing_year = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Mother Name */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Mother Name</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Mother Name</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.mother_name`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.mother_name}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].mother_name = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
                             {/* Passing Year */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
+                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</p>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <FormField
-                                        control={form.control}
-                                        name={`others.previous_school_details.${updateStudent.others.previous_school_details.indexOf(school)}.mother_passing_year`}
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
+                                    <Input
+                                        value={school.mother_passing_year}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].mother_passing_year = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                     />
                                 </div>
                             </div>
+
+                            <span
+                                onClick={() => {
+                                    setPreviousSchoolsDetails(previousSchoolsDetails.filter((s:any) => s !== school))
+                                }}
+                                className='flex items-center justify-center px-2 py-2 text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white cursor-pointer
+                                        hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b]'
+                            >
+                                <Trash size={15} />
+                            </span>
+
                         </div>
                     ))}
+                    <div className='flex items-center justify-center'>
+                        <span
+                            onClick={() => {
+                                setPreviousSchoolsDetails([
+                                    ...previousSchoolsDetails,
+                                    {
+                                        school_name:'',
+                                        board:'',
+                                        passing_year:'',
+                                        total_marks:'',
+                                        percentage:'',
+                                        result:'',
+                                        is_alumni:'',
+                                        father_name:'',
+                                        father_passing_year:'',
+                                        mother_name:'',
+                                        mother_passing_year:''
+                                    }
+                                ])
+                            }}
+                            className='text-lg px-3 py-1 text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] rounded-full transition border-[1px] border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            +
+                        </span>
+                    </div>
                 </div>
             </div>
 

@@ -1,18 +1,17 @@
+'use client';
 // Imports
-import React from 'react';
-import {Landmark, Banknote, PersonStanding, Globe} from 'lucide-react';
-import {Progress} from '@/components/ui/progress';
 import Image from 'next/image';
+import {Progress} from '@/components/ui/progress';
+import {Landmark, PersonStanding, Globe} from 'lucide-react';
 
 
 
 
 
 // Main function
-const AdmissionCards = () => {
+const AdmissionCards = ({studentsCount, newStudentsCount, studentsOnlineAndOfflineCount}:any) => {
     return (
         <div className='grid grid-rows-4 grid-cols-1 gap-4 mt-4 sm:grid-cols-2 sm:grid-rows-2 md:grid-rows-4 md:grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 2xl:grid-cols-4 2xl:grid-rows-1'>
-
 
             {/* Card One */}
             <div className='flex flex-col flex-1 bg-white py-4 px-2 rounded-[8px]'>
@@ -22,7 +21,7 @@ const AdmissionCards = () => {
                 </div>
                 <div className='flex flex-row justify-center mt-2 items-center'>
                     <span className='text-hash-color text-sm'>Total:</span>
-                    <p className='font-bold ml-2 text-xl'>3850</p>
+                    <p className='font-bold ml-2 text-xl'>{studentsCount.all_students_count}</p>
                 </div>
                 <div className='flex flex-col mt-4 gap-2'>
                     <div className='flex flex-row items-center justify-between'>
@@ -30,12 +29,12 @@ const AdmissionCards = () => {
                             <PersonStanding color='#959595'/>
                             <div className='ml-2 flex-1'>
                                 <p className='text-xs mb-[2px]'>Boys</p>
-                                <Progress value={60} indicatorColor='bg-[#959595]'/>
+                                <Progress value={(studentsCount.boys_count / studentsCount.all_students_count) * 100} indicatorColor='bg-[#959595]'/>
                             </div>
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
-                            <p>23,10</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(60%)</span>
+                            <p>{studentsCount.boys_count}</p>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.boys_count / studentsCount.all_students_count) * 100}%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -48,12 +47,12 @@ const AdmissionCards = () => {
                             />
                             <div className='ml-2 flex-1'>
                                 <p className='text-xs mb-[2px]'>Girls</p>
-                                <Progress value={40} indicatorColor='bg-[#dd288f]'/>
+                                <Progress value={(studentsCount.girls_count / studentsCount.all_students_count) * 100} indicatorColor='bg-[#dd288f]'/>
                             </div>
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
-                            <p>1540</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(40%)</span>
+                            <p>{studentsCount.girls_count}</p>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({(studentsCount.girls_count / studentsCount.all_students_count) * 100}%)</span>
                         </div>
                     </div>
                 </div>
@@ -68,7 +67,7 @@ const AdmissionCards = () => {
                 </div>
                 <div className='flex flex-row justify-center mt-2 items-center'>
                     <span className='text-hash-color text-sm'>Total:</span>
-                    <p className='font-bold ml-2 text-xl'>290</p>
+                    <p className='font-bold ml-2 text-xl'>{studentsOnlineAndOfflineCount.all_students_count}</p>
                 </div>
                 <div className='flex flex-col mt-4 gap-2'>
                     <div className='flex flex-row items-center justify-between'>
@@ -76,12 +75,12 @@ const AdmissionCards = () => {
                             <Landmark color='#EC8428'/>
                             <div className='ml-2 flex-1'>
                                 <p className='text-xs mb-[2px]'>Reg. At School</p>
-                                <Progress value={70} indicatorColor='bg-[#EC8428]'/>
+                                <Progress value={studentsOnlineAndOfflineCount.online_count / studentsOnlineAndOfflineCount.all_students_count * 100} indicatorColor='bg-[#EC8428]'/>
                             </div>
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
-                            <p>203</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(70%)</span>
+                            <p>{studentsOnlineAndOfflineCount.online_count}</p>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.online_count / studentsOnlineAndOfflineCount.all_students_count * 100}%)</span>
                         </div>
                     </div>
                     <div className='flex flex-row items-center justify-between'>
@@ -89,12 +88,12 @@ const AdmissionCards = () => {
                             <Globe color='#12A6C5'/>
                             <div className='ml-2 flex-1'>
                                 <p className='text-xs mb-[2px]'>Online Reg.</p>
-                                <Progress value={30} indicatorColor='bg-[#12A6C5]'/>
+                                <Progress value={studentsOnlineAndOfflineCount.offline_count / studentsOnlineAndOfflineCount.all_students_count * 100} indicatorColor='bg-[#12A6C5]'/>
                             </div>
                         </div>
                         <div className='flex-1 flex flex-row ml-[2px] justify-center items-center text-sm xl:flex-row'>
-                            <p>87</p>
-                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>(30%)</span>
+                            <p>{studentsOnlineAndOfflineCount.offline_count}</p>
+                            <span className='text-hash-color text-xs mt-[1px] xl:ml-2'>({studentsOnlineAndOfflineCount.offline_count / studentsOnlineAndOfflineCount.all_students_count * 100}%)</span>
                         </div>
                     </div>
                 </div>
@@ -126,13 +125,25 @@ const AdmissionCards = () => {
                     </div>
                     <div className='flex-1 flex flex-col items-center'>
                         <p className='flex-1 flex items-center font-semibold'>This Year</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>210 (+13.5%)</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>80 (-15.78%)</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>
+                            {newStudentsCount.boys_count}
+                            (
+                                {(newStudentsCount.boys_count === newStudentsCount.previous_boys_count) ? '' : newStudentsCount.boys_count > newStudentsCount.previous_boys_count ? '+' : '-'}
+                                {Math.round((newStudentsCount.boys_count === newStudentsCount.previous_boys_count) ? 0 : newStudentsCount.boys_count > newStudentsCount.previous_boys_count ? ((newStudentsCount.boys_count - newStudentsCount.previous_boys_count) / (newStudentsCount.previous_boys_count || 1)) * 10 : ((newStudentsCount.previous_boys_count - newStudentsCount.boys_count) / newStudentsCount.previous_boys_count) * 10) / 10 * 100}%
+                            )
+                        </p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>
+                            {newStudentsCount.girls_count}
+                            (
+                                {(newStudentsCount.girls_count === newStudentsCount.previous_girls_count) ? '' : newStudentsCount.girls_count > newStudentsCount.previous_girls_count ? '+' : '-'}
+                                {Math.round((newStudentsCount.girls_count === newStudentsCount.previous_girls_count) ? 0 : newStudentsCount.girls_count > newStudentsCount.previous_girls_count ? ((newStudentsCount.girls_count - newStudentsCount.previous_girls_count) / (newStudentsCount.previous_girls_count || 1)) * 10 : ((newStudentsCount.previous_girls_count - newStudentsCount.girls_count) / newStudentsCount.previous_girls_count) * 10) / 10 * 100}%
+                            )
+                        </p>
                     </div>
                     <div className='flex-1 flex flex-col items-center'>
                         <p className='flex-1 flex items-center font-semibold'>Prev Year</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>185</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>95</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>{newStudentsCount.previous_boys_count}</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>{newStudentsCount.previous_girls_count}</p>
                     </div>
                 </div>
             </div>
@@ -163,17 +174,28 @@ const AdmissionCards = () => {
                     </div>
                     <div className='h-full flex-1 flex flex-col items-center justify-between'>
                         <p className='flex-1 flex items-center font-semibold'>This Year</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>2310 (+10%)</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>1540 (+5.4%)</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>
+                            {newStudentsCount.boys_count}
+                            (
+                                {(newStudentsCount.boys_count === newStudentsCount.previous_boys_count) ? '' : newStudentsCount.boys_count > newStudentsCount.previous_boys_count ? '+' : '-'}
+                                {Math.round((newStudentsCount.boys_count === newStudentsCount.previous_boys_count) ? 0 : newStudentsCount.boys_count > newStudentsCount.previous_boys_count ? ((newStudentsCount.boys_count - newStudentsCount.previous_boys_count) / (newStudentsCount.previous_boys_count || 1)) * 10 : ((newStudentsCount.previous_boys_count - newStudentsCount.boys_count) / newStudentsCount.previous_boys_count) * 10) / 10 * 100}%
+                            )
+                        </p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>
+                            {newStudentsCount.girls_count}
+                            (
+                                {(newStudentsCount.girls_count === newStudentsCount.previous_girls_count) ? '' : newStudentsCount.girls_count > newStudentsCount.previous_girls_count ? '+' : '-'}
+                                {Math.round((newStudentsCount.girls_count === newStudentsCount.previous_girls_count) ? 0 : newStudentsCount.girls_count > newStudentsCount.previous_girls_count ? ((newStudentsCount.girls_count - newStudentsCount.previous_girls_count) / (newStudentsCount.previous_girls_count || 1)) * 10 : ((newStudentsCount.previous_girls_count - newStudentsCount.girls_count) / newStudentsCount.previous_girls_count) * 10) / 10 * 100}%
+                            )
+                        </p>
                     </div>
                     <div className='h-full flex-1 flex flex-col items-center'>
                         <p className='flex-1 flex items-center font-semibold'>Prev Year</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>2100</p>
-                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>1460</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>{newStudentsCount.previous_boys_count}</p>
+                        <p className='flex-1 flex flex-row items-center justify-center text-sm'>{newStudentsCount.previous_girls_count}</p>
                     </div>
                 </div>
             </div>
-
 
         </div>
     );
