@@ -3,6 +3,7 @@
 import * as z from 'zod';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
+import MonthsList from './MonthsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
@@ -13,7 +14,6 @@ import {RouteStopValidation} from '@/lib/validations/fees/transport/routeStop.va
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createRouteStop, deleteRouteStop, modifyRouteStop} from '@/lib/actions/fees/transport/routeStop.actions';
-import MonthsList from './MonthsList';
 
 
 
@@ -21,7 +21,6 @@ import MonthsList from './MonthsList';
 
 // Main function
 const FormCom = ({setIsViewOpened, routeStops, updateRouteStop, setUpdateRouteStop, vehicleRoutes, transportGroups}:any) => {
-
 
     // Toast
     const {toast} = useToast();
@@ -64,7 +63,7 @@ const FormCom = ({setIsViewOpened, routeStops, updateRouteStop, setUpdateRouteSt
         resolver:zodResolver(RouteStopValidation),
         defaultValues:{
             route_no:updateRouteStop.id === '' ? '' : updateRouteStop.route_no,
-            stop_no:updateRouteStop.id === '' ? '' : updateRouteStop.stop_no,
+            stop_no:updateRouteStop.id === '' ? 0 : updateRouteStop.stop_no,
             stop_name:updateRouteStop.id === '' ? '' : updateRouteStop.stop_name,
             morning_arrival_time:{
                 hour:updateRouteStop.id === '' ? '01' : updateRouteStop.morning_arrival_time.hour,
@@ -265,7 +264,6 @@ const FormCom = ({setIsViewOpened, routeStops, updateRouteStop, setUpdateRouteSt
             return `${n}`;
         }
     });
-
 
     return (
         <div className='w-[90%] max-w-[1000px] h-[90%] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] overflow-y-scroll custom-sidebar-scrollbar'>

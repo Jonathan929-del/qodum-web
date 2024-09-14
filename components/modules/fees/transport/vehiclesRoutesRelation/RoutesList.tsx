@@ -27,9 +27,20 @@ const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
                             {`Route No. => Description`} 
                             <ChevronsUpDown size={12} />
                         </li>
-                        <li className='basis-[20%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            Select
-                            <ChevronsUpDown size={12} />
+                        <li className='basis-[20%] flex flex-row items-center justify-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                            {routes.length > 0 && (
+                                <Checkbox
+                                    checked={selectedRoutes.length === routes.length}
+                                    onCheckedChange={() => {
+                                        selectedRoutes.length === routes.length
+                                            ?
+                                                setSelectedRoutes([])
+                                            :
+                                                setSelectedRoutes(routes.map((r:any) => r.route_no));
+                                    }}
+                                    className='rounded-[2px] text-hash-color'
+                                />
+                            )}
                         </li>
                     </ul>
                     {/* Values */}

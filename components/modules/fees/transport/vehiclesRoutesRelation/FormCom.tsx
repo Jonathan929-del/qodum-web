@@ -107,7 +107,7 @@ const FormCom = ({setIsViewOpened, vehicles, routes, updateRoute, setUpdateRoute
 
     return (
         <div className='w-[90%] max-w-[700px] max-h-[90%] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] overflow-scroll custom-sidebar-scrollbar sm:w-[80%]'>
-            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Vehicle Details</h2>
+            <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Define Vehicle Route Relation</h2>
             <Form
                 {...form}
             >

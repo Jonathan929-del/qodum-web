@@ -8,7 +8,7 @@ import * as z from 'zod';
 // Route stop validation
 export const RouteStopValidation = z.object({
     route_no:z.string(),
-    stop_no:z.string(),
+    stop_no:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
     stop_name:z.string(),
     morning_arrival_time:z.object({
         hour:z.string(),

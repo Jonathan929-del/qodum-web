@@ -63,7 +63,7 @@ export const routeStopsSesssionTransfer = async ({next_session}:any) => {
 // Route stop props
 interface CreateRouteStopProps{
     route_no:String;
-    stop_no:String;
+    stop_no:Number;
     stop_name:String;
     morning_arrival_time:{
         hour:String;
@@ -150,7 +150,7 @@ export const fetchRouteStops = async () => {
 interface ModifyRouteStopProps{
     id:String;
     route_no:String;
-    stop_no:String;
+    stop_no:Number;
     stop_name:String;
     morning_arrival_time:{
         hour:String;

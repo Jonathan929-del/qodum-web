@@ -8,7 +8,7 @@ import React from 'react';
 // Main function
 const page = () => {
     return (
-        <div>Payroll page</div>
+        <div>Payroll</div>
     );
 };
 
