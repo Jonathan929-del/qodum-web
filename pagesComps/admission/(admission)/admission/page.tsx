@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import {fetchClubs} from '@/lib/actions/admission/globalMasters/club.actions';
 import {fetchHouses} from '@/lib/actions/admission/globalMasters/house.actions';
 import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
 import FormCom from '@/components/modules/admission/admission/admission/FormCom';
@@ -10,6 +11,7 @@ import {fetchParishes} from '@/lib/actions/admission/globalMasters/parish.action
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchCadetTypes} from '@/lib/actions/admission/globalMasters/cadetType.actions';
 import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchTransportMediums} from '@/lib/actions/fees/transport/transportMedium.actions';
@@ -19,8 +21,6 @@ import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedS
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
-import { fetchCadetTypes } from '@/lib/actions/admission/globalMasters/cadetType.actions';
-import { fetchClubs } from '@/lib/actions/admission/globalMasters/club.actions';
 
 
 

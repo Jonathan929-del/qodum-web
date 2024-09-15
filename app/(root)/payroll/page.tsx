@@ -12,6 +12,7 @@ import DefineProfession from '@/pagesComps/payroll/globalMasters/define-professi
 import DefineDepartment from '@/pagesComps/payroll/globalMasters/define-department/page';
 import DefineDesignation from '@/pagesComps/payroll/globalMasters/define-designation/page';
 import DefineStaffType from '@/pagesComps/payroll/globalMasters/define-staff-type/page';
+import DefineStaff from '@/pagesComps/payroll/globalMasters/define-staff/page';
 
 
 
@@ -62,6 +63,9 @@ const Home = () => {
     };
     if(openedPages.includes('Define Staff Type')){
       openedPagesArray.push({name:'Define Staff Type', component:<DefineStaffType />});
+    };
+    if(openedPages.includes('Define Staff')){
+      openedPagesArray.push({name:'Define Staff', component:<DefineStaff />});
     };
 
 

@@ -11,10 +11,7 @@ import {Command, CommandItem, CommandList} from '@/components/ui/command';
 // Main Function
 const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
     return (       
-        <Command
-            className='w-[100%] max-h-[90%] flex flex-col items-center mt-4 pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
-        >
-
+        <Command className='w-[100%] max-h-[90%] flex flex-col items-center mt-4 pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
                 {/* Heads */}
                 <div className='w-full flex flex-col overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
@@ -79,7 +76,6 @@ const RoutesList = ({routes, selectedRoutes, setSelectedRoutes}:any) => {
                         }
                     </CommandList>
                 </div>
-
         </Command>    
     );
 };

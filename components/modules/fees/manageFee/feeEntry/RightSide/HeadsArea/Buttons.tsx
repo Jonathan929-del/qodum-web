@@ -42,10 +42,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             });
         };
         const newHeads = heads.filter((h:any) => !nextHeadsToPay.map((head:any) => head.head_name).includes(h.head_name)).concat(filteredNewHeads);
-        const newSortedHeads = arrangeFeeHeads(newHeads, selectedStudent.affiliated_heads.heads);
-        // setHeads(newSortedHeads);
-
-
     };
 
 
