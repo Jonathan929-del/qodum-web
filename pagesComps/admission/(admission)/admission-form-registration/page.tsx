@@ -12,12 +12,12 @@ import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.a
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
 import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
+import {fetchNationalities} from '@/lib/actions/admission/globalMasters/nationality.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
-import { fetchNationalities } from '@/lib/actions/admission/globalMasters/nationality.actions';
 
 
 

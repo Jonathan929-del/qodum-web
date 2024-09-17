@@ -88,6 +88,28 @@ export const StaffValidation = z.object({
         head_name:z.string(),
         value:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         value_type:z.string()
-    }))
+    })),
+
+
+    // Staff educational details
+    staff_educational_details:z.object({
+        qualification:z.string(),
+        name_of_school_or_college:z.string(),
+        name_of_board_or_university:z.string(),
+        rc:z.string(),
+        subjects:z.string(),
+        percentage_of_marks:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        year_of_passing:z.string()
+    }),
+
+
+    // Staff document details
+    staff_document_details:z.object({
+        documents:z.array(z.object({
+            document_type:z.string(),
+            document_name:z.string()
+        })),
+        file:z.string()
+    })
 
 });

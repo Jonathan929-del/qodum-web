@@ -274,3 +274,50 @@ export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) 
         console.log(err);
     }
 };
+
+
+
+
+
+// Upload staff file (PDF)
+const uploadStaffPdfFile = async (file: any, pref_no: any) => {
+    const fileBuffer = file;
+    const params = {
+        Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+        Key: `staff-documents/${pref_no}`,
+        Body: fileBuffer,
+        ContentType: 'application/pdf',
+    };
+    const command = new PutObjectCommand(params);
+    await configs.send(command);
+
+    return pref_no;
+};
+
+
+
+
+
+// Upload Staff PDF
+export const uploadStaffPdf = async ({data, pref_no}: {data:any, pref_no:any}) => {
+    try {
+        const formData = await data;
+        const file = formData.get('file');
+        
+        if (!file) {
+            throw new Error('No file was sent');
+        }
+
+        // Convert file to buffer
+        const buffer = Buffer.from(await file.arrayBuffer());
+        
+        // Upload the file (PDF) to S3
+        const res = await uploadStaffPdfFile(buffer, pref_no);
+
+        // Return the file key or pref_no
+        return res;
+    } catch (err) {
+        console.error(err);
+        throw new Error('Failed to upload PDF');
+    }
+};

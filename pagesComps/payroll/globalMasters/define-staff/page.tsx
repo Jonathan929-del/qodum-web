@@ -20,6 +20,10 @@ const page = () => {
     const [staff, setStaff] = useState([{}]);
 
 
+    // Selected documents
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
+
+
     // Update staff
     const [updateStaff, setUpdateStaff] = useState({
         id:'',
@@ -101,7 +105,24 @@ const page = () => {
         },
 
         // Staff salary head
-        staff_salary_heads:[]
+        staff_salary_heads:[],
+
+        // Staff educational details
+        staff_educational_details:{
+            qualification:'',
+            name_of_school_or_college:'',
+            name_of_board_or_university:'',
+            rc:'',
+            subjects:'',
+            percentage_of_marks:0,
+            year_of_passing:''
+        },
+
+        // Staff document details
+        staff_document_details:{
+            documents:[],
+            file:''
+        }
     });
 
 
@@ -128,6 +149,7 @@ const page = () => {
                         staff={staff}
                         setIsViewOpened={setIsViewOpened}
                         setUpdateStaff={setUpdateStaff}
+                        setSelectedDocuments={setSelectedDocuments}
                     />
                 ) : (
                     <FormCom
@@ -136,6 +158,8 @@ const page = () => {
                         staff={staff}
                         updateStaff={updateStaff}
                         setUpdateStaff={setUpdateStaff}
+                        selectedDocuments={selectedDocuments}
+                        setSelectedDocuments={setSelectedDocuments}
                     />
                 )
             }

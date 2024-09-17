@@ -87,7 +87,26 @@ const StaffSchema = new mongoose.Schema(
         },
 
         // Staff salary head
-        staff_salary_heads:{type:Array}
+        staff_salary_heads:{type:Array},
+
+
+        // Staff educational details
+        staff_educational_details:{
+            qualification:{type:String},
+            name_of_school_or_college:{type:String},
+            name_of_board_or_university:{type:String},
+            rc:{type:String},
+            subjects:{type:String},
+            percentage_of_marks:{type:Number},
+            year_of_passing:{type:String}
+        },
+
+
+        // Staff document details
+        staff_document_details:{
+            documents:{type:Array},
+            file:{type:String}
+        }
 
     },
     {

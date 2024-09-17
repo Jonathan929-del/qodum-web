@@ -5,7 +5,6 @@ import {useEffect, useState} from 'react';
 import ProfilePicture from './ProfilePicture';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
-import {Switch} from '@/components/ui/switch';
 import {Checkbox} from '@/components/ui/checkbox';
 import {ChevronDown, Search, } from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
@@ -190,7 +189,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
     useEffect(() => {
         if(dateOfRetire){
             // @ts-ignore
-            form.setValue('staff_registration.date_of_joining', dateOfRetire._d);
+            form.setValue('staff_registration.date_of_retire', dateOfRetire._d);
         };
     }, [dateOfRetire]);
 
@@ -623,71 +622,75 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                         )}
                     />
 
-
-                    {/* Profile picture */}
-                    <ProfilePicture
-                        setFile={setFile}
-                        imageSrc={imageSrc}
-                        setImageSrc={setImageSrc}
-                        updateStaff={updateStaff}
-                    />
-
                 </div>
 
                 {/* Right side */}
                 <div className='flex-1 flex flex-col gap-2'>
 
-                    {/* Date of Birth */}
-                    <div className='w-full h-7 flex flex-row items-center justify-center'>
-                        <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Birth</FormLabel>
-                        <FormField
-                            control={form?.control}
-                            name='staff_registration.date_of_birth'
-                            render={() => (
-                                <FormItem className='basis-[65%]'>
-                                    <MyDatePicker
-                                        selectedDate={dateOfBirth}
-                                        setSelectedDate={setDateOfBirth}
-                                    />
-                                </FormItem>
-                            )}
+                    <div className='flex flex-row'>
+
+                        {/* Profile picture */}
+                        <ProfilePicture
+                            setFile={setFile}
+                            imageSrc={imageSrc}
+                            setImageSrc={setImageSrc}
+                            updateStaff={updateStaff}
                         />
-                    </div>
+
+                        <div className='basis-[75%] flex flex-col gap-2'>
+                            {/* Date of Birth */}
+                            <div className='w-full h-7 flex flex-row items-center justify-center'>
+                                <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Birth</FormLabel>
+                                <FormField
+                                    control={form?.control}
+                                    name='staff_registration.date_of_birth'
+                                    render={() => (
+                                        <FormItem className='basis-[65%]'>
+                                            <MyDatePicker
+                                                selectedDate={dateOfBirth}
+                                                setSelectedDate={setDateOfBirth}
+                                            />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
 
-                    {/* Date of Anniversary */}
-                    <div className='w-full h-7 flex flex-row items-center justify-center'>
-                        <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Anniversary</FormLabel>
-                        <FormField
-                            control={form?.control}
-                            name='staff_registration.date_of_anniversary'
-                            render={() => (
-                                <FormItem className='basis-[65%]'>
-                                    <MyDatePicker
-                                        selectedDate={dateOfAnniversary}
-                                        setSelectedDate={setDateOfAnniversary}
-                                    />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                            {/* Date of Anniversary */}
+                            <div className='w-full h-7 flex flex-row items-center justify-center'>
+                                <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Anniversary</FormLabel>
+                                <FormField
+                                    control={form?.control}
+                                    name='staff_registration.date_of_anniversary'
+                                    render={() => (
+                                        <FormItem className='basis-[65%]'>
+                                            <MyDatePicker
+                                                selectedDate={dateOfAnniversary}
+                                                setSelectedDate={setDateOfAnniversary}
+                                            />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
 
-                    {/* Date of Joining */}
-                    <div className='w-full h-7 flex flex-row items-center justify-center'>
-                        <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Joining</FormLabel>
-                        <FormField
-                            control={form?.control}
-                            name='staff_registration.date_of_joining'
-                            render={() => (
-                                <FormItem className='basis-[65%]'>
-                                    <MyDatePicker
-                                        selectedDate={dateOfJoining}
-                                        setSelectedDate={setDateOfJoining}
-                                    />
-                                </FormItem>
-                            )}
-                        />
+                            {/* Date of Joining */}
+                            <div className='w-full h-7 flex flex-row items-center justify-center'>
+                                <FormLabel className='pr-[4px] text-end text-[11px] text-[#726E71] basis-[35%]'>Date of Joining</FormLabel>
+                                <FormField
+                                    control={form?.control}
+                                    name='staff_registration.date_of_joining'
+                                    render={() => (
+                                        <FormItem className='basis-[65%]'>
+                                            <MyDatePicker
+                                                selectedDate={dateOfJoining}
+                                                setSelectedDate={setDateOfJoining}
+                                            />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
                     </div>
 
 

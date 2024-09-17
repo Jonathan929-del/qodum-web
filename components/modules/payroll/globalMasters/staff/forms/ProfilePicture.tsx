@@ -21,8 +21,8 @@ const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc}:any) => {
 
 
     return (
-        <div className='w-full flex items-center justify-center'>
-            <div className='w-[75px] h-[75px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-full transition hover:opacity-90'>
+        <div className='basis-[25%] flex items-center justify-end'>
+            <div className='w-[100px] h-[100px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-[4px] transition hover:opacity-90'>
                 <label
                     // @ts-ignore
                     for='image'
@@ -32,13 +32,13 @@ const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc}:any) => {
                         <img
                             alt="Student's image"
                             src={imageSrc}
-                            className='w-full h-full rounded-full'
+                            className='w-full h-full rounded-[4px]'
                         />
                     ) : updateStaff.staff_registration.profile_picture ? (
                         <img
                             alt="Student's image"
                             src={updateStaff.staff_registration.profile_picture}
-                            className='w-full h-full rounded-full'
+                            className='w-full h-full rounded-[4px]'
                         />
                     ) : (
                         <p className='text-[10px]'>Select Image</p>

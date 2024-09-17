@@ -13,7 +13,9 @@ import StaffSalaryHeads from './forms/StaffSalaryHeads';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import StaffRegistration from './forms/StaffRegistration';
 import StaffSalaryDetails from './forms/StaffSalaryDetails';
-import {uploadStaffImage} from '@/lib/actions/image.actions';
+import {uploadStaffImage, uploadStaffPdf} from '@/lib/actions/image.actions';
+import StaffDocumentDetails from './forms/StaffDocumentDetails';
+import StaffEducationalDetails from './forms/StaffEducationalDetails';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StaffValidation} from '@/lib/validations/payroll/globalMasters/staff.validation';
 import {createStaff, deleteStaff, modifyStaff} from '@/lib/actions/payroll/globalMasters/staff.actions';
@@ -23,14 +25,14 @@ import {createStaff, deleteStaff, modifyStaff} from '@/lib/actions/payroll/globa
 
 
 // Main function
-const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
+const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelectedDocuments, selectedDocuments,}:any) => {
 
     // Toast
     const {toast} = useToast();
 
 
     // Date states
-    const [dateOfbirth, setDateOfBirth] = useState(moment());
+    const [dateOfBirth, setDateOfBirth] = useState(moment());
     const [dateOfAnniversary, setDateOfAnniversary] = useState(moment());
     const [dateOfJoining, setDateOfJoining] = useState(moment());
     const [dateOfRetire, setDateOfRetire] = useState(moment());
@@ -49,13 +51,20 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
     const [isLoading, setIsLoading] = useState(false);
 
 
-    // File
+    // Image file
     const [file, setFile] = useState(null);
 
 
     // Image source (For image preview)
     const [imageSrc, setImageSrc] = useState('');
 
+
+    // Pdf file
+    const [pdfFile, setPdfFile] = useState(null);
+
+
+    // Pdf file name
+    const [pdfFileName, setPdfFileName] = useState('');
 
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('staff-registration');
@@ -139,7 +148,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
         },
 
         // Staff salary head
-        staff_salary_heads:updateStaff.staff_salary_heads
+        staff_salary_heads:updateStaff.staff_salary_heads,
+
+        // Staff educational details
+        staff_educational_details:{
+            qualification:updateStaff.staff_educational_details.qualification,
+            name_of_school_or_college:updateStaff.staff_educational_details.name_of_school_or_college,
+            name_of_board_or_university:updateStaff.staff_educational_details.name_of_board_or_university,
+            rc:updateStaff.staff_educational_details.rc,
+            subjects:updateStaff.staff_educational_details.subjects,
+            percentage_of_marks:updateStaff.staff_educational_details.percentage_of_marks,
+            year_of_passing:updateStaff.staff_educational_details.year_of_passing
+        },
+
+        // Staff document details
+        staff_document_details:{
+            documents:updateStaff.staff_document_details.documents,
+            file:updateStaff.staff_document_details.file
+        }
     };
 
 
@@ -223,7 +249,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
             },
 
             // Staff salary head
-            staff_salary_heads:updateStaff.id === '' ? [] : updateStaff.staff_salary_heads
+            staff_salary_heads:updateStaff.id === '' ? [] : updateStaff.staff_salary_heads,
+
+            // Staff educational details
+            staff_educational_details:{
+                qualification:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.qualification,
+                name_of_school_or_college:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.name_of_school_or_college,
+                name_of_board_or_university:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.name_of_board_or_university,
+                rc:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.rc,
+                subjects:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.subjects,
+                percentage_of_marks:updateStaff.id === '' ? 0 : updateStaff.staff_educational_details.percentage_of_marks,
+                year_of_passing:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.year_of_passing
+            },
+
+            // Staff document details
+            staff_document_details:{
+                documents:updateStaff.id === '' ? [] : updateStaff.staff_document_details.documents,
+                file:updateStaff.id === '' ? '' : updateStaff.staff_document_details.file
+            }
         }
     });
 
@@ -242,10 +285,16 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                 setIsLoading(false);
                 return;
             };
+            const randomNumber = Math.floor(Math.random() * 1000000) + 1;
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${values.staff_registration.pref_no}`});
+                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+            };
+            if(pdfFile){
+                const formData = new FormData();
+                formData.append('file', pdfFile);
+                await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
             const res = await createStaff({
                 // Staff registration
@@ -264,7 +313,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                     emergency_mobile:values.staff_registration.emergency_mobile,
                     wing:values.staff_registration.wing,
                     is_active:values.staff_registration.is_active,
-                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${values.staff_registration.pref_no}` : values.staff_registration.profile_picture || '',
+                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_registration.profile_picture || '',
                     maritial_status:values.staff_registration.maritial_status,
                     qualification:values.staff_registration.qualification,
                     date_of_birth:values.staff_registration.date_of_birth,
@@ -324,7 +373,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                 },
 
                 // Staff salary head
-                staff_salary_heads:values.staff_salary_heads
+                staff_salary_heads:values.staff_salary_heads,
+
+                // Staff educational details
+                staff_educational_details:{
+                    qualification:values.staff_educational_details.qualification,
+                    name_of_school_or_college:values.staff_educational_details.name_of_school_or_college,
+                    name_of_board_or_university:values.staff_educational_details.name_of_board_or_university,
+                    rc:values.staff_educational_details.rc,
+                    subjects:values.staff_educational_details.subjects,
+                    percentage_of_marks:values.staff_educational_details.percentage_of_marks,
+                    year_of_passing:values.staff_educational_details.year_of_passing
+                },
+
+                // staff document details
+                staff_document_details:{
+                    documents:selectedDocuments.filter((d:any) => d.document_name !== ''),
+                    file:pdfFile !== null ? `https://qodum.s3.amazonaws.com/staff-documents/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_document_details.file || '',
+                }
             });
             if(res === 0){
                 toast({title:'Please create a session first', variant:'alert'});
@@ -337,17 +403,37 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
         else if(
             !deepEqual(comparisonObject, values)
             || file
+            || pdfFile
+            || comparisonObject.staff_document_details.documents !== selectedDocuments
             || moment(values.staff_registration.date_of_birth).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_birth).format('DD-MM-YYYY')
+            || moment(values.staff_registration.date_of_anniversary).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_anniversary).format('DD-MM-YYYY')
+            || moment(values.staff_registration.date_of_joining).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_joining).format('DD-MM-YYYY')
+            || moment(values.staff_registration.date_of_retire).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_retire).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.confirmation_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.confirmation_date).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.permanent_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.permanent_date).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.leaving_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.leaving_date).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.joining_date_epf).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.joining_date_epf).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.joining_date_eps).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.joining_date_eps).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.leaving_date_epf).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.leaving_date_epf).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.leaving_date_eps).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.leaving_date_eps).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.probation_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.probation_date).format('DD-MM-YYYY')
+            || moment(values.staff_salary_details.increment_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.increment_date).format('DD-MM-YYYY')
         ){
             if(comparisonObject.staff_registration.pref_no !== values.staff_registration.pref_no && staff.map((s:any) => s.staff_registration.pref_no).includes(values.staff_registration.pref_no)){
                 toast({title:'Preference no. already exists', variant:'error'});
                 setIsLoading(false);
                 return;
             };
+            const randomNumber = Math.floor(Math.random() * 1000000) + 1;
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${values.staff_registration.pref_no}`});
+                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+            };
+            if(pdfFile){
+                const formData = new FormData();
+                formData.append('file', pdfFile);
+                await uploadStaffPdf({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
             // Update
             await modifyStaff({
@@ -368,7 +454,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                     emergency_mobile:values.staff_registration.emergency_mobile,
                     wing:values.staff_registration.wing,
                     is_active:values.staff_registration.is_active,
-                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${values.staff_registration.pref_no}` : comparisonObject.staff_registration.profile_picture,
+                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : comparisonObject.staff_registration.profile_picture,
                     maritial_status:values.staff_registration.maritial_status,
                     qualification:values.staff_registration.qualification,
                     date_of_birth:values.staff_registration.date_of_birth,
@@ -428,7 +514,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                 },
 
                 // Staff salary head
-                staff_salary_heads:values.staff_salary_heads
+                staff_salary_heads:values.staff_salary_heads,
+
+                // Staff educational details
+                staff_educational_details:{
+                    qualification:values.staff_educational_details.qualification,
+                    name_of_school_or_college:values.staff_educational_details.name_of_school_or_college,
+                    name_of_board_or_university:values.staff_educational_details.name_of_board_or_university,
+                    rc:values.staff_educational_details.rc,
+                    subjects:values.staff_educational_details.subjects,
+                    percentage_of_marks:values.staff_educational_details.percentage_of_marks,
+                    year_of_passing:values.staff_educational_details.year_of_passing
+                },
+
+                // Staff document details
+                staff_document_details:{
+                    documents:selectedDocuments.filter((d:any) => d.document_name !== ''),
+                    file:pdfFile !== null ? `https://qodum.s3.amazonaws.com/staff-documents/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : comparisonObject.staff_document_details.file,
+                }
             });
             toast({title:'Updated Successfully!'});
         }
@@ -522,7 +625,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
             },
 
             // Staff salary head
-            staff_salary_heads:[]
+            staff_salary_heads:[],
+
+            // Staff educational details
+            staff_educational_details:{
+                qualification:'',
+                name_of_school_or_college:'',
+                name_of_board_or_university:'',
+                rc:'',
+                subjects:'',
+                percentage_of_marks:0,
+                year_of_passing:''
+            },
+
+            // Staff document details
+            staff_document_details:{
+                documents:[],
+                file:''
+            }
         });
         // Reseting form
         form.reset({
@@ -602,10 +722,29 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
             },
 
             // Staff salary head
-            staff_salary_heads:[]
+            staff_salary_heads:[],
+
+            // Staff educational details
+            staff_educational_details:{
+                qualification:'',
+                name_of_school_or_college:'',
+                name_of_board_or_university:'',
+                rc:'',
+                subjects:'',
+                percentage_of_marks:0,
+                year_of_passing:''
+            },
+
+            // Staff document details
+            staff_document_details:{
+                documents:[],
+                file:''
+            }
         });
         setFile(null);
         setImageSrc('');
+        setPdfFile(null);
+        setPdfFileName(null);
         setDateOfBirth(moment());
         setDateOfAnniversary(moment());
         setDateOfJoining(moment());
@@ -619,6 +758,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
         setLeavingDateEps(moment());
         setProbationDate(moment());
         setIncrementDate(moment());
+        setSelectedDocuments([]);
 
 
         // Setting is loadind to false
@@ -716,6 +856,18 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
             // Staff salary heads
             form.setValue('staff_salary_heads', updateStaff.staff_salary_heads);
 
+            // Setting values for staff_educational_details
+            form.setValue('staff_educational_details.qualification', updateStaff.staff_educational_details.qualification);
+            form.setValue('staff_educational_details.name_of_school_or_college', updateStaff.staff_educational_details.name_of_school_or_college);
+            form.setValue('staff_educational_details.name_of_board_or_university', updateStaff.staff_educational_details.name_of_board_or_university);
+            form.setValue('staff_educational_details.rc', updateStaff.staff_educational_details.rc);
+            form.setValue('staff_educational_details.subjects', updateStaff.staff_educational_details.subjects);
+            form.setValue('staff_educational_details.percentage_of_marks', updateStaff.staff_educational_details.percentage_of_marks);
+            form.setValue('staff_educational_details.year_of_passing', updateStaff.staff_educational_details.year_of_passing);
+
+            // Setting values for staff_document_details (assuming it is an array)
+            form.setValue('staff_document_details', updateStaff.staff_document_details);
+
         }
     }, [updateStaff]);
     useEffect(() => {
@@ -754,7 +906,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                         onClick={() => setSelectedTab('staff-registration')}
                                         className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-registration' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
-                                        Staff Registration
+                                        Registration
                                     </TabsTrigger>
 
                                     <TabsTrigger
@@ -762,7 +914,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                         onClick={() => setSelectedTab('staff-salary-details')}
                                         className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-salary-details' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
-                                        Staff Salary Details
+                                        Salary Details
                                     </TabsTrigger>
 
                                     <TabsTrigger
@@ -770,7 +922,21 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                         onClick={() => setSelectedTab('staff-salary-heads')}
                                         className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-salary-heads' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
-                                        Staff Salary Heads
+                                        Salary Heads
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value='staff-educational-details'
+                                        onClick={() => setSelectedTab('staff-educational-details')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-educational-details' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Educational Details
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value='staff-document-details'
+                                        onClick={() => setSelectedTab('staff-document-details')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-document-details' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Document Details
                                     </TabsTrigger>
                                 </TabsList>
                             </div>
@@ -787,7 +953,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                     setUpdateStaff={setUpdateStaff}
                                     updateStaff={updateStaff}
                                     setIsLoading={setIsLoading}
-                                    dateOfbirth={dateOfbirth}
+                                    dateOfBirth={dateOfBirth}
                                     setDateOfBirth={setDateOfBirth}
                                     dateOfAnniversary={dateOfAnniversary}
                                     setDateOfAnniversary={setDateOfAnniversary}
@@ -795,6 +961,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                     setDateOfJoining={setDateOfJoining}
                                     dateOfRetire={dateOfRetire}
                                     setDateOfRetire={setDateOfRetire}
+                                    setSelectedDocuments={setSelectedDocuments}
                                 />
                             </TabsContent>
                             <TabsContent value='staff-salary-details'>
@@ -824,6 +991,23 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                             <TabsContent value='staff-salary-heads'>
                                 <StaffSalaryHeads />
                             </TabsContent>
+                            <TabsContent value='staff-educational-details'>
+                                <StaffEducationalDetails
+                                    form={form}
+                                />
+                            </TabsContent>
+                            <TabsContent value='staff-document-details'>
+                                <StaffDocumentDetails
+                                    form={form}
+                                    setSelectedDocuments={setSelectedDocuments}
+                                    selectedDocuments={selectedDocuments}
+                                    pdfFile={pdfFile}
+                                    setPdfFile={setPdfFile}
+                                    pdfFileName={pdfFileName}
+                                    updateStaff={updateStaff}
+                                    setPdfFileName={setPdfFileName}
+                                />
+                            </TabsContent>
                         </Tabs>
 
 
@@ -838,6 +1022,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                 form={form}
                                 setFile={setFile}
                                 setImageSrc={setImageSrc}
+                                setPdfFile={setPdfFile}
+                                setPdfFileName={setPdfFileName}
                                 setDateOfBirth={setDateOfBirth}
                                 setDateOfAnniversary={setDateOfAnniversary}
                                 setDateOfJoining={setDateOfJoining}
@@ -851,6 +1037,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff}:any) => {
                                 setLeavingDateEps={setLeavingDateEps}
                                 setProbationDate={setProbationDate}
                                 setIncrementDate={setIncrementDate}
+                                setSelectedDocuments={setSelectedDocuments}
                             />
                         </div>
                     </form>

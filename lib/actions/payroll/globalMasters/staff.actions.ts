@@ -87,9 +87,26 @@ interface CreateStaffProps{
 
     // Staff salary head
     staff_salary_heads:any;
+
+    // Staff educational details
+    staff_educational_details:{
+        qualification:String;
+        name_of_school_or_college:String;
+        name_of_board_or_university:String;
+        rc:String;
+        subjects:String;
+        percentage_of_marks:Number;
+        year_of_passing:String;
+    },
+
+    // Staff document details
+    staff_document_details:{
+        documents:any;
+        file:String;
+    }
 };
 // Create staff
-export const createStaff = async ({staff_registration, staff_salary_details, staff_salary_heads}:CreateStaffProps) => {
+export const createStaff = async ({staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:CreateStaffProps) => {
     try {
     
         // Database connection
@@ -109,9 +126,9 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
 
 
         // Creating new staff
-        const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details});
+        const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details, staff_educational_details});
         newStaff.save().then(async () => {
-            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads});
+            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads, staff_document_details});
         });
 
 
@@ -235,9 +252,26 @@ interface ModifyStaffProps{
 
     // Staff salary head
     staff_salary_heads:any;
+
+    // Staff educational details
+    staff_educational_details:{
+        qualification:String;
+        name_of_school_or_college:String;
+        name_of_board_or_university:String;
+        rc:String;
+        subjects:String;
+        percentage_of_marks:Number;
+        year_of_passing:String;
+    },
+
+    // Staff document details
+    staff_document_details:{
+        documents:any;
+        file:String;
+    }
 }
 // Modify staff
-export const modifyStaff = async ({id, staff_registration, staff_salary_details, staff_salary_heads}:ModifyStaffProps) => {
+export const modifyStaff = async ({id, staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:ModifyStaffProps) => {
     try {
 
         // Db connection
@@ -255,7 +289,7 @@ export const modifyStaff = async ({id, staff_registration, staff_salary_details,
 
         
         // Update staff
-        await Staff.findByIdAndUpdate(id, {staff_registration, staff_salary_details, staff_salary_heads}, {new:true});
+        await Staff.findByIdAndUpdate(id, {staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}, {new:true});
 
 
         // Return

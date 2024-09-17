@@ -30,8 +30,6 @@ const Document = ({selectedDocuments, setSelectedDocuments}:any) => {
         <div className='w-full h-full m-auto flex flex-col overflow-y-scroll custom-sidebar-scrollbar'>
             <div className='flex flex-col gap-6 py-2'>
 
-
-
                 {documents.length < 1 ? (
                         <p>No documents</p>
                     ) : // @ts-ignore
@@ -67,9 +65,6 @@ const Document = ({selectedDocuments, setSelectedDocuments}:any) => {
                         </div>
                     </div>
                 ))}
-
-
-
 
             </div>
         </div>
