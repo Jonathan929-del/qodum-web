@@ -12,7 +12,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments}:any) => {
+const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, setEducationalDetails}:any) => {
 
     // Is active
     const [isActive, setIsActive] = useState(true);
@@ -107,15 +107,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments}:
             staff_salary_heads:s.staff_salary_heads,
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:s.staff_educational_details.qualification,
-                name_of_school_or_college:s.staff_educational_details.name_of_school_or_college,
-                name_of_board_or_university:s.staff_educational_details.name_of_board_or_university,
-                rc:s.staff_educational_details.rc,
-                subjects:s.staff_educational_details.subjects,
-                percentage_of_marks:s.staff_educational_details.percentage_of_marks,
-                year_of_passing:s.staff_educational_details.year_of_passing
-            },
+            staff_educational_details:s?.staff_educational_details || [],
 
             // Staff document details
             staff_document_details:{
@@ -123,6 +115,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments}:
                 file:s.staff_document_details.file
             }
         });
+        setEducationalDetails(s?.staff_educational_details || []);
         setSelectedDocuments(s?.staff_document_details?.documents || []);
         setIsViewOpened(false);
     };

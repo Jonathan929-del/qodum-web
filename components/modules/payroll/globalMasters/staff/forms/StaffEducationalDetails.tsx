@@ -1,20 +1,18 @@
 // Imports
-import moment from 'moment';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
-import {Checkbox} from '@/components/ui/checkbox';
-import {ChevronDown, ChevronsUpDown} from 'lucide-react';
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchSubjects } from '@/lib/actions/admission/globalMasters/subject.actions';
+import {ChevronDown, Trash} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 
 
 
 
 // Main function
-const StaffEducationalDetails = ({form}:any) => {
+const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetails}:any) => {
 
     // Subjects
     const [subjects, setSubjects] = useState([]);
@@ -30,21 +28,25 @@ const StaffEducationalDetails = ({form}:any) => {
     }, []);
 
     return (
-        <div className='flex justify-start px-4 pt-10'>
-            <div className='flex-1 flex flex-col gap-2 max-w-[50%]'>
+        <div className='flex flex-col gap-4 px-4 pt-10'>
+            <h2>Details of Qualification:</h2>
+            <div className='flex flex-col justify-center w-full h-full gap-4 pt-6 overflow-scroll custom-sidebar-scrollbar'>
 
-                {/* Qualification */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.qualification'
-                    render={({ field }) => (
+                {educationalDetails.map((d:any) => (
+                    <div className='min-w-[1500px] h-10 flex flex-row gap-2'>
+
+                        {/* Qualification */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center'>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Qualification</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.qualification}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].qualification = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -52,22 +54,20 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
 
 
-                {/* Name of School/College */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.name_of_school_or_college'
-                    render={({ field }) => (
+                        {/* Name of School/College */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name of School/College</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.name_of_school_or_college}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].name_of_school_or_college = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -75,22 +75,20 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
 
 
-                {/* Name of Board/University */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.name_of_board_or_university'
-                    render={({ field }) => (
+                        {/* Name of Board/University */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name of Board/University</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.name_of_board_or_universtity}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].name_of_board_or_universtity = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -98,22 +96,20 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
 
 
-                {/* RC */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.rc'
-                    render={({ field }) => (
+                        {/* RC */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>RC</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.rc}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].rc = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -121,61 +117,50 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
 
 
-                {/* Subjects */}
-                <div className='w-full flex flex-col items-center lg:flex-row'>
-                    <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Subjects</FormLabel>
-                    <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                        <FormField
-                            control={form?.control}
-                            name='staff_educational_details.subjects'
-                            render={({ field }) => (
-                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                    <FormControl>
-                                        <Select
-                                            {...field}
-                                            value={field?.value}
-                                            onValueChange={field?.onChange}
-                                        >
-                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                <ChevronDown className="h-4 w-4 opacity-50" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {subjects?.length < 1 ? (
-                                                    <p>No subjects</p>
-                                                    // @ts-ignore
-                                                ) : !subjects[0]?.subject_name ? (
-                                                    <LoadingIcon />
-                                                ) : subjects?.map((item:any) => (
-                                                    <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                </div>
+                        {/* Subjects */}
+                        <div className='w-full h-12 mt-[-10px] flex flex-col'>
+                            <FormLabel className='w-full text-[11px] text-[#726E71]'>Subjects</FormLabel>
+                            <div className='w-full h-full'>
+                                <Select
+                                    value={d.subjects}
+                                    onValueChange={(e:any) => {
+                                        educationalDetails[educationalDetails.indexOf(d)].subjects = e;
+                                        setEducationalDetails([...educationalDetails]);
+                                    }}
+                                >
+                                    <SelectTrigger className='w-full h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {subjects?.length < 1 ? (
+                                            <p>No subjects</p>
+                                            // @ts-ignore
+                                        ) : !subjects[0]?.subject_name ? (
+                                            <LoadingIcon />
+                                        ) : subjects?.map((item:any) => (
+                                            <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
 
 
-                {/* Percentage of Marks */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.percentage_of_marks'
-                    render={({ field }) => (
+                        {/* Percentage of Marks */}
                         <FormItem className='relative w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Percentage of Marks</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.percentage_of_marks}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].percentage_of_marks = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             type='number'
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                         />
@@ -184,22 +169,20 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
 
 
-                {/* Year of Passing */}
-                <FormField
-                    control={form?.control}
-                    name='staff_educational_details.year_of_passing'
-                    render={({ field }) => (
+                        {/* Year of Passing */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
                                 <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Year of Passing</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            {...field}
+                                            value={d.year_of_passing}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].year_of_passing = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />
                                     </FormControl>
@@ -207,9 +190,44 @@ const StaffEducationalDetails = ({form}:any) => {
                                 </div>
                             </div>
                         </FormItem>
-                    )}
-                />
-        
+
+                        {/* Remove button */}
+                        <span
+                            onClick={() => {
+                                setEducationalDetails(educationalDetails.filter((s:any) => s !== d))
+                            }}
+                            className='flex items-center justify-center px-2 py-2 text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white cursor-pointer
+                                    hover:border-[#ba2b2b] hover:from-[#ba2b2b42] hover:to-[#ba2b2b42] hover:text-[#ba2b2b]'
+                        >
+                            <Trash size={15} />
+                        </span>
+
+                    </div>
+                ))}
+
+                <div className='flex justify-center'>
+                    <span
+                        onClick={() => {
+                            setEducationalDetails([
+                                ...educationalDetails,
+                                {
+                                    qualification:'',
+                                    name_of_school_or_college:'',
+                                    name_of_board_or_universtity:'',
+                                    rc:'',
+                                    subjects:'',
+                                    percentage_of_marks:0,
+                                    year_of_passing:''
+                                }
+                            ])
+                        }}
+                        className='text-lg px-3 py-1 text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] rounded-full transition border-[1px] border-white cursor-pointer
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    >
+                        +
+                    </span>
+                </div>
+
             </div>
         </div>
     );

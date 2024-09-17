@@ -25,7 +25,7 @@ import {createStaff, deleteStaff, modifyStaff} from '@/lib/actions/payroll/globa
 
 
 // Main function
-const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelectedDocuments, selectedDocuments,}:any) => {
+const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelectedDocuments, selectedDocuments, educationalDetails, setEducationalDetails}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -151,15 +151,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         staff_salary_heads:updateStaff.staff_salary_heads,
 
         // Staff educational details
-        staff_educational_details:{
-            qualification:updateStaff.staff_educational_details.qualification,
-            name_of_school_or_college:updateStaff.staff_educational_details.name_of_school_or_college,
-            name_of_board_or_university:updateStaff.staff_educational_details.name_of_board_or_university,
-            rc:updateStaff.staff_educational_details.rc,
-            subjects:updateStaff.staff_educational_details.subjects,
-            percentage_of_marks:updateStaff.staff_educational_details.percentage_of_marks,
-            year_of_passing:updateStaff.staff_educational_details.year_of_passing
-        },
+        staff_educational_details:updateStaff.staff_educational_details,
 
         // Staff document details
         staff_document_details:{
@@ -252,15 +244,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_salary_heads:updateStaff.id === '' ? [] : updateStaff.staff_salary_heads,
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.qualification,
-                name_of_school_or_college:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.name_of_school_or_college,
-                name_of_board_or_university:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.name_of_board_or_university,
-                rc:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.rc,
-                subjects:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.subjects,
-                percentage_of_marks:updateStaff.id === '' ? 0 : updateStaff.staff_educational_details.percentage_of_marks,
-                year_of_passing:updateStaff.id === '' ? '' : updateStaff.staff_educational_details.year_of_passing
-            },
+            staff_educational_details:updateStaff.id === '' ? [] : updateStaff.staff_educational_details,
 
             // Staff document details
             staff_document_details:{
@@ -269,6 +253,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             }
         }
     });
+    console.log(form.formState.errors);
 
 
     // Submit handler
@@ -376,15 +361,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_salary_heads:values.staff_salary_heads,
 
                 // Staff educational details
-                staff_educational_details:{
-                    qualification:values.staff_educational_details.qualification,
-                    name_of_school_or_college:values.staff_educational_details.name_of_school_or_college,
-                    name_of_board_or_university:values.staff_educational_details.name_of_board_or_university,
-                    rc:values.staff_educational_details.rc,
-                    subjects:values.staff_educational_details.subjects,
-                    percentage_of_marks:values.staff_educational_details.percentage_of_marks,
-                    year_of_passing:values.staff_educational_details.year_of_passing
-                },
+                staff_educational_details:educationalDetails,
 
                 // staff document details
                 staff_document_details:{
@@ -405,6 +382,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             || file
             || pdfFile
             || comparisonObject.staff_document_details.documents !== selectedDocuments
+            || comparisonObject.staff_educational_details !== educationalDetails
             || moment(values.staff_registration.date_of_birth).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_birth).format('DD-MM-YYYY')
             || moment(values.staff_registration.date_of_anniversary).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_anniversary).format('DD-MM-YYYY')
             || moment(values.staff_registration.date_of_joining).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_joining).format('DD-MM-YYYY')
@@ -517,15 +495,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_salary_heads:values.staff_salary_heads,
 
                 // Staff educational details
-                staff_educational_details:{
-                    qualification:values.staff_educational_details.qualification,
-                    name_of_school_or_college:values.staff_educational_details.name_of_school_or_college,
-                    name_of_board_or_university:values.staff_educational_details.name_of_board_or_university,
-                    rc:values.staff_educational_details.rc,
-                    subjects:values.staff_educational_details.subjects,
-                    percentage_of_marks:values.staff_educational_details.percentage_of_marks,
-                    year_of_passing:values.staff_educational_details.year_of_passing
-                },
+                staff_educational_details:educationalDetails,
 
                 // Staff document details
                 staff_document_details:{
@@ -628,15 +598,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_salary_heads:[],
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:'',
-                percentage_of_marks:0,
-                year_of_passing:''
-            },
+            staff_educational_details:[],
 
             // Staff document details
             staff_document_details:{
@@ -725,15 +687,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_salary_heads:[],
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:'',
-                percentage_of_marks:0,
-                year_of_passing:''
-            },
+            staff_educational_details:[],
 
             // Staff document details
             staff_document_details:{
@@ -759,6 +713,15 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         setProbationDate(moment());
         setIncrementDate(moment());
         setSelectedDocuments([]);
+        setEducationalDetails([{
+            qualification:'',
+            name_of_school_or_college:'',
+            name_of_board_or_universtity:'',
+            rc:'',
+            subjects:'',
+            percentage_of_marks:0,
+            year_of_passing:''
+        }]);
 
 
         // Setting is loadind to false
@@ -857,16 +820,11 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             form.setValue('staff_salary_heads', updateStaff.staff_salary_heads);
 
             // Setting values for staff_educational_details
-            form.setValue('staff_educational_details.qualification', updateStaff.staff_educational_details.qualification);
-            form.setValue('staff_educational_details.name_of_school_or_college', updateStaff.staff_educational_details.name_of_school_or_college);
-            form.setValue('staff_educational_details.name_of_board_or_university', updateStaff.staff_educational_details.name_of_board_or_university);
-            form.setValue('staff_educational_details.rc', updateStaff.staff_educational_details.rc);
-            form.setValue('staff_educational_details.subjects', updateStaff.staff_educational_details.subjects);
-            form.setValue('staff_educational_details.percentage_of_marks', updateStaff.staff_educational_details.percentage_of_marks);
-            form.setValue('staff_educational_details.year_of_passing', updateStaff.staff_educational_details.year_of_passing);
+            form.setValue('staff_educational_details', updateStaff.staff_educational_details);
 
             // Setting values for staff_document_details (assuming it is an array)
-            form.setValue('staff_document_details', updateStaff.staff_document_details);
+            form.setValue('staff_document_details.documents', updateStaff.staff_document_details.documents);
+            form.setValue('staff_document_details.file', updateStaff.staff_document_details.file);
 
         }
     }, [updateStaff]);
@@ -994,6 +952,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                             <TabsContent value='staff-educational-details'>
                                 <StaffEducationalDetails
                                     form={form}
+                                    educationalDetails={educationalDetails}
+                                    setEducationalDetails={setEducationalDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='staff-document-details'>
@@ -1038,6 +998,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                 setProbationDate={setProbationDate}
                                 setIncrementDate={setIncrementDate}
                                 setSelectedDocuments={setSelectedDocuments}
+                                setEducationalDetails={setEducationalDetails}
                             />
                         </div>
                     </form>

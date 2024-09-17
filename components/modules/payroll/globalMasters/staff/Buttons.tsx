@@ -11,7 +11,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setPdfFile, setPdfFileName, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setConfirmationDate, setPermanentDate, setLeavingDate, setJoiningDateEpf, setJoiningDateEps, setLeavingDateEpf, setLeavingDateEps, setProbationDate, setIncrementDate, setSelectedDocuments}:any) => {
+const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setPdfFile, setPdfFileName, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setConfirmationDate, setPermanentDate, setLeavingDate, setJoiningDateEpf, setJoiningDateEps, setLeavingDateEpf, setLeavingDateEps, setProbationDate, setIncrementDate, setSelectedDocuments, setEducationalDetails}:any) => {
 
     // Cancel click
     const cancelClick = () => {
@@ -100,15 +100,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
             staff_salary_heads:[],
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:'',
-                percentage_of_marks:0,
-                year_of_passing:''
-            },
+            staff_educational_details:[],
 
             // Staff document details
             staff_document_details:{
@@ -199,15 +191,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
             staff_salary_heads:[],
 
             // Staff educational details
-            staff_educational_details:{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:'',
-                percentage_of_marks:0,
-                year_of_passing:''
-            },
+            staff_educational_details:[],
 
             staff_document_details:{
                 documents:[],
@@ -235,6 +219,15 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
         setProbationDate(moment());
         setIncrementDate(moment());
         setSelectedDocuments([]);
+        setEducationalDetails([{
+            qualification:'',
+            name_of_school_or_college:'',
+            name_of_board_or_universtity:'',
+            rc:'',
+            subjects:'',
+            percentage_of_marks:0,
+            year_of_passing:''
+        }]);
 
     };
 

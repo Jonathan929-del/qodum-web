@@ -92,15 +92,7 @@ export const StaffValidation = z.object({
 
 
     // Staff educational details
-    staff_educational_details:z.object({
-        qualification:z.string(),
-        name_of_school_or_college:z.string(),
-        name_of_board_or_university:z.string(),
-        rc:z.string(),
-        subjects:z.string(),
-        percentage_of_marks:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
-        year_of_passing:z.string()
-    }),
+    staff_educational_details:z.any(),
 
 
     // Staff document details

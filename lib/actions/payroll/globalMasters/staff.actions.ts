@@ -89,15 +89,7 @@ interface CreateStaffProps{
     staff_salary_heads:any;
 
     // Staff educational details
-    staff_educational_details:{
-        qualification:String;
-        name_of_school_or_college:String;
-        name_of_board_or_university:String;
-        rc:String;
-        subjects:String;
-        percentage_of_marks:Number;
-        year_of_passing:String;
-    },
+    staff_educational_details:any;
 
     // Staff document details
     staff_document_details:{
@@ -126,9 +118,9 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
 
 
         // Creating new staff
-        const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details, staff_educational_details});
+        const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details});
         newStaff.save().then(async () => {
-            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads, staff_document_details});
+            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads, staff_educational_details, staff_document_details});
         });
 
 
@@ -254,15 +246,7 @@ interface ModifyStaffProps{
     staff_salary_heads:any;
 
     // Staff educational details
-    staff_educational_details:{
-        qualification:String;
-        name_of_school_or_college:String;
-        name_of_board_or_university:String;
-        rc:String;
-        subjects:String;
-        percentage_of_marks:Number;
-        year_of_passing:String;
-    },
+    staff_educational_details:any;
 
     // Staff document details
     staff_document_details:{

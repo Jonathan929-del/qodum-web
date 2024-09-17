@@ -91,15 +91,7 @@ const StaffSchema = new mongoose.Schema(
 
 
         // Staff educational details
-        staff_educational_details:{
-            qualification:{type:String},
-            name_of_school_or_college:{type:String},
-            name_of_board_or_university:{type:String},
-            rc:{type:String},
-            subjects:{type:String},
-            percentage_of_marks:{type:Number},
-            year_of_passing:{type:String}
-        },
+        staff_educational_details:{Array},
 
 
         // Staff document details
