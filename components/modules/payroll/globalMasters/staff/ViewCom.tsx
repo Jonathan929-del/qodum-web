@@ -110,13 +110,10 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
             staff_educational_details:s?.staff_educational_details || [],
 
             // Staff document details
-            staff_document_details:{
-                documents:s?.staff_document_details?.documents || '',
-                file:s.staff_document_details.file
-            }
+            staff_document_details:s?.staff_document_details || []
         });
         setEducationalDetails(s?.staff_educational_details || []);
-        setSelectedDocuments(s?.staff_document_details?.documents || []);
+        setSelectedDocuments(s?.staff_document_details || []);
         setIsViewOpened(false);
     };
 

@@ -918,6 +918,9 @@ const modules = [
                         subPageName:'Define Staff'
                     },
                     {
+                        subPageName:'Define Document Type'
+                    },
+                    {
                         subPageName:'Modify Staff in Bulk'
                     },
                     {

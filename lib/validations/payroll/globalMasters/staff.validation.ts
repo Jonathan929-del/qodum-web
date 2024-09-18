@@ -96,12 +96,10 @@ export const StaffValidation = z.object({
 
 
     // Staff document details
-    staff_document_details:z.object({
-        documents:z.array(z.object({
-            document_type:z.string(),
-            document_name:z.string()
-        })),
-        file:z.string()
-    })
+    staff_document_details:z.array(z.object({
+        document_type:z.string(),
+        document_name:z.string(),
+        files:z.array(z.string())
+    })),
 
 });

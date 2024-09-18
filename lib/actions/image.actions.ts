@@ -280,13 +280,14 @@ export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) 
 
 
 // Upload staff file (PDF)
-const uploadStaffPdfFile = async (file: any, pref_no: any) => {
+const uploadStaffPdfFile = async (file: any, pref_no: any, content_type:any) => {
+    console.log(content_type);
     const fileBuffer = file;
     const params = {
         Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
         Key: `staff-documents/${pref_no}`,
         Body: fileBuffer,
-        ContentType: 'application/pdf',
+        ContentType: content_type,
     };
     const command = new PutObjectCommand(params);
     await configs.send(command);
@@ -299,7 +300,7 @@ const uploadStaffPdfFile = async (file: any, pref_no: any) => {
 
 
 // Upload Staff PDF
-export const uploadStaffPdf = async ({data, pref_no}: {data:any, pref_no:any}) => {
+export const uploadStaffPdf = async ({data, pref_no, content_type}: {data:any, pref_no:any, content_type:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -312,7 +313,7 @@ export const uploadStaffPdf = async ({data, pref_no}: {data:any, pref_no:any}) =
         const buffer = Buffer.from(await file.arrayBuffer());
         
         // Upload the file (PDF) to S3
-        const res = await uploadStaffPdfFile(buffer, pref_no);
+        const res = await uploadStaffPdfFile(buffer, pref_no, content_type);
 
         // Return the file key or pref_no
         return res;

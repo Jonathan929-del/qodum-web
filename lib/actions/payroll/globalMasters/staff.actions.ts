@@ -92,10 +92,7 @@ interface CreateStaffProps{
     staff_educational_details:any;
 
     // Staff document details
-    staff_document_details:{
-        documents:any;
-        file:String;
-    }
+    staff_document_details:any;
 };
 // Create staff
 export const createStaff = async ({staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:CreateStaffProps) => {
@@ -249,10 +246,7 @@ interface ModifyStaffProps{
     staff_educational_details:any;
 
     // Staff document details
-    staff_document_details:{
-        documents:any;
-        file:String;
-    }
+    staff_document_details:any;
 }
 // Modify staff
 export const modifyStaff = async ({id, staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:ModifyStaffProps) => {

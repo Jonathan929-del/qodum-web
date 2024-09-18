@@ -95,10 +95,7 @@ const StaffSchema = new mongoose.Schema(
 
 
         // Staff document details
-        staff_document_details:{
-            documents:{type:Array},
-            file:{type:String}
-        }
+        staff_document_details:{type:Array}
 
     },
     {

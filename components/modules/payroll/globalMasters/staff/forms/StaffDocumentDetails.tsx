@@ -1,15 +1,17 @@
 // Imports
+import {Download, Eye, X} from 'lucide-react';
 import {useEffect, useRef, useState} from 'react';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchDocumentsForAdmission} from '@/lib/actions/admission/globalMasters/document/document.actions';
+import {fetchStaffDocumentsForAdmission} from '@/lib/actions/payroll/globalMasters/document/staffDocument.actions';
+import Link from 'next/link';
 
 
 
 
 
 // Main function
-const StaffDocumentDetails = ({form, updateStaff, selectedDocuments, setSelectedDocuments, pdfFile, setPdfFile, pdfFileName, setPdfFileName}:any) => {
+const StaffDocumentDetails = ({selectedDocuments, setSelectedDocuments}:any) => {
 
     // Documents
     const [documents, setDocuments] = useState([]);
@@ -20,32 +22,51 @@ const StaffDocumentDetails = ({form, updateStaff, selectedDocuments, setSelected
 
 
     // Handle file input
-    const handleFileChange = (e:any) => {
-        const selectedFile = e.target.files[0];
-        setPdfFile(selectedFile);
-        setPdfFileName(selectedFile.name);
-    };
+    const handleFileChange = (e:any, d:any) => {
+        const selectedFile = e.target.files?.[0];
+        console.log(selectedFile);
 
+        if (!selectedFile) {
+            console.error('No file selected');
+            return;
+        }
 
-    // Select handler
-    const handleSelectClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click();
-        };
+        // Update documents state
+        setSelectedDocuments((prevDocuments:any) =>
+            prevDocuments.map((doc) =>
+                doc.document_name === d.document_name
+                    ? {
+                        ...doc,
+                        files: [
+                            ...doc.files,
+                            { file: selectedFile, file_name: selectedFile.name }
+                        ]
+                    }
+                    : doc
+            )
+        );
     };
 
 
     // Remove handler
-    const removeHandler = () => {
-        setPdfFile(null);
-        setPdfFileName('');
+    const removeHandler = ({document_name, file_name}:any) => {
+        setSelectedDocuments((prevDocuments) =>
+            prevDocuments.map((doc) =>
+                doc.document_name === document_name
+                    ? {
+                        ...doc,
+                        files: doc.files.filter((file) => (file?.file_name || file) !== file_name)
+                    }
+                    : doc
+            )
+        );
     };
 
 
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const documentsRes = await fetchDocumentsForAdmission();
+            const documentsRes = await fetchStaffDocumentsForAdmission();
             setDocuments(documentsRes);
         };
         fetcher();
@@ -67,65 +88,84 @@ const StaffDocumentDetails = ({form, updateStaff, selectedDocuments, setSelected
                                 {document.document_names.length === 0 ? (
                                     <p className='text-xs text-hash-color pl-[2px]'>-</p>
                                 ) : document.document_names.map((n:any) => (
-                                    <div className='flex flex-row items-ceter gap-[2px] min-w-[180px]'>
-                                        <Checkbox
-                                            className='rounded-[2px] text-hash-color'
-                                            onClick={() => {
-                                                if(selectedDocuments?.map((d:any) => d?.document_name).includes(n?.document_name)){
-                                                    setSelectedDocuments(selectedDocuments?.filter((d:any) => d?.document_name !== n?.document_name))
-                                                }else{
-                                                    setSelectedDocuments([...selectedDocuments, {
-                                                        document_type:n.document_type,
-                                                        document_name:n.document_name
-                                                    }])
-                                                }
-                                            }}
-                                            checked={selectedDocuments?.map((d:any) => d?.document_name).includes(n?.document_name)}
-                                        />
-                                        <p className='text-xs text-hash-color pl-[2px]'>
-                                            {n.document_name}
-                                        </p>
+                                    <div>
+
+                                        {/* Document name */}
+                                        <div className='flex flex-row items-ceter gap-[2px] min-w-[180px]'>
+                                            <Checkbox
+                                                className='rounded-[2px] text-hash-color'
+                                                onClick={() => {
+                                                    if(selectedDocuments?.map((d:any) => d?.document_name).includes(n?.document_name)){
+                                                        setSelectedDocuments(selectedDocuments?.filter((d:any) => d?.document_name !== n?.document_name))
+                                                    }else{
+                                                        setSelectedDocuments([...selectedDocuments, {
+                                                            document_type:n.document_type,
+                                                            document_name:n.document_name,
+                                                            files:[]
+                                                        }])
+                                                    }
+                                                }}
+                                                checked={selectedDocuments?.map((d:any) => d?.document_name).includes(n?.document_name)}
+                                            />
+                                            <p className='text-xs text-hash-color pl-[2px]'>
+                                                {n.document_name}
+                                            </p>
+                                        </div>
+
+                                        {/* Attachments */}
+                                        <div className='mt-2'>
+
+
+                                            {selectedDocuments.find((sd:any) => sd.document_name === n.document_name)?.files?.map((f:any) => (
+                                                <div className='flex flex-row items-center gap-1 ml-6'> 
+                                                    <p className='text-[11px] text-hash-color'>{f?.file_name || `Document ${selectedDocuments.find((sd:any) => sd.document_name === n.document_name)?.files.indexOf(f) + 1}`}</p>
+                                                    <X
+                                                        size={15}
+                                                        color='#F00'
+                                                        className='cursor-pointer hover:opacity-60'
+                                                        onClick={() => removeHandler({document_name:n.document_name, file_name:f.file_name || f})}
+                                                    />
+                                                    {!f.file_name && (
+                                                        <Link href={f} target='_blank'>
+                                                            <Eye
+                                                                size={15}
+                                                                color='green'
+                                                                className='cursor-pointer hover:opacity-60'
+                                                            />
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            ))}
+                                            {selectedDocuments.map((sd:any) => sd.document_name).includes(n.document_name) && (
+                                                <div className='ml-6'>
+                                                    <label
+                                                        // @ts-ignore
+                                                        for={n.document_name}
+                                                        // onClick={handleSelectClick}
+                                                        className='text-[11px] text-[#00F] cursor-pointer hover:opacity-70'
+                                                    >
+                                                        Select
+                                                    </label>
+                                                    <input
+                                                        type='file'
+                                                        accept='image/*, application/pdf'
+                                                        name={n.document_name}
+                                                        id={n.document_name}
+                                                        ref={fileInputRef}
+                                                        onChange={(e) => handleFileChange(e, n)}
+                                                        style={{display:'none'}}
+                                                        className='hidden'
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+
                                     </div>
                                 ))}
                             </div>
                         </div>
                     )
                 )}
-
-                <div className='flex flex-col gap-2 pl-4'>
-
-                    <p className='font-semibold'>Attachment: </p>
-
-                    {pdfFileName ? <p>{pdfFileName}</p> : updateStaff.id !== '' && <a className='text-[#00F]' href={form.getValues().staff_document_details.file} target='_blank'>Staff's document details</a>}
-
-                    <ul className='flex flex-row items-center gap-2'>
-                        <li
-                            onClick={handleSelectClick}
-                            className='flex items-center px-[8px] h-6 text-xs text-white bg-gradient-to-r bg-[#6DFD9C] rounded-full transition border-[1px] border-white cursor-pointer
-                                    hover:opacity-70'
-                        >
-                            Select
-                        </li>
-                        <li
-                            onClick={removeHandler}
-                            className='flex items-center px-[8px] h-6 text-xs text-white bg-gradient-to-r bg-[#f00] rounded-full transition border-[1px] border-white cursor-pointer
-                                    hover:opacity-70'
-                        >
-                            Remove
-                        </li>
-                    </ul>
-
-                    {/* Hidden file input */}
-                    <input
-                        type="file"
-                        accept="application/pdf"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        style={{display:'none'}}
-                    />
-
-                </div>
-
             </div>
         </div>
     );

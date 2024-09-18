@@ -131,10 +131,8 @@ const page = () => {
         }],
 
         // Staff document details
-        staff_document_details:{
-            documents:[],
-            file:''
-        }
+        staff_document_details:[]
+
     });
 
 

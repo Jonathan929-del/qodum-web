@@ -11,7 +11,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setPdfFile, setPdfFileName, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setConfirmationDate, setPermanentDate, setLeavingDate, setJoiningDateEpf, setJoiningDateEps, setLeavingDateEpf, setLeavingDateEps, setProbationDate, setIncrementDate, setSelectedDocuments, setEducationalDetails}:any) => {
+const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setConfirmationDate, setPermanentDate, setLeavingDate, setJoiningDateEpf, setJoiningDateEps, setLeavingDateEpf, setLeavingDateEps, setProbationDate, setIncrementDate, setSelectedDocuments, setEducationalDetails}:any) => {
 
     // Cancel click
     const cancelClick = () => {
@@ -103,10 +103,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
             staff_educational_details:[],
 
             // Staff document details
-            staff_document_details:{
-                documents:[],
-                file:''
-            }
+            staff_document_details:[]
         });
 
 
@@ -193,18 +190,13 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
             // Staff educational details
             staff_educational_details:[],
 
-            staff_document_details:{
-                documents:[],
-                file:''
-            }
+            staff_document_details:[]
         });
 
 
         // Reseting other variables
         setFile(null);
         setImageSrc('');
-        setPdfFile(null);
-        setPdfFileName('');
         setDateOfBirth(moment());
         setDateOfAnniversary(moment());
         setDateOfJoining(moment());

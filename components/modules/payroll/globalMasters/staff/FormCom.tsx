@@ -59,13 +59,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
     const [imageSrc, setImageSrc] = useState('');
 
 
-    // Pdf file
-    const [pdfFile, setPdfFile] = useState(null);
-
-
-    // Pdf file name
-    const [pdfFileName, setPdfFileName] = useState('');
-
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('staff-registration');
 
@@ -154,10 +147,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         staff_educational_details:updateStaff.staff_educational_details,
 
         // Staff document details
-        staff_document_details:{
-            documents:updateStaff.staff_document_details.documents,
-            file:updateStaff.staff_document_details.file
-        }
+        staff_document_details:updateStaff.staff_document_details
     };
 
 
@@ -247,13 +237,9 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_educational_details:updateStaff.id === '' ? [] : updateStaff.staff_educational_details,
 
             // Staff document details
-            staff_document_details:{
-                documents:updateStaff.id === '' ? [] : updateStaff.staff_document_details.documents,
-                file:updateStaff.id === '' ? '' : updateStaff.staff_document_details.file
-            }
+            staff_document_details:updateStaff.id === '' ? [] : updateStaff.staff_document_details
         }
     });
-    console.log(form.formState.errors);
 
 
     // Submit handler
@@ -276,10 +262,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 formData.append('file', file);
                 await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
-            if(pdfFile){
-                const formData = new FormData();
-                formData.append('file', pdfFile);
-                await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+            if(selectedDocuments.filter((s:any) => s.files.length > 0).length){
+                selectedDocuments.map((s:any) => s.files.map(async (f:any) => {
+                    const formData = new FormData();
+                    formData.append('file', f.file);
+                    await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
+                }));
             };
             const res = await createStaff({
                 // Staff registration
@@ -364,10 +352,14 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_educational_details:educationalDetails,
 
                 // staff document details
-                staff_document_details:{
-                    documents:selectedDocuments.filter((d:any) => d.document_name !== ''),
-                    file:pdfFile !== null ? `https://qodum.s3.amazonaws.com/staff-documents/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_document_details.file || '',
-                }
+                staff_document_details:selectedDocuments.map((s:any) => {
+                    return{
+                        ...s,
+                        files:s?.files?.map((f:any) => {
+                            return `https://qodum.s3.amazonaws.com/staff-documents/${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`;
+                        })
+                    }
+                })
             });
             if(res === 0){
                 toast({title:'Please create a session first', variant:'alert'});
@@ -380,8 +372,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         else if(
             !deepEqual(comparisonObject, values)
             || file
-            || pdfFile
-            || comparisonObject.staff_document_details.documents !== selectedDocuments
+            || comparisonObject.staff_document_details !== selectedDocuments
             || comparisonObject.staff_educational_details !== educationalDetails
             || moment(values.staff_registration.date_of_birth).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_birth).format('DD-MM-YYYY')
             || moment(values.staff_registration.date_of_anniversary).format('DD-MM-YYYY') !== moment(comparisonObject.staff_registration.date_of_anniversary).format('DD-MM-YYYY')
@@ -408,10 +399,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 formData.append('file', file);
                 await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
-            if(pdfFile){
-                const formData = new FormData();
-                formData.append('file', pdfFile);
-                await uploadStaffPdf({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+            if(selectedDocuments.filter((s:any) => s.files.filter((f:any) => f.file).length > 0).length){
+                selectedDocuments.map((s:any) => s.files.map(async (f:any) => {
+                    const formData = new FormData();
+                    formData.append('file', f.file);
+                    await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
+                }));
             };
             // Update
             await modifyStaff({
@@ -498,10 +491,14 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_educational_details:educationalDetails,
 
                 // Staff document details
-                staff_document_details:{
-                    documents:selectedDocuments.filter((d:any) => d.document_name !== ''),
-                    file:pdfFile !== null ? `https://qodum.s3.amazonaws.com/staff-documents/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : comparisonObject.staff_document_details.file,
-                }
+                staff_document_details:selectedDocuments.map((s:any) => {
+                    return{
+                        ...s,
+                        files:s?.files?.map((f:any) => {
+                            return f.file ? `https://qodum.s3.amazonaws.com/staff-documents/${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}` : f;
+                        })
+                    }
+                })
             });
             toast({title:'Updated Successfully!'});
         }
@@ -601,10 +598,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_educational_details:[],
 
             // Staff document details
-            staff_document_details:{
-                documents:[],
-                file:''
-            }
+            staff_document_details:[]
         });
         // Reseting form
         form.reset({
@@ -690,15 +684,10 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_educational_details:[],
 
             // Staff document details
-            staff_document_details:{
-                documents:[],
-                file:''
-            }
+            staff_document_details:[]
         });
         setFile(null);
         setImageSrc('');
-        setPdfFile(null);
-        setPdfFileName(null);
         setDateOfBirth(moment());
         setDateOfAnniversary(moment());
         setDateOfJoining(moment());
@@ -822,9 +811,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             // Setting values for staff_educational_details
             form.setValue('staff_educational_details', updateStaff.staff_educational_details);
 
-            // Setting values for staff_document_details (assuming it is an array)
-            form.setValue('staff_document_details.documents', updateStaff.staff_document_details.documents);
-            form.setValue('staff_document_details.file', updateStaff.staff_document_details.file);
+            // Staff document details
+            form.setValue('staff_document_details', updateStaff.staff_document_details);
 
         }
     }, [updateStaff]);
@@ -958,14 +946,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                             </TabsContent>
                             <TabsContent value='staff-document-details'>
                                 <StaffDocumentDetails
-                                    form={form}
                                     setSelectedDocuments={setSelectedDocuments}
                                     selectedDocuments={selectedDocuments}
-                                    pdfFile={pdfFile}
-                                    setPdfFile={setPdfFile}
-                                    pdfFileName={pdfFileName}
-                                    updateStaff={updateStaff}
-                                    setPdfFileName={setPdfFileName}
                                 />
                             </TabsContent>
                         </Tabs>
@@ -982,8 +964,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                 form={form}
                                 setFile={setFile}
                                 setImageSrc={setImageSrc}
-                                setPdfFile={setPdfFile}
-                                setPdfFileName={setPdfFileName}
                                 setDateOfBirth={setDateOfBirth}
                                 setDateOfAnniversary={setDateOfAnniversary}
                                 setDateOfJoining={setDateOfJoining}
