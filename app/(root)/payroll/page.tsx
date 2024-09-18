@@ -65,8 +65,8 @@ const Home = () => {
     if(openedPages.includes('Define Staff Type')){
       openedPagesArray.push({name:'Define Staff Type', component:<DefineStaffType />});
     };
-    if(openedPages.includes('Define Staff')){
-      openedPagesArray.push({name:'Define Staff', component:<DefineStaff />});
+    if(openedPages.includes('Employee Registration')){
+      openedPagesArray.push({name:'Employee Registration', component:<DefineStaff />});
     };
     if(openedPages.includes('Define Document Type')){
       openedPagesArray.push({name:'Define Document Type', component:<DefineDocumentType />});

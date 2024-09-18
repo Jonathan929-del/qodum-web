@@ -915,7 +915,7 @@ const modules = [
                         subPageName:'Define Department'
                     },
                     {
-                        subPageName:'Define Staff'
+                        subPageName:'Employee Registration'
                     },
                     {
                         subPageName:'Define Document Type'
