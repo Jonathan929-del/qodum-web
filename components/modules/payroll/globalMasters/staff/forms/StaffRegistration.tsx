@@ -556,7 +556,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             <p className='text-[11px] text-[#726E71]'>Active</p>
                             <Checkbox
                                 className='rounded-[2px] border-[#ccc] text-[#ccc]'
-                                value={form.getValues().staff_registration.is_active}
+                                checked={form.getValues().staff_registration.is_active}
                                 onClick={() => form.getValues().staff_registration.is_active ? form.setValue('staff_registration.is_active', false) : form.setValue('staff_registration.is_active', true)}
                             />
 
@@ -713,7 +713,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             <p className='text-[11px] text-[#726E71]'>Extend</p>
                             <Checkbox
                                 className='rounded-[2px] border-[#ccc] text-[#ccc]'
-                                value={form.getValues().staff_registration.date_of_retire_is_extend}
+                                checked={form.getValues().staff_registration.date_of_retire_is_extend}
                                 onClick={() => form.getValues().staff_registration.date_of_retire_is_extend ? form.setValue('staff_registration.date_of_retire_is_extend', false) : form.setValue('staff_registration.date_of_retire_is_extend', true)}
                             />
                         </div>

@@ -30,7 +30,7 @@ const page = () => {
         name_of_school_or_college:'',
         name_of_board_or_universtity:'',
         rc:'',
-        subjects:'',
+        subjects:[],
         percentage_of_marks:0,
         year_of_passing:''
     }]);
@@ -125,7 +125,7 @@ const page = () => {
             name_of_school_or_college:'',
             name_of_board_or_university:'',
             rc:'',
-            subjects:'',
+            subjects:[],
             percentage_of_marks:0,
             year_of_passing:''
         }],

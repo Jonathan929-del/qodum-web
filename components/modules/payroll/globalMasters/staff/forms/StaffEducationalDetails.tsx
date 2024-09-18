@@ -1,11 +1,12 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
-import {ChevronDown, Trash} from 'lucide-react';
+import {Check, ChevronDown, Trash, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 
 
 
@@ -120,7 +121,7 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
 
 
                         {/* Subjects */}
-                        <div className='w-full h-12 mt-[-10px] flex flex-col'>
+                        {/* <div className='w-full h-12 mt-[-10px] flex flex-col'>
                             <FormLabel className='w-full text-[11px] text-[#726E71]'>Subjects</FormLabel>
                             <div className='w-full h-full'>
                                 <Select
@@ -143,6 +144,60 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                                         ) : subjects?.map((item:any) => (
                                             <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
                                         ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div> */}
+                        <div className='w-full h-8 flex flex-col items-start justify-center'>
+                            <p className='basis-auto pr-2 text-xs text-end text-[#726E71] sm:basis-[30%]'>Subjects</p>
+                            <div className='relative h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                <Select>
+                                    <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder={educationalDetails[educationalDetails.indexOf(d)].subjects?.length < 1 ? 'Select subjects' : educationalDetails[educationalDetails.indexOf(d)].subjects?.length === 1 ? '1 subject selected' : `${educationalDetails[educationalDetails.indexOf(d)].subjects?.length} subjects selected`} className='text-xs'/>
+                                        <ChevronDown className='h-4 w-4 opacity-50' />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <div className='flex flex-row'>
+                                            <div
+                                                // @ts-ignore
+                                                onClick={() => {
+                                                    educationalDetails[educationalDetails.indexOf(d)].subjects = subjects.map((s:any) => s.subject_name);
+                                                    setEducationalDetails([...educationalDetails]);
+                                                }}
+                                                className='group flex flex-row items-center justify-center cursor-pointer'
+                                            >
+                                                <Check size={12}/>
+                                                <p className='text-xs group-hover:underline'>All</p>
+                                            </div>
+                                            <div
+                                                onClick={() => {
+                                                    educationalDetails[educationalDetails.indexOf(d)].subjects = [];
+                                                    setEducationalDetails([...educationalDetails]);
+                                                }}
+                                                className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                            >
+                                                <X size={12}/>
+                                                <p className='text-xs group-hover:underline'>Clear</p>
+                                            </div>
+                                        </div>
+                                        <ul className='mt-2'>
+                                            {subjects.map((subject:any) => (
+                                                <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                    <Checkbox
+                                                        className='rounded-[2px] text-hash-color font-semibold'
+                                                        checked={educationalDetails[educationalDetails.indexOf(d)]?.subjects?.map((s:any) => s).includes(subject.subject_name)}
+                                                        // @ts-ignore
+                                                        onClick={() => {
+                                                            educationalDetails[educationalDetails.indexOf(d)].subjects?.includes(subject.subject_name)
+                                                                ? educationalDetails[educationalDetails.indexOf(d)].subjects = educationalDetails[educationalDetails.indexOf(d)].subjects.filter((s:any) => s !== subject.subject_name)
+                                                                : educationalDetails[educationalDetails.indexOf(d)].subjects = [...educationalDetails[educationalDetails.indexOf(d)].subjects, subject.subject_name]
+                                                            setEducationalDetails([...educationalDetails]);
+                                                        }}
+                                                    />
+                                                    <p className='text-xs font-semibold'>{subject.subject_name}</p>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -215,7 +270,7 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                                     name_of_school_or_college:'',
                                     name_of_board_or_universtity:'',
                                     rc:'',
-                                    subjects:'',
+                                    subjects:[],
                                     percentage_of_marks:0,
                                     year_of_passing:''
                                 }
