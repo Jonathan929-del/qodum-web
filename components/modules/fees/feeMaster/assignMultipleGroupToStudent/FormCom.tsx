@@ -68,7 +68,17 @@ const FormCom = () => {
         const classesRes = await fetchClasses();
         setInstallments(installmentsRes);
         setClasses(classesRes);
-        setSelectedClasses(classesRes.filter((c:any) => c?.affiliated_heads?.group_name === form.getValues().fees_group));
+        setSelectedClasses(classesRes.filter((c:any) =>
+            c?.affiliated_heads?.group_name
+                ?
+                    c?.affiliated_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
+                        ? true
+                        : c?.affiliated_heads?.group_name?.split('(')[1]?.trim()
+                            ? c?.affiliated_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
+                            : false
+                :
+                    false
+        ));
     };
 
 
@@ -101,13 +111,11 @@ const FormCom = () => {
 
 
             // Assigning to classes
-            if(values.group_type === 'Classes'){
-                await modifyClassHeads({
-                    group_name:values.fees_group,
-                    installment:values.fees_installment,
-                    classes:selectedClasses.map((c:any) => c.class_name)
-                });
-            };
+            await modifyClassHeads({
+                group_name:values.fees_group,
+                installment:values.fees_installment,
+                classes:selectedClasses.map((c:any) => c.class_name)
+            });
 
 
             // Toast

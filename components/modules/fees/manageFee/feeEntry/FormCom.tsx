@@ -18,7 +18,7 @@ import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/a
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence}: any) => {
 
 
     // Toast
@@ -57,74 +57,77 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     const [paymentsReceiptNo, setPaymentReceiptNo] = useState('');
 
 
-        // Show button click
-        const showButtonClick = async () => {
-            setIsLoadingHeads(true);
-            const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
-            setSelectedStudent({
-                id:student._id,
-                image:student.student.image,
-                name:student.student.name,
-                address:student.student.h_no_and_streets,
-                father_name:student.parents.father.father_name,
-                mother_name:student.parents.mother.mother_name,
-                contact_no:student.student.contact_person_mobile,
-                admission_no:student.student.adm_no,
-                bill_no:student.student.bill_no,
-                class:student.student.class,
-                board:student?.student?.board,
-                route_name:student?.transport_details?.route,
-                stop_name:student?.transport_details?.stop,
-                vehicle_name:student?.transport_details?.vehicle,
-                affiliated_heads:{
-                    group_name:student.affiliated_heads.group_name,
-                    heads:student.affiliated_heads.heads.map((h:any) => {
-                        return {
-                            ...h,
-                            amounts:h.amounts.map((a:any) => {
-                                const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
-                                const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
-                                return {
-                                    name:a.name,
-                                    value:Number(a.value),
-                                    conc_amount:conc_amount,
-                                    last_rec_amount:last_rec_amount,
-                                    payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
-                                    paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
-                                };
-                            })
-                        };
-                    })
-                }
-            });
-            const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-            const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1).length > 0
-                ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1)?.map((h:any) => h.amounts.map((a:any) => a.name).concat(singleInstallments))[0]
-                : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-            const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-            const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
-            setInstallments(sortedInstallments);
-            setSelectedInstallments([sortedInstallments[0]]);
-            setIsViewOpened(false);
-            form.reset({
-                received_date:new Date(),
-                receipt_no:'',
-                remarks:'',
-                installment:'',
-                pay_mode:'',
-                pay_mode_details:{},
-    
-    
-                // Form inputs
-                fee_type:'All fee types',
-                bank_name:'',
-                entry_mode:'School',
-                total_paid_amount:0,
-                dues:0,
-                advance_amt:0
-            });
-            setIsLoadingHeads(false);
-        };
+    // Show button click
+    const showButtonClick = async () => {
+        setIsLoadingHeads(true);
+        const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
+        setSelectedStudent({
+            id:student._id,
+            image:student.student.image,
+            name:student.student.name,
+            address:student.student.h_no_and_streets,
+            father_name:student.parents.father.father_name,
+            mother_name:student.parents.mother.mother_name,
+            contact_no:student.student.contact_person_mobile,
+            admission_no:student.student.adm_no,
+            bill_no:student.student.bill_no,
+            class:student.student.class,
+            section:student.student.section,
+            phone:student.student.mobile,
+            email:student.student.email,
+            board:student?.student?.board,
+            route_name:student?.transport_details?.route,
+            stop_name:student?.transport_details?.stop,
+            vehicle_name:student?.transport_details?.vehicle,
+            affiliated_heads:{
+                group_name:student.affiliated_heads.group_name,
+                heads:student.affiliated_heads.heads.map((h:any) => {
+                    return {
+                        ...h,
+                        amounts:h.amounts.map((a:any) => {
+                            const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
+                            const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
+                            return {
+                                name:a.name,
+                                value:Number(a.value),
+                                conc_amount:conc_amount,
+                                last_rec_amount:last_rec_amount,
+                                payable_amount:Number(a.payable_amount) || (Number(a.value) - (last_rec_amount + conc_amount)),
+                                paid_amount:Number(a.paid_amount) || (Number(a.value) - (last_rec_amount + conc_amount))
+                            };
+                        })
+                    };
+                })
+            }
+        });
+        const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1).length > 0
+            ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1)?.map((h:any) => h.amounts.map((a:any) => a.name).concat(singleInstallments))[0]
+            : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
+        const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
+        const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
+        setInstallments(sortedInstallments);
+        setSelectedInstallments([sortedInstallments[0]]);
+        setIsViewOpened(false);
+        form.reset({
+            received_date:new Date(),
+            receipt_no:'',
+            remarks:'',
+            installment:'',
+            pay_mode:'',
+            pay_mode_details:{},
+
+
+            // Form inputs
+            fee_type:'All fee types',
+            bank_name:'',
+            entry_mode:'School',
+            total_paid_amount:0,
+            dues:0,
+            advance_amt:0
+        });
+        setIsLoadingHeads(false);
+    };
 
 
     // Form
@@ -286,6 +289,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             fee_type:values.fee_type,
             advance_dues_number:advanceDuesNumber,
             class_name:selectedStudent.class,
+            section:selectedStudent.section,
             board:selectedStudent.board,
             adm_no:selectedStudent.admission_no,
             father_name:selectedStudent.father_name,
@@ -360,6 +364,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             admission_no:'',
             bill_no:'',
             class:'',
+            section:'',
+            phone:'',
+            email:'',
             affiliated_heads:{
                     group_name:'',
                 heads:[]
@@ -384,6 +391,9 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             admission_no:student.student.adm_no,
             bill_no:student.student.bill_no,
             class:student.student.class,
+            section:student.student.section,
+            phone:student.student.mobile,
+            email:student.student.email,
             board:student?.student?.board,
             route_name:student?.transport_details?.route,
             stop_name:student?.transport_details?.stop,
@@ -511,6 +521,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setIsReceiptOpened={setIsReceiptOpened}
                             setReceiptPaymentData={setReceiptPaymentData}
                             setPaymentReceiptNo={setPaymentReceiptNo}
+                            headsSequence={headsSequence}
                         />
                 </form>
             </Form>

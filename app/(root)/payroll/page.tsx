@@ -1,8 +1,10 @@
 'use client';
 // Imports
 import moment from 'moment';
+import {setMomentDefaultYear} from '@/lib/utils';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
+import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 import Dashboard from '@/pagesComps/payroll/page';
 // @ts-ignore
@@ -71,6 +73,14 @@ const Home = () => {
     if(openedPages.includes('Define Document Type')){
       openedPagesArray.push({name:'Define Document Type', component:<DefineDocumentType />});
     };
+
+
+    // Setting active year in moment
+    const fetcher = async () => {
+      const activeYearRes = await fetchActiveAcademicYear();
+      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    };
+    fetcher();
 
 
     setOpenedPagesComponents(openedPagesArray);

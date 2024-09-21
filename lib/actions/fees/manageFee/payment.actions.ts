@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Payment from '@/lib/models/fees/manageFee/Payment.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import moment from 'moment';
 
 
 
@@ -22,6 +23,7 @@ interface CreateAdmittedStudentProps{
         fee_type:String;
         advance_dues_number:String;
         class_name:String;
+        section:String;
         board:String;
         adm_no:String;
         father_name:String;
@@ -48,7 +50,7 @@ interface CreateAdmittedStudentProps{
         concession_reason:String;
 };
 // Create payment
-export const createPayment = async ({student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, section, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -73,6 +75,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             fee_type,
             advance_dues_number,
             class_name,
+            section,
             board,
             adm_no,
             father_name,
@@ -262,8 +265,8 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
 
         // Fetching active session naeme
         const activeSession = await AcademicYear.findOne({is_active:1});
-
-
+        
+        
         // Fetching and filtering payments
         const payments = await Payment.find({session:activeSession?.year_name});
         const filteredPayments = payments
@@ -284,10 +287,9 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
             // Heads filter
             .filter((p:any) => p.paid_heads.filter((ph:any) => heads.map((h:any) => h.name).includes(ph.head_name)).length > 0)
             // Dates filter
-            .filter((p:any) => p.received_date >= date_from && p.received_date <= date_to)
+            .filter((p:any) => moment(p.received_date).format('DD-MM-YYYY') >= moment(date_from).format('DD-MM-YYYY') && moment(p.received_date).format('DD-MM-YYYY') <= moment(date_to).format('DD-MM-YYYY'))
             // Receipt no filter
             .filter((p:any) => {
-                console.log('EXCUTING');
                 const pattern = /\d+/;
                 const matches = p.receipt_no.match(pattern);
                 if(matches){
@@ -357,13 +359,13 @@ export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes,
             .filter((p:any) => p.fee_type === 'All fee types' ? p : p.fee_type === fee_type)
             // Installments filter
             .filter((p:any) => installment === 'All installments' ? p : p.installments.filter((i:any) => installment === i).length > 0)
-            // // Pay modes filter
+            // Pay modes filter
             .filter((p:any) => pay_modes.includes(p.paymode))
-            // // Dates filter
-            .filter((p:any) => p.received_date >= date_from && p.received_date <= date_to)
-            // // User filter
+            // Dates filter
+            .filter((p:any) => moment(p.received_date).format('DD-MM-YYYY') >= moment(date_from).format('DD-MM-YYYY') && moment(p.received_date).format('DD-MM-YYYY') <= moment(date_to).format('DD-MM-YYYY'))
+            // User filter
             .filter((p:any) => p)
-            // // Bank filter
+            // Bank filter
             .filter((p:any) => banks.map((i:any) => i.account_name).includes(p.bank_name))
             // New student filter
             .filter((p:any) => {
@@ -463,7 +465,7 @@ export const modifyPaymentPaidHeads = async ({receipt_no, actual_amount, paid_am
 
 
         // Return
-        return payments;
+        return 'Modified';
 
     } catch (err:any) {
         console.log(`Error updating payment: ${err.message}`);

@@ -6,9 +6,9 @@ import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pagesComps/admission/page';
 // @ts-ignore
+import {setMomentDefaultYear} from '@/lib/utils';
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
-import DefineNarrationMaster from '@/pagesComps/accounts/(global masters)/define-narration-master/page';
 import ChangeAcademic from '@/pagesComps/accounts/(masterSettings)/change-academic/page';
 import DefineAccountGroup from '@/pagesComps/accounts/(accounts)/define-account-group/page';
 import DefineBankLedger from '@/pagesComps/accounts/(accounts)/define-bank-ledger/page';
@@ -17,8 +17,10 @@ import DefineGeneralLedger from '@/pagesComps/accounts/(accounts)/define-general
 import SessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/page';
 import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/account/page';
 import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
+import DefineNarrationMaster from '@/pagesComps/accounts/(global masters)/define-narration-master/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
+import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -92,6 +94,13 @@ const Home = () => {
     if(openedPages.includes('Admission Manager Session Transfer')){
       openedPagesArray.push({name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />});
     };
+
+    // Setting active year in moment
+    const fetcher = async () => {
+      const activeYearRes = await fetchActiveAcademicYear();
+      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    };
+    fetcher();
 
     setOpenedPagesComponents(openedPagesArray)
 

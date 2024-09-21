@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
@@ -12,7 +11,6 @@ import {fetchFreeHeads, fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster
 
 // Main function
 const page = () => {
-
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
@@ -34,28 +32,22 @@ const page = () => {
     });
 
 
-    // Use effect for types
+    // Fetcher
+    const fetcher = async () => {
+        const typesRes = await fetchTypes();
+        const headsRes = (await fetchFreeHeads()).reduce((acc, cur) => {
+            acc.push(cur.name)
+            return acc; 
+        }, []);
+        setTypes(typesRes);
+        setHeads(headsRes);
+    };
+
+
+    // Use effect
     useEffect(() => {
-        const typesFetcher = async () => {
-            const res = await fetchTypes();
-            setTypes(res);
-        };
-        typesFetcher();
+        fetcher();
     }, [isViewOpened, updateType]);
-
-
-    // Use effect for heads
-    useEffect(() => {
-        const headsFetcher = async () => {
-            const res = (await fetchFreeHeads()).reduce((acc, cur) => {
-                acc.push(cur.name)
-                return acc; 
-            }, []);
-            setHeads(res);
-        };
-        headsFetcher();
-    }, [isViewOpened, updateType]);
-
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-10 bg-white '>
@@ -74,6 +66,7 @@ const page = () => {
                         setIsViewOpened={setIsViewOpened}
                         updateType={updateType}
                         setUpdateType={setUpdateType}
+                        fetcher={fetcher}
                     />
                 )
             }

@@ -9,7 +9,9 @@ import FeeDefaulterList from '@/components/modules/fees/transactionReport/defaul
 // Main function
 const page = () => {
     return (
-        <FeeDefaulterList />
+        <div className='w-full h-full bg-white'>
+            <FeeDefaulterList />
+        </div>
     );
 };
 

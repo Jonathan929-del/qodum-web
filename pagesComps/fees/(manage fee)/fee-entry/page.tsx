@@ -10,6 +10,7 @@ import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installm
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchAdmittedStudents, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchHeadsSequence } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 
@@ -67,6 +68,9 @@ const page = () => {
         admission_no:'',
         bill_no:'',
         class:'',
+        section:'',
+        phone:'',
+        email:'',
         affiliated_heads:{
             group_name:'',
             heads:[]
@@ -76,6 +80,10 @@ const page = () => {
 
     // Heads
     const [heads, setHeads] = useState<any>([]);
+
+
+    // Heads sequence
+    const [headsSequence, setHeadsSequence] = useState([]);
 
 
     // All installments
@@ -105,10 +113,12 @@ const page = () => {
             const sectionsRes = await fetchSections();
             const studentsRes = await fetchAdmittedStudents();
             const installmentsRes = await fetchInstallments();
+            const headsSequenceRes = await fetchHeadsSequence();
             setClasses(classesRes);
             setSections(sectionsRes);
             setStudents(studentsRes);
             setAllInstallments(installmentsRes);
+            setHeadsSequence(headsSequenceRes);
         };
         fetcher();
     }, []);
@@ -161,6 +171,7 @@ const page = () => {
                     setIsReceiptOpened={setIsReceiptOpened}
                     setReceiptPaymentData={setReceiptPaymentData}
                     setIsLoadingHeads={setIsLoadingHeads}
+                    headsSequence={headsSequence}
                 />
             )}
         </div>

@@ -322,3 +322,46 @@ export const uploadStaffPdf = async ({data, pref_no, content_type}: {data:any, p
         throw new Error('Failed to upload PDF');
     }
 };
+
+
+
+
+
+// Upload user file
+const uploadUserFile = async (file:any, name:any) => {
+    const fileBuffer = file;
+    const params = {
+        Bucket:process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+        Key:`users/${name}`,
+        Body:fileBuffer,
+        ContentType:'image'
+    };
+    const command = new PutObjectCommand(params);
+    await configs.send(command);
+    
+    
+    // Return
+    return name;
+};
+
+
+
+
+
+// User image
+export const uploadUserImage = async ({data, name}:{data:any, name:any}) => {
+    try {
+        const formData = await data;
+        const file = formData.get('file');
+        if(!file){
+            throw new Error('No file was sent');
+        };
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const res = await uploadUserFile(buffer, name);
+
+        // Return
+        return res;
+    } catch (err) {
+        console.log(err);
+    }
+};

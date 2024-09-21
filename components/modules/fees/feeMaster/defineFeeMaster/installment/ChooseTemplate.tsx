@@ -307,24 +307,24 @@ const ChooseTemplate = ({setIsTemplatesOpened}:any) => {
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1200px] flex flex-col items-center py-10 gap-10 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
             <p>Choose installments structure:</p>
-            <ul className='w-[60%] flex flex-row items-center justify-between'>
+            <ul className='w-[60%] flex flex-col items-center justify-center gap-3'>
                 <li
                     onClick={() => clickHandler('Monthly')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#6BCDFD] rounded-full transition border-[1px] border-white cursor-pointer
+                    className='flex items-center justify-center w-[150px] h-8 text-xs text-white bg-gradient-to-r bg-[#6BCDFD] rounded-full transition border-[1px] border-white cursor-pointer
                             hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Monthly
                 </li>
                 <li
                     onClick={() => clickHandler('Quarterly')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#699CFC] rounded-full transition border-[1px] border-white cursor-pointer
+                    className='flex items-center justify-center w-[150px] h-8 text-xs text-white bg-gradient-to-r bg-[#699CFC] rounded-full transition border-[1px] border-white cursor-pointer
                             hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Quarterly
                 </li>
                 <li
                     onClick={() => clickHandler('Custom')}
-                    className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r bg-[#6DFD9C] rounded-full transition border-[1px] border-white cursor-pointer
+                    className='flex items-center justify-center w-[150px] h-8 text-xs text-white bg-gradient-to-r bg-[#6DFD9C] rounded-full transition border-[1px] border-white cursor-pointer
                             hover:opacity-70 sm:text-[16px] sm:px-6'
                 >
                     Custom

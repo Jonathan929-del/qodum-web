@@ -52,6 +52,8 @@ import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
+import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import { setMomentDefaultYear } from '@/lib/utils';
 
 
 
@@ -223,6 +225,14 @@ const Home = () => {
     if(openedPages.includes('Class Notice')){
       openedPagesArray.push({name:'Class Notice', component:<ClassNotice />});
     };
+
+
+    // Setting active year in moment
+    const fetcher = async () => {
+      const activeYearRes = await fetchActiveAcademicYear();
+      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    };
+    fetcher();
 
 
     setOpenedPagesComponents(openedPagesArray);

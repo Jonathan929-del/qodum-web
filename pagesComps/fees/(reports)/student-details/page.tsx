@@ -9,7 +9,9 @@ import StudentDetails from '@/components/modules/fees/reports/studentDetails';
 // Main function
 const page = () => {
     return (
-        <StudentDetails />
+        <div className='w-full h-full bg-white'>
+            <StudentDetails />
+        </div>
     );
 };
 

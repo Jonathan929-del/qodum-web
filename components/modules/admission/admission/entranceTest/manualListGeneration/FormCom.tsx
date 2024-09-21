@@ -104,7 +104,6 @@ function FormCom() {
 
     // Get students
     const getStudents = async (class_name:any) => {
-        console.log(classes.map((c:any) => c.class_name));
         if(class_name === 'All Classes'){
             const classStudents = await fetchClassesStudents({classes_names:classes.map((c:any) => c.class_name)});
             if(classStudents.length > 0){

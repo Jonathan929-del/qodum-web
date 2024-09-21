@@ -10,7 +10,7 @@ import {fetchClassDueLimit} from '@/lib/actions/fees/masterSettings/dueLimit.act
 
 
 // Main function
-const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, form, heads, setHeads, totalNumberGenerator, setIsConcession, isLoadingHeads}:any) => {
+const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, form, heads, setHeads, totalNumberGenerator, setIsConcession, isLoadingHeads, headsSequence}:any) => {
 
 
     // Toast
@@ -327,6 +327,11 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
 
     // Use effects
     useEffect(() => {
+
+        const orderMap = headsSequence.reduce((map:any, item:any, index:any) => {
+            map[item.name] = index;
+            return map;
+        }, {});
         const assignedHeads = selectedStudent?.affiliated_heads?.heads
             // Fee type filter
             ?.filter((h:any) => h.type_name === form.getValues().fee_type || form.getValues().fee_type === 'All fee types')
@@ -367,7 +372,9 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                     return h;
                 }
             });
-        setHeads(assignedHeads);
+        setHeads(assignedHeads.sort((a, b) => {
+            return orderMap[a.head_name] - orderMap[b.head_name];
+        }));
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h?.amounts?.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h?.amounts?.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
     }, [selectedInstallments, selectedStudent, form.watch('fee_type'), form.watch('received_date')]);

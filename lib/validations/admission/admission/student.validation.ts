@@ -142,19 +142,7 @@ export const StudentValidation = z.object({
             admission_number:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         }),
         // 4
-        previous_school_details:z.array(z.object({
-            school_name:z.string(),
-            board:z.string(),
-            passing_year:z.string(),
-            total_marks:z.string(),
-            percentage:z.string(),
-            result:z.string(),
-            is_alumni:z.string(),
-            father_name:z.string(),
-            father_passing_year:z.string(),
-            mother_name:z.string(),
-            mother_passing_year:z.string()
-        }))
+        previous_school_details:z.any()
     }),
 
 

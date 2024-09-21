@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments}:any) => {
+const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments, setPreviousSchoolsDetails}:any) => {
 
 
     // Select handler
@@ -343,32 +343,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                     admission_number:student?.others?.is_alumni?.admission_number || 0,
                 },
                 // 4
-                previous_school_details:[
-                    {
-                        school_name:student?.others?.previous_school_details[0]?.school_name || '',
-                        board:student?.others?.previous_school_details[0]?.board || '',
-                        passing_year:student?.others?.previous_school_details[0]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[0]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[0]?.percentage || '',
-                        result:student?.others?.previous_school_details[0]?.result || ''
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[1]?.school_name || '',
-                        board:student?.others?.previous_school_details[1]?.board || '',
-                        passing_year:student?.others?.previous_school_details[1]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[1]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[1]?.percentage || '',
-                        result:student?.others?.previous_school_details[1]?.result || ''
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[2]?.school_name || '',
-                        board:student?.others?.previous_school_details[2]?.board || '',
-                        passing_year:student?.others?.previous_school_details[2]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[2]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[2]?.percentage || '',
-                        result:student?.others?.previous_school_details[2]?.result || ''
-                    }
-                ]
+                previous_school_details:student?.others?.previous_school_details || []
             },
 
             // Guardian details
@@ -396,6 +371,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
             document_type:'',
             document_name:''
         }]);
+        setPreviousSchoolsDetails(student?.others?.previous_school_details || []);
     };
 
 

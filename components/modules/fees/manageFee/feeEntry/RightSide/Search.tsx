@@ -14,7 +14,7 @@ import {fetchStudentByAdmNo, fetchStudentsByAllData, fetchStudentsCountByClassAn
 
 
 // Main function
-const Search = ({classes, sections, setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments}:any) => {
+const Search = ({classes, sections, setIsViewOpened, students, setSelectedStudent, setInstallments, setSelectedInstallments, headsSequence}:any) => {
 
 
     // Search
@@ -49,6 +49,10 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
     const admissionSearchClick = async () => {
         if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
             const student = await fetchStudentByAdmNo({adm_no:search});
+            const orderMap = headsSequence.reduce((map:any, item:any, index:any) => {
+                map[item.name] = index;
+                return map;
+            }, {});
             setSelectedStudent({
                 id:student?._id || '',
                 image:student?.student?.image || '',
@@ -60,6 +64,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 admission_no:student?.student?.adm_no || '',
                 bill_no:student?.student?.bill_no || '',
                 class:student?.student?.class || '',
+                section:student?.student?.section || '',
+                phone:student.student.mobile || '',
+                email:student.student.email || '',
                 board:student?.student?.board || '',
                 route_name:student?.transport_details?.route,
                 stop_name:student?.transport_details?.stop,
@@ -86,6 +93,8 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                 };
                             })
                         };
+                    }).sort((a, b) => {
+                        return orderMap[a.head_name] - orderMap[b.head_name];
                     }) || []
                 }
             });
@@ -117,6 +126,9 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             admission_no:student?.student?.adm_no || '',
             bill_no:student?.student?.bill_no || '',
             class:student?.student?.class || '',
+            section:student?.student?.section || '',
+            phone:student?.student?.mobile || '',
+            email:student?.student?.email || '',
             board:student?.student?.board || '',
             route_name:student?.transport_details?.route || '',
             stop_name:student?.transport_details?.stop || '',

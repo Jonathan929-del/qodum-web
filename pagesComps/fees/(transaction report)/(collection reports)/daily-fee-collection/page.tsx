@@ -9,7 +9,9 @@ import DailyFeeCollection from '@/components/modules/fees/transactionReport/coll
 // Main function
 const page = () => {
     return (
-        <DailyFeeCollection />
+        <div className='w-full h-full bg-white'>
+            <DailyFeeCollection />
+        </div>
     );
 };
 

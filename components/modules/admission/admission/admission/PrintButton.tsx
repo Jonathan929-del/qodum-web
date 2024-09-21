@@ -12,7 +12,7 @@ const PrintButton = ({students}:any) => {
 
 
     // Students Array
-    const studentsArray = students.map((student:any) => {
+    const studentsArray = students?.map((student:any) => {
         return([
             {value:students.indexOf(student) + 1},
             {value:student?.student?.name},

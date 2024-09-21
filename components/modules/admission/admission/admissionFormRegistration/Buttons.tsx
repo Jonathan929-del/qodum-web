@@ -163,43 +163,14 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -359,43 +330,14 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -429,17 +371,14 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
         setMotherDob(moment());
         setAnniversaryDate(moment());
         setPreviousSchoolsDetails([{
+            class:'',
             school_name:'',
             board:'',
             passing_year:'',
             total_marks:'',
+            obtain_marks:'',
             percentage:'',
-            result:'',
-            is_alumni:'',
-            father_name:'',
-            father_passing_year:'',
-            mother_name:'',
-            mother_passing_year:''
+            result:''
         }]);
     };
 

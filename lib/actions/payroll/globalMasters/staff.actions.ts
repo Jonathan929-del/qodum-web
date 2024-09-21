@@ -301,3 +301,31 @@ export const deleteStaff = async ({id}:{id:String}) => {
         throw new Error(`Error deleting staff: ${err}`);      
     };
 };
+
+
+
+
+
+// Fetch staff names
+export const fetchStaffNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const staff = await Staff.find({session:activeSession?.year_name}, {'staff_registration.first_name':1});
+
+
+        // Return
+        return staff;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching staff staff: ${err}`);
+    };
+};

@@ -158,47 +158,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                     admission_number:student?.others?.is_alumni?.admission_number || 0,
                 },
                 // 4
-                previous_school_details:[
-                    {
-                        school_name:student?.others?.previous_school_details[0]?.school_name || '',
-                        board:student?.others?.previous_school_details[0]?.board || '',
-                        passing_year:student?.others?.previous_school_details[0]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[0]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[0]?.percentage || '',
-                        result:student?.others?.previous_school_details[0]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[0]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[0]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[0]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[0]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[0]?.mother_passing_year || '' || '',
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[1]?.school_name || '',
-                        board:student?.others?.previous_school_details[1]?.board || '',
-                        passing_year:student?.others?.previous_school_details[1]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[1]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[1]?.percentage || '',
-                        result:student?.others?.previous_school_details[1]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[1]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[1]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[1]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[1]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[1]?.mother_passing_year || '',
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[2]?.school_name || '',
-                        board:student?.others?.previous_school_details[2]?.board || '',
-                        passing_year:student?.others?.previous_school_details[2]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[2]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[2]?.percentage || '',
-                        result:student?.others?.previous_school_details[2]?.result || '',
-                        is_alumni:student?.others?.previous_school_details[2]?.is_alumni || '',
-                        father_name:student?.others?.previous_school_details[2]?.father_name || '',
-                        father_passing_year:student?.others?.previous_school_details[2]?.father_passing_year || '',
-                        mother_name:student?.others?.previous_school_details[2]?.mother_name || '',
-                        mother_passing_year:student?.others?.previous_school_details[2]?.mother_passing_year || '',
-                    }
-                ]
+                previous_school_details:student?.others?.previous_school_details || []
             },
 
             // Guardian details
@@ -222,7 +182,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
         });
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects || []);
-        setPreviousSchoolsDetails(student.others.previous_school_details);
+        setPreviousSchoolsDetails(student?.others?.previous_school_details || []);
     };
 
 

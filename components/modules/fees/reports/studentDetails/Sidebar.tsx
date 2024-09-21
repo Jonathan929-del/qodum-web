@@ -13,6 +13,8 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import { fetchDesignations } from '@/lib/actions/payroll/globalMasters/designation.actions';
+import { fetchProfessions } from '@/lib/actions/payroll/globalMasters/profession.actions';
 
 
 
@@ -91,14 +93,14 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     const [selectedOptionalSubjects, setSelectedOptionalSubjects] = useState([{}]);
 
 
-    // Professions
-    const professions = ['N.A.'];
-    const [selectedProfessions, setSelectedProfessions] = useState(['N.A.']);
-
-
     // Designations
-    const designations = ['N.A.', 'Teacher', 'Principal'];
-    const [selectedDesignations, setSelectedDesignations] = useState(['N.A.', 'Teacher', 'Principal']);
+    const [designations, setDesignations] = useState([]);
+    const [selectedDesignations, setSelectedDesignations] = useState([]);
+
+
+    // Professions
+    const [professions, setProfessions] = useState([]);
+    const [selectedProfessions, setSelectedProfessions] = useState([]);
 
 
 
@@ -304,6 +306,8 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             const categoriesRes = await fetchCategories();
             const streamsRes = await fetchStreams();
             const optionalSubjectsRes = await fetchOptionalSubjects();
+            const designationsRes = await fetchDesignations();
+            const professionsRes = await fetchProfessions();
             setSchools(schoolsRes);
             setClasses(classesRes);
             setSelectedClasses(classesRes);
@@ -315,6 +319,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setSelectedStreams(streamsRes);
             setOptionalSubjects(optionalSubjectsRes);
             setSelectedOptionalSubjects(optionalSubjectsRes);
+            setDesignations(designationsRes);
+            setSelectedDesignations(designationsRes);
+            setProfessions(professionsRes);
+            setSelectedProfessions(professionsRes);
             setCheckedDetails(localStorage.getItem('selectedDetails') === null ? [] : localStorage.getItem('selectedDetails')?.split('-'));
         };
         fetcher();
@@ -945,7 +953,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                     </div>
                                     <ul className='mt-2'>
                                         {optionalSubjects.length < 1 ? (
-                                            <p className='text-xs text-hash-color'>No optionalSubjects</p>
+                                            <p className='text-xs text-hash-color'>No optional subjects</p>
                                         ) : // @ts-ignore
                                         !optionalSubjects[0].subject_name ? (
                                             <LoadingIcon />
@@ -995,15 +1003,20 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                         </div>
                                     </div>
                                     <ul className='mt-2'>
-                                        {professions.map((i:any) => (
+                                        {professions.length < 1 ? (
+                                            <p className='text-xs text-hash-color'>No professions</p>
+                                        ) : // @ts-ignore
+                                        !professions[0].profession ? (
+                                            <LoadingIcon />
+                                        ) : professions.map((i:any) => (
                                             <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
                                                 <Checkbox
                                                     className='rounded-[2px] text-hash-color font-semibold'
-                                                    checked={selectedProfessions.includes(i)}
+                                                    checked={selectedProfessions?.map((item:any) => item.profession).includes(i.profession)}
                                                     // @ts-ignore
                                                     onClick={() => selectedProfessions?.includes(i) ? setSelectedProfessions(selectedProfessions?.filter((item:any) => item !== i)) : setSelectedProfessions([...selectedProfessions, i])}
                                                 />
-                                                <p className='text-xs font-semibold'>{i}</p>
+                                                <p className='text-xs font-semibold'>{i.profession}</p>
                                             </li>
                                         ))}
                                     </ul>
@@ -1019,7 +1032,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                         <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
                             <Select>
                                 <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                    <SelectValue placeholder={selectedDesignations?.length === 0 ? 'Select Designation(s)' : selectedDesignations?.length === 1 ? '1 designation selected' : `${selectedDesignations?.length} designations selected`} className='text-xs'/>
+                                    <SelectValue placeholder={selectedDesignations?.length === 0 ? 'Select Designatoin(s)' : selectedDesignations?.length === 1 ? '1 designation selected' : `${selectedDesignations?.length} designations selected`} className='text-xs'/>
                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1041,15 +1054,20 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                         </div>
                                     </div>
                                     <ul className='mt-2'>
-                                        {designations.map((i:any) => (
+                                        {designations.length < 1 ? (
+                                            <p className='text-xs text-hash-color'>No designations</p>
+                                        ) : // @ts-ignore
+                                        !designations[0].designation ? (
+                                            <LoadingIcon />
+                                        ) : designations.map((i:any) => (
                                             <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
                                                 <Checkbox
                                                     className='rounded-[2px] text-hash-color font-semibold'
-                                                    checked={selectedDesignations.includes(i)}
+                                                    checked={selectedDesignations?.map((item:any) => item.designation).includes(i.designation)}
                                                     // @ts-ignore
                                                     onClick={() => selectedDesignations?.includes(i) ? setSelectedDesignations(selectedDesignations?.filter((item:any) => item !== i)) : setSelectedDesignations([...selectedDesignations, i])}
                                                 />
-                                                <p className='text-xs font-semibold'>{i}</p>
+                                                <p className='text-xs font-semibold'>{i.designation}</p>
                                             </li>
                                         ))}
                                     </ul>

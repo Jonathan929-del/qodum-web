@@ -9,7 +9,9 @@ import ReceiptWiseFeeTypeCollection from '@/components/modules/fees/transactionR
 // Main function
 const page = () => {
     return (
-        <ReceiptWiseFeeTypeCollection />
+        <div className='h-full w-ful bg-white'>
+            <ReceiptWiseFeeTypeCollection />
+        </div>
     );
 };
 

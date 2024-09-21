@@ -24,7 +24,7 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails,}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails, professions, designations, staff}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -187,47 +187,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 admission_number:updateStudent.others.is_alumni.admission_number
             },
             // 4
-            previous_school_details:[
-                {
-                    school_name:updateStudent.others.previous_school_details[0].school_name,
-                    board:updateStudent.others.previous_school_details[0].board,
-                    passing_year:updateStudent.others.previous_school_details[0].passing_year,
-                    total_marks:updateStudent.others.previous_school_details[0].total_marks,
-                    percentage:updateStudent.others.previous_school_details[0].percentage,
-                    result:updateStudent.others.previous_school_details[0].result,
-                    is_alumni:updateStudent.others.previous_school_details[0].is_alumni,
-                    father_name:updateStudent.others.previous_school_details[0].father_name,
-                    father_passing_year:updateStudent.others.previous_school_details[0].father_passing_year,
-                    mother_name:updateStudent.others.previous_school_details[0].mother_name,
-                    mother_passing_year:updateStudent.others.previous_school_details[0].mother_passing_year
-                },
-                {
-                    school_name:updateStudent.others.previous_school_details[1].school_name,
-                    board:updateStudent.others.previous_school_details[1].board,
-                    passing_year:updateStudent.others.previous_school_details[1].passing_year,
-                    total_marks:updateStudent.others.previous_school_details[1].total_marks,
-                    percentage:updateStudent.others.previous_school_details[1].percentage,
-                    result:updateStudent.others.previous_school_details[1].result,
-                    is_alumni:updateStudent.others.previous_school_details[1].is_alumni,
-                    father_name:updateStudent.others.previous_school_details[1].father_name,
-                    father_passing_year:updateStudent.others.previous_school_details[1].father_passing_year,
-                    mother_name:updateStudent.others.previous_school_details[1].mother_name,
-                    mother_passing_year:updateStudent.others.previous_school_details[1].mother_passing_year
-                },
-                {
-                    school_name:updateStudent.others.previous_school_details[2].school_name,
-                    board:updateStudent.others.previous_school_details[2].board,
-                    passing_year:updateStudent.others.previous_school_details[2].passing_year,
-                    total_marks:updateStudent.others.previous_school_details[2].total_marks,
-                    percentage:updateStudent.others.previous_school_details[2].percentage,
-                    result:updateStudent.others.previous_school_details[2].result,
-                    is_alumni:updateStudent.others.previous_school_details[2].is_alumni,
-                    father_name:updateStudent.others.previous_school_details[2].father_name,
-                    father_passing_year:updateStudent.others.previous_school_details[2].father_passing_year,
-                    mother_name:updateStudent.others.previous_school_details[2].mother_name,
-                    mother_passing_year:updateStudent.others.previous_school_details[2].mother_passing_year
-                }
-            ]
+            previous_school_details:updateStudent.others.previous_school_details
         },
 
         // Guardian details
@@ -387,47 +347,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     admission_number:updateStudent.id === '' ? 0 : updateStudent.others.is_alumni.admission_number
                 },
                 // 4
-                previous_school_details:[
-                    {
-                        school_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].school_name,
-                        board:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].board,
-                        passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].passing_year,
-                        total_marks:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].total_marks,
-                        percentage:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].percentage,
-                        result:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].result,
-                        is_alumni:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].is_alumni,
-                        father_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_name,
-                        father_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].father_passing_year,
-                        mother_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_name,
-                        mother_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[0].mother_passing_year
-                    },
-                    {
-                        school_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].school_name,
-                        board:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].board,
-                        passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].passing_year,
-                        total_marks:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].total_marks,
-                        percentage:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].percentage,
-                        result:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].result,
-                        is_alumni:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].is_alumni,
-                        father_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_name,
-                        father_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].father_passing_year,
-                        mother_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_name,
-                        mother_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[1].mother_passing_year
-                    },
-                    {
-                        school_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].school_name,
-                        board:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].board,
-                        passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].passing_year,
-                        total_marks:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].total_marks,
-                        percentage:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].percentage,
-                        result:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].result,
-                        is_alumni:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].is_alumni,
-                        father_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_name,
-                        father_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].father_passing_year,
-                        mother_name:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_name,
-                        mother_passing_year:updateStudent.id === '' ? '' : updateStudent.others.previous_school_details[2].mother_passing_year
-                    }
-                ]
+                previous_school_details:updateStudent.id === '' ? [] : updateStudent.others.previous_school_details
+
             },
 
             // Guardian details
@@ -454,6 +375,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Submit handler
     const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
+
         setIsLoading(true);
         // Create Student
         if(updateStudent.id === ''){
@@ -628,15 +550,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }
         // Modify Student
         else if(
-            !deepEqual(comparisonObject, values)
-            || file
+            file
+            || !deepEqual(comparisonObject, values)
             || comparisonObject.student.subjects !== selectedSubjects
             || moment(values.student.date).format('DD-MM-YYYY') !== moment(comparisonObject.student.date).format('DD-MM-YYYY')
             || moment(values.student.dob).format('DD-MM-YYYY') !== moment(comparisonObject.student.dob).format('DD-MM-YYYY')
             || moment(values.parents.father.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.father.dob).format('DD-MM-YYYY')
             || moment(values.parents.mother.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.dob).format('DD-MM-YYYY')
             || moment(values.parents.mother.anniversary_date).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.anniversary_date).format('DD-MM-YYYY')
-            || form.getValues().others.previous_school_details !== previousSchoolsDetails
+            || JSON.stringify(values.others.previous_school_details) !== JSON.stringify(previousSchoolsDetails)
         ){
             if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                 toast({title:'Register no. already exists', variant:'error'});
@@ -960,43 +882,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -1156,43 +1049,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:'',
-                        is_alumni:'',
-                        father_name:'',
-                        father_passing_year:'',
-                        mother_name:'',
-                        mother_passing_year:''
+                        result:''
                     }
                 ]
             },
@@ -1227,17 +1091,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         setMotherDob(moment());
         setAnniversaryDate(moment());
         setPreviousSchoolsDetails([{
+            class:'',
             school_name:'',
             board:'',
             passing_year:'',
             total_marks:'',
+            obtain_marks:'',
             percentage:'',
-            result:'',
-            is_alumni:'',
-            father_name:'',
-            father_passing_year:'',
-            mother_name:'',
-            mother_passing_year:''
+            result:''
         }]);
     };
 
@@ -1362,41 +1223,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('others.is_alumni.class_name', updateStudent.others.is_alumni.class_name);
             form.setValue('others.is_alumni.admission_number', updateStudent.others.is_alumni.admission_number);
 
-            form.setValue('others.previous_school_details.0.school_name', updateStudent.others.previous_school_details[0].school_name);
-            form.setValue('others.previous_school_details.0.board', updateStudent.others.previous_school_details[0].board);
-            form.setValue('others.previous_school_details.0.passing_year', updateStudent.others.previous_school_details[0].passing_year);
-            form.setValue('others.previous_school_details.0.total_marks', updateStudent.others.previous_school_details[0].total_marks);
-            form.setValue('others.previous_school_details.0.percentage', updateStudent.others.previous_school_details[0].percentage);
-            form.setValue('others.previous_school_details.0.result', updateStudent.others.previous_school_details[0].result);
-            form.setValue('others.previous_school_details.0.is_alumni', updateStudent.others.previous_school_details[0].is_alumni);
-            form.setValue('others.previous_school_details.0.father_name', updateStudent.others.previous_school_details[0].father_name);
-            form.setValue('others.previous_school_details.0.father_passing_year', updateStudent.others.previous_school_details[0].father_passing_year);
-            form.setValue('others.previous_school_details.0.mother_name', updateStudent.others.previous_school_details[0].mother_name);
-            form.setValue('others.previous_school_details.0.mother_passing_year', updateStudent.others.previous_school_details[0].mother_passing_year);
-
-            form.setValue('others.previous_school_details.1.school_name', updateStudent.others.previous_school_details[1].school_name);
-            form.setValue('others.previous_school_details.1.board', updateStudent.others.previous_school_details[1].board);
-            form.setValue('others.previous_school_details.1.passing_year', updateStudent.others.previous_school_details[1].passing_year);
-            form.setValue('others.previous_school_details.1.total_marks', updateStudent.others.previous_school_details[1].total_marks);
-            form.setValue('others.previous_school_details.1.percentage', updateStudent.others.previous_school_details[1].percentage);
-            form.setValue('others.previous_school_details.1.result', updateStudent.others.previous_school_details[1].result);
-            form.setValue('others.previous_school_details.1.is_alumni', updateStudent.others.previous_school_details[1].is_alumni);
-            form.setValue('others.previous_school_details.1.father_name', updateStudent.others.previous_school_details[1].father_name);
-            form.setValue('others.previous_school_details.1.father_passing_year', updateStudent.others.previous_school_details[1].father_passing_year);
-            form.setValue('others.previous_school_details.1.mother_name', updateStudent.others.previous_school_details[1].mother_name);
-            form.setValue('others.previous_school_details.1.mother_passing_year', updateStudent.others.previous_school_details[1].mother_passing_year);
-
-            form.setValue('others.previous_school_details.2.school_name', updateStudent.others.previous_school_details[2].school_name);
-            form.setValue('others.previous_school_details.2.board', updateStudent.others.previous_school_details[2].board);
-            form.setValue('others.previous_school_details.2.passing_year', updateStudent.others.previous_school_details[2].passing_year);
-            form.setValue('others.previous_school_details.2.total_marks', updateStudent.others.previous_school_details[2].total_marks);
-            form.setValue('others.previous_school_details.2.percentage', updateStudent.others.previous_school_details[2].percentage);
-            form.setValue('others.previous_school_details.2.result', updateStudent.others.previous_school_details[2].result);
-            form.setValue('others.previous_school_details.2.is_alumni', updateStudent.others.previous_school_details[2].is_alumni);
-            form.setValue('others.previous_school_details.2.father_name', updateStudent.others.previous_school_details[2].father_name);
-            form.setValue('others.previous_school_details.2.father_passing_year', updateStudent.others.previous_school_details[2].father_passing_year);
-            form.setValue('others.previous_school_details.2.mother_name', updateStudent.others.previous_school_details[2].mother_name);
-            form.setValue('others.previous_school_details.2.mother_passing_year', updateStudent.others.previous_school_details[2].mother_passing_year);
+            form.setValue('others.previous_school_details', updateStudent.others.previous_school_details);
 
 
 
@@ -1536,6 +1363,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setMotherDob={setMotherDob}
                                     anniversaryDate={anniversaryDate}
                                     setAnniversaryDate={setAnniversaryDate}
+                                    designations={designations}
+                                    professions={professions}
                                 />
                             </TabsContent>
                             <TabsContent value='other'>
@@ -1544,6 +1373,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     updateStudent={updateStudent}
                                     previousSchoolsDetails={previousSchoolsDetails}
                                     setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                                    staff={staff}
                                 />
                             </TabsContent>
                             <TabsContent value='guardian'>

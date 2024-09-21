@@ -250,14 +250,7 @@ interface CreateAdmittedStudentProps{
             admission_number:Number;
         },
         // 4
-        previous_school_details:{
-            school_name:String;
-            board:String;
-            passing_year:String;
-            total_marks:String;
-            percentage:String;
-            result:String;
-        }[]
+        previous_school_details:any;
     };
 
     // Guardian details
@@ -527,14 +520,7 @@ interface ModifyAdmittedStudentProps{
             admission_number:Number;
         },
         // 3
-        previous_school_details:{
-            school_name:String;
-            board:String;
-            passing_year:String;
-            total_marks:String;
-            percentage:String;
-            result:String;
-        }[]
+        previous_school_details:any;
     };
 
     // Guardian details
@@ -974,6 +960,10 @@ export const ModifyStudentAffiliatedHeads = async ({id, affiliated_heads}:Modify
 
         // Updating
         await AdmittedStudent.findByIdAndUpdate(id, {affiliated_heads});
+
+
+        // Return
+        return 'Modified';
 
     } catch (err) {
         throw new Error(`Error updating student affiliated heads: ${err}`);

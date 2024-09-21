@@ -142,19 +142,7 @@ interface CreateStudentProps{
             admission_number:Number;
         },
         // 4
-        previous_school_details:{
-            school_name:String;
-            board:String;
-            passing_year:String;
-            total_marks:String;
-            percentage:String;
-            result:String;
-            is_alumni:String;
-            father_name:String;
-            father_passing_year:String;
-            mother_name:String;
-            mother_passing_year:String;
-        }[]
+        previous_school_details:any;
     };
 
     // Guardian details
@@ -433,19 +421,7 @@ interface ModifyStudentProps{
             admission_number:Number;
         },
         // 3
-        previous_school_details:{
-            school_name:String;
-            board:String;
-            passing_year:String;
-            total_marks:String;
-            percentage:String;
-            result:String;
-            is_alumni:String;
-            father_name:String;
-            father_passing_year:String;
-            mother_name:String;
-            mother_passing_year:String;
-        }[]
+        previous_school_details:any;
     };
 
     // Guardian details

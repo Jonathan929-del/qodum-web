@@ -141,26 +141,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
                         result:''
                     }
@@ -341,26 +327,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
                         result:''
                     }
@@ -544,26 +516,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
                         result:''
                     }
@@ -610,10 +568,12 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
         setMotherDob(moment());
         setAnniversaryDate(moment());
         setPreviousSchoolsDetails([{
+            class:'',
             school_name:'',
             board:'',
             passing_year:'',
             total_marks:'',
+            obtain_marks:'',
             percentage:'',
             result:''
         }]);

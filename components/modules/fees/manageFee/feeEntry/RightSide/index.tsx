@@ -10,7 +10,7 @@ import HeadsArea from './HeadsArea';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo, headsSequence}:any) => {
 
 
     // Total paid amount
@@ -18,7 +18,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
     
 
     return (
-        <div className='w-[70%] min-w-[400px] flex flex-col justify-between gap-1 px-2'>
+        <div className='w-[70%] h-full min-w-[400px] flex flex-col justify-between gap-1 px-2'>
             <div className='flex flex-col gap-1'>
                 {/* Search */}
                 <Search
@@ -29,6 +29,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setIsViewOpened={setIsViewOpened}
                     setSelectedInstallments={setSelectedInstallments}
                     setInstallments={setInstallments}
+                    headsSequence={headsSequence}
                 />
 
 
@@ -42,6 +43,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     installments={installments}
                     selectedInstallments={selectedInstallments}
                     setSelectedInstallments={setSelectedInstallments}
+                    selectedStudent={selectedStudent}
                     chequeDetails={chequeDetails}
                     setChequeDetails={setChequeDetails}
                     ddDetails={ddDetails}
@@ -54,6 +56,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setUpiDetails={setUpiDetails}
                     swipedCardDetails={swipedCardDetails}
                     setSwipedCardDetails={setSwipedCardDetails}
+                    totalPaidAmount={totalPaidAmount}
                 />
 
 
@@ -98,6 +101,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 paymentsReceiptNo={paymentsReceiptNo}
                 setInstallments={setInstallments}
                 setPaymentReceiptNo={setPaymentReceiptNo}
+                headsSequence={headsSequence}
             />
         </div>
     );

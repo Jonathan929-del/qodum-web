@@ -56,6 +56,10 @@ import AccountSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/fee/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
+import FeeDefaulterList from '@/pagesComps/fees/(transaction report)/(defaulter reports)/fee-defaulter-list/page';
+import StudentDetails from '@/pagesComps/fees/(reports)/student-details/page';
+import { setMomentDefaultYear } from '@/lib/utils';
+import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -224,8 +228,11 @@ const Home = () => {
     if(openedPages.includes('Receipt Wise Fee Type Collection')){
       openedPagesArray.push({name:'Receipt Wise Fee Type Collection', component:<ReceiptWiseFeeTypeCollection />});
     };
-    if(openedPages.includes('Class Wise Studnet Strength')){
-      openedPagesArray.push({name:'Class Wise Studnet Strength', component:<ClassWiseStudentStrength />});
+    if(openedPages.includes('Class Wise Student Strength')){
+      openedPagesArray.push({name:'Class Wise Student Strength', component:<ClassWiseStudentStrength />});
+    };
+    if(openedPages.includes('Fee Defaulter List')){
+      openedPagesArray.push({name:'Fee Defaulter List', component:<FeeDefaulterList />});
     };
     if(openedPages.includes('Account Manager Session Transfer')){
       openedPagesArray.push({name:'Account Manager Session Transfer', component:<AccountSessionTransfer />});
@@ -239,8 +246,19 @@ const Home = () => {
     if(openedPages.includes('Admission Manager Session Transfer')){
       openedPagesArray.push({name:'Admission Manager Session Transfer', component:<AdmissionSessionTransfer />});
     };
+    if(openedPages.includes('Student Details')){
+      openedPagesArray.push({name:'Student Details', component:<StudentDetails />});
+    };
 
     setOpenedPagesComponents(openedPagesArray);
+
+
+    // Setting active year in moment
+    const fetcher = async () => {
+      const activeYearRes = await fetchActiveAcademicYear();
+      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    };
+    fetcher();
 
   }, [openedPages]);
 

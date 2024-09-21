@@ -8,13 +8,14 @@ import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
 
 
 // Main function
-const Guardian = ({form}:any) => {
+const Guardian = ({form, designations, professions}:any) => {
 
 
     // Date states
@@ -74,7 +75,13 @@ const Guardian = ({form}:any) => {
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                            <SelectItem value='N.A.'>N.A.</SelectItem>
+                                                        {professions.length < 1 ? (
+                                                            <p className='text-[11px]'>No professions</p>
+                                                        ) : !professions[0].profession ? (
+                                                            <LoadingIcon />
+                                                        ) : professions.map((d:any) => (
+                                                            <SelectItem value={d.profession} key={d._id}>{d.profession}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
@@ -104,9 +111,13 @@ const Guardian = ({form}:any) => {
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                            <SelectItem value='N.A.'>N.A.</SelectItem>
-                                                            <SelectItem value='Principal'>Principal</SelectItem>
-                                                            <SelectItem value='Teacher'>Teacher</SelectItem>
+                                                        {designations.length < 1 ? (
+                                                            <p className='text-[11px]'>No designations</p>
+                                                        ) : !designations[0].designation ? (
+                                                            <LoadingIcon />
+                                                        ) : designations.map((d:any) => (
+                                                            <SelectItem value={d.designation} key={d._id}>{d.designation}</SelectItem>
+                                                        ))}
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>

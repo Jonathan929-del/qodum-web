@@ -15,7 +15,7 @@ import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSes
 
 
 // Main function
-const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
+const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsDetails, staff}:any) => {
 
 
     // Sessions
@@ -36,6 +36,7 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
         };
         fetcher();
     }, []);
+    useEffect(() => {}, [form.getValues().others.student_staff_relation.staff_ward]);
 
 
     return (
@@ -320,7 +321,7 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                 <h2 className='w-full bg-[#EDF1F5] font-semibold text-start text-sm py-2 px-2 rounded-[5px]'>Student Staff Relation</h2>
                 <div className='w-full flex flex-row px-4 py-2 gap-2 lg:w-[50%]'>
                     {/* Staff Ward */}
-                    <div className='w-full flex flex-col items-center'>
+                    <div className='w-[50%] flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Staff Ward</FormLabel>
                         <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                             <FormField
@@ -339,7 +340,8 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value='All Staff'>All Staff</SelectItem>
+                                                    <SelectItem value='Yes'>Yes</SelectItem>
+                                                    <SelectItem value='No'>No</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </FormControl>
@@ -349,36 +351,45 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                             />
                         </div>
                     </div>
+
                     {/* Staff Name */}
-                    <div className='w-full flex flex-col items-center'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Staff Name</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form.control}
-                                name='others.student_staff_relation.staff_name'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field.value}
-                                                onValueChange={field.onChange}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value='All Staff'>Name</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
+                    {form.getValues().others.student_staff_relation.staff_ward === 'Yes' && (
+                        <div className='w-[50%] flex flex-col items-center'>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Staff Name</FormLabel>
+                            <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField
+                                    control={form.control}
+                                    name='others.student_staff_relation.staff_name'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field.value}
+                                                    onValueChange={field.onChange}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {staff.length < 1 ? (
+                                                            <p className='text-[11px]'>No staff</p>
+                                                        ) : !staff[0]?.staff_registration?.first_name ? (
+                                                            <LoadingIcon />
+                                                        ) : staff.map((s:any) => (
+                                                            <SelectItem value={s?.staff_registration?.first_name} key={s?._id}>{s?.staff_registration?.first_name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
 
@@ -539,6 +550,21 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                 {previousSchoolsDetails.map((school:any) => (
                         <div className='flex flex-row items-center min-w-[1600px] px-4 py-2 gap-2'>
 
+                            {/* Class */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <Input
+                                        value={school.class}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].class = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                    />
+                                </div>
+                            </div>
+
                             {/* School Name */}
                             <div className='w-full flex flex-col items-center'>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>School Name</FormLabel>
@@ -574,9 +600,9 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
-                                        value={school.passing_year}
+                                        value={school.passig_year}
                                         onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].passing_year = e.target.value;
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].passig_year = e.target.value;
                                             setPreviousSchoolsDetails([...previousSchoolsDetails]);
                                         }}
                                         className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
@@ -586,7 +612,7 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
 
                             {/* Total Marks */}
                             <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</p>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Total Marks</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
                                         value={school.total_marks}
@@ -599,9 +625,24 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                                 </div>
                             </div>
 
+                            {/* Obtain Marks */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Obtain Marks</FormLabel>
+                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <Input
+                                        value={school.obtain_marks}
+                                        onChange={(e:any) => {
+                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].obtain_marks = e.target.value;
+                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
+                                        }}
+                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                    />
+                                </div>
+                            </div>
+
                             {/* Percentage */}
                             <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</p>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
                                         value={school.percentage}
@@ -616,87 +657,12 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
 
                             {/* Result */}
                             <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</p>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Result</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
                                         value={school.result}
                                         onChange={(e:any) => {
                                             previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].result = e.target.value;
-                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
-                                        }}
-                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Is Alumni */}
-                            <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Is Alumni</p>
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <Input
-                                        value={school.is_alumni}
-                                        onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].is_alumni = e.target.value;
-                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
-                                        }}
-                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Father Name */}
-                            <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Father Name</p>
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <Input
-                                        value={school.father_name}
-                                        onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].father_name = e.target.value;
-                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
-                                        }}
-                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Passing Year */}
-                            <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</p>
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <Input
-                                        value={school.father_passing_year}
-                                        onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].father_passing_year = e.target.value;
-                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
-                                        }}
-                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Mother Name */}
-                            <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Mother Name</p>
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <Input
-                                        value={school.mother_name}
-                                        onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].mother_name = e.target.value;
-                                            setPreviousSchoolsDetails([...previousSchoolsDetails]);
-                                        }}
-                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Passing Year */}
-                            <div className='w-full flex flex-col items-center'>
-                                <p className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Passing Year</p>
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                    <Input
-                                        value={school.mother_passing_year}
-                                        onChange={(e:any) => {
-                                            previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].mother_passing_year = e.target.value;
                                             setPreviousSchoolsDetails([...previousSchoolsDetails]);
                                         }}
                                         className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
@@ -722,17 +688,14 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                                 setPreviousSchoolsDetails([
                                     ...previousSchoolsDetails,
                                     {
+                                        class:'',
                                         school_name:'',
                                         board:'',
                                         passing_year:'',
                                         total_marks:'',
+                                        obtain_marks:'',
                                         percentage:'',
-                                        result:'',
-                                        is_alumni:'',
-                                        father_name:'',
-                                        father_passing_year:'',
-                                        mother_name:'',
-                                        mother_passing_year:''
+                                        result:''
                                     }
                                 ])
                             }}

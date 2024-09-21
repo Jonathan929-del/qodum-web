@@ -16,7 +16,6 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {ChevronRight, ChevronLeft, ChevronDown, Check, X,} from 'lucide-react';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {dailyFeeCollectionFilter} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
@@ -120,6 +119,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
         setIsShowClicked(true);
         setIsLoading(true);
+
         // Fetching filtered payments
         const res = await dailyFeeCollectionFilter({
             school:values.school,

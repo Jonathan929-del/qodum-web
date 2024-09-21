@@ -192,6 +192,9 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             admission_no:'',
             bill_no:'',
             class:'',
+            section:'',
+            phone:'',
+            email:'',
             affiliated_heads:{
                     group_name:'',
                 heads:[]

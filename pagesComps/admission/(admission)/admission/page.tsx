@@ -21,6 +21,9 @@ import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedS
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
+import { fetchDesignations } from '@/lib/actions/payroll/globalMasters/designation.actions';
+import { fetchProfessions } from '@/lib/actions/payroll/globalMasters/profession.actions';
+import { fetchStaffNames } from '@/lib/actions/payroll/globalMasters/staff.actions';
 
 
 
@@ -195,32 +198,16 @@ const page = () => {
                 admission_number:0
             },
             // 4
-            previous_school_details:[
-                {
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                },
-                {
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                },
-                {
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                }
-            ]
+            previous_school_details:[{
+                class:'',
+                school_name:'',
+                board:'',
+                passing_year:'',
+                total_marks:'',
+                obtain_marks:'',
+                percentage:'',
+                result:''
+            }]
         },
 
         // Guardian details
@@ -377,28 +364,14 @@ const page = () => {
             // 4
             previous_school_details:[
                 {
+                    class:'',
                     school_name:'',
                     board:'',
                     passing_year:'',
                     total_marks:'',
+                    obtain_marks:'',
                     percentage:'',
-                    result:'',
-                },
-                {
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
-                },
-                {
-                    school_name:'',
-                    board:'',
-                    passing_year:'',
-                    total_marks:'',
-                    percentage:'',
-                    result:'',
+                    result:''
                 }
             ]
         },
@@ -492,12 +465,26 @@ const page = () => {
     const [clubs, setClubs] = useState<any>([{}]);
 
 
+    // Designations
+    const [designations, setDesignations] = useState([{}]);
+
+
+    // Professions
+    const [professions, setProfessions] = useState([{}]);
+
+
+    // Staff
+    const [staff, setStaff] = useState([{}]);
+
+
     // Previous schools details
     const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
+        class:'',
         school_name:'',
         board:'',
         passing_year:'',
         total_marks:'',
+        obtain_marks:'',
         percentage:'',
         result:''
     }]);
@@ -508,9 +495,15 @@ const page = () => {
         const accountGroupsFetcher = async () => {
             const studentsRes = await fetchAdmittedStudents();
             const registeredStudentsRes = await fetchManualListStudents();
+            const designationsRes = await fetchDesignations();
+            const professionsRes = await fetchProfessions();
+            const staffRes = await fetchStaffNames();
             setStudents(studentsRes);
             setRegisteredStudents(registeredStudentsRes);
             setRegisteredStudents(registeredStudentsRes.filter((s:any) => !studentsRes.map((student) => student?.student?.name).includes(s?.student?.name)));
+            setDesignations(designationsRes);
+            setProfessions(professionsRes);
+            setStaff(staffRes);
         };
         accountGroupsFetcher();
     }, [isViewOpened, updateStudent]);
@@ -572,6 +565,7 @@ const page = () => {
                         registeredStudents={registeredStudents}
                         setIsViewOpened={setIsViewOpened}
 l                       setValuesFromRegister={setValuesFromRegister}
+                        setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
                 ) : (
                     <FormCom
@@ -604,6 +598,9 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                         cadetTypes={cadetTypes}
                         clubs={clubs}
+                        designations={designations}
+                        professions={professions}
+                        staff={staff}
                     />
                 )
             }

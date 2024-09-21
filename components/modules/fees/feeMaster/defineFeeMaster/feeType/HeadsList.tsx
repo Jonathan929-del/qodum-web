@@ -12,7 +12,7 @@ import {fetchHeads} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 // Main Function
-const HeadsList = ({heads, updateType, form}: any) => {
+const HeadsList = ({heads, updateType, form, isSubmitLoading}: any) => {
 
 
     // All heads
@@ -87,7 +87,9 @@ const HeadsList = ({heads, updateType, form}: any) => {
                     {/* Values */}
                     <CommandList>
                         {
-                            updateType.id === '' ?
+                            isSubmitLoading ? (
+                                <LoadingIcon />
+                            ) : updateType.id === '' ?
                                 // Free heads 
                                 heads.length < 1 ? (
                                     <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>

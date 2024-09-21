@@ -140,26 +140,12 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 // 4
                 previous_school_details:[
                     {
+                        class:'',
                         school_name:'',
                         board:'',
                         passing_year:'',
                         total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
-                        percentage:'',
-                        result:''
-                    },
-                    {
-                        school_name:'',
-                        board:'',
-                        passing_year:'',
-                        total_marks:'',
+                        obtain_marks:'',
                         percentage:'',
                         result:''
                     }
@@ -336,32 +322,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                     admission_number:student?.others?.is_alumni?.admission_number || 0,
                 },
                 // 4
-                previous_school_details:[
-                    {
-                        school_name:student?.others?.previous_school_details[0]?.school_name || '',
-                        board:student?.others?.previous_school_details[0]?.board || '',
-                        passing_year:student?.others?.previous_school_details[0]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[0]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[0]?.percentage || '',
-                        result:student?.others?.previous_school_details[0]?.result || ''
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[1]?.school_name || '',
-                        board:student?.others?.previous_school_details[1]?.board || '',
-                        passing_year:student?.others?.previous_school_details[1]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[1]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[1]?.percentage || '',
-                        result:student?.others?.previous_school_details[1]?.result || ''
-                    },
-                    {
-                        school_name:student?.others?.previous_school_details[2]?.school_name || '',
-                        board:student?.others?.previous_school_details[2]?.board || '',
-                        passing_year:student?.others?.previous_school_details[2]?.passing_year || '',
-                        total_marks:student?.others?.previous_school_details[2]?.total_marks || '',
-                        percentage:student?.others?.previous_school_details[2]?.percentage || '',
-                        result:student?.others?.previous_school_details[2]?.result || ''
-                    }
-                ]
+                previous_school_details:student?.others?.previous_school_details || []
             },
 
             // Guardian details

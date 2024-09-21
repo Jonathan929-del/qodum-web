@@ -55,7 +55,7 @@ const RecentTransactionsCard = ({payments, students}:any) => {
                         <div className='flex flex-col ml-4'>
                             <div className='flex flex-row items-center gap-[2px]'>
                                 <p>{p.student}</p>
-                                <p className='text-xs text-hash-color'>(6-F)</p>
+                                <p className='text-xs text-hash-color'>{p.class_name} - {p.section}</p>
                             </div>
                             <div className='flex flex-row items-center gap-[2px]'>
                                 <p className='text-[#28C289]'>₹ {p.paid_amount}</p>

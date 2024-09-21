@@ -264,7 +264,10 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    const theClass = await Class.findOne({class_name:c});
+                    if(theClass?.affiliated_heads?.group_name !== group_name){
+                        await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                    };
                 } catch (err:any) {
                     console.log(err);
                 }
@@ -274,7 +277,10 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             classes.map(async (c:any) => {
                 try {
-                    await Class.updateMany({class_name:c}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                    const theClass = await Class.findOne({class_name:c});
+                    if(theClass?.affiliated_heads?.group_name !== group_name){
+                        await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                    };
                 } catch (err:any) {
                     console.log(err);
                 }

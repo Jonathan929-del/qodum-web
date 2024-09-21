@@ -26,6 +26,7 @@ const PaymentSchema = new mongoose.Schema(
         fee_type:{type:String},
         advance_dues_number:{type:String},
         class_name:{type:String},
+        section:{type:String},
         board:{type:String},
         adm_no:{type:String},
         father_name:{type:String},

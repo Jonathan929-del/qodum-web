@@ -11,17 +11,22 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {FeeTypeValidation} from '@/lib/validations/fees/feeMaster/feeMaster/type.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {createType, deleteType, modifyType} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import { useState } from 'react';
 
 
 
 
 
 // Main function
-const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: any) => {
+const FormCom = ({setIsViewOpened, heads, updateType, types, setUpdateType, fetcher}: any) => {
 
 
     // Toast
-    const { toast } = useToast();
+    const {toast} = useToast();
+
+
+    // Is submit loading
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
 
     // Comparison object
@@ -45,6 +50,10 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
 
     // Submit handler
     const onSubmit = async (values: z.infer<typeof FeeTypeValidation>) => {
+
+        // Setting is submit loading to true
+        setIsSubmitLoading(true);
+
 
         // Create type
         if (updateType.id === '') {
@@ -99,6 +108,12 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
             preference_no: 0,
             heads: []
         });
+        fetcher();
+
+
+        // Setting is submit loading to false
+        setIsSubmitLoading(false);
+
     };
 
 
@@ -156,7 +171,7 @@ const FormCom = ({ setIsViewOpened, heads, updateType, types, setUpdateType }: a
                     </div>
 
 
-                    <HeadsList heads={heads} updateType={updateType} form={form} />
+                    <HeadsList heads={heads} updateType={updateType} form={form} isSubmitLoading={isSubmitLoading}/>
 
 
 

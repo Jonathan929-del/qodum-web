@@ -23,7 +23,6 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 // Main function
 const FormCom = ({groups}: any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -50,6 +49,7 @@ const FormCom = ({groups}: any) => {
 
     // Selected heads
     const [selectedHeads, setSelectedHeads] = useState<any>([]);
+    console.log(selectedHeads);
 
 
     // Selected account ledger
@@ -142,7 +142,6 @@ const FormCom = ({groups}: any) => {
         };
         fetcher();
     }, []);
-
 
     return (
         <div className='w-[100%] max-w-[1500px] h-full overflow-y-scroll overflow-x-hidden custom-sidebar-scrollbar flex flex-col items-center'>

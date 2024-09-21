@@ -4,13 +4,16 @@ import {useEffect, useState} from 'react';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
 import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
 import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchProfessions} from '@/lib/actions/payroll/globalMasters/profession.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
 import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import {fetchDesignations} from '@/lib/actions/payroll/globalMasters/designation.actions';
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import {fetchNationalities} from '@/lib/actions/admission/globalMasters/nationality.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
@@ -303,19 +306,28 @@ const page = () => {
     const [nationalities, setNationlaities] = useState([{}]);
 
 
+    // Designations
+    const [designations, setDesignations] = useState([{}]);
+
+
+    // Professions
+    const [professions, setProfessions] = useState([{}]);
+
+
+    // Staff
+    const [staff, setStaff] = useState([{}]);
+
+
     // Previous schools details
     const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
+        class:'',
         school_name:'',
         board:'',
         passing_year:'',
         total_marks:'',
+        obtain_marks:'',
         percentage:'',
-        result:'',
-        is_alumni:'',
-        father_name:'',
-        father_passing_year:'',
-        mother_name:'',
-        mother_passing_year:''
+        result:''
     }]);
 
 
@@ -336,6 +348,9 @@ const page = () => {
             const bloodGroupsRes = await fetchBloodGroups();
             const castsRes = await fetchCastes();
             const nationalitiesRes = await fetchNationalities();
+            const designationsRes = await fetchDesignations();
+            const professionsRes = await fetchProfessions();
+            const staffRes = await fetchStaffNames();
             setClasses(classesRes);
             setBoards(boardsRes);
             setStreams(streamsRes);
@@ -350,7 +365,9 @@ const page = () => {
             setStudents(studentsRes);
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setNationlaities(nationalitiesRes);
-
+            setDesignations(designationsRes);
+            setProfessions(professionsRes);
+            setStaff(staffRes);
         };
         fetcher();
     }, [isViewOpened, updateStudent]);
@@ -402,6 +419,9 @@ const page = () => {
                         nationalities={nationalities}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                        designations={designations}
+                        professions={professions}
+                        staff={staff}
                     />
                 )
             }

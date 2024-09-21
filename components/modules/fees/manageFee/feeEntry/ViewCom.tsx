@@ -26,6 +26,8 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent, setInstallments
             admission_no:student.student.adm_no,
             bill_no:student.student.bill_no,
             class:student.student.class,
+            section:student.student.section,
+            phone:student.student.mobile,
             board:student.student.board,
             route_name:student?.transport_details?.route,
             stop_name:student?.transport_details?.stop,

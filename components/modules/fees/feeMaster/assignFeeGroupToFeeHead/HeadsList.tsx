@@ -261,7 +261,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     )}
                                                 </SelectContent>
                                             </Select>
-                                            {installmentError && selectedHeads[heads.indexOf(head)]?.installment === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Installment</span>}
+                                            {installmentError && selectedHeads[selectedHeads.indexOf(selectedHeads.find((sh:any) => sh.head_name === head.name))]?.installment === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Installment</span>}
                                         </li>
 
                                         {/* Fee account */}
@@ -290,7 +290,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                            {feeAccountError && selectedHeads[heads.indexOf(head)]?.account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Account</span>}
+                                            {feeAccountError && selectedHeads[selectedHeads.indexOf(selectedHeads.find((sh:any) => sh.head_name === head.name))]?.account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Account</span>}
                                         </li>
 
                                         {/* Fee post account */}
@@ -319,7 +319,7 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                            {feePostAccountError && selectedHeads[heads.indexOf(head)]?.post_account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Post A/C</span>}
+                                            {feePostAccountError && selectedHeads[selectedHeads.indexOf(selectedHeads.find((sh:any) => sh.head_name === head.name))]?.post_account === '' &&  <span className='text-[10px] text-[#F0343A]'>Select Post A/C</span>}
                                         </li>
                                     </CommandItem>
                                 ))

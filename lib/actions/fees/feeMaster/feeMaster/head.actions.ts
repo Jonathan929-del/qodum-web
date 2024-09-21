@@ -296,3 +296,31 @@ export const isGroupRelatedToStudent = async ({group_name}) => {
         throw new Error(`Error checking group relation: ${err}`);
     }
 };
+
+
+
+
+
+// Fetch heads sequence
+export const fetchHeadsSequence = async () => {
+    try {
+        
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
+        // Heads
+        const heads = await Head.find({session:activeSession?.year_name}, {name:1});
+
+
+        // Return
+        return heads;
+
+    }catch (err){
+        throw new Error(`Error fetching heads sequence: ${err}`);    
+    };
+};
