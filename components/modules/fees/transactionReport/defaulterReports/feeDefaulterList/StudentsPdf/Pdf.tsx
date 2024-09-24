@@ -61,7 +61,7 @@ const PDF = ({pdfData}:any) => {
     return(
         <Document>
             {/* <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:1900, height:1900}} orientation='landscape'> */}
-            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:700, height:800}} orientation='landscape'>
+            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:700, height:800}} orientation='portrait'>
 
                 {/* School data */}
                 <View style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', gap:50, paddingVertical:10, paddingHorizontal:50, borderBottomWidth:0.5, borderBottomColor:'#ccc'}}>

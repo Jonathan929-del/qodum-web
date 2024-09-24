@@ -28,6 +28,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     const [isDraggableOpened, setIsDraggableOpened] = useState(false);
 
 
+    // Is loading data
+    const [isLoadingData, setIsLoadingData] = useState(false);
+
+
     // Schools
     const [schools, setSchools] = useState([{}]);
     const [selectedSchool, setSelectedSchool] = useState('All schools');
@@ -269,7 +273,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     // Onsubmit
     const onSubmit = async () => {
 
-        setIsShowClicked(true);
         setIsLoading(true);
         // Student details filter
         const res = await studentDetailsFilter({
@@ -294,12 +297,14 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             fields:[...selectedStudentDetails, ...selectedParentsDetails, ...selectedGuardianDetails]
         });
         setIsLoading(false);
+        setIsShowClicked(true);
     };
 
 
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
+            setIsLoadingData(true);
             const schoolsRes = await fetchGlobalSchoolDetails();
             const classesRes = await fetchClasses();
             const religionsRes = await fetchReligions();
@@ -324,6 +329,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setProfessions(professionsRes);
             setSelectedProfessions(professionsRes);
             setCheckedDetails(localStorage.getItem('selectedDetails') === null ? [] : localStorage.getItem('selectedDetails')?.split('-'));
+            setIsLoadingData(false);
         };
         fetcher();
     }, []);
@@ -1279,24 +1285,28 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
                 {/* Buttons */}
-                <div className='flex flex-col gap-2 mt-2'>
-                    <div className='flex flex-row justify-center items-center gap-2'>
-                        <span
-                            onClick={() => setIsDraggableOpened(true)}
-                            className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Setting
-                        </span>
-                        <span
-                            onClick={onSubmit}
-                            className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Show
-                        </span>
+                {isLoadingData ? (
+                    <LoadingIcon />
+                ) : (
+                    <div className='flex flex-col gap-2 mt-2'>
+                        <div className='flex flex-row justify-center items-center gap-2'>
+                            <span
+                                onClick={() => setIsDraggableOpened(true)}
+                                className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Setting
+                            </span>
+                            <span
+                                onClick={onSubmit}
+                                className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Show
+                            </span>
+                        </div>
                     </div>
-                </div>
+                )}
 
 
             </div>

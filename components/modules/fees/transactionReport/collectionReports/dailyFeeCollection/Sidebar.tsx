@@ -38,6 +38,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
     const [dateTo, setDateTo] = useState(moment());
 
 
+    // Is loading data
+    const [isLoadingData, setIsLoadingData] = useState(false);
+
+
     // Schools
     const [schools, setSchools] = useState([{}]);
 
@@ -117,7 +121,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
     // Onsubmit
     const onSubmit = async (values:z.infer<typeof DailyFeeCollectionValidation>) => {
 
-        setIsShowClicked(true);
         setIsLoading(true);
 
         // Fetching filtered payments
@@ -145,6 +148,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             payments:res
         });
         setIsLoading(false);
+        setIsShowClicked(true);
 
     };
 
@@ -152,6 +156,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
+            setIsLoadingData(true);
             const schoolsRes = await fetchGlobalSchoolDetails();
             const wingsRes = await fetchWings();
             const classesRes = await fetchClasses();
@@ -167,6 +172,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             setSelectedFeeTypes(feeTypesRes);
             setHeads(headsRes);
             setSelectedHeads(headsRes);
+            setIsLoadingData(false)
         };
         fetcher();
     }, []);
@@ -830,21 +836,25 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
                     {/* Buttons */}
-                    <div className='flex flex-row justify-center items-center gap-2 mt-2'>
-                        <span
-                            className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Send Sms
-                        </span>
-                        <Button
-                            type='submit'
-                            className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Show
-                        </Button>
-                    </div>
+                    {isLoadingData ? (
+                        <LoadingIcon />
+                    ) : (
+                        <div className='flex flex-row justify-center items-center gap-2 mt-2'>
+                            <span
+                                className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Send Sms
+                            </span>
+                            <Button
+                                type='submit'
+                                className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Show
+                            </Button>
+                        </div>
+                    )}
 
 
                 </form>

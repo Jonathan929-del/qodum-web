@@ -26,6 +26,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     const [isDateWise, setIsDateWise] = useState(false);
 
 
+    // Is loading data
+    const [isLoadingData, setIsLoadingData] = useState(false);
+
+
     // Date states
     const [isCalendarOpened, setIsCalendarOpened] = useState('');
 
@@ -58,7 +62,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
     // Onsubmit
     const onSubmit = async () => {
-        setIsShowClicked(true);
         setIsLoading(true);
         // Class wise students strength filter
         const res = await classWiseStudentStrengthFilter({
@@ -75,6 +78,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             selectedSection
         });
         setIsLoading(false);
+        setIsShowClicked(true);
     };
 
 
@@ -103,10 +107,12 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
+            setIsLoadingData(true);
             const classesRes = await fetchClasses();
             const sectionsRes = await fetchSections();
             setClasses(classesRes);
             setSections(sectionsRes.map((s:any) => s.section_name));
+            setIsLoadingData(false);
         };
         fetcher();
     }, []);
@@ -296,22 +302,26 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
                 {/* Buttons */}
-                <div className='flex items-center justify-center gap-2 mt-2'>
-                    <span
-                        onClick={onSubmit}
-                        className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                    >
-                        Show
-                    </span>
-                    <span
-                        onClick={showStudentsClick}
-                        className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                    >
-                        Show Students
-                    </span>
-                </div>
+                {isLoadingData ? (
+                    <LoadingIcon />
+                ) : (
+                    <div className='flex items-center justify-center gap-2 mt-2'>
+                        <span
+                            onClick={onSubmit}
+                            className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Show
+                        </span>
+                        <span
+                            onClick={showStudentsClick}
+                            className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Show Students
+                        </span>
+                    </div>
+                )}
 
 
             </div>

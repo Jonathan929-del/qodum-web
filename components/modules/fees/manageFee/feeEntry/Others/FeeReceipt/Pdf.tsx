@@ -45,7 +45,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between', paddingTop:10, paddingBottom:4, marginHorizontal:4, fontSize:10, borderBottomWidth:1, borderBottomColor:'#ccc'}}>
                     <View style={{flex:1}}>
                         <Image
-                            style={{width:100, height:100}}
+                            style={{width:50, height:50}}
                             src={receiptPaymentData.logo}
                         />
                     </View>
