@@ -8,7 +8,7 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, headsSequence}:any) => {
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, headsSequence, isQrCodeGenerated}:any) => {
 
 
     // Is concession
@@ -49,6 +49,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 setInstallments={setInstallments}
                 setPaymentReceiptNo={setPaymentReceiptNo}
                 installments={installments}
+                isQrCodeGenerated={isQrCodeGenerated}
             />
         </div>
     );

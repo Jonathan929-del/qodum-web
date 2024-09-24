@@ -194,7 +194,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                                         .map((h:any) =>
                                             h.amounts
                                                 .filter((a:any) => selectedInstallments.includes(a.name))
-                                                // .filter((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0)
                                                 .map((a:any) => {
                                                     const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                                     const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;

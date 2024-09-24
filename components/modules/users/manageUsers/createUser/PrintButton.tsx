@@ -30,19 +30,24 @@ const PrintButton = ({users}:any) => {
         {
             columns:[
                 {title:'Users List', width:{wpx:400}, style:{font:{bold:true, sz:'11', color:{rgb:'ffffff'}}, fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
+                {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}},
                 {title:'', style:{fill:{patternType:'solid', fgColor:{rgb:'16365C'}}}}
             ],
             data:[]
         },
         {
             columns: [
-                {title:'User Name', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Email', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Name', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'User Name', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Email', width:{wpx:150}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
+                {title:'Name', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Mobile No.', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Active', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
                 {title:'Created Date', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}},
-                {title:'Modified Date', width:{wpx:75}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
+                {title:'Modified Date', width:{wpx:100}, style:{font:{bold:true}, fill:{patternType:'solid', fgColor:{rgb:'C9CACC'}}}}
             ],
             data:usersArray,
         }

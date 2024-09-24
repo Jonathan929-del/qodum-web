@@ -1,5 +1,5 @@
 // Imports
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
@@ -11,11 +11,15 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments, isQrCodeGenerated}:any) => {
 
 
     // Toast
     const {toast} = useToast();
+
+
+    // Save button
+    const [saveButton, setSaveButton] = useState<any>();
 
 
     // Next installment pay handler
@@ -223,7 +227,51 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             };
         };
         !totalPaidAmount && form.setValue('dues', form.getValues().total_paid_amount);
+        setSaveButton(
+            localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.student_name).includes(selectedStudent.name)
+                ?
+                    (
+                        <span
+                            onClick={() => toast({title:'Student has pending payment link', variant:'alert'})}
+                            className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'
+                        >
+                            Save
+                        </span>
+                    )
+                :
+                    (
+                        <Button
+                            type='submit'
+                            className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7]'
+                        >
+                            Save
+                        </Button>   
+                    )
+        )
     }, [totalPaidAmount]);
+    useEffect(() => {
+        setSaveButton(
+            localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.adm_no).includes(selectedStudent.admission_no)
+                ?
+                    (
+                        <span
+                            onClick={() => toast({title:'Student has pending payment link', variant:'alert'})}
+                            className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'
+                        >
+                            Save
+                        </span>
+                    )
+                :
+                    (
+                        <Button
+                            type='submit'
+                            className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7]'
+                        >
+                            Save
+                        </Button>   
+                    )
+        )
+    }, [isQrCodeGenerated])
 
 
     return (
@@ -313,21 +361,20 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                    onClick={() => {handleSubmit();setIsConcession(false)}}
+                                    onClick={() => {
+                                        if(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.student_name).includes(selectedStudent.name)){
+                                            toast({title:'Student has pending payment link', variant:'alert'});
+                                        }else{
+                                            handleSubmit();setIsConcession(false)
+                                        }
+                                    }}
                                 >
                                     Submit
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
-                ) : (
-                    <Button
-                        type='submit'
-                        className='px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7]'
-                    >
-                        Save
-                    </Button>
-                )}
+                ) : saveButton}
                 {/* Cancel */}
                 <span
                     onClick={cancel}

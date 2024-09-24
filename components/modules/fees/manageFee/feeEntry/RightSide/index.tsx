@@ -15,6 +15,10 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
 
     // Total paid amount
     const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
+
+
+    // Is QR code generated
+    const [isQrCodeGenerated, setIsQrCodeGenerated] = useState(false);
     
 
     return (
@@ -57,6 +61,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     swipedCardDetails={swipedCardDetails}
                     setSwipedCardDetails={setSwipedCardDetails}
                     totalPaidAmount={totalPaidAmount}
+                    setIsQrCodeGenerated={setIsQrCodeGenerated}
                 />
 
 
@@ -102,6 +107,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 setInstallments={setInstallments}
                 setPaymentReceiptNo={setPaymentReceiptNo}
                 headsSequence={headsSequence}
+                isQrCodeGenerated={isQrCodeGenerated}
             />
         </div>
     );

@@ -28,7 +28,6 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
 
     // Toast
     const {toast} = useToast();
-    console.log(updateUser);
 
 
     // Is loading
@@ -70,7 +69,6 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
             enable_otp:updateUser.id === '' ? false : updateUser.enable_otp
         }
     });
-    console.log(form.formState.errors);
 
 
     // Submit handler
@@ -78,8 +76,6 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
 
         // Setting is loading to true
         setIsLoading(true);
-        console.log(updateUser.schools);
-        console.log(selectedSchools);
 
 
         // Create user
@@ -115,7 +111,7 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
             toast({title:'Added Successfully!'});
         }
         // Modify user
-        else if(!deepEqual(comparisonObject, values || file || JSON.stringify(updateUser.schools) !== JSON.stringify(selectedSchools))){
+        else if(!deepEqual(comparisonObject, values) || file || JSON.stringify(comparisonObject.schools) !== JSON.stringify(selectedSchools)){
             if(comparisonObject.user_name !== values.user_name && users.map((r:any) => r.user_name).includes(values.user_name)){
                 toast({title:'User already exists', variant:'error'});
                 return;

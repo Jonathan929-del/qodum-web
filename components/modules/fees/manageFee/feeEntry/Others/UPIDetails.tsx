@@ -1,24 +1,33 @@
 // Imports
 import axios from 'axios';
+import QRCodeLib from 'qrcode';
+import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
-import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 
 
 
 
 
 // Main function
-const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount}:any) => {
+const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated}:any) => {
 
     // Payment url
-    const [paymentUrl, setPaymentUrl] = useState<any>('');
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    // Error
+    const [error, setError] = useState('');
 
 
     // Is phone error
     const [isPhoneError, setIsPhoneError] = useState(false);
-    console.log(selectedStudent);
+
+
+    // QR image
+    const [qrImage, setQRImage] = useState('');
 
 
     // Use effect
@@ -26,23 +35,58 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
         const fetcher = async () => {
             if(selectedStudent.name !== ''){
 
+                // Setting is loading to true
+                setIsLoading(true);
+
+
+                // Check if student has pending payment links
+                if(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.adm_no).includes(selectedStudent.admission_no)){
+                    const qrDataURL = await QRCodeLib.toDataURL(JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no).payment_link, {width:150});
+                    setQRImage(qrDataURL);
+                    setIsLoading(false);
+                    return;
+                };
+
+
+                // Payment link
                 if(Math.abs(selectedStudent.phone).toString().length !== 10){
                     setIsPhoneError(true);
                     return;
                 };
+                const txnId = Math.floor(Math.random() * 1000000000);
                 const params = {
-                    merchant_txn:Math.floor(Math.random() * 1000000000),
+                    merchant_txn:txnId,
                     amount:totalPaidAmount,
                     name:selectedStudent.name,
-                    phone:selectedStudent.phone,
+                    phone:JSON.stringify(selectedStudent.phone),
                     email:selectedStudent.email
                 };
                 const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/easy-pay`, params);
-                setPaymentUrl(paymentUrlRes.data);
+
+
+                // Setting QR code and validations
+                if(paymentUrlRes.data.status === 'error'){
+                    setError(paymentUrlRes?.data?.message);
+                }else{
+                    const qrDataURL = await QRCodeLib.toDataURL(paymentUrlRes.data, {width:150});
+                    setQRImage(qrDataURL);
+                    const existingPayments = localStorage.getItem('payments')
+                        ? JSON.parse(localStorage.getItem('payments'))
+                        : [];
+                    existingPayments.push({txnId, amount:totalPaidAmount, student_name:selectedStudent.name, payment_link:paymentUrlRes.data, adm_no:selectedStudent.admission_no});
+                    localStorage.setItem('payments', JSON.stringify(existingPayments));
+                    setIsQrCodeGenerated(true);
+                };
+
+
+                // Setting is loading to false
+                setIsLoading(false);
+
             }
         };
         fetcher();
-    }, []);
+    }, [totalPaidAmount]);
+
     return (
         <div className='flex items-center justify-center'>
             {/* Reference No. */}
@@ -60,12 +104,14 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 </div>
             </FormItem> */}
             {selectedStudent.name !== '' ?
-                isPhoneError ? (
-                    <p className='text-[11px] text-red-500'>Student phone number is not valid</p>
-                ) : paymentUrl === '' ? (
+            isPhoneError ? (
+                <p className='text-[11px] text-red-500'>Student phone number is not valid</p>
+            ) : isLoading ? (
                 <LoadingIcon />
+            ) : error ? (
+                <p className='text-[11px] text-red-500'>{error}</p>
             ) : (
-                <p>{paymentUrl}</p>
+                <Image alt='QR Code' src={qrImage} width={100} height={100}/>
             ) : (
                 <p className='text-[11px] text-red-500'>Please select a student</p>
             )}
