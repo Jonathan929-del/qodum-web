@@ -12,7 +12,7 @@ import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/for
 
 
 // Main function
-const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated}:any) => {
+const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated, form, selectedInstallments}:any) => {
 
     // Payment url
     const [isLoading, setIsLoading] = useState(false);
@@ -70,10 +70,28 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 }else{
                     const qrDataURL = await QRCodeLib.toDataURL(paymentUrlRes.data, {width:150});
                     setQRImage(qrDataURL);
+                    let advanceDuesNumber;
+                    if(form.getValues().dues > 0){
+                        advanceDuesNumber = - form.getValues().dues;
+                    }else if (form.getValues().advance_amt > 0){
+                        advanceDuesNumber = form.getValues().advance_amt;
+                    };
                     const existingPayments = localStorage.getItem('payments')
                         ? JSON.parse(localStorage.getItem('payments'))
                         : [];
-                    existingPayments.push({txnId, amount:totalPaidAmount, student_name:selectedStudent.name, payment_link:paymentUrlRes.data, adm_no:selectedStudent.admission_no});
+                    existingPayments.push({
+                        txnId,
+                        amount:totalPaidAmount,
+                        student_name:selectedStudent.name,
+                        payment_link:paymentUrlRes.data,
+                        adm_no:selectedStudent.admission_no,
+                        advance_dues_number:advanceDuesNumber,
+                        installments:selectedInstallments,
+                        received_date:form.getValues().received_date,
+                        remarks:form.getValues().remarks,
+                        fee_type:form.getValues().fee_type,
+                        bank_name:form.getValues().bank_name
+                    });
                     localStorage.setItem('payments', JSON.stringify(existingPayments));
                     setIsQrCodeGenerated(true);
                 };

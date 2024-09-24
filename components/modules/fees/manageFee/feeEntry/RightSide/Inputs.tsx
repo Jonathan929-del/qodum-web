@@ -310,7 +310,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 {form.getValues().pay_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
                 {form.getValues().pay_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
                 {form.getValues().pay_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
-                {form.getValues().pay_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated}/>}
+                {form.getValues().pay_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
                 {form.getValues().pay_mode === 'Swiped Card' && <SwipedCardDetaila swipedCardDetails={swipedCardDetails} setSwipedCardDetails={setSwipedCardDetails} />}
             </div>
         </div>

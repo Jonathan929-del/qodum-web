@@ -6,13 +6,14 @@ import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
-import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {createPayment, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchHeadsSequence} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {fetchAdmittedStudents, fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -135,81 +136,92 @@ const page = () => {
                     // Apply payment function
                     const applyPayment = (amount:any, feesArray:any) => {
                         let remainingAmount = amount;
-        
+
                         // Get the first amount's name from the first head
                         const firstName = feesArray[0].amounts[0].name;
-        
+                    
                         for (const fee of feesArray) {
-                            const amountsToPay = fee.amounts.filter(a => a.name === firstName); // Get all amounts with the same name
-        
+                            const amountsToPay = fee.amounts.filter(a => a.name === firstName && (!a.payable_amount || a.payable_amount > 0));
+                    
                             for (const a of amountsToPay) {
                                 const feeValue = Number(a.value);
                                 const name = a.name;
-        
+                    
+                                // Initialize fields if they don't exist
+                                if (typeof a.last_rec_amount === 'undefined') a.last_rec_amount = 0;
+                                if (typeof a.payable_amount === 'undefined') a.payable_amount = feeValue;
+                                if (typeof a.paid_amount === 'undefined') a.paid_amount = feeValue;
+                                // Keep conc_amount as is if it exists, else initialize to 0
+                                if (typeof a.conc_amount === 'undefined') a.conc_amount = 0;
+                    
                                 if (remainingAmount > 0) {
-                                    if (remainingAmount >= feeValue) {
-                                        // Pay the entire amount
+                                    if (remainingAmount >= feeValue - a.last_rec_amount) {
+                                        // Pay the entire remaining balance
+                                        remainingAmount -= (feeValue - a.last_rec_amount);
                                         a.last_rec_amount = feeValue;
                                         a.paid_amount = 0;
                                         a.payable_amount = 0;
-                                        a.conc_amount = 0;
-                                        remainingAmount -= feeValue;
                                     } else {
                                         // Pay partially
-                                        a.last_rec_amount = remainingAmount;
-                                        a.paid_amount = feeValue - remainingAmount;
-                                        a.payable_amount = feeValue - remainingAmount;
-                                        a.conc_amount = 0;
+                                        a.last_rec_amount += remainingAmount;
+                                        a.paid_amount = feeValue - a.last_rec_amount;
+                                        a.payable_amount = feeValue - a.last_rec_amount;
                                         remainingAmount = 0; // All paid
-                                        break; // Exit the loop to finish this name
+                                        break; // Exit the loop for this name
                                     }
                                 }
                             }
-        
+                    
                             // If remaining amount is 0, break out of the outer loop
                             if (remainingAmount === 0) break;
                         }
-        
-                        // Now check if there's any remaining amount to pay for other names
+                    
+                        // If there's remaining amount, move to the next names
                         if (remainingAmount > 0) {
                             for (const fee of feesArray) {
-                                const amountsToPay = fee.amounts.filter(a => a.name !== firstName); // Get amounts with different names
-        
+                                const amountsToPay = fee.amounts.filter(a => a.name !== firstName && (!a.payable_amount || a.payable_amount > 0));
+                    
                                 for (const a of amountsToPay) {
                                     const feeValue = Number(a.value);
-        
+                    
+                                    // Initialize fields if they don't exist
+                                    if (typeof a.last_rec_amount === 'undefined') a.last_rec_amount = 0;
+                                    if (typeof a.payable_amount === 'undefined') a.payable_amount = feeValue;
+                                    if (typeof a.paid_amount === 'undefined') a.paid_amount = feeValue;
+                                    // Keep conc_amount as is if it exists, else initialize to 0
+                                    if (typeof a.conc_amount === 'undefined') a.conc_amount = 0;
+                    
                                     if (remainingAmount > 0) {
-                                        if (remainingAmount >= feeValue) {
-                                            // Pay the entire amount
+                                        if (remainingAmount >= feeValue - a.last_rec_amount) {
+                                            // Pay the entire remaining balance
+                                            remainingAmount -= (feeValue - a.last_rec_amount);
                                             a.last_rec_amount = feeValue;
                                             a.paid_amount = 0;
                                             a.payable_amount = 0;
-                                            a.conc_amount = 0;
-                                            remainingAmount -= feeValue;
                                         } else {
                                             // Pay partially
-                                            a.last_rec_amount = remainingAmount;
-                                            a.paid_amount = feeValue - remainingAmount;
-                                            a.payable_amount = feeValue - remainingAmount;
-                                            a.conc_amount = 0;
+                                            a.last_rec_amount += remainingAmount;
+                                            a.paid_amount = feeValue - a.last_rec_amount;
+                                            a.payable_amount = feeValue - a.last_rec_amount;
                                             remainingAmount = 0; // All paid
-                                            break; // Exit the loop to finish this name
+                                            break; // Exit the loop for this name
                                         }
                                     }
                                 }
-        
+                    
                                 // If remaining amount is 0, break out of the outer loop
                                 if (remainingAmount === 0) break;
                             }
                         }
-        
+                    
                         return feesArray;
                     };
 
 
                     // Student's fess heads
                     const student = await fetchStudentByAdmNo({adm_no:p.adm_no});
-                    const studentHeads = student.affiliated_heads.heads;
+                    let studentHeads = student.affiliated_heads.heads;
+                    let studentHeadsCopy = JSON.parse(JSON.stringify(studentHeads));
 
 
                     // New student's fee heads
@@ -218,6 +230,100 @@ const page = () => {
 
                     // Updating student
                     await ModifyStudentAffiliatedHeads({id:student._id, affiliated_heads:{group_name:student.affiliated_heads.group_name, heads:updatedHeads}});
+
+
+                    // Saving payment
+                    const getPaidHeads = (originalHeads:any, updatedArray:any) => {
+                        const changedHeads = [];
+
+                        originalHeads.forEach((originalHead) => {
+                            const updatedHead = updatedHeads.find(head => head.head_name === originalHead.head_name);
+                    
+                            // If the head exists in the updated list
+                            if (updatedHead) {
+                                const originalAmounts = originalHead.amounts;
+                                const updatedAmounts = updatedHead.amounts;
+                    
+                                const changedAmounts = [];
+                    
+                                // Check for changes in amounts
+                                originalAmounts.forEach((originalAmount, index) => {
+                                    const updatedAmount = updatedAmounts[index];
+                    
+                                    // Create the output object based on the comparison
+                                    const outputAmount = {
+                                        value: originalAmount.value === updatedAmount.value ? originalAmount.value : updatedAmount.value,
+                                        name: originalAmount.name === updatedAmount.name ? originalAmount.name : updatedAmount.name,
+                                        conc_amount: updatedAmount.conc_amount, // always from updated
+                                        paid_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0), // always from updated
+                                        payable_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0), // always from updated
+                                        last_rec_amount: originalAmount.last_rec_amount || 0 // always from original
+                                    };
+                    
+                                    // Include the amount if it has changed in terms of conc_amount or last_rec_amount
+                                    if (
+                                        originalAmount.last_rec_amount !== updatedAmount.last_rec_amount ||
+                                        originalAmount.conc_amount !== updatedAmount.conc_amount
+                                    ) {
+                                        changedAmounts.push(outputAmount);
+                                    }
+                                });
+                    
+                                // Only add the updated head if there are changed amounts
+                                if (changedAmounts.length > 0) {
+                                    changedHeads.push({
+                                        ...updatedHead, // Keep the original structure
+                                        amounts: changedAmounts // Replace amounts with only changed amounts
+                                    });
+                                }
+                            }
+                        });
+                    
+                        return changedHeads;
+                    };
+                    const schools = await fetchGlobalSchoolDetails();
+                    const res = await createPayment({
+                        // Others
+                        student:student?.student?.name,
+                        receipt_no:p.txnId,
+                        ref_no:'0',
+                        installments:p.installments,
+                        received_date:p.received_date,
+                        remarks:p.remarks,
+                        paymode:'Payment Gateway',
+                        paymode_details:{},
+                        fee_type:p.fee_type,
+                        advance_dues_number:p.advance_dues_number,
+                        class_name:student?.student?.class,
+                        section:student?.student?.section,
+                        board:student?.student?.board,
+                        adm_no:student?.student?.adm_no,
+                        father_name:student?.parents?.father?.father_name,
+                        school_name:schools[0].school_name,
+                        school_address:schools[0].school_address,
+                        website:schools[0].website,
+                        school_no:schools[0].school_no,
+                        affiliation_no:schools[0].affiliation_no,
+                        logo:schools[0].logo,
+                        wing_name:selectedStudent.wing_name,
+                        entry_mode:'Online',
+                        is_new:student?.student?.is_new,
+                        is_active:student?.student?.is_active,
+                        student_status:student?.student?.student_status,
+                        bank_name:p.bank_name,
+                        fee_group:student?.affiliated_heads?.group_name,
+                        // Amounts
+                        actual_amount:totalNumberGenerator(getPaidHeads(studentHeadsCopy, updatedHeads).map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value))))),
+                        concession_amount:totalNumberGenerator(getPaidHeads(studentHeadsCopy, updatedHeads).map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.conc_amount))))),
+                        paid_amount:p.amount,
+            
+                        paid_heads:getPaidHeads(studentHeadsCopy, updatedHeads),
+                        concession_reason:''
+                    });
+                    if(res === 0){
+                        toast({title:'Please create a session first', variant:'alert'});
+                        return;
+                    };
 
 
                     // Removing the payment id from local storage
