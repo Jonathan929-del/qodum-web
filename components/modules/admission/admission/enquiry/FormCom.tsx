@@ -177,7 +177,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         if(updateEnquiry.id !== ''){
             setEnquiryDate(moment(updateEnquiry.enquiry_date));
@@ -303,69 +303,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                     />
 
 
-                    {/* Visitor Name */}
-                    <FormField
-                        control={form.control}
-                        name='visitor_name'
-                        render={({field}) => (
-                            <FormItem className='w-full h-7 flex flex-col items-start justify-center mt-[-8px] sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Name</FormLabel>
-                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Visitor Address */}
-                    <FormField
-                        control={form.control}
-                        name='visitor_address'
-                        render={({field}) => (
-                            <FormItem className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Address</FormLabel>
-                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Mobile No. */}
-                    <FormField
-                        control={form.control}
-                        name='mobile_no'
-                        render={({field}) => (
-                            <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Mobile No.</FormLabel>
-                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute left-0 top-[90%] text-xs' />
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
                     {/* Purpose Is Admission */}
                     <FormField
                         control={form.control}
@@ -468,29 +405,95 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                     </FormItem>
                                 )}
                             />
+
+
+                            {/* Contact Person */}
+                            <FormField
+                                control={form.control}
+                                name='contact_person'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Contact Person</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[100%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+
+                            {/* Visitor Name */}
+                            <FormField
+                                control={form.control}
+                                name='visitor_name'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Name</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+
+                            {/* Visitor Address */}
+                            <FormField
+                                control={form.control}
+                                name='visitor_address'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Visitor Address</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+
+                            {/* Mobile No. */}
+                            <FormField
+                                control={form.control}
+                                name='mobile_no'
+                                render={({field}) => (
+                                    <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
+                                        <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Mobile No.</FormLabel>
+                                        <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[90%] text-xs' />
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
                         </>
                     )}
 
 
-                    {/* Contact Person */}
-                    <FormField
-                        control={form.control}
-                        name='contact_person'
-                        render={({field}) => (
-                            <FormItem className='w-full h-7 flex flex-col items-start justify-center  sm:flex-row sm:items-center'>
-                                <FormLabel className='basis-auto pr-2 mb-[-10px] text-end text-xs text-[#726E71] sm:basis-[30%]'>Contact Person</FormLabel>
-                                <div className='relative w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute left-0 top-[100%] text-xs' />
-                                </div>
-                            </FormItem>
-                        )}
-                    />
 
 
                     {/* Reference Details */}

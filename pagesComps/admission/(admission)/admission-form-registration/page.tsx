@@ -334,8 +334,10 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const studentsRes = await fetchStudents();
             const enquiriesRes = await fetchAdmissionEnquiries();
+            const studentsRes = await fetchStudents();
+            setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
+            setStudents(studentsRes);
             const classesRes = await fetchClasses();
             const boardsRes = await fetchBoards();
             const streamsRes = await fetchStreams();
@@ -362,8 +364,6 @@ const page = () => {
             setAdmissionAccounts(admissionAccountRes);
             setBloodGroups(bloodGroupsRes);
             setCasts(castsRes);
-            setStudents(studentsRes);
-            setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setNationlaities(nationalitiesRes);
             setDesignations(designationsRes);
             setProfessions(professionsRes);
