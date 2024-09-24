@@ -52,8 +52,8 @@ import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
-import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import { setMomentDefaultYear } from '@/lib/utils';
+// import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+// import { setMomentDefaultYear } from '@/lib/utils';
 
 
 
@@ -227,12 +227,12 @@ const Home = () => {
     };
 
 
-    // Setting active year in moment
-    const fetcher = async () => {
-      const activeYearRes = await fetchActiveAcademicYear();
-      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
-    };
-    fetcher();
+    // // Setting active year in moment
+    // const fetcher = async () => {
+    //   const activeYearRes = await fetchActiveAcademicYear();
+    //   setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    // };
+    // fetcher();
 
 
     setOpenedPagesComponents(openedPagesArray);

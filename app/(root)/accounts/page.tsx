@@ -6,7 +6,7 @@ import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pagesComps/admission/page';
 // @ts-ignore
-import {setMomentDefaultYear} from '@/lib/utils';
+// import {setMomentDefaultYear} from '@/lib/utils';
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
 import ChangeAcademic from '@/pagesComps/accounts/(masterSettings)/change-academic/page';
@@ -20,7 +20,7 @@ import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-tran
 import DefineNarrationMaster from '@/pagesComps/accounts/(global masters)/define-narration-master/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
-import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+// import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -96,11 +96,11 @@ const Home = () => {
     };
 
     // Setting active year in moment
-    const fetcher = async () => {
-      const activeYearRes = await fetchActiveAcademicYear();
-      setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
-    };
-    fetcher();
+    // const fetcher = async () => {
+    //   const activeYearRes = await fetchActiveAcademicYear();
+    //   setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
+    // };
+    // fetcher();
 
     setOpenedPagesComponents(openedPagesArray)
 

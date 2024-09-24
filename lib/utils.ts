@@ -34,13 +34,25 @@ export const deepEqual:any = (x:any, y:any) => {
 
 // Moment default year
 export const setMomentDefaultYear = (sessionYear:any) => {
+  // Update locale for months if necessary (this line can be adjusted as needed)
   moment.updateLocale('en', {
     // @ts-ignore
-    months:moment().months()
+    months: moment().months()
   });
 
-  const currentTimestamp = moment().year(sessionYear).valueOf();
+  // Get the current month and date
+  const currentMonth = moment().month();  // 0-based index for months (Jan = 0, Dec = 11)
+  const currentDate = moment().date();    // 1-based index for the date (1 = 1st of the month)
+
+  // Create a new moment with the custom year and current month/date
+  const customTimestamp = moment()
+    .year(sessionYear)   // Set the custom year
+    .month(currentMonth) // Keep the current month
+    .date(currentDate)   // Keep the current day of the month
+    .valueOf();          // Get the timestamp
+
+  // Override moment's 'now' function to use the custom timestamp
   moment.now = function () {
-    return currentTimestamp;
+    return customTimestamp;
   };
 };
