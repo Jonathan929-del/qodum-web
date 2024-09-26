@@ -126,12 +126,12 @@ const page = () => {
 
             // Checking payments status
             pendingPayments.map(async (p:any) => {
-                const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/status`, {txnId:p.txnId});
-                if(paymentStatus.data.status === 'failure'){
+                const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {txnId:p.txnId});
+                if(paymentStatus.data.status === 'cancelled'){
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
                     localStorage.setItem('payments', JSON.stringify(newPendingPayments));   
                 };
-                if(paymentStatus.data.status === 'success'){
+                if(paymentStatus.data.status !== 'created' && paymentStatus.data.status !== 'cancelled'){
 
                     // Apply payment function
                     const applyPayment = (amount:any, feesArray:any) => {

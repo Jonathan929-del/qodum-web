@@ -22,10 +22,6 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
     const [error, setError] = useState('');
 
 
-    // Is phone error
-    const [isPhoneError, setIsPhoneError] = useState(false);
-
-
     // QR image
     const [qrImage, setQRImage] = useState('');
 
@@ -41,35 +37,30 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
 
                 // Check if student has pending payment links
                 if(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.adm_no).includes(selectedStudent.admission_no)){
-                    const qrDataURL = await QRCodeLib.toDataURL(JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no).payment_link, {width:150});
-                    setQRImage(qrDataURL);
+                    // const qrDataURL = await QRCodeLib.toDataURL(JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no).payment_link, {width:150});
+                    setQRImage(JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no).payment_url);
                     setIsLoading(false);
                     return;
                 };
 
 
                 // Payment link
-                if(Math.abs(selectedStudent.phone).toString().length !== 10){
-                    setIsPhoneError(true);
-                    return;
-                };
-                const txnId = Math.floor(Math.random() * 1000000000);
+                const unique_request_number = Math.floor(Math.random() * 1000000000);
                 const params = {
-                    merchant_txn:txnId,
+                    unique_request_number:JSON.stringify(unique_request_number),
                     amount:totalPaidAmount,
-                    name:selectedStudent.name,
-                    phone:JSON.stringify(selectedStudent.phone),
-                    email:selectedStudent.email
+                    customer_name:selectedStudent.name,
+                    customer_phone:JSON.stringify(selectedStudent.phone)
                 };
-                const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/easy-pay`, params);
+                const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect`, params);
 
 
                 // Setting QR code and validations
-                if(paymentUrlRes.data.status === 'error'){
+                if(!paymentUrlRes.data.success){
                     setError(paymentUrlRes?.data?.message);
                 }else{
-                    const qrDataURL = await QRCodeLib.toDataURL(paymentUrlRes.data, {width:150});
-                    setQRImage(qrDataURL);
+                    // const qrDataURL = await QRCodeLib.toDataURL(paymentUrlRes.data, {width:150});
+                    setQRImage(paymentUrlRes.data.payment_url);
                     let advanceDuesNumber;
                     if(form.getValues().dues > 0){
                         advanceDuesNumber = - form.getValues().dues;
@@ -80,10 +71,10 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                         ? JSON.parse(localStorage.getItem('payments'))
                         : [];
                     existingPayments.push({
-                        txnId,
+                        txnId:paymentUrlRes.data.order_id,
                         amount:totalPaidAmount,
                         student_name:selectedStudent.name,
-                        payment_link:paymentUrlRes.data,
+                        payment_url:paymentUrlRes.data.payment_url,
                         adm_no:selectedStudent.admission_no,
                         advance_dues_number:advanceDuesNumber,
                         installments:selectedInstallments,
@@ -122,9 +113,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 </div>
             </FormItem> */}
             {selectedStudent.name !== '' ?
-            isPhoneError ? (
-                <p className='text-[11px] text-red-500'>Student phone number is not valid</p>
-            ) : isLoading ? (
+                isLoading ? (
                 <LoadingIcon />
             ) : error ? (
                 <p className='text-[11px] text-red-500'>{error}</p>
