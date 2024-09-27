@@ -53,6 +53,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                     customer_name:selectedStudent.name,
                     customer_phone:JSON.stringify(selectedStudent.phone)
                 };
+                console.log(process.env.NEXT_PUBLIC_API_URL);
                 const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect`, params);
                 console.log(paymentUrlRes.data);
 
