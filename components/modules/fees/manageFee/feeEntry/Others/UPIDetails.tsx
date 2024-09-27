@@ -24,6 +24,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
 
     // QR image
     const [qrImage, setQRImage] = useState('');
+    console.log(qrImage);
 
 
     // Use effect
@@ -118,7 +119,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
             ) : error ? (
                 <p className='text-[11px] text-red-500'>{error}</p>
             ) : (
-                <Image alt='QR Code' src={qrImage} width={100} height={100}/>
+                <img alt='QR Code' src={qrImage} className='w-[100px] h-[100px]'/>
             ) : (
                 <p className='text-[11px] text-red-500'>Please select a student</p>
             )}
