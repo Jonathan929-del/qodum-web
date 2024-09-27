@@ -129,7 +129,7 @@ const page = () => {
                 const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {txnId:p.txnId});
                 if(paymentStatus.data.status === 'cancelled'){
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
-                    localStorage.setItem('payments', JSON.stringify(newPendingPayments));   
+                    localStorage.setItem('payments', JSON.stringify(newPendingPayments));
                 };
                 if(paymentStatus.data.status !== 'created' && paymentStatus.data.status !== 'cancelled'){
 
