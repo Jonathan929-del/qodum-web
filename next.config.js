@@ -10,6 +10,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'img.clerk.com',
                 port: ''
+            },
+            {
+                protocol: 'https',
+                hostname: 's3.ap-south-1.amazonaws.com',
+                port: ''
             }
         ],
         domains:['qodum.s3.amazonaws.com', 's3.ap-south-1.amazonaws.com']
