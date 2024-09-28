@@ -1,19 +1,15 @@
 // Imports
 import axios from 'axios';
-import QRCodeLib from 'qrcode';
-import Image from 'next/image';
 import {useEffect, useState} from 'react';
-import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 
 
 
 
 
 // Main function
-const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated, form, selectedInstallments}:any) => {
+const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, form, selectedInstallments}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -21,6 +17,11 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
 
     // Debounced total paid amount
     const [debouncedAmount, setDebouncedAmount] = useState(totalPaidAmount);
+
+
+    // Is cancel clicked
+    const [isCancelClicked, setIsCancelClicked] = useState(false);
+    console.log(isCancelClicked);
 
 
     // Payment url
@@ -52,6 +53,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
         setQRImage('');
         setCurrentOrder({});
         setIsQrCodeGenerated(false);
+        setIsCancelClicked(true);
 
         // Toast
         toast({title:'Payment canceled successfully!'});
@@ -129,6 +131,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
 
             // Setting is loading to false
             setIsLoading(false);
+            setIsCancelClicked(false);
 
             // Toast
             toast({title:'Payment created!'});
@@ -155,21 +158,12 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
     };
 
 
-    // Is payment applicable for update
-    const isPaymentApplicableForUpdate = () => {
-        return currentOrder.amount !== totalPaidAmount
-            || JSON.stringify(currentOrder.installments) !== JSON.stringify(selectedInstallments)
-            || currentOrder.remarks !== form.getValues().remarks
-            || currentOrder.fee_type !== form.getValues().fee_type
-            || currentOrder.bank_name !== form.getValues().bank_name
-    };
-
-
     // Use effect
     useEffect(() => {
-        createPayment();
+        if(!isCancelClicked){
+            createPayment();
+        };
         setCurrentOrder(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).length > 0 ? JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no) : {});
-        // Set a timeout to debounce the effect
         const handler = setTimeout(() => {
             setDebouncedAmount(totalPaidAmount);
         }, 1000);
@@ -178,28 +172,14 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
         };
     }, [totalPaidAmount]);
     useEffect(() => {
-        if (currentOrder.amount && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount)) {
-          updatePayment();
-        }
-      }, [debouncedAmount]);
+        if(Number(currentOrder.amount) > 0 && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount) && !isCancelClicked){
+            updatePayment();
+        };
+    }, [debouncedAmount]);
     
 
     return (
         <div className='flex items-center justify-center'>
-            {/* Reference No. */}
-            {/* <FormItem className='w-full'>
-                <div className='relative flex flex-col'>
-                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Reference No.</FormLabel>
-                    <FormControl>
-                        <Input
-                            value={upiDetails.neft_name}
-                            onChange={(e:any) => setUpiDetails({...upiDetails, reference_no:e.target.value})}
-                            className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
-                        />
-                    </FormControl>
-                    <FormMessage className='absolute w-[120%] top-[100%] left-0 text-[11px]'/>
-                </div>
-            </FormItem> */}
             {selectedStudent.name !== '' ?
                 isLoading ? (
                 <LoadingIcon />
@@ -208,13 +188,6 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
             ) : qrImage ? (
                 <div className='flex flex-col'>
                     <img alt='QR Code' src={qrImage} className='w-[100px] h-[100px]'/>
-                    {/* <span
-                        className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        onClick={() => isPaymentApplicableForUpdate() ? updatePayment() : toast({title:'No values changed to update', variant:'alert'})}
-                    >
-                        Update
-                    </span> */}
                     <span
                         className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
