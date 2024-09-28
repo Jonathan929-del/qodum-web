@@ -126,7 +126,7 @@ const page = () => {
 
             // Checking payments status
             pendingPayments.map(async (p:any) => {
-                const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {txnId:p.txnId});
+                const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId});
                 if(paymentStatus.data.status === 'cancelled'){
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
                     localStorage.setItem('payments', JSON.stringify(newPendingPayments));
