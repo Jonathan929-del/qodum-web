@@ -19,6 +19,10 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
     const {toast} = useToast();
 
 
+    // Debounced total paid amount
+    const [debouncedAmount, setDebouncedAmount] = useState(totalPaidAmount);
+
+
     // Payment url
     const [isLoading, setIsLoading] = useState(false);
 
@@ -61,7 +65,6 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
             // Setting is loading to true
             setIsLoading(true);
 
-
             // Check if student has pending payment links
             if(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).map((p:any) => p.adm_no).includes(selectedStudent.admission_no)){
                 setQRImage(JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no).payment_url);
@@ -69,7 +72,6 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 setIsLoading(false);
                 return;
             };
-
 
             // Payment link
             const unique_request_number = Math.floor(Math.random() * 1000000000);
@@ -80,7 +82,6 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 customer_phone:JSON.stringify(selectedStudent.phone)
             };
             const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect`, params);
-
 
             // Setting QR code and validations
             if(!paymentUrlRes.data.success){
@@ -111,7 +112,7 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                     : [];
                 existingPayments.push({
                     txnId:paymentUrlRes.data.order_id,
-                    amount:totalPaidAmount,
+                    amount:Number(totalPaidAmount),
                     student_name:selectedStudent.name,
                     payment_url:paymentUrlRes.data.payment_url,
                     adm_no:selectedStudent.admission_no,
@@ -126,10 +127,8 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
                 setIsQrCodeGenerated(true);
             };
 
-
             // Setting is loading to false
             setIsLoading(false);
-
 
             // Toast
             toast({title:'Payment created!'});
@@ -168,12 +167,22 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
 
     // Use effect
     useEffect(() => {
-        // const fetcher = async () => {
-        //     createPayment();
-        // };
-        // fetcher();
+        createPayment();
         setCurrentOrder(localStorage.getItem('payments') && JSON.parse(localStorage.getItem('payments')).length > 0 ? JSON.parse(localStorage.getItem('payments')).find((p:any) => p.adm_no === selectedStudent.admission_no) : {});
+        // Set a timeout to debounce the effect
+        const handler = setTimeout(() => {
+            setDebouncedAmount(totalPaidAmount);
+        }, 1000);
+        return () => {
+            clearTimeout(handler);
+        };
     }, [totalPaidAmount]);
+    useEffect(() => {
+        if (currentOrder.amount && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount)) {
+          updatePayment();
+        }
+      }, [debouncedAmount]);
+    
 
     return (
         <div className='flex items-center justify-center'>
@@ -199,13 +208,13 @@ const UPIDetails = ({upiDetails, setUpiDetails, selectedStudent, totalPaidAmount
             ) : qrImage ? (
                 <div className='flex flex-col'>
                     <img alt='QR Code' src={qrImage} className='w-[100px] h-[100px]'/>
-                    <span
+                    {/* <span
                         className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                         onClick={() => isPaymentApplicableForUpdate() ? updatePayment() : toast({title:'No values changed to update', variant:'alert'})}
                     >
                         Update
-                    </span>
+                    </span> */}
                     <span
                         className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
