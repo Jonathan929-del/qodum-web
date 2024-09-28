@@ -131,7 +131,7 @@ const page = () => {
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
                     localStorage.setItem('payments', JSON.stringify(newPendingPayments));
                 };
-                if(paymentStatus.data.status !== 'created' && paymentStatus.data.status !== 'cancelled'){
+                if(paymentStatus.data.status === 'completed'){
 
                     // Apply payment function
                     const applyPayment = (amount:any, feesArray:any) => {
