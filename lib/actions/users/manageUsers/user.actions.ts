@@ -825,32 +825,32 @@ export const modifyUserPermissions = async ({id, permissions}:ModifyUserPermissi
 
 
 // Login user
-export const loginUser = async ({user_name, password}) => {
-    try {
+// export const loginUser = async ({user_name, password}) => {
+//     try {
 
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Validations
-        const user = await User.findOne({user_name});
-        if(!user){
-            return 'User not found';
-        };
-        const match = bcrypt.compareSync(password, user.password);
-        if(!match){
-            return 'Wrong password';
-        };
+//         // Db connection
+//         connectToDb('accounts');
 
 
-        // loging the teacher
-        const token = signToken(searchedTeacher);
-        res.status(200).json({
-            ...searchedTeacher._doc,
-            token
-        });
+//         // Validations
+//         const user = await User.findOne({user_name});
+//         if(!user){
+//             return 'User not found';
+//         };
+//         const match = bcrypt.compareSync(password, user.password);
+//         if(!match){
+//             return 'Wrong password';
+//         };
 
-    }catch(err){
-        throw new Error(`Error with user login: ${err}`);  
-    };
-};
+
+//         // loging the teacher
+//         const token = signToken(searchedTeacher);
+//         res.status(200).json({
+//             ...searchedTeacher._doc,
+//             token
+//         });
+
+//     }catch(err){
+//         throw new Error(`Error with user login: ${err}`);  
+//     };
+// };
