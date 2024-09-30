@@ -1,7 +1,7 @@
 // Imports
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import {SignOutButton, useUser} from '@clerk/nextjs';
+// import {SignOutButton, useUser} from '@clerk/nextjs';
 
 
 
@@ -10,14 +10,12 @@ import {SignOutButton, useUser} from '@clerk/nextjs';
 // Main function
 const HomeSidebar = () => {
 
-
     // Fetching user
-    const {user} = useUser();
-
+    // const {user} = useUser();
 
     return (
         <div className='h-full flex flex-col justify-between py-20 mx-4'>
-            {
+            {/* {
                 user && (
                     <>
                         <div className='flex flex-col items-center'>
@@ -38,7 +36,7 @@ const HomeSidebar = () => {
                         </Button>
                     </>
                 )
-            }
+            } */}
         </div>
     );
 };

@@ -20,7 +20,8 @@ const UserSchema = new mongoose.Schema(
         profile_picture:{type:String},
         schools:{type:Array},
         is_active:{type:Boolean},
-        enable_otp:{type:Boolean}
+        enable_otp:{type:Boolean},
+        permissions:{type:Array}
     },
     {
         timestamps:true

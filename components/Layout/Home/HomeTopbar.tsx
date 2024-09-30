@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import {Menu} from 'lucide-react';
 import Clock from 'react-live-clock';
-import {UserButton} from '@clerk/nextjs';
+// import {UserButton} from '@clerk/nextjs';
 
 
 
@@ -25,7 +25,7 @@ const HomeTopbar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
                 <Clock format={'HH:mm:ss'} ticking={true} className='text-4xl'/>
             </div>
             <div className='hidden md:block'>
-                <UserButton />
+                {/* <UserButton /> */}
             </div>
             <div
                 className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform md:hidden'

@@ -12,6 +12,7 @@ import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
 import ChangeAcademic from '@/components/modules/shared/ChangeAcademic/index';
 import CreateUser from '@/pagesComps/users/manageUsers/create-user/page';
+import UserPermission from '@/pagesComps/users/manageUsers/user-permission/page';
 
 
 
@@ -56,6 +57,9 @@ const Home = () => {
     };
     if(openedPages.includes('Create User')){
       openedPagesArray.push({name:'Create User', component:<CreateUser />});
+    };
+    if(openedPages.includes('User Permission')){
+      openedPagesArray.push({name:'User Permission', component:<UserPermission />});
     };
 
 

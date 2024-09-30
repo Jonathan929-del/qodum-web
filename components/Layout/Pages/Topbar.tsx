@@ -1,6 +1,6 @@
 // Imports
 import {Input} from '../../ui/input';
-import {UserButton} from '@clerk/nextjs';
+// import {UserButton} from '@clerk/nextjs';
 import {useEffect, useState} from 'react';
 import DropdownMenuCom from '../../utils/DropdownMenuCom';
 import {Select, SelectContent, SelectItem, SelectTrigger} from '@/components/ui/select';
@@ -160,13 +160,13 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                         />
                     </div>
                 </div>
-                <UserButton
+                {/* <UserButton
                     appearance={{
                         elements:{
                             avatarBox:'rounded-[8px] w-[35px] h-[35px]'
                         }
                     }}
-                />
+                /> */}
             </div>
 
 

@@ -404,7 +404,7 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {staff.length < 1 ? (
-                                                        <p>No document types</p>
+                                                        <p>No users</p>
                                                     ) : !staff[0]?.staff_registration?.first_name ? (
                                                         <LoadingIcon />
                                                     ) : staff.map((item:any) => (

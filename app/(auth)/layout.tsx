@@ -2,8 +2,8 @@
 import '../globals.css';
 import {Inter} from 'next/font/google';
 import {redirect} from 'next/navigation';
-import {ClerkProvider} from '@clerk/nextjs';
-import {currentUser} from '@clerk/nextjs/server';
+// import {ClerkProvider} from '@clerk/nextjs';
+// import {currentUser} from '@clerk/nextjs/server';
 
 
 
@@ -24,17 +24,17 @@ const inter = Inter({subsets:['latin']});
 export default async function RootLayout({children}:{children:React.ReactNode}) {
 
   // User check
-  const user = await currentUser();
-  if(user) redirect('/');
+  // const user = await currentUser();
+  // if(user) redirect('/');
 
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-          <ClerkProvider>
+          {/* <ClerkProvider> */}
             <div className='w-full flex items-center justify-center min-h-screen'>
               {children}
             </div>
-          </ClerkProvider>
+          {/* </ClerkProvider> */}
       </body>
     </html>
   );

@@ -8,11 +8,6 @@ const nextConfig = {
         remotePatterns:[
             {
                 protocol: 'https',
-                hostname: 'img.clerk.com',
-                port: ''
-            },
-            {
-                protocol: 'https',
                 hostname: 's3.ap-south-1.amazonaws.com',
                 port: ''
             }

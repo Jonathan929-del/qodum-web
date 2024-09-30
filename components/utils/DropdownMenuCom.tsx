@@ -1,11 +1,11 @@
 // Imports
 import Link from 'next/link';
 import Image from 'next/image';
+import {useContext} from 'react';
 import {Menu} from 'lucide-react';
 import modules from '@/constants/modulesHome';
+import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu';
-import { useContext } from 'react';
-import { GlobalStateContext } from '@/context/GlobalStateContext';
 
 
 
