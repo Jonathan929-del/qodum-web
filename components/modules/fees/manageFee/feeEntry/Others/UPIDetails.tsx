@@ -21,7 +21,6 @@ const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, for
 
     // Is cancel clicked
     const [isCancelClicked, setIsCancelClicked] = useState(false);
-    console.log(isCancelClicked);
 
 
     // Payment url

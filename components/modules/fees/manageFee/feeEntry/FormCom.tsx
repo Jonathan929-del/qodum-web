@@ -18,7 +18,7 @@ import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/a
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence, paymentsReceiptNo, setPaymentReceiptNo, allPayments}: any) => {
 
     // Toast
     const {toast} = useToast();
@@ -46,14 +46,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
     // Concession reason
     const [concessionReason, setConcessionReason] = useState('');
-
-
-    // ALl payments
-    const [allPayments, setAllPayments] = useState<any>([]);
-
-
-    // Payment receipt mo.
-    const [paymentsReceiptNo, setPaymentReceiptNo] = useState('');
 
 
     // Show button click
@@ -442,38 +434,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         // Loading end
         setIsLoading(false);
     };
-
-
-    // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-            const res = await fetchPayments();
-            setAllPayments(res);
-
-            // Receipt no creation
-            let substringValue;
-            if(res.length < 9){
-                substringValue = 0;
-            }else if(res.length >= 9){
-                substringValue = 1;
-            }else if(res.length >= 99){
-                substringValue = 2;
-            }else if(res.length >= 999){
-                substringValue = 3;
-            }else if(res.length >= 9999){
-                substringValue = 4;
-            }else if(res.length >= 99999){
-                substringValue = 5;
-            }else if(res.length >= 999999){
-                substringValue = 6;
-            }
-            const prefix = localStorage.getItem('receipt_prefix') ? localStorage.getItem('receipt_prefix') : '';
-            const leadZero = localStorage.getItem('receipt_lead_zero') ? localStorage.getItem('receipt_lead_zero') : '';
-            const suffix = localStorage.getItem('receipt_suffix') ? localStorage.getItem('receipt_suffix') : '';
-            setPaymentReceiptNo(`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`);
-        };
-        fetcher();
-    }, []);
 
     return (
         <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'>

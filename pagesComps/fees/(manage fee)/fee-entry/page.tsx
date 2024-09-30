@@ -6,7 +6,7 @@ import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
-import {createPayment, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchHeadsSequence} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
@@ -104,6 +104,14 @@ const page = () => {
     const [receiptPaymentData, setReceiptPaymentData] = useState({});
 
 
+    // ALl payments
+    const [allPayments, setAllPayments] = useState<any>([]);
+
+
+    // Payment receipt mo.
+    const [paymentsReceiptNo, setPaymentReceiptNo] = useState('');
+
+
     // Total number generator
     const totalNumberGenerator = (array:any) => {
         let sum = 0;
@@ -118,6 +126,31 @@ const page = () => {
 
             // Set is loading to true
             setIsLoading(true);
+
+
+            // Creating receipt no
+            const res = await fetchPayments();
+            setAllPayments(res);
+            let substringValue;
+            if(res.length < 9){
+                substringValue = 0;
+            }else if(res.length >= 9){
+                substringValue = 1;
+            }else if(res.length >= 99){
+                substringValue = 2;
+            }else if(res.length >= 999){
+                substringValue = 3;
+            }else if(res.length >= 9999){
+                substringValue = 4;
+            }else if(res.length >= 99999){
+                substringValue = 5;
+            }else if(res.length >= 999999){
+                substringValue = 6;
+            };
+            const prefix = localStorage.getItem('receipt_prefix') ? localStorage.getItem('receipt_prefix') : '';
+            const leadZero = localStorage.getItem('receipt_lead_zero') ? localStorage.getItem('receipt_lead_zero') : '';
+            const suffix = localStorage.getItem('receipt_suffix') ? localStorage.getItem('receipt_suffix') : '';
+            setPaymentReceiptNo(`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`);
 
 
             // Pending pending payments
@@ -282,10 +315,10 @@ const page = () => {
                         return changedHeads;
                     };
                     const schools = await fetchGlobalSchoolDetails();
-                    const res = await createPayment({
+                    const paymentRes = await createPayment({
                         // Others
                         student:student?.student?.name,
-                        receipt_no:p.txnId,
+                        receipt_no:`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`,
                         ref_no:p.txnId,
                         installments:p.installments,
                         received_date:p.received_date,
@@ -320,7 +353,7 @@ const page = () => {
                         paid_heads:getPaidHeads(studentHeadsCopy, updatedHeads),
                         concession_reason:''
                     });
-                    if(res === 0){
+                    if(paymentRes === 0){
                         toast({title:'Please create a session first', variant:'alert'});
                         return;
                     };
@@ -420,6 +453,9 @@ const page = () => {
                     setReceiptPaymentData={setReceiptPaymentData}
                     setIsLoadingHeads={setIsLoadingHeads}
                     headsSequence={headsSequence}
+                    paymentsReceiptNo={paymentsReceiptNo}
+                    setPaymentReceiptNo={setPaymentReceiptNo}
+                    allPayments={allPayments}
                 />
             )}
         </div>

@@ -26,26 +26,11 @@ const Buttons = ({setIsViewOpened, feeEntrySettings, updateFeeEntrySetting, setU
         });
         // Reseting form
         form.reset({
-            single_prefix:'',
-            single_lead_zero:'',
-            single_receipt_no:'',
-            single_suffix:'',
-            school_prefix:'',
-            school_lead_zero:'',
-            school_receipt_no:'',
-            school_suffix:'',
-            fee_school_prefix:'',
-            fee_transport_prefix:'',
-            fee_tution_prefix:'',
-            fee_school_lead_zero:'',
-            fee_transport_lead_zero:'',
-            fee_tution_lead_zero:'',
-            fee_school_receipt_no:'',
-            fee_transport_receipt_no:'',
-            fee_tution_receipt_no:'',
-            fee_school_suffix:'',
-            fee_transport_suffix:'',
-            fee_tution_suffix:''
+            prefix:'',
+            lead_zero:'',
+            receipt_no_start:'',
+            suffix:'',
+            generate_type:''
         });
     };
 

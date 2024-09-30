@@ -78,7 +78,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Ref No.:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}></Text>
+                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.ref_no}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Class:</Text>

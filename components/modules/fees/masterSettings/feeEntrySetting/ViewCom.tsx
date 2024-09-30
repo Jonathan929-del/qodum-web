@@ -86,7 +86,7 @@ const ViewCom = ({setIsViewOpened, feeEntrySettings, setUpdateFeeEntrySetting}:a
                                 <p className='w-full min-w-[800px] flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
                                     No fee entry settings
                                 </p>
-                            ) : !feeEntrySettings[0]?.suffix ? (
+                            ) : !feeEntrySettings[0]?.prefix ? (
                                     <LoadingIcon />
                                 ) : feeEntrySettings.map((d:any) => (
                                     <CommandItem
