@@ -19,13 +19,12 @@ const initialState = {
 // User local storage check
 const localStorageCheck = async () => {
     try {
-
         // User token check
-        const token = await localStorage.getItem('token');
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
         if(token){
             const decodedToken = JSON.parse(decode(token.split('.')[1]));
             if(decodedToken.exp > Date.now()){
-                await localStorage.removeItem('token');
+                typeof window !== 'undefined' ? localStorage.removeItem('token') : '';
             }else{
                 initialState.user = decodedToken;
             }
@@ -84,7 +83,7 @@ const AuthProvider = props => {
     // login
     const login = async userData => {
         try {
-            await localStorage.setItem('token', userData.token);
+            typeof window !== 'undefined' ? localStorage.setItem('token', userData.token) : '';
             dispatch({
                 type:'LOGIN',
                 payload:userData
@@ -98,7 +97,7 @@ const AuthProvider = props => {
     // Logout
     const logout = async () => {
         try {
-            await localStorage.removeItem('token');
+            typeof window !== 'undefined' ? localStorage.removeItem('token') : '';
             dispatch({
                 type:'LOGOUT'
             });
