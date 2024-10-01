@@ -1,10 +1,12 @@
 // Imports
+import Image from 'next/image';
 import {Input} from '../../ui/input';
-// import {UserButton} from '@clerk/nextjs';
-import {useEffect, useState} from 'react';
+import {AuthContext} from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 import DropdownMenuCom from '../../utils/DropdownMenuCom';
 import {Select, SelectContent, SelectItem, SelectTrigger} from '@/components/ui/select';
-import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft, Check, Shrink} from 'lucide-react';
+import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft, Check, Shrink, LogOut} from 'lucide-react';
+import { redirect } from 'next/navigation';
   
 
 
@@ -12,6 +14,9 @@ import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft, Check
 
 // Main function
 const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear, academicYears, activeAcademicYearName}:any) => {
+
+    // User
+    const {user, logout} = useContext(AuthContext);
 
 
     // Full screen page handler
@@ -27,7 +32,7 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         function onFullscreenChange() {
           setIsFullscreen(Boolean(document.fullscreenElement));
@@ -35,7 +40,9 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
         document.addEventListener('fullscreenchange', onFullscreenChange);
         return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
     }, []);
-
+    useEffect(() => {
+        if(!user) redirect('/sign-in');
+    }, [user, logout]);
 
     return (
         <nav className='flex flex-col items-center justify-between bg-white w-full border-b-[0.5px] border-[#ccc] px-4 py-2 lg:flex-row'>
@@ -159,14 +166,27 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                             className='text-hash-color'
                         />
                     </div>
+                    <span
+                        onClick={logout}
+                        className='hidden justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform lg:flex'
+                    >
+                        <LogOut className='text-hash-color' size={20}/>
+                    </span>
                 </div>
-                {/* <UserButton
-                    appearance={{
-                        elements:{
-                            avatarBox:'rounded-[8px] w-[35px] h-[35px]'
-                        }
-                    }}
-                /> */}
+                <div className='hidden flex-col items-center gap-1 md:flex'>
+                    {user?.profile_picture ? (
+                        <img
+                            src={user?.profile_picture}
+                            alt='User profile picture'
+                            className='h-[50px] w-[50px] size-fit rounded-[4px]'
+                        />
+                    ) : (
+                        <div className='flex items-center justify-center h-[50px] w-[50px] text-[11px] text-hash-color rounded-[4px] border-[0.5px] border-[#ccc]'>
+                            No photo
+                        </div>
+                    )}
+                    <p className='text-xs text-hash-color'>{user?.name}</p>
+                </div>
             </div>
 
 

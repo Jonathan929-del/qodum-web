@@ -1,7 +1,7 @@
 // Imports
-import Image from 'next/image';
-import {Button} from '@/components/ui/button';
-// import {SignOutButton, useUser} from '@clerk/nextjs';
+import {useContext} from 'react';
+import {AuthContext} from '@/context/AuthContext';
+import { LogOut } from 'lucide-react';
 
 
 
@@ -11,32 +11,29 @@ import {Button} from '@/components/ui/button';
 const HomeSidebar = () => {
 
     // Fetching user
-    // const {user} = useUser();
+    const {user, logout} = useContext(AuthContext);
 
     return (
         <div className='h-full flex flex-col justify-between py-20 mx-4'>
-            {/* {
-                user && (
-                    <>
-                        <div className='flex flex-col items-center'>
-                            <Image
-                                width={125}
-                                height={125}
-                                alt="User's Image"
-                                // @ts-ignore
-                                src={user?.imageUrl}
-                                className='rounded-full'
-                            />
-                            <p className='font-semibold mt-2 text-sm'>{`${user?.firstName} ${user?.lastName}`}</p>
-                            <p className='text-sm text-[#5392C6]'>Administrator</p>
-                            <p className='text-xs text-hash-color'>{user?.emailAddresses[0].emailAddress}</p>
-                        </div>
-                        <Button className='text-white group opacity-100 bg-gradient-to-r from-[#3e67b1] to-[#4da7db] w-[100%] mt-4 rounded-[8px] transition-opacity hover:opacity-90'>
-                            <SignOutButton />
-                        </Button>
-                    </>
-                )
-            } */}
+            <div className='hidden flex-col items-center gap-2 md:flex'>
+                {user?.profile_picture ? (
+                    <img
+                        src={user?.profile_picture}
+                        alt='User profile picture'
+                        className='h-[50px] w-[50px] size-fit rounded-full'
+                    />
+                ) : (
+                    <div className='flex items-center justify-center h-[50px] w-[50px] text-[11px] text-hash-color rounded-full border-[0.5px] border-[#ccc]'>
+                        No photo
+                    </div>
+                )}
+                <span
+                    onClick={logout}
+                    className='hidden justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform lg:flex'
+                >
+                    <LogOut className='text-hash-color' size={20}/>
+                </span>
+            </div>
         </div>
     );
 };

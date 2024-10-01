@@ -1,6 +1,8 @@
 'use client';
 // Imports
 import moment from 'moment';
+import {redirect} from 'next/navigation';
+import {AuthContext} from '@/context/AuthContext';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 
@@ -62,6 +64,10 @@ import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice
 // Main function
 const Home = () => {
 
+  // Login user check
+  const {user} = useContext(AuthContext);
+
+
   // Setting moment local to english
   moment.locale('en-gb');
 
@@ -76,6 +82,8 @@ const Home = () => {
 
   // Use effect
   useEffect(() => {
+
+    if(!user) redirect('/sign-in');
 
     let openedPagesArray = [];
 

@@ -2,8 +2,8 @@
 import '../globals.css';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
-// import {ClerkProvider} from '@clerk/nextjs';
 import Layout from '@/components/Layout/index';
+import {AuthProvider} from '@/context/AuthContext';
 import {GlobalStateProvider} from '@/context/GlobalStateContext';
 
 
@@ -26,11 +26,11 @@ export default function RootLayout({children}:{children:React.ReactNode}) {
   return (
     <html lang='en'>
       <body className={`${inter.className}`}>
-          {/* <ClerkProvider> */}
+          <AuthProvider>
             <GlobalStateProvider>
               <Layout children={children} />
             </GlobalStateProvider>
-          {/* </ClerkProvider> */}
+          </AuthProvider>
       </body>
     </html>
   );

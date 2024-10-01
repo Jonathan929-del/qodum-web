@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import {connectToDb} from '@/lib/mongoose';
 import User from '@/lib/models/users/manageUsers/User.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { signToken } from '@/lib/utils';
 
 
 
@@ -677,7 +678,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
+        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
         newUser.save();
 
 
@@ -756,7 +757,7 @@ export const modifyUser = async ({id, name, user_name, password, is_reset_passwo
 
         
         // Update user
-        await User.findByIdAndUpdate(id, {name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
+        await User.findByIdAndUpdate(id, {name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
 
 
         // Return
@@ -825,32 +826,35 @@ export const modifyUserPermissions = async ({id, permissions}:ModifyUserPermissi
 
 
 // Login user
-// export const loginUser = async ({user_name, password}) => {
-//     try {
+export const loginUser = async ({user_name, password}) => {
+    try {
 
-//         // Db connection
-//         connectToDb('accounts');
-
-
-//         // Validations
-//         const user = await User.findOne({user_name});
-//         if(!user){
-//             return 'User not found';
-//         };
-//         const match = bcrypt.compareSync(password, user.password);
-//         if(!match){
-//             return 'Wrong password';
-//         };
+        // Db connection
+        connectToDb('accounts');
 
 
-//         // loging the teacher
-//         const token = signToken(searchedTeacher);
-//         res.status(200).json({
-//             ...searchedTeacher._doc,
-//             token
-//         });
+        // Validations
+        const user = await User.findOne({user_name});
+        if(!user){
+            return {success:false, message:'User not found'};
+        };
+        const match = bcrypt.compareSync(password, user.password);
+        if(!match){
+            return {success:false, message:'Wrong password'};
+        };
 
-//     }catch(err){
-//         throw new Error(`Error with user login: ${err}`);  
-//     };
-// };
+
+        // loging the teacher
+        const token = signToken(user);
+        return({
+            success:true,
+            user:{
+                ...user._doc,
+                token
+            }
+        });
+
+    }catch(err){
+        throw new Error(`Error with user login: ${err}`);  
+    };
+};

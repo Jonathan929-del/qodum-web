@@ -22,7 +22,6 @@ const ConfigBar = () => {
 
         // Use Effect
         useEffect(() => {
-            // const page = pathname === '/' ? 'Home' : `${pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)} ${pathname.split('/')[2] ? '/' : ''} ${pathname.split('/')[2] ? pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ') : ''}`;
             const page = pathname === '/' ? 'Home' : `${pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}`;
             switch (pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)) {
                 case 'Time-table':

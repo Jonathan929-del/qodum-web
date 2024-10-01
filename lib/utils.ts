@@ -1,5 +1,6 @@
 // Imports
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 import {twMerge} from 'tailwind-merge';
 import {type ClassValue, clsx} from 'clsx';
 
@@ -55,4 +56,33 @@ export const setMomentDefaultYear = (sessionYear:any) => {
   moment.now = function () {
     return customTimestamp;
   };
+};
+
+
+
+
+
+// Sign jwt token
+export const signToken = (user:any) => {
+  return jwt.sign({
+      _id:user._id,
+      session:user.session,
+      name:user.name,
+      user_name:user.user_name,
+      password:user.password,
+      is_reset_password:user.is_reset_password,
+      designation:user.designation,
+      email:user.email,
+      employee:user.employee,
+      mobile:user.mobile,
+      profile_picture:user.profile_picture,
+      schools:user.schools,
+      is_active:user.is_active,
+      enable_otp:user.enable_otp,
+      permissions:user.permissions
+  },
+  process.env.JWT_SECRET,
+  {
+      expiresIn:'30d'
+  });
 };
