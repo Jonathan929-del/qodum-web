@@ -850,6 +850,7 @@ export const loginUser = async ({user_name, password}) => {
             success:true,
             user:{
                 ...user._doc,
+                _id:JSON.stringify(user._doc._id),
                 token
             }
         });
