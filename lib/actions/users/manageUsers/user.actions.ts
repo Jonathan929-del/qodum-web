@@ -838,10 +838,10 @@ export const loginUser = async ({user_name, password}) => {
         if(!user){
             return {success:false, message:'User not found'};
         };
-        const match = bcrypt.compareSync(password, user.password);
-        if(!match){
-            return {success:false, message:'Wrong password'};
-        };
+        // const match = bcrypt.compareSync(password, user.password);
+        // if(!match){
+        //     return {success:false, message:'Wrong password'};
+        // };
 
 
         // loging the teacher
