@@ -845,15 +845,16 @@ export const loginUser = async ({user_name, password}) => {
 
 
         // loging the teacher
-        const token = signToken(user);
-        return({
-            success:true,
-            user:{
-                ...user._doc,
-                _id:JSON.stringify(user._doc._id),
-                token
-            }
-        });
+        // const token = signToken(user);
+        // return({
+        //     success:true,
+        //     user:{
+        //         ...user._doc,
+        //         _id:JSON.stringify(user._doc._id),
+        //         token
+        //     }
+        // });
+        return user;
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  
