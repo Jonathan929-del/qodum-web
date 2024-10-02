@@ -845,14 +845,15 @@ export const loginUser = async ({user_name, password}:any) => {
 
 
         // loging user
-        const token = signToken(user);
-        return(JSON.parse(JSON.stringify({
-            success:true,
-            user:JSON.parse(JSON.stringify({
-                ...user._doc,
-                token
-            }))
-        })));
+        // const token = signToken(user);
+        // return(JSON.parse(JSON.stringify({
+        //     success:true,
+        //     user:JSON.parse(JSON.stringify({
+        //         ...user._doc,
+        //         token
+        //     }))
+        // })));
+        return JSON.parse(JSON.stringify(user));
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  
