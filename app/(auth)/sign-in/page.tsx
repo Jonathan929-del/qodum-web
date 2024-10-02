@@ -72,8 +72,7 @@ const SignIn = () => {
             setIsLoading(false);
             return;
         };
-        console.log(res);
-        // login(res.user);
+        login(res.user);
         toast({title:'Logged in'});
 
 
