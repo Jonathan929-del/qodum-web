@@ -1,7 +1,7 @@
 'use server';
 // Imports
-import bcrypt from 'bcryptjs';
-import {signToken} from '@/lib/utils';
+// import bcrypt from 'bcryptjs';
+// import {signToken} from '@/lib/utils';
 import {connectToDb} from '@/lib/mongoose';
 import User from '@/lib/models/users/manageUsers/User.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
@@ -678,7 +678,8 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
+        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
+        // const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
         newUser.save();
 
 
@@ -757,7 +758,8 @@ export const modifyUser = async ({id, name, user_name, password, is_reset_passwo
 
         
         // Update user
-        await User.findByIdAndUpdate(id, {name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
+        // await User.findByIdAndUpdate(id, {name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
+        await User.findByIdAndUpdate(id, {name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
 
 
         // Return
@@ -826,7 +828,7 @@ export const modifyUserPermissions = async ({id, permissions}:ModifyUserPermissi
 
 
 // Login user
-export const loginUser = async ({user_name, password}) => {
+export const loginUser = async ({user_name, password}:any) => {
     try {
 
         // Db connection
