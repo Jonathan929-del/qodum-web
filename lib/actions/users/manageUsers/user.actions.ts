@@ -845,7 +845,7 @@ export const loginUser = async ({user_name, password}:any) => {
 
 
         // loging user
-        // const token = signToken(user);
+        const token = signToken(user);
         // return(JSON.parse(JSON.stringify({
         //     success:true,
         //     user:JSON.parse(JSON.stringify({
