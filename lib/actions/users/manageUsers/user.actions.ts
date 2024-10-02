@@ -848,10 +848,10 @@ export const loginUser = async ({user_name, password}:any) => {
         const token = signToken(user);
         return(JSON.parse(JSON.stringify({
             success:true,
-            user:{
+            user:JSON.parse(JSON.stringify({
                 ...user._doc,
                 token
-            }
+            }))
         })));
 
     }catch(err){
