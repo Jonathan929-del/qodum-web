@@ -856,7 +856,7 @@ export const loginUser = async ({user_name, password}:any) => {
         //         token
         //     }
         // });
-        return user;
+        return JSON.parse(JSON.stringify(user));
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  

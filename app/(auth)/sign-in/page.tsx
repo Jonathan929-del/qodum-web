@@ -65,10 +65,8 @@ const SignIn = () => {
 
 
         // User login
-        const academicYearsRes = await fetchAcademicYears();
-        console.log(academicYearsRes);
-        // const res = await loginUser({user_name:username, password});
-        // console.log(res);
+        const res = await loginUser({user_name:username, password});
+        console.log(res);
         // if(!res.success){
         //     toast({title:res.message, variant:'error'});
         //     setIsLoading(false);
