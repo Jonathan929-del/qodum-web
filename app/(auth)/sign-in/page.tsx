@@ -10,6 +10,7 @@ import {useContext, useEffect, useState} from 'react';
 import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {loginUser} from '@/lib/actions/users/manageUsers/user.actions';
+import { fetchAcademicYears } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -64,8 +65,10 @@ const SignIn = () => {
 
 
         // User login
-        const res = await loginUser({user_name:username, password});
-        console.log(res);
+        const academicYearsRes = await fetchAcademicYears();
+        console.log(academicYearsRes);
+        // const res = await loginUser({user_name:username, password});
+        // console.log(res);
         // if(!res.success){
         //     toast({title:res.message, variant:'error'});
         //     setIsLoading(false);
