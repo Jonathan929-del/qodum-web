@@ -64,7 +64,7 @@ export const setMomentDefaultYear = (sessionYear:any) => {
 
 // Sign jwt token
 export const signToken = (user:any) => {
-  return jwt.sign({
+  return JSON.parse(JSON.stringify(jwt.sign({
       _id:user._id,
       session:user.session,
       name:user.name,
@@ -84,5 +84,5 @@ export const signToken = (user:any) => {
   process.env.JWT_SECRET,
   {
       expiresIn:'30d'
-  });
+  })));
 };
