@@ -1,10 +1,10 @@
 'use server';
 // Imports
 import bcrypt from 'bcryptjs';
+import {signToken} from '@/lib/utils';
 import {connectToDb} from '@/lib/mongoose';
 import User from '@/lib/models/users/manageUsers/User.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
-import { signToken } from '@/lib/utils';
 
 
 

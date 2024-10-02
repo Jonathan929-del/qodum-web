@@ -64,13 +64,13 @@ const SignIn = () => {
 
 
         // User login
-        const res = await loginUser({user_name:username, password});
-        if(!res.success){
-            toast({title:res.message, variant:'error'});
-            setIsLoading(false);
-            return;
-        };
-        console.log(res);
+        // const res = await loginUser({user_name:username, password});
+        // if(!res.success){
+        //     toast({title:res.message, variant:'error'});
+        //     setIsLoading(false);
+        //     return;
+        // };
+        // console.log(res);
         // login(res.user);
         toast({title:'Logged in'});
 
