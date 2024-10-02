@@ -1,7 +1,7 @@
 'use server';
 // Imports
-// import bcrypt from 'bcryptjs';
-// import {signToken} from '@/lib/utils';
+import bcrypt from 'bcryptjs';
+import {signToken} from '@/lib/utils';
 import {connectToDb} from '@/lib/mongoose';
 import User from '@/lib/models/users/manageUsers/User.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
@@ -678,8 +678,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
-        // const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
+        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
         newUser.save();
 
 
@@ -758,8 +757,7 @@ export const modifyUser = async ({id, name, user_name, password, is_reset_passwo
 
         
         // Update user
-        // await User.findByIdAndUpdate(id, {name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
-        await User.findByIdAndUpdate(id, {name, user_name, password, is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
+        await User.findByIdAndUpdate(id, {name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp}, {new:true});
 
 
         // Return
@@ -840,23 +838,21 @@ export const loginUser = async ({user_name, password}:any) => {
         if(!user){
             return {success:false, message:'User not found'};
         };
-        // const match = bcrypt.compareSync(password, user.password);
-        // if(!match){
-        //     return {success:false, message:'Wrong password'};
-        // };
+        const match = bcrypt.compareSync(password, user.password);
+        if(!match){
+            return {success:false, message:'Wrong password'};
+        };
 
 
-        // loging the teacher
-        // const token = signToken(user);
-        // return({
-        //     success:true,
-        //     user:{
-        //         ...user._doc,
-        //         _id:JSON.stringify(user._doc._id),
-        //         token
-        //     }
-        // });
-        return JSON.parse(JSON.stringify(user));
+        // loging user
+        const token = signToken(user);
+        return(JSON.parse(JSON.stringify({
+            success:true,
+            user:{
+                ...user._doc,
+                token
+            }
+        })));
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  
