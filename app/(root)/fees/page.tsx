@@ -197,11 +197,11 @@ const Home = () => {
     if(openedPages.includes('Modify Fees Receipt')){
       openedPagesArray.push({name:'Modify Fees Receipt', component:<ModifyFeesReceipt />});
     };
-    if(openedPages.includes('Cancel Fees Receipt')){
-      openedPagesArray.push({name:'Cancel Fees Receipt', component:<CancelFeesReceipt />});
+    if(openedPages.includes('Cancel Fee Receipt')){
+      openedPagesArray.push({name:'Cancel Fee Receipt', component:<CancelFeesReceipt />});
     };
-    if(openedPages.includes('Delete Fees Receipt')){
-      openedPagesArray.push({name:'Delete Fees Receipt', component:<DeleteFeesReceipt />});
+    if(openedPages.includes('Delete Fee Receipt')){
+      openedPagesArray.push({name:'Delete Fee Receipt', component:<DeleteFeesReceipt />});
     };
     if(openedPages.includes('Travel Agency Master')){
       openedPagesArray.push({name:'Travel Agency Master', component:<TravelAgencyMaster />});
@@ -227,8 +227,8 @@ const Home = () => {
     if(openedPages.includes('Define Route Stop')){
       openedPagesArray.push({name:'Define Route Stop', component:<DefineRouteStop />});
     };
-    if(openedPages.includes('Assign Transport to Students')){
-      openedPagesArray.push({name:'Assign Transport to Students', component:<AssignTransportToStudents />});
+    if(openedPages.includes('Assign Transport To Students')){
+      openedPagesArray.push({name:'Assign Transport To Students', component:<AssignTransportToStudents />});
     };
     if(openedPages.includes('Daily Fee Collection')){
       openedPagesArray.push({name:'Daily Fee Collection', component:<DailyFeeCollection />});

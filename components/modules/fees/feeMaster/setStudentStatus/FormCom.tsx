@@ -3,7 +3,7 @@ import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import StudentsList from './StudentList';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -14,6 +14,7 @@ import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {SetStudentStatusValidation} from '@/lib/validations/fees/feeMaster/setStudentStatus.validation';
 import {fetchStudentsByClassAndSectionTransport, modifyAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -21,6 +22,19 @@ import {fetchStudentsByClassAndSectionTransport, modifyAdmittedStudent} from '@/
 
 // Main function
 function FormCom() {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -99,7 +113,10 @@ function FormCom() {
             fetcher();
         };
     }, [form.watch('class_name'), form.watch('section_name')]);
-
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Set Student Status');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[95%] max-h-[90%] max-w-[1500px] flex flex-col items-center overflow-y-scroll custom-sidebar-scrollbar'>
@@ -122,6 +139,7 @@ function FormCom() {
                                         <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
                                             <FormControl>
                                                 <Select
+                                                    disabled={!permissions.read_only}
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
@@ -161,6 +179,7 @@ function FormCom() {
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
+                                                    disabled={!permissions.read_only}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Select Section' className='text-[11px]' />
@@ -185,13 +204,15 @@ function FormCom() {
                             </div>
                         </div>
                         {/* Button */}
-                        <Button
-                            type='submit'
-                            className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[5px] border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Save
-                        </Button>
+                        {permissions.add && (
+                            <Button
+                                type='submit'
+                                className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[5px] border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Save
+                            </Button>
+                        )}
                     </div>
 
                     

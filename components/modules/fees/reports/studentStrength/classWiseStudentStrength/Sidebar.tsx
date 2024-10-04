@@ -1,6 +1,6 @@
 // Improts
 import {format} from 'date-fns';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Label} from '@/components/ui/label';
 import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
@@ -13,6 +13,7 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {classWiseStudentStrengthFilter} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -20,6 +21,19 @@ import {classWiseStudentStrengthFilter} from '@/lib/actions/admission/admission/
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfData}) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Is date wise
@@ -123,7 +137,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setSections(classSections);
         };
     }, [selectedClass]);
-
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Class Wise Student Strength');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className={`absolute top-0 left-0 h-full pb-10 w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -302,7 +319,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
 
                 {/* Buttons */}
-                {isLoadingData ? (
+                {permissions.add && isLoadingData ? (
                     <LoadingIcon />
                 ) : (
                     <div className='flex items-center justify-center gap-2 mt-2'>

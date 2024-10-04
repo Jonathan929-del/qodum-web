@@ -12,7 +12,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main Function
-const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason}:any) => {
+const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason, permissions}:any) => {
 
 
     // Toast
@@ -205,7 +205,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
 
 
                                     {
-                                        concessionReason === '' ? (
+                                        concessionReason === '' ? permissions.delete && (
                                             <span
                                                 onClick={() => toast({title:'Please enter reason', variant:'error'})}
                                                 className='flex items-center justify-center px-[2px] w-full h-6 text-[11px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF] cursor-pointer

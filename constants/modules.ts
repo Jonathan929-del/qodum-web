@@ -197,7 +197,6 @@ const modules = [
     // Fees
     {
         moduleName:'Fees',
-        // icon:CircleDollarSignIcon,
         icon:FessImage,
         pages:[
             // Global Masters
@@ -357,10 +356,10 @@ const modules = [
                         subPageName:'Modify Fees Receipt'
                     },
                     {
-                        subPageName:'cancel Fees Receipt'
+                        subPageName:'Cancel Fee Receipt'
                     },
                     {
-                        subPageName:'Delete Fees Receipt'
+                        subPageName:'Delete Fee Receipt'
                     },
                     {
                         subPageName:'Manual Fees Modification'
@@ -427,7 +426,7 @@ const modules = [
                         subPageName:'Define Route Stop'
                     },
                     {
-                        subPageName:'Assign Transport to Students'
+                        subPageName:'Assign Transport To Students'
                     },
                     {
                         subPageName:'Assign Self Transport to Students'

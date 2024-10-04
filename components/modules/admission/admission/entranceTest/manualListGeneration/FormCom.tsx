@@ -4,7 +4,7 @@ import moment from 'moment';
 import {useForm} from 'react-hook-form';
 import StudentsList from './StudentList';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -16,6 +16,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {ManualListGenerationValidation} from '@/lib/validations/admission/admission/entranceTest/manualListGeneration.validation';
 import {applyStudentForAdmission, fetchClassStudents, fetchClassesStudents} from '@/lib/actions/admission/admission/student.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -23,6 +24,20 @@ import {applyStudentForAdmission, fetchClassStudents, fetchClassesStudents} from
 
 // Main function
 function FormCom() {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Toast
     const {toast} = useToast();
@@ -136,6 +151,10 @@ function FormCom() {
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Manual List Generation');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%] overflow-y-scroll custom-sidebar-scrollbar'>
@@ -245,13 +264,15 @@ function FormCom() {
 
 
                         {/* Get Student */}
-                        <span
-                            className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                            onClick={() => getStudents(form.getValues().class_name)}
-                        >
-                            Get Student
-                        </span>
+                        {permissions.read_only && (
+                            <span
+                                className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                onClick={() => getStudents(form.getValues().class_name)}
+                            >
+                                Get Student
+                            </span>
+                        )}
                     </div>
 
 
@@ -339,13 +360,15 @@ function FormCom() {
 
 
                         {/* Buttons */}
-                        <Button
-                            type='submit'
-                            className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        >
-                            Update
-                        </Button>
+                        {permissions.modify && (
+                            <Button
+                                type='submit'
+                                className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            >
+                                Update
+                            </Button>
+                        )}
                     </div>
 
 

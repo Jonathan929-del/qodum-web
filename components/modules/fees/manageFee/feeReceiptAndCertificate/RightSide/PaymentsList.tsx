@@ -10,8 +10,7 @@ import moment from 'moment';
 // Main Function
 const PaymentsList = ({payments, totalNumberGenerator, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
-
-
+    // Print
     const printReceiptHandler = async (p:any) => {
         setReceiptPaymentData(p);
         setIsReceiptOpened(true);

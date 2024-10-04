@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
@@ -18,6 +18,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {AdmissionSettingValidation} from '@/lib/validations/admission/masterSettings/admission.validation';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -25,6 +26,19 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 
 // Main function
 function FormCom() {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -101,6 +115,10 @@ function FormCom() {
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('should_be')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Admission Setting');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (
@@ -554,13 +572,15 @@ function FormCom() {
 
                     
                     {/* Buttons */}
-                    <Button
-                        type='submit'
-                        className='px-8 h-8 mb-4 mt-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
-                    >
-                        Save
-                    </Button>
+                    {permissions.add && (
+                        <Button
+                            type='submit'
+                            className='px-8 h-8 mb-4 mt-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
+                        >
+                            Save
+                        </Button>
+                    )}
                 </form>
             </Form>
         </div>

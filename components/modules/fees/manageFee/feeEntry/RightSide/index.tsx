@@ -1,9 +1,10 @@
 // Imports
 import Inputs from './Inputs';
 import Search from './Search';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import EntryMode from './EntryMode';
 import HeadsArea from './HeadsArea';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -12,6 +13,19 @@ import HeadsArea from './HeadsArea';
 // Main function
 const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo, headsSequence}:any) => {
 
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Total paid amount
     const [totalPaidAmount, setTotalPaidAmount] = useState<any>();
@@ -19,22 +33,31 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
 
     // Is QR code generated
     const [isQrCodeGenerated, setIsQrCodeGenerated] = useState(false);
-    
+
+
+    // Use effect
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Define SMS Template');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[70%] h-full min-w-[400px] flex flex-col justify-between gap-1 px-2'>
             <div className='flex flex-col gap-1'>
+
                 {/* Search */}
-                <Search
-                    classes={classes}
-                    sections={sections}
-                    students={students}
-                    setSelectedStudent={setSelectedStudent}
-                    setIsViewOpened={setIsViewOpened}
-                    setSelectedInstallments={setSelectedInstallments}
-                    setInstallments={setInstallments}
-                    headsSequence={headsSequence}
-                />
+                {permissions.read_only && (
+                    <Search
+                        classes={classes}
+                        sections={sections}
+                        students={students}
+                        setSelectedStudent={setSelectedStudent}
+                        setIsViewOpened={setIsViewOpened}
+                        setSelectedInstallments={setSelectedInstallments}
+                        setInstallments={setInstallments}
+                        headsSequence={headsSequence}
+                    />
+                )}
 
 
 
@@ -108,6 +131,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 setPaymentReceiptNo={setPaymentReceiptNo}
                 headsSequence={headsSequence}
                 isQrCodeGenerated={isQrCodeGenerated}
+                permissions={permissions}
             />
         </div>
     );

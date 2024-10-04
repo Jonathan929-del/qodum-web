@@ -9,6 +9,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {BusIdSettingValidation} from '@/lib/validations/fees/masterSettings/busIdSetting.validation';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -17,6 +19,19 @@ import {BusIdSettingValidation} from '@/lib/validations/fees/masterSettings/busI
 
 // Main function
 const FormCom = () => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -57,6 +72,12 @@ const FormCom = () => {
         }
     };
 
+
+    // Use effect
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Bus ID Setting');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[90%] sm:w-[60%]  max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
@@ -186,13 +207,15 @@ const FormCom = () => {
 
 
                     {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 mt-4 mb-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Save
-                    </Button>
+                    {permissions.add && (
+                        <Button
+                            type='submit'
+                            className='px-[8px] h-8 mt-4 mb-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Save
+                        </Button>
+                    )}
 
                 </form>
             </Form>

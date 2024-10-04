@@ -3,7 +3,7 @@ import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import StudentsList from './StudentList';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -15,6 +15,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {StudentClassPromotionValidation} from '@/lib/validations/admission/masterSettings/studentClassPromotion.validation';
 import {fetchStudentsByClassAndSectionTransport, modifyAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -22,6 +23,19 @@ import {fetchStudentsByClassAndSectionTransport, modifyAdmittedStudent} from '@/
 
 // Main function
 function FormCom() {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -121,6 +135,10 @@ function FormCom() {
             fetcher();
         };
     }, [form.watch('class_name'), form.watch('section_name')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Student Class Promotion');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (
@@ -148,6 +166,7 @@ function FormCom() {
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
+                                                    disabled={!permissions.read_only}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -185,6 +204,7 @@ function FormCom() {
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
+                                                    disabled={!permissions.read_only}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -225,6 +245,7 @@ function FormCom() {
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
+                                                    disabled={!permissions.read_only}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -262,6 +283,7 @@ function FormCom() {
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field?.onChange}
+                                                    disabled={!permissions.read_only}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -289,13 +311,15 @@ function FormCom() {
 
 
                     {/* Button */}
-                    <Button
-                        type='submit'
-                        className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[5px] border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                    >
-                        Update
-                    </Button>
+                    {permissions.modify && (
+                        <Button
+                            type='submit'
+                            className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[5px] border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Update
+                        </Button>
+                    )}
 
                     
                     <div className='flex items-center justify-center w-full mt-4'>

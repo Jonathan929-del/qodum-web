@@ -4,10 +4,11 @@ import * as z from 'zod';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
+import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
@@ -22,6 +23,20 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, A
 
 // Main function
 const FormCom = ({groups}: any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Toast
     const {toast} = useToast();
@@ -49,7 +64,6 @@ const FormCom = ({groups}: any) => {
 
     // Selected heads
     const [selectedHeads, setSelectedHeads] = useState<any>([]);
-    console.log(selectedHeads);
 
 
     // Selected account ledger
@@ -142,6 +156,10 @@ const FormCom = ({groups}: any) => {
         };
         fetcher();
     }, []);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Assign Fee Group to Fee Head');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[100%] max-w-[1500px] h-full overflow-y-scroll overflow-x-hidden custom-sidebar-scrollbar flex flex-col items-center'>
@@ -165,6 +183,7 @@ const FormCom = ({groups}: any) => {
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
                                         <Select
+                                            disabled={!permissions.read_only}
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
@@ -209,7 +228,7 @@ const FormCom = ({groups}: any) => {
 
 
                     {/* Save button */}
-                    {oldHeads.length > selectedHeads.length ? (
+                    {permissions.add && oldHeads.length > selectedHeads.length ? (
                         <AlertDialog>
                             <AlertDialogTrigger
                                 className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer

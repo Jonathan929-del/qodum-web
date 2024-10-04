@@ -4,7 +4,7 @@ import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import StudentsList from './StudentList';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -13,6 +13,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignTransportToStudentsValidation} from '@/lib/validations/fees/transport/assignTransportToStudents.validation';
 import {ModifyStudentsTransportDetails, fetchStudentsByClassAndSectionTransport} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -20,6 +21,19 @@ import {ModifyStudentsTransportDetails, fetchStudentsByClassAndSectionTransport}
 
 // Main function
 const FormCom = ({classes, sections, students, setStudents}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -103,7 +117,10 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
             fetcher();
         };
     }, [form.watch('class_name'), form.watch('section_name')]);
-
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Assign Transport To Students');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[95%] max-w-[1100px] flex flex-col items-center rounded-[8px] sm:w-[95%]'>
@@ -131,6 +148,7 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
                                                 {...field}
                                                 value={field.value}
                                                 onValueChange={field.onChange}
+                                                disabled={!permissions.read_only}
                                             >
                                                 <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='Select Class' className='text-xs' />
@@ -167,6 +185,7 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
                                                 {...field}
                                                 value={field.value}
                                                 onValueChange={field.onChange}
+                                                disabled={!permissions.read_only}
                                             >
                                                 <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='Select Section' className='text-xs' />
@@ -191,13 +210,15 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
                         </div>
 
 
-                        <Button
-                            type='submit'
-                            className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                        >
-                            Update
-                        </Button>
+                        {permissions.modify && (
+                            <Button
+                                type='submit'
+                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                            >
+                                Update
+                            </Button>
+                        )}
                     </div>
 
 

@@ -12,7 +12,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main Function
-const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason}:any) => {
+const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason, permissions}:any) => {
 
 
     // Toast
@@ -223,7 +223,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                                             >
                                                 Cancel Receipt
                                             </span>
-                                        ) : (
+                                        ) : permissions.add (
                                             <AlertDialog>
                                                 <AlertDialogTrigger className='w-full'>
                                                     <span

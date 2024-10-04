@@ -2,7 +2,8 @@
 // Imports
 import ViewCom from './ViewCom';
 import FormCom from './FormCom';
-import {useEffect, useState} from 'react';
+import {AuthContext} from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -47,7 +48,6 @@ const page = () => {
         };
         academicYearsFetcher();
     }, [isViewOpened, updateAcademicYear]);
-
 
     return (
         <div className='relative h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>

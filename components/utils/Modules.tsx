@@ -1,10 +1,11 @@
 // Imports
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '../ui/button';
 import {ArrowRight, Home} from 'lucide-react';
 import modules from '@/constants/modulesHome';
+import {AuthContext} from '@/context/AuthContext';
 
 
 
@@ -12,10 +13,24 @@ import modules from '@/constants/modulesHome';
 
 // Main functions
 const Modules = () => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permitted modules
+    const [permittedModules, setPermittedModules] = useState(['']);
+
+
+    // Use effect
+    useEffect(() => {
+        setPermittedModules(user?.permissions?.filter((p:any) => p?.permissions?.filter((pp:any) => pp?.add || pp?.modify || pp?.delete || pp?.print || pp?.read_only).length > 0)?.map((p:any) => p?.name));
+    }, [user]);
+
     return (
         <section className='grid grid-cols-1 grid-rows-3 rounded-[9px] mt-8 px-4 pb-2 gap-2 gap-y-8 lg:grid-cols-3 sm:grid-cols-2'>
             {
-                modules.map((module:any) => (
+                modules.filter((module:any) => permittedModules.includes(module.title)).map((module:any) => (
                     <div className='relative flex flex-col rounded-[4px] p-4 bg-[#FAFAFA]' key={module.title}>
 
                         <div className='absolute top-[-30px] left-[38%] flex items-center justify-center w-[85px] h-[85px] rounded-full border-4 border-[#ecedf0] bg-white'>

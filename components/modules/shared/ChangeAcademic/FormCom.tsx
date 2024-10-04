@@ -11,6 +11,9 @@ import {Form, FormControl, FormField, FormItem, FormLabel} from '@/components/ui
 import {changeAcademic} from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
 import {ChangeAcademicValidation} from '@/lib/validations/accounts/masterSettings/changeAcademic';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { useContext, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -18,6 +21,23 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 // Main function
 const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYear, activeFinancialYear}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
+
+    // Pathname
+    const pathname = usePathname();
 
 
     // Toast
@@ -57,6 +77,19 @@ const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYea
     };
 
 
+    // Use effect
+    useEffect(() => {
+        const formatTitle = (input:any) => {
+            return input
+                .split(/[-_]/)
+                .map((word:any) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        };
+        const currentModule = formatTitle(pathname.split('/')[1]);
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === currentModule)?.permissions?.find((pp:any) => pp.sub_menu === 'Change Academic');
+        setPermissions(grantedPermissions);
+    }, [user]);
+
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Change Academic</h2>
@@ -80,6 +113,7 @@ const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYea
                                         {...field}
                                         value={field.value}
                                         onValueChange={field.onChange}
+                                        disabled={!permissions.read_only}
                                     >
                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
                                             <SelectValue placeholder={activeAcademicYear || <LoadingIcon />}/>
@@ -113,6 +147,7 @@ const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYea
                                         {...field}
                                         value={field.value}
                                         onValueChange={field.onChange}
+                                        disabled={!permissions.read_only}
                                     >
                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
                                             <SelectValue placeholder={activeFinancialYear || <LoadingIcon />}/>
@@ -146,6 +181,7 @@ const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYea
                                         {...field}
                                         value={field.value}
                                         onValueChange={field.onChange}
+                                        disabled={!permissions.read_only}
                                     >
                                         <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none sm:basis-[70%]'>
                                             <SelectValue placeholder={schoolsNames[0] || <LoadingIcon />}/>
@@ -169,13 +205,15 @@ const FormCom = ({academicYears, financialYears, schoolsNames, activeAcademicYea
 
 
                     {/* Buttons */}
-                    <Button
-                        type='submit'
-                        className='px-8 h-8 mb-4 mt-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
-                    >
-                        Change
-                    </Button>
+                    {permissions.modify && (
+                        <Button
+                            type='submit'
+                            className='px-8 h-8 mb-4 mt-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px]'
+                        >
+                            Change
+                        </Button>
+                    )}
                 </form>
             </Form>
         </div>

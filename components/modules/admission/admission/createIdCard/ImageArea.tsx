@@ -9,7 +9,7 @@ import {useToast} from '@/components/ui/use-toast';
 
 
 // Main function
-const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) => {
+const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened, permissions}:any) => {
     
 
     // Toast
@@ -83,24 +83,26 @@ const ImageArea = ({selectedStudent, setSelectedStudent, setIsCardOpened}:any) =
                     <p className='text-[11px] text-[#f00]'>{colorValidation}</p>
                 </div>
                 <div className='h-full flex flex-row items-center gap-2'>
-                    <span
-                        onClick={() => {
-                            if(selectedStudent.name === ''){
-                                toast({title:'Please selected student', variant:'alert'});
-                            }else{
-                                if(selectedStudent.color === ''){
-                                    setColorValidation('Please enter theme color');
+                    {permissions.add && (
+                        <span
+                            onClick={() => {
+                                if(selectedStudent.name === ''){
+                                    toast({title:'Please selected student', variant:'alert'});
                                 }else{
-                                    localStorage.setItem('id_card_theme_color', selectedStudent.color);
-                                    setIsCardOpened(true);
+                                    if(selectedStudent.color === ''){
+                                        setColorValidation('Please enter theme color');
+                                    }else{
+                                        localStorage.setItem('id_card_theme_color', selectedStudent.color);
+                                        setIsCardOpened(true);
+                                    }
                                 }
-                            }
-                        }}
-                        className='flex items-center justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                    >
-                        Create ID Card
-                    </span>
+                            }}
+                            className='flex items-center justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        >
+                            Create ID Card
+                        </span>
+                    )}
                     <span
                         className='flex items-center justify-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'

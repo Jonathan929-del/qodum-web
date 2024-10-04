@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
 import {Input} from '@/components/ui/input';
@@ -14,6 +14,7 @@ import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSettings/feeEntrySettingOthers.validation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -22,6 +23,20 @@ import {FeeEntrySettingOthersValidation} from '@/lib/validations/fees/masterSett
 
 // Main function
 const FormCom = () => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Toast
     const {toast} = useToast();
@@ -1355,7 +1370,7 @@ const FormCom = () => {
     );
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         if(form.getValues().fee_entry_mode_used === 'School' || form.getValues().fee_entry_mode_used === 'Bank'){
             setPaymodes(['Cash', 'Cheque', 'DD', 'NEFT', 'Swiped Card', 'UPI']);
@@ -1365,6 +1380,10 @@ const FormCom = () => {
             form.setValue('fee_pay_mode_used', 'Payment Gateway');
         };
     }, [form.watch('fee_entry_mode_used')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Fee Entry Setting Others');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[90%] h-[90%] max-w-[1100px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
@@ -1389,13 +1408,15 @@ const FormCom = () => {
 
 
                     {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 mt-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Save
-                    </Button>
+                    {permissions.add && (
+                        <Button
+                            type='submit'
+                            className='px-[8px] h-8 mt-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Save
+                        </Button>
+                    )}
 
 
                 </form>

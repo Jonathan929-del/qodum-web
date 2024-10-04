@@ -1,13 +1,14 @@
 'use client';
 // Imports
 import * as XLSX from 'xlsx';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {createAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -15,6 +16,19 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 
 // Main function
 const FormCom = ({}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -582,6 +596,12 @@ const FormCom = ({}:any) => {
     };
 
 
+    // Use effect
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Import Student');
+        setPermissions(grantedPermissions);
+    }, [user]);    
+
     return (
         <div className='w-[90%] max-w-[800px] flex flex-col items-center pb-6 rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
             <h2 className='w-full text-center py-2 text-sm rounded-t-[8px] font-bold bg-[#e7f0f7] text-main-color'>Upload Data Option</h2>
@@ -618,7 +638,7 @@ const FormCom = ({}:any) => {
                                 className='text-xs'
                                 onChange={(e) => setFile(e.target.files[0])}
                             />
-                            {isLoading ? (
+                            {permissions.add && isLoading ? (
                                 <LoadingIcon />
                             ) : (
                                 <span

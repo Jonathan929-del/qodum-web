@@ -11,7 +11,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main function
-const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments, isQrCodeGenerated}:any) => {
+const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments, isQrCodeGenerated, permissions}:any) => {
 
 
     // Toast
@@ -343,7 +343,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             {/* Buttons */}
             <div className='h-full flex flex-row items-end gap-2'>
                 {/* Save */}
-                {isConcession ? (
+                {permissions.add ? (
                     <AlertDialog>
                         <AlertDialogTrigger>
                             <span className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'>
@@ -375,6 +375,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
                         </AlertDialogContent>
                     </AlertDialog>
                 ) : saveButton}
+
                 {/* Cancel */}
                 <span
                     onClick={cancel}

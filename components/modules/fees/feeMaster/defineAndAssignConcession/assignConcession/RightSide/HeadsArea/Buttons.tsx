@@ -8,7 +8,6 @@ import {Button} from '@/components/ui/button';
 // Main function
 const Buttons = ({form, setSelectedStudent, setHeads}:any) => {
 
-
     // Cancel button
     const cancel = () => {
         // Reseting
@@ -35,7 +34,6 @@ const Buttons = ({form, setSelectedStudent, setHeads}:any) => {
             }
         });
     };
-
 
     return (
         <div className='flex flex-row items-center justify-center gap-3 p-2 rounded-[5px] bg-[#F7F7F7] border-[#ccc] border-[0.5px]'>

@@ -3,7 +3,7 @@ import * as z from 'zod';
 import {useForm} from 'react-hook-form';
 import StudentsList from './StudentList';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
@@ -15,6 +15,7 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchStudentsByClasses} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {StudentImageDownloadValidation} from '@/lib/validations/admission/masterSettings/studentImageDownload.validation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -22,6 +23,19 @@ import {StudentImageDownloadValidation} from '@/lib/validations/admission/master
 
 // Main function
 function FormCom() {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -90,6 +104,10 @@ function FormCom() {
             fetcher();
         };
     }, [form.watch('class_name')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Student Image Download');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (

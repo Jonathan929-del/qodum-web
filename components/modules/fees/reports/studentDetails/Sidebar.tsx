@@ -1,6 +1,6 @@
 // Improts
 import Details from './Details';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Switch} from '@/components/ui/switch';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
@@ -15,6 +15,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import { fetchDesignations } from '@/lib/actions/payroll/globalMasters/designation.actions';
 import { fetchProfessions } from '@/lib/actions/payroll/globalMasters/profession.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -22,6 +23,19 @@ import { fetchProfessions } from '@/lib/actions/payroll/globalMasters/profession
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfData}) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Is draggable opened
@@ -341,7 +355,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
         setFilteredGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
         setSelectedGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
     }, [isDraggableOpened]);
-
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Student Details');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className={`absolute top-0 left-0 h-full pb-10 w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -1297,13 +1314,15 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                             >
                                 Setting
                             </span>
-                            <span
-                                onClick={onSubmit}
-                                className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                            >
-                                Show
-                            </span>
+                            {permissions.read_only && (
+                                <span
+                                    onClick={onSubmit}
+                                    className='flex items-center justify-center px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                >
+                                    Show
+                                </span>
+                            )}
                         </div>
                     </div>
                 )}

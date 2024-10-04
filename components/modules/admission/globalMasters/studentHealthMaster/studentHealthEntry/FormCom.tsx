@@ -4,7 +4,7 @@ import * as z from 'zod';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -13,6 +13,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStudentsByClassAndSection, modifyStudentsHealthDetails} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {StudentHealthEntryValidation} from '@/lib/validations/admission/globalMasters/studentHealthMaster/studentHealthEntry.validation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -20,6 +21,19 @@ import {StudentHealthEntryValidation} from '@/lib/validations/admission/globalMa
 
 // Main function
 const FormCom = ({classes, sections, terms}: any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -78,6 +92,10 @@ const FormCom = ({classes, sections, terms}: any) => {
         };
         fetcher();
     }, [form.watch('class_name'), form.watch('section')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Student Health Entry');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (
@@ -207,15 +225,17 @@ const FormCom = ({classes, sections, terms}: any) => {
 
 
                         {/* Save button */}
-                        <div className='w-full flex justify-center sm:w-auto'>
-                            <Button
-                                type='submit'
-                                className='px-4 h-8 text-[16px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                            >
-                                Save
-                            </Button>
-                        </div>
+                        {permissions.modify && (
+                            <div className='w-full flex justify-center sm:w-auto'>
+                                <Button
+                                    type='submit'
+                                    className='px-4 h-8 text-[16px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                >
+                                    Save
+                                </Button>
+                            </div>
+                        )}
                     </div>
 
 

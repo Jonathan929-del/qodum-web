@@ -3,7 +3,7 @@ import * as z from 'zod';
 import moment from 'moment';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
@@ -25,6 +25,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {DailyFeeCollectionValidation} from '@/lib/validations/fees/transactionReport/collectionReports/dailyFeeCollection.validation';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -32,6 +33,20 @@ import MyDatePicker from '@/components/utils/CustomDatePicker';
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData, setPdfData}) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Date states
     const [dateFrom, setDateFrom] = useState(moment());
@@ -189,6 +204,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             form.setValue('date_to', dateTo._d);
         };
     }, [dateTo]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Daily Fee Collection');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (
@@ -846,13 +865,15 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
                             >
                                 Send Sms
                             </span>
-                            <Button
-                                type='submit'
-                                className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
-                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                            >
-                                Show
-                            </Button>
+                            {permissions.read_only && (
+                                <Button
+                                    type='submit'
+                                    className='px-4 h-6 text-sm text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white
+                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                >
+                                    Show
+                                </Button>
+                            )}
                         </div>
                     )}
 

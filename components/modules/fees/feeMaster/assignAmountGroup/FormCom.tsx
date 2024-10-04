@@ -4,10 +4,11 @@ import * as z from 'zod';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import { AuthContext } from '@/context/AuthContext';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {isGroupRelatedToStudent} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -21,6 +22,19 @@ import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeads
 
 // Main function
 const FormCom = ({groups, installments, setIsLoading}: any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Toast
@@ -94,7 +108,10 @@ const FormCom = ({groups, installments, setIsLoading}: any) => {
         };
         fetcher();
     }, [form.watch('group_name'), form.watch('installment')]);
-
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Assign Amount Group');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[100%] max-w-[1500px] flex flex-col items-center overflow-y-scroll custom-sidebar-scrollbar'>
@@ -195,13 +212,15 @@ const FormCom = ({groups, installments, setIsLoading}: any) => {
 
                     {/* Buttons */}
                     <div className='flex flex-row items-center gap-4'>
-                        <Button
-                            type='submit'
-                            className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                        >
-                            Save
-                        </Button>
+                        {permissions.add && (
+                            <Button
+                                type='submit'
+                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                            >
+                                Save
+                            </Button>
+                        )}
                         <span
                             className='flex items-center px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'

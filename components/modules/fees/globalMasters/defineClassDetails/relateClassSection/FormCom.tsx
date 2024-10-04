@@ -1,12 +1,13 @@
 'use client';
 // Imports
 import * as z from 'zod';
-import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
+import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useContext, useEffect, useState} from 'react';
 import {ChevronDown, ChevronsUpDown} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
@@ -20,6 +21,20 @@ import {RelateClassValidation} from '@/lib/validations/fees/globalMasters/define
 
 // Main function
 const FormCom = ({classes, sections}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Toast
     const {toast} = useToast();
@@ -71,6 +86,10 @@ const FormCom = ({classes, sections}:any) => {
         };
     }, [form.watch('class_name')]);
     useEffect(() => {}, [form.watch('sections')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Relate Class Section');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-[90%] max-w-[500px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
@@ -96,6 +115,7 @@ const FormCom = ({classes, sections}:any) => {
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
+                                            disabled={!permissions?.read_only}
                                         >
                                             <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                                                 <SelectValue placeholder='Select Class'/>
@@ -156,13 +176,15 @@ const FormCom = ({classes, sections}:any) => {
 
 
                     {/* Save button */}
-                    <Button
-                        type='submit'
-                        className='px-[8px] h-8 mt-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                    >
-                        Save
-                    </Button>
+                    {permissions.add && (
+                        <Button
+                            type='submit'
+                            className='px-[8px] h-8 mt-4 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                        >
+                            Save
+                        </Button>
+                    )}
                     
                 </form>
             </Form>

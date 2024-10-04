@@ -8,12 +8,10 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, headsSequence, isQrCodeGenerated}:any) => {
-
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, headsSequence, isQrCodeGenerated, permissions}:any) => {
 
     // Is concession
     const [isConcession, setIsConcession] = useState(false);
-
 
     return (
         <div className='h-full flex flex-col border-[0.5px] border-[#ccc] rounded-[8px]'>
@@ -50,6 +48,7 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 setPaymentReceiptNo={setPaymentReceiptNo}
                 installments={installments}
                 isQrCodeGenerated={isQrCodeGenerated}
+                permissions={permissions}
             />
         </div>
     );

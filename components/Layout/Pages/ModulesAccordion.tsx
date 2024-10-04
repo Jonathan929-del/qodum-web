@@ -7,6 +7,7 @@ import {MoveRight, ChevronDown} from 'lucide-react';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -14,6 +15,9 @@ import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/co
 
 // Main function
 const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
 
 
     // Router
@@ -25,7 +29,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
 
 
     // Currnet Module
-    const [currentModule, setCurrentModule] = useState({});
+    const [currentModule, setCurrentModule] = useState<any>({});
 
 
     // Select Module
@@ -54,22 +58,43 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
     };
 
 
-    // Use Effect
+    // Use Effects
     useEffect(() => {
-
-        // Selected Module
         const threadName = pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
         setSelectedThread(threadName);
         const pageName = pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1);
         setSelectedModule(pageName);
-        
-        
-        // Current Module
-        const module = modules.filter(module => module.moduleName === pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1));
-        setCurrentModule(module[0]);
-
     }, [pathname]);
-
+    useEffect(() => {
+        if(user){
+            // Selected Module
+            const threadName = pathname.split('/')[2]?.split('-').join(' ').split(' ').map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+            setSelectedThread(threadName);
+            const pageName = pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1);
+            setSelectedModule(pageName);
+            
+            
+            // Current Module
+            const module = modules.filter(module => module.moduleName === pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1));
+            const permittedPages = user?.permissions?.find((p:any) => p?.name === currentModule?.moduleName)?.permissions.filter((pp:any) => pp?.add || pp?.modify || pp?.delete || pp?.print || pp?.read_only)?.map((pp:any) => pp?.main_menu);
+            const permittedSubPages = user?.permissions?.find((p:any) => p?.name === currentModule?.moduleName)?.permissions.filter((pp:any) => pp?.add || pp?.modify || pp?.delete || pp?.print || pp?.read_only)?.map((pp:any) => pp?.sub_menu);
+            setCurrentModule({
+                ...module[0],
+                pages:module[0]?.pages?.filter((p:any) => permittedPages?.includes(p?.pageName))?.map((p:any) => {
+                    return{
+                        ...p,
+                        subPages:p.subPages?.filter((p:any) => permittedSubPages?.includes(p.subPageName) || p?.threads?.filter((t:any) => permittedSubPages?.includes(t))?.length > 0)?.map((sb:any) => {
+                            return{
+                                ...sb,
+                                // threads:sb?.threads?.filter((t:any) => t)
+                                threads:sb?.threads?.filter((t:any) => permittedSubPages?.includes(t))
+                            };
+                        })
+                    };
+                })
+            });
+        }
+    }, [user, pathname, selectedModule]);
 
     return (
         <Accordion

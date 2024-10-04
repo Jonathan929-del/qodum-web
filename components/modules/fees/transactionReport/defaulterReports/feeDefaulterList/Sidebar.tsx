@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import moment from 'moment';
 import {useForm} from 'react-hook-form';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
@@ -24,6 +24,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {FeeDefaulterListFilter, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {FeeDefaulterListValidation} from '@/lib/validations/fees/transactionReport/defaulterReports/feeDefaulterList.validation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -31,6 +32,20 @@ import {FeeDefaulterListValidation} from '@/lib/validations/fees/transactionRepo
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData, setPdfData}) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Date states
     const [fromDate, setFromDate] = useState(moment());
@@ -212,6 +227,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             form.setValue('till_date', tillDate._d);
         };
     }, [tillDate]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Fee Defaulter List');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className={`absolute top-0 left-0 h-full w-[250px] bg-[#fff] border-r-[0.5px] border-r-[#ccc] transition-transform transform ${isOpened ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -906,7 +925,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
                     {/* Buttons */}
-                    {isLoadingData ? (
+                    {permissions.read_only && isLoadingData ? (
                         <LoadingIcon />
                     ) : (
                         <div className='flex flex-col gap-2 mt-2'>

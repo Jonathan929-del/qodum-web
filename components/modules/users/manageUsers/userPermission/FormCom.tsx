@@ -1,12 +1,13 @@
 'use client';
 // Imports
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {fetchUsers, modifyUserPermissions} from '@/lib/actions/users/manageUsers/user.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import PermissionsList from './PermissionsList';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -14,6 +15,20 @@ import PermissionsList from './PermissionsList';
 
 // Main function
 const FormCom = () => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
 
     // Toast
     const {toast} = useToast();
@@ -73,7 +88,7 @@ const FormCom = () => {
 
 
         // Reseting
-        toast({title:'User data updated!'});
+        toast({title:'User permissions updated!'});
 
 
         // Setting is loading to false
@@ -95,6 +110,10 @@ const FormCom = () => {
         setCurrentUser(users.find((u:any) => u.name === selectedUser));
         setIsLoading(false);
     }, [selectedUser]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Users')?.permissions?.find((pp:any) => pp.sub_menu === 'User Permission');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
     return (
         <div className='w-full flex flex-col items-center justify-center gap-10'>
@@ -109,6 +128,7 @@ const FormCom = () => {
                             setSelctedUser(v);
                             setErrors({...errors, user:''});
                         }}
+                        disabled={!permissions.read_only}
                     >
                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                             <SelectValue placeholder='Select User'/>
@@ -136,6 +156,7 @@ const FormCom = () => {
                             setSelectedModule(v);
                             setErrors({...errors, module:''});
                         }}
+                        disabled={!permissions.read_only}
                     >
                         <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
                             <SelectValue placeholder='Select Module'/>
@@ -152,7 +173,7 @@ const FormCom = () => {
 
 
                 {/* Buttons */}
-                {isLoading ? (
+                {permissions.modify && isLoading ? (
                     <LoadingIcon />
                 ) : (
                     <span

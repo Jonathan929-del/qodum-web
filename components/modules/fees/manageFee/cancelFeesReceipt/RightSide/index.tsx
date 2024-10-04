@@ -1,10 +1,11 @@
 // Imports
 import moment from 'moment';
 import Search from './Search';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import PaymentsList from './PaymentsList';
 import {Input} from '@/components/ui/input';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -13,6 +14,20 @@ import MyDatePicker from '@/components/utils/CustomDatePicker';
 // Main function
 const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent, selectedStudent}:any) => {
 
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
+
+
     // Date
     const [date, setDate] = useState(moment());
 
@@ -20,18 +35,27 @@ const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent
     // Concession reason
     const [concessionReason, setConcessionReason] = useState('');
 
+
+    // Use effect
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Cancel Fee Receipt');
+        setPermissions(grantedPermissions);
+    }, [user]);
+
     return (
         <div className='w-[70%] min-w-[400px] flex flex-col justify-between px-2 gap-4'>
 
 
             {/* Search */}
-            <Search
-                classes={classes}
-                sections={sections}
-                students={students}
-                setIsViewOpened={setIsViewOpened}
-                setSelectedStudent={setSelectedStudent}
-            />
+            {permissions.read_only && (
+                <Search
+                    classes={classes}
+                    sections={sections}
+                    students={students}
+                    setIsViewOpened={setIsViewOpened}
+                    setSelectedStudent={setSelectedStudent}
+                />
+            )}
 
 
             {/* Inputs */}
@@ -61,6 +85,7 @@ const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent
                 setSelectedStudent={setSelectedStudent}
                 concessionReason={concessionReason}
                 setConcessionReason={setConcessionReason}
+                permissions={permissions}
             />
 
 

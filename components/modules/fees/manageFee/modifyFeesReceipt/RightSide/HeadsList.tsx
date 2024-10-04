@@ -10,7 +10,7 @@ import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/ad
 
 
 // Main Function
-const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, selectedPayment, setSelectedPayment}:any) => {
+const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, selectedPayment, setSelectedPayment, permissions}:any) => {
 
 
     // Toast
@@ -491,12 +491,14 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                         {/* Buttons */}
                         <div className='w-full flex flex-row items-center justify-center gap-2 mt-4'>
                             {/* Save */}
-                            <span
-                                onClick={submitHandler}
-                                className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] transition cursor-pointer hover:opacity-80'
-                            >
-                                Modify
-                            </span>
+                            {permissions.add && (
+                                <span
+                                    onClick={submitHandler}
+                                    className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] transition cursor-pointer hover:opacity-80'
+                                >
+                                    Modify
+                                </span>
+                            )}
 
                             {/* Cancel */}
                             <span

@@ -4,12 +4,13 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import Topbar from './Pages/Topbar';
 import {Toaster} from '../ui/toaster';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import PagesList from './Pages/PagesList';
 import HomeTopbar from './Home/HomeTopbar';
-import {usePathname} from 'next/navigation';
+import {redirect, usePathname} from 'next/navigation';
 import {fetchActiveFinancialYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -17,6 +18,10 @@ import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/
 
 // Main function
 const index = ({children}:any) => {
+
+    // User
+    const {user, logout} = useContext(AuthContext);
+
 
     // Sidebar Toggler
     const [isSidebarOpened, setIsSidebarOpened] = useState(false);
@@ -60,6 +65,9 @@ const index = ({children}:any) => {
         };
         academicYearsFetcher();
     }, []);
+    useEffect(() => {
+        if(!user) redirect('/sign-in');
+    }, [user]);
 
     return (
         <main className='w-full h-screen flex flex-row bg-[#ecedf0] font-Poppins'>
