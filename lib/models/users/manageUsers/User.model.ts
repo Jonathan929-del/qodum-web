@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema(
         schools:{type:Array},
         is_active:{type:Boolean},
         enable_otp:{type:Boolean},
-        permissions:{type:Array}
+        permissions:{type:Array},
+        is_admin:{type:Boolean}
     },
     {
         timestamps:true

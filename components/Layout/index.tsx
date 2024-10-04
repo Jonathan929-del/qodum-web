@@ -71,10 +71,12 @@ const index = ({children}:any) => {
 
     return (
         <main className='w-full h-screen flex flex-row bg-[#ecedf0] font-Poppins'>
-            <Sidebar
-                isSidebarOpened={isSidebarOpened}
-                setIsSidebarOpened={setIsSidebarOpened}
-            />
+            {pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1) !== '' && (
+                <Sidebar
+                    isSidebarOpened={isSidebarOpened}
+                    setIsSidebarOpened={setIsSidebarOpened}
+                />
+            )}
             <div className='relative flex flex-col flex-1 overflow-hidden'>
                 {
                     pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1) === ''

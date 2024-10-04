@@ -9,7 +9,7 @@ import {useToast} from '@/components/ui/use-toast';
 import {useContext, useEffect, useState} from 'react';
 import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {loginUser} from '@/lib/actions/users/manageUsers/user.actions';
+import {fetchAdmin, loginUser} from '@/lib/actions/users/manageUsers/user.actions';
 import { fetchAcademicYears } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -78,6 +78,30 @@ const SignIn = () => {
         // Set loading to true
         setIsLoading(false);
 
+    };
+
+
+    // Admin login
+    const adminLogin = async () => {
+    
+        // Set loading to true
+        setIsLoading(true);
+
+
+        // User login
+        const res = await fetchAdmin();
+        if(!res.success){
+            toast({title:res.message, variant:'error'});
+            setIsLoading(false);
+            return;
+        };
+        login(res.user);
+        toast({title:'Logged in'});
+
+
+        // Set loading to true
+        setIsLoading(false);
+    
     };
 
 
@@ -156,6 +180,7 @@ const SignIn = () => {
                 </div>
 
 
+                {/* Login */}
                 <span
                     onClick={submitHandler}
                     className='flex items-center justify-center px-4 h-10 mt-8 text-lg text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
@@ -167,6 +192,17 @@ const SignIn = () => {
                         'Login'
                     )}
                 </span>
+
+
+                {/* Admin */}
+                <div className='flex justify-center'>
+                    <span
+                        onClick={adminLogin}
+                        className='text-[#3D67B0] cursor-pointer hover:opacity-80'
+                    >
+                        Admin
+                    </span>
+                </div>
 
             </div>
 

@@ -684,7 +684,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray});
+        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false});
         newUser.save();
 
 
@@ -713,7 +713,7 @@ export const fetchUsers = async () => {
 
 
         // Fetching
-        const users = await User.find({session:activeSession?.year_name});
+        const users = await User.find({session:activeSession?.year_name, is_admin:false});
 
 
         // Return
@@ -862,5 +862,46 @@ export const loginUser = async ({user_name, password}:any) => {
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  
+    };
+};
+
+
+
+
+
+// Fetch admin
+export const fetchAdmin = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const user = await User.findOne({session:activeSession?.year_name, is_admin:true});
+
+
+        // Validations
+        if(!user){
+            return {success:false, message:'User not found'};
+        };
+
+
+        // loging user
+        const token = signToken(JSON.parse(JSON.stringify(user)));
+        return({
+            success:true,
+            user:JSON.parse(JSON.stringify({
+                ...user._doc,
+                token
+            }))
+        });
+
+    } catch (err:any) {
+        throw new Error(`Error fetching users: ${err}`);
     };
 };

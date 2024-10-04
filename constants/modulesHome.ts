@@ -90,7 +90,7 @@ const modules:any = [
     },
     {
         icon:TimetableImage,
-        title:'Timetable',
+        title:'Time Table',
         sections:[
             'Teacher Setting',
             'Define Resource',
