@@ -2,7 +2,7 @@
 // Imports
 import * as z from 'zod';
 import Buttons from './Buttons';
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
@@ -17,6 +17,7 @@ import {DueLimitValidation} from '@/lib/validations/fees/masterSettings/dueLimit
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createDueLimit, deleteDueLimit, modifyDueLimit} from '@/lib/actions/fees/masterSettings/dueLimit.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -24,6 +25,9 @@ import {createDueLimit, deleteDueLimit, modifyDueLimit} from '@/lib/actions/fees
 
 // Main function
 const FormCom = ({setIsViewOpened, dueLimits, updateDueLimit, setUpdateDueLimit, classes, feeTypes, heads}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
 
 
     // Toast
@@ -208,11 +212,11 @@ const FormCom = ({setIsViewOpened, dueLimits, updateDueLimit, setUpdateDueLimit,
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {feeTypes.length < 1 ? (
+                                                        {feeTypes?.filter((t:any) => user.fee_types.includes(t.name)).length < 1 ? (
                                                             <p className='text-hash-color text-xs'>No fee types</p>
                                                         ) : !feeTypes[0].name ? (
                                                             <LoadingIcon />
-                                                        ) : feeTypes.map((c:any) => (
+                                                        ) : feeTypes.filter((t:any) => user.fee_types.includes(t.name)).map((c:any) => (
                                                             <SelectItem value={c.name} key={c._id}>{c.name}</SelectItem>
                                                         ))}
                                                     </SelectContent>

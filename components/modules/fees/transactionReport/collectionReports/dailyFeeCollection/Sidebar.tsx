@@ -183,8 +183,8 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             setClasses(classesRes);
             setSelectedClasses(classesRes);
             setBoards(boardsRes);
-            setFeeTypes(feeTypesRes);
-            setSelectedFeeTypes(feeTypesRes);
+            setFeeTypes(feeTypesRes.filter((t:any) => user.fee_types.includes(t.name)));
+            setSelectedFeeTypes(feeTypesRes.filter((t:any) => user.fee_types.includes(t.name)));
             setHeads(headsRes);
             setSelectedHeads(headsRes);
             setIsLoadingData(false)

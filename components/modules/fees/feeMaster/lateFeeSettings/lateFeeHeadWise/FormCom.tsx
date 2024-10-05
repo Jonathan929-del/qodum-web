@@ -6,16 +6,17 @@ import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {LateFeeHeadWiseValidation} from '@/lib/validations/fees/feeMaster/lateFeeSettings/lateFeeHeadWise.validation';
 import {createLateFeeHeadWise, deleteLateFeeHeadWise, modifyLateFeeHeadWise} from '@/lib/actions/fees/feeMaster/lateFeeSettings/lateFeeHeadWise.actions';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -23,6 +24,11 @@ import {createLateFeeHeadWise, deleteLateFeeHeadWise, modifyLateFeeHeadWise} fro
 
 // Main function
 const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, groups, types, installments, heads, lateFeeTypes}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+    console.log(user);
+
 
     // Toast
     const {toast} = useToast();
@@ -207,11 +213,11 @@ const FormCom = ({setIsViewOpened, lateFees, updateLateFee, setUpdateLateFee, gr
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {types.length < 1 ? (
+                                                    {types.filter((t:any) => user.fee_types.includes(t.name)).length < 1 ? (
                                                         <p className='text-xs text-hash-color'>No types</p>
                                                     ) : !types[0].name ? (
                                                         <LoadingIcon />
-                                                    ) : types.map((g:any) => (
+                                                    ) : types.filter((t:any) => user.fee_types.includes(t.name)).map((g:any) => (
                                                         <SelectItem value={g.name} key={g._id}>{g.name}</SelectItem>
                                                     ))}
                                                 </SelectContent>

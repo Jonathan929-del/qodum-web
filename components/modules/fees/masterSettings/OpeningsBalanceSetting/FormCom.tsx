@@ -79,7 +79,7 @@ const FormCom = () => {
     useEffect(() => {
         const fetcher = async () => {
             const feeTypesRes = await fetchTypes();
-            setFeeTypes(feeTypesRes);
+            setFeeTypes(feeTypesRes.filter((t:any) => user.fee_types.includes(t.name)));
         };
         fetcher();
     }, []);

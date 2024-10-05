@@ -79,7 +79,9 @@ export const signToken = (user:any) => {
       schools:user.schools,
       is_active:user.is_active,
       enable_otp:user.enable_otp,
-      permissions:user.permissions
+      permissions:user.permissions,
+      is_admin:user.is_admin,
+      fee_types:user.fee_types
   },
   process.env.JWT_SECRET,
   {

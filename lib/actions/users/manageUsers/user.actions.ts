@@ -684,7 +684,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false});
+        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false, fee_types:[]});
         newUser.save();
 
 
@@ -817,6 +817,35 @@ export const modifyUserPermissions = async ({id, permissions}:ModifyUserPermissi
         
         // Update user
         await User.findByIdAndUpdate(id, {permissions}, {new:true});
+
+
+        // Return
+        return 'Updated';
+
+    } catch (err) {
+        throw new Error(`Error updating user: ${err}`);
+    };
+};
+
+
+
+
+
+// Modify user's fee types props
+interface ModifyUserFeeTypesProps{
+    id:String;
+    fee_types:any;
+}
+// Modify user fee types
+export const modifyUserFeeTypes = async ({id, fee_types}:ModifyUserFeeTypesProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+        
+        // Update user
+        await User.findByIdAndUpdate(id, {fee_types}, {new:true});
 
 
         // Return

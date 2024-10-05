@@ -1,13 +1,14 @@
 'use client';
 // Imports
 import {ChevronDown} from 'lucide-react';
-import {useContext, useEffect, useState} from 'react';
+import FeeTypesList from './FeeTypesList';
+import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchUsers, modifyUserPermissions} from '@/lib/actions/users/manageUsers/user.actions';
+import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
+import {fetchUsers, modifyUserFeeTypes} from '@/lib/actions/users/manageUsers/user.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import PermissionsList from './PermissionsList';
-import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -40,8 +41,7 @@ const FormCom = () => {
 
     // Errors
     const [errors, setErrors] = useState({
-        user:'',
-        module:''
+        user:''
     });
 
 
@@ -49,16 +49,12 @@ const FormCom = () => {
     const [users, setUsers] = useState<any>([{}]);
 
 
-    // Modules
-    const modules = ['Fees', 'Payroll', 'Stocks', 'Admission', 'Accounts', 'Users', 'Attendance', 'Time Table'];
+    // Fee types
+    const [feeTypes, setFeeTypes] = useState<any>([{}]);
 
 
     // Selected user
     const [selectedUser, setSelctedUser] = useState('');
-
-
-    // Selected module
-    const [selectedModule, setSelectedModule] = useState('');
 
 
     // Current user
@@ -73,10 +69,9 @@ const FormCom = () => {
 
 
         // Validate user and module
-        if(selectedUser === '' || selectedModule === ''){
+        if(selectedUser === ''){
             setErrors({
-                user:selectedUser === '' ? 'Please select a user' : '',
-                module:selectedModule === '' ? 'Please select a module' : ''
+                user:selectedUser === '' ? 'Please select a user' : ''
             });
             setIsLoading(false);
             return;
@@ -84,11 +79,11 @@ const FormCom = () => {
 
 
         // Updaing user's permissions
-        await modifyUserPermissions({id:currentUser?._id, permissions:currentUser.permissions});
+        await modifyUserFeeTypes({id:currentUser?._id, fee_types:currentUser.fee_types});
 
 
         // Reseting
-        toast({title:'User permissions updated!'});
+        toast({title:'Fee Types Updated!'});
 
 
         // Setting is loading to false
@@ -101,7 +96,9 @@ const FormCom = () => {
     useEffect(() => {
         const fetcher = async () => {
             const usersRes = await fetchUsers();
-            setUsers(usersRes);
+            const feeTypesRes = await fetchTypes();
+            setUsers(usersRes.filter((u:any) => !u.is_admin));
+            setFeeTypes(feeTypesRes);
         };
         fetcher();
     }, []);
@@ -118,7 +115,7 @@ const FormCom = () => {
     return (
         <div className='w-full flex flex-col items-center justify-center gap-10'>
 
-            <div className='w-[50%] flex flex-row items-center gap-4'>
+            <div className='w-[50%] max-w-[400px] flex flex-row items-center gap-4'>
 
                 {/* User */}
                 <div className='w-full flex flex-col items-start justify-center'>
@@ -148,30 +145,6 @@ const FormCom = () => {
                 </div>
 
 
-                {/* Module */}
-                {/* <div className='w-full flex flex-col items-start justify-center'>
-                    <Select
-                        value={selectedModule}
-                        onValueChange={(v:any) => {
-                            setSelectedModule(v);
-                            setErrors({...errors, module:''});
-                        }}
-                        disabled={!permissions.read_only}
-                    >
-                        <SelectTrigger className='h-8 w-full flex flex-row items-center text-xs pl-2 rounded-none bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'>
-                            <SelectValue placeholder='Select Module'/>
-                            <ChevronDown className='h-4 w-4 opacity-50'/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            {modules.map((item:any) => (
-                                <SelectItem value={item} key={item}>{item}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    {errors.module && <span className='text-[11px] text-red-500'>{errors.module}</span>}
-                </div> */}
-
-
                 {/* Buttons */}
                 {permissions.modify && isLoading ? (
                     <LoadingIcon />
@@ -189,11 +162,11 @@ const FormCom = () => {
 
 
             {/* Permissions list */}
-            {selectedUser !== '' && selectedModule !== '' && (
-                <PermissionsList
+            {selectedUser && (
+                <FeeTypesList
                     currentUser={currentUser}
-                    selectedModule={selectedModule}
                     setCurrentUser={setCurrentUser}
+                    feeTypes={feeTypes}
                 />
             )}
 

@@ -1,15 +1,16 @@
 // Imports
 import moment from 'moment';
-import {useEffect, useState} from 'react';
 import DDDetails from '../Others/DDDetails';
 import {Input} from '@/components/ui/input';
 import UPIDetails from '../Others/UPIDetails';
 import NeftDetails from '../Others/NeftDetails';
 import {Checkbox} from '@/components/ui/checkbox';
+import {AuthContext} from '@/context/AuthContext';
+import {Check, ChevronDown, X} from 'lucide-react';
 import ChequeDetails from '../Others/ChequeDetails';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import SwipedCardDetaila from '../Others/SwipedCardDetails';
-import {Check, ChevronDown, X} from 'lucide-react';
 import CustomDatePicker from '@/components/utils/CustomDatePicker';
 import {fetchTypes} from '@/lib/actions/fees/feeMaster/feeMaster/type.actions';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
@@ -22,6 +23,10 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 // Main function
 const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated}:any) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
 
     // Date states
     const [selectedDate, setSelectedDate] = useState(moment());
@@ -62,7 +67,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
             const bankLedgersRes = await fetchBankLedgers();
             const feeTypesRes = await fetchTypes();
             setBankLedgers(bankLedgersRes);
-            setFeeTypes(feeTypesRes);
+            setFeeTypes(feeTypesRes.filter((t:any) => user.fee_types.includes(t.name)));
         };
         fetcher();
     }, []);

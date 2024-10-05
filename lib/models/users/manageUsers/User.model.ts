@@ -22,7 +22,8 @@ const UserSchema = new mongoose.Schema(
         is_active:{type:Boolean},
         enable_otp:{type:Boolean},
         permissions:{type:Array},
-        is_admin:{type:Boolean}
+        is_admin:{type:Boolean},
+        fee_types:{type:Array}
     },
     {
         timestamps:true

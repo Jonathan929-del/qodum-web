@@ -2,7 +2,7 @@
 import * as z from 'zod';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Label} from '@/components/ui/label';
 import {Switch} from '@/components/ui/switch';
 import {Button} from '@/components/ui/button';
@@ -24,6 +24,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {ReceiptWiseFeeTypeCollectionValidation} from '@/lib/validations/fees/transactionReport/collectionReports/receiptWiseFeeTypeCollection.validation';
+import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -31,6 +32,19 @@ import {ReceiptWiseFeeTypeCollectionValidation} from '@/lib/validations/fees/tra
 
 // Main function
 const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData, setPdfData}) => {
+
+    // User
+    const {user} = useContext(AuthContext);
+
+
+    // Permissions
+    const [permissions, setPermissions] = useState({
+        add:false,
+        modify:false,
+        delete:false,
+        print:false,
+        read_only:false
+    });
 
 
     // Date states
@@ -165,7 +179,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
             setClasses(classesRes);
             setSelectedClasses(classesRes);
             setBoards(boardsRes);
-            setFeeTypes(feeTypesRes);
+            setFeeTypes(feeTypesRes.filter((t:any) => user.fee_types.includes(t.name)));
             setInstallments(installmentsRes);
             setBankNames(bankNamesRes);
             setSelectedBankNames(bankNamesRes);
@@ -174,6 +188,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
         fetcher();
     }, []);
     useEffect(() => {}, [form.watch('is_active'), form.watch('preview')]);
+    useEffect(() => {
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Receipt Wise Fee Type Collection');
+        setPermissions(grantedPermissions);
+    }, [user]);
 
 
     return (
@@ -900,7 +918,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, pdfData
 
 
                     {/* Buttons */}
-                    {isLoadingData ? (
+                    {permissions.read_only && isLoadingData ? (
                         <LoadingIcon />
                     ) : (
                         <div className='flex flex-row justify-center items-center gap-2 mt-2'>
