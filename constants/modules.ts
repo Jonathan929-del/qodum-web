@@ -1411,7 +1411,7 @@ const modules = [
                         subPageName:'Create User'
                     },
                     {
-                        subPageName:'Fee Type Assign to User'
+                        subPageName:'Fee Type Assign To User'
                     },
                     {
                         subPageName:'User Permission'

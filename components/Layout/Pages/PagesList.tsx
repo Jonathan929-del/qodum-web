@@ -24,7 +24,7 @@ const PagesList = () => {
     };
 
     return (
-        <div className='relative pt-14 bg-white border-b-[0.5px] border-[#ccc]'>
+        <div className={`relative ${openedPages.length > 0 ? 'pt-8 border-b-[0.5px] border-[#ccc]' : ''} bg-white`}>
             <ul className='flex flex-row bottom-0 left-0 items-center absolute z-2 px-6 gap-2'>
                 {openedPages?.map((page:any) => (
                     <li

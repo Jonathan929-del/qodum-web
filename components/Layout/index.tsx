@@ -20,7 +20,7 @@ import { AuthContext } from '@/context/AuthContext';
 const index = ({children}:any) => {
 
     // User
-    const {user, logout} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
 
 
     // Sidebar Toggler

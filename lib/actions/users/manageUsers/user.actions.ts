@@ -713,7 +713,7 @@ export const fetchUsers = async () => {
 
 
         // Fetching
-        const users = await User.find({session:activeSession?.year_name, is_admin:false});
+        const users = await User.find({session:activeSession?.year_name});
 
 
         // Return

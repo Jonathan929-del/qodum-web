@@ -101,7 +101,7 @@ const FormCom = () => {
     useEffect(() => {
         const fetcher = async () => {
             const usersRes = await fetchUsers();
-            setUsers(usersRes.filter((u:any) => !u.is_admin));
+            setUsers(usersRes);
         };
         fetcher();
     }, []);
@@ -111,7 +111,7 @@ const FormCom = () => {
         setIsLoading(false);
     }, [selectedUser]);
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Users')?.permissions?.find((pp:any) => pp.sub_menu === 'User Permission');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Users')?.permissions?.find((pp:any) => pp.sub_menu === 'Fee Type Assign To User');
         setPermissions(grantedPermissions);
     }, [user]);
 
@@ -149,7 +149,7 @@ const FormCom = () => {
 
 
                 {/* Module */}
-                <div className='w-full flex flex-col items-start justify-center'>
+                {/* <div className='w-full flex flex-col items-start justify-center'>
                     <Select
                         value={selectedModule}
                         onValueChange={(v:any) => {
@@ -169,7 +169,7 @@ const FormCom = () => {
                         </SelectContent>
                     </Select>
                     {errors.module && <span className='text-[11px] text-red-500'>{errors.module}</span>}
-                </div>
+                </div> */}
 
 
                 {/* Buttons */}

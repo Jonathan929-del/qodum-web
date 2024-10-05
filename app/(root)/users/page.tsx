@@ -1,8 +1,6 @@
 'use client';
 // Imports
 import moment from 'moment';
-import {redirect} from 'next/navigation';
-import {AuthContext} from '@/context/AuthContext';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 
@@ -13,6 +11,7 @@ import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index
 import ChangeAcademic from '@/components/modules/shared/ChangeAcademic/index';
 import CreateUser from '@/pagesComps/users/manageUsers/create-user/page';
 import UserPermission from '@/pagesComps/users/manageUsers/user-permission/page';
+import FeeTypeAssignToUser from '@/pagesComps/users/manageUsers/fee-type-assign-to-user/page';
 
 
 
@@ -20,10 +19,6 @@ import UserPermission from '@/pagesComps/users/manageUsers/user-permission/page'
 
 // Main function
 const Home = () => {
-
-  // Login user check
-  const {user} = useContext(AuthContext);
-
 
   // Setting moment local to english
   moment.locale('en-gb');
@@ -40,10 +35,9 @@ const Home = () => {
   // Use effect
   useEffect(() => {
 
-    if(!user) redirect('/sign-in');
-
     let openedPagesArray = [];
 
+  
     if(openedPages.length === 0){
       openedPagesArray.push({name:'Dashboard', component:(
         <div className='h-full overflow-y-scroll custom-sidebar-scrollbar'>
@@ -67,14 +61,9 @@ const Home = () => {
     if(openedPages.includes('User Permission')){
       openedPagesArray.push({name:'User Permission', component:<UserPermission />});
     };
-
-
-    // Setting active year in moment
-    // const fetcher = async () => {
-    //   const activeYearRes = await fetchActiveAcademicYear();
-    //   setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
-    // };
-    // fetcher();
+    if(openedPages.includes('Fee Type Assign To User')){
+      openedPagesArray.push({name:'Fee Type Assign To User', component:<FeeTypeAssignToUser />});
+    };
 
 
     setOpenedPagesComponents(openedPagesArray);
