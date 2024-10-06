@@ -17,13 +17,14 @@ import MarksImage from '@/public/assets/Modules Icons/Sidebar icons/Marks.png';
 
 // Modules
 const modules = [
-    // Accounts
+
+    // Admission
     {
-        moduleName:'Accounts',
-        // icon:FileStack,
-        icon:AccountsImage,
+        moduleName:'Admission',
+        // icon:GraduationCap,
+        icon:AdmissionImage,
         pages:[
-            // Global Masters
+            // Global Master
             {
                 pageName:'Global Masters',
                 subPages:[
@@ -35,11 +36,78 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define Narration Master'
+                        subPageName:'Define TC Details',
+                        threads:[
+                            'Define TC Caste',
+                            'Term Master'
+                        ]
+                    },
+                    {
+                        subPageName:'Student Health Master',
+                        threads:[
+                            'Health Unit Master',
+                            'Health Master',
+                            'Define Term',
+                            'Student Health Entry'
+                        ]
+                    },
+                    {
+                        subPageName:'Define Blood Group'
+                    },
+                    {
+                        subPageName:'Define Nationality'
+                    },
+                    {
+                        subPageName:'Define Cadet Type'
+                    },
+                    {
+                        subPageName:'Define Club'
+                    },
+                    {
+                        subPageName:'Define Remark'
+                    },
+                    {
+                        subPageName:'Define Category'
+                    },
+                    {
+                        subPageName:'Define Religion'
+                    },
+                    {
+                        subPageName:'Define Caste'
+                    },
+                    {
+                        subPageName:'Possible Siblings'
+                    },
+                    {
+                        subPageName:'Stationary Details'
+                    },
+                    {
+                        subPageName:'Define Parish'
+                    },
+                    {
+                        subPageName:'Define House'
+                    },
+                    {
+                        subPageName:'Define Stream'
+                    },
+                    {
+                        subPageName:'Define Subject'
+                    },
+                    {
+                        subPageName:'Define Optional Subject'
+                    },
+                    {
+                        subPageName:'Parents Status'
+                    },
+                    {
+                        subPageName:'Define Document Type'
+                    },
+                    {
+                        subPageName:'Import Student'
                     }
                 ]
             },
-            // Master settings
+            // Master Settings
             {
                 pageName:'Master Settings',
                 subPages:[
@@ -47,19 +115,25 @@ const modules = [
                         subPageName:'Change Academic'
                     },
                     {
-                        subPageName:'Account Master setting'
+                        subPageName:'Enquiry No Setting'
                     },
                     {
-                        subPageName:'Account Petty Cash Setting'
+                        subPageName:'Admission Setting'
                     },
                     {
-                        subPageName:'Voucher Print Settings'
+                        subPageName:'Student Class Promotion'
                     },
                     {
-                        subPageName:'Voucher Code Settings'
+                        subPageName:'Update Student Details'
                     },
                     {
-                        subPageName:'Cheque Print Format Setting'
+                        subPageName:'Student Image Download'
+                    },
+                    {
+                        subPageName:'Update Address and Blood'
+                    },
+                    {
+                        subPageName:'Admission Form Settings'
                     },
                     {
                         subPageName:'Report Layout Setting'
@@ -69,58 +143,70 @@ const modules = [
                     }
                 ]
             },
-            // Accounts
+            // Admission
             {
-                pageName:'Accounts',
+                pageName:'Admission',
                 subPages:[
                     {
-                        subPageName:'Define Account Group'
+                        subPageName:'Enquiry'
                     },
                     {
-                        subPageName:'Define Bank Ledger'
+                        subPageName:'Admission Form Registration'
                     },
                     {
-                        subPageName:'Define Party Ledger'
+                        subPageName:'Entrance Test',
+                        threads:[
+                            'Define Merit Criteria',
+                            'Slot Creation',
+                            'Slot Wise Point Entry',
+                            'Re Sloting',
+                            'Merit List Generation',
+                            'Manual List Generation',
+                        ]
                     },
                     {
-                        subPageName:'Define General Ledger'
+                        subPageName:'Admission'
                     },
                     {
-                        subPageName:'Bank Payment Voucher'
+                        subPageName:'Upload Student Document'
                     },
                     {
-                        subPageName:'Cash Payment Voucher'
+                        subPageName:'Requests for Changes From Parents'
                     },
                     {
-                        subPageName:'Bank Receipt Voucher'
+                        subPageName:'Admission Entry'
                     },
                     {
-                        subPageName:'Cash Receipt Voucher'
+                        subPageName:'Generate Student Info Performa in Bulk'
                     },
                     {
-                        subPageName:'Define Group Nature'
+                        subPageName:'Create ID Card'
                     },
                     {
-                        subPageName:'Contra Voucher'
+                        subPageName:'Print Student Label'
                     },
                     {
-                        subPageName:'Journal Voucher'
-                    },
-                    {
-                        subPageName:'Payment Voucher'
-                    },
-                    {
-                        subPageName:'Salary Payment Voucher'
-                    },
-                    {
-                        subPageName:'Cheque Clearing'
-                    },
-                    {
-                        subPageName:'Cheque Printing'
-                    },
-                    {
-                        subPageName:'Voucher Image Upload'
+                        subPageName:'Send SMS'
                     }
+                ]
+            },
+            // Certificate
+            {
+                pageName:'Certificate',
+                subPages:[
+                    {
+                        subPageName:'TC',
+                        threads:[
+                            'TC Form',
+                            'TC Form Class Wise',
+                            'Generate TC',
+                            'Generate TC in Bulk',
+                            'TC Report',
+                        ]
+                    },
+                    {
+                        subPageName:'Certificates'
+                    },
                 ]
             },
             // Reports
@@ -128,72 +214,62 @@ const modules = [
                 pageName:'Reports',
                 subPages:[
                     {
-                        subPageName:'Ledger Report',
-                        threads:[
-                            'Ledger Report',
-                            'Ledger Report Detail',
-                            'Ledger Report Detail New',
-                            'Ledger Report With Filter'
-                        ]
+                        subPageName:'Prospectud Charges Report'
                     },
                     {
-                        subPageName:'Daily Cash Status'
+                        subPageName:'Merit List Generation'
                     },
                     {
-                        subPageName:'Bank Ledger'
+                        subPageName:'Merit Criteria Print'
                     },
                     {
-                        subPageName:'Cash/Bank Book'
+                        subPageName:'Merit List Report'
                     },
                     {
-                        subPageName:'Day Book'
+                        subPageName:'Admission Collection Report'
                     },
                     {
-                        subPageName:'Trial Balance New'
+                        subPageName:'Slot Report'
                     },
                     {
-                        subPageName:'Trial Balance'
+                        subPageName:'Search and Import Online Registration'
                     },
                     {
-                        subPageName:'Profit & Loss'
+                        subPageName:'Sibling Report'
                     },
                     {
-                        subPageName:'Income & Expenditure'
+                        subPageName:'Student House Wise Strength Report'
                     },
                     {
-                        subPageName:'Balance Sheet'
+                        subPageName:'Student Document Details'
                     },
                     {
-                        subPageName:'Reconciliation Statment'
+                        subPageName:'Class Wise Admission Report'
                     },
                     {
-                        subPageName:'Journal Ledger/Book'
+                        subPageName:'Student Repeater List'
                     },
                     {
-                        subPageName:'Group Wise Report'
+                        subPageName:'Prospectud Charges Report'
                     },
                     {
-                        subPageName:'Fee Account Mismatch'
+                        subPageName:'Verification Admission Form'
                     },
                     {
-                        subPageName:'Entry Type Wise Report'
+                        subPageName:'Admission Withdrawal Register'
                     },
                     {
-                        subPageName:'Fee Outstandig Report'
+                        subPageName:'Total Collection Report Student Wise'
                     },
                     {
-                        subPageName:'Depreciation Chart'
-                    },
-                    {
-                        subPageName:'Depreciation Detail Item Wise'
-                    },
-                    {
-                        subPageName:'Serialize Voucher Code'
+                        subPageName:'Manual List Generation Report'
                     }
                 ]
-            },
+            }
         ]
     },
+
+
     // Fees
     {
         moduleName:'Fees',
@@ -634,13 +710,15 @@ const modules = [
             }
         ]
     },
-    // Admission
+
+
+    // Attendance
     {
-        moduleName:'Admission',
-        // icon:GraduationCap,
-        icon:AdmissionImage,
+        moduleName:'Attendance',
+        // icon:Megaphone,
+        icon:AttendenceImage,
         pages:[
-            // Global Master
+            // Global Masters
             {
                 pageName:'Global Masters',
                 subPages:[
@@ -652,74 +730,25 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define TC Details',
-                        threads:[
-                            'Define TC Caste',
-                            'Term Master'
-                        ]
+                        subPageName:'Define Holiday'
                     },
                     {
-                        subPageName:'Student Health Master',
-                        threads:[
-                            'Health Unit Master',
-                            'Health Master',
-                            'Define Term',
-                            'Student Health Entry'
-                        ]
+                        subPageName:'Define Leave'
                     },
                     {
-                        subPageName:'Define Blood Group'
+                        subPageName:'Define Shift Master'
                     },
                     {
-                        subPageName:'Define Nationality'
+                        subPageName:'Attendance Settings'
                     },
                     {
-                        subPageName:'Define Cadet Type'
+                        subPageName:'Report Settings'
                     },
                     {
-                        subPageName:'Define Club'
+                        subPageName:'Employee Enrollment'
                     },
                     {
-                        subPageName:'Define Remark'
-                    },
-                    {
-                        subPageName:'Define Category'
-                    },
-                    {
-                        subPageName:'Define Religion'
-                    },
-                    {
-                        subPageName:'Define Caste'
-                    },
-                    {
-                        subPageName:'Possible Siblings'
-                    },
-                    {
-                        subPageName:'Stationary Details'
-                    },
-                    {
-                        subPageName:'Define Parish'
-                    },
-                    {
-                        subPageName:'Define House'
-                    },
-                    {
-                        subPageName:'Define Stream'
-                    },
-                    {
-                        subPageName:'Define Subject'
-                    },
-                    {
-                        subPageName:'Define Optional Subject'
-                    },
-                    {
-                        subPageName:'Parents Status'
-                    },
-                    {
-                        subPageName:'Define Document Type'
-                    },
-                    {
-                        subPageName:'Import Student'
+                        subPageName:'Mark Attendance'
                     }
                 ]
             },
@@ -731,97 +760,52 @@ const modules = [
                         subPageName:'Change Academic'
                     },
                     {
-                        subPageName:'Enquiry No Setting'
-                    },
-                    {
-                        subPageName:'Admission Setting'
-                    },
-                    {
-                        subPageName:'Student Class Promotion'
-                    },
-                    {
-                        subPageName:'Update Student Details'
-                    },
-                    {
-                        subPageName:'Student Image Download'
-                    },
-                    {
-                        subPageName:'Update Address and Blood'
-                    },
-                    {
-                        subPageName:'Admission Form Settings'
-                    },
-                    {
                         subPageName:'Report Layout Setting'
                     },
                     {
                         subPageName:'Session Transfer'
-                    }
+                    },
                 ]
             },
-            // Admission
+            // Attendance
             {
-                pageName:'Admission',
+                pageName:'Attendance',
                 subPages:[
                     {
-                        subPageName:'Enquiry'
+                        subPageName:'Assign Leave to Staff'
                     },
                     {
-                        subPageName:'Admission Form Registration'
+                        subPageName:'Modify Staff in Bulk'
                     },
                     {
-                        subPageName:'Entrance Test',
-                        threads:[
-                            'Define Merit Criteria',
-                            'Slot Creation',
-                            'Slot Wise Point Entry',
-                            'Re Sloting',
-                            'Merit List Generation',
-                            'Manual List Generation',
-                        ]
+                        subPageName:'Staff Shift Relation'
                     },
                     {
-                        subPageName:'Admission'
+                        subPageName:'Auto Process Attendance'
                     },
                     {
-                        subPageName:'Upload Student Document'
+                        subPageName:'Mark Manual Attendance'
                     },
                     {
-                        subPageName:'Requests for Changes From Parents'
+                        subPageName:'Upload Attendance'
                     },
                     {
-                        subPageName:'Admission Entry'
+                        subPageName:'Process Leave Application'
                     },
                     {
-                        subPageName:'Generate Student Info Performa in Bulk'
+                        subPageName:'Process Leave'
                     },
                     {
-                        subPageName:'Create ID Card'
+                        subPageName:'Reprocess Attendance'
                     },
                     {
-                        subPageName:'Print Student Label'
+                        subPageName:'Leave Acceptance Employee Wise'
                     },
                     {
-                        subPageName:'Send SMS'
-                    }
-                ]
-            },
-            // Certificate
-            {
-                pageName:'Certificate',
-                subPages:[
-                    {
-                        subPageName:'TC',
-                        threads:[
-                            'TC Form',
-                            'TC Form Class Wise',
-                            'Generate TC',
-                            'Generate TC in Bulk',
-                            'TC Report',
-                        ]
+                        subPageName:'Mark Leave Staff Type Wise'
                     },
                     {
-                        subPageName:'Certificates'
+                        subPageName:'Leave Marking'
                     },
                 ]
             },
@@ -830,60 +814,55 @@ const modules = [
                 pageName:'Reports',
                 subPages:[
                     {
-                        subPageName:'Prospectud Charges Report'
+                        subPageName:'Daily Reports',
+                        threads:[
+                            'Late in Early out Report',
+                            'Attendance Consolidated Report',
+                            'Staff Wise Daily Attendance Report',
+                            'Absent/Missing Attendance Report',
+                            'Biometrics Attendance Detail Department Wise',
+                            'Weekly Attendance Report',
+                            'Daily Performance Report',
+                            'Attendance Report'
+                        ]
                     },
                     {
-                        subPageName:'Merit List Generation'
+                        subPageName:'Monthly Reports',
+                        threads:[
+                            'Attendance Report Monthly Wise',
+                            'Monthly Attendance Report',
+                            'Monthly Performance Report',
+                            'School Staff Attendance Register',
+                            'Monthly Late in Count Report',
+                            'Monthly Consolidated Biometric Report',
+                        ]
                     },
                     {
-                        subPageName:'Merit Criteria Print'
+                        subPageName:'Leave Reports',
+                        threads:[
+                            'Leave Format Report',
+                            'Leave Balance Report',
+                            'Sanctioned Leave Report',
+                            'Leave Card Report',
+                            'Leave Ledger Report',
+                            'Leave Register Report',
+                            'Leave Bucket Report'
+                        ]
                     },
                     {
-                        subPageName:'Merit List Report'
-                    },
-                    {
-                        subPageName:'Admission Collection Report'
-                    },
-                    {
-                        subPageName:'Slot Report'
-                    },
-                    {
-                        subPageName:'Search and Import Online Registration'
-                    },
-                    {
-                        subPageName:'Sibling Report'
-                    },
-                    {
-                        subPageName:'Student House Wise Strength Report'
-                    },
-                    {
-                        subPageName:'Student Document Details'
-                    },
-                    {
-                        subPageName:'Class Wise Admission Report'
-                    },
-                    {
-                        subPageName:'Student Repeater List'
-                    },
-                    {
-                        subPageName:'Prospectud Charges Report'
-                    },
-                    {
-                        subPageName:'Verification Admission Form'
-                    },
-                    {
-                        subPageName:'Admission Withdrawal Register'
-                    },
-                    {
-                        subPageName:'Total Collection Report Student Wise'
-                    },
-                    {
-                        subPageName:'Manual List Generation Report'
+                        subPageName:'Other Reports',
+                        threads:[
+                            'Staff Shift Relation Report',
+                            'Attendance Analysis Report',
+                            'LWP Year Wise Report',
+                        ]
                     }
                 ]
             }
         ]
     },
+
+
     // Payroll
     {
         moduleName:'Payroll',
@@ -1204,382 +1183,24 @@ const modules = [
             }
         ]
     },
-    // Stocks
+
+
+    // Marks Entry
     {
-        moduleName:'Stocks',
-        // icon:Box,
-        icon:StocksImage,
-        pages:[
-            // Global Masters
-            {
-                pageName:'Global Masters',
-                subPages:[
-                    {
-                        subPageName:'Define Session',
-                        threads:[
-                            'Define Financial Year',
-                            'Define Academic Year',
-                        ]
-                    },
-                    {
-                        subPageName:'Define Item Category'
-                    },
-                    {
-                        subPageName:'Define Items Sub Category'
-                    },
-                    {
-                        subPageName:'Define Unit'
-                    },
-                    {
-                        subPageName:'Define Item'
-                    },
-                    {
-                        subPageName:'Define Brand Name'
-                    },
-                    {
-                        subPageName:'Define GST Slab'
-                    },
-                    {
-                        subPageName:'Relate Item With GST Slab'
-                    }
-                ]
-            },
-            // Master Settings
-            {
-                pageName:'Master Settings',
-                subPages:[
-                    {
-                        subPageName:'Change Academic'
-                    },
-                    {
-                        subPageName:'Stock Master Setting'
-                    },
-                    {
-                        subPageName:'Notification Scheduler'
-                    },
-                    {
-                        subPageName:'Set Stock Reminder Details'
-                    },
-                    {
-                        subPageName:'Report Layout Setting'
-                    },
-                    {
-                        subPageName:'Session Transfer'
-                    }
-                ]
-            },
-            // Stock
-            {
-                pageName:'Stock',
-                subPages:[
-                    {
-                        subPageName:'Asset Opening Entry'
-                    },
-                    {
-                        subPageName:'Opening Qty'
-                    },
-                    {
-                        subPageName:'Requisition Order'
-                    },
-                    {
-                        subPageName:'Purchase Order'
-                    },
-                    {
-                        subPageName:'Purchase Return Entry'
-                    },
-                    {
-                        subPageName:'Stock in Entry'
-                    },
-                    {
-                        subPageName:'Stock Bill Entry'
-                    },
-                    {
-                        subPageName:'Stock Issue'
-                    },
-                    {
-                        subPageName:'Multiple Stock Issue'
-                    },
-                    {
-                        subPageName:'Stock Return'
-                    },
-                    {
-                        subPageName:'Stock Return Item Wise'
-                    },
-                    {
-                        subPageName:'Stock Destroy'
-                    }
-                ]
-            },
-            // Reports
-            {
-                pageName:'Reports',
-                subPages:[
-                    {
-                        subPageName:'Stock Opening Report'
-                    },
-                    {
-                        subPageName:'Purchase Order Report'
-                    },
-                    {
-                        subPageName:'Stock in Report'
-                    },
-                    {
-                        subPageName:'Bill Report'
-                    },
-                    {
-                        subPageName:'Employee Issue Report'
-                    },
-                    {
-                        subPageName:'Employee Return Report'
-                    },
-                    {
-                        subPageName:'Stock Issue Report'
-                    },
-                    {
-                        subPageName:'Other Return Report'
-                    },
-                    {
-                        subPageName:'Stock Ledger'
-                    },
-                    {
-                        subPageName:'Cumulative Stock Statement Value Wise'
-                    },
-                    {
-                        subPageName:'Active Stock'
-                    },
-                    {
-                        subPageName:'Max Stock Report'
-                    },
-                    {
-                        subPageName:'Min Stock Report'
-                    },
-                    {
-                        subPageName:'Challan Report'
-                    },
-                    {
-                        subPageName:'Item Master Report'
-                    },
-                    {
-                        subPageName:'Purchase Return Report'
-                    },
-                    {
-                        subPageName:'Stock Destroy Report'
-                    }
-                ]
-            }
-        ]
+        moduleName:'Marks Entry',
+        icon:MarksImage,
+        pages:[]
     },
-    // Users
+
+
+    // Examinations
     {
-        moduleName:'Users',
-        // icon:Users,
-        icon:UsersImage,
-        pages:[
-            // Global Master
-            {
-                pageName:'Global Masters',
-                subPages:[
-                    {
-                        subPageName:'Define Session',
-                        threads:[
-                            'Define Academic Year',
-                            'Define Financial Year'
-                        ]
-                    }
-                ]
-            },
-            // Master Settings
-            {
-                pageName:'Master Settings',
-                subPages:[
-                    {
-                        subPageName:'Change Academic'
-                    },
-                    {
-                        subPageName:'Report Layout Setting'
-                    },
-                    {
-                        subPageName:'Session Transfer'
-                    }
-                ]
-            },
-            // Manage Users
-            {
-                pageName:'Manage Users',
-                subPages:[
-                    {
-                        subPageName:'Create User'
-                    },
-                    {
-                        subPageName:'Fee Type Assign To User'
-                    },
-                    {
-                        subPageName:'User Permission'
-                    },
-                    {
-                        subPageName:'Create Role'
-                    },
-                    {
-                        subPageName:'User Role'
-                    }
-                ]
-            },
-            // Reports
-            {
-                pageName:'Reports',
-                subPages:[]
-            }
-        ]
+        moduleName:'Examinations',
+        icon:MarksImage,
+        pages:[]
     },
-    // Attendance
-    {
-        moduleName:'Attendance',
-        // icon:Megaphone,
-        icon:AttendenceImage,
-        pages:[
-            // Global Masters
-            {
-                pageName:'Global Masters',
-                subPages:[
-                    {
-                        subPageName:'Define Session',
-                        threads:[
-                            'Define Academic Year',
-                            'Define Financial Year'
-                        ]
-                    },
-                    {
-                        subPageName:'Define Holiday'
-                    },
-                    {
-                        subPageName:'Define Leave'
-                    },
-                    {
-                        subPageName:'Define Shift Master'
-                    },
-                    {
-                        subPageName:'Attendance Settings'
-                    },
-                    {
-                        subPageName:'Report Settings'
-                    },
-                    {
-                        subPageName:'Employee Enrollment'
-                    },
-                    {
-                        subPageName:'Mark Attendance'
-                    }
-                ]
-            },
-            // Master Settings
-            {
-                pageName:'Master Settings',
-                subPages:[
-                    {
-                        subPageName:'Change Academic'
-                    },
-                    {
-                        subPageName:'Report Layout Setting'
-                    },
-                    {
-                        subPageName:'Session Transfer'
-                    },
-                ]
-            },
-            // Attendance
-            {
-                pageName:'Attendance',
-                subPages:[
-                    {
-                        subPageName:'Assign Leave to Staff'
-                    },
-                    {
-                        subPageName:'Modify Staff in Bulk'
-                    },
-                    {
-                        subPageName:'Staff Shift Relation'
-                    },
-                    {
-                        subPageName:'Auto Process Attendance'
-                    },
-                    {
-                        subPageName:'Mark Manual Attendance'
-                    },
-                    {
-                        subPageName:'Upload Attendance'
-                    },
-                    {
-                        subPageName:'Process Leave Application'
-                    },
-                    {
-                        subPageName:'Process Leave'
-                    },
-                    {
-                        subPageName:'Reprocess Attendance'
-                    },
-                    {
-                        subPageName:'Leave Acceptance Employee Wise'
-                    },
-                    {
-                        subPageName:'Mark Leave Staff Type Wise'
-                    },
-                    {
-                        subPageName:'Leave Marking'
-                    },
-                ]
-            },
-            // Reports
-            {
-                pageName:'Reports',
-                subPages:[
-                    {
-                        subPageName:'Daily Reports',
-                        threads:[
-                            'Late in Early out Report',
-                            'Attendance Consolidated Report',
-                            'Staff Wise Daily Attendance Report',
-                            'Absent/Missing Attendance Report',
-                            'Biometrics Attendance Detail Department Wise',
-                            'Weekly Attendance Report',
-                            'Daily Performance Report',
-                            'Attendance Report'
-                        ]
-                    },
-                    {
-                        subPageName:'Monthly Reports',
-                        threads:[
-                            'Attendance Report Monthly Wise',
-                            'Monthly Attendance Report',
-                            'Monthly Performance Report',
-                            'School Staff Attendance Register',
-                            'Monthly Late in Count Report',
-                            'Monthly Consolidated Biometric Report',
-                        ]
-                    },
-                    {
-                        subPageName:'Leave Reports',
-                        threads:[
-                            'Leave Format Report',
-                            'Leave Balance Report',
-                            'Sanctioned Leave Report',
-                            'Leave Card Report',
-                            'Leave Ledger Report',
-                            'Leave Register Report',
-                            'Leave Bucket Report'
-                        ]
-                    },
-                    {
-                        subPageName:'Other Reports',
-                        threads:[
-                            'Staff Shift Relation Report',
-                            'Attendance Analysis Report',
-                            'LWP Year Wise Report',
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
+
+
     // Time Table
     {
         moduleName:'Time Table',
@@ -1787,26 +1408,433 @@ const modules = [
             }
         ]
     },
+
+
+    // Accounts
     {
-        moduleName:'Report Card',
-        icon:ExamanationImage,
-        pages:[]
+        moduleName:'Accounts',
+        // icon:FileStack,
+        icon:AccountsImage,
+        pages:[
+            // Global Masters
+            {
+                pageName:'Global Masters',
+                subPages:[
+                    {
+                        subPageName:'Define Session',
+                        threads:[
+                            'Define Academic Year',
+                            'Define Financial Year'
+                        ]
+                    },
+                    {
+                        subPageName:'Define Narration Master'
+                    }
+                ]
+            },
+            // Master settings
+            {
+                pageName:'Master Settings',
+                subPages:[
+                    {
+                        subPageName:'Change Academic'
+                    },
+                    {
+                        subPageName:'Account Master setting'
+                    },
+                    {
+                        subPageName:'Account Petty Cash Setting'
+                    },
+                    {
+                        subPageName:'Voucher Print Settings'
+                    },
+                    {
+                        subPageName:'Voucher Code Settings'
+                    },
+                    {
+                        subPageName:'Cheque Print Format Setting'
+                    },
+                    {
+                        subPageName:'Report Layout Setting'
+                    },
+                    {
+                        subPageName:'Session Transfer'
+                    }
+                ]
+            },
+            // Accounts
+            {
+                pageName:'Accounts',
+                subPages:[
+                    {
+                        subPageName:'Define Account Group'
+                    },
+                    {
+                        subPageName:'Define Bank Ledger'
+                    },
+                    {
+                        subPageName:'Define Party Ledger'
+                    },
+                    {
+                        subPageName:'Define General Ledger'
+                    },
+                    {
+                        subPageName:'Bank Payment Voucher'
+                    },
+                    {
+                        subPageName:'Cash Payment Voucher'
+                    },
+                    {
+                        subPageName:'Bank Receipt Voucher'
+                    },
+                    {
+                        subPageName:'Cash Receipt Voucher'
+                    },
+                    {
+                        subPageName:'Define Group Nature'
+                    },
+                    {
+                        subPageName:'Contra Voucher'
+                    },
+                    {
+                        subPageName:'Journal Voucher'
+                    },
+                    {
+                        subPageName:'Payment Voucher'
+                    },
+                    {
+                        subPageName:'Salary Payment Voucher'
+                    },
+                    {
+                        subPageName:'Cheque Clearing'
+                    },
+                    {
+                        subPageName:'Cheque Printing'
+                    },
+                    {
+                        subPageName:'Voucher Image Upload'
+                    }
+                ]
+            },
+            // Reports
+            {
+                pageName:'Reports',
+                subPages:[
+                    {
+                        subPageName:'Ledger Report',
+                        threads:[
+                            'Ledger Report',
+                            'Ledger Report Detail',
+                            'Ledger Report Detail New',
+                            'Ledger Report With Filter'
+                        ]
+                    },
+                    {
+                        subPageName:'Daily Cash Status'
+                    },
+                    {
+                        subPageName:'Bank Ledger'
+                    },
+                    {
+                        subPageName:'Cash/Bank Book'
+                    },
+                    {
+                        subPageName:'Day Book'
+                    },
+                    {
+                        subPageName:'Trial Balance New'
+                    },
+                    {
+                        subPageName:'Trial Balance'
+                    },
+                    {
+                        subPageName:'Profit & Loss'
+                    },
+                    {
+                        subPageName:'Income & Expenditure'
+                    },
+                    {
+                        subPageName:'Balance Sheet'
+                    },
+                    {
+                        subPageName:'Reconciliation Statment'
+                    },
+                    {
+                        subPageName:'Journal Ledger/Book'
+                    },
+                    {
+                        subPageName:'Group Wise Report'
+                    },
+                    {
+                        subPageName:'Fee Account Mismatch'
+                    },
+                    {
+                        subPageName:'Entry Type Wise Report'
+                    },
+                    {
+                        subPageName:'Fee Outstandig Report'
+                    },
+                    {
+                        subPageName:'Depreciation Chart'
+                    },
+                    {
+                        subPageName:'Depreciation Detail Item Wise'
+                    },
+                    {
+                        subPageName:'Serialize Voucher Code'
+                    }
+                ]
+            },
+        ]
     },
+
+
+    // Stocks
+    {
+        moduleName:'Stocks',
+        // icon:Box,
+        icon:StocksImage,
+        pages:[
+            // Global Masters
+            {
+                pageName:'Global Masters',
+                subPages:[
+                    {
+                        subPageName:'Define Session',
+                        threads:[
+                            'Define Financial Year',
+                            'Define Academic Year',
+                        ]
+                    },
+                    {
+                        subPageName:'Define Item Category'
+                    },
+                    {
+                        subPageName:'Define Items Sub Category'
+                    },
+                    {
+                        subPageName:'Define Unit'
+                    },
+                    {
+                        subPageName:'Define Item'
+                    },
+                    {
+                        subPageName:'Define Brand Name'
+                    },
+                    {
+                        subPageName:'Define GST Slab'
+                    },
+                    {
+                        subPageName:'Relate Item With GST Slab'
+                    }
+                ]
+            },
+            // Master Settings
+            {
+                pageName:'Master Settings',
+                subPages:[
+                    {
+                        subPageName:'Change Academic'
+                    },
+                    {
+                        subPageName:'Stock Master Setting'
+                    },
+                    {
+                        subPageName:'Notification Scheduler'
+                    },
+                    {
+                        subPageName:'Set Stock Reminder Details'
+                    },
+                    {
+                        subPageName:'Report Layout Setting'
+                    },
+                    {
+                        subPageName:'Session Transfer'
+                    }
+                ]
+            },
+            // Stock
+            {
+                pageName:'Stock',
+                subPages:[
+                    {
+                        subPageName:'Asset Opening Entry'
+                    },
+                    {
+                        subPageName:'Opening Qty'
+                    },
+                    {
+                        subPageName:'Requisition Order'
+                    },
+                    {
+                        subPageName:'Purchase Order'
+                    },
+                    {
+                        subPageName:'Purchase Return Entry'
+                    },
+                    {
+                        subPageName:'Stock in Entry'
+                    },
+                    {
+                        subPageName:'Stock Bill Entry'
+                    },
+                    {
+                        subPageName:'Stock Issue'
+                    },
+                    {
+                        subPageName:'Multiple Stock Issue'
+                    },
+                    {
+                        subPageName:'Stock Return'
+                    },
+                    {
+                        subPageName:'Stock Return Item Wise'
+                    },
+                    {
+                        subPageName:'Stock Destroy'
+                    }
+                ]
+            },
+            // Reports
+            {
+                pageName:'Reports',
+                subPages:[
+                    {
+                        subPageName:'Stock Opening Report'
+                    },
+                    {
+                        subPageName:'Purchase Order Report'
+                    },
+                    {
+                        subPageName:'Stock in Report'
+                    },
+                    {
+                        subPageName:'Bill Report'
+                    },
+                    {
+                        subPageName:'Employee Issue Report'
+                    },
+                    {
+                        subPageName:'Employee Return Report'
+                    },
+                    {
+                        subPageName:'Stock Issue Report'
+                    },
+                    {
+                        subPageName:'Other Return Report'
+                    },
+                    {
+                        subPageName:'Stock Ledger'
+                    },
+                    {
+                        subPageName:'Cumulative Stock Statement Value Wise'
+                    },
+                    {
+                        subPageName:'Active Stock'
+                    },
+                    {
+                        subPageName:'Max Stock Report'
+                    },
+                    {
+                        subPageName:'Min Stock Report'
+                    },
+                    {
+                        subPageName:'Challan Report'
+                    },
+                    {
+                        subPageName:'Item Master Report'
+                    },
+                    {
+                        subPageName:'Purchase Return Report'
+                    },
+                    {
+                        subPageName:'Stock Destroy Report'
+                    }
+                ]
+            }
+        ]
+    },
+
+
+    // Library
     {
         moduleName:'Library',
         icon:LibraryImage,
         pages:[]
     },
+
+
+    // Users
     {
-        moduleName:'CBSE/DIOS',
-        icon:CBSEImage,
-        pages:[]
+        moduleName:'Users',
+        // icon:Users,
+        icon:UsersImage,
+        pages:[
+            // Global Master
+            {
+                pageName:'Global Masters',
+                subPages:[
+                    {
+                        subPageName:'Define Session',
+                        threads:[
+                            'Define Academic Year',
+                            'Define Financial Year'
+                        ]
+                    }
+                ]
+            },
+            // Master Settings
+            {
+                pageName:'Master Settings',
+                subPages:[
+                    {
+                        subPageName:'Change Academic'
+                    },
+                    {
+                        subPageName:'Report Layout Setting'
+                    },
+                    {
+                        subPageName:'Session Transfer'
+                    }
+                ]
+            },
+            // Manage Users
+            {
+                pageName:'Manage Users',
+                subPages:[
+                    {
+                        subPageName:'Create User'
+                    },
+                    {
+                        subPageName:'Fee Type Assign To User'
+                    },
+                    {
+                        subPageName:'User Permission'
+                    },
+                    {
+                        subPageName:'Create Role'
+                    },
+                    {
+                        subPageName:'User Role'
+                    }
+                ]
+            },
+            // Reports
+            {
+                pageName:'Reports',
+                subPages:[]
+            }
+        ]
     },
+
+
+    // Qodum Care
     {
-        moduleName:'Marks',
-        icon:MarksImage,
+        moduleName:'Qodum Care',
+        icon:ExamanationImage,
         pages:[]
-    },
+    }
+
 ];
 
 

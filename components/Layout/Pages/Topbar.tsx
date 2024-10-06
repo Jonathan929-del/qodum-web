@@ -167,16 +167,6 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                     </div>
                 </div>
                 <div className='flex flex-row gap-2'>
-                    <div className='flex flex-col justify-center items-end'>
-                        <p className='h-5 text-md text-semibold text-hash-color'>{user?.name}</p>
-                        <p className='text-xs text-hash-color'>{user?.designation}</p>
-                        <span
-                            onClick={logout}
-                            className='flex justify-center items-center border-2 border-[#ccc] w-7 h-7 rounded-full cursor-pointer hover:scale-105 transition-transform'
-                        >
-                            <LogOut className='text-hash-color' size={15}/>
-                        </span>
-                    </div>
                     {user?.profile_picture ? (
                         <img
                             src={user?.profile_picture}
@@ -188,6 +178,16 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                             No photo
                         </div>
                     )}
+                    <div className='flex flex-col justify-center items-start pl-[4px] border-l-[1px] border-[#ccc]'>
+                        <p className='h-5 text-md text-semibold text-hash-color'>{user?.name}</p>
+                        <p className='text-xs text-hash-color'>{user?.designation}</p>
+                        <span
+                            onClick={logout}
+                            className='flex justify-center items-center border-2 border-[#ccc] w-7 h-7 rounded-full cursor-pointer hover:scale-105 transition-transform'
+                        >
+                            <LogOut className='text-hash-color' size={15}/>
+                        </span>
+                    </div>
                 </div>
             </div>
 

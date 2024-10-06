@@ -10,6 +10,7 @@ import {useContext, useEffect, useState} from 'react';
 import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {loginUser} from '@/lib/actions/users/manageUsers/user.actions';
+import { Lock, LogIn, PersonStanding, User } from 'lucide-react';
 
 
 
@@ -43,6 +44,19 @@ const SignIn = () => {
 
     // Password
     const [password, setPassword] = useState('');
+
+
+    // Focused input
+    const [focusedInput, setFocusedInput] = useState('');
+
+
+    // Background colors
+    const backgrounds = [
+        '/assets/Slides/SlideOne.png',
+        '/assets/Slides/SlideTwo.png',
+        '/assets/Slides/SlideThree.png',
+    ];
+    const [currentBackground, setCurrentBackground] = useState(0);
 
 
     // Submit handler
@@ -80,40 +94,66 @@ const SignIn = () => {
     };
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         if(user) redirect('/');
     }, [isLoading]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentBackground((prev) => (prev + 1) % backgrounds.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
-        <div className='flex items-center justify-center h-screen w-screen bg-[#2CABE3]'>
-            <div className='w-[80%] h-[80%] flex flex-row border-[0.5px] border-[#ccc] rounded-[10px] bg-[#F0F6FB]'>
+        <div
+            className='flex justify-center h-screen w-screen pt-20'
+            style={{
+                backgroundImage:`url(${backgrounds[currentBackground]})`,
+                backgroundSize:'cover',
+                backgroundPosition:'center',
+                transition:'background 1s ease'
+            }}
+        >
+            {/* Overlay */}
+            <div
+                className='absolute inset-0 bg-black opacity-50 pointer-events-none'
+                style={{
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    backdropFilter: 'blur(3px)',
+                }}
+            />
+            <div className='w-[60%] h-[80%] flex flex-row items-center rounded-[10px] bg-[#F0F6FB] backdrop-blur-lg'>
 
                 {/* Image */}
-                <div className='flex-1 border-r-[0.5px] border-[#ccc] rounded-r-2'>
-                    <Image
-                        width={100}
-                        height={100}
-                        src={WelcomeImage}
-                        alt='Welcome image'
-                        className='w-full h-full'
-                    />
+                <div
+                    className='h-[110%] relative flex-1 border-r-[0.5px] border-[#ccc] rounded-[10px]'
+                    style={{
+                        backgroundImage:`url('/assets/Slides/WelcomeBackground.png')`,
+                        backgroundSize:'cover',
+                        backgroundPosition:'center',
+                        transition:'background 1s ease-in-out'
+                    }}
+                >
+                    <div className='h-full flex flex-col justify-center items-center gap-2 rounded-[10px] backdrop-blur-sm'>
+                        <div className='relative'>
+                            <p className='text-[35px] text-white cursor-pointer'>WELCOME TO</p>
+                            <p className='bottom-0 absolute w-[150px] border-b-[2px] border-[#fff] text-[#fff] h-[13.387px]'>-</p>
+                        </div>
+                        <div className='w-full flex justify-center'>
+                            <Image
+                                width={250}
+                                height={250}
+                                src={QodumLogo}
+                                alt='Qodum logo'
+                            />
+                        </div>
+                    </div>
                 </div>
 
 
                 {/* Form */}
-                <div className='flex-1 flex flex-col gap-6 pt-20 px-20'>
-
-                    {/* Qodum logo */}
-                    <div className='w-full flex justify-center'>
-                        <Image
-                            width={250}
-                            height={250}
-                            src={QodumLogo}
-                            alt='Qodum logo'
-                        />
-                    </div>
-
+                <div className='flex-1 flex flex-col gap-6 pt-10 px-20'>
 
                     {/* Sign in heading */}
                     <h2 className='text-2xl font-semibold mt-6'>Sign in to your account</h2>
@@ -124,24 +164,32 @@ const SignIn = () => {
 
 
                     {/* Username */}
-                    <div className='flex flex-col'>
-                        <p className='text-sm text-[#726E71]'>Username</p>
+                    <div className={`relative flex flex-row items-center pl-3 bg-[#fff] border-[0.5px] ${focusedInput === 'username' ? 'border-[#4CA7DE]' : 'border-[#E4E4E4]'} rounded-full transition-all`}>
+                        <User
+                            size={25}
+                            className='text-hash-color'
+                        />
                         <Input
                             value={username}
                             onChange={(e:any) => {
                                 setUsername(e.target.value);
                                 setErrors({...errors, username:''});
                             }}
-                            placeholder='Please enter username'
-                            className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
+                            onClick={() => setFocusedInput('username')}
+                            onBlur={() => setFocusedInput('')}
+                            placeholder='Username'
+                            className='text-xs pl-3 bg-[#fff] border-[0.5px] border-[#fff] rounded-full placeholder:text-hash-color'
                         />
-                        {errors.username && <p className='text-xs text-red-600'>{errors.username}</p>}
+                        {errors.username && <p className='absolute bottom-[-15px] left-0 text-xs text-red-600'>{errors.username}</p>}
                     </div>
 
 
                     {/* Password */}
-                    <div className='flex flex-col'>
-                        <p className='text-sm text-[#726E71]'>Password</p>
+                    <div className={`relative flex flex-row items-center pl-3 bg-[#fff] border-[0.5px] ${focusedInput === 'password' ? 'border-[#4CA7DE]' : 'border-[#E4E4E4]'} rounded-full transition-all`}>
+                        <Lock
+                            size={25}
+                            className='text-hash-color'
+                        />
                         <Input
                             type='password'
                             value={password}
@@ -149,10 +197,12 @@ const SignIn = () => {
                                 setPassword(e.target.value);
                                 setErrors({...errors, password:''});
                             }}
-                            placeholder='Please enter password'
-                            className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
+                            placeholder='Password'
+                            onClick={() => setFocusedInput('password')}
+                            onBlur={() => setFocusedInput('')}
+                            className='text-xs pl-3 bg-[#fff] border-[0.5px] border-[#fff] rounded-full placeholder:text-hash-color'
                         />
-                        {errors.password && <p className='text-xs text-red-600'>{errors.password}</p>}
+                        {errors.password && <p className='absolute bottom-[-15px] left-0 text-xs text-red-600'>{errors.password}</p>}
                     </div>
 
 
@@ -165,7 +215,10 @@ const SignIn = () => {
                         {isLoading ? (
                             <LoadingIcon />
                         ) : (
-                            'Login'
+                            <>
+                                <LogIn size={25} className='mr-2'/>
+                                Login
+                            </>
                         )}
                     </span>
 

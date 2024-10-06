@@ -50,7 +50,7 @@ const FormCom = () => {
 
 
     // Modules
-    const modules = ['Fees', 'Payroll', 'Stocks', 'Admission', 'Accounts', 'Users', 'Attendance', 'Time Table'];
+    const modules = ['Admission', 'Fees', 'Attendance', 'Payroll', 'Marks Entry', 'Examinations', 'Time Table', 'Accounts', 'Stocks', 'Library', 'Users', 'Qodum Care'];
 
 
     // Selected user

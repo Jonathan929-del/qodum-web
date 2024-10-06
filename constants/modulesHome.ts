@@ -9,7 +9,7 @@ import AttendenceImage from '@/public/assets/Modules Icons/Menu icons/Attendance
 import TimetableImage from '@/public/assets/Modules Icons/Menu icons/Time Table.png';
 import ExamanationImage from '@/public/assets/Modules Icons/Menu icons/Examination.png';
 import LibraryImage from '@/public/assets/Modules Icons/Menu icons/Library.png';
-import CBSEImage from '@/public/assets/Modules Icons/Menu icons/CBSE DIOS.png';
+import QodumCareImage from '@/public/assets/Modules Icons/Menu icons/CBSE DIOS.png';
 import MarksImage from '@/public/assets/Modules Icons/Menu icons/Marks.png';
 
 
@@ -18,36 +18,8 @@ import MarksImage from '@/public/assets/Modules Icons/Menu icons/Marks.png';
 
 // Modules
 const modules:any = [
-    {
-        icon:FessImage,
-        title:'Fees',
-        sections:[
-            'Fee Entry',
-            'Student Fee Entry',
-            'Print Fee Receipt',
-            'Student Fee Details',
-        ]
-    },
-    {
-        icon:PayrollImage,
-        title:'Payroll',
-        sections:[
-            'Define Staff',
-            'Salary Sheets',
-            'Salary Generation',
-            'Bank Statement Reports',
-        ]
-    },
-    {
-        icon:StocksImage,
-        title:'Stocks',
-        sections:[
-            'Define Items',
-            'Stock Issues',
-            'Student Fee Entry',
-            'Print Fee Receipt',
-        ]
-    },
+
+    // Admission
     {
         icon:AdmissionImage,
         title:'Admission',
@@ -58,26 +30,22 @@ const modules:any = [
             'Student Registration',
         ]
     },
+
+
+    // Fees
     {
-        icon:AccountsImage,
-        title:'Accounts',
+        icon:FessImage,
+        title:'Fees',
         sections:[
-            'Cheque Printing',
-            'Session Transfer',
-            'Daily Cash Status',
-            'Define Account Group',
+            'Fee Entry',
+            'Student Fee Entry',
+            'Print Fee Receipt',
+            'Student Fee Details',
         ]
     },
-    {
-        icon:UsersImage,
-        title:'Users',
-        sections:[
-            'User Role',
-            'Create User',
-            'Create Role',
-            'Define Session',
-        ]
-    },
+
+
+    // Attendance
     {
         icon:AttendenceImage,
         title:'Attendance',
@@ -88,6 +56,50 @@ const modules:any = [
             'Employee Enrollment',
         ]
     },
+
+
+    // Payroll
+    {
+        icon:PayrollImage,
+        title:'Payroll',
+        sections:[
+            'Define Staff',
+            'Salary Sheets',
+            'Salary Generation',
+            'Bank Statement Reports',
+        ]
+    },
+
+
+    // Marks Entry
+    {
+        icon:MarksImage,
+        title:'Marks Entry',
+        numberOfSections:7,
+        sections:[
+            'Marks Entry Subject Wise',
+            'CSA Entry Activity Wise',
+            'Marks Consolidated Report',
+            'Marks SMS',
+        ]
+    },
+
+
+    // Examinations
+    {
+        icon:ExamanationImage,
+        title:'Examinations',
+        numberOfSections:7,
+        sections:[
+            'Teacher Setting',
+            'Define Resource',
+            'Auto Generate Timetable',
+            'Class Timetable Details',
+        ]
+    },
+
+
+    // Time Table
     {
         icon:TimetableImage,
         title:'Time Table',
@@ -98,17 +110,35 @@ const modules:any = [
             'Class Timetable Details',
         ]
     },
+
+
+    // Accounts
     {
-        icon:ExamanationImage,
-        title:'Examination',
-        numberOfSections:7,
+        icon:AccountsImage,
+        title:'Accounts',
         sections:[
-            'Teacher Setting',
-            'Define Resource',
-            'Auto Generate Timetable',
-            'Class Timetable Details',
+            'Cheque Printing',
+            'Session Transfer',
+            'Daily Cash Status',
+            'Define Account Group',
         ]
     },
+
+
+    // Stocks
+    {
+        icon:StocksImage,
+        title:'Stocks',
+        sections:[
+            'Define Items',
+            'Stock Issues',
+            'Student Fee Entry',
+            'Print Fee Receipt',
+        ]
+    },
+    
+    
+    // Library
     {
         icon:LibraryImage,
         title:'Library',
@@ -120,9 +150,25 @@ const modules:any = [
             'Class Timetable Details',
         ]
     },
+
+
+    // Users
     {
-        icon:CBSEImage,
-        title:'CBSE/DIOS',
+        icon:UsersImage,
+        title:'Users',
+        sections:[
+            'User Role',
+            'Create User',
+            'Create Role',
+            'Define Session',
+        ]
+    },
+
+
+    // Qodum Care
+    {
+        icon:QodumCareImage,
+        title:'Qodum Care',
         numberOfSections:7,
         sections:[
             'Teacher Setting',
@@ -130,18 +176,8 @@ const modules:any = [
             'Auto Generate Timetable',
             'Class Timetable Details',
         ]
-    },
-    {
-        icon:MarksImage,
-        title:'Marks',
-        numberOfSections:7,
-        sections:[
-            'Marks Entry Subject Wise',
-            'CSA Entry Activity Wise',
-            'Marks Consolidated Report',
-            'Marks SMS',
-        ]
-    },
+    }
+
 ];
 
 

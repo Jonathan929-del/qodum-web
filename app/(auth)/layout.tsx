@@ -1,6 +1,6 @@
 // Improts
 import '../globals.css';
-import {DM_Sans} from 'next/font/google';
+import {ABeeZee} from 'next/font/google';
 import {Toaster} from '@/components/ui/toaster';
 import {AuthProvider} from '@/context/AuthContext';
 
@@ -13,9 +13,9 @@ export const metadata = {
   title:'Qodum',
   description:'School management system | Auth',
 };
-const dmSans = DM_Sans({
-  subsets: ['latin'],  // Choose your font's subsets
-  weight: ['400', '500', '700'],  // Specify weights
+const ABZ = ABeeZee({
+  subsets: ['latin'],
+  weight: ['400']
 });
 
 
@@ -26,7 +26,7 @@ const dmSans = DM_Sans({
 export default async function RootLayout({children}:{children:React.ReactNode}) {
   return (
     <html lang='en'>
-      <body className={`${dmSans.className}`}>
+      <body className={`${ABZ.className}`}>
         <AuthProvider>
           <div className='w-full flex items-center justify-center min-h-screen'>
             {children}
