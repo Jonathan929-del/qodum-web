@@ -1,7 +1,7 @@
 // Imports
 import '../globals.css';
 import type {Metadata} from 'next';
-import {Inter} from 'next/font/google';
+import {DM_Sans} from 'next/font/google';
 import Layout from '@/components/Layout/index';
 import {AuthProvider} from '@/context/AuthContext';
 import {GlobalStateProvider} from '@/context/GlobalStateContext';
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   title:'Qodum',
   description:'School management system',
 };
-const inter = Inter({subsets:['latin']});
+const dmSans = DM_Sans({
+  subsets: ['latin'],  // Choose your font's subsets
+  weight: ['400', '500', '700'],  // Specify weights
+});
 
 
 
@@ -25,7 +28,7 @@ const inter = Inter({subsets:['latin']});
 export default function RootLayout({children}:{children:React.ReactNode}) {
   return (
     <html lang='en'>
-      <body className={`${inter.className}`}>
+      <body className={`${dmSans.className}`}>
           <AuthProvider>
             <GlobalStateProvider>
               <Layout children={children} />

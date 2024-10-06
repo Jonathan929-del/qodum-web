@@ -86,90 +86,92 @@ const SignIn = () => {
     }, [isLoading]);
 
     return (
-        <div className='w-full h-screen flex flex-row bg-[#F1F7FB]'>
+        <div className='flex items-center justify-center h-screen w-screen bg-[#2CABE3]'>
+            <div className='w-[80%] h-[80%] flex flex-row border-[0.5px] border-[#ccc] rounded-[10px] bg-[#F0F6FB]'>
 
-            {/* Image */}
-            <div className='flex-1'>
-                <Image
-                    width={100}
-                    height={100}
-                    src={WelcomeImage}
-                    alt='Welcome image'
-                    className='w-full h-full size-fit'
-                />
-            </div>
-
-
-            {/* Form */}
-            <div className='flex-1 flex flex-col gap-6 pt-20 px-20'>
-
-                {/* Qodum logo */}
-                <div className='w-full flex justify-center'>
+                {/* Image */}
+                <div className='flex-1 border-r-[0.5px] border-[#ccc] rounded-r-2'>
                     <Image
-                        width={250}
-                        height={250}
-                        src={QodumLogo}
-                        alt='Qodum logo'
+                        width={100}
+                        height={100}
+                        src={WelcomeImage}
+                        alt='Welcome image'
+                        className='w-full h-full'
                     />
                 </div>
 
 
-                {/* Sign in heading */}
-                <h2 className='text-2xl font-semibold mt-6'>Sign in to your account</h2>
+                {/* Form */}
+                <div className='flex-1 flex flex-col gap-6 pt-20 px-20'>
+
+                    {/* Qodum logo */}
+                    <div className='w-full flex justify-center'>
+                        <Image
+                            width={250}
+                            height={250}
+                            src={QodumLogo}
+                            alt='Qodum logo'
+                        />
+                    </div>
 
 
-                {/* Welcom paragraph */}
-                <p className='text-sm text-hash-color'>Welcom back! Please enter your username and password.</p>
+                    {/* Sign in heading */}
+                    <h2 className='text-2xl font-semibold mt-6'>Sign in to your account</h2>
 
 
-                {/* Username */}
-                <div className='flex flex-col'>
-                    <p className='text-sm text-[#726E71]'>Username</p>
-                    <Input
-                        value={username}
-                        onChange={(e:any) => {
-                            setUsername(e.target.value);
-                            setErrors({...errors, username:''});
-                        }}
-                        placeholder='Please enter username'
-                        className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
-                    />
-                    {errors.username && <p className='text-xs text-red-600'>{errors.username}</p>}
+                    {/* Welcom paragraph */}
+                    <p className='text-sm text-hash-color'>Welcom back! Please enter your username and password.</p>
+
+
+                    {/* Username */}
+                    <div className='flex flex-col'>
+                        <p className='text-sm text-[#726E71]'>Username</p>
+                        <Input
+                            value={username}
+                            onChange={(e:any) => {
+                                setUsername(e.target.value);
+                                setErrors({...errors, username:''});
+                            }}
+                            placeholder='Please enter username'
+                            className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
+                        />
+                        {errors.username && <p className='text-xs text-red-600'>{errors.username}</p>}
+                    </div>
+
+
+                    {/* Password */}
+                    <div className='flex flex-col'>
+                        <p className='text-sm text-[#726E71]'>Password</p>
+                        <Input
+                            type='password'
+                            value={password}
+                            onChange={(e:any) => {
+                                setPassword(e.target.value);
+                                setErrors({...errors, password:''});
+                            }}
+                            placeholder='Please enter password'
+                            className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
+                        />
+                        {errors.password && <p className='text-xs text-red-600'>{errors.password}</p>}
+                    </div>
+
+
+                    {/* Login */}
+                    <span
+                        onClick={submitHandler}
+                        className='flex items-center justify-center px-4 h-10 mt-8 text-lg text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                    >
+                        {isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            'Login'
+                        )}
+                    </span>
+
                 </div>
-
-
-                {/* Password */}
-                <div className='flex flex-col'>
-                    <p className='text-sm text-[#726E71]'>Password</p>
-                    <Input
-                        type='password'
-                        value={password}
-                        onChange={(e:any) => {
-                            setPassword(e.target.value);
-                            setErrors({...errors, password:''});
-                        }}
-                        placeholder='Please enter password'
-                        className='text-[11px] pl-3 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-full placeholder:text-hash-color'
-                    />
-                    {errors.password && <p className='text-xs text-red-600'>{errors.password}</p>}
-                </div>
-
-
-                {/* Login */}
-                <span
-                    onClick={submitHandler}
-                    className='flex items-center justify-center px-4 h-10 mt-8 text-lg text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                >
-                    {isLoading ? (
-                        <LoadingIcon />
-                    ) : (
-                        'Login'
-                    )}
-                </span>
 
             </div>
-
         </div>
     );
 };

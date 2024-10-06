@@ -1,5 +1,4 @@
 // Imports
-import Image from 'next/image';
 import {Input} from '../../ui/input';
 import {AuthContext} from '@/context/AuthContext';
 import {useContext, useEffect, useState} from 'react';

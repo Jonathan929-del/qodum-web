@@ -28,7 +28,7 @@ const Modules = () => {
     }, [user]);
 
     return (
-        <section className='grid grid-cols-1 grid-rows-3 rounded-[9px] mt-8 px-4 pb-2 gap-2 gap-y-8 lg:grid-cols-3 sm:grid-cols-2'>
+        <section className='w-full grid grid-cols-1 grid-rows-3 rounded-[9px] mt-8 px-4 pb-2 gap-2 gap-y-8 lg:grid-cols-3 sm:grid-cols-2'>
             {
                 modules.filter((module:any) => permittedModules.includes(module.title)).map((module:any) => (
                     <div className='relative flex flex-col rounded-[4px] p-4 bg-[#FAFAFA]' key={module.title}>

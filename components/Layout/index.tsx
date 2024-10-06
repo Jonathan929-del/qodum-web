@@ -11,6 +11,7 @@ import {redirect, usePathname} from 'next/navigation';
 import {fetchActiveFinancialYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
 import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import { AuthContext } from '@/context/AuthContext';
+import { LogOut } from 'lucide-react';
 
 
 
@@ -20,7 +21,7 @@ import { AuthContext } from '@/context/AuthContext';
 const index = ({children}:any) => {
 
     // User
-    const {user} = useContext(AuthContext);
+    const {user, logout} = useContext(AuthContext);
 
 
     // Sidebar Toggler
@@ -100,7 +101,36 @@ const index = ({children}:any) => {
                     )
                 }
                 <div className='flex-1 flex flex-col justify-between overflow-scroll custom-scrollbar'>
-                    {children}
+                    {pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1) === '' ? (
+                        <div className='flex flex-row'>
+                            <aside className='flex flex-col items-center w-[200px] h-[75%] pt-10 mt-7 ml-5 gap-1 bg-[#fff] rounded-[10px] fixed'>
+                                {user?.profile_picture ? (
+                                    <img
+                                        src={user?.profile_picture}
+                                        alt='User profile picture'
+                                        className='h-[100px] w-[100px] size-fit rounded-[4px]'
+                                    />
+                                ) : (
+                                    <div className='flex items-center justify-center h-[100px] w-[100px] text-[11px] text-hash-color rounded-[4px] border-[0.5px] border-[#ccc]'>
+                                        No photo
+                                    </div>
+                                )}
+                                <p className='h-5 mt-3 text-lg text-semibold text-hash-color'>{user?.name}</p>
+                                <p className='text-xs text-hash-color'>{user?.designation}</p>
+                                <p className='text-xs text-hash-color'>{user?.mobile}</p>
+                                <p className='text-xs text-hash-color'>{user?.email}</p>
+                                <span
+                                    onClick={logout}
+                                    className='flex justify-center items-center border-2 border-[#ccc] w-7 h-7 rounded-full cursor-pointer hover:scale-105 transition-transform'
+                                >
+                                    <LogOut className='text-hash-color' size={15}/>
+                                </span>
+                            </aside>
+                            <div className='w-full pl-[220px]'>
+                                {children}
+                            </div>
+                        </div>
+                    ) : children}
                     <Toaster />
                 </div>
                 <Footer
