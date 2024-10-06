@@ -1,6 +1,6 @@
 // Improts
 import '../globals.css';
-import {Inter} from 'next/font/google';
+import {DM_Sans} from 'next/font/google';
 import {Toaster} from '@/components/ui/toaster';
 import {AuthProvider} from '@/context/AuthContext';
 
@@ -13,7 +13,10 @@ export const metadata = {
   title:'Qodum',
   description:'School management system | Auth',
 };
-const inter = Inter({subsets:['latin']});
+const dmSans = DM_Sans({
+  subsets: ['latin'],  // Choose your font's subsets
+  weight: ['400', '500', '700'],  // Specify weights
+});
 
 
 
@@ -23,7 +26,7 @@ const inter = Inter({subsets:['latin']});
 export default async function RootLayout({children}:{children:React.ReactNode}) {
   return (
     <html lang='en'>
-      <body className={`${inter.className}`}>
+      <body className={`${dmSans.className}`}>
         <AuthProvider>
           <div className='w-full flex items-center justify-center min-h-screen'>
             {children}
