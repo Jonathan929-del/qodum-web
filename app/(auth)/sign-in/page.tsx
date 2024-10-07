@@ -112,7 +112,7 @@ const SignIn = () => {
                 backgroundImage:`url(${backgrounds[currentBackground]})`,
                 backgroundSize:'cover',
                 backgroundPosition:'center',
-                transition:'background 1s ease'
+                transition:'background 1s ease-out'
             }}
         >
             {/* Overlay */}
