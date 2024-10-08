@@ -9,7 +9,7 @@ import {useToast} from '@/components/ui/use-toast';
 import {useContext, useEffect, useState} from 'react';
 import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {loginUser} from '@/lib/actions/users/manageUsers/user.actions';
+import {createUser, loginUser} from '@/lib/actions/users/manageUsers/user.actions';
 import { Lock, LogIn, PersonStanding, User } from 'lucide-react';
 
 
@@ -64,6 +64,23 @@ const SignIn = () => {
 
         // Set loading to true
         setIsLoading(true);
+
+
+        // Create admin
+        // const createUserRes = await createUser({
+        //     name:'superadmin',
+        //     user_name:'superadmin',
+        //     password:'$2y$10$EDY8Y7WfpjMZMYeqOE36me7Z2hoymr0o9Ycq/H3ZDnrPfJZutEmTS',
+        //     is_reset_password:true,
+        //     designation:'Designataion',
+        //     email:'admin@admin.com',
+        //     employee:'',
+        //     mobile:1234567891,
+        //     profile_picture:'https://www.unitedagents.co.uk/sites/default/files/thumbnails/image/guybolton-photo-deadline.jpg',
+        //     schools:[''],
+        //     is_active:true,
+        //     enable_otp:true
+        // });
 
 
         // Username and password validations

@@ -11,6 +11,7 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 // Create bank ledger props
 interface CreateBankLedgerProps{
     account_name:String;
+    account_no:Number;
     group:String;
     account_type:String;
     account_address:String;
@@ -23,7 +24,7 @@ interface CreateBankLedgerProps{
     assign_date:Date;
 };
 // Create bank ledger
-export const createBankLedger = async ({account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}:CreateBankLedgerProps) => {
+export const createBankLedger = async ({account_name, account_no, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}:CreateBankLedgerProps) => {
     try {
 
     
@@ -47,6 +48,7 @@ export const createBankLedger = async ({account_name, group, account_type, accou
         const newBankLedger = await BankLedger.create({
             session:activeSession?.year_name,
             account_name,
+            account_no,
             group,
             account_type,
             account_address,
@@ -101,6 +103,7 @@ export const fetchBankLedgers = async () => {
 interface ModifyBankLedgerProps{
     id:String;
     account_name:String;
+    account_no:Number;
     group:String;
     account_type:String;
     account_address:String;
@@ -113,7 +116,7 @@ interface ModifyBankLedgerProps{
     assign_date:Date;
 }
 // Modify Bank Ledger
-export const modifyBankLedger = async ({id, account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}:ModifyBankLedgerProps) => {
+export const modifyBankLedger = async ({id, account_name, account_no, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}:ModifyBankLedgerProps) => {
     try {
 
         // Db connection
@@ -131,7 +134,7 @@ export const modifyBankLedger = async ({id, account_name, group, account_type, a
 
 
         // Update Bank Ledger
-        const updatedBankLedger = await BankLedger.findByIdAndUpdate(id, {account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
+        const updatedBankLedger = await BankLedger.findByIdAndUpdate(id, {account_name, account_no, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
 
 
         // Return

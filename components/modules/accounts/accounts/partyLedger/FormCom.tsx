@@ -43,6 +43,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
     // Comparison object
     const comparisonObject = {
         account_name:updatePartyLedger.account_name,
+        account_no:updatePartyLedger.account_no,
+        cin_no:updatePartyLedger.cin_no,
         group:updatePartyLedger.group,
         account_type:updatePartyLedger.account_type,
         account_address:updatePartyLedger.account_address,
@@ -51,7 +53,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
         email:updatePartyLedger.email,
         mobile:updatePartyLedger.mobile,
         pan:updatePartyLedger.pan,
-        tin:updatePartyLedger.tin,
+        gstin:updatePartyLedger.gstin,
         opening_balance:updatePartyLedger.opening_balance,
         opening_balance_type:updatePartyLedger.opening_balance_type,
         assign_date:updatePartyLedger.assign_date
@@ -63,6 +65,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
         resolver:zodResolver(PartyLedgerValidation),
         defaultValues:{
             account_name:updatePartyLedger.id === '' ? '' : updatePartyLedger.account_name,
+            account_no:updatePartyLedger.id === '' ? '' : updatePartyLedger.account_no,
+            cin_no:updatePartyLedger.id === '' ? '' : updatePartyLedger.cin_no,
             group:updatePartyLedger.id === '' ? '' : updatePartyLedger.group,
             account_type:updatePartyLedger.id === '' ? '' : updatePartyLedger.account_type,
             account_address:updatePartyLedger.id === '' ? '' : updatePartyLedger.account_address,
@@ -71,7 +75,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             email:updatePartyLedger.id === '' ? '' : updatePartyLedger.email,
             mobile:updatePartyLedger.id === '' ? null : updatePartyLedger.mobile,
             pan:updatePartyLedger.id === '' ? null : updatePartyLedger.pan,
-            tin:updatePartyLedger.id === '' ? null : updatePartyLedger.tin,
+            gstin:updatePartyLedger.id === '' ? null : updatePartyLedger.gstin,
             opening_balance:updatePartyLedger.id === '' ? null : updatePartyLedger.opening_balance,
             opening_balance_type:updatePartyLedger.id === '' ? 'Debit' : updatePartyLedger.opening_balance_type,
             assign_date:updatePartyLedger.id === '' ? new Date() : updatePartyLedger.assign_date
@@ -89,6 +93,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             };
             const res = await createPartyLedger({
                 account_name:values.account_name,
+                account_no:values.account_no,
+                cin_no:values.cin_no,
                 group:values.group,
                 account_type:accountType,
                 account_address:values.account_address,
@@ -97,7 +103,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 email:values.email,
                 mobile:values.mobile,
                 pan:values.pan,
-                tin:values.tin,
+                gstin:values.gstin,
                 opening_balance:values.opening_balance,
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
@@ -119,6 +125,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             await modifyPartyLedger({
                 id:updatePartyLedger.id,
                 account_name:values.account_name,
+                account_no:values.account_no,
+                cin_no:values.cin_no,
                 group:values.group,
                 account_type:accountType,
                 account_address:values.account_address,
@@ -127,7 +135,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                 email:values.email,
                 mobile:values.mobile,
                 pan:values.pan,
-                tin:values.tin,
+                gstin:values.gstin,
                 opening_balance:values.opening_balance,
                 opening_balance_type:values.opening_balance_type,
                 assign_date:values.assign_date
@@ -146,6 +154,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             id:'',
             isDeleteClicked:false,
             account_name:'',
+            account_no:'',
+            cin_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -154,7 +164,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             email:'',
             mobile:'',
             pan:'',
-            tin:'',
+            gstin:'',
             opening_balance:'',
             opening_balance_type:'Debit',
             assign_date:new Date()
@@ -162,6 +172,8 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
         // Reseting form
         form.reset({
             account_name:'',
+            account_no:'',
+            cin_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -170,7 +182,7 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             email:'',
             mobile:'',
             pan:'',
-            tin:'',
+            gstin:'',
             opening_balance:'',
             opening_balance_type:'Debit',
             assign_date:new Date()
@@ -221,6 +233,46 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                         render={({field}) => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Account Name</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none placeholder:text-red-500l'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='absolute text-xs w-[200px] left-0 sm:left-[30%] top-[100%]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Account No. */}
+                    <FormField
+                        control={form.control}
+                        name='account_no'
+                        render={({field}) => (
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Account No.</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none placeholder:text-red-500l'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='absolute text-xs w-[200px] left-0 sm:left-[30%] top-[100%]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* CIN No. */}
+                    <FormField
+                        control={form.control}
+                        name='cin_no'
+                        render={({field}) => (
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>CIN No.</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -413,10 +465,10 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                     {/* TIN */}
                     <FormField
                         control={form.control}
-                        name='tin'
+                        name='gstin'
                         render={({field}) => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
-                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>TIN</FormLabel>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>GSTIN</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Input
@@ -487,10 +539,12 @@ const FormCom = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
                         render={() => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-6 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Assign Date</FormLabel>
-                                <MyDatePicker
-                                    selectedDate={assignDate}
-                                    setSelectedDate={setAssignDate}
-                                />
+                                <div className='basis-[70%]'>
+                                    <MyDatePicker
+                                        selectedDate={assignDate}
+                                        setSelectedDate={setAssignDate}
+                                    />
+                                </div>
                             </FormItem>
                         )}
                     />

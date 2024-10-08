@@ -19,6 +19,7 @@ const ViewCom = ({setIsViewOpened, bankLedgers, setUpdateBankLedger}:any) => {
             id:ledger._id,
             isDeleteClicked:false,
             account_name:ledger.account_name,
+            account_no:ledger.account_no,
             group:ledger.group,
             account_type:ledger.account_type,
             account_address:ledger.account_address,

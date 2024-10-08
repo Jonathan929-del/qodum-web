@@ -35,6 +35,7 @@ const Buttons = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
             id:'',
             isDeleteClicked:false,
             account_name:'',
+            account_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -49,6 +50,7 @@ const Buttons = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
         // Reseting form
         form.reset({
             account_name:'',
+            account_no:'',
             group:'',
             account_type:'',
             account_address:'',

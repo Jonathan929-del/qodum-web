@@ -31,6 +31,7 @@ const page = () => {
         id:'',
         isDeleteClicked:false,
         account_name:'',
+        account_no:0,
         group:'',
         account_type:'',
         account_address:'',

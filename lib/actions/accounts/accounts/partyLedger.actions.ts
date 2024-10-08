@@ -11,6 +11,8 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 // Create party ledger props
 interface CreatePartyLedgerProps{
     account_name:String;
+    account_no:Number;
+    cin_no:Number;
     group:String;
     account_type:String;
     account_address:String;
@@ -18,14 +20,14 @@ interface CreatePartyLedgerProps{
     pin_code:Number;
     email:String;
     mobile:Number;
-    pan:Number;
-    tin:Number;
+    pan:String;
+    gstin:String;
     opening_balance:Number;
     opening_balance_type:String;
     assign_date:Date;
 };
 // Create party ledger
-export const createPartyLedger = async ({account_name, group, account_type, account_address, account_city, pin_code, email, mobile, pan, tin, opening_balance, opening_balance_type, assign_date}:CreatePartyLedgerProps) => {
+export const createPartyLedger = async ({account_name, account_no, cin_no, group, account_type, account_address, account_city, pin_code, email, mobile, pan, gstin, opening_balance, opening_balance_type, assign_date}:CreatePartyLedgerProps) => {
     try {
 
         // Database connection
@@ -48,6 +50,8 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
         const newPartyLedger = await PartyLedger.create({
             session:activeSession?.year_name,
             account_name,
+            account_no,
+            cin_no,
             group,
             account_type,
             account_address,
@@ -55,7 +59,7 @@ export const createPartyLedger = async ({account_name, group, account_type, acco
             pin_code, email,
             mobile,
             pan,
-            tin,
+            gstin,
             opening_balance,
             opening_balance_type,
             assign_date
@@ -104,6 +108,8 @@ export const fetchPartyLedgers = async () => {
 interface ModifyPartyLedgerProps{
     id:String;
     account_name:String;
+    account_no:Number;
+    cin_no:Number;
     group:String;
     account_type:String;
     account_address:String;
@@ -111,14 +117,14 @@ interface ModifyPartyLedgerProps{
     pin_code:Number;
     email:String;
     mobile:Number;
-    pan:Number;
-    tin:Number;
+    pan:String;
+    gstin:String;
     opening_balance:Number;
     opening_balance_type:String;
     assign_date:Date;
 }
 // Modify Party Ledger
-export const modifyPartyLedger = async ({id, account_name, group, account_type, account_address, account_city, pin_code, email, mobile, pan, tin, opening_balance, opening_balance_type, assign_date}:ModifyPartyLedgerProps) => {
+export const modifyPartyLedger = async ({id, account_name, account_no, cin_no, group, account_type, account_address, account_city, pin_code, email, mobile, pan, gstin, opening_balance, opening_balance_type, assign_date}:ModifyPartyLedgerProps) => {
     try {
 
         // Db connection
@@ -136,7 +142,7 @@ export const modifyPartyLedger = async ({id, account_name, group, account_type, 
 
 
         // Update Party Ledger
-        await PartyLedger.findByIdAndUpdate(id, {account_name, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
+        await PartyLedger.findByIdAndUpdate(id, {account_name, account_no, cin_no, group, account_type, account_address, account_city, pin_code, email, mobile, pan, gstin, opening_balance, opening_balance_type, assign_date}, {new:true});
 
 
         // Return

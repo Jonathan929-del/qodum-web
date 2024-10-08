@@ -39,6 +39,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
     // Comparison object
     const comparisonObject = {
         account_name:updateBankLedger.account_name,
+        account_no:updateBankLedger.account_no,
         group:updateBankLedger.group,
         account_type:updateBankLedger.account_type,
         account_address:updateBankLedger.account_address,
@@ -57,6 +58,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
         resolver:zodResolver(BankLedgerValidation),
         defaultValues:{
             account_name:updateBankLedger.id === '' ? '' : updateBankLedger.account_name,
+            account_no:updateBankLedger.id === '' ? 0 : updateBankLedger.account_no,
             group:updateBankLedger.id === '' ? '' : updateBankLedger.group,
             account_type:updateBankLedger.id === '' ? '' : updateBankLedger.account_type,
             account_address:updateBankLedger.id === '' ? '' : updateBankLedger.account_address,
@@ -81,6 +83,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
             };
             const res = await createBankLedger({
                 account_name:values.account_name,
+                account_no:values.account_no,
                 group:values.group,
                 account_type:accountType,
                 account_address:values.account_address,
@@ -109,6 +112,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
             await modifyBankLedger({
                 id:updateBankLedger.id,
                 account_name:values.account_name,
+                account_no:values.account_no,
                 group:values.group,
                 account_type:accountType,
                 account_address:values.account_address,
@@ -134,6 +138,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
             id:'',
             isDeleteClicked:false,
             account_name:'',
+            account_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -148,6 +153,7 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
         // Reseting form
         form.reset({
             account_name:'',
+            account_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -205,6 +211,26 @@ const FormCom = ({setIsViewOpened, bankLedgers, updateBankLedger, setUpdateBankL
                         render={({field}) => (
                             <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
                                 <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Account Name</FormLabel>
+                                <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none placeholder:text-red-500l'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='absolute text-xs w-[200px] left-0 sm:left-[30%] top-[100%]'/>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+                    {/* Account No */}
+                    <FormField
+                        control={form.control}
+                        name='account_no'
+                        render={({field}) => (
+                            <FormItem className='relative w-full flex flex-col items-start justify-center h-7 mt-6 sm:flex-row sm:items-center sm:gap-2 sm:mt-2'>
+                                <FormLabel className='basis-auto mb-[-4px] text-xs text-[#726E71] sm:basis-[30%] sm:mb-0'>Account No</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start sm:basis-[70%]'>
                                     <FormControl>
                                         <Input

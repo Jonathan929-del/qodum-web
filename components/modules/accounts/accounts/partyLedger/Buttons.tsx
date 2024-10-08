@@ -35,6 +35,8 @@ const Buttons = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             id:'',
             isDeleteClicked:false,
             account_name:'',
+            account_no:'',
+            cin_no:'',
             group:'',
             account_type:'',
             account_address:'',
@@ -42,8 +44,8 @@ const Buttons = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
             pin_code:null,
             email:'',
             mobile:null,
-            pan:null,
-            tin:null,
+            pan:'',
+            gstin:'',
             opening_balance:null,
             opening_balance_type:'Debit',
             assign_date:new Date()
@@ -51,16 +53,18 @@ const Buttons = ({setIsViewOpened, partyLedgers, updatePartyLedger, setUpdatePar
         // Reseting form
         form.reset({
             account_name:'',
+            account_no:'',
+            cin_no:'',
             group:'',
             account_type:'',
             account_address:'',
             account_city:'',
-            pin_code:'',
+            pin_code:null,
             email:'',
-            mobile:'',
+            mobile:null,
             pan:'',
-            tin:'',
-            opening_balance:'',
+            gstin:'',
+            opening_balance:null,
             opening_balance_type:'Debit',
             assign_date:new Date()
         });

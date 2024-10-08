@@ -19,6 +19,8 @@ const ViewCom = ({setIsViewOpened, partyLedgers, setUpdatePartyLedger}:any) => {
             id:ledger._id,
             isDeleteClicked:false,
             account_name:ledger.account_name,
+            account_no:ledger.account_no,
+            cin_no:ledger.cin_no,
             group:ledger.group,
             account_type:ledger.account_type,
             account_address:ledger.account_address,
@@ -27,7 +29,7 @@ const ViewCom = ({setIsViewOpened, partyLedgers, setUpdatePartyLedger}:any) => {
             email:ledger.email,
             mobile:ledger.mobile,
             pan:ledger.pan,
-            tin:ledger.tin,
+            gstin:ledger.gstin,
             opening_balance:ledger.opening_balance,
             opening_balance_type:ledger.opening_balance_type,
             assign_date:ledger.assign_date
