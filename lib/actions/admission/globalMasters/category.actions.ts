@@ -84,6 +84,31 @@ export const fetchCategories = async () => {
 
 
 
+// Fetch categories names
+export const fetchCategoriesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const categories = await Category.find({session:activeSession?.year_name}, {category_name:1});
+        return categories;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching categories: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify category props
 interface ModifyCategoryProps{
     id:String;

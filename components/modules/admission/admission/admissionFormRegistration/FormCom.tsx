@@ -329,7 +329,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
                     family_doctor_phone:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.family_doctor_phone,
                     family_doctor_address:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
-                    distance_from_home:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.distance_from_home,
+                    distance_from_home:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.distance_from_home,
                     no_of_living_year:updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.no_of_living_year,
                     only_child:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
                     general_description:updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
@@ -862,7 +862,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''
@@ -1029,7 +1029,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''

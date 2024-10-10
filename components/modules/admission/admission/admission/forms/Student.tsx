@@ -993,7 +993,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             }
         });
         setUpdateStudent({
-            id:student?.student?._id,
+            id:student?._id,
             isDeleteClicked:false,
 
             // Student

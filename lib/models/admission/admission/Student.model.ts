@@ -129,7 +129,7 @@ const StudentSchema = new mongoose.Schema(
                 family_doctor_name:{type:String},
                 family_doctor_phone:{type:Number},
                 family_doctor_address:{type:String},
-                distance_from_home:{type:Number},
+                distance_from_home:{type:String},
                 no_of_living_year:{type:Number},
                 only_child:{type:String},
                 general_description:{type:String},

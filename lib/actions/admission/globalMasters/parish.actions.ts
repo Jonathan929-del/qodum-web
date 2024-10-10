@@ -77,6 +77,31 @@ export const fetchParishes = async () => {
 
 
 
+
+// Fetch parishes names
+export const fetchParishesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const parishes = await Parish.find({session:activeSession?.year_name}, {parish:1});
+        return parishes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching parishes: ${err}`);
+    };
+};
+
+
+
+
 // Modify parish props
 interface ModifyParishProps{
     id:String;

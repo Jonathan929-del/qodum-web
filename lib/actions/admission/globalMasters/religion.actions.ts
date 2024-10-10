@@ -73,6 +73,31 @@ export const fetchReligions = async () => {
 
 
 
+
+// Fetch religions names
+export const fetchReligionsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const religions = await Religion.find({session:activeSession?.year_name}, {religion_name:1});
+        return religions;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching religions: ${err}`);
+    };
+};
+
+
+
+
 // Modify religion props
 interface ModifyReligionProps{
     id:String;

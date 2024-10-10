@@ -86,6 +86,27 @@ export const fetchClasses = async () => {
 
 
 
+// Fetch classes names
+export const fetchClassesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const classes = await Class.find({}, {class_name:1}).sort({order:1});
+        return classes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching classes: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify Class Props
 interface ModifyClassProps{
     id:String;

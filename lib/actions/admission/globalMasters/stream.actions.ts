@@ -74,6 +74,32 @@ export const fetchStreams = async () => {
 
 
 
+
+// Fetch streams names
+export const fetchStreamsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const streams = await Stream.find({session:activeSession?.year_name}, {stream_name:1});
+        return streams;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching streams: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify stream props
 interface ModifyStreamProps{
     id:String;

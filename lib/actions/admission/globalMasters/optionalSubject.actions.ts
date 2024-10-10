@@ -74,6 +74,32 @@ export const fetchOptionalSubjects = async () => {
 
 
 
+
+// Fetch subjects names
+export const fetchOptionalSubjectsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const subjects = await OptionalSubject.find({session:activeSession?.year_name}, {subject_name:1});
+        return subjects;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching subjects: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify subject props
 interface ModifySubjectProps{
     id:String;

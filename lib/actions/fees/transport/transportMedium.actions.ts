@@ -75,6 +75,31 @@ export const fetchTransportMediums = async () => {
 
 
 
+// Fetch transport mediums names
+export const fetchTransportMediumsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const transportMediums = await TransportMedium.find({session:activeSession?.year_name}, {transport_medium:1});
+        return transportMediums;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching transport mediums: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify transport medium props
 interface ModifyTransportMediumProps{
     id:String;

@@ -36,11 +36,29 @@ const modules = [
                         ]
                     },
                     {
+                        subPageName:'Define Remark'
+                    },
+                    {
                         subPageName:'Define TC Details',
                         threads:[
                             'Define TC Caste',
                             'Term Master'
                         ]
+                    },
+                    {
+                        subPageName:'Stationary Details'
+                    },
+                    {
+                        subPageName:'Define Document Type'
+                    },
+                    {
+                        subPageName:'Define Stream'
+                    },
+                    {
+                        subPageName:'Define Subject'
+                    },
+                    {
+                        subPageName:'Define Optional Subject'
                     },
                     {
                         subPageName:'Student Health Master',
@@ -55,52 +73,34 @@ const modules = [
                         subPageName:'Define Blood Group'
                     },
                     {
+                        subPageName:'Define Religion'
+                    },
+                    {
+                        subPageName:'Define Category'
+                    },
+                    {
+                        subPageName:'Define Caste'
+                    },
+                    {
+                        subPageName:'Define Parish'
+                    },
+                    {
                         subPageName:'Define Nationality'
                     },
                     {
                         subPageName:'Define Cadet Type'
                     },
                     {
-                        subPageName:'Define Club'
-                    },
-                    {
-                        subPageName:'Define Remark'
-                    },
-                    {
-                        subPageName:'Define Category'
-                    },
-                    {
-                        subPageName:'Define Religion'
-                    },
-                    {
-                        subPageName:'Define Caste'
-                    },
-                    {
-                        subPageName:'Possible Siblings'
-                    },
-                    {
-                        subPageName:'Stationary Details'
-                    },
-                    {
-                        subPageName:'Define Parish'
-                    },
-                    {
                         subPageName:'Define House'
                     },
                     {
-                        subPageName:'Define Stream'
-                    },
-                    {
-                        subPageName:'Define Subject'
-                    },
-                    {
-                        subPageName:'Define Optional Subject'
+                        subPageName:'Define Club'
                     },
                     {
                         subPageName:'Parents Status'
                     },
                     {
-                        subPageName:'Define Document Type'
+                        subPageName:'Possible Siblings'
                     },
                     {
                         subPageName:'Import Student'

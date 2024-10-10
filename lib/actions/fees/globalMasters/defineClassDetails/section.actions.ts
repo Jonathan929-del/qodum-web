@@ -127,6 +127,31 @@ export const fetchSections = async () => {
 
 
 
+// Fetch sections names
+export const fetchSectionsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const sections = await Section.find({session:activeSession?.year_name}, {section_name:1});
+        return sections;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching sections: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify Section Props
 interface ModifySectionProps{
     id:String;

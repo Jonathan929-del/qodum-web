@@ -8,7 +8,7 @@ import AdmissionCards from '@/components/dashboards/admissionDashboard/Admission
 import NewAdmissionsIn from '@/components/dashboards/admissionDashboard/NewAdmissionsIn';
 import {fetchStudentsOnlineAndOfflineRegistrations} from '@/lib/actions/admission/admission/student.actions';
 import ReligionWiseStudentStrength from '@/components/dashboards/admissionDashboard/ReligionWiseStudentStrength';
-import {admissionDashboardStudentsReligionsData, newStudentsAndGendersCounts, studentsAndGendersCounts} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {newStudentsAndGendersCounts, studentsAndGendersCounts} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {studentStrengthBarData, studentComparisionBarData, standardStatisticsDoughnutData, transferDoughnutData, categoryDoughnutData} from '@/constants/charts/admissionCharts';
 
 
@@ -66,7 +66,6 @@ const page = () => {
             const studentsCountRes = await studentsAndGendersCounts();
             const newStudentsCountRes = await newStudentsAndGendersCounts();
             const studentsOnlineAndOfflineCountRes = await fetchStudentsOnlineAndOfflineRegistrations();
-            const studentsReligionsDataRes = await admissionDashboardStudentsReligionsData();
             setStudentsCount(studentsCountRes);
             setNewStudentsCount(newStudentsCountRes);
             setStudentsOnlineAndOfflineCount(studentsOnlineAndOfflineCountRes);

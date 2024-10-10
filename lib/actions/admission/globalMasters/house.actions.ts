@@ -74,6 +74,32 @@ export const fetchHouses = async () => {
 
 
 
+
+// Fetch houses names
+export const fetchHousesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const houses = await House.find({session:activeSession?.year_name}, {house_name:1});
+        return houses;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching houses: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify house props
 interface ModifyHouseProps{
     id:String;

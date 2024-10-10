@@ -149,7 +149,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''
@@ -325,7 +325,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                     family_doctor_name:student?.others?.student_other_details?.family_doctor_name || '',
                     family_doctor_phone:student?.others?.student_other_details?.family_doctor_phone || 0,
                     family_doctor_address:student?.others?.student_other_details?.family_doctor_address || '',
-                    distance_from_home:student?.others?.student_other_details?.distance_from_home || 0,
+                    distance_from_home:student?.others?.student_other_details?.distance_from_home || '',
                     no_of_living_year:student?.others?.student_other_details?.no_of_living_year || 0,
                     only_child:student?.others?.student_other_details?.only_child || '',
                     general_description:student?.others?.student_other_details?.general_description || ''

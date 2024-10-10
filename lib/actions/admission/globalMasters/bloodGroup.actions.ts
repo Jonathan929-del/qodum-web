@@ -73,6 +73,31 @@ export const fetchBloodGroups = async () => {
 
 
 
+
+// Fetch blood groups names
+export const fetchBloodGroupsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const bloodGroups = await BloodGroup.find({session:activeSession?.year_name}, {blood_group:1});
+        return bloodGroups;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching blood groups: ${err}`);
+    };
+};
+
+
+
+
 // Modify blood group props
 interface ModifyBloodGroupProps{
     id:String;

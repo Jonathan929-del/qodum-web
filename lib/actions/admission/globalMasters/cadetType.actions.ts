@@ -77,6 +77,35 @@ export const fetchCadetTypes = async () => {
 
 
 
+// Fetch cadet types names
+export const fetchCadetTypesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const cadetTypes = await CadetType.find({session:activeSession?.year_name}, {name:1});
+
+
+        // Return
+        return cadetTypes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching cadet types: ${err}`);
+    };
+};
+
+
+
+
+
+
 // Modify cadet type props
 interface ModifyCadetTypeProps{
     id:String;

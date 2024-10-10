@@ -13,7 +13,6 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 // Main function
 const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallments, totalPaidAmount, setTotalPaidAmount, totalNumberGenerator, selectedInstallments, heads, setConcessionReason, isConcession, setIsConcession, onSubmit, setHeads, setInstallments, setPaymentReceiptNo, installments, isQrCodeGenerated, permissions}:any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -273,7 +272,6 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
         )
     }, [isQrCodeGenerated])
 
-
     return (
         <div className='flex flex-col items-center justify-between gap-3 p-2 rounded-[5px] bg-[#435680] border-[#ccc] border-[0.5px] lg:flex-row'>
 
@@ -343,7 +341,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             {/* Buttons */}
             <div className='h-full flex flex-row items-end gap-2'>
                 {/* Save */}
-                {permissions.add ? (
+                {permissions.add && isConcession ? (
                     <AlertDialog>
                         <AlertDialogTrigger>
                             <span className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'>

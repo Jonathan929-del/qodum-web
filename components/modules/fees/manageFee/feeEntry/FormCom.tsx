@@ -435,19 +435,28 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         setIsLoading(false);
     };
 
+
+    // Use effect
+    useEffect(() => {
+        form.setValue('bank_name', selectedStudent?.affiliated_heads?.heads[0]?.post_account || '');
+    }, [selectedStudent]);
+
     return (
-        <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'>
+        <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 lg:min-h-[100%]'>
+        {/* <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'> */}
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='h-full w-full flex flex-row gap-4 justify-center items-center py-4 overflow-scroll custom-sidebar-scrollbar'
+                    className='h-full w-full flex flex-row gap-4 justify-center items-center py-4'
+                    // className='h-full w-full flex flex-row gap-4 justify-center items-center py-4 overflow-scroll custom-sidebar-scrollbar'
                 >
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}
                         />
+
 
                         {/* Right Side */}
                         <RightSide
@@ -489,6 +498,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setPaymentReceiptNo={setPaymentReceiptNo}
                             headsSequence={headsSequence}
                         />
+
                 </form>
             </Form>
         </div>

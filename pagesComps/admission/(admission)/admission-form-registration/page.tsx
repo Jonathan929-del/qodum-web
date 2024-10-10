@@ -160,7 +160,7 @@ const page = () => {
                 family_doctor_name:'',
                 family_doctor_phone:0,
                 family_doctor_address:'',
-                distance_from_home:0,
+                distance_from_home:'',
                 no_of_living_year:0,
                 only_child:'',
                 general_description:''

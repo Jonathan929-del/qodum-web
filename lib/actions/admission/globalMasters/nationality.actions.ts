@@ -77,6 +77,34 @@ export const fetchNationalities = async () => {
 
 
 
+// Fetch nationalities names
+export const fetchNationalitiesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const nationalities = await Nationality.find({session:activeSession?.year_name}, {name:1});
+
+
+        // Return
+        return nationalities;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching nationalities: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify nationality props
 interface ModifyNationalityProps{
     id:String;

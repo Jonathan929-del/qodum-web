@@ -73,6 +73,32 @@ export const fetchCastes = async () => {
 
 
 
+
+// Fetch casts names
+export const fetchCastesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const castes = await Caste.find({session:activeSession?.year_name}, {caste_name:1});
+        return castes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching castes: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify caste props
 interface ModifyCasteProps{
     id:String;

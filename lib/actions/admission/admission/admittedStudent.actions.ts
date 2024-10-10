@@ -232,7 +232,7 @@ interface CreateAdmittedStudentProps{
             family_doctor_name:String;
             family_doctor_phone:Number;
             family_doctor_address:String;
-            distance_from_home:Number;
+            distance_from_home:String;
             no_of_living_year:Number;
             only_child:String;
             general_description:String;
@@ -503,7 +503,7 @@ interface ModifyAdmittedStudentProps{
             family_doctor_name:String;
             family_doctor_phone:Number;
             family_doctor_address:String;
-            distance_from_home:Number;
+            distance_from_home:String;
             no_of_living_year:Number;
             only_child:String;
             general_description:String;

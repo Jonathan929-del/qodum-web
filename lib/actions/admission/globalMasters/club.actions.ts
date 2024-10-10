@@ -77,6 +77,34 @@ export const fetchClubs = async () => {
 
 
 
+// Fetch clubs names
+export const fetchClubsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const clubs = await Club.find({session:activeSession?.year_name}, {name:1});
+
+
+        // Return
+        return clubs;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching clubs: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify club props
 interface ModifyClubProps{
     id:String;

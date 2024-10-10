@@ -373,7 +373,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_name : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_name,
                     family_doctor_phone:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_phone : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.family_doctor_phone,
                     family_doctor_address:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.family_doctor_address : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.family_doctor_address,
-                    distance_from_home:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.distance_from_home : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.distance_from_home,
+                    distance_from_home:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.distance_from_home : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.distance_from_home,
                     no_of_living_year:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.no_of_living_year : updateStudent.id === '' ? 0 : updateStudent.others.student_other_details.no_of_living_year,
                     only_child:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.only_child : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.only_child,
                     general_description:valuesFromRegister.student.name !== '' ? valuesFromRegister.others.student_other_details.general_description : updateStudent.id === '' ? '' : updateStudent.others.student_other_details.general_description
@@ -928,7 +928,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''
@@ -1114,7 +1114,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''
@@ -1303,7 +1303,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     family_doctor_name:'',
                     family_doctor_phone:0,
                     family_doctor_address:'',
-                    distance_from_home:0,
+                    distance_from_home:'',
                     no_of_living_year:0,
                     only_child:'',
                     general_description:''
@@ -1564,8 +1564,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
             // Documents
             form.setValue('documents', updateStudent.documents);
+
+
+            // Dates
+            setDob(moment(updateStudent.student.dob));
+            setDoa(moment(updateStudent.student.doa));
+            setDoj(moment(updateStudent.student.doj));
+            setFatherDob(moment(updateStudent.parents.father.dob));
+            setMotherDob(moment(updateStudent.parents.mother.dob));
+            setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
+
         }
-    }, [updateStudent]);
+    }, [updateStudent, classes]);
     useEffect(() => {
         if(valuesFromRegister.student.name !== ''){
             // Student
@@ -1694,8 +1704,18 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('guardian_details.if_single_parent.correspondence_to', valuesFromRegister.guardian_details.if_single_parent.correspondence_to);
             form.setValue('guardian_details.if_single_parent.check_id_applicable', valuesFromRegister.guardian_details.if_single_parent.check_id_applicable);
             form.setValue('guardian_details.if_single_parent.separation_reason', valuesFromRegister.guardian_details.if_single_parent.separation_reason);
+
+
+            // Dates
+            setDob(moment(updateStudent.student.dob || moment()));
+            setDoa(moment(updateStudent.student.doa || moment()));
+            setDoj(moment(updateStudent.student.doj || moment()));
+            setFatherDob(moment(updateStudent.parents.father.dob || moment()));
+            setMotherDob(moment(updateStudent.parents.mother.dob || moment()));
+            setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date || moment()));
+
         }
-    }, [valuesFromRegister]);
+    }, [valuesFromRegister, classes]);
     useEffect(() => {
         // @ts-ignore
         form.setValue('student.board', boards.find((b:any) => b.is_default)?.board || '');

@@ -78,6 +78,34 @@ export const fetchDesignations = async () => {
 
 
 
+// Fetch designations names
+export const fetchDesignationsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const designations = await Designation.find({session:activeSession?.year_name}, {designation:1});
+
+
+        // Return
+        return designations;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching designations: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify designation props
 interface ModifyDesignationProps{
     id:String;

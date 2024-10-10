@@ -77,6 +77,34 @@ export const fetchProfessions = async () => {
 
 
 
+// Fetch professions names
+export const fetchProfessionsNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const professions = await Profession.find({session:activeSession?.year_name}, {profession:1});
+
+
+        // Return
+        return professions;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching professions: ${err}`);
+    };
+};
+
+
+
+
+
 // Modify profession props
 interface ModifyProfessionProps{
     id:String;

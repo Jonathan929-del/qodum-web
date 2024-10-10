@@ -70,7 +70,7 @@ const SignIn = () => {
         // const createUserRes = await createUser({
         //     name:'superadmin',
         //     user_name:'superadmin',
-        //     password:'$2y$10$EDY8Y7WfpjMZMYeqOE36me7Z2hoymr0o9Ycq/H3ZDnrPfJZutEmTS',
+        //     password:'Cmn1nf@ct',
         //     is_reset_password:true,
         //     designation:'Designataion',
         //     email:'admin@admin.com',

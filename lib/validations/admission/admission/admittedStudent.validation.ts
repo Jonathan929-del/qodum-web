@@ -141,7 +141,7 @@ export const AdmittedStudentValidation = z.object({
             family_doctor_name:z.string(),
             family_doctor_phone:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
             family_doctor_address:z.string(),
-            distance_from_home:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+            distance_from_home:z.string(),
             no_of_living_year:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
             only_child:z.string(),
             general_description:z.string(),

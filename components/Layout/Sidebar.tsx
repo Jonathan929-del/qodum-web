@@ -2,9 +2,10 @@
 // Imports
 import Image from 'next/image';
 import {X} from 'lucide-react';
-import {usePathname} from 'next/navigation';
+import {redirect, usePathname} from 'next/navigation';
 import HomeSidebar from './Home/HomeSidebar';
 import ModulesAccordion from './Pages/ModulesAccordion';
+import Link from 'next/link';
 
 
 
@@ -25,14 +26,20 @@ const Sidebar = ({isSidebarOpened, setIsSidebarOpened}:any) => {
         >
 
             {/* Logo */}
-            <div className='w-full flex flex-row items-center justify-between py-[10px] border-b-[0.5px] border-[#ccc] md:justify-center'>
-                <Image
-                    width={isSidebarOpened ? 125 : 50}
-                    height={isSidebarOpened ? 125 : 50}
-                    alt='Qodum logo'
-                    src='/assets/logo.png'
-                    className={`${isSidebarOpened ? 'py-[2px]' : 'py-[21px]'} rounded-[5px]`}
-                />
+            <div
+                className='w-full flex flex-row items-center justify-between py-[10px] border-b-[0.5px] border-[#ccc] md:justify-center'
+            >
+                <Link
+                    href='/'
+                >
+                    <Image
+                        width={isSidebarOpened ? 125 : 50}
+                        height={isSidebarOpened ? 125 : 50}
+                        alt='Qodum logo'
+                        src='/assets/logo.png'
+                        className={`${isSidebarOpened ? 'py-[2px]' : 'py-[21px]'} rounded-[5px]`}
+                    />
+                </Link>
                 <div
                     className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition md:hidden'
                     onClick={() => setIsSidebarOpened(false)}
