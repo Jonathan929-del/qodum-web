@@ -246,7 +246,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
 
     // Use effect
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Payroll')?.permissions?.find((pp:any) => pp.sub_menu === 'Define Staff');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Payroll')?.permissions?.find((pp:any) => pp.sub_menu === 'Employee Registration');
         setPermissions(grantedPermissions);
     }, [user]);
 
