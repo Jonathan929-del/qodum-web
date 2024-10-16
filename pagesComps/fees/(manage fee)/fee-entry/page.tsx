@@ -412,7 +412,7 @@ const page = () => {
     }, [selectedStudent]);
 
     return (
-        <div className='h-full flex flex-col items-center justify-start bg-white'>
+        <div className='h-full flex flex-col items-center justify-start bg-white overflow-y-scroll custom-sidebar-scrollbar'>
             {isLoading ? (
                 <LoadingIcon />
             ) : isReceiptOpened ? (

@@ -133,7 +133,10 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
                     { sr_no: 78, main_menu: 'Student Health Master', sub_menu: 'Health Unit Master', add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 79, main_menu: 'Student Health Master', sub_menu: 'Health Master', add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 80, main_menu: 'Student Health Master', sub_menu: 'Define Term', add: false, modify: false, delete: false, print: false, read_only: false },
-                    { sr_no: 81, main_menu: 'Global Masters', sub_menu: 'Define Remark', add: false, modify: false, delete: false, print: false, read_only: false }
+                    { sr_no: 81, main_menu: 'Global Masters', sub_menu: 'Define Remark', add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 82, main_menu: 'Master Settings', sub_menu: 'Assign Roll No to Student', add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 83, main_menu: 'Master Settings', sub_menu: 'Assign Computer No to Student', add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 83, main_menu: 'Admission', sub_menu: 'Enquiry Follow Up', add: false, modify: false, delete: false, print: false, read_only: false },
                 ]
             },
 
@@ -318,7 +321,10 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
                         { sr_no: 174, main_menu: 'Transaction Report', sub_menu: 'Concession Reports', add: false, modify: false, delete: false, print: false, read_only: false },
                         { sr_no: 175, main_menu: 'Transaction Report', sub_menu: 'Cancelled Receipt Reports', add: false, modify: false, delete: false, print: false, read_only: false },
                         { sr_no: 176, main_menu: 'Transaction Report', sub_menu: 'Amount Without Structure Reports', add: false, modify: false, delete: false, print: false, read_only: false },
-                        { sr_no: 177, main_menu: 'Transaction Report', sub_menu: 'Cheque Reports', add: false, modify: false, delete: false, print: false, read_only: false }
+                        { sr_no: 177, main_menu: 'Transaction Report', sub_menu: 'Cheque Reports', add: false, modify: false, delete: false, print: false, read_only: false },
+                        { sr_no: 178, main_menu: 'Master Setting', sub_menu: 'Fee Certificate Setting', add: false, modify: false, delete: false, print: false, read_only: false },
+                        { sr_no: 179, main_menu: 'Fee Master', sub_menu: 'Refund Fee', add: false, modify: false, delete: false, print: false, read_only: false },
+                        { sr_no: 180, main_menu: 'Transport', sub_menu: 'Vehicle Alerts', add: false, modify: false, delete: false, print: false, read_only: false },
                 ]
             },
 
@@ -496,7 +502,9 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
                     { sr_no: 106, main_menu: "Salary Reports", sub_menu: "Income Tax", add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 107, main_menu: "Salary Reports", sub_menu: "Monthly Reports", add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 108, main_menu: "Salary Reports", sub_menu: "Yearly Reports", add: false, modify: false, delete: false, print: false, read_only: false },
-                    { sr_no: 109, main_menu: "Global Masters", sub_menu: "Define Document Type", add: false, modify: false, delete: false, print: false, read_only: false }
+                    { sr_no: 109, main_menu: "Global Masters", sub_menu: "Define Document Type", add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 110, main_menu: "Global Masters", sub_menu: "Candidate Application", add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 111, main_menu: "Global Masters", sub_menu: "Shortlisted Candidate", add: false, modify: false, delete: false, print: false, read_only: false }
                 ]
             },
 

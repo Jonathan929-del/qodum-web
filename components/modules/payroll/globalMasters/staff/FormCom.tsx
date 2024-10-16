@@ -25,7 +25,7 @@ import {createStaff, deleteStaff, modifyStaff} from '@/lib/actions/payroll/globa
 
 
 // Main function
-const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelectedDocuments, selectedDocuments, educationalDetails, setEducationalDetails}:any) => {
+const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelectedDocuments, selectedDocuments, educationalDetails, setEducationalDetails, valuesFromApplication, setValuesFromApplication}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -158,38 +158,38 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             // Staff registration
             staff_registration:{
                 pref_no:updateStaff.id === '' ? 0 : updateStaff.staff_registration.pref_no,
-                first_name_title:updateStaff.id === '' ? 'Mr.' : updateStaff.staff_registration.first_name_title,
-                first_name:updateStaff.id === '' ? '' : updateStaff.staff_registration.first_name,
-                middle_name:updateStaff.id === '' ? '' : updateStaff.staff_registration.middle_name,
-                last_name:updateStaff.id === '' ? '' : updateStaff.staff_registration.last_name,
-                gender:updateStaff.id === '' ? 'Male' : updateStaff.staff_registration.gender,
-                email:updateStaff.id === '' ? '' : updateStaff.staff_registration.email,
-                alternate_email:updateStaff.id === '' ? '' : updateStaff.staff_registration.alternate_email,
-                phone:updateStaff.id === '' ? 0 : updateStaff.staff_registration.phone,
-                mobile:updateStaff.id === '' ? 0 : updateStaff.staff_registration.mobile,
-                alternate_mobile:updateStaff.id === '' ? 0 : updateStaff.staff_registration.alternate_mobile,
-                emergency_mobile:updateStaff.id === '' ? 0 : updateStaff.staff_registration.emergency_mobile,
-                wing:updateStaff.id === '' ? '' : updateStaff.staff_registration.wing,
-                is_active:updateStaff.id === '' ? false : updateStaff.staff_registration.is_active,
-                profile_picture:updateStaff.id === '' ? '' : updateStaff.staff_registration.profile_picture,
-                maritial_status:updateStaff.id === '' ? 'Married' : updateStaff.staff_registration.maritial_status,
-                qualification:updateStaff.id === '' ? '' : updateStaff.staff_registration.qualification,
-                date_of_birth:updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_birth,
-                date_of_anniversary:updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_anniversary,
-                date_of_joining:updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_joining,
-                date_of_retire:updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_retire,
-                date_of_retire_is_extend:updateStaff.id === '' ? false : updateStaff.staff_registration.date_of_retire_is_extend,
-                address:updateStaff.id === '' ? '' : updateStaff.staff_registration.address,
-                current_address:updateStaff.id === '' ? '' : updateStaff.staff_registration.current_address,
-                father_or_spouse_name:updateStaff.id === '' ? '' : updateStaff.staff_registration.father_or_spouse_name,
-                father_or_spouse_mobile:updateStaff.id === '' ? 0 : updateStaff.staff_registration.father_or_spouse_mobile,
-                father_or_spouse_relation:updateStaff.id === '' ? '' : updateStaff.staff_registration.father_or_spouse_relation,
-                blood_group:updateStaff.id === '' ? '' : updateStaff.staff_registration.blood_group,
-                staff_type:updateStaff.id === '' ? '' : updateStaff.staff_registration.staff_type,
-                designation:updateStaff.id === '' ? '' : updateStaff.staff_registration.designation,
-                department:updateStaff.id === '' ? '' : updateStaff.staff_registration.department,
-                religion:updateStaff.id === '' ? '' : updateStaff.staff_registration.religion,
-                aadhar_card_no:updateStaff.id === '' ? 0 : updateStaff.staff_registration.aadhar_card_no
+                first_name_title:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.first_name_title : updateStaff.id === '' ? 'Mr.' : updateStaff.staff_registration.first_name_title,
+                first_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.first_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.first_name,
+                middle_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.middle_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.middle_name,
+                last_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.last_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.last_name,
+                gender:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.gender : updateStaff.id === '' ? 'Male' : updateStaff.staff_registration.gender,
+                email:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.email : updateStaff.id === '' ? '' : updateStaff.staff_registration.email,
+                alternate_email:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.alternate_email : updateStaff.id === '' ? '' : updateStaff.staff_registration.alternate_email,
+                phone:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.phone : updateStaff.id === '' ? 0 : updateStaff.staff_registration.phone,
+                mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.mobile,
+                alternate_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.alternate_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.alternate_mobile,
+                emergency_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.emergency_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.emergency_mobile,
+                wing:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.wing : updateStaff.id === '' ? '' : updateStaff.staff_registration.wing,
+                is_active:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.is_active : updateStaff.id === '' ? false : updateStaff.staff_registration.is_active,
+                profile_picture:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.profile_picture : updateStaff.id === '' ? '' : updateStaff.staff_registration.profile_picture,
+                maritial_status:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.maritial_status : updateStaff.id === '' ? 'Married' : updateStaff.staff_registration.maritial_status,
+                qualification:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.qualification : updateStaff.id === '' ? '' : updateStaff.staff_registration.qualification,
+                date_of_birth:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_birth : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_birth,
+                date_of_anniversary:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_anniversary : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_anniversary,
+                date_of_joining:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_joining : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_joining,
+                date_of_retire:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_retire : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_retire,
+                date_of_retire_is_extend:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_retire_is_extend : updateStaff.id === '' ? false : updateStaff.staff_registration.date_of_retire_is_extend,
+                address:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.address : updateStaff.id === '' ? '' : updateStaff.staff_registration.address,
+                current_address:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.current_address : updateStaff.id === '' ? '' : updateStaff.staff_registration.current_address,
+                father_or_spouse_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.father_or_spouse_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.father_or_spouse_name,
+                father_or_spouse_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.father_or_spouse_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.father_or_spouse_mobile,
+                father_or_spouse_relation:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.father_or_spouse_relation : updateStaff.id === '' ? '' : updateStaff.staff_registration.father_or_spouse_relation,
+                blood_group:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.blood_group : updateStaff.id === '' ? '' : updateStaff.staff_registration.blood_group,
+                staff_type:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.staff_type : updateStaff.id === '' ? '' : updateStaff.staff_registration.staff_type,
+                designation:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.designation : updateStaff.id === '' ? '' : updateStaff.staff_registration.designation,
+                department:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.department : updateStaff.id === '' ? '' : updateStaff.staff_registration.department,
+                religion:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.religion : updateStaff.id === '' ? '' : updateStaff.staff_registration.religion,
+                aadhar_card_no:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.aadhar_card_no : updateStaff.id === '' ? 0 : updateStaff.staff_registration.aadhar_card_no
             },
 
             //Staff salary details
@@ -600,6 +600,50 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             // Staff document details
             staff_document_details:[]
         });
+        setValuesFromApplication({
+            // Staff registration
+            staff_registration:{
+                pref_no:0,
+                first_name_title:'Mr.',
+                first_name:'',
+                middle_name:'',
+                last_name:'',
+                gender:'Male',
+                email:'',
+                alternate_email:'',
+                phone:0,
+                mobile:0,
+                alternate_mobile:0,
+                emergency_mobile:0,
+                wing:'',
+                is_active:false,
+                profile_picture:'',
+                maritial_status:'Married',
+                qualification:'',
+                date_of_birth:new Date(),
+                date_of_anniversary:new Date(),
+                date_of_joining:new Date(),
+                date_of_retire:new Date(),
+                date_of_retire_is_extend:false,
+                address:'',
+                current_address:'',
+                father_or_spouse_name:'',
+                father_or_spouse_mobile:0,
+                father_or_spouse_relation:'Father',
+                blood_group:'',
+                staff_type:'',
+                designation:'',
+                department:'',
+                religion:'',
+                aadhar_card_no:0
+            },
+
+            // Staff educational details
+            staff_educational_details:[],
+
+            // Staff document details
+            staff_document_details:[]
+        });
         // Reseting form
         form.reset({
             // Staff registration
@@ -817,6 +861,52 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         }
     }, [updateStaff]);
     useEffect(() => {
+        if(valuesFromApplication?.staff_registration?.first_name !== ''){
+
+            // Staff registration
+            form.setValue('staff_registration.pref_no', valuesFromApplication.staff_registration.pref_no);
+            form.setValue('staff_registration.first_name_title', valuesFromApplication.staff_registration.first_name_title);
+            form.setValue('staff_registration.first_name', valuesFromApplication.staff_registration.first_name);
+            form.setValue('staff_registration.middle_name', valuesFromApplication.staff_registration.middle_name);
+            form.setValue('staff_registration.last_name', valuesFromApplication.staff_registration.last_name);
+            form.setValue('staff_registration.gender', valuesFromApplication.staff_registration.gender);
+            form.setValue('staff_registration.email', valuesFromApplication.staff_registration.email);
+            form.setValue('staff_registration.alternate_email', valuesFromApplication.staff_registration.alternate_email);
+            form.setValue('staff_registration.phone', valuesFromApplication.staff_registration.phone);
+            form.setValue('staff_registration.mobile', valuesFromApplication.staff_registration.mobile);
+            form.setValue('staff_registration.alternate_mobile', valuesFromApplication.staff_registration.alternate_mobile);
+            form.setValue('staff_registration.emergency_mobile', valuesFromApplication.staff_registration.emergency_mobile);
+            form.setValue('staff_registration.wing', valuesFromApplication.staff_registration.wing);
+            form.setValue('staff_registration.is_active', valuesFromApplication.staff_registration.is_active);
+            form.setValue('staff_registration.profile_picture', valuesFromApplication.staff_registration.profile_picture);
+            form.setValue('staff_registration.maritial_status', valuesFromApplication.staff_registration.maritial_status);
+            form.setValue('staff_registration.qualification', valuesFromApplication.staff_registration.qualification);
+            form.setValue('staff_registration.date_of_birth', valuesFromApplication.staff_registration.date_of_birth);
+            form.setValue('staff_registration.date_of_anniversary', valuesFromApplication.staff_registration.date_of_anniversary);
+            form.setValue('staff_registration.date_of_joining', valuesFromApplication.staff_registration.date_of_joining);
+            form.setValue('staff_registration.date_of_retire', valuesFromApplication.staff_registration.date_of_retire);
+            form.setValue('staff_registration.date_of_retire_is_extend', valuesFromApplication.staff_registration.date_of_retire_is_extend);
+            form.setValue('staff_registration.address', valuesFromApplication.staff_registration.address);
+            form.setValue('staff_registration.current_address', valuesFromApplication.staff_registration.current_address);
+            form.setValue('staff_registration.father_or_spouse_name', valuesFromApplication.staff_registration.father_or_spouse_name);
+            form.setValue('staff_registration.father_or_spouse_mobile', valuesFromApplication.staff_registration.father_or_spouse_mobile);
+            form.setValue('staff_registration.father_or_spouse_relation', valuesFromApplication.staff_registration.father_or_spouse_relation);
+            form.setValue('staff_registration.blood_group', valuesFromApplication.staff_registration.blood_group);
+            form.setValue('staff_registration.staff_type', valuesFromApplication.staff_registration.staff_type);
+            form.setValue('staff_registration.designation', valuesFromApplication.staff_registration.designation);
+            form.setValue('staff_registration.department', valuesFromApplication.staff_registration.department);
+            form.setValue('staff_registration.religion', valuesFromApplication.staff_registration.religion);
+            form.setValue('staff_registration.aadhar_card_no', valuesFromApplication.staff_registration.aadhar_card_no);
+
+            // Setting values for staff_educational_details
+            form.setValue('staff_educational_details', valuesFromApplication.staff_educational_details);
+
+            // Staff document details
+            form.setValue('staff_document_details', valuesFromApplication.staff_document_details);
+
+        }
+    }, [valuesFromApplication]);
+    useEffect(() => {
         if(updateStaff.id === ''){
             staff.length > 0
                 ? form.setValue('staff_registration.pref_no', staff.length + 1)
@@ -908,6 +998,9 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                     dateOfRetire={dateOfRetire}
                                     setDateOfRetire={setDateOfRetire}
                                     setSelectedDocuments={setSelectedDocuments}
+                                    valuesFromApplication={valuesFromApplication}
+                                    setValuesFromApplication={setValuesFromApplication}
+                                    setEducationalDetails={setEducationalDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='staff-salary-details'>
@@ -979,6 +1072,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                 setIncrementDate={setIncrementDate}
                                 setSelectedDocuments={setSelectedDocuments}
                                 setEducationalDetails={setEducationalDetails}
+                                setValuesFromApplication={setValuesFromApplication}
                             />
                         </div>
                     </form>

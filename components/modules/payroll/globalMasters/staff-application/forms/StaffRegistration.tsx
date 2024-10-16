@@ -19,14 +19,14 @@ import {fetchDesignations} from '@/lib/actions/payroll/globalMasters/designation
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchStaffByAllData } from '@/lib/actions/payroll/globalMasters/staff.actions';
+import { fetchStaffApplicationsByAllData } from '@/lib/actions/payroll/globalMasters/staffApplication.actions';
 
 
 
 
 
 // Main function
-const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, updateStaff, imageSrc, setImageSrc, setIsLoading, staff, dateOfBirth, setDateOfBirth, dateOfAnniversary, setDateOfAnniversary, dateOfJoining, setDateOfJoining, dateOfRetire, setDateOfRetire, valuesFromApplication, setValuesFromApplication, setEducationalDetails, setSelectedDocuments}:any) => {
+const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, updateStaff, imageSrc, setImageSrc, setIsLoading, staff, dateOfBirth, setDateOfBirth, dateOfAnniversary, setDateOfAnniversary, dateOfJoining, setDateOfJoining, dateOfRetire, setDateOfRetire, setEducationalDetails, setSelectedDocuments}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -67,7 +67,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
     // Handle Search Click
     const searchClick = async () => {
         setIsLoading(true);
-        setIsViewOpened('admission');
+        setIsViewOpened(true);
         setSearch('');
         setIsLoading(false);
     };
@@ -76,62 +76,9 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
     // Staff search click
     const staffSearchClick = (s:any) => {
         setIsLoading(true);
-        setValuesFromApplication({
-            // Staff registration
-            staff_registration:{
-                pref_no:0,
-                first_name_title:'Mr.',
-                first_name:'',
-                middle_name:'',
-                last_name:'',
-                gender:'Male',
-                email:'',
-                alternate_email:'',
-                phone:0,
-                mobile:0,
-                alternate_mobile:0,
-                emergency_mobile:0,
-                wing:'',
-                is_active:false,
-                profile_picture:'',
-                maritial_status:'Married',
-                qualification:'',
-                date_of_birth:new Date(),
-                date_of_anniversary:new Date(),
-                date_of_joining:new Date(),
-                date_of_retire:new Date(),
-                date_of_retire_is_extend:false,
-                address:'',
-                current_address:'',
-                father_or_spouse_name:'',
-                father_or_spouse_mobile:0,
-                father_or_spouse_relation:'Father',
-                blood_group:'',
-                staff_type:'',
-                designation:'',
-                department:'',
-                religion:'',
-                aadhar_card_no:0
-            },
-
-            // Staff educational details
-            staff_educational_details:[{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:[],
-                percentage_of_marks:0,
-                year_of_passing:''
-            }],
-
-            // Staff document details
-            staff_document_details:[]
-        });
         setUpdateStaff({
             id:s?._id,
             isDeleteClicked:false,
-
             // Staff registration
             staff_registration:{
                 pref_no:s.staff_registration.pref_no,
@@ -168,47 +115,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                 religion:s.staff_registration.religion,
                 aadhar_card_no:s.staff_registration.aadhar_card_no
             },
-
-            //Staff salary details
-            staff_salary_details:{
-                emp_no:s.staff_salary_details.emp_no,
-                pan_no:s.staff_salary_details.pan_no,
-                bank_name:s.staff_salary_details.bank_name,
-                bank_account_no:s.staff_salary_details.bank_account_no,
-                is_generate_salary:s.staff_salary_details.is_generate_salary,
-                is_salary_to_bank:s.staff_salary_details.is_salary_to_bank,
-                machine_no:s.staff_salary_details.machine_no,
-                pf_no:s.staff_salary_details.pf_no,
-                esi_no:s.staff_salary_details.esi_no,
-                uan_no:s.staff_salary_details.uan_no,
-                emp_acc_no:s.staff_salary_details.emp_acc_no,
-                status:s.staff_salary_details.status,
-                salary_group:s.staff_salary_details.salary_group,
-                basic_salary_part:{
-                    basic:{
-                        value:s.staff_salary_details.basic_salary_part.basic.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.basic.applied_on
-                    },
-                    grade_pay:{
-                        value:s.staff_salary_details.basic_salary_part.grade_pay.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.grade_pay.applied_on
-                    }
-                },
-                confirmation_date:s.staff_salary_details.confirmation_date,
-                permanent_date:s.staff_salary_details.permanent_date,
-                leaving_date:s.staff_salary_details.leaving_date,
-                joining_date_epf:s.staff_salary_details.joining_date_epf,
-                joining_date_eps:s.staff_salary_details.joining_date_eps,
-                leaving_date_epf:s.staff_salary_details.leaving_date_epf,
-                leaving_date_eps:s.staff_salary_details.leaving_date_eps,
-                probation_date:s.staff_salary_details.probation_date,
-                increment_date:s.staff_salary_details.increment_date,
-                reason_of_leaving:s.staff_salary_details.reason_of_leaving,
-                short_name:s.staff_salary_details.short_name
-            },
-
-            // Staff salary head
-            staff_salary_heads:s.staff_salary_heads,
 
             // Staff educational details
             staff_educational_details:s?.staff_educational_details || [],
@@ -289,7 +195,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStaffByAllData({first_name:search, pref_no:search, mobile:search});
+                const res = await fetchStaffApplicationsByAllData({first_name:search, pref_no:search, mobile:search});
                 setSearchStaff(res);
                 setIsLoadingSearchedStudents(false);
             };
@@ -343,12 +249,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                         <p className='transition text-[#2EABE5] group-hover:text-white'>Search</p>
                     </div>
                     {searchedStaff}
-                </div>
-                <div
-                    onClick={() => setIsViewOpened('applications')}
-                    className='group w-[150px] h-6 mt-2 flex flex-row items-center justify-center gap-[2px] ml-2 px-2 border-[0.5px] border-[#2EABE5] bg-white rounded-[5px] transition cursor-pointer hover:opacity-80 hover:bg-[#2EABE5] sm:h-auto sm:w-[250px] sm:mt-0'
-                >
-                    <p className='transition text-[#2EABE5] group-hover:text-white'>Search Applications</p>
                 </div>
             </div>
 
@@ -771,7 +671,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             imageSrc={imageSrc}
                             setImageSrc={setImageSrc}
                             updateStaff={updateStaff}
-                            valuesFromApplication={valuesFromApplication}
                         />
 
                         <div className='basis-[75%] flex flex-col gap-2'>

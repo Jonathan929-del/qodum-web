@@ -8,14 +8,16 @@ import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 // @ts-ignore
 import Dashboard from '@/pagesComps/payroll/page';
+import DefineStaff from '@/pagesComps/payroll/globalMasters/define-staff/page';
 import DefineAcademicYear from '@/components/modules/shared/AcademicYear/index';
 import DefineFinancialYear from '@/components/modules/shared/FinancialYear/index';
+import DefineStaffType from '@/pagesComps/payroll/globalMasters/define-staff-type/page';
 import DefineProfession from '@/pagesComps/payroll/globalMasters/define-profession/page';
 import DefineDepartment from '@/pagesComps/payroll/globalMasters/define-department/page';
 import DefineDesignation from '@/pagesComps/payroll/globalMasters/define-designation/page';
-import DefineStaffType from '@/pagesComps/payroll/globalMasters/define-staff-type/page';
-import DefineStaff from '@/pagesComps/payroll/globalMasters/define-staff/page';
+import CandidateApplication from '@/pagesComps/payroll/globalMasters/staff-application/page';
 import DefineDocumentType from '@/pagesComps/payroll/globalMasters/define-document-type/page';
+import ShortlistedCandidate from '@/pagesComps/payroll/globalMasters/shortlisted-candidate/page';
 
 
 
@@ -75,6 +77,12 @@ const Home = () => {
     };
     if(openedPages.includes('Employee Registration')){
       openedPagesArray.push({name:'Employee Registration', component:<DefineStaff />});
+    };
+    if(openedPages.includes('Shortlisted Candidate')){
+      openedPagesArray.push({name:'Shortlisted Candidate', component:<ShortlistedCandidate />});
+    };
+    if(openedPages.includes('Candidate Application')){
+      openedPagesArray.push({name:'Candidate Application', component:<CandidateApplication />});
     };
     if(openedPages.includes('Define Document Type')){
       openedPagesArray.push({name:'Define Document Type', component:<DefineDocumentType />});

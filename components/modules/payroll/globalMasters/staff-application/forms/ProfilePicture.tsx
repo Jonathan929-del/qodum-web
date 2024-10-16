@@ -5,7 +5,8 @@
 
 
 // Main function
-const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc, valuesFromApplication}:any) => {
+const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc}:any) => {
+
 
     // Handle on change
     const handleOnChange = (e:any) => {
@@ -18,6 +19,7 @@ const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc, valuesFrom
         reader.readAsDataURL(e.target.files[0]);
     };
 
+
     return (
         <div className='basis-[25%] flex items-center justify-end'>
             <div className='w-[100px] h-[100px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-[4px] transition hover:opacity-90'>
@@ -28,20 +30,14 @@ const ProfilePicture = ({setFile, updateStaff, imageSrc, setImageSrc, valuesFrom
                 >
                     {imageSrc !== '' ? (
                         <img
-                            alt="Staff's image"
+                            alt="Student's image"
                             src={imageSrc}
                             className='w-full h-full rounded-[4px]'
                         />
                     ) : updateStaff.staff_registration.profile_picture ? (
                         <img
-                            alt="Staff's image"
+                            alt="Student's image"
                             src={updateStaff.staff_registration.profile_picture}
-                            className='w-full h-full rounded-[4px]'
-                        />
-                    ) : valuesFromApplication.staff_registration.profile_picture ? (
-                        <img
-                            alt="Staff's image"
-                            src={valuesFromApplication.staff_registration.profile_picture}
                             className='w-full h-full rounded-[4px]'
                         />
                     ) : (

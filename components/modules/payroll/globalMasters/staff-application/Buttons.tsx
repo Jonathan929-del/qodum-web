@@ -13,7 +13,7 @@ import { AuthContext } from '@/context/AuthContext';
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setConfirmationDate, setPermanentDate, setLeavingDate, setJoiningDateEpf, setJoiningDateEps, setLeavingDateEpf, setLeavingDateEps, setProbationDate, setIncrementDate, setSelectedDocuments, setEducationalDetails, setValuesFromApplication}:any) => {
+const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit, form, setFile, setImageSrc, setDateOfBirth, setDateOfAnniversary, setDateOfJoining, setDateOfRetire, setSelectedDocuments, setEducationalDetails}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -31,53 +31,6 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
 
     // Cancel click
     const cancelClick = () => {
-
-
-        // Reseting values from application
-        setValuesFromApplication({
-            // Staff registration
-            staff_registration:{
-                pref_no:staff.length,
-                first_name_title:'Mr.',
-                first_name:'',
-                middle_name:'',
-                last_name:'',
-                gender:'Male',
-                email:'',
-                alternate_email:'',
-                phone:0,
-                mobile:0,
-                alternate_mobile:0,
-                emergency_mobile:0,
-                wing:'',
-                is_active:false,
-                profile_picture:'',
-                maritial_status:'Married',
-                qualification:'',
-                date_of_birth:new Date(),
-                date_of_anniversary:new Date(),
-                date_of_joining:new Date(),
-                date_of_retire:new Date(),
-                date_of_retire_is_extend:false,
-                address:'',
-                current_address:'',
-                father_or_spouse_name:'',
-                father_or_spouse_mobile:0,
-                father_or_spouse_relation:'Father',
-                blood_group:'',
-                staff_type:'',
-                designation:'',
-                department:'',
-                religion:'',
-                aadhar_card_no:0
-            },
-
-            // Staff educational details
-            staff_educational_details:[],
-
-            // Staff document details
-            staff_document_details:[]
-        });
 
         // Reseting update entity
         setUpdateStaff({
@@ -120,47 +73,6 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 religion:'',
                 aadhar_card_no:0
             },
-
-            //Staff salary details
-            staff_salary_details:{
-                emp_no:'',
-                pan_no:'',
-                bank_name:'',
-                bank_account_no:'',
-                is_generate_salary:false,
-                is_salary_to_bank:false,
-                machine_no:0,
-                pf_no:'',
-                esi_no:'',
-                uan_no:'',
-                emp_acc_no:'',
-                status:'',
-                salary_group:'',
-                basic_salary_part:{
-                    basic:{
-                        value:0,
-                        applied_on:new Date()
-                    },
-                    grade_pay:{
-                        value:0,
-                        applied_on:new Date()
-                    }
-                },
-                confirmation_date:new Date(),
-                permanent_date:new Date(),
-                leaving_date:new Date(),
-                joining_date_epf:new Date(),
-                joining_date_eps:new Date(),
-                leaving_date_epf:new Date(),
-                leaving_date_eps:new Date(),
-                probation_date:new Date(),
-                increment_date:new Date(),
-                reason_of_leaving:'',
-                short_name:''
-            },
-
-            // Staff salary head
-            staff_salary_heads:[],
 
             // Staff educational details
             staff_educational_details:[],
@@ -209,47 +121,6 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 aadhar_card_no:0
             },
 
-            //Staff salary details
-            staff_salary_details:{
-                emp_no:'',
-                pan_no:'',
-                bank_name:'',
-                bank_account_no:'',
-                is_generate_salary:false,
-                is_salary_to_bank:false,
-                machine_no:0,
-                pf_no:'',
-                esi_no:'',
-                uan_no:'',
-                emp_acc_no:'',
-                status:'',
-                salary_group:'',
-                basic_salary_part:{
-                    basic:{
-                        value:0,
-                        applied_on:new Date()
-                    },
-                    grade_pay:{
-                        value:0,
-                        applied_on:new Date()
-                    }
-                },
-                confirmation_date:new Date(),
-                permanent_date:new Date(),
-                leaving_date:new Date(),
-                joining_date_epf:new Date(),
-                joining_date_eps:new Date(),
-                leaving_date_epf:new Date(),
-                leaving_date_eps:new Date(),
-                probation_date:new Date(),
-                increment_date:new Date(),
-                reason_of_leaving:'',
-                short_name:''
-            },
-
-            // Staff salary head
-            staff_salary_heads:[],
-
             // Staff educational details
             staff_educational_details:[],
 
@@ -264,15 +135,6 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
         setDateOfAnniversary(moment());
         setDateOfJoining(moment());
         setDateOfRetire(moment());
-        setConfirmationDate(moment());
-        setPermanentDate(moment());
-        setLeavingDate(moment());
-        setJoiningDateEpf(moment());
-        setJoiningDateEps(moment());
-        setLeavingDateEpf(moment());
-        setLeavingDateEps(moment());
-        setProbationDate(moment());
-        setIncrementDate(moment());
         setSelectedDocuments([]);
         setEducationalDetails([{
             qualification:'',

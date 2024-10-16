@@ -1,15 +1,15 @@
 'use server';
 // Imports
 import {connectToDb} from '@/lib/mongoose';
-import Staff from '@/lib/models/payroll/globalMasters/Staff.model';
+import StaffApplication from '@/lib/models/payroll/globalMasters/StaffApplication.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 
 
 
 
 
-// Create staff props
-interface CreateStaffProps{
+// Create staff application props
+interface CreateStaffApplicationProps{
     // Staff registration
     staff_registration:{
         pref_no:Number
@@ -45,48 +45,7 @@ interface CreateStaffProps{
         department:String;
         religion:String;
         aadhar_card_no:Number;
-    },
-
-    //Staff salary details
-    staff_salary_details:{
-        emp_no:String;
-        pan_no:String;
-        bank_name:String;
-        bank_account_no:String;
-        is_generate_salary:Boolean;
-        is_salary_to_bank:Boolean;
-        machine_no:Number;
-        pf_no:String;
-        esi_no:String;
-        uan_no:String;
-        emp_acc_no:String;
-        status:String;
-        salary_group:String;
-        basic_salary_part:{
-            basic:{
-                value:Number;
-                applied_on:Date;
-            };
-            grade_pay:{
-                value:Number;
-                applied_on:Date;
-            };
-        },
-        confirmation_date:Date;
-        permanent_date:Date;
-        leaving_date:Date;
-        joining_date_epf:Date;
-        joining_date_eps:Date;
-        leaving_date_epf:Date;
-        leaving_date_eps:Date;
-        probation_date:Date;
-        increment_date:Date;
-        reason_of_leaving:String;
-        short_name:String;
-    },
-
-    // Staff salary head
-    staff_salary_heads:any;
+    };
 
     // Staff educational details
     staff_educational_details:any;
@@ -94,8 +53,8 @@ interface CreateStaffProps{
     // Staff document details
     staff_document_details:any;
 };
-// Create staff
-export const createStaff = async ({staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:CreateStaffProps) => {
+// Create staff application
+export const createStaffApplication = async ({staff_registration, staff_educational_details, staff_document_details}:CreateStaffApplicationProps) => {
     try {
     
         // Database connection
@@ -108,16 +67,16 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
 
 
         // Checking if the staff already exists
-        const existingStaff = await Staff.findOne({'staff_registration.pref_no':staff_registration.pref_no, session:activeSession?.year_name});
+        const existingStaff = await StaffApplication.findOne({'staff_registration.pref_no':staff_registration.pref_no, session:activeSession?.year_name});
         if(existingStaff){
             throw new Error('Staff already exists');
         };
 
 
         // Creating new staff
-        const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details});
+        const newStaff = await StaffApplication.create({session:activeSession?.year_name, is_up_for_admission:false, staff_registration});
         newStaff.save().then(async () => {
-            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads, staff_educational_details, staff_document_details});
+            await StaffApplication.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_educational_details, staff_document_details});
         });
 
 
@@ -133,8 +92,8 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
 
 
 
-// Fetch staff
-export const fetchStaff = async () => {
+// Fetch staff application
+export const fetchStaffApplication = async () => {
     try {
 
         // Db connection
@@ -146,7 +105,7 @@ export const fetchStaff = async () => {
 
 
         // Fetching
-        const staff = await Staff.find({session:activeSession?.year_name});
+        const staff = await StaffApplication.find({session:activeSession?.year_name});
 
 
         // Return
@@ -161,8 +120,8 @@ export const fetchStaff = async () => {
 
 
 
-// Modify staff props
-interface ModifyStaffProps{
+// Modify staff application props
+interface ModifyStaffApplicationProps{
     id:String;
     // Staff registration
     staff_registration:{
@@ -201,55 +160,14 @@ interface ModifyStaffProps{
         aadhar_card_no:Number;
     },
 
-    //Staff salary details
-    staff_salary_details:{
-        emp_no:String;
-        pan_no:String;
-        bank_name:String;
-        bank_account_no:String;
-        is_generate_salary:Boolean;
-        is_salary_to_bank:Boolean;
-        machine_no:Number;
-        pf_no:String;
-        esi_no:String;
-        uan_no:String;
-        emp_acc_no:String;
-        status:String;
-        salary_group:String;
-        basic_salary_part:{
-            basic:{
-                value:Number;
-                applied_on:Date;
-            };
-            grade_pay:{
-                value:Number;
-                applied_on:Date;
-            };
-        },
-        confirmation_date:Date;
-        permanent_date:Date;
-        leaving_date:Date;
-        joining_date_epf:Date;
-        joining_date_eps:Date;
-        leaving_date_epf:Date;
-        leaving_date_eps:Date;
-        probation_date:Date;
-        increment_date:Date;
-        reason_of_leaving:String;
-        short_name:String;
-    },
-
-    // Staff salary head
-    staff_salary_heads:any;
-
     // Staff educational details
     staff_educational_details:any;
 
     // Staff document details
     staff_document_details:any;
 }
-// Modify staff
-export const modifyStaff = async ({id, staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}:ModifyStaffProps) => {
+// Modify staff application
+export const modifyStaffApplication = async ({id, staff_registration, staff_educational_details, staff_document_details}:ModifyStaffApplicationProps) => {
     try {
 
         // Db connection
@@ -261,13 +179,13 @@ export const modifyStaff = async ({id, staff_registration, staff_salary_details,
 
 
         // Checking if the staff already exists
-        const staff = await Staff.find({session:activeSession?.year_name});
-        const existingStaff = await Staff.findById(id);
+        const staff = await StaffApplication.find({session:activeSession?.year_name});
+        const existingStaff = await StaffApplication.findById(id);
         if(existingStaff.staff_registration.pref_no !== staff_registration.pref_no && staff.map(s => s.staff_registration.pref_no).includes(staff_registration.pref_no)){throw new Error('Staff pref no. already exists')};
 
         
         // Update staff
-        await Staff.findByIdAndUpdate(id, {staff_registration, staff_salary_details, staff_salary_heads, staff_educational_details, staff_document_details}, {new:true});
+        await StaffApplication.findByIdAndUpdate(id, {staff_registration, staff_educational_details, staff_document_details}, {new:true});
 
 
         // Return
@@ -282,8 +200,8 @@ export const modifyStaff = async ({id, staff_registration, staff_salary_details,
 
 
 
-// Delete staff
-export const deleteStaff = async ({id}:{id:String}) => {
+// Delete staff application
+export const deleteStaffApplication = async ({id}:{id:String}) => {
     try {
 
         // Db connection
@@ -291,7 +209,7 @@ export const deleteStaff = async ({id}:{id:String}) => {
 
 
         // Deleting staff
-        await Staff.findByIdAndDelete(id);
+        await StaffApplication.findByIdAndDelete(id);
 
 
         // Return
@@ -306,8 +224,8 @@ export const deleteStaff = async ({id}:{id:String}) => {
 
 
 
-// Fetch staff names
-export const fetchStaffNames = async () => {
+// Fetch staff applications names
+export const fetchStaffApplicationsNames = async () => {
     try {
 
         // Db connection
@@ -319,7 +237,7 @@ export const fetchStaffNames = async () => {
 
 
         // Fetching
-        const staff = await Staff.find({session:activeSession?.year_name}, {'staff_registration.first_name':1});
+        const staff = await StaffApplication.find({session:activeSession?.year_name}, {'staff_registration.first_name':1});
 
 
         // Return
@@ -334,14 +252,14 @@ export const fetchStaffNames = async () => {
 
 
 
-// Fetch staff by all data props
-interface fetchStaffByAllDataProps{
+// Fetch staff applications by all data props
+interface fetchStaffApplicationsByAllDataProps{
     first_name:String;
     mobile:String;
     pref_no:String;
 };
-// Fetch staff by all data
-export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchStaffByAllDataProps) => {
+// Fetch staff applications by all data
+export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_no}:fetchStaffApplicationsByAllDataProps) => {
     try {
 
         // Db connection
@@ -358,7 +276,7 @@ export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchSta
 
 
         // Students
-        let staff; 
+        let staffApplications; 
 
 
         // Values
@@ -369,10 +287,10 @@ export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchSta
         if(!containsAnyLetters(mobile) || !containsAnyLetters(pref_no)){
 
             // Mobile number
-            const mobileRes = await Staff.find({'staff_registration.mobile':mobile, session:activeSession?.year_name});
+            const mobileRes = await StaffApplication.find({'staff_registration.mobile':mobile, session:activeSession?.year_name});
 
             // Admission number res
-            const prefNoRes = await Staff.find({'staff_registration.pref_no':pref_no, session:activeSession?.year_name});
+            const prefNoRes = await StaffApplication.find({'staff_registration.pref_no':pref_no, session:activeSession?.year_name});
 
             // All res
             const allRes = mobileRes.concat(prefNoRes);
@@ -385,12 +303,12 @@ export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchSta
             };
             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
 
-            staff = filteredAllRes;
+            staffApplications = filteredAllRes;
 
         }else{
 
             // Name res
-            const firstnameRes = await Staff.find({'staff_registration.first_name':{$regex:firstNameRegex}, session:activeSession?.year_name});
+            const firstnameRes = await StaffApplication.find({'staff_registration.first_name':{$regex:firstNameRegex}, session:activeSession?.year_name});
 
 
             const allRes = firstnameRes;
@@ -403,14 +321,102 @@ export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchSta
             };
             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
 
-            staff = filteredAllRes;
+            staffApplications = filteredAllRes;
         }
+
+
+        // Return
+        return staffApplications;
+
+    } catch (err) {
+        throw new Error(`Error searching staff applications: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch staff applications not up for admission
+export const fetchStaffApplicationsNotUpForAdmission = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const staff = await StaffApplication.find({session:activeSession?.year_name, is_up_for_admission:false});
 
 
         // Return
         return staff;
 
     } catch (err) {
-        throw new Error(`Error searching staff: ${err}`);
+        throw new Error(`Error searching staff applications: ${err}`);
+    };
+};
+
+
+
+
+
+// Apply staff for admission props
+interface ApplyStaffForAdmissionProps{
+    pref_nos:string[];
+}
+// Apply staff for admission
+export const applyStaffForAdmission = async ({pref_nos}:ApplyStaffForAdmissionProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Update staff
+        pref_nos.map(async no => {
+            const updatedStaff = await StaffApplication.updateMany({'staff_registration.pref_no':no, session:activeSession?.year_name}, {is_up_for_admission:true}, {new:true});
+            return updatedStaff;
+        });
+    
+
+    } catch (err) {
+        throw new Error(`Error updating staff: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch staff applications up for admission
+export const fetchStaffApplicationsUpForAdmission = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const staff = await StaffApplication.find({session:activeSession?.year_name, is_up_for_admission:true});
+
+
+        // Return
+        return staff;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching staff staff: ${err}`);
     };
 };

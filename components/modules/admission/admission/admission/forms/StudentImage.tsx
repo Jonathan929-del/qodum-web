@@ -7,7 +7,6 @@
 // Main function
 const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc, valuesFromRegister}:any) => {
 
-
     // Handle on change
     const handleOnChange = (e:any) => {
         setFile(e.target.files[0])
@@ -18,7 +17,6 @@ const StudentImage = ({setFile, updateStudent, imageSrc, setImageSrc, valuesFrom
         };
         reader.readAsDataURL(e.target.files[0]);
     };
-
 
     return (
         <div className='w-full mt-10 flex items-center justify-center'>

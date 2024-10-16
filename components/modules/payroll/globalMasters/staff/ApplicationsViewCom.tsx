@@ -12,19 +12,22 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, setEducationalDetails, setValuesFromApplication}:any) => {
+const ApplicationsViewCom = ({setIsViewOpened, staffApplications, setValuesFromApplication, setSelectedDocuments, setEducationalDetails, setUpdateStaff}:any) => {
 
     // Is active
     const [isActive, setIsActive] = useState(true);
 
 
     // Filtered staff
-    const [filteredStaff, setFilteredStaff] = useState(staff?.filter((s:any) => s?.staff_registration?.is_active));
+    const [filteredStaff, setFilteredStaff] = useState(staffApplications?.filter((s:any) => s?.staff_registration?.is_active));
 
 
     // Select handler
     const selectHandler = (s:any) => {
-        setValuesFromApplication({
+        setUpdateStaff({
+            id:'',
+            isDeleteClicked:false,
+    
             // Staff registration
             staff_registration:{
                 pref_no:0,
@@ -61,7 +64,48 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 religion:'',
                 aadhar_card_no:0
             },
-
+    
+            //Staff salary details
+            staff_salary_details:{
+                emp_no:'',
+                pan_no:'',
+                bank_name:'',
+                bank_account_no:'',
+                is_generate_salary:false,
+                is_salary_to_bank:false,
+                machine_no:0,
+                pf_no:'',
+                esi_no:'',
+                uan_no:'',
+                emp_acc_no:'',
+                status:'',
+                salary_group:'',
+                basic_salary_part:{
+                    basic:{
+                        value:0,
+                        applied_on:new Date()
+                    },
+                    grade_pay:{
+                        value:0,
+                        applied_on:new Date()
+                    }
+                },
+                confirmation_date:new Date(),
+                permanent_date:new Date(),
+                leaving_date:new Date(),
+                joining_date_epf:new Date(),
+                joining_date_eps:new Date(),
+                leaving_date_epf:new Date(),
+                leaving_date_eps:new Date(),
+                probation_date:new Date(),
+                increment_date:new Date(),
+                reason_of_leaving:'',
+                short_name:''
+            },
+    
+            // Staff salary head
+            staff_salary_heads:[],
+    
             // Staff educational details
             staff_educational_details:[{
                 qualification:'',
@@ -72,11 +116,11 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 percentage_of_marks:0,
                 year_of_passing:''
             }],
-
+    
             // Staff document details
             staff_document_details:[]
         });
-        setUpdateStaff({
+        setValuesFromApplication({
             id:s?._id,
             isDeleteClicked:false,
 
@@ -117,47 +161,6 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 aadhar_card_no:s.staff_registration.aadhar_card_no
             },
 
-            //Staff salary details
-            staff_salary_details:{
-                emp_no:s.staff_salary_details.emp_no,
-                pan_no:s.staff_salary_details.pan_no,
-                bank_name:s.staff_salary_details.bank_name,
-                bank_account_no:s.staff_salary_details.bank_account_no,
-                is_generate_salary:s.staff_salary_details.is_generate_salary,
-                is_salary_to_bank:s.staff_salary_details.is_salary_to_bank,
-                machine_no:s.staff_salary_details.machine_no,
-                pf_no:s.staff_salary_details.pf_no,
-                esi_no:s.staff_salary_details.esi_no,
-                uan_no:s.staff_salary_details.uan_no,
-                emp_acc_no:s.staff_salary_details.emp_acc_no,
-                status:s.staff_salary_details.status,
-                salary_group:s.staff_salary_details.salary_group,
-                basic_salary_part:{
-                    basic:{
-                        value:s.staff_salary_details.basic_salary_part.basic.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.basic.applied_on
-                    },
-                    grade_pay:{
-                        value:s.staff_salary_details.basic_salary_part.grade_pay.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.grade_pay.applied_on
-                    }
-                },
-                confirmation_date:s.staff_salary_details.confirmation_date,
-                permanent_date:s.staff_salary_details.permanent_date,
-                leaving_date:s.staff_salary_details.leaving_date,
-                joining_date_epf:s.staff_salary_details.joining_date_epf,
-                joining_date_eps:s.staff_salary_details.joining_date_eps,
-                leaving_date_epf:s.staff_salary_details.leaving_date_epf,
-                leaving_date_eps:s.staff_salary_details.leaving_date_eps,
-                probation_date:s.staff_salary_details.probation_date,
-                increment_date:s.staff_salary_details.increment_date,
-                reason_of_leaving:s.staff_salary_details.reason_of_leaving,
-                short_name:s.staff_salary_details.short_name
-            },
-
-            // Staff salary head
-            staff_salary_heads:s.staff_salary_heads,
-
             // Staff educational details
             staff_educational_details:s?.staff_educational_details || [],
 
@@ -188,7 +191,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                             checked={isActive}
                             onClick={() => {
                                 setIsActive(!isActive);
-                                setFilteredStaff(isActive ? staff.filter((s:any) => !s.staff_registration.is_active) : staff.filter((s:any) => s.staff_registration.is_active))
+                                setFilteredStaff(isActive ? staffApplications.filter((s:any) => !s.staff_registration.is_active) : staffApplications.filter((s:any) => s.staff_registration.is_active))
                             }}
                         />
                         <p className='text-sm'>Is Active</p>
@@ -264,7 +267,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                             ))
                         }
                     </CommandList>
-                    {staff.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
+                    {staffApplications.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
                 </div>
 
 
@@ -306,4 +309,4 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
 
 
 // Export
-export default ViewCom;
+export default ApplicationsViewCom;

@@ -170,7 +170,6 @@ const StudentSchema = new mongoose.Schema(
             }
         }
 
-
     },
     {
         timestamps:true

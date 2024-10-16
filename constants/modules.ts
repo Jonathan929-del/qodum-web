@@ -124,6 +124,12 @@ const modules = [
                         subPageName:'Student Class Promotion'
                     },
                     {
+                        subPageName:'Assign Roll No to Student'
+                    },
+                    {
+                        subPageName:'Assign Computer No to Student'
+                    },
+                    {
                         subPageName:'Update Student Details'
                     },
                     {
@@ -149,6 +155,9 @@ const modules = [
                 subPages:[
                     {
                         subPageName:'Enquiry'
+                    },
+                    {
+                        subPageName:'Enquiry Follow Up'
                     },
                     {
                         subPageName:'Admission Form Registration'
@@ -327,6 +336,9 @@ const modules = [
                         subPageName:'Fee Entry Setting Others'
                     },
                     {
+                        subPageName:'Fee Certificate Setting'
+                    },
+                    {
                         subPageName:'Set Due Limit'
                     },
                     {
@@ -390,6 +402,9 @@ const modules = [
                     },
                     {
                         subPageName:'Student Fee Details'
+                    },
+                    {
+                        subPageName:'Refund Fee'
                     },
                     {
                         subPageName:'Assign Opening Balance'
@@ -482,6 +497,9 @@ const modules = [
                     },
                     {
                         subPageName:'Define Vehicle Type'
+                    },
+                    {
+                        subPageName:'Vehicle Alerts'
                     },
                     {
                         subPageName:'Define Vehicle Details'
@@ -891,6 +909,12 @@ const modules = [
                     },
                     {
                         subPageName:'Define Department'
+                    },
+                    {
+                        subPageName:'Candidate Application'
+                    },
+                    {
+                        subPageName:'Shortlisted Candidate'
                     },
                     {
                         subPageName:'Employee Registration'

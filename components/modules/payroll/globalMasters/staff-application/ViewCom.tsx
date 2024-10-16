@@ -12,7 +12,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, setEducationalDetails, setValuesFromApplication}:any) => {
+const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, setEducationalDetails}:any) => {
 
     // Is active
     const [isActive, setIsActive] = useState(true);
@@ -24,58 +24,6 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
 
     // Select handler
     const selectHandler = (s:any) => {
-        setValuesFromApplication({
-            // Staff registration
-            staff_registration:{
-                pref_no:0,
-                first_name_title:'Mr.',
-                first_name:'',
-                middle_name:'',
-                last_name:'',
-                gender:'Male',
-                email:'',
-                alternate_email:'',
-                phone:0,
-                mobile:0,
-                alternate_mobile:0,
-                emergency_mobile:0,
-                wing:'',
-                is_active:false,
-                profile_picture:'',
-                maritial_status:'Married',
-                qualification:'',
-                date_of_birth:new Date(),
-                date_of_anniversary:new Date(),
-                date_of_joining:new Date(),
-                date_of_retire:new Date(),
-                date_of_retire_is_extend:false,
-                address:'',
-                current_address:'',
-                father_or_spouse_name:'',
-                father_or_spouse_mobile:0,
-                father_or_spouse_relation:'Father',
-                blood_group:'',
-                staff_type:'',
-                designation:'',
-                department:'',
-                religion:'',
-                aadhar_card_no:0
-            },
-
-            // Staff educational details
-            staff_educational_details:[{
-                qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
-                subjects:[],
-                percentage_of_marks:0,
-                year_of_passing:''
-            }],
-
-            // Staff document details
-            staff_document_details:[]
-        });
         setUpdateStaff({
             id:s?._id,
             isDeleteClicked:false,
@@ -117,47 +65,6 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 aadhar_card_no:s.staff_registration.aadhar_card_no
             },
 
-            //Staff salary details
-            staff_salary_details:{
-                emp_no:s.staff_salary_details.emp_no,
-                pan_no:s.staff_salary_details.pan_no,
-                bank_name:s.staff_salary_details.bank_name,
-                bank_account_no:s.staff_salary_details.bank_account_no,
-                is_generate_salary:s.staff_salary_details.is_generate_salary,
-                is_salary_to_bank:s.staff_salary_details.is_salary_to_bank,
-                machine_no:s.staff_salary_details.machine_no,
-                pf_no:s.staff_salary_details.pf_no,
-                esi_no:s.staff_salary_details.esi_no,
-                uan_no:s.staff_salary_details.uan_no,
-                emp_acc_no:s.staff_salary_details.emp_acc_no,
-                status:s.staff_salary_details.status,
-                salary_group:s.staff_salary_details.salary_group,
-                basic_salary_part:{
-                    basic:{
-                        value:s.staff_salary_details.basic_salary_part.basic.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.basic.applied_on
-                    },
-                    grade_pay:{
-                        value:s.staff_salary_details.basic_salary_part.grade_pay.value,
-                        applied_on:s.staff_salary_details.basic_salary_part.grade_pay.applied_on
-                    }
-                },
-                confirmation_date:s.staff_salary_details.confirmation_date,
-                permanent_date:s.staff_salary_details.permanent_date,
-                leaving_date:s.staff_salary_details.leaving_date,
-                joining_date_epf:s.staff_salary_details.joining_date_epf,
-                joining_date_eps:s.staff_salary_details.joining_date_eps,
-                leaving_date_epf:s.staff_salary_details.leaving_date_epf,
-                leaving_date_eps:s.staff_salary_details.leaving_date_eps,
-                probation_date:s.staff_salary_details.probation_date,
-                increment_date:s.staff_salary_details.increment_date,
-                reason_of_leaving:s.staff_salary_details.reason_of_leaving,
-                short_name:s.staff_salary_details.short_name
-            },
-
-            // Staff salary head
-            staff_salary_heads:s.staff_salary_heads,
-
             // Staff educational details
             staff_educational_details:s?.staff_educational_details || [],
 
@@ -166,7 +73,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
         });
         setEducationalDetails(s?.staff_educational_details || []);
         setSelectedDocuments(s?.staff_document_details || []);
-        setIsViewOpened('');
+        setIsViewOpened(false);
     };
 
     return (

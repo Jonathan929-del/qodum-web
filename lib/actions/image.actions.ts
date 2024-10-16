@@ -279,6 +279,49 @@ export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) 
 
 
 
+// Upload staff application file
+const uploadStaffApplicationFile = async (file:any, pref_no:any) => {
+    const fileBuffer = file;
+    const params = {
+        Bucket:process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+        Key:`staff-application/${pref_no}`,
+        Body:fileBuffer,
+        ContentType:'image'
+    };
+    const command = new PutObjectCommand(params);
+    await configs.send(command);
+    
+    
+    // Return
+    return pref_no;
+};
+
+
+
+
+
+// Staff application image
+export const uploadStaffApplicationImage = async ({data, pref_no}:{data:any, pref_no:any}) => {
+    try {
+        const formData = await data;
+        const file = formData.get('file');
+        if(!file){
+            throw new Error('No file was sent');
+        };
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const res = await uploadStaffApplicationFile(buffer, pref_no);
+
+        // Return
+        return res;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+
+
+
+
 // Upload staff file (PDF)
 const uploadStaffPdfFile = async (file: any, pref_no: any, content_type:any) => {
     console.log(content_type);
