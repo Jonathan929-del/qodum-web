@@ -547,6 +547,13 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                         Educational Details
                                     </TabsTrigger>
                                     <TabsTrigger
+                                        value='staff-experience-details'
+                                        onClick={() => setSelectedTab('staff-experience-details')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-experience-details' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                    >
+                                        Experience Details
+                                    </TabsTrigger>
+                                    <TabsTrigger
                                         value='staff-document-details'
                                         onClick={() => setSelectedTab('staff-document-details')}
                                         className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'staff-document-details' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
@@ -581,6 +588,13 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                 />
                             </TabsContent>
                             <TabsContent value='staff-educational-details'>
+                                <StaffEducationalDetails
+                                    form={form}
+                                    educationalDetails={educationalDetails}
+                                    setEducationalDetails={setEducationalDetails}
+                                />
+                            </TabsContent>
+                            <TabsContent value='staff-experience-details'>
                                 <StaffEducationalDetails
                                     form={form}
                                     educationalDetails={educationalDetails}

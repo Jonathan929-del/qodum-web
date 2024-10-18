@@ -338,7 +338,7 @@ export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_
 
 
 // Fetch staff applications not up for admission
-export const fetchStaffApplicationsNotUpForAdmission = async () => {
+export const fetchStaffApplicationsNotUpForAdmission = async ({joiningDateFrom, joiningDateTo}:any) => {
     try {
 
         // Db connection
@@ -349,8 +349,22 @@ export const fetchStaffApplicationsNotUpForAdmission = async () => {
         const activeSession = await AcademicYear.findOne({is_active:true});
 
 
+        // Adjust to include the entire day
+        const startOfDay = new Date(joiningDateFrom);
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(joiningDateTo);
+        endOfDay.setHours(23, 59, 59, 999);
+
+
         // Fetching
-        const staff = await StaffApplication.find({session:activeSession?.year_name, is_up_for_admission:false});
+        const staff = await StaffApplication.find({
+            session:activeSession?.year_name,
+            is_up_for_admission:false,
+            'staff_registration.date_of_joining':{
+                $gte:startOfDay,
+                $lte:endOfDay
+            }
+        });
 
 
         // Return

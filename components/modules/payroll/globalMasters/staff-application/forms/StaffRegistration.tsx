@@ -636,14 +636,37 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     />
 
 
-                    {/* Qualification */}
+                    {/* Address */}
                     <FormField
                         control={form?.control}
-                        name='staff_registration.qualification'
+                        name='staff_registration.address'
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Qualification</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Address</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* Current Address */}
+                    <FormField
+                        control={form?.control}
+                        name='staff_registration.current_address'
+                        render={({ field }) => (
+                            <FormItem className='w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Current Address</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -756,37 +779,14 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     </div>
 
 
-                    {/* Address */}
+                    {/* Qualification */}
                     <FormField
                         control={form?.control}
-                        name='staff_registration.address'
+                        name='staff_registration.qualification'
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Address</FormLabel>
-                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
-                                    </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Current Address */}
-                    <FormField
-                        control={form?.control}
-                        name='staff_registration.current_address'
-                        render={({ field }) => (
-                            <FormItem className='w-full mt-2 lg:mt-0'>
-                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Current Address</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Qualification</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input

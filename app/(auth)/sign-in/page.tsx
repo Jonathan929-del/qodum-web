@@ -9,8 +9,8 @@ import {useToast} from '@/components/ui/use-toast';
 import {useContext, useEffect, useState} from 'react';
 import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {Lock, LogIn, PersonStanding, User} from 'lucide-react';
 import {createUser, loginUser} from '@/lib/actions/users/manageUsers/user.actions';
-import { Lock, LogIn, PersonStanding, User } from 'lucide-react';
 
 
 

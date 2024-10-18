@@ -107,6 +107,8 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
+                // @ts-ignore
+                localStorage.getItem('isStaffAdmissionStateOpened') && localStorage.getItem('isStaffAdmissionStateOpened') === 'true' ?
                 isViewOpened ? (
                     <ViewCom
                         staff={staff}
@@ -127,6 +129,8 @@ const page = () => {
                         educationalDetails={educationalDetails}
                         setEducationalDetails={setEducationalDetails}
                     />
+                ) : (
+                    <p className='text-xs text-red-500'>Admission is Closed!</p>
                 )
             }
         </div>

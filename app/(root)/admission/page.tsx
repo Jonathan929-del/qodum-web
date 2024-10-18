@@ -54,8 +54,7 @@ import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
-// import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-// import { setMomentDefaultYear } from '@/lib/utils';
+import AdmissionOpen from '@/pagesComps/admission/(masterSettings)/admission-open/page';
 
 
 
@@ -232,6 +231,9 @@ const Home = () => {
     };
     if(openedPages.includes('Class Notice')){
       openedPagesArray.push({name:'Class Notice', component:<ClassNotice />});
+    };
+    if(openedPages.includes('Admission Open')){
+      openedPagesArray.push({name:'Admission Open', component:<AdmissionOpen />});
     };
 
 

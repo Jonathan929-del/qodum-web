@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // Staff Schema
 const StaffSchema = new mongoose.Schema(
     {
+    
         // Session
         session:{type:String, required:true},
 

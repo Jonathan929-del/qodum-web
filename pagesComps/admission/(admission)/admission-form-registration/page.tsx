@@ -372,10 +372,11 @@ const page = () => {
         fetcher();
     }, [isViewOpened, updateStudent]);
 
-
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
+                // @ts-ignore
+                localStorage.getItem('isStudentAdmissionStateOpened') && localStorage.getItem('isStudentAdmissionStateOpened') === 'true' ?
                 isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}
@@ -423,6 +424,8 @@ const page = () => {
                         professions={professions}
                         staff={staff}
                     />
+                ) : (
+                    <p className='text-xs text-red-500'>Admission is Closed!</p>
                 )
             }
         </div>

@@ -115,6 +115,9 @@ const modules = [
                         subPageName:'Change Academic'
                     },
                     {
+                        subPageName:'Admission Open'
+                    },
+                    {
                         subPageName:'Enquiry No Setting'
                     },
                     {
@@ -899,44 +902,35 @@ const modules = [
                         ]
                     },
                     {
-                        subPageName:'Define Profession'
+                        subPageName:'Define Department'
                     },
                     {
-                        subPageName:'Define Staff Type'
+                        subPageName:'Define Profession'
                     },
                     {
                         subPageName:'Define Designation'
                     },
                     {
-                        subPageName:'Define Department'
-                    },
-                    {
-                        subPageName:'Candidate Application'
-                    },
-                    {
-                        subPageName:'Shortlisted Candidate'
-                    },
-                    {
-                        subPageName:'Employee Registration'
+                        subPageName:'Define Staff Type'
                     },
                     {
                         subPageName:'Define Document Type'
                     },
                     {
-                        subPageName:'Modify Staff in Bulk'
-                    },
-                    {
-                        subPageName:'Rejoin Staff'
-                    },
-                    {
-                        subPageName:'Define Reminder'
-                    },
-                    {
-                        subPageName:'Assign Transport to Staff'
-                    },
-                    {
-                        subPageName:'Report Settings'
-                    },
+                        subPageName:'Human Resources',
+                        threads:[
+                            'Current Job Opening',
+                            'Admission Open',
+                            'Candidate Registration',
+                            'Shortlisted Candidate',
+                            'Employee Registration',
+                            'Update Staff Profile',
+                            'Rejoin Staff',
+                            'Define Reminder',
+                            'Report Settings',
+                            'Assign Transport To Staff'
+                        ]
+                    }
                 ]
             },
             // Master Settings

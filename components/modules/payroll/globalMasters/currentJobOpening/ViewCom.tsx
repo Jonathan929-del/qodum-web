@@ -11,15 +11,21 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, departments, setUpdateDepartment}:any) => {
+const ViewCom = ({setIsViewOpened, jobs, setUpdateJob}:any) => {
 
 
     // Select handler
-    const selectHandler = (r:any) => {
-        setUpdateDepartment({
-            id:r._id,
+    const selectHandler = (i:any) => {
+        setUpdateJob({
+            id:i._id,
             isDeleteClicked:false,
-            department:r.department
+
+            post:i.post,
+            salary:i.salary,
+            experience:i.experience,
+            description:i.description,
+            key_skill:i.key_skill,
+            last_date_of_submission:i.last_date_of_submission
         });
         setIsViewOpened(false);
     };
@@ -32,7 +38,7 @@ const ViewCom = ({setIsViewOpened, departments, setUpdateDepartment}:any) => {
 
             {/* Header */}
             <div className='flex flex-row items-center justify-between w-full px-2 py-2 text-sm font-bold text-main-color bg-[#e7f0f7] rounded-t-[8px]'>
-                <h2>Departments List</h2>
+                <h2>Jobs List</h2>
                 <X color='#3a3a3a' size={18} cursor={'pointer'} onClick={() => setIsViewOpened(false)}/>
             </div>
             <div className='w-[95%] h-[90%] flex flex-col items-center bg-[#F1F1F1] rounded-[8px]'>
@@ -47,7 +53,7 @@ const ViewCom = ({setIsViewOpened, departments, setUpdateDepartment}:any) => {
                 </div>
 
 
-                {/* Departments */}
+                {/* jobs */}
                 <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
                     {/* Headers */}
                     <ul className='w-full min-w-[300px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
@@ -60,25 +66,25 @@ const ViewCom = ({setIsViewOpened, departments, setUpdateDepartment}:any) => {
                             <ChevronsUpDown size={12}/>
                         </li>
                         <li className='basis-[60%] flex flex-row items-center justify-between px-2'>
-                            Department
+                            Last Date of Submission
                             <ChevronsUpDown size={12}/>
                         </li>
                     </ul>
                     {/* Values */}
                     <CommandList>
                         {
-                            departments.length < 1 ? (
+                            jobs.length < 1 ? (
                                 <p className='w-full flex flex-row p-2 text-sm bg-[#E2E4FF] border-b-[0.5px] border-[#ccc]'>
-                                    No departments
+                                    No jobs
                                 </p>
-                            ) : !departments[0]?.department ? (
+                            ) : !jobs[0]?.post ? (
                                     <LoadingIcon />
-                                ) : departments.map((c:any) => (
+                                ) : jobs.map((c:any) => (
                                     <CommandItem
-                                        value={`${departments.indexOf(c) + 1} ${c.department}`}
+                                        value={`${jobs.indexOf(c) + 1} ${moment(c.last_date_of_submission).format('DD-MM-YYYY')}`}
                                         className='w-full min-w-[300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                     >
-                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{departments.indexOf(c) + 1}</li>
+                                        <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{jobs.indexOf(c) + 1}</li>
                                         <li className='basis-[20%] flex flex-row items-center justify-center px-2 border-r-[0.5px] border-[#ccc]'>
                                             <Button
                                                 className='px-[8px] h-6 text-[10px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-[#E2E4FF]
@@ -88,7 +94,7 @@ const ViewCom = ({setIsViewOpened, departments, setUpdateDepartment}:any) => {
                                                 Select
                                             </Button>
                                         </li>
-                                        <li className='basis-[60%] flex flex-row items-center px-2'>{c.department}</li>
+                                        <li className='basis-[60%] flex flex-row items-center px-2'>{moment(c.last_date_of_submission).format('DD-MM-YYYY')}</li>
                                     </CommandItem>
                                 ))
                         }
