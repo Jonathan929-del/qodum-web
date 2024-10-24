@@ -402,7 +402,7 @@ export const fetchStaffApplicationsNotUpForAdmission = async ({joiningDateFrom, 
 // Apply staff for admission props
 interface ApplyStaffForAdmissionProps{
     reg_nos:string[];
-}
+};
 // Apply staff for admission
 export const applyStaffForAdmission = async ({reg_nos}:ApplyStaffForAdmissionProps) => {
     try {

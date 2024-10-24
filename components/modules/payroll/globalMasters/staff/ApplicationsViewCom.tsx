@@ -253,7 +253,7 @@ const ApplicationsViewCom = ({setIsViewOpened, staffApplications, setValuesFromA
                                     No staff
                                 </p>
                             ):
-                            !filteredStaff[0]?.staff_registration.pref_no ? (
+                            !filteredStaff[0]?.staff_registration.reg_no ? (
                                 <LoadingIcon />
                             ) : filteredStaff.map((s:any) => (
                                 <CommandItem

@@ -68,25 +68,25 @@ const StaffList = ({staffApplications, selectedStaffApplications, setSelectedSta
                             ) : staffApplications.map((s:any, index:number) => (
                                 <CommandItem
                                     key={index}
-                                    value={`${staffApplications.indexOf(s) + 1}  ${s?.staff_registration.pref_no} ${s?.staff_registration?.first_name} ${s?.staff_registration?.father_or_spouse_name} ${s?.staff_registration?.mobile} ${s?.staff_registration?.designation}`}
+                                    value={`${staffApplications.indexOf(s) + 1}  ${s?.staff_registration.reg_no} ${s?.staff_registration?.first_name} ${s?.staff_registration?.father_or_spouse_name} ${s?.staff_registration?.mobile} ${s?.staff_registration?.designation}`}
                                     className='w-full min-w-[1000px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>{staffApplications.indexOf(s) + 1}</li>
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         <Checkbox
-                                            checked={selectedStaffApplications.includes(s?.staff_registration?.pref_no)}
+                                            checked={selectedStaffApplications.includes(s?.staff_registration?.reg_no)}
                                             onCheckedChange={() => {
-                                                if(selectedStaffApplications.includes(s?.staff_registration?.pref_no)){
-                                                    setSelectedStaffApplications(selectedStaffApplications.filter((s:any) => s === s?.staff_registration?.pref_no));
+                                                if(selectedStaffApplications.includes(s?.staff_registration?.reg_no)){
+                                                    setSelectedStaffApplications(selectedStaffApplications.filter((s:any) => s === s?.staff_registration?.reg_no));
                                                 }else{
-                                                    setSelectedStaffApplications([...selectedStaffApplications, s?.staff_registration?.pref_no]);
+                                                    setSelectedStaffApplications([...selectedStaffApplications, s?.staff_registration?.reg_no]);
                                                 };
                                             }}
                                             className='rounded-[2px] text-hash-color'
                                         />
                                     </li>
                                     <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {s?.staff_registration?.pref_no}
+                                        {s?.staff_registration?.reg_no}
                                     </li>
                                     <li className='basis-[20%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         {s?.staff_registration?.first_name}

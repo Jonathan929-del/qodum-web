@@ -56,7 +56,7 @@ function FormCom() {
             };
 
             // Applying for admission
-            await applyStaffForAdmission({pref_nos:selectedStaffApplications});
+            await applyStaffForAdmission({reg_nos:selectedStaffApplications});
 
             // Reseting
             setStaffApplications([{}]);
@@ -78,7 +78,7 @@ function FormCom() {
         if(staffApplicationsRes.length > 0){
             setStaffApplications(staffApplicationsRes);
             // @ts-ignore
-            setSelectedStaffApplications(staffApplicationsRes.map((s:any) => s?.staff_registration?.pref_no));
+            setSelectedStaffApplications(staffApplicationsRes.map((s:any) => s?.staff_registration?.reg_no));
         }else{
             toast({title:'No staff applications found', variant:'alert'});
         }

@@ -237,11 +237,11 @@ export const uploadClassNoticeImage = async ({data, class_notice_id}:{data:any, 
 
 
 // Upload staff file
-const uploadStaffFile = async (file:any, pref_no:any) => {
+const uploadStaffFile = async (file:any, reg_no:any) => {
     const fileBuffer = file;
     const params = {
         Bucket:process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-        Key:`staff/${pref_no}`,
+        Key:`staff/${reg_no}`,
         Body:fileBuffer,
         ContentType:'image'
     };
@@ -250,7 +250,7 @@ const uploadStaffFile = async (file:any, pref_no:any) => {
     
     
     // Return
-    return pref_no;
+    return reg_no;
 };
 
 

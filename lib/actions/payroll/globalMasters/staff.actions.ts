@@ -273,7 +273,7 @@ export const modifyStaff = async ({id, staff_registration, staff_salary_details,
         // Checking if the staff already exists
         const staff = await Staff.find({session:activeSession?.year_name});
         const existingStaff = await Staff.findById(id);
-        if(existingStaff.staff_registration.reg_no !== staff_registration.reg_no && staff.map(s => s.staff_registration.reg_no).includes(staff_registration.reg_no)){throw new Error('Staff pref no. already exists')};
+        if(existingStaff.staff_registration.reg_no !== staff_registration.reg_no && staff.map(s => s.staff_registration.reg_no).includes(staff_registration.reg_no)){throw new Error('Staff reg. no. already exists')};
 
         
         // Update staff
@@ -382,10 +382,10 @@ export const fetchStaffByAllData = async ({first_name, mobile, reg_no}:fetchStaf
             const mobileRes = await Staff.find({'staff_registration.mobile':mobile, session:activeSession?.year_name});
 
             // Admission number res
-            const prefNoRes = await Staff.find({'staff_registration.reg_no':reg_no, session:activeSession?.year_name});
+            const regNoRes = await Staff.find({'staff_registration.reg_no':reg_no, session:activeSession?.year_name});
 
             // All res
-            const allRes = mobileRes.concat(prefNoRes);
+            const allRes = mobileRes.concat(regNoRes);
             const uniqueBy = (a:any, key:any) => {
                 var seen:any = {};
                 return a.filter(function(item:any) {
