@@ -1,32 +1,31 @@
 'use client';
 // Imports
+import moment from 'moment';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
-import ProfilePicture from './ProfilePicture';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
+import ProfilePicture from './ProfilePicture';
+import {ChevronDown, Search} from 'lucide-react';
 import {Checkbox} from '@/components/ui/checkbox';
-import {ChevronDown, Search, } from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchJobs} from '@/lib/actions/payroll/globalMasters/job.actions';
 import {fetchStaffTypes} from '@/lib/actions/payroll/globalMasters/staffType.actions';
-import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
 import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchDepartments} from '@/lib/actions/payroll/globalMasters/department.actions';
 import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import {fetchDesignations} from '@/lib/actions/payroll/globalMasters/designation.actions';
 import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchStaffApplicationsByAllData } from '@/lib/actions/payroll/globalMasters/staffApplication.actions';
+import {fetchStaffApplicationsByAllData} from '@/lib/actions/payroll/globalMasters/staffApplication.actions';
 
 
 
 
 
 // Main function
-const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, updateStaff, imageSrc, setImageSrc, setIsLoading, staff, dateOfBirth, setDateOfBirth, dateOfAnniversary, setDateOfAnniversary, dateOfJoining, setDateOfJoining, dateOfRetire, setDateOfRetire, setEducationalDetails, setSelectedDocuments}:any) => {
+const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, updateStaff, imageSrc, setImageSrc, setIsLoading, dateOfBirth, setDateOfBirth, dateOfAnniversary, setDateOfAnniversary, dateOfJoining, setDateOfJoining, dateOfRetire, setDateOfRetire, setEducationalDetails, setExperienceDetails, setSelectedDocuments, designations, departments}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -36,20 +35,16 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
     const [wings, setWings] = useState([{}]);
 
 
+    // Posts
+    const [posts, setPosts] = useState([{}]);
+
+
     // Blood groups
     const [bloodGroups, setBloodGroups] = useState([{}]);
 
 
     // Staff types
     const [staffTypes, setStaffTypes] = useState([{}]);
-
-
-    // Designations
-    const [designations, setDesignations] = useState([{}]);
-
-
-    // Departments
-    const [departments, setDepartments] = useState([{}]);
 
 
     // Religions
@@ -81,7 +76,12 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             isDeleteClicked:false,
             // Staff registration
             staff_registration:{
-                pref_no:s.staff_registration.pref_no,
+                post:s.staff_registration.post,
+                reg_no:s.staff_registration.reg_no,
+                employee_code:s.staff_registration.employee_code,
+                approved_teacher:s.staff_registration.approved_teacher,
+                teacher_id:s.staff_registration.teacher_id,
+                cbse_code:s.staff_registration.cbse_code,
                 first_name_title:s.staff_registration.first_name_title,
                 first_name:s.staff_registration.first_name,
                 middle_name:s.staff_registration.middle_name,
@@ -91,7 +91,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                 alternate_email:s.staff_registration.alternate_email,
                 phone:s.staff_registration.phone,
                 mobile:s.staff_registration.mobile,
-                alternate_mobile:s.staff_registration.alternate_mobile,
+                whatsapp_mobile:s.staff_registration.whatsapp_mobile,
                 emergency_mobile:s.staff_registration.emergency_mobile,
                 wing:s.staff_registration.wing,
                 is_active:s.staff_registration.is_active,
@@ -103,7 +103,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                 date_of_joining:s.staff_registration.date_of_joining,
                 date_of_retire:s.staff_registration.date_of_retire,
                 date_of_retire_is_extend:s.staff_registration.date_of_retire_is_extend,
-                address:s.staff_registration.address,
+                permenant_address:s.staff_registration.permenant_address,
                 current_address:s.staff_registration.current_address,
                 father_or_spouse_name:s.staff_registration.father_or_spouse_name,
                 father_or_spouse_mobile:s.staff_registration.father_or_spouse_mobile,
@@ -123,6 +123,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             staff_document_details:s?.staff_document_details || []
         });
         setEducationalDetails(s?.staff_educational_details || []);
+        setExperienceDetails(s?.staff_experience_details || []);
         setSelectedDocuments(s?.staff_document_details || []);
         setSearch('');
         setIsLoading(false);
@@ -161,7 +162,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     </div>
                     <div className='flex flex-col py-2 text-[10px] text-hash-color gap-[2px]'>
                         <p className='font-semibold'>Staff's Name - {s?.staff_registration.first_name}</p>
-                        <p className='mt-1'>Pref. No. - {s?.staff_registration.pref_no}</p>
+                        <p className='mt-1'>Registration. No. - {s?.staff_registration.reg_no}</p>
                         <p>Mobile - {s?.staff_registration.mobile}</p>
                     </div>
                 </div>
@@ -176,17 +177,15 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
     useEffect(() => {
         const fetcher = async () => {
             const wingsRes = await fetchWings();
+            const postsRes = await fetchJobs();
             const bloodGroupsRes = await fetchBloodGroups();
             const staffTypesRes = await fetchStaffTypes();
-            const designationsRes = await fetchDesignations();
-            const departmentsRes = await fetchDepartments();
             const religionsRes = await fetchReligions();
             setWings(wingsRes);
             setBloodGroups(bloodGroupsRes);
             setStaffTypes(staffTypesRes);
-            setDesignations(designationsRes);
-            setDepartments(departmentsRes);
             setReligions(religionsRes);
+            setPosts(postsRes);
         };
         fetcher();
     }, []);
@@ -195,7 +194,7 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStaffApplicationsByAllData({first_name:search, pref_no:search, mobile:search});
+                const res = await fetchStaffApplicationsByAllData({first_name:search, reg_no:search, mobile:search});
                 setSearchStaff(res);
                 setIsLoadingSearchedStudents(false);
             };
@@ -208,6 +207,10 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
         if(dateOfBirth){
             // @ts-ignore
             form.setValue('staff_registration.date_of_birth', dateOfBirth._d);
+            if(!form.getValues().staff_registration.date_of_retire_is_extend){
+                setDateOfRetire(moment(dateOfBirth).add(60, 'years'));
+                form.setValue('staff_registration.date_of_retire', moment(dateOfBirth).add(60, 'years'));
+            }
         };
     }, [dateOfBirth]);
     useEffect(() => {
@@ -228,6 +231,8 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             form.setValue('staff_registration.date_of_retire', dateOfRetire._d);
         };
     }, [dateOfRetire]);
+    useEffect(() => {}, [form.watch('staff_registration.approved_teacher')]);
+    useEffect(() => {}, [form.watch('staff_registration.date_of_retire_is_extend')]);
 
     return (
         <div className='flex flex-col items-center gap-4'>
@@ -257,19 +262,160 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                 {/* Left side */}
                 <div className='flex-1 flex flex-col gap-2'>
 
-                    {/* Pref. No. */}
+                    {/* Post */}
+                    <div className='w-full flex flex-col items-center lg:flex-row'>
+                        <FormLabel className='w-full text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Applied Post</FormLabel>
+                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                            <FormField
+                                control={form?.control}
+                                name='staff_registration.post'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field?.value}
+                                                onValueChange={field?.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {posts?.length < 1 ? (
+                                                        <p>No blood groups</p>
+                                                        // @ts-ignore
+                                                    ) : !posts[0]?.post ? (
+                                                        <LoadingIcon />
+                                                    ) : posts?.map((item:any) => (
+                                                        <SelectItem value={item?.post} key={item?._id}>{item?.post}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
+                    {/* Reg. No. */}
                     <FormField
                         control={form?.control}
-                        name='staff_registration.pref_no'
+                        name='staff_registration.reg_no'
                         render={({ field }) => (
                             <FormItem className='relative w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Pref. No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Reg. No.</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                disabled
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* Employee Code */}
+                    <FormField
+                        control={form?.control}
+                        name='staff_registration.employee_code'
+                        render={({ field }) => (
+                            <FormItem className='relative w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Employee Code</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                type='number'
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* Approved Teacher */}
+                    <div className='relative flex flex-row items-center gap-1'>
+                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Approved Teacher</FormLabel>
+                        <FormField
+                            control={form?.control}
+                            name='staff_registration.approved_teacher'
+                            render={({ field }) => (
+                                <FormItem className='flex-1 h-8 flex flex-col items-start justify-center lg:flex-row lg:items-center lg:basis-[15%]'>
+                                    <FormControl>
+                                        <Select
+                                            {...field}
+                                            value={field?.value}
+                                            onValueChange={field?.onChange}
+                                        >
+                                            <SelectTrigger className='w-full h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value='Yes'>Yes</SelectItem>
+                                                <SelectItem value='No'>No</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
+
+                    {/* CBSE Code */}
+                    {form.getValues().staff_registration.approved_teacher === 'Yes' && (
+                        <FormField
+                            control={form?.control}
+                            name='staff_registration.cbse_code'
+                            render={({ field }) => (
+                                <FormItem className='relative w-full mt-2 lg:mt-0'>
+                                    <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>CBSE Code</FormLabel>
+                                        <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
+                                                />
+                                            </FormControl>
+                                            <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                    )}
+
+
+                    {/* Teacher ID */}
+                    <FormField
+                        control={form?.control}
+                        name='staff_registration.teacher_id'
+                        render={({ field }) => (
+                            <FormItem className='relative w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Teacher ID</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
                                                 className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                             />
                                         </FormControl>
@@ -504,14 +650,14 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     />
 
 
-                    {/* Alternate Mobile */}
+                    {/* Whatsapp No. */}
                     <FormField
                         control={form?.control}
-                        name='staff_registration.alternate_mobile'
+                        name='staff_registration.whatsapp_mobile'
                         render={({ field }) => (
                             <FormItem className='relative w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Alternate Mobile</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Whatsapp No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -636,14 +782,14 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     />
 
 
-                    {/* Address */}
+                    {/* Permanent Address */}
                     <FormField
                         control={form?.control}
-                        name='staff_registration.address'
+                        name='staff_registration.permenant_address'
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Address</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Permanent Address</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -760,11 +906,25 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             control={form?.control}
                             name='staff_registration.date_of_retire'
                             render={() => (
-                                <FormItem className='basis-[45%]'>
+                                <FormItem className='relative basis-[45%]'>
                                     <MyDatePicker
                                         selectedDate={dateOfRetire}
                                         setSelectedDate={setDateOfRetire}
                                     />
+                                    {!form.getValues().staff_registration.date_of_retire_is_extend && (
+                                        <div
+                                            style={{
+                                                position:'absolute',
+                                                top:0,
+                                                left:0,
+                                                width:'100%',
+                                                height:'100%',
+                                                backgroundColor:'rgba(255, 255, 255, 0.6)',
+                                                zIndex:1,
+                                                cursor:'not-allowed'
+                                            }}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />
@@ -773,7 +933,10 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             <Checkbox
                                 className='rounded-[2px] border-[#ccc] text-[#ccc]'
                                 checked={form.getValues().staff_registration.date_of_retire_is_extend}
-                                onClick={() => form.getValues().staff_registration.date_of_retire_is_extend ? form.setValue('staff_registration.date_of_retire_is_extend', false) : form.setValue('staff_registration.date_of_retire_is_extend', true)}
+                                onClick={() => {
+                                    form.getValues().staff_registration.date_of_retire_is_extend ? form.setValue('staff_registration.date_of_retire_is_extend', false) : form.setValue('staff_registration.date_of_retire_is_extend', true);
+                                    setDateOfRetire(moment(dateOfBirth).add(60, 'years'));
+                                }}
                             />
                         </div>
                     </div>

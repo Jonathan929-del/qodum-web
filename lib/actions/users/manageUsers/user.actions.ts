@@ -508,6 +508,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
                     { sr_no: 111, main_menu: "Global Masters", sub_menu: "Shortlisted Candidate", add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 112, main_menu: "Global Masters", sub_menu: "Current Job Opening", add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 113, main_menu: "Global Masters", sub_menu: "Admission Open", add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 114, main_menu: "Master Settings", sub_menu: "Admission Settings", add: false, modify: false, delete: false, print: false, read_only: false },
                 ]
             },
 

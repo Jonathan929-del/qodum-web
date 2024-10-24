@@ -27,7 +27,12 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
         setValuesFromApplication({
             // Staff registration
             staff_registration:{
-                pref_no:0,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -37,7 +42,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -49,7 +54,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -65,24 +70,31 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
             // Staff educational details
             staff_educational_details:[{
                 qualification:'',
-                name_of_school_or_college:'',
-                name_of_board_or_university:'',
-                rc:'',
+                program_or_steam:'',
+                name_of_board_or_universtity:'',
                 subjects:[],
-                percentage_of_marks:0,
-                year_of_passing:''
+                year_of_passing:'',
+                maximum_marks:0,
+                obtains_marks:0,
+                percentage:0
             }],
 
             // Staff document details
             staff_document_details:[]
         });
+        console.log('View component: ', s);
         setUpdateStaff({
             id:s?._id,
             isDeleteClicked:false,
 
             // Staff registration
             staff_registration:{
-                pref_no:s.staff_registration.pref_no,
+                post:s.staff_registration.post,
+                reg_no:s.staff_registration.reg_no,
+                employee_code:s.staff_registration.employee_code,
+                approved_teacher:s.staff_registration.approved_teacher,
+                teacher_id:s.staff_registration.teacher_id,
+                cbse_code:s.staff_registration.cbse_code,
                 first_name_title:s.staff_registration.first_name_title,
                 first_name:s.staff_registration.first_name,
                 middle_name:s.staff_registration.middle_name,
@@ -92,7 +104,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 alternate_email:s.staff_registration.alternate_email,
                 phone:s.staff_registration.phone,
                 mobile:s.staff_registration.mobile,
-                alternate_mobile:s.staff_registration.alternate_mobile,
+                whatsapp_mobile:s.staff_registration.whatsapp_mobile,
                 emergency_mobile:s.staff_registration.emergency_mobile,
                 wing:s.staff_registration.wing,
                 is_active:s.staff_registration.is_active,
@@ -104,7 +116,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                 date_of_joining:s.staff_registration.date_of_joining,
                 date_of_retire:s.staff_registration.date_of_retire,
                 date_of_retire_is_extend:s.staff_registration.date_of_retire_is_extend,
-                address:s.staff_registration.address,
+                permenant_address:s.staff_registration.permenant_address,
                 current_address:s.staff_registration.current_address,
                 father_or_spouse_name:s.staff_registration.father_or_spouse_name,
                 father_or_spouse_mobile:s.staff_registration.father_or_spouse_mobile,
@@ -239,7 +251,7 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
                                     No staff
                                 </p>
                             ):
-                            !filteredStaff[0]?.staff_registration.pref_no ? (
+                            !filteredStaff[0]?.staff_registration.reg_no ? (
                                 <LoadingIcon />
                             ) : filteredStaff.map((s:any) => (
                                 <CommandItem

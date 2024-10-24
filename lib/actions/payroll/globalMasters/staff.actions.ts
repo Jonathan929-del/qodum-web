@@ -12,7 +12,12 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 interface CreateStaffProps{
     // Staff registration
     staff_registration:{
-        pref_no:Number
+        post:String;
+        reg_no:String;
+        employee_code:String;
+        approved_teacher:String;
+        teacher_id:String;
+        cbse_code:String;
         first_name_title:String;
         first_name:String;
         middle_name:String;
@@ -22,7 +27,7 @@ interface CreateStaffProps{
         alternate_email:String;
         phone:Number;
         mobile:Number;
-        alternate_mobile:Number;
+        whatsapp_mobile:Number;
         emergency_mobile:Number;
         wing:String;
         is_active:Boolean;
@@ -34,7 +39,7 @@ interface CreateStaffProps{
         date_of_joining:Date;
         date_of_retire:Date;
         date_of_retire_is_extend:Boolean;
-        address:String;
+        permenant_address:String;
         current_address:String;
         father_or_spouse_name:String;
         father_or_spouse_mobile:Number;
@@ -108,7 +113,7 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
 
 
         // Checking if the staff already exists
-        const existingStaff = await Staff.findOne({'staff_registration.pref_no':staff_registration.pref_no, session:activeSession?.year_name});
+        const existingStaff = await Staff.findOne({'staff_registration.reg_no':staff_registration.reg_no, session:activeSession?.year_name});
         if(existingStaff){
             throw new Error('Staff already exists');
         };
@@ -117,7 +122,7 @@ export const createStaff = async ({staff_registration, staff_salary_details, sta
         // Creating new staff
         const newStaff = await Staff.create({session:activeSession?.year_name, staff_registration, staff_salary_details});
         newStaff.save().then(async () => {
-            await Staff.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_salary_heads, staff_educational_details, staff_document_details});
+            await Staff.findOneAndUpdate({'staff_registration.reg_no':staff_registration.reg_no}, {staff_salary_heads, staff_educational_details, staff_document_details});
         });
 
 
@@ -166,7 +171,12 @@ interface ModifyStaffProps{
     id:String;
     // Staff registration
     staff_registration:{
-        pref_no:Number
+        post:String;
+        reg_no:String;
+        employee_code:String;
+        approved_teacher:String;
+        teacher_id:String;
+        cbse_code:String;
         first_name_title:String;
         first_name:String;
         middle_name:String;
@@ -176,7 +186,7 @@ interface ModifyStaffProps{
         alternate_email:String;
         phone:Number;
         mobile:Number;
-        alternate_mobile:Number;
+        whatsapp_mobile:Number;
         emergency_mobile:Number;
         wing:String;
         is_active:Boolean;
@@ -188,7 +198,7 @@ interface ModifyStaffProps{
         date_of_joining:Date;
         date_of_retire:Date;
         date_of_retire_is_extend:Boolean;
-        address:String;
+        permenant_address:String;
         current_address:String;
         father_or_spouse_name:String;
         father_or_spouse_mobile:Number;
@@ -263,7 +273,7 @@ export const modifyStaff = async ({id, staff_registration, staff_salary_details,
         // Checking if the staff already exists
         const staff = await Staff.find({session:activeSession?.year_name});
         const existingStaff = await Staff.findById(id);
-        if(existingStaff.staff_registration.pref_no !== staff_registration.pref_no && staff.map(s => s.staff_registration.pref_no).includes(staff_registration.pref_no)){throw new Error('Staff pref no. already exists')};
+        if(existingStaff.staff_registration.reg_no !== staff_registration.reg_no && staff.map(s => s.staff_registration.reg_no).includes(staff_registration.reg_no)){throw new Error('Staff pref no. already exists')};
 
         
         // Update staff
@@ -338,10 +348,10 @@ export const fetchStaffNames = async () => {
 interface fetchStaffByAllDataProps{
     first_name:String;
     mobile:String;
-    pref_no:String;
+    reg_no:String;
 };
 // Fetch staff by all data
-export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchStaffByAllDataProps) => {
+export const fetchStaffByAllData = async ({first_name, mobile, reg_no}:fetchStaffByAllDataProps) => {
     try {
 
         // Db connection
@@ -366,13 +376,13 @@ export const fetchStaffByAllData = async ({first_name, mobile, pref_no}:fetchSta
             return /[a-zA-Z]/.test(str);
         }
 
-        if(!containsAnyLetters(mobile) || !containsAnyLetters(pref_no)){
+        if(!containsAnyLetters(mobile) || !containsAnyLetters(reg_no)){
 
             // Mobile number
             const mobileRes = await Staff.find({'staff_registration.mobile':mobile, session:activeSession?.year_name});
 
             // Admission number res
-            const prefNoRes = await Staff.find({'staff_registration.pref_no':pref_no, session:activeSession?.year_name});
+            const prefNoRes = await Staff.find({'staff_registration.reg_no':reg_no, session:activeSession?.year_name});
 
             // All res
             const allRes = mobileRes.concat(prefNoRes);

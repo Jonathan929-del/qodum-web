@@ -258,7 +258,7 @@ const uploadStaffFile = async (file:any, pref_no:any) => {
 
 
 // Staff image
-export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) => {
+export const uploadStaffImage = async ({data, reg_no}:{data:any, reg_no:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -266,7 +266,7 @@ export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) 
             throw new Error('No file was sent');
         };
         const buffer = Buffer.from(await file.arrayBuffer());
-        const res = await uploadStaffFile(buffer, pref_no);
+        const res = await uploadStaffFile(buffer, reg_no);
 
         // Return
         return res;
@@ -280,11 +280,11 @@ export const uploadStaffImage = async ({data, pref_no}:{data:any, pref_no:any}) 
 
 
 // Upload staff application file
-const uploadStaffApplicationFile = async (file:any, pref_no:any) => {
+const uploadStaffApplicationFile = async (file:any, reg_no:any) => {
     const fileBuffer = file;
     const params = {
         Bucket:process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-        Key:`staff-application/${pref_no}`,
+        Key:`staff-application/${reg_no}`,
         Body:fileBuffer,
         ContentType:'image'
     };
@@ -293,7 +293,7 @@ const uploadStaffApplicationFile = async (file:any, pref_no:any) => {
     
     
     // Return
-    return pref_no;
+    return reg_no;
 };
 
 
@@ -301,7 +301,7 @@ const uploadStaffApplicationFile = async (file:any, pref_no:any) => {
 
 
 // Staff application image
-export const uploadStaffApplicationImage = async ({data, pref_no}:{data:any, pref_no:any}) => {
+export const uploadStaffApplicationImage = async ({data, reg_no}:{data:any, reg_no:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -309,7 +309,7 @@ export const uploadStaffApplicationImage = async ({data, pref_no}:{data:any, pre
             throw new Error('No file was sent');
         };
         const buffer = Buffer.from(await file.arrayBuffer());
-        const res = await uploadStaffApplicationFile(buffer, pref_no);
+        const res = await uploadStaffApplicationFile(buffer, reg_no);
 
         // Return
         return res;
@@ -323,19 +323,19 @@ export const uploadStaffApplicationImage = async ({data, pref_no}:{data:any, pre
 
 
 // Upload staff file (PDF)
-const uploadStaffPdfFile = async (file: any, pref_no: any, content_type:any) => {
+const uploadStaffPdfFile = async (file: any, reg_no: any, content_type:any) => {
     console.log(content_type);
     const fileBuffer = file;
     const params = {
         Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-        Key: `staff-documents/${pref_no}`,
+        Key: `staff-documents/${reg_no}`,
         Body: fileBuffer,
         ContentType: content_type,
     };
     const command = new PutObjectCommand(params);
     await configs.send(command);
 
-    return pref_no;
+    return reg_no;
 };
 
 
@@ -343,7 +343,7 @@ const uploadStaffPdfFile = async (file: any, pref_no: any, content_type:any) => 
 
 
 // Upload Staff PDF
-export const uploadStaffPdf = async ({data, pref_no, content_type}: {data:any, pref_no:any, content_type:any}) => {
+export const uploadStaffPdf = async ({data, reg_no, content_type}: {data:any, reg_no:any, content_type:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -356,9 +356,9 @@ export const uploadStaffPdf = async ({data, pref_no, content_type}: {data:any, p
         const buffer = Buffer.from(await file.arrayBuffer());
         
         // Upload the file (PDF) to S3
-        const res = await uploadStaffPdfFile(buffer, pref_no, content_type);
+        const res = await uploadStaffPdfFile(buffer, reg_no, content_type);
 
-        // Return the file key or pref_no
+        // Return the file key or reg_no
         return res;
     } catch (err) {
         console.error(err);

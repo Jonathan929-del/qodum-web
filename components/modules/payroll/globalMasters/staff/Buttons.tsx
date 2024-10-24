@@ -3,10 +3,10 @@
 import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
+import {AuthContext} from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '@/context/AuthContext';
 
 
 
@@ -37,7 +37,12 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
         setValuesFromApplication({
             // Staff registration
             staff_registration:{
-                pref_no:staff.length,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -47,7 +52,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -59,7 +64,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -86,7 +91,12 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
 
             // Staff registration
             staff_registration:{
-                pref_no:staff.length,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -96,7 +106,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -108,7 +118,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -174,7 +184,12 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
         form.reset({
             // Staff registration
             staff_registration:{
-                pref_no:staff.length,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -184,7 +199,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -196,7 +211,7 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -276,12 +291,13 @@ const Buttons = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, onSubmit,
         setSelectedDocuments([]);
         setEducationalDetails([{
             qualification:'',
-            name_of_school_or_college:'',
+            program_or_steam:'',
             name_of_board_or_universtity:'',
-            rc:'',
             subjects:[],
-            percentage_of_marks:0,
-            year_of_passing:''
+            year_of_passing:'',
+            maximum_marks:0,
+            obtains_marks:0,
+            percentage:0
         }]);
 
     };

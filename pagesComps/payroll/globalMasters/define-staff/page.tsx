@@ -33,12 +33,13 @@ const page = () => {
     // Educational details
     const [educationalDetails, setEducationalDetails] = useState([{
         qualification:'',
-        name_of_school_or_college:'',
+        program_or_steam:'',
         name_of_board_or_universtity:'',
-        rc:'',
         subjects:[],
-        percentage_of_marks:0,
-        year_of_passing:''
+        year_of_passing:'',
+        maximum_marks:0,
+        obtains_marks:0,
+        percentage:0
     }]);
 
 
@@ -49,7 +50,12 @@ const page = () => {
 
         // Staff registration
         staff_registration:{
-            pref_no:0,
+            post:'',
+            reg_no:'',
+            employee_code:'',
+            approved_teacher:'',
+            teacher_id:'',
+            cbse_code:'',
             first_name_title:'Mr.',
             first_name:'',
             middle_name:'',
@@ -59,7 +65,7 @@ const page = () => {
             alternate_email:'',
             phone:0,
             mobile:0,
-            alternate_mobile:0,
+            whatsapp_mobile:0,
             emergency_mobile:0,
             wing:'',
             is_active:false,
@@ -71,7 +77,7 @@ const page = () => {
             date_of_joining:new Date(),
             date_of_retire:new Date(),
             date_of_retire_is_extend:false,
-            address:'',
+            permenant_address:'',
             current_address:'',
             father_or_spouse_name:'',
             father_or_spouse_mobile:0,
@@ -128,12 +134,13 @@ const page = () => {
         // Staff educational details
         staff_educational_details:[{
             qualification:'',
-            name_of_school_or_college:'',
-            name_of_board_or_university:'',
-            rc:'',
+            program_or_steam:'',
+            name_of_board_or_universtity:'',
             subjects:[],
-            percentage_of_marks:0,
-            year_of_passing:''
+            year_of_passing:'',
+            maximum_marks:0,
+            obtains_marks:0,
+            percentage:0
         }],
 
         // Staff document details
@@ -146,7 +153,12 @@ const page = () => {
     const [valuesFromApplication, setValuesFromApplication] = useState({
         // Staff registration
         staff_registration:{
-            pref_no:0,
+            post:'',
+            reg_no:'',
+            employee_code:'',
+            approved_teacher:'',
+            teacher_id:'',
+            cbse_code:'',
             first_name_title:'Mr.',
             first_name:'',
             middle_name:'',
@@ -156,7 +168,7 @@ const page = () => {
             alternate_email:'',
             phone:0,
             mobile:0,
-            alternate_mobile:0,
+            whatsapp_mobile:0,
             emergency_mobile:0,
             wing:'',
             is_active:false,
@@ -168,7 +180,7 @@ const page = () => {
             date_of_joining:new Date(),
             date_of_retire:new Date(),
             date_of_retire_is_extend:false,
-            address:'',
+            permenant_address:'',
             current_address:'',
             father_or_spouse_name:'',
             father_or_spouse_mobile:0,
@@ -184,12 +196,13 @@ const page = () => {
         // Staff educational details
         staff_educational_details:[{
             qualification:'',
-            name_of_school_or_college:'',
-            name_of_board_or_university:'',
-            rc:'',
+            program_or_steam:'',
+            name_of_board_or_universtity:'',
             subjects:[],
-            percentage_of_marks:0,
-            year_of_passing:''
+            year_of_passing:'',
+            maximum_marks:0,
+            obtains_marks:0,
+            percentage:0
         }],
 
         // Staff document details
@@ -207,12 +220,6 @@ const page = () => {
         };
         fetcher();
     }, [isViewOpened, updateStaff]);
-    useEffect(() => {
-        const fetcher = async () => {
-
-        };
-        fetcher();
-    }, []);
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>

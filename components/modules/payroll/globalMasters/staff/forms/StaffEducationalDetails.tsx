@@ -1,19 +1,18 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
+import {Checkbox} from '@/components/ui/checkbox';
 import {Check, ChevronDown, Trash, X} from 'lucide-react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {FormControl, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 
 
 
 
 
 // Main function
-const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetails}:any) => {
+const StaffEducationalDetails = ({educationalDetails, setEducationalDetails}:any) => {
 
     // Subjects
     const [subjects, setSubjects] = useState([]);
@@ -37,15 +36,44 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                     <div className='min-w-[1500px] h-10 flex flex-row gap-2'>
 
                         {/* Qualification */}
+                        <div className='w-full h-8 flex flex-col items-start justify-center'>
+                            <p className='basis-auto pr-2 text-xs text-end text-[#726E71] sm:basis-[30%]'>Qualification</p>
+                            <div className='relative h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
+                                <Select
+                                    value={d.qualification}
+                                    onValueChange={(v:any) => {
+                                        educationalDetails[educationalDetails.indexOf(d)].qualification = v;
+                                        setEducationalDetails([...educationalDetails]);
+                                    }}
+                                >
+                                    <SelectTrigger className='w-full h-8 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value='10th'>10th</SelectItem>
+                                        <SelectItem value='12th'>12th</SelectItem>
+                                        <SelectItem value='Graduation'>Graduation</SelectItem>
+                                        <SelectItem value='Post Graduation'>Post Graduation</SelectItem>
+                                        <SelectItem value='Professional Degree'>Professional Degree</SelectItem>
+                                        <SelectItem value='Dimploma and Certificate'>Dimploma and Certificate</SelectItem>
+                                        <SelectItem value='Doctoral'>Doctoral</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+
+
+                        {/* Program/Steam */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center'>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Qualification</FormLabel>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Program/Steam</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
-                                            value={d.qualification}
+                                            value={d.program_or_steam}
                                             onChange={(e:any) => {
-                                                educationalDetails[educationalDetails.indexOf(d)].qualification = e.target.value;
+                                                educationalDetails[educationalDetails.indexOf(d)].program_or_steam = e.target.value;
                                                 setEducationalDetails([...educationalDetails]);
                                             }}
                                             className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
@@ -57,31 +85,10 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                         </FormItem>
 
 
-                        {/* Name of School/College */}
+                        {/* Board/University */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
                             <div className='w-full h-7 flex flex-col items-start justify-center '>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name of School/College</FormLabel>
-                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                    <FormControl>
-                                        <Input
-                                            value={d.name_of_school_or_college}
-                                            onChange={(e:any) => {
-                                                educationalDetails[educationalDetails.indexOf(d)].name_of_school_or_college = e.target.value;
-                                                setEducationalDetails([...educationalDetails]);
-                                            }}
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='mt-[-20px] text-[11px]' />
-                                </div>
-                            </div>
-                        </FormItem>
-
-
-                        {/* Name of Board/University */}
-                        <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center '>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name of Board/University</FormLabel>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Board/University</FormLabel>
                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                     <FormControl>
                                         <Input
@@ -99,55 +106,7 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                         </FormItem>
 
 
-                        {/* RC */}
-                        <FormItem className='w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center '>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>RC</FormLabel>
-                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                    <FormControl>
-                                        <Input
-                                            value={d.rc}
-                                            onChange={(e:any) => {
-                                                educationalDetails[educationalDetails.indexOf(d)].rc = e.target.value;
-                                                setEducationalDetails([...educationalDetails]);
-                                            }}
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='mt-[-20px] text-[11px]' />
-                                </div>
-                            </div>
-                        </FormItem>
-
-
                         {/* Subjects */}
-                        {/* <div className='w-full h-12 mt-[-10px] flex flex-col'>
-                            <FormLabel className='w-full text-[11px] text-[#726E71]'>Subjects</FormLabel>
-                            <div className='w-full h-full'>
-                                <Select
-                                    value={d.subjects}
-                                    onValueChange={(e:any) => {
-                                        educationalDetails[educationalDetails.indexOf(d)].subjects = e;
-                                        setEducationalDetails([...educationalDetails]);
-                                    }}
-                                >
-                                    <SelectTrigger className='w-full h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {subjects?.length < 1 ? (
-                                            <p>No subjects</p>
-                                            // @ts-ignore
-                                        ) : !subjects[0]?.subject_name ? (
-                                            <LoadingIcon />
-                                        ) : subjects?.map((item:any) => (
-                                            <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div> */}
                         <div className='w-full h-8 flex flex-col items-start justify-center'>
                             <p className='basis-auto pr-2 text-xs text-end text-[#726E71] sm:basis-[30%]'>Subjects</p>
                             <div className='relative h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
@@ -204,28 +163,6 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                         </div>
 
 
-                        {/* Percentage of Marks */}
-                        <FormItem className='relative w-full mt-2 lg:mt-0'>
-                            <div className='w-full h-7 flex flex-col items-start justify-center '>
-                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Percentage of Marks</FormLabel>
-                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                    <FormControl>
-                                        <Input
-                                            value={d.percentage_of_marks}
-                                            onChange={(e:any) => {
-                                                educationalDetails[educationalDetails.indexOf(d)].percentage_of_marks = e.target.value;
-                                                setEducationalDetails([...educationalDetails]);
-                                            }}
-                                            type='number'
-                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
-                                </div>
-                            </div>
-                        </FormItem>
-
-
                         {/* Year of Passing */}
                         <FormItem className='w-full mt-2 lg:mt-0'>
                             <div className='w-full h-7 flex flex-col items-start justify-center '>
@@ -245,6 +182,70 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                                 </div>
                             </div>
                         </FormItem>
+
+
+                        {/* Maximum Marks */}
+                        <FormItem className='w-full mt-2 lg:mt-0'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Maximum Marks</FormLabel>
+                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                    <FormControl>
+                                        <Input
+                                            value={d.maximum_marks}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].maximum_marks = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
+                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                </div>
+                            </div>
+                        </FormItem>
+
+
+                        {/* Obtains Marks */}
+                        <FormItem className='w-full mt-2 lg:mt-0'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Obtains Marks</FormLabel>
+                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                    <FormControl>
+                                        <Input
+                                            value={d.obtains_marks}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].obtains_marks = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
+                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                </div>
+                            </div>
+                        </FormItem>
+
+
+                        {/* Percentage */}
+                        <FormItem className='w-full mt-2 lg:mt-0'>
+                            <div className='w-full h-7 flex flex-col items-start justify-center '>
+                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Percentage</FormLabel>
+                                <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                    <FormControl>
+                                        <Input
+                                            value={d.percentage}
+                                            onChange={(e:any) => {
+                                                educationalDetails[educationalDetails.indexOf(d)].percentage = e.target.value;
+                                                setEducationalDetails([...educationalDetails]);
+                                            }}
+                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                        />
+                                    </FormControl>
+                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                </div>
+                            </div>
+                        </FormItem>
+
 
                         {/* Remove button */}
                         <span
@@ -267,12 +268,13 @@ const StaffEducationalDetails = ({form, educationalDetails, setEducationalDetail
                                 ...educationalDetails,
                                 {
                                     qualification:'',
-                                    name_of_school_or_college:'',
+                                    program_or_steam:'',
                                     name_of_board_or_universtity:'',
-                                    rc:'',
                                     subjects:[],
-                                    percentage_of_marks:0,
-                                    year_of_passing:''
+                                    year_of_passing:'',
+                                    maximum_marks:0,
+                                    obtains_marks:0,
+                                    percentage:0
                                 }
                             ])
                         }}

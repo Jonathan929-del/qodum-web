@@ -12,7 +12,12 @@ import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/Acad
 interface CreateStaffApplicationProps{
     // Staff registration
     staff_registration:{
-        pref_no:Number
+        post:String;
+        reg_no:String;
+        employee_code:String;
+        approved_teacher:String;
+        teacher_id:String;
+        cbse_code:String;
         first_name_title:String;
         first_name:String;
         middle_name:String;
@@ -22,7 +27,7 @@ interface CreateStaffApplicationProps{
         alternate_email:String;
         phone:Number;
         mobile:Number;
-        alternate_mobile:Number;
+        whatsapp_mobile:Number;
         emergency_mobile:Number;
         wing:String;
         is_active:Boolean;
@@ -34,7 +39,7 @@ interface CreateStaffApplicationProps{
         date_of_joining:Date;
         date_of_retire:Date;
         date_of_retire_is_extend:Boolean;
-        address:String;
+        permenant_address:String;
         current_address:String;
         father_or_spouse_name:String;
         father_or_spouse_mobile:Number;
@@ -50,11 +55,14 @@ interface CreateStaffApplicationProps{
     // Staff educational details
     staff_educational_details:any;
 
+    // Staff experience details
+    staff_experience_details:any;
+
     // Staff document details
     staff_document_details:any;
 };
 // Create staff application
-export const createStaffApplication = async ({staff_registration, staff_educational_details, staff_document_details}:CreateStaffApplicationProps) => {
+export const createStaffApplication = async ({staff_registration, staff_educational_details, staff_experience_details, staff_document_details}:CreateStaffApplicationProps) => {
     try {
     
         // Database connection
@@ -67,7 +75,7 @@ export const createStaffApplication = async ({staff_registration, staff_educatio
 
 
         // Checking if the staff already exists
-        const existingStaff = await StaffApplication.findOne({'staff_registration.pref_no':staff_registration.pref_no, session:activeSession?.year_name});
+        const existingStaff = await StaffApplication.findOne({'staff_registration.reg_no':staff_registration.reg_no, session:activeSession?.year_name});
         if(existingStaff){
             throw new Error('Staff already exists');
         };
@@ -76,7 +84,7 @@ export const createStaffApplication = async ({staff_registration, staff_educatio
         // Creating new staff
         const newStaff = await StaffApplication.create({session:activeSession?.year_name, is_up_for_admission:false, staff_registration});
         newStaff.save().then(async () => {
-            await StaffApplication.findOneAndUpdate({'staff_registration.pref_no':staff_registration.pref_no}, {staff_educational_details, staff_document_details});
+            await StaffApplication.findOneAndUpdate({'staff_registration.reg_no':staff_registration.reg_no}, {staff_educational_details, staff_experience_details, staff_document_details});
         });
 
 
@@ -125,7 +133,12 @@ interface ModifyStaffApplicationProps{
     id:String;
     // Staff registration
     staff_registration:{
-        pref_no:Number
+        post:String;
+        reg_no:String;
+        employee_code:String;
+        approved_teacher:String;
+        teacher_id:String;
+        cbse_code:String;
         first_name_title:String;
         first_name:String;
         middle_name:String;
@@ -135,7 +148,7 @@ interface ModifyStaffApplicationProps{
         alternate_email:String;
         phone:Number;
         mobile:Number;
-        alternate_mobile:Number;
+        whatsapp_mobile:Number;
         emergency_mobile:Number;
         wing:String;
         is_active:Boolean;
@@ -147,7 +160,7 @@ interface ModifyStaffApplicationProps{
         date_of_joining:Date;
         date_of_retire:Date;
         date_of_retire_is_extend:Boolean;
-        address:String;
+        permenant_address:String;
         current_address:String;
         father_or_spouse_name:String;
         father_or_spouse_mobile:Number;
@@ -163,11 +176,14 @@ interface ModifyStaffApplicationProps{
     // Staff educational details
     staff_educational_details:any;
 
+    // Staff experience details
+    staff_experience_details:any;
+
     // Staff document details
     staff_document_details:any;
 }
 // Modify staff application
-export const modifyStaffApplication = async ({id, staff_registration, staff_educational_details, staff_document_details}:ModifyStaffApplicationProps) => {
+export const modifyStaffApplication = async ({id, staff_registration, staff_educational_details, staff_experience_details, staff_document_details}:ModifyStaffApplicationProps) => {
     try {
 
         // Db connection
@@ -181,11 +197,11 @@ export const modifyStaffApplication = async ({id, staff_registration, staff_educ
         // Checking if the staff already exists
         const staff = await StaffApplication.find({session:activeSession?.year_name});
         const existingStaff = await StaffApplication.findById(id);
-        if(existingStaff.staff_registration.pref_no !== staff_registration.pref_no && staff.map(s => s.staff_registration.pref_no).includes(staff_registration.pref_no)){throw new Error('Staff pref no. already exists')};
+        if(existingStaff.staff_registration.reg_no !== staff_registration.reg_no && staff.map(s => s.staff_registration.reg_no).includes(staff_registration.reg_no)){throw new Error('Staff registration no. already exists')};
 
         
         // Update staff
-        await StaffApplication.findByIdAndUpdate(id, {staff_registration, staff_educational_details, staff_document_details}, {new:true});
+        await StaffApplication.findByIdAndUpdate(id, {staff_registration, staff_educational_details, staff_experience_details, staff_document_details}, {new:true});
 
 
         // Return
@@ -256,10 +272,10 @@ export const fetchStaffApplicationsNames = async () => {
 interface fetchStaffApplicationsByAllDataProps{
     first_name:String;
     mobile:String;
-    pref_no:String;
+    reg_no:String;
 };
 // Fetch staff applications by all data
-export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_no}:fetchStaffApplicationsByAllDataProps) => {
+export const fetchStaffApplicationsByAllData = async ({first_name, mobile, reg_no}:fetchStaffApplicationsByAllDataProps) => {
     try {
 
         // Db connection
@@ -273,6 +289,8 @@ export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_
         // Regex
         // @ts-ignore
         const firstNameRegex = new RegExp(first_name, 'i');
+        // @ts-ignore
+        const regNoRegex = new RegExp(reg_no, 'i');
 
 
         // Students
@@ -284,16 +302,14 @@ export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_
             return /[a-zA-Z]/.test(str);
         }
 
-        if(!containsAnyLetters(mobile) || !containsAnyLetters(pref_no)){
+        if(!containsAnyLetters(mobile) || !containsAnyLetters(reg_no)){
 
             // Mobile number
             const mobileRes = await StaffApplication.find({'staff_registration.mobile':mobile, session:activeSession?.year_name});
 
-            // Admission number res
-            const prefNoRes = await StaffApplication.find({'staff_registration.pref_no':pref_no, session:activeSession?.year_name});
 
             // All res
-            const allRes = mobileRes.concat(prefNoRes);
+            const allRes = mobileRes;
             const uniqueBy = (a:any, key:any) => {
                 var seen:any = {};
                 return a.filter(function(item:any) {
@@ -311,7 +327,11 @@ export const fetchStaffApplicationsByAllData = async ({first_name, mobile, pref_
             const firstnameRes = await StaffApplication.find({'staff_registration.first_name':{$regex:firstNameRegex}, session:activeSession?.year_name});
 
 
-            const allRes = firstnameRes;
+            // Registration number res
+            const regNoRes = await StaffApplication.find({'staff_registration.reg_no':{$regex:regNoRegex}, session:activeSession?.year_name});
+
+
+            const allRes = firstnameRes.concat(regNoRes);
             const uniqueBy = (a:any, key:any) => {
                 var seen:any = {};
                 return a.filter(function(item:any) {
@@ -381,10 +401,10 @@ export const fetchStaffApplicationsNotUpForAdmission = async ({joiningDateFrom, 
 
 // Apply staff for admission props
 interface ApplyStaffForAdmissionProps{
-    pref_nos:string[];
+    reg_nos:string[];
 }
 // Apply staff for admission
-export const applyStaffForAdmission = async ({pref_nos}:ApplyStaffForAdmissionProps) => {
+export const applyStaffForAdmission = async ({reg_nos}:ApplyStaffForAdmissionProps) => {
     try {
 
         // Db connection
@@ -396,8 +416,8 @@ export const applyStaffForAdmission = async ({pref_nos}:ApplyStaffForAdmissionPr
 
 
         // Update staff
-        pref_nos.map(async no => {
-            const updatedStaff = await StaffApplication.updateMany({'staff_registration.pref_no':no, session:activeSession?.year_name}, {is_up_for_admission:true}, {new:true});
+        reg_nos.map(async no => {
+            const updatedStaff = await StaffApplication.updateMany({'staff_registration.reg_no':no, session:activeSession?.year_name}, {is_up_for_admission:true}, {new:true});
             return updatedStaff;
         });
     

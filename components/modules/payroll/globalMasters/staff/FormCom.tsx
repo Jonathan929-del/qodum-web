@@ -19,6 +19,9 @@ import StaffEducationalDetails from './forms/StaffEducationalDetails';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StaffValidation} from '@/lib/validations/payroll/globalMasters/staff.validation';
 import {createStaff, deleteStaff, modifyStaff} from '@/lib/actions/payroll/globalMasters/staff.actions';
+import { fetchDesignations } from '@/lib/actions/payroll/globalMasters/designation.actions';
+import { fetchDepartments } from '@/lib/actions/payroll/globalMasters/department.actions';
+import { fetchStaffAdmissionNumberByName } from '@/lib/actions/payroll/masterSettings/staffAdmissionNumber.actions';
 
 
 
@@ -63,11 +66,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
     const [selectedTab, setSelectedTab] = useState('staff-registration');
 
 
+    // Designations
+    const [designations, setDesignations] = useState([{}]);
+
+
+    // Departments
+    const [departments, setDepartments] = useState([{}]);
+
+
     // Comparison object
     const comparisonObject = {
         // Staff registration
         staff_registration:{
-            pref_no:updateStaff.staff_registration.pref_no,
+            post:updateStaff.staff_registration.post,
+            reg_no:updateStaff.staff_registration.reg_no,
+            employee_code:updateStaff.staff_registration.employee_code,
+            approved_teacher:updateStaff.staff_registration.approved_teacher,
+            teacher_id:updateStaff.staff_registration.teacher_id,
+            cbse_code:updateStaff.staff_registration.cbse_code,
             first_name_title:updateStaff.staff_registration.first_name_title,
             first_name:updateStaff.staff_registration.first_name,
             middle_name:updateStaff.staff_registration.middle_name,
@@ -77,7 +93,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             alternate_email:updateStaff.staff_registration.alternate_email,
             phone:updateStaff.staff_registration.phone,
             mobile:updateStaff.staff_registration.mobile,
-            alternate_mobile:updateStaff.staff_registration.alternate_mobile,
+            whatsapp_mobile:updateStaff.staff_registration.whatsapp_mobile,
             emergency_mobile:updateStaff.staff_registration.emergency_mobile,
             wing:updateStaff.staff_registration.wing,
             is_active:updateStaff.staff_registration.is_active,
@@ -89,7 +105,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             date_of_joining:updateStaff.staff_registration.date_of_joining,
             date_of_retire:updateStaff.staff_registration.date_of_retire,
             date_of_retire_is_extend:updateStaff.staff_registration.date_of_retire_is_extend,
-            address:updateStaff.staff_registration.address,
+            permenant_address:updateStaff.staff_registration.permenant_address,
             current_address:updateStaff.staff_registration.current_address,
             father_or_spouse_name:updateStaff.staff_registration.father_or_spouse_name,
             father_or_spouse_mobile:updateStaff.staff_registration.father_or_spouse_mobile,
@@ -157,7 +173,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         defaultValues:{
             // Staff registration
             staff_registration:{
-                pref_no:updateStaff.id === '' ? 0 : updateStaff.staff_registration.pref_no,
+                reg_no:updateStaff.id === '' ? 0 : updateStaff.staff_registration.reg_no,
+                post:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.post : updateStaff.id === '' ? '' : updateStaff.staff_registration.post,
+                employee_code:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.employee_code : updateStaff.id === '' ? '' : updateStaff.staff_registration.employee_code,
+                approved_teacher:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.approved_teacher : updateStaff.id === '' ? '' : updateStaff.staff_registration.approved_teacher,
+                cbse_code:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.cbse_code : updateStaff.id === '' ? '' : updateStaff.staff_registration.cbse_code,
+                teacher_id:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.teacher_id : updateStaff.id === '' ? '' : updateStaff.staff_registration.teacher_id,
                 first_name_title:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.first_name_title : updateStaff.id === '' ? 'Mr.' : updateStaff.staff_registration.first_name_title,
                 first_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.first_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.first_name,
                 middle_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.middle_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.middle_name,
@@ -167,7 +188,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 alternate_email:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.alternate_email : updateStaff.id === '' ? '' : updateStaff.staff_registration.alternate_email,
                 phone:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.phone : updateStaff.id === '' ? 0 : updateStaff.staff_registration.phone,
                 mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.mobile,
-                alternate_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.alternate_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.alternate_mobile,
+                whatsapp_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.whatsapp_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.whatsapp_mobile,
                 emergency_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.emergency_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.emergency_mobile,
                 wing:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.wing : updateStaff.id === '' ? '' : updateStaff.staff_registration.wing,
                 is_active:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.is_active : updateStaff.id === '' ? false : updateStaff.staff_registration.is_active,
@@ -179,7 +200,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 date_of_joining:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_joining : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_joining,
                 date_of_retire:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_retire : updateStaff.id === '' ? new Date() : updateStaff.staff_registration.date_of_retire,
                 date_of_retire_is_extend:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.date_of_retire_is_extend : updateStaff.id === '' ? false : updateStaff.staff_registration.date_of_retire_is_extend,
-                address:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.address : updateStaff.id === '' ? '' : updateStaff.staff_registration.address,
+                permenant_address:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.permenant_address : updateStaff.id === '' ? '' : updateStaff.staff_registration.permenant_address,
                 current_address:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.current_address : updateStaff.id === '' ? '' : updateStaff.staff_registration.current_address,
                 father_or_spouse_name:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.father_or_spouse_name : updateStaff.id === '' ? '' : updateStaff.staff_registration.father_or_spouse_name,
                 father_or_spouse_mobile:valuesFromApplication?.staff_registration.first_name ? valuesFromApplication?.staff_registration.father_or_spouse_mobile : updateStaff.id === '' ? 0 : updateStaff.staff_registration.father_or_spouse_mobile,
@@ -251,8 +272,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
 
         // Create staff
         if(updateStaff.id === ''){
-            if(staff.map((s:any) => s.staff_registration.pref_no).includes(values.staff_registration.pref_no)){
-                toast({title:'Pref no. already exists', variant:'error'});
+            if(staff.map((s:any) => s.staff_registration.reg_no).includes(values.staff_registration.reg_no)){
+                toast({title:'Admission no. already exists', variant:'error'});
                 setIsLoading(false);
                 return;
             };
@@ -260,19 +281,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+                await uploadStaffImage({data:formData, reg_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
             if(selectedDocuments.filter((s:any) => s.files.length > 0).length){
                 selectedDocuments.map((s:any) => s.files.map(async (f:any) => {
                     const formData = new FormData();
                     formData.append('file', f.file);
-                    await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
+                    await uploadStaffPdf({data:formData, reg_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
                 }));
             };
             const res = await createStaff({
                 // Staff registration
                 staff_registration:{
-                    pref_no:values.staff_registration.pref_no,
+                    post:values.staff_registration.post,
+                    reg_no:values.staff_registration.reg_no,
+                    employee_code:values.staff_registration.employee_code,
+                    approved_teacher:values.staff_registration.approved_teacher,
+                    teacher_id:values.staff_registration.teacher_id,
+                    cbse_code:values.staff_registration.cbse_code,
                     first_name_title:values.staff_registration.first_name_title,
                     first_name:values.staff_registration.first_name,
                     middle_name:values.staff_registration.middle_name,
@@ -282,11 +308,11 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                     alternate_email:values.staff_registration.alternate_email,
                     phone:values.staff_registration.phone,
                     mobile:values.staff_registration.mobile,
-                    alternate_mobile:values.staff_registration.alternate_mobile,
+                    whatsapp_mobile:values.staff_registration.whatsapp_mobile,
                     emergency_mobile:values.staff_registration.emergency_mobile,
                     wing:values.staff_registration.wing,
                     is_active:values.staff_registration.is_active,
-                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_registration.profile_picture || '',
+                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff-application/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_registration.profile_picture || '',
                     maritial_status:values.staff_registration.maritial_status,
                     qualification:values.staff_registration.qualification,
                     date_of_birth:values.staff_registration.date_of_birth,
@@ -294,7 +320,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                     date_of_joining:values.staff_registration.date_of_joining,
                     date_of_retire:values.staff_registration.date_of_retire,
                     date_of_retire_is_extend:values.staff_registration.date_of_retire_is_extend,
-                    address:values.staff_registration.address,
+                    permenant_address:values.staff_registration.permenant_address,
                     current_address:values.staff_registration.current_address,
                     father_or_spouse_name:values.staff_registration.father_or_spouse_name,
                     father_or_spouse_mobile:values.staff_registration.father_or_spouse_mobile,
@@ -388,8 +414,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             || moment(values.staff_salary_details.probation_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.probation_date).format('DD-MM-YYYY')
             || moment(values.staff_salary_details.increment_date).format('DD-MM-YYYY') !== moment(comparisonObject.staff_salary_details.increment_date).format('DD-MM-YYYY')
         ){
-            if(comparisonObject.staff_registration.pref_no !== values.staff_registration.pref_no && staff.map((s:any) => s.staff_registration.pref_no).includes(values.staff_registration.pref_no)){
-                toast({title:'Preference no. already exists', variant:'error'});
+            if(comparisonObject.staff_registration.reg_no !== values.staff_registration.reg_no && staff.map((s:any) => s.staff_registration.reg_no).includes(values.staff_registration.reg_no)){
+                toast({title:'Admission no. already exists', variant:'error'});
                 setIsLoading(false);
                 return;
             };
@@ -397,13 +423,13 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             if(file){
                 const formData = new FormData();
                 formData.append('file', file);
-                await uploadStaffImage({data:formData, pref_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
+                await uploadStaffImage({data:formData, reg_no:`${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}`});
             };
             if(selectedDocuments.filter((s:any) => s.files.filter((f:any) => f.file).length > 0).length){
                 selectedDocuments.map((s:any) => s.files.map(async (f:any) => {
                     const formData = new FormData();
                     formData.append('file', f.file);
-                    await uploadStaffPdf({data:formData, pref_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
+                    await uploadStaffPdf({data:formData, reg_no:`${form.getValues().staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${f.file_name}-${randomNumber}`, content_type:f.file.type});
                 }));
             };
             // Update
@@ -411,7 +437,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 id:updateStaff.id,
                 // Staff registration
                 staff_registration:{
-                    pref_no:values.staff_registration.pref_no,
+                    post:values.staff_registration.post,
+                    reg_no:values.staff_registration.reg_no,
+                    employee_code:values.staff_registration.employee_code,
+                    approved_teacher:values.staff_registration.approved_teacher,
+                    teacher_id:values.staff_registration.teacher_id,
+                    cbse_code:values.staff_registration.cbse_code,
                     first_name_title:values.staff_registration.first_name_title,
                     first_name:values.staff_registration.first_name,
                     middle_name:values.staff_registration.middle_name,
@@ -421,11 +452,11 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                     alternate_email:values.staff_registration.alternate_email,
                     phone:values.staff_registration.phone,
                     mobile:values.staff_registration.mobile,
-                    alternate_mobile:values.staff_registration.alternate_mobile,
+                    whatsapp_mobile:values.staff_registration.whatsapp_mobile,
                     emergency_mobile:values.staff_registration.emergency_mobile,
                     wing:values.staff_registration.wing,
                     is_active:values.staff_registration.is_active,
-                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : comparisonObject.staff_registration.profile_picture,
+                    profile_picture:file !== null ? `https://qodum.s3.amazonaws.com/staff-application/${values.staff_registration.first_name.toLowerCase().replace(/\s+/g, '-')}-${randomNumber}` : values.staff_registration.profile_picture || '',
                     maritial_status:values.staff_registration.maritial_status,
                     qualification:values.staff_registration.qualification,
                     date_of_birth:values.staff_registration.date_of_birth,
@@ -433,7 +464,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                     date_of_joining:values.staff_registration.date_of_joining,
                     date_of_retire:values.staff_registration.date_of_retire,
                     date_of_retire_is_extend:values.staff_registration.date_of_retire_is_extend,
-                    address:values.staff_registration.address,
+                    permenant_address:values.staff_registration.permenant_address,
                     current_address:values.staff_registration.current_address,
                     father_or_spouse_name:values.staff_registration.father_or_spouse_name,
                     father_or_spouse_mobile:values.staff_registration.father_or_spouse_mobile,
@@ -518,7 +549,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
 
             // Staff registration
             staff_registration:{
-                pref_no:0,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -528,7 +564,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -540,7 +576,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -603,7 +639,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         setValuesFromApplication({
             // Staff registration
             staff_registration:{
-                pref_no:0,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -613,7 +654,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -625,7 +666,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -648,7 +689,12 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         form.reset({
             // Staff registration
             staff_registration:{
-                pref_no:0,
+                post:'',
+                reg_no:'',
+                employee_code:'',
+                approved_teacher:'',
+                teacher_id:'',
+                cbse_code:'',
                 first_name_title:'Mr.',
                 first_name:'',
                 middle_name:'',
@@ -658,7 +704,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 alternate_email:'',
                 phone:0,
                 mobile:0,
-                alternate_mobile:0,
+                whatsapp_mobile:0,
                 emergency_mobile:0,
                 wing:'',
                 is_active:false,
@@ -670,7 +716,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 date_of_joining:new Date(),
                 date_of_retire:new Date(),
                 date_of_retire_is_extend:false,
-                address:'',
+                permenant_address:'',
                 current_address:'',
                 father_or_spouse_name:'',
                 father_or_spouse_mobile:0,
@@ -748,12 +794,13 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         setSelectedDocuments([]);
         setEducationalDetails([{
             qualification:'',
-            name_of_school_or_college:'',
+            program_or_steam:'',
             name_of_board_or_universtity:'',
-            rc:'',
             subjects:[],
-            percentage_of_marks:0,
-            year_of_passing:''
+            year_of_passing:'',
+            maximum_marks:0,
+            obtains_marks:0,
+            percentage:0
         }]);
 
 
@@ -780,12 +827,24 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             setProbationDate(moment(updateStaff.staff_salary_details.probation_date));
             setIncrementDate(moment(updateStaff.staff_salary_details.increment_date));
         };
+        const fetcher = async () => {
+            const designationsRes = await fetchDesignations();
+            const departmentsRes = await fetchDepartments();
+            setDesignations(designationsRes);
+            setDepartments(departmentsRes);
+        };
+        fetcher();
     }, []);
     useEffect(() => {
         if(updateStaff.id !== ''){
 
             // Staff registration
-            form.setValue('staff_registration.pref_no', updateStaff.staff_registration.pref_no);
+            form.setValue('staff_registration.post', updateStaff.staff_registration.post);
+            form.setValue('staff_registration.reg_no', updateStaff.staff_registration.reg_no);
+            form.setValue('staff_registration.employee_code', updateStaff.staff_registration.employee_code);
+            form.setValue('staff_registration.approved_teacher', updateStaff.staff_registration.approved_teacher);
+            form.setValue('staff_registration.teacher_id', updateStaff.staff_registration.teacher_id);
+            form.setValue('staff_registration.cbse_code', updateStaff.staff_registration.cbse_code);
             form.setValue('staff_registration.first_name_title', updateStaff.staff_registration.first_name_title);
             form.setValue('staff_registration.first_name', updateStaff.staff_registration.first_name);
             form.setValue('staff_registration.middle_name', updateStaff.staff_registration.middle_name);
@@ -795,7 +854,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             form.setValue('staff_registration.alternate_email', updateStaff.staff_registration.alternate_email);
             form.setValue('staff_registration.phone', updateStaff.staff_registration.phone);
             form.setValue('staff_registration.mobile', updateStaff.staff_registration.mobile);
-            form.setValue('staff_registration.alternate_mobile', updateStaff.staff_registration.alternate_mobile);
+            form.setValue('staff_registration.whatsapp_mobile', updateStaff.staff_registration.whatsapp_mobile);
             form.setValue('staff_registration.emergency_mobile', updateStaff.staff_registration.emergency_mobile);
             form.setValue('staff_registration.wing', updateStaff.staff_registration.wing);
             form.setValue('staff_registration.is_active', updateStaff.staff_registration.is_active);
@@ -807,7 +866,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             form.setValue('staff_registration.date_of_joining', updateStaff.staff_registration.date_of_joining);
             form.setValue('staff_registration.date_of_retire', updateStaff.staff_registration.date_of_retire);
             form.setValue('staff_registration.date_of_retire_is_extend', updateStaff.staff_registration.date_of_retire_is_extend);
-            form.setValue('staff_registration.address', updateStaff.staff_registration.address);
+            form.setValue('staff_registration.permenant_address', updateStaff.staff_registration.permenant_address);
             form.setValue('staff_registration.current_address', updateStaff.staff_registration.current_address);
             form.setValue('staff_registration.father_or_spouse_name', updateStaff.staff_registration.father_or_spouse_name);
             form.setValue('staff_registration.father_or_spouse_mobile', updateStaff.staff_registration.father_or_spouse_mobile);
@@ -864,39 +923,44 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         if(valuesFromApplication?.staff_registration?.first_name !== ''){
 
             // Staff registration
-            form.setValue('staff_registration.pref_no', valuesFromApplication.staff_registration.pref_no);
-            form.setValue('staff_registration.first_name_title', valuesFromApplication.staff_registration.first_name_title);
-            form.setValue('staff_registration.first_name', valuesFromApplication.staff_registration.first_name);
-            form.setValue('staff_registration.middle_name', valuesFromApplication.staff_registration.middle_name);
-            form.setValue('staff_registration.last_name', valuesFromApplication.staff_registration.last_name);
-            form.setValue('staff_registration.gender', valuesFromApplication.staff_registration.gender);
-            form.setValue('staff_registration.email', valuesFromApplication.staff_registration.email);
-            form.setValue('staff_registration.alternate_email', valuesFromApplication.staff_registration.alternate_email);
-            form.setValue('staff_registration.phone', valuesFromApplication.staff_registration.phone);
-            form.setValue('staff_registration.mobile', valuesFromApplication.staff_registration.mobile);
-            form.setValue('staff_registration.alternate_mobile', valuesFromApplication.staff_registration.alternate_mobile);
-            form.setValue('staff_registration.emergency_mobile', valuesFromApplication.staff_registration.emergency_mobile);
-            form.setValue('staff_registration.wing', valuesFromApplication.staff_registration.wing);
-            form.setValue('staff_registration.is_active', valuesFromApplication.staff_registration.is_active);
-            form.setValue('staff_registration.profile_picture', valuesFromApplication.staff_registration.profile_picture);
-            form.setValue('staff_registration.maritial_status', valuesFromApplication.staff_registration.maritial_status);
-            form.setValue('staff_registration.qualification', valuesFromApplication.staff_registration.qualification);
-            form.setValue('staff_registration.date_of_birth', valuesFromApplication.staff_registration.date_of_birth);
-            form.setValue('staff_registration.date_of_anniversary', valuesFromApplication.staff_registration.date_of_anniversary);
-            form.setValue('staff_registration.date_of_joining', valuesFromApplication.staff_registration.date_of_joining);
-            form.setValue('staff_registration.date_of_retire', valuesFromApplication.staff_registration.date_of_retire);
-            form.setValue('staff_registration.date_of_retire_is_extend', valuesFromApplication.staff_registration.date_of_retire_is_extend);
-            form.setValue('staff_registration.address', valuesFromApplication.staff_registration.address);
-            form.setValue('staff_registration.current_address', valuesFromApplication.staff_registration.current_address);
-            form.setValue('staff_registration.father_or_spouse_name', valuesFromApplication.staff_registration.father_or_spouse_name);
-            form.setValue('staff_registration.father_or_spouse_mobile', valuesFromApplication.staff_registration.father_or_spouse_mobile);
-            form.setValue('staff_registration.father_or_spouse_relation', valuesFromApplication.staff_registration.father_or_spouse_relation);
-            form.setValue('staff_registration.blood_group', valuesFromApplication.staff_registration.blood_group);
-            form.setValue('staff_registration.staff_type', valuesFromApplication.staff_registration.staff_type);
-            form.setValue('staff_registration.designation', valuesFromApplication.staff_registration.designation);
-            form.setValue('staff_registration.department', valuesFromApplication.staff_registration.department);
-            form.setValue('staff_registration.religion', valuesFromApplication.staff_registration.religion);
-            form.setValue('staff_registration.aadhar_card_no', valuesFromApplication.staff_registration.aadhar_card_no);
+            form.setValue('staff_registration.post', updateStaff.staff_registration.post);
+            form.setValue('staff_registration.reg_no', updateStaff.staff_registration.reg_no);
+            form.setValue('staff_registration.employee_code', updateStaff.staff_registration.employee_code);
+            form.setValue('staff_registration.approved_teacher', updateStaff.staff_registration.approved_teacher);
+            form.setValue('staff_registration.teacher_id', updateStaff.staff_registration.teacher_id);
+            form.setValue('staff_registration.cbse_code', updateStaff.staff_registration.cbse_code);
+            form.setValue('staff_registration.first_name_title', updateStaff.staff_registration.first_name_title);
+            form.setValue('staff_registration.first_name', updateStaff.staff_registration.first_name);
+            form.setValue('staff_registration.middle_name', updateStaff.staff_registration.middle_name);
+            form.setValue('staff_registration.last_name', updateStaff.staff_registration.last_name);
+            form.setValue('staff_registration.gender', updateStaff.staff_registration.gender);
+            form.setValue('staff_registration.email', updateStaff.staff_registration.email);
+            form.setValue('staff_registration.alternate_email', updateStaff.staff_registration.alternate_email);
+            form.setValue('staff_registration.phone', updateStaff.staff_registration.phone);
+            form.setValue('staff_registration.mobile', updateStaff.staff_registration.mobile);
+            form.setValue('staff_registration.whatsapp_mobile', updateStaff.staff_registration.whatsapp_mobile);
+            form.setValue('staff_registration.emergency_mobile', updateStaff.staff_registration.emergency_mobile);
+            form.setValue('staff_registration.wing', updateStaff.staff_registration.wing);
+            form.setValue('staff_registration.is_active', updateStaff.staff_registration.is_active);
+            form.setValue('staff_registration.profile_picture', updateStaff.staff_registration.profile_picture);
+            form.setValue('staff_registration.maritial_status', updateStaff.staff_registration.maritial_status);
+            form.setValue('staff_registration.qualification', updateStaff.staff_registration.qualification);
+            form.setValue('staff_registration.date_of_birth', updateStaff.staff_registration.date_of_birth);
+            form.setValue('staff_registration.date_of_anniversary', updateStaff.staff_registration.date_of_anniversary);
+            form.setValue('staff_registration.date_of_joining', updateStaff.staff_registration.date_of_joining);
+            form.setValue('staff_registration.date_of_retire', updateStaff.staff_registration.date_of_retire);
+            form.setValue('staff_registration.date_of_retire_is_extend', updateStaff.staff_registration.date_of_retire_is_extend);
+            form.setValue('staff_registration.permenant_address', updateStaff.staff_registration.permenant_address);
+            form.setValue('staff_registration.current_address', updateStaff.staff_registration.current_address);
+            form.setValue('staff_registration.father_or_spouse_name', updateStaff.staff_registration.father_or_spouse_name);
+            form.setValue('staff_registration.father_or_spouse_mobile', updateStaff.staff_registration.father_or_spouse_mobile);
+            form.setValue('staff_registration.father_or_spouse_relation', updateStaff.staff_registration.father_or_spouse_relation);
+            form.setValue('staff_registration.blood_group', updateStaff.staff_registration.blood_group);
+            form.setValue('staff_registration.staff_type', updateStaff.staff_registration.staff_type);
+            form.setValue('staff_registration.designation', updateStaff.staff_registration.designation);
+            form.setValue('staff_registration.department', updateStaff.staff_registration.department);
+            form.setValue('staff_registration.religion', updateStaff.staff_registration.religion);
+            form.setValue('staff_registration.aadhar_card_no', updateStaff.staff_registration.aadhar_card_no);
 
             // Setting values for staff_educational_details
             form.setValue('staff_educational_details', valuesFromApplication.staff_educational_details);
@@ -908,9 +972,27 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
     }, [valuesFromApplication]);
     useEffect(() => {
         if(updateStaff.id === ''){
-            staff.length > 0
-                ? form.setValue('staff_registration.pref_no', staff.length + 1)
-                : form.setValue('staff_registration.pref_no', 1);
+            const createRegNo = async () => {
+                let substringValue;
+                if(staff?.length < 9){
+                    substringValue = 0;
+                }else if(staff?.length >= 9){
+                    substringValue = 1;
+                }else if(staff?.length >= 99){
+                    substringValue = 2;
+                }else if(staff?.length >= 999){
+                    substringValue = 3;
+                }else if(staff?.length >= 9999){
+                    substringValue = 4;
+                }else if(staff?.length >= 99999){
+                    substringValue = 5;
+                }else if(staff?.length >= 999999){
+                    substringValue = 6;
+                };
+                const admissionNumber = await fetchStaffAdmissionNumberByName({name:'Employment Number'});
+                form.setValue('staff_registration.reg_no', admissionNumber ? `${admissionNumber?.prefix}${admissionNumber?.lead_zero.substring(substringValue, admissionNumber?.lead_zero?.length - 1)}${staff?.length + 1}${admissionNumber?.suffix}` : '');
+            };
+            createRegNo();
         };
     }, [staff]);
 
@@ -1001,6 +1083,8 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                                     valuesFromApplication={valuesFromApplication}
                                     setValuesFromApplication={setValuesFromApplication}
                                     setEducationalDetails={setEducationalDetails}
+                                    designations={designations}
+                                    departments={departments}
                                 />
                             </TabsContent>
                             <TabsContent value='staff-salary-details'>
@@ -1032,7 +1116,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                             </TabsContent>
                             <TabsContent value='staff-educational-details'>
                                 <StaffEducationalDetails
-                                    form={form}
                                     educationalDetails={educationalDetails}
                                     setEducationalDetails={setEducationalDetails}
                                 />

@@ -1,0 +1,76 @@
+'use client';
+// Imports
+import {useEffect, useState} from 'react';
+import FormCom from '@/components/modules/payroll/masterSettings/admissionSetting/FormCom';
+import ViewCom from '@/components/modules/payroll/masterSettings/admissionSetting/ViewCom';
+import {fetchStaffAdmissionNumbers} from '@/lib/actions/payroll/masterSettings/staffAdmissionNumber.actions';
+
+
+
+
+
+// Main function
+const page = () => {
+
+    // Is view component opened
+    const [isViewOpened, setIsViewOpened] = useState(false);
+
+
+    // Admissions
+    const [admissions, setAdmissions] = useState([{}]);
+
+
+    // Update admission
+    const [updateAdmission, setUpdateAdmission] = useState({
+        id:'',
+        isDeleteClicked:false,
+        setting_type:'',
+        should_be:'Automatic',
+        rec_no:'',
+        prefix:'',
+        start_from:'',
+        lead_zero:'',
+        suffix:''
+    });
+
+    
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const res = await fetchStaffAdmissionNumbers();
+            setAdmissions(res);
+        };
+        fetcher();
+    }, [isViewOpened, updateAdmission]);
+
+    return (
+        <div className='h-full flex flex-col items-center justify-start pt-10 pb-10 bg-white overflow-y-scroll custom-sidebar-scrollbar'>
+            {
+                isViewOpened ? (
+                    <ViewCom
+                        admissions={admissions}
+                        setUpdateAdmission={setUpdateAdmission}
+                        setIsViewOpened={setIsViewOpened}
+                    />
+                ) : (
+                    <div className='w-[90%] max-w-[1000px] flex flex-col items-center rounded-[8px] border-[0.5px] border-[#E8E8E8] sm:w-[80%]'>
+                        <FormCom
+                            admissions={admissions}
+                            isViewOpened={isViewOpened}
+                            setIsViewOpened={setIsViewOpened}
+                            updateAdmission={updateAdmission}
+                            setUpdateAdmission={setUpdateAdmission}
+                        />
+                    </div>
+                )
+            }
+        </div>
+    );
+};
+
+
+
+
+
+// Export
+export default page;

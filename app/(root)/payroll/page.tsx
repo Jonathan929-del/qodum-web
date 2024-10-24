@@ -20,6 +20,7 @@ import DefineDocumentType from '@/pagesComps/payroll/globalMasters/define-docume
 import ShortlistedCandidate from '@/pagesComps/payroll/globalMasters/shortlisted-candidate/page';
 import AdmissionOpen from '@/pagesComps/payroll/globalMasters/admission-open/page';
 import CurrentJobOpening from '@/pagesComps/payroll/globalMasters/current-job-opening/page';
+import AdmissionSettings from '@/pagesComps/payroll/masterSettings/admission-setting/page';
 
 
 
@@ -94,6 +95,9 @@ const Home = () => {
     };
     if(openedPages.includes('Current Job Opening')){
       openedPagesArray.push({name:'Current Job Opening', component:<CurrentJobOpening />});
+    };
+    if(openedPages.includes('Admission Settings')){
+      openedPagesArray.push({name:'Admission Settings', component:<AdmissionSettings />});
     };
 
 

@@ -944,6 +944,9 @@ const modules = [
                         subPageName:'Change Academic'
                     },
                     {
+                        subPageName:'Admission Settings'
+                    },
+                    {
                         subPageName:'Report Layout Setting'
                     },
                     {

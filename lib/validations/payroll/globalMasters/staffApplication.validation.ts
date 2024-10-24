@@ -10,7 +10,12 @@ export const StaffApplicationValidation = z.object({
 
     // Staff registration
     staff_registration:z.object({
-        pref_no:z.number({invalid_type_error:'*Please enter pref. no.'}).or(z.string().nonempty({message:'*Please enter Pref. no.'})).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        post:z.string().nonempty({message:'Please select a post'}),
+        reg_no:z.string().nonempty({message:'Please enter registration no'}),
+        employee_code:z.string().nonempty({message:'Please enter employee code'}),
+        approved_teacher:z.string(),
+        teacher_id:z.string(),
+        cbse_code:z.string(),
         first_name_title:z.string().nonempty({message:'Please select first name title'}),
         first_name:z.string().nonempty({message:'Please enter first name'}),
         middle_name:z.string(),
@@ -20,7 +25,7 @@ export const StaffApplicationValidation = z.object({
         alternate_email:z.string(),
         phone:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         mobile:z.number({invalid_type_error:'*Please enter mobile no.'}).or(z.string().nonempty({message:'*Please enter mobile no.'})).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
-        alternate_mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
+        whatsapp_mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         emergency_mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
         wing:z.string(),
         is_active:z.boolean(),
@@ -32,7 +37,7 @@ export const StaffApplicationValidation = z.object({
         date_of_joining:z.date(),
         date_of_retire:z.date(),
         date_of_retire_is_extend:z.boolean(),
-        address:z.string(),
+        permenant_address:z.string(),
         current_address:z.string(),
         father_or_spouse_name:z.string().nonempty({message:'*Please enter father/spouse name'}),
         father_or_spouse_mobile:z.number().or(z.string()).pipe(z.coerce.number({invalid_type_error:'*Please enter a numeric value'})),
@@ -48,6 +53,10 @@ export const StaffApplicationValidation = z.object({
 
     // Staff educational details
     staff_educational_details:z.any(),
+
+
+    // Staff experience details
+    staff_experience_details:z.any(),
 
 
     // Staff document details
