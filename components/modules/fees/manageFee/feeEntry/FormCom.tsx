@@ -91,14 +91,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 })
             }
         });
-        // const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-        // const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1).length > 0
-        //     ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length > 1)?.map((h:any) => h.amounts.map((a:any) => a.name).concat(singleInstallments))[0]
-        //     : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts.length === 1)?.map((h:any) => h.amounts.map((a:any) => a.name)[0]);
-        // const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
-        // const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
-        // setInstallments(sortedInstallments);
-        // setSelectedInstallments([sortedInstallments[0]]);
         const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
         const installments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1).length > 0
             ? student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name).concat(singleInstallments))[0]
@@ -443,14 +435,12 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
     return (
         <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 lg:min-h-[100%]'>
-        {/* <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'> */}
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='h-full w-full flex flex-row gap-4 justify-center items-center py-4'
-                    // className='h-full w-full flex flex-row gap-4 justify-center items-center py-4 overflow-scroll custom-sidebar-scrollbar'
                 >
                         {/* Left Side */}
                         <LeftSide

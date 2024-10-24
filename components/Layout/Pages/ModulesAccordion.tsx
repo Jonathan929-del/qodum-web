@@ -75,7 +75,7 @@ const ModulesAccordion = ({isSidebarOpened, setIsSidebarOpened}:any) => {
             
             
             // Current Module
-            const module = modules.filter(module => module.moduleName === pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1));
+            const module = modules.filter(module => module.moduleName === pathname.split('/')[1].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '));
             const permittedPages = user?.permissions?.find((p:any) => p?.name === currentModule?.moduleName)?.permissions.filter((pp:any) => pp?.add || pp?.modify || pp?.delete || pp?.print || pp?.read_only)?.map((pp:any) => pp?.main_menu);
             const permittedSubPages = user?.permissions?.find((p:any) => p?.name === currentModule?.moduleName)?.permissions.filter((pp:any) => pp?.add || pp?.modify || pp?.delete || pp?.print || pp?.read_only)?.map((pp:any) => pp?.sub_menu);
             setCurrentModule({

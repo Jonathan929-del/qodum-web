@@ -56,7 +56,7 @@ const Buttons = ({setIsViewOpened, transportGroups, updateTransportGroup, setUpd
 
     // Use effect
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Define Transport Group');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Define Transport Fare And Group');
         setPermissions(grantedPermissions);
     }, [user]);
 

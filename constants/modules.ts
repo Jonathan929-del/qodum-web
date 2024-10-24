@@ -196,9 +196,6 @@ const modules = [
                     },
                     {
                         subPageName:'Print Student Label'
-                    },
-                    {
-                        subPageName:'Send SMS'
                     }
                 ]
             },
@@ -1853,7 +1850,24 @@ const modules = [
     {
         moduleName:'Qodum Care',
         icon:ExamanationImage,
-        pages:[]
+        pages:[
+            // Global Master
+            {
+                pageName:'Global Masters',
+                subPages:[
+                    {
+                        subPageName:'Define Session',
+                        threads:[
+                            'Define Academic Year',
+                            'Define Financial Year'
+                        ]
+                    },
+                    {
+                        subPageName:'App Control'
+                    }
+                ]
+            },
+        ]
     }
 
 ];

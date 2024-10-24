@@ -1,18 +1,21 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import moment from 'moment';
 import Buttons from './Buttons';
 import {deepEqual} from '@/lib/utils';
 import {useForm} from 'react-hook-form';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
+import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {JobValidation} from '@/lib/validations/payroll/globalMasters/job.validation';
 import {createJob, deleteJob, modifyJob} from '@/lib/actions/payroll/globalMasters/job.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import MyDatePicker from '@/components/utils/CustomDatePicker';
+import { createAdmissionStates, fetchAdmissionStates, toggleStaffAdmissionState } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -27,6 +30,25 @@ const FormCom = ({setIsViewOpened, jobs, updateJob, setUpdateJob}:any) => {
 
     // Last date of submission
     const [lastDateOfSubmission, setLastDateOfSubmission] = useState(moment());
+
+
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    // Admission states
+    const [admissionStates, setAdmissionStates] = useState({is_staff_admission_opened:false, is_students_admission_opened:false});
+
+
+    // Change admission state
+    const changeAdmissionState = async () => {
+        setIsLoading(true);
+        await toggleStaffAdmissionState().then(async () => {
+            const statesRes = await fetchAdmissionStates();
+            setAdmissionStates(statesRes);
+        });
+        setIsLoading(false);
+    };
 
 
     // Comparison object
@@ -116,7 +138,23 @@ const FormCom = ({setIsViewOpened, jobs, updateJob, setUpdateJob}:any) => {
     };
 
 
-    // Use effect
+    // Use effects
+    useEffect(() => {
+        setIsLoading(true);
+        const fetcher = async () => {
+            const statesRes = await fetchAdmissionStates();
+            if(!statesRes){
+                await createAdmissionStates().then(async () => {
+                    const statesRes = await fetchAdmissionStates(); 
+                    setAdmissionStates(statesRes);
+                });
+                return;
+            };
+            setAdmissionStates(statesRes);
+            setIsLoading(false);
+        };
+        fetcher();
+    }, []);
     useEffect(() => {
         if(lastDateOfSubmission){
             // @ts-ignore
@@ -134,6 +172,18 @@ const FormCom = ({setIsViewOpened, jobs, updateJob, setUpdateJob}:any) => {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='relative w-full flex flex-col pt-4 items-center px-2 sm:px-4'
                 >
+
+                    {/* Open/Close Staff Admission */}
+                    <span
+                        className='flex items-center justify-center min-w-[150px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                        onClick={changeAdmissionState}
+                    >
+                        {isLoading ? (
+                            <LoadingIcon />
+                        ) : `${admissionStates.is_staff_admission_opened ? 'Close' : 'Open'} Staff Admission`
+                        }
+                    </span>
 
                     {/* Post */}
                     <FormField
@@ -209,11 +259,12 @@ const FormCom = ({setIsViewOpened, jobs, updateJob, setUpdateJob}:any) => {
                         control={form.control}
                         name='description'
                         render={({field}) => (
-                            <FormItem className='w-full h-10 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
+                            <FormItem className='w-full flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center'>
                                 <FormLabel className='basis-auto pr-2 text-end text-xs text-[#726E71] sm:basis-[30%]'>Description</FormLabel>
                                 <div className='w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <FormControl>
-                                        <Input
+                                        <Textarea
+                                            rows={4}
                                             {...field}
                                             className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                         />

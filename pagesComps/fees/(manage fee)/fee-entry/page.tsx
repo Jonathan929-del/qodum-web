@@ -6,14 +6,14 @@ import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
-import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchHeadsSequence} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {fetchAdmittedStudents, fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -412,7 +412,7 @@ const page = () => {
     }, [selectedStudent]);
 
     return (
-        <div className='h-full flex flex-col items-center justify-start bg-white overflow-y-scroll custom-sidebar-scrollbar'>
+        <div className='h-screen flex flex-col items-center justify-start bg-white overflow-y-scroll custom-sidebar-scrollbar'>
             {isLoading ? (
                 <LoadingIcon />
             ) : isReceiptOpened ? (

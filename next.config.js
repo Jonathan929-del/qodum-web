@@ -12,7 +12,7 @@ const nextConfig = {
                 port: ''
             }
         ],
-        domains:['qodum.s3.amazonaws.com', 's3.ap-south-1.amazonaws.com']
+        domains:['qodum.s3.amazonaws.com', 's3.ap-south-1.amazonaws.com', 'www.unitedagents.co.uk']
     }
 }
 
