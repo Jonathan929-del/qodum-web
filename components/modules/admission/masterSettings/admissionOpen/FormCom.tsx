@@ -2,6 +2,7 @@
 import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
 import {useContext, useEffect, useState} from 'react';
+import { createAdmissionStates, fetchAdmissionStates, toggleStaffAdmissionState } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -24,22 +25,26 @@ function FormCom() {
     });
 
 
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    // Admission states
+    const [admissionStates, setAdmissionStates] = useState({is_staff_admission_opened:false, is_students_admission_opened:false});
+
+
     // Toast
     const {toast} = useToast();
 
 
     // Change admission state
     const changeAdmissionState = async () => {
-        const currentState = localStorage.getItem('isStudentAdmissionStateOpened') ? localStorage.getItem('isStudentAdmissionStateOpened') === 'true' ? true : false : false;
-        if(currentState){
-            // @ts-ignore
-            localStorage.setItem('isStudentAdmissionStateOpened', false);
-            toast({title:'Admission Closed!'});
-        }else{
-            // @ts-ignore
-            localStorage.setItem('isStudentAdmissionStateOpened', true);
-            toast({title:'Admission Opened!'});
-        };
+        setIsLoading(true);
+        await toggleStaffAdmissionState().then(async () => {
+            const statesRes = await fetchAdmissionStates();
+            setAdmissionStates(statesRes);
+        });
+        setIsLoading(false);
     };
 
 
@@ -48,6 +53,22 @@ function FormCom() {
         const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Admission Open');
         setPermissions(grantedPermissions);
     }, [user]);
+    useEffect(() => {
+        setIsLoading(true);
+        const fetcher = async () => {
+            const statesRes = await fetchAdmissionStates();
+            if(!statesRes){
+                await createAdmissionStates().then(async () => {
+                    const statesRes = await fetchAdmissionStates(); 
+                    setAdmissionStates(statesRes);
+                });
+                return;
+            };
+            setAdmissionStates(statesRes);
+            setIsLoading(false);
+        };
+        fetcher();
+    }, []);
 
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center sm:w-[80%]'>
