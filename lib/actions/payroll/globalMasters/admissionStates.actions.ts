@@ -115,7 +115,7 @@ export const toggleStudentsAdmissionState = async () => {
         // Toggling staff admission state
         await AdmissionState.findOneAndUpdate(
             {session:activeSession?.year_name},
-            {$set:{is_students_admission_opened:{$not:'$is_students_admission_opened'}}}
+            [{$set:{is_students_admission_opened:{$eq:[false, '$is_students_admission_opened']}}}]
         );
 
 
