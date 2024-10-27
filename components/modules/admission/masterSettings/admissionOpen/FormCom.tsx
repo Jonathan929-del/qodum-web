@@ -2,7 +2,8 @@
 import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
 import {useContext, useEffect, useState} from 'react';
-import { createAdmissionStates, fetchAdmissionStates, toggleStaffAdmissionState } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import { createAdmissionStates, fetchAdmissionStates, toggleStudentsAdmissionState } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -40,7 +41,7 @@ function FormCom() {
     // Change admission state
     const changeAdmissionState = async () => {
         setIsLoading(true);
-        await toggleStaffAdmissionState().then(async () => {
+        await toggleStudentsAdmissionState().then(async () => {
             const statesRes = await fetchAdmissionStates();
             setAdmissionStates(statesRes);
         });
@@ -73,12 +74,15 @@ function FormCom() {
     return (
         <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center sm:w-[80%]'>
             {permissions.modify && (
-                <span
-                    className='flex items-center justify-center min-w-[200px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                    <span
+                    className='flex items-center justify-center min-w-[150px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                     onClick={changeAdmissionState}
                 >
-                    {localStorage.getItem('isStudentAdmissionStateOpened') ? localStorage.getItem('isStudentAdmissionStateOpened') === 'true' ? 'Close' : 'Open' : 'Open'} Student Admission
+                    {isLoading ? (
+                        <LoadingIcon />
+                    ) : `${admissionStates.is_students_admission_opened ? 'Close' : 'Open'} Students Admission`
+                    }
                 </span>
             )}
         </div>
