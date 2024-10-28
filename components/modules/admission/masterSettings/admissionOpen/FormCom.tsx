@@ -75,7 +75,7 @@ function FormCom() {
         <div className='w-[90%] max-h-[90%] max-w-[1000px] flex flex-col items-center sm:w-[80%]'>
             {permissions.modify && (
                     <span
-                    className='flex items-center justify-center min-w-[150px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                    className='flex items-center justify-center min-w-[200px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                             hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                     onClick={changeAdmissionState}
                 >

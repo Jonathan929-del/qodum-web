@@ -21,6 +21,8 @@ import FormCom from '@/components/modules/admission/admission/admissionFormRegis
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
+import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -29,9 +31,16 @@ import EnquiryViewCom from '@/components/modules/admission/admission/admissionFo
 // Main function
 const page = () => {
 
-
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState('');
+
+
+    // Admission states
+    const [admissionStates, setAdmissionStates] = useState({is_students_admission_opened:false, is_staff_admission_opened:false});
+
+
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // Students
@@ -334,6 +343,8 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
+            setIsLoading(true);
+            const admissionStatesRes = await fetchAdmissionStates();
             const enquiriesRes = await fetchAdmissionEnquiries();
             const studentsRes = await fetchStudents();
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
@@ -368,6 +379,8 @@ const page = () => {
             setDesignations(designationsRes);
             setProfessions(professionsRes);
             setStaff(staffRes);
+            setAdmissionStates(admissionStatesRes ? admissionStatesRes : admissionStates);
+            setIsLoading(false);
         };
         fetcher();
     }, [isViewOpened, updateStudent]);
@@ -375,8 +388,9 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                // @ts-ignore
-                localStorage.getItem('isStudentAdmissionStateOpened') && localStorage.getItem('isStudentAdmissionStateOpened') === 'true' ?
+                isLoading ? (
+                    <LoadingIcon />
+                ) : admissionStates.is_students_admission_opened ?
                 isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}

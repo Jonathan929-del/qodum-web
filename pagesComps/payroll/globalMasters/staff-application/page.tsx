@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/payroll/globalMasters/staff-application/FormCom';
 import ViewCom from '@/components/modules/payroll/globalMasters/staff-application/ViewCom';
 import {fetchStaffApplication} from '@/lib/actions/payroll/globalMasters/staffApplication.actions';
+import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -14,6 +16,14 @@ const page = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
+
+
+    // Admission states
+    const [admissionStates, setAdmissionStates] = useState({is_students_admission_opened:false, is_staff_admission_opened:false});
+
+
+    // Is loading
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // Staff
@@ -128,8 +138,12 @@ const page = () => {
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
+            setIsLoading(true);
             const staffRes = await fetchStaffApplication();
+            const admissionStatesRes = await fetchAdmissionStates();
             setStaff(staffRes);
+            setAdmissionStates(admissionStatesRes ? admissionStatesRes : admissionStates);
+            setIsLoading(false);
         };
         fetcher();
     }, [isViewOpened, updateStaff]);
@@ -137,8 +151,9 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                // @ts-ignore
-                localStorage.getItem('isStaffAdmissionStateOpened') && localStorage.getItem('isStaffAdmissionStateOpened') === 'true' ?
+                isLoading ? (
+                    <LoadingIcon />
+                ) : admissionStates.is_staff_admission_opened ?
                 isViewOpened ? (
                     <ViewCom
                         staff={staff}
