@@ -35,7 +35,11 @@ interface CreateGlobalSchoolDetailsProps{
     recess:String,
     total_period:String,
     academic_year:String,
-    financial_year:String
+    financial_year:String;
+    facebook_link:String;
+    linkedin_link:String;
+    twitter_link:String;
+    instagram_link:String;
 };
 // Create global school details
 export const createGlobalSchoolDetails = async ({
@@ -65,7 +69,11 @@ export const createGlobalSchoolDetails = async ({
     recess,
     total_period,
     academic_year,
-    financial_year
+    financial_year,
+    facebook_link,
+    linkedin_link,
+    twitter_link,
+    instagram_link
     }:CreateGlobalSchoolDetailsProps) => {
     try {
 
@@ -102,7 +110,11 @@ export const createGlobalSchoolDetails = async ({
             recess,
             total_period,
             academic_year,
-            financial_year
+            financial_year,
+            facebook_link,
+            linkedin_link,
+            twitter_link,
+            instagram_link
         });
         newGlobalSchoolDetails.save();
 
@@ -177,7 +189,11 @@ interface ModifyGlobalSchoolDetailsProps{
     recess:String,
     total_period:String,
     academic_year:String,
-    financial_year:String
+    financial_year:String;
+    facebook_link:String;
+    linkedin_link:String;
+    twitter_link:String;
+    instagram_link:String;
 }
 // Modify global school details
 export const modifyGlobalSchoolDetails = async ({
@@ -208,7 +224,11 @@ export const modifyGlobalSchoolDetails = async ({
     recess,
     total_period,
     academic_year,
-    financial_year
+    financial_year,
+    facebook_link,
+    linkedin_link,
+    twitter_link,
+    instagram_link
 }:ModifyGlobalSchoolDetailsProps) => {
     try {
 
@@ -246,7 +266,11 @@ export const modifyGlobalSchoolDetails = async ({
                 recess,
                 total_period,
                 academic_year,
-                financial_year
+                financial_year,
+                facebook_link,
+                linkedin_link,
+                twitter_link,
+                instagram_link
             },
             {new:true}
         );

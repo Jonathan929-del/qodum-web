@@ -34,7 +34,11 @@ const SchoolGlobalDetailsSchema = new mongoose.Schema(
             recess:{type:String},
             total_period:{type:String},
             academic_year:{type:String},
-            financial_year:{type:String}
+            financial_year:{type:String},
+            facebook_link:{type:String},
+            linkedin_link:{type:String},
+            twitter_link:{type:String},
+            instagram_link:{type:String}
         },
         {
             timestamps:true

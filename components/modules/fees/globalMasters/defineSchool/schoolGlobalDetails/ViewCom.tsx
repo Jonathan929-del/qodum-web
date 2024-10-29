@@ -43,6 +43,10 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
             total_period:schoolD.total_period,
             academic_year:'',
             financial_year:'',
+            facebook_link:schoolD.facebook_link,
+            linkedin_link:schoolD.linkedin_link,
+            twitter_link:schoolD.twitter_link,
+            instagram_link:schoolD.instagram_link,
             isDeleteClicked:false
         });
         setIsViewOpened(false);

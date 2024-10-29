@@ -59,7 +59,11 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             total_period:'',
             academic_year:'',
             financial_year:'',
-            isDeleteClicked:false
+            isDeleteClicked:false,
+            facebook_link:'',
+            linkedin_link:'',
+            twitter_link:'',
+            instagram_link:''
         });
         // Reseting form
         form.reset({
@@ -90,6 +94,10 @@ const Buttons = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             total_period:'',
             academic_year:'',
             financial_year:'',
+            facebook_link:'',
+            linkedin_link:'',
+            twitter_link:'',
+            instagram_link:''
         });
         setImageSrc('');
         setFile(null);

@@ -42,7 +42,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
     }, [user]);
 
     return (
-        <div className='w-[70%] h-full min-w-[400px] flex flex-col justify-between gap-1 px-2'>
+        <div className='w-[70%] h-full min-w-[400px] flex flex-col justify-between gap-1 px-2 overflow-y-scroll custom-sidebar-scrollbar'>
             <div className='flex flex-col gap-1'>
 
                 {/* Search */}

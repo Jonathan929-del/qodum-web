@@ -79,6 +79,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         total_period:updateSchoolDetails.total_period,
         academic_year:'',
         financial_year:'',
+        facebook_link:updateSchoolDetails.facebook_link,
+        linkedin_link:updateSchoolDetails.linkedin_link,
+        twitter_link:updateSchoolDetails.twitter_link,
+        instagram_link:updateSchoolDetails.instagram_link
     };
 
 
@@ -113,6 +117,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             total_period:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.total_period,
             academic_year:'',
             financial_year:'',
+            facebook_link:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.facebook_link,
+            linkedin_link:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.linkedin_link,
+            twitter_link:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.twitter_link,
+            instagram_link:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.instagram_link
         }
     });
 
@@ -155,6 +163,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 total_period:values.total_period,
                 academic_year:'',
                 financial_year:'',
+                facebook_link:values.facebook_link,
+                linkedin_link:values.linkedin_link,
+                twitter_link:values.twitter_link,
+                instagram_link:values.instagram_link
             });
             toast({title:'Added Successfully!'});
         }
@@ -194,6 +206,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 total_period:values.total_period,
                 academic_year:'',
                 financial_year:'',
+                facebook_link:values.facebook_link,
+                linkedin_link:values.linkedin_link,
+                twitter_link:values.twitter_link,
+                instagram_link:values.instagram_link
             });
             toast({title:'Updated Successfully!'});
         }
@@ -234,6 +250,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             total_period:'',
             academic_year:'',
             financial_year:'',
+            facebook_link:'',
+            linkedin_link:'',
+            twitter_link:'',
+            instagram_link:'',
             isDeleteClicked:false
         });
         // Reseting form
@@ -265,6 +285,10 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             total_period:'',
             academic_year:'',
             financial_year:'',
+            facebook_link:'',
+            linkedin_link:'',
+            twitter_link:'',
+            instagram_link:''
         });
         setImageSrc('');
         setFile(null);
@@ -792,6 +816,90 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                     <FormItem>
                                         <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
                                             <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Total Period</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Face Book Link */}
+                            <FormField
+                                control={form.control}
+                                name='facebook_link'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Face Book Link</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Linked In Link */}
+                            <FormField
+                                control={form.control}
+                                name='linkedin_link'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Linked In Link</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Twitter Link */}
+                            <FormField
+                                control={form.control}
+                                name='twitter_link'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Twitter Link</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Instagram Link */}
+                            <FormField
+                                control={form.control}
+                                name='instagram_link'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Instagram Link</FormLabel>
                                             <div className='basis-[70%] h-full sm:basis-[65%]'>
                                                 <FormControl>
                                                     <Input

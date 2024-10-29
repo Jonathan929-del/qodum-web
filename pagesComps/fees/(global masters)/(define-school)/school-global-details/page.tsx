@@ -62,6 +62,10 @@ const page = () => {
         total_period:'',
         academic_year:'',
         financial_year:'',
+        facebook_link:'',
+        linkedin_link:'',
+        twitter_link:'',
+        instagram_link:''
     });
 
     

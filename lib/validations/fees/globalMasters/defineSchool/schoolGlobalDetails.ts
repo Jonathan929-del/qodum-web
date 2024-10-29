@@ -33,5 +33,9 @@ export const SchoolGlobalValidation = z.object({
     recess:z.string(),
     total_period:z.string(),
     academic_year:z.string(),
-    financial_year:z.string()
+    financial_year:z.string(),
+    facebook_link:z.string(),
+    linkedin_link:z.string(),
+    twitter_link:z.string(),
+    instagram_link:z.string()
 });

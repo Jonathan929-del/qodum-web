@@ -159,7 +159,9 @@ const page = () => {
 
             // Checking payments status
             pendingPayments.map(async (p:any) => {
-                const paymentStatus = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId});
+                const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
+                    ? await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId})
+                    : await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/check-easy-pay`, {merchant_txn:p.txnId});
                 if(paymentStatus.data.status === 'cancelled'){
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
                     localStorage.setItem('payments', JSON.stringify(newPendingPayments));
@@ -184,7 +186,6 @@ const page = () => {
                                 if (typeof a.last_rec_amount === 'undefined') a.last_rec_amount = 0;
                                 if (typeof a.payable_amount === 'undefined') a.payable_amount = feeValue;
                                 if (typeof a.paid_amount === 'undefined') a.paid_amount = feeValue;
-                                // Keep conc_amount as is if it exists, else initialize to 0
                                 if (typeof a.conc_amount === 'undefined') a.conc_amount = 0;
                     
                                 if (remainingAmount > 0) {
@@ -279,21 +280,18 @@ const page = () => {
                     
                                 const changedAmounts = [];
                     
-                                // Check for changes in amounts
                                 originalAmounts.forEach((originalAmount, index) => {
                                     const updatedAmount = updatedAmounts[index];
                     
-                                    // Create the output object based on the comparison
                                     const outputAmount = {
                                         value: originalAmount.value === updatedAmount.value ? originalAmount.value : updatedAmount.value,
                                         name: originalAmount.name === updatedAmount.name ? originalAmount.name : updatedAmount.name,
-                                        conc_amount: updatedAmount.conc_amount, // always from updated
-                                        paid_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0), // always from updated
-                                        payable_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0), // always from updated
-                                        last_rec_amount: originalAmount.last_rec_amount || 0 // always from original
+                                        conc_amount: updatedAmount.conc_amount,
+                                        paid_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0),
+                                        payable_amount: updatedAmount.last_rec_amount - (originalAmount.last_rec_amount || 0),
+                                        last_rec_amount: originalAmount.last_rec_amount || 0
                                     };
                     
-                                    // Include the amount if it has changed in terms of conc_amount or last_rec_amount
                                     if (
                                         originalAmount.last_rec_amount !== updatedAmount.last_rec_amount ||
                                         originalAmount.conc_amount !== updatedAmount.conc_amount
@@ -302,11 +300,10 @@ const page = () => {
                                     }
                                 });
                     
-                                // Only add the updated head if there are changed amounts
                                 if (changedAmounts.length > 0) {
                                     changedHeads.push({
-                                        ...updatedHead, // Keep the original structure
-                                        amounts: changedAmounts // Replace amounts with only changed amounts
+                                        ...updatedHead,
+                                        amounts: changedAmounts
                                     });
                                 }
                             }
@@ -412,7 +409,7 @@ const page = () => {
     }, [selectedStudent]);
 
     return (
-        <div className='h-screen flex flex-col items-center justify-start bg-white overflow-y-scroll custom-sidebar-scrollbar'>
+        <div className='h-full flex flex-col items-center justify-start bg-white overflow-hidden'>
             {isLoading ? (
                 <LoadingIcon />
             ) : isReceiptOpened ? (

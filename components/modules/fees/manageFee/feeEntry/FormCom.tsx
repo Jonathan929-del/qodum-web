@@ -434,17 +434,20 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     }, [selectedStudent]);
 
     return (
-        <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 lg:min-h-[100%]'>
+        <div className='w-[100%] max-w-[1200px] flex items-center justify-center px-4 lg:min-h-[100%]'>
             <Form
                 {...form}
             >
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='h-full w-full flex flex-row gap-4 justify-center items-center py-4'
+                    className='relative h-full w-full flex flex-row gap-4 justify-center items-center py-4'
                 >
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}
+                        />
+                        <div
+                            className='basis-[40%] w-[40%] min-w-[250px] max-w-[350px]'
                         />
 
 
