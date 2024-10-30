@@ -159,14 +159,22 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {stops.filter((s:any) => s.route_no === student.route).length < 1 ? (
+                                                {stops.length < 1 ? (
+                                                    <p className='text-xs text-hash-color'>No route stops</p>
+                                                ) : // @ts-ignore
+                                                !stops[0]?.stop_name ? (
+                                                    <LoadingIcon />
+                                                ) : stops.map((s:any) => (
+                                                    <SelectItem value={s.stop_name} key={s._id}>{s.stop_name}</SelectItem>
+                                                ))}
+                                                {/* {stops.filter((s:any) => s.route_no === student.route).length < 1 ? (
                                                     <p className='text-xs text-hash-color'>No route stops</p>
                                                 ) : // @ts-ignore
                                                 !stops.filter((s:any) => s.route_no === student.route)[0]?.stop_name ? (
                                                     <LoadingIcon />
                                                 ) : stops.filter((s:any) => s.route_no === student.route).map((s:any) => (
                                                     <SelectItem value={s.stop_name} key={s._id}>{s.stop_name}</SelectItem>
-                                                ))}
+                                                ))} */}
                                             </SelectContent>
                                         </Select>
                                     </li>
