@@ -2,24 +2,24 @@
 // Imports
 import {useEffect, useState} from 'react';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
-import {fetchCastes} from '@/lib/actions/admission/globalMasters/caste.actions';
-import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchCastes, fetchCastesNames} from '@/lib/actions/admission/globalMasters/caste.actions';
+import {fetchStreams, fetchStreamsNames} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions';
 import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
-import {fetchReligions} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchCategories} from '@/lib/actions/admission/globalMasters/category.actions';
-import {fetchProfessions} from '@/lib/actions/payroll/globalMasters/profession.actions';
+import {fetchSubjects, fetchSubjectsNames} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {fetchReligions, fetchReligionsNames} from '@/lib/actions/admission/globalMasters/religion.actions';
+import {fetchCategories, fetchCategoriesNames} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchProfessions, fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
 import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
-import {fetchBloodGroups} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import {fetchDesignations} from '@/lib/actions/payroll/globalMasters/designation.actions';
+import {fetchBloodGroups, fetchBloodGroupsNames} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import {fetchDesignations, fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
 import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
-import {fetchNationalities} from '@/lib/actions/admission/globalMasters/nationality.actions';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchNationalities, fetchNationalitiesNames} from '@/lib/actions/admission/globalMasters/nationality.actions';
+import {fetchClasses, fetchClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
-import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
+import {fetchOptionalSubjects, fetchOptionalSubjectsNames} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
 import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import LoadingIcon from '@/components/utils/LoadingIcon';
@@ -349,20 +349,20 @@ const page = () => {
             const studentsRes = await fetchStudents();
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setStudents(studentsRes);
-            const classesRes = await fetchClasses();
+            const classesRes = await fetchClassesNames();
             const boardsRes = await fetchBoards();
-            const streamsRes = await fetchStreams();
-            const subjectsRes = await fetchSubjects();
-            const optionalSubjectsRes = await fetchOptionalSubjects();
-            const religionsRes = await fetchReligions();
-            const categoriesRes = await fetchCategories();
+            const streamsRes = await fetchStreamsNames();
+            const subjectsRes = await fetchSubjectsNames();
+            const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+            const religionsRes = await fetchReligionsNames();
+            const categoriesRes = await fetchCategoriesNames();
             const bankLedgerRes = await fetchBankLedgers();
             const admissionAccountRes = await fetchGeneralLedgers();
-            const bloodGroupsRes = await fetchBloodGroups();
-            const castsRes = await fetchCastes();
-            const nationalitiesRes = await fetchNationalities();
-            const designationsRes = await fetchDesignations();
-            const professionsRes = await fetchProfessions();
+            const bloodGroupsRes = await fetchBloodGroupsNames();
+            const castsRes = await fetchCastesNames();
+            const nationalitiesRes = await fetchNationalitiesNames();
+            const designationsRes = await fetchDesignationsNames();
+            const professionsRes = await fetchProfessionsNames();
             const staffRes = await fetchStaffNames();
             setClasses(classesRes);
             setBoards(boardsRes);
@@ -383,7 +383,7 @@ const page = () => {
             setIsLoading(false);
         };
         fetcher();
-    }, []);
+    }, [isViewOpened, updateStudent]);
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
