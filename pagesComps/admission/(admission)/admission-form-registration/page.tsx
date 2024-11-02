@@ -383,7 +383,7 @@ const page = () => {
             setIsLoading(false);
         };
         fetcher();
-    }, [isViewOpened, updateStudent]);
+    }, []);
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>

@@ -39,7 +39,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:'',
+            seating_capacity:0,
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -63,7 +63,7 @@ const Buttons = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:'',
+            seating_capacity:0,
             facility_in_bus:{
                 cctv:false,
                 wifi:false,

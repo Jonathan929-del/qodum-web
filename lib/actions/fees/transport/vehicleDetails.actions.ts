@@ -69,7 +69,7 @@ interface CreateVehicleTDetailsProps{
     driver_name:String;
     attendent_name:String;
     fule_type:String;
-    seating_capacity:String;
+    seating_capacity:Number;
     facility_in_bus:{
         cctv:Boolean;
         wifi:Boolean;
@@ -149,7 +149,7 @@ interface ModifyVehicleDetailsProps{
     driver_name:String;
     attendent_name:String;
     fule_type:String;
-    seating_capacity:String;
+    seating_capacity:Number;
     facility_in_bus:{
         cctv:Boolean;
         wifi:Boolean;

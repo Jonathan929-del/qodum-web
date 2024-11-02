@@ -72,7 +72,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.driver_name,
             attendent_name:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.attendent_name,
             fule_type:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.fule_type,
-            seating_capacity:updateVehicleDetails.id === '' ? '' : updateVehicleDetails.seating_capacity,
+            seating_capacity:updateVehicleDetails.id === '' ? 0 : updateVehicleDetails.seating_capacity,
             facility_in_bus:{
                 cctv:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.cctv,
                 wifi:updateVehicleDetails.id === '' ? false : updateVehicleDetails.facility_in_bus.wifi,
@@ -184,7 +184,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:'',
+            seating_capacity:0,
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -206,7 +206,7 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
             driver_name:'',
             attendent_name:'',
             fule_type:'',
-            seating_capacity:'',
+            seating_capacity:0,
             facility_in_bus:{
                 cctv:false,
                 wifi:false,
@@ -485,8 +485,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         control={form?.control}
                         name='service_due_date'
                         render={() => (
-                            <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
-                                <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Service Due Date</FormLabel>
+                            <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Service Due Date</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <div className='w-full'>
                                         <MyDatePicker
@@ -504,8 +504,8 @@ const FormCom = ({setIsViewOpened, vehiclesDetails, updateVehicleDetails, setUpd
                         control={form?.control}
                         name='insurance_due_date'
                         render={() => (
-                            <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:flex-row lg:gap-2 lg:items-center'>
-                                <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[30%] lg:text-center'>Insurance Due Date</FormLabel>
+                            <FormItem className='w-full h-8  flex flex-col items-start justify-center sm:flex-row sm:items-center sm:gap-2'>
+                                <FormLabel className='basis-auto text-center text-xs text-[#726E71] sm:basis-[30%]'>Service Due Date</FormLabel>
                                 <div className='w-full h-full flex flex-col items-start gap-4 sm:basis-[70%]'>
                                     <div className='w-full'>
                                         <MyDatePicker

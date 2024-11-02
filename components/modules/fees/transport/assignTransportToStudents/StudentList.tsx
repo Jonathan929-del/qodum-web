@@ -159,22 +159,16 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {stops.length < 1 ? (
-                                                    <p className='text-xs text-hash-color'>No route stops</p>
-                                                ) : // @ts-ignore
-                                                !stops[0]?.stop_name ? (
-                                                    <LoadingIcon />
-                                                ) : stops.map((s:any) => (
-                                                    <SelectItem value={s.stop_name} key={s._id}>{s.stop_name}</SelectItem>
-                                                ))}
-                                                {/* {stops.filter((s:any) => s.route_no === student.route).length < 1 ? (
+                                                {stops.filter((s:any) => s.route_no === student.route).length < 1 ? (
                                                     <p className='text-xs text-hash-color'>No route stops</p>
                                                 ) : // @ts-ignore
                                                 !stops.filter((s:any) => s.route_no === student.route)[0]?.stop_name ? (
                                                     <LoadingIcon />
                                                 ) : stops.filter((s:any) => s.route_no === student.route).map((s:any) => (
-                                                    <SelectItem value={s.stop_name} key={s._id}>{s.stop_name}</SelectItem>
-                                                ))} */}
+                                                    <SelectItem value={s.stop_name} key={s._id}>
+                                                        {s.stop_name}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                     </li>
@@ -199,8 +193,25 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                                 ) : // @ts-ignore
                                                 !vehicles[0]?.vehicle_name ? (
                                                     <LoadingIcon />
-                                                ) : vehicles.map((v:any) => (
-                                                    <SelectItem value={v.vehicle_name} key={v._id}>{v.vehicle_name}</SelectItem>
+                                                ) : vehicles.map((v:any) => v.seating_capacity == 0 ? (
+                                                    <SelectItem
+                                                        value={v.vehicle_name}
+                                                        key={v._id}
+                                                        disabled
+                                                        className='flex flex-row items-center justify-start'
+                                                    >
+                                                        {v.vehicle_name}
+                                                        ({v.seating_capacity})
+                                                    </SelectItem>
+                                                ) : (
+                                                    <SelectItem
+                                                        value={v.vehicle_name}
+                                                        key={v._id}
+                                                        className='flex flex-row items-center justify-start'
+                                                    >
+                                                        {v.vehicle_name}
+                                                        ({v.seating_capacity})
+                                                    </SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>

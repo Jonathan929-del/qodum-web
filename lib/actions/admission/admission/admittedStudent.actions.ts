@@ -12,6 +12,7 @@ import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.acti
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import VehicleDetails from '@/lib/models/fees/transport/VehicleDetails.model';
 
 
 
@@ -617,6 +618,7 @@ export const deleteAdmittedStudent = async ({id}:{id:String}) => {
         // Adding subject available seats
         const student = await AdmittedStudent.findById(id);
         const subjects = await Subject.find({subject_name:student.student.subjects, is_university:true});
+        await VehicleDetails.findOneAndUpdate({vehicle_name:student?.transport_details?.vehicle}, {$inc:{seating_capacity:1}});
         if(subjects.length > 0){
             subjects.map(async s => {
                 await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
@@ -1080,6 +1082,10 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
                 $push:{'affiliated_heads.heads':submitTransporFee}
             }
         );
+
+
+        // Updating vehicle details
+        await VehicleDetails.findOneAndUpdate({vehicle_name:transport_details.vehicle}, {$inc:{seating_capacity:-1}});
 
     } catch (err) {
         throw new Error(`Error updating student transport details: ${err}`);
