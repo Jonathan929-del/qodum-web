@@ -17,6 +17,7 @@ const VehicleDetailsSchema = new mongoose.Schema(
         attendent_name:{type:String},
         fule_type:{type:String},
         seating_capacity:{type:Number},
+        reserved_seats:{type:Number},
         facility_in_bus:{
             cctv:{type:Boolean},
             wifi:{type:Boolean},

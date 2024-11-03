@@ -6,7 +6,6 @@ import RouteStop from '@/lib/models/fees/transport/RouteStop.model';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import Head from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeHead.model';
 import TransportGroup from '@/lib/models/fees/transport/TransportGroup.model';
-import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import {fetchInstallments} from '../../fees/feeMaster/feeMaster/installment.actions';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
@@ -319,6 +318,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
                 route:'',
                 stop:'',
                 vehicle:'',
+                seat_no:0,
                 months:[]
             }
         });
@@ -618,7 +618,7 @@ export const deleteAdmittedStudent = async ({id}:{id:String}) => {
         // Adding subject available seats
         const student = await AdmittedStudent.findById(id);
         const subjects = await Subject.find({subject_name:student.student.subjects, is_university:true});
-        await VehicleDetails.findOneAndUpdate({vehicle_name:student?.transport_details?.vehicle}, {$inc:{seating_capacity:1}});
+        await VehicleDetails.findOneAndUpdate({vehicle_name:student?.transport_details?.vehicle}, {$inc:{reserved_seats:-1}});
         if(subjects.length > 0){
             subjects.map(async s => {
                 await Subject.updateMany({'subject_name':s.subject_name}, {available_seats:s.available_seats + 1});
@@ -1068,7 +1068,7 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
             amounts:installments.map((i:any) => {
                             return {
                                 name:i.name,
-                                value:transportGroup.distance_amount
+                                value:transportGroup?.distance_amount || 0
                             }
                         })
         };
@@ -1085,7 +1085,7 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
 
 
         // Updating vehicle details
-        await VehicleDetails.findOneAndUpdate({vehicle_name:transport_details.vehicle}, {$inc:{seating_capacity:-1}});
+        await VehicleDetails.findOneAndUpdate({vehicle_name:transport_details.vehicle}, {$inc:{reserved_seats:1}});
 
     } catch (err) {
         throw new Error(`Error updating student transport details: ${err}`);
@@ -1444,7 +1444,7 @@ export const feesDashboardDefaulterStudentsData = async () => {
 
 
         // Installments overdues
-        const installmentsOverdues = installments.filter((i:any) => new Date() > new Date(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`)).map((i:any) => i.name);
+        const installmentsOverdues = installments?.filter((i:any) => new Date() > new Date(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`)).map((i:any) => i.name);
 
 
         // Students
@@ -1452,7 +1452,7 @@ export const feesDashboardDefaulterStudentsData = async () => {
 
 
         // Defaulter students
-        const defaulterStudents = students.filter((s:any) => s.affiliated_heads.heads.filter((h:any) => h.amounts.filter((a:any) => installmentsOverdues.includes(a.name) && Number(a.last_rec_amount) + Number(a.conc_amount) < Number(a.value)).length).length > 0);
+        const defaulterStudents = students?.filter((s:any) => s?.affiliated_heads.heads?.filter((h:any) => h?.amounts?.filter((a:any) => installmentsOverdues.includes(a.name) && Number(a.last_rec_amount) + Number(a.conc_amount) < Number(a.value)).length).length > 0);
 
 
         // Total students count

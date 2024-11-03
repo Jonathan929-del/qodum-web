@@ -211,6 +211,7 @@ const AdmittedStudentSchema = new mongoose.Schema(
             route:{type:String},
             stop:{type:String},
             vehicle:{type:String},
+            seat_no:{type:Number},
             months:{type:Array}
         }
 

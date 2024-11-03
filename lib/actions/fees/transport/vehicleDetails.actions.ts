@@ -96,7 +96,7 @@ export const createVehicleDetails = async ({vehicle_owner, vehicle_type, vehicle
 
 
         // Creating new vehicle details
-        const newVehicleDetails = await VehicleDetails.create({session:activeSession?.year_name, vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
+        const newVehicleDetails = await VehicleDetails.create({session:activeSession?.year_name, vehicle_owner, vehicle_type, vehicle_name, vehicle_reg_no, driver_name, attendent_name, fule_type, seating_capacity, reserved_seats:0, facility_in_bus, driver_mobile_no, gps_no, service_due_date, insurance_due_date, vendor});
         newVehicleDetails.save().then(async () => {
             await VehicleDetails.findByIdAndUpdate(newVehicleDetails._id, {routes:[]});
         });

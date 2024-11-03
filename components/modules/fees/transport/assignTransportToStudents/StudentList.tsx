@@ -1,11 +1,7 @@
 // Imports
-import {useEffect, useState} from 'react';
 import {Checkbox} from '@/components/ui/checkbox';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Check, ChevronDown, ChevronsUpDown, X} from 'lucide-react';
-import {fetchRouteStops} from '@/lib/actions/fees/transport/routeStop.actions';
-import {fetchVehicleRoutes} from '@/lib/actions/fees/transport/vehicleRoute.actions';
-import {fetchVehiclesDetails} from '@/lib/actions/fees/transport/vehicleDetails.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 
 
@@ -13,38 +9,10 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const StudentsList = ({selectedStudents, setSelectedStudents, students, isStudentsLoading, setStudents}:any) => {
-
+const StudentsList = ({selectedStudents, setSelectedStudents, students, isStudentsLoading, setStudents, vehicles, stops, routes}:any) => {
 
     // Months
     const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
-
-
-    // Routes
-    const [routes, setRoutes] = useState<any>([{}]);
-
-
-    // Stops
-    const [stops, setStops] = useState<any>([{}]);
-
-
-    // Vehicles
-    const [vehicles, setVehicles] = useState<any>([{}]);
-
-
-    // Use effect
-    useEffect(() => {
-        const fetcher = async () => {
-            const routesRes = await fetchVehicleRoutes();
-            const stopsRes = await fetchRouteStops();
-            const vehiclesRes = await fetchVehiclesDetails();
-            setRoutes(routesRes);
-            setStops(stopsRes);
-            setVehicles(vehiclesRes);
-        };
-        fetcher();
-    }, []);
-
 
     return (
             <div className='w-full h-[90%] mt-10 flex flex-col items-center rounded-[4px] border-[0.5px] border-[#ccc]'>
@@ -173,48 +141,56 @@ const StudentsList = ({selectedStudents, setSelectedStudents, students, isStuden
                                         </Select>
                                     </li>
                                     <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        <Select
-                                            value={students[students.indexOf(student)].vehicle}
-                                            onValueChange={(v:any) => {
-                                                students[students.indexOf(student)].vehicle = v;
-                                                setStudents([...students])
-                                            }}
-                                        >
-                                            <SelectTrigger
-                                                disabled={student.is_transport_assigned}
-                                                className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'
+                                        {student?.is_transport_assigned ? (
+                                            <div>
+                                                {student.vehicle} ({student.seat_no})
+                                            </div>
+                                        ) : (
+                                            <Select
+                                                value={students[students.indexOf(student)].vehicle}
+                                                onValueChange={(v:any) => {
+                                                    students[students.indexOf(student)].vehicle = v;
+                                                    const selectedVehicle = vehicles.find((vehicle:any) => vehicle.vehicle_name === v);
+                                                    students[students.indexOf(student)].seat_no = Number(selectedVehicle.reserved_seats + 1) || 1;
+                                                    setStudents([...students])
+                                                }}
                                             >
-                                                <SelectValue placeholder='Select' className='text-xs' />
-                                                <ChevronDown className="h-4 w-4 opacity-50" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {vehicles?.filter((v:any) => v.routes?.map((r:any) => r.route_no).includes(students[students.indexOf(student)].route))?.length < 1 ? (
-                                                    <p className='text-xs text-hash-color'>No vehicles</p>
-                                                ) : // @ts-ignore
-                                                !vehicles[0]?.vehicle_name ? (
-                                                    <LoadingIcon />
-                                                ) : vehicles.map((v:any) => v.seating_capacity == 0 ? (
-                                                    <SelectItem
-                                                        value={v.vehicle_name}
-                                                        key={v._id}
-                                                        disabled
-                                                        className='flex flex-row items-center justify-start'
-                                                    >
-                                                        {v.vehicle_name}
-                                                        ({v.seating_capacity})
-                                                    </SelectItem>
-                                                ) : (
-                                                    <SelectItem
-                                                        value={v.vehicle_name}
-                                                        key={v._id}
-                                                        className='flex flex-row items-center justify-start'
-                                                    >
-                                                        {v.vehicle_name}
-                                                        ({v.seating_capacity})
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                                <SelectTrigger
+                                                    disabled={student.is_transport_assigned}
+                                                    className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'
+                                                >
+                                                    <SelectValue placeholder='Select' className='text-xs' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {vehicles?.filter((v:any) => v.routes?.map((r:any) => r.route_no).includes(students[students.indexOf(student)].route))?.length < 1 ? (
+                                                        <p className='text-xs text-hash-color'>No vehicles</p>
+                                                    ) : // @ts-ignore
+                                                    !vehicles[0]?.vehicle_name ? (
+                                                        <LoadingIcon />
+                                                    ) : vehicles.map((v:any) => ((v.seating_capacity == v.reserved_seats) || v.seating_capacity === 0) ? (
+                                                        <SelectItem
+                                                            value={v.vehicle_name}
+                                                            key={v._id}
+                                                            disabled
+                                                            className='flex flex-row items-center justify-start'
+                                                        >
+                                                            {v.vehicle_name}
+                                                            (0)
+                                                        </SelectItem>
+                                                    ) : (
+                                                        <SelectItem
+                                                            value={v.vehicle_name}
+                                                            key={v._id}
+                                                            className='flex flex-row items-center justify-start'
+                                                        >
+                                                            {v.vehicle_name}
+                                                            ({(Number(v.seating_capacity) || 0) - Number(v.reserved_seats)})
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        )}
                                     </li>
                                     <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         <Select>

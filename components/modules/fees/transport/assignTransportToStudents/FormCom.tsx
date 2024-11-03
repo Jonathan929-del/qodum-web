@@ -10,6 +10,9 @@ import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
+import {fetchRouteStops} from '@/lib/actions/fees/transport/routeStop.actions';
+import {fetchVehicleRoutes} from '@/lib/actions/fees/transport/vehicleRoute.actions';
+import {fetchVehiclesDetails} from '@/lib/actions/fees/transport/vehicleDetails.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignTransportToStudentsValidation} from '@/lib/validations/fees/transport/assignTransportToStudents.validation';
@@ -40,6 +43,18 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
     const {toast} = useToast();
 
 
+    // Routes
+    const [routes, setRoutes] = useState<any>([{}]);
+
+
+    // Stops
+    const [stops, setStops] = useState<any>([{}]);
+
+
+    // Vehicles
+    const [vehicles, setVehicles] = useState<any>([{}]);
+
+
     // Is students loading
     const [isStudentsLoading, setIsStudentsLoading] = useState(false);
 
@@ -58,35 +73,72 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
     });
 
 
+    // Fetcher
+    const fetcher = async () => {
+        const routesRes = await fetchVehicleRoutes();
+        const stopsRes = await fetchRouteStops();
+        const vehiclesRes = await fetchVehiclesDetails();
+        setRoutes(routesRes);
+        setStops(stopsRes);
+        setVehicles(vehiclesRes);
+        const res = await fetchStudentsByClassAndSectionTransport({class_name:form.getValues().class_name, section:form.getValues().section_name});
+        setStudents(res.map((s:any) => {
+            return {
+                adm_no:s.student.adm_no,
+                name:s.student.name,
+                father_name:s.parents.father.father_name,
+                route:s?.transport_details?.route || '',
+                stop:s?.transport_details?.stop || '',
+                vehicle:s?.transport_details?.vehicle || '',
+                seat_no:s?.transport_details?.seat_no || 1,
+                months:s?.transport_details?.months || [],
+                is_transport_assigned:s?.transport_details?.route
+            };
+        }));
+        setSelectedStudents([]);
+        setIsStudentsLoading(false);
+    };
+
+
     // Submit handler
     const onSubmit = async (values: z.infer<typeof AssignTransportToStudentsValidation>) => {
         try {
 
+            // Empty validation
+            if(selectedStudents.length === 0){
+                toast({title:'Please select students', variant:'alert'});
+                return;
+            };
+
 
             // Assigning student transport details
-            selectedStudents.map(async (s:any) => {
-                await ModifyStudentsTransportDetails({
-                    adm_no:s.adm_no,
-                    transport_details:{
-                        route:s.route,
-                        stop:s.stop,
-                        vehicle:s.vehicle,
-                        months:s.months   
-                    }
-                });
-            })
+            if(selectedStudents[0].name !== ''){
+                selectedStudents.map(async (s:any) => {
+                    await ModifyStudentsTransportDetails({
+                        adm_no:s.adm_no,
+                        transport_details:{
+                            route:s.route,
+                            stop:s.stop,
+                            vehicle:s.vehicle,
+                            months:s.months,
+                            seat_no:s.seat_no
+                        }
+                    });
+                })
+            }
 
 
             // Toast
             toast({title:'Assigned Successfully!'});
 
             // Reseting
-            form.reset({
-                class_name:'',
-                section_name:''
-            });
-            setStudents([]);
-            setSelectedStudents([{}]);
+            // form.reset({
+            //     class_name:'',
+            //     section_name:''
+            // });
+            // setStudents([]);
+            // setSelectedStudents([{}]);
+            fetcher();
 
         } catch (err:any) {
             console.log(err);
@@ -98,22 +150,6 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
     useEffect(() => {
         if(form.getValues().class_name !== '' || form.getValues().section_name !== ''){
             setIsStudentsLoading(true);
-            const fetcher = async () => {
-                const res = await fetchStudentsByClassAndSectionTransport({class_name:form.getValues().class_name, section:form.getValues().section_name});
-                setStudents(res.map((s:any) => {
-                    return {
-                        adm_no:s.student.adm_no,
-                        name:s.student.name,
-                        father_name:s.parents.father.father_name,
-                        route:s?.transport_details?.route || '',
-                        stop:s?.transport_details?.stop || '',
-                        vehicle:s?.transport_details?.vehicle || '',
-                        months:s?.transport_details?.months || [],
-                        is_transport_assigned:s?.transport_details?.route
-                    };
-                }));
-                setIsStudentsLoading(false);
-            };
             fetcher();
         };
     }, [form.watch('class_name'), form.watch('section_name')]);
@@ -222,7 +258,7 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
                     </div>
 
 
-                    <StudentsList selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} students={students} isStudentsLoading={isStudentsLoading} setStudents={setStudents}/>
+                    <StudentsList selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} students={students} isStudentsLoading={isStudentsLoading} setStudents={setStudents} vehicles={vehicles} routes={routes} stops={stops}/>
                 </form>
             </Form>
 
