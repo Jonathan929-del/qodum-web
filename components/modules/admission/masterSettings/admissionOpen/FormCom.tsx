@@ -108,7 +108,7 @@ function FormCom() {
             };
 
             const guidelinesRes = await fetchGuidline();
-            if(!guidelinesRes){
+            if(guidelinesRes.status === 'failure'){
                 await createGuidelines({guidelines:guideLines});
             }else{
                 setGuideLines(guidelinesRes.guidelines);
