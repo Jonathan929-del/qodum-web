@@ -108,6 +108,7 @@ function FormCom() {
             };
 
             const guidelinesRes = await fetchGuidline();
+            // console.log(guidelinesRes);
             if(guidelinesRes.status === 'failure'){
                 await createGuidelines({guidelines:guideLines});
             }else{
