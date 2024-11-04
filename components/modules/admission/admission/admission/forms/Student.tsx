@@ -11,19 +11,34 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Check, ChevronDown, Search, X} from 'lucide-react';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchClubsNames} from '@/lib/actions/admission/globalMasters/club.actions';
+import {fetchHousesNames} from '@/lib/actions/admission/globalMasters/house.actions';
+import {fetchCastesNames} from '@/lib/actions/admission/globalMasters/caste.actions';
 import {fetchStudentByRegNo} from '@/lib/actions/admission/admission/student.actions';
+import {fetchStreamsNames} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
+import {fetchParishesNames} from '@/lib/actions/admission/globalMasters/parish.actions';
+import {fetchSubjectsNames} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchClassNumbers} from '@/lib/actions/admission/masterSettings/admission.actions';
-import {fetchClass} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchReligionsNames} from '@/lib/actions/admission/globalMasters/religion.actions';
+import {fetchCategoriesNames} from '@/lib/actions/admission/globalMasters/category.actions';
+import {fetchCadetTypesNames} from '@/lib/actions/admission/globalMasters/cadetType.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {fetchBloodGroupsNames} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
+import {fetchTransportMediumsNames} from '@/lib/actions/fees/transport/transportMedium.actions';
+import {fetchNationalitiesNames} from '@/lib/actions/admission/globalMasters/nationality.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchOptionalSubjectsNames} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
+import {fetchClass, fetchClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchSectionsNames } from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, boards, dob, setDob, doa, setDoa, doj, setDoj, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, cadetTypes, clubs}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, valuesFromRegister, dob, setDob, doa, setDoa, doj, setDoj}:any) => {
 
     // Is loading searched students
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
@@ -31,6 +46,70 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     // Search
     const [search, setSearch] = useState('');
+
+
+    // Classes state
+    const [classesState, setClassesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Sections state
+    const [sectionsState, setSectionsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Boards state
+    const [boardsState, setBoardsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Religions state
+    const [religionsState, setReligionsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Parishes state
+    const [parishesState, setParishesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Categories state
+    const [categoriesState, setCategoriesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Castes state
+    const [castesState, setCastesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Blood groups state
+    const [bloodGroupsState, setBloodGroupsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Cadet types state
+    const [cadetTypesState, setCadetTypesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Clubs state
+    const [clubsState, setClubsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Streams state
+    const [streamsState, setStreamsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Subjects state
+    const [subjectsState, setSubjectsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Optional subjects state
+    const [optionalSubjectsState, setOptionalSubjectsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Houses state
+    const [housesState, setHousesState] = useState({isLoading:false, items:[{}]});
+
+
+    // Transports state
+    const [transportState, setTransportsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Nationalities state
+    const [nationalitiesState, setNationalitiesState] = useState({isLoading:false, items:[{}]});
 
 
     // Search Students
@@ -45,7 +124,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     const [selectedClass, setSelectedClass] = useState('');
 
 
-    // Selectted section
+    // Selected section
     const [selectedSection, setSelectedSection] = useState('');
 
 
@@ -1363,18 +1442,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 <FormControl>
                                     <Select
                                         onValueChange={(v:any) => setSelectedClass(v)}
+                                        onOpenChange={async () => {
+                                            setClassesState({...classesState, isLoading:true});
+                                            const classesRes = await fetchClassesNames();
+                                            setClassesState({isLoading:false, items:classesRes});
+                                        }}
                                     >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Select Class' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {classes?.length < 1 ? (
+                                            {classesState.items?.length < 1 ? (
                                                 <p>No classes</p>
                                                 // @ts-ignore
-                                            ) : !classes[0]?.class_name ? (
+                                            ) : !classesState.items[0]?.class_name ? (
                                                 <LoadingIcon />
-                                            ) : classes?.map((item:any) => (
+                                            ) : classesState.items?.map((item:any) => (
                                                 <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
                                             ))}
                                         </SelectContent>
@@ -1391,6 +1475,11 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 <FormControl>
                                     <Select
                                         onValueChange={(v:any) => setSelectedSection(v)}
+                                        onOpenChange={async () => {
+                                            setSectionsState({...sectionsState, isLoading:true});
+                                            const classesRes = await fetchSectionsNames();
+                                            setSectionsState({isLoading:false, items:classesRes});
+                                        }}
                                     >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Select Section' className='text-[11px]' />
@@ -1398,12 +1487,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         </SelectTrigger>
                                         <SelectContent>
                                             {
-                                                sections?.length < 1 ? (
+                                                sectionsState.items?.length < 1 ? (
                                                     <p>No sections</p>
                                                 ) : // @ts-ignore
-                                                !sections[0]?.section_name ? (
+                                                !sectionsState.items[0]?.section_name ? (
                                                     <LoadingIcon />
-                                                ) : sections?.map((item:any) => (
+                                                ) : sectionsState.items?.map((item:any) => (
                                                     <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
                                                 ))
                                             }
@@ -1472,18 +1561,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 {...field}
                                                 value={field?.value}
                                                 onValueChange={field?.onChange}
+                                                onOpenChange={async () => {
+                                                    setClassesState({...classesState, isLoading:true});
+                                                    const classesRes = await fetchClassesNames();
+                                                    setClassesState({isLoading:false, items:classesRes});
+                                                }}
                                             >
                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {classes?.length < 1 ? (
+                                                    {classesState.items?.length < 1 ? (
                                                         <p>No classes</p>
                                                         // @ts-ignore
-                                                    ) : !classes[0]?.class_name ? (
+                                                    ) : !classesState.items[0]?.class_name ? (
                                                         <LoadingIcon />
-                                                    ) : classes?.map((item:any) => (
+                                                    ) : classesState.items?.map((item:any) => (
                                                         <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
                                                     ))}
                                                 </SelectContent>
@@ -1512,6 +1606,11 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 {...field}
                                                 value={field?.value}
                                                 onValueChange={field?.onChange}
+                                                onOpenChange={async () => {
+                                                    setSectionsState({...sectionsState, isLoading:true});
+                                                    const res = await fetchSectionsNames();
+                                                    setSectionsState({isLoading:false, items:res});
+                                                }}
                                             >
                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -1525,12 +1624,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                     <SelectItem value={item} key={item}>{item}</SelectItem>
                                                                 ))
                                                             :
-                                                                sections?.length < 1 ? (
+                                                                sectionsState.items?.length < 1 ? (
                                                                     <p>No sections</p>
                                                                     // @ts-ignore
-                                                                ) : !sections[0]?.section_name ? (
+                                                                ) : !sectionsState.items[0]?.section_name ? (
                                                                     <LoadingIcon />
-                                                                ) : sections?.map((item:any) => (
+                                                                ) : sectionsState.items?.map((item:any) => (
                                                                     <SelectItem value={item?.section_name} key={item?._id}>{item?.section_name}</SelectItem>
                                                                 ))
                                                     }
@@ -1559,18 +1658,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 {...field}
                                                 value={field?.value}
                                                 onValueChange={field?.onChange}
+                                                onOpenChange={async () => {
+                                                    setBoardsState({...boardsState, isLoading:true});
+                                                    const res = await fetchBoards();
+                                                    setBoardsState({isLoading:false, items:res});
+                                                }}
                                             >
                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                     <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    {boards?.length < 1 ? (
+                                                    {boardsState.items?.length < 1 ? (
                                                         <p>No boards</p>
                                                         // @ts-ignore
-                                                    ) : !boards[0]?.board ? (
+                                                    ) : !boardsState.items[0]?.board ? (
                                                         <LoadingIcon />
-                                                    ) : boards?.map((item:any) => (
+                                                    ) : boardsState.items?.map((item:any) => (
                                                         <SelectItem value={item?.board} key={item?._id}>{item?.board}</SelectItem>
                                                     ))}
                                                 </SelectContent>
@@ -1907,18 +2011,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         {...field}
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            setClassesState({...classesState, isLoading:true});
+                                                            const res = await fetchClassesNames();
+                                                            setClassesState({isLoading:false, items:res});
+                                                        }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {classes?.length < 1 ? (
+                                                            {classesState.items?.length < 1 ? (
                                                                 <p>No classes</p>
                                                                 // @ts-ignore
-                                                            ) : !classes[0]?.class_name ? (
+                                                            ) : !classesState.items[0]?.class_name ? (
                                                                 <LoadingIcon />
-                                                            ) : classes?.map((item:any) => (
+                                                            ) : classesState.items?.map((item:any) => (
                                                                 <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
                                                             ))}
                                                         </SelectContent>
@@ -2192,18 +2301,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         {...field}
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            setReligionsState({...religionsState, isLoading:true});
+                                                            const res = await fetchReligionsNames();
+                                                            setReligionsState({isLoading:false, items:res});
+                                                        }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {religions?.length < 1 ? (
+                                                            {religionsState.items?.length < 1 ? (
                                                                 <p>No religions</p>
                                                                 // @ts-ignore
-                                                            ) : !religions[0]?.religion_name ? (
+                                                            ) : !religionsState.items[0]?.religion_name ? (
                                                                 <LoadingIcon />
-                                                            ) : religions?.map((item:any) => (
+                                                            ) : religionsState.items?.map((item:any) => (
                                                                 <SelectItem value={item?.religion_name} key={item?._id}>{item?.religion_name}</SelectItem>
                                                             ))}
                                                         </SelectContent>
@@ -2231,18 +2345,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             {...field}
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                setParishesState({...parishesState, isLoading:true});
+                                                                const res = await fetchParishesNames();
+                                                                setParishesState({isLoading:false, items:res});
+                                                            }}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {parishes?.length < 1 ? (
+                                                                {parishesState.items?.length < 1 ? (
                                                                     <p>No parishes</p>
                                                                     // @ts-ignore
-                                                                ) : !parishes[0]?.parish ? (
+                                                                ) : !parishesState.items[0]?.parish ? (
                                                                     <LoadingIcon />
-                                                                ) : parishes?.map((item:any) => (
+                                                                ) : parishesState.items?.map((item:any) => (
                                                                     <SelectItem value={item?.parish} key={item?._id}>{item?.parish}</SelectItem>
                                                                 ))}
                                                             </SelectContent>
@@ -2270,18 +2389,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         {...field}
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            setCategoriesState({...categoriesState, isLoading:true});
+                                                            const res = await fetchCategoriesNames();
+                                                            setCategoriesState({isLoading:false, items:res});
+                                                        }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {categories?.length < 1 ? (
+                                                            {categoriesState.items?.length < 1 ? (
                                                                 <p>No categories</p>
                                                                 // @ts-ignore
-                                                            ) : !categories[0]?.category_name ? (
+                                                            ) : !categoriesState.items[0]?.category_name ? (
                                                                 <LoadingIcon />
-                                                            ) : categories?.map((item:any) => (
+                                                            ) : categoriesState.items?.map((item:any) => (
                                                                 <SelectItem value={item?.category_name} key={item?._id}>{item?.category_name}</SelectItem>
                                                             ))}
                                                         </SelectContent>
@@ -2306,17 +2430,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         {...field}
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            setCastesState({...castesState, isLoading:true});
+                                                            const res = await fetchCastesNames();
+                                                            setCastesState({isLoading:false, items:res});
+                                                        }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            {casts.length < 1 ? (
+                                                            {castesState.items?.length < 1 ? (
                                                                 <p className='text-xs text-hash-color'>No castes</p>
-                                                            ) : !casts[0].caste_name ? (
+                                                            ) : // @ts-ignore
+                                                            !castesState.items[0]?.caste_name ? (
                                                                 <LoadingIcon />
-                                                            ) : casts.map((i:any) => (
+                                                            ) : castesState.items?.map((i:any) => (
                                                                 <SelectItem value={i.caste_name} key={i._id}>{i.caste_name}</SelectItem>
                                                             ))}
                                                         </SelectContent>
@@ -2349,17 +2479,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                                                        const res = await fetchBloodGroupsNames();
+                                                        setBloodGroupsState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {bloodGroups.length < 1 ? (
+                                                        {bloodGroupsState.items.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No blood groups</p>
-                                                        ) : !bloodGroups[0].blood_group ? (
+                                                        ) : // @ts-ignore
+                                                        !bloodGroupsState.items[0].blood_group ? (
                                                             <LoadingIcon />
-                                                        ) : bloodGroups.map((i:any) => (
+                                                        ) : bloodGroupsState.items.map((i:any) => (
                                                             <SelectItem value={i.blood_group} key={i._id}>{i.blood_group}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2386,17 +2522,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setCadetTypesState({...cadetTypesState, isLoading:true});
+                                                        const res = await fetchCadetTypesNames();
+                                                        setCadetTypesState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {cadetTypes.length < 1 ? (
+                                                        {cadetTypesState.items.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No cadet types</p>
-                                                        ) : !cadetTypes[0].name ? (
+                                                        ) : // @ts-ignore
+                                                        !cadetTypesState.items[0].name ? (
                                                             <LoadingIcon />
-                                                        ) : cadetTypes.map((i:any) => (
+                                                        ) : cadetTypesState.items.map((i:any) => (
                                                             <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2423,17 +2565,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setClubsState({...clubsState, isLoading:true});
+                                                        const res = await fetchClubsNames();
+                                                        setClubsState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {clubs.length < 1 ? (
+                                                        {clubsState.items.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No clubs</p>
-                                                        ) : !clubs[0].name ? (
+                                                        ) : // @ts-ignore
+                                                        !clubsState.items[0].name ? (
                                                             <LoadingIcon />
-                                                        ) : clubs.map((i:any) => (
+                                                        ) : clubsState.items.map((i:any) => (
                                                             <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2465,18 +2613,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setStreamsState({...streamsState, isLoading:true});
+                                                        const res = await fetchStreamsNames();
+                                                        setStreamsState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {streams?.length < 1 ? (
+                                                        {streamsState.items?.length < 1 ? (
                                                             <p>No streams</p>
                                                             // @ts-ignore
-                                                        ) : !streams[0]?.stream_name ? (
+                                                        ) : !streamsState.items[0]?.stream_name ? (
                                                             <LoadingIcon />
-                                                        ) : streams?.map((item:any) => (
+                                                        ) : streamsState.items?.map((item:any) => (
                                                             <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2495,23 +2648,29 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                                 <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
                                     <FormControl>
-                                        <Select>
+                                        <Select
+                                            onOpenChange={async () => {
+                                                setSubjectsState({...subjectsState, isLoading:true});
+                                                const res = await fetchSubjectsNames();
+                                                setSubjectsState({isLoading:false, items:res});
+                                            }}
+                                        >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {subjects.length < 1 ? (
+                                                {subjectsState.items.length < 1 ? (
                                                     <p>No subjects</p>
                                                 ) : // @ts-ignore
-                                                !subjects[0]?.subject_name ? (
+                                                !subjectsState.items[0]?.subject_name ? (
                                                     <LoadingIcon />
                                                 ) : (
                                                     <>
                                                         <div className='flex flex-row'>
                                                             <div
                                                                 // @ts-ignore
-                                                                onClick={() => setSelectedSubjects(subjects.map((s:any) => s.subject_name))}
+                                                                onClick={() => setSelectedSubjects(subjectsState.items.map((s:any) => s.subject_name))}
                                                                 className='group flex flex-row items-center justify-center cursor-pointer'
                                                             >
                                                                 <Check size={12}/>
@@ -2526,7 +2685,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             </div>
                                                         </div>
                                                         <ul className='mt-2'>
-                                                            {subjects.map((subject:any) => (
+                                                            {subjectsState.items.map((subject:any) => (
                                                                 <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
                                                                     <Checkbox
                                                                         className='rounded-[3px] text-hash-color font-semibold'
@@ -2565,18 +2724,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                                                        const res = await fetchOptionalSubjectsNames();
+                                                        setOptionalSubjectsState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {optionalSubjects?.length < 1 ? (
+                                                        {optionalSubjectsState.items?.length < 1 ? (
                                                             <p>No optional subjects</p>
                                                             // @ts-ignore
-                                                        ) : !optionalSubjects[0]?.subject_name ? (
+                                                        ) : !optionalSubjectsState.items[0]?.subject_name ? (
                                                             <LoadingIcon />
-                                                        ) : optionalSubjects?.map((item:any) => (
+                                                        ) : optionalSubjectsState.items?.map((item:any) => (
                                                             <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2603,18 +2767,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setHousesState({...housesState, isLoading:true});
+                                                        const res = await fetchHousesNames();
+                                                        setHousesState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {houses?.length < 1 ? (
+                                                        {housesState.items?.length < 1 ? (
                                                             <p>No houses</p>
                                                             // @ts-ignore
-                                                        ) : !houses[0]?.house_name ? (
+                                                        ) : !housesState.items[0]?.house_name ? (
                                                             <LoadingIcon />
-                                                        ) : houses?.map((item:any) => (
+                                                        ) : housesState.items?.map((item:any) => (
                                                             <SelectItem value={item?.house_name} key={item?._id}>{item?.house_name}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2908,17 +3077,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setTransportsState({...transportState, isLoading:true});
+                                                        const res = await fetchTransportMediumsNames();
+                                                        setTransportsState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {transportMediums.length < 1 ? (
+                                                        {transportState.items.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No transport mediums</p>
-                                                        ) : !transportMediums[0].transport_medium ? (
+                                                        ) : // @ts-ignore
+                                                        !transportState.items[0].transport_medium ? (
                                                             <LoadingIcon />
-                                                        ) : transportMediums.map((t:any) => (
+                                                        ) : transportState.items.map((t:any) => (
                                                             <SelectItem value={t.transport_medium} id={t._id}>{t.transport_medium}</SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -2943,17 +3118,23 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     {...field}
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        setNationalitiesState({...nationalitiesState, isLoading:true});
+                                                        const res = await fetchNationalitiesNames();
+                                                        setNationalitiesState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {nationalities.length < 1 ? (
+                                                        {nationalitiesState.items.length < 1 ? (
                                                             <p className='text-xs text-hash-color'>No nationalities</p>
-                                                        ) : !nationalities[0].name ? (
+                                                        ) : // @ts-ignore
+                                                        !nationalitiesState.items[0].name ? (
                                                             <LoadingIcon />
-                                                        ) : nationalities.map((t:any) => (
+                                                        ) : nationalitiesState.items.map((t:any) => (
                                                             <SelectItem value={t.name} id={t._id}>{t.name}</SelectItem>
                                                         ))}
                                                     </SelectContent>

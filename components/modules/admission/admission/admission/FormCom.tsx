@@ -18,7 +18,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {AdmittedStudentValidation} from '@/lib/validations/admission/admission/admittedStudent.validation';
 import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
@@ -27,7 +26,7 @@ import {createAdmittedStudent, deleteAdmittedStudent, modifyAdmittedStudent} fro
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, classes, religions, categories, sections, houses, subjects, optionalSubjects, streams, parishes, transportMediums, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails, cadetTypes, clubs, designations, professions, staff}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromRegister, valuesFromRegister, registeredStudents, selectedSubjects, setSelectedSubjects, setSelectedDocuments, selectedDocuments, previousSchoolsDetails, setPreviousSchoolsDetails, designations, professions, staff}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -56,10 +55,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('student');
-
-
-    // Boards
-    const [boards, setBoards] = useState([{}]);
 
 
     // Comparison object
@@ -1398,11 +1393,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setMotherDob(moment(updateStudent.parents.mother.dob));
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
         };
-        const fetcher = async () => {
-            const boardsRes = await fetchBoards();
-            setBoards(boardsRes);
-        };
-        fetcher();
     }, []);
     useEffect(() => {
         if(updateStudent.id !== ''){
@@ -1575,7 +1565,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
 
         }
-    }, [updateStudent, classes]);
+    }, [updateStudent]);
     useEffect(() => {
         if(valuesFromRegister.student.name !== ''){
             // Student
@@ -1715,11 +1705,11 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date || moment()));
 
         }
-    }, [valuesFromRegister, classes]);
-    useEffect(() => {
-        // @ts-ignore
-        form.setValue('student.board', boards.find((b:any) => b.is_default)?.board || '');
-    }, []);
+    }, [valuesFromRegister]);
+    // useEffect(() => {
+    //     // @ts-ignore
+    //     form.setValue('student.board', boards.find((b:any) => b.is_default)?.board || '');
+    // }, []);
     useEffect(() => {}, [form.watch('others')]);
 
     return (
@@ -1817,28 +1807,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     selectedSubjects={selectedSubjects}
                                     setSelectedSubjects={setSelectedSubjects}
                                     setSelectedDocuments={setSelectedDocuments}
-                                    boards={boards}
                                     dob={dob}
                                     setDob={setDob}
                                     doa={doa}
                                     setDoa={setDoa}
                                     doj={doj}
                                     setDoj={setDoj}
-                                    classes={classes}
-                                    religions={religions}
-                                    categories={categories}
-                                    sections={sections}
-                                    houses={houses}
-                                    subjects={subjects}
-                                    optionalSubjects={optionalSubjects}
-                                    streams={streams}
-                                    parishes={parishes}
-                                    transportMediums={transportMediums}
-                                    bloodGroups={bloodGroups}
-                                    casts={casts}
-                                    nationalities={nationalities}
-                                    cadetTypes={cadetTypes}
-                                    clubs={clubs}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>

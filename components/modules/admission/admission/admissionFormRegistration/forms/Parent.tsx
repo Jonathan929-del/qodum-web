@@ -1,18 +1,28 @@
 // Imports
-import {useEffect} from 'react';
 import {ChevronDown} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {Input} from '@/components/ui/input';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
+import {fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import LoadingIcon from '@/components/utils/LoadingIcon';
+import { fetchDesignationsNames } from '@/lib/actions/payroll/globalMasters/designation.actions';
 
 
 
 
 
 // Main function
-const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniversaryDate, setAnniversaryDate, designations, professions}:any) => {
+const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniversaryDate, setAnniversaryDate}:any) => {
+
+    // Professions state
+    const [professionsState, setProfessionsState] = useState({isLoading:false, items:[{}]});
+
+
+    // Designations state
+    const [designationsState, setDesignationsState] = useState({isLoading:false, items:[{}]});
+
 
     // Use effects
     useEffect(() => {
@@ -116,17 +126,23 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
+                                            onOpenChange={async () => {
+                                                setProfessionsState({...professionsState, isLoading:true});
+                                                const res = await fetchProfessionsNames();
+                                                setProfessionsState({isLoading:false, items:res});
+                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {professions.length < 1 ? (
+                                                {professionsState.items.length < 1 ? (
                                                     <p className='text-[11px]'>No professions</p>
-                                                ) : !professions[0].profession ? (
+                                                ) : // @ts-ignore
+                                                !professionsState.items[0].profession ? (
                                                     <LoadingIcon />
-                                                ) : professions.map((d:any) => (
+                                                ) : professionsState.items.map((d:any) => (
                                                     <SelectItem value={d.profession} key={d._id}>{d.profession}</SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -152,17 +168,23 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
+                                            onOpenChange={async () => {
+                                                setDesignationsState({...designationsState, isLoading:true});
+                                                const res = await fetchDesignationsNames();
+                                                setDesignationsState({isLoading:false, items:res});
+                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {designations.length < 1 ? (
+                                                {designationsState.items.length < 1 ? (
                                                     <p className='text-[11px]'>No designations</p>
-                                                ) : !designations[0].designation ? (
+                                                ) : // @ts-ignore
+                                                !designationsState.items[0].designation ? (
                                                     <LoadingIcon />
-                                                ) : designations.map((d:any) => (
+                                                ) : designationsState.items.map((d:any) => (
                                                     <SelectItem value={d.designation} key={d._id}>{d.designation}</SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -644,17 +666,23 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
+                                            onOpenChange={async () => {
+                                                setProfessionsState({...professionsState, isLoading:true});
+                                                const res = await fetchProfessionsNames();
+                                                setProfessionsState({isLoading:false, items:res});
+                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {professions.length < 1 ? (
+                                                {professionsState.items.length < 1 ? (
                                                     <p className='text-[11px]'>No professions</p>
-                                                ) : !professions[0].profession ? (
+                                                ) : // @ts-ignore
+                                                !professionsState.items[0].profession ? (
                                                     <LoadingIcon />
-                                                ) : professions.map((d:any) => (
+                                                ) : professionsState.items.map((d:any) => (
                                                     <SelectItem value={d.profession} key={d._id}>{d.profession}</SelectItem>
                                                 ))}
                                             </SelectContent>
@@ -680,17 +708,23 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
+                                            onOpenChange={async () => {
+                                                setDesignationsState({...designationsState, isLoading:true});
+                                                const res = await fetchDesignationsNames();
+                                                setDesignationsState({isLoading:false, items:res});
+                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {designations.length < 1 ? (
+                                                {designationsState.items.length < 1 ? (
                                                     <p className='text-[11px]'>No designations</p>
-                                                ) : !designations[0].designation ? (
+                                                ) : // @ts-ignore
+                                                !designationsState.items[0].designation ? (
                                                     <LoadingIcon />
-                                                ) : designations.map((d:any) => (
+                                                ) : designationsState.items.map((d:any) => (
                                                     <SelectItem value={d.designation} key={d._id}>{d.designation}</SelectItem>
                                                 ))}
                                             </SelectContent>

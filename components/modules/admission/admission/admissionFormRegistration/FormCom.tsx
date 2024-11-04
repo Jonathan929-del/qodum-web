@@ -24,7 +24,7 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, subjects, optionalSubjects, classes, boards, streams, religions, categories, bankLedgers, admissionAccounts, bloodGroups, casts, nationalities, previousSchoolsDetails, setPreviousSchoolsDetails, professions, designations, staff}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -1340,18 +1340,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setDate={setDate}
                                     dob={dob}
                                     setDob={setDob}
-                                    optionalSubjects={optionalSubjects}
-                                    classes={classes}
-                                    boards={boards}
-                                    streams={streams}
-                                    religions={religions}
-                                    categories={categories}
-                                    bankLedgers={bankLedgers}
-                                    admissionAccounts={admissionAccounts}
-                                    bloodGroups={bloodGroups}
-                                    casts={casts}
-                                    subjects={subjects}
-                                    nationalities={nationalities}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -1363,8 +1351,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setMotherDob={setMotherDob}
                                     anniversaryDate={anniversaryDate}
                                     setAnniversaryDate={setAnniversaryDate}
-                                    designations={designations}
-                                    professions={professions}
                                 />
                             </TabsContent>
                             <TabsContent value='other'>
@@ -1373,7 +1359,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     updateStudent={updateStudent}
                                     previousSchoolsDetails={previousSchoolsDetails}
                                     setPreviousSchoolsDetails={setPreviousSchoolsDetails}
-                                    staff={staff}
                                 />
                             </TabsContent>
                             <TabsContent value='guardian'>

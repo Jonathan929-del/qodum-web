@@ -4,25 +4,10 @@ import {useEffect, useState} from 'react';
 import FormCom from '@/components/modules/admission/admission/admission/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admission/ViewCom';
 import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions';
-import {fetchClubsNames} from '@/lib/actions/admission/globalMasters/club.actions';
-import {fetchHousesNames} from '@/lib/actions/admission/globalMasters/house.actions';
-import {fetchCastesNames} from '@/lib/actions/admission/globalMasters/caste.actions';
-import {fetchStreamsNames} from '@/lib/actions/admission/globalMasters/stream.actions';
-import {fetchParishesNames} from '@/lib/actions/admission/globalMasters/parish.actions';
-import {fetchSubjectsNames} from '@/lib/actions/admission/globalMasters/subject.actions';
 import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
-import {fetchReligionsNames} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchCategoriesNames} from '@/lib/actions/admission/globalMasters/category.actions';
 import {fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
-import {fetchCadetTypesNames} from '@/lib/actions/admission/globalMasters/cadetType.actions';
-import {fetchBloodGroupsNames} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
 import {fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
-import {fetchTransportMediumsNames} from '@/lib/actions/fees/transport/transportMedium.actions';
 import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import {fetchNationalitiesNames} from '@/lib/actions/admission/globalMasters/nationality.actions';
-import {fetchClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchSectionsNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
-import {fetchOptionalSubjectsNames} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
 
 
@@ -404,66 +389,6 @@ const page = () => {
     const [selectedDocuments, setSelectedDocuments] = useState([]);
 
 
-    // Classes
-    const [classes, setClasses] = useState([{}]);
-
-
-    // Religions
-    const [religions, setReligions] = useState([{}]);
-
-
-    // Categories
-    const [categories, setCategories] = useState([{}]);
-
-
-    // Sections
-    const [sections, setSections] = useState([{}]);
-
-
-    // Houses
-    const [houses, setHouses] = useState([{}]);
-
-
-    // Subjects
-    const [subjects, setSubjects] = useState([{}]);
-
-
-    // Optional subjects
-    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
-
-
-    // Streams
-    const [streams, setStreams] = useState([{}]);
-
-
-    // Parishes
-    const [parishes, setParishes] = useState([{}]);
-
-
-    // Transport mediums
-    const [transportMediums, setTransportMediums] = useState<any>([{}]);
-
-
-    // Blood groups
-    const [bloodGroups, setBloodGroups] = useState<any>([{}]);
-
-
-    // Casts
-    const [casts, setCasts] = useState<any>([{}]);
-
-
-    // Nationalities
-    const [nationalities, setNationalities] = useState<any>([{}]);
-
-
-    // Cadet types
-    const [cadetTypes, setCadetTypes] = useState<any>([{}]);
-
-
-    // Clubs
-    const [clubs, setClubs] = useState<any>([{}]);
-
-
     // Designations
     const [designations, setDesignations] = useState([{}]);
 
@@ -499,42 +424,12 @@ const page = () => {
             const designationsRes = await fetchDesignationsNames();
             const professionsRes = await fetchProfessionsNames();
             const staffRes = await fetchStaffNames();
-            const classesRes = await fetchClassesNames();
-            const religionsRes = await fetchReligionsNames();
-            const categoriesRes = await fetchCategoriesNames();
-            const sectionsRes = await fetchSectionsNames();
-            const housesRes = await fetchHousesNames();
-            const subjectsRes = await fetchSubjectsNames();
-            const optionalSubjectsRes  = await fetchOptionalSubjectsNames();
-            const streamsRes = await fetchStreamsNames();
-            const parishesRes = await fetchParishesNames();
-            const transportMediumsRes = await fetchTransportMediumsNames();
-            const bloodGroupsRes = await fetchBloodGroupsNames();
-            const castsRes = await fetchCastesNames();
-            const nationalitiesRes = await fetchNationalitiesNames();
-            const cadetTypesRes = await fetchCadetTypesNames();
-            const clubsRes = await fetchClubsNames();
-            setClasses(classesRes);
-            setReligions(religionsRes);
-            setCategories(categoriesRes);
-            setSections(sectionsRes);
-            setHouses(housesRes);
-            setSubjects(subjectsRes);
-            setOptionalSubjects(optionalSubjectsRes);
-            setStreams(streamsRes);
-            setParishes(parishesRes);
-            setTransportMediums(transportMediumsRes);
-            setBloodGroups(bloodGroupsRes);
-            setCasts(castsRes);
-            setNationalities(nationalitiesRes);
-            setCadetTypes(cadetTypesRes);
-            setClubs(clubsRes);
             setDesignations(designationsRes);
             setProfessions(professionsRes);
             setStaff(staffRes);
         };
         fetcher();
-    }, [isViewOpened]);
+    }, []);
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
@@ -573,23 +468,8 @@ l                       setValuesFromRegister={setValuesFromRegister}
                         setSelectedSubjects={setSelectedSubjects}
                         selectedDocuments={selectedDocuments}
                         setSelectedDocuments={setSelectedDocuments}
-                        classes={classes}
-                        religions={religions}
-                        categories={categories}
-                        sections={sections}
-                        houses={houses}
-                        subjects={subjects}
-                        optionalSubjects={optionalSubjects}
-                        streams={streams}
-                        parishes={parishes}
-                        transportMediums={transportMediums}
-                        bloodGroups={bloodGroups}
-                        casts={casts}
-                        nationalities={nationalities}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
-                        cadetTypes={cadetTypes}
-                        clubs={clubs}
                         designations={designations}
                         professions={professions}
                         staff={staff}

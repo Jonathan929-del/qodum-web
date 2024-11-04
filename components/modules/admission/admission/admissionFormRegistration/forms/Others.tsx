@@ -9,13 +9,17 @@ import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/compon
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import { fetchStaffNames } from '@/lib/actions/payroll/globalMasters/staff.actions';
 
 
 
 
 
 // Main function
-const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsDetails, staff}:any) => {
+const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
+
+    // Staff state
+    const [staffState, setStaffState] = useState({isLoading:false, items:[{}]});
 
 
     // Sessions
@@ -367,17 +371,23 @@ const Other = ({form, updateStudent, previousSchoolsDetails, setPreviousSchoolsD
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field.onChange}
+                                                    onOpenChange={async () => {
+                                                        setStaffState({...staffState, isLoading:true});
+                                                        const res = await fetchStaffNames();
+                                                        setStaffState({isLoading:false, items:res});
+                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        {staff.length < 1 ? (
+                                                        {staffState.items.length < 1 ? (
                                                             <p className='text-[11px]'>No staff</p>
-                                                        ) : !staff[0]?.staff_registration?.first_name ? (
+                                                        ) : // @ts-ignore
+                                                        !staffState.items[0]?.staff_registration?.first_name ? (
                                                             <LoadingIcon />
-                                                        ) : staff.map((s:any) => (
+                                                        ) : staffState.items.map((s:any) => (
                                                             <SelectItem value={s?.staff_registration?.first_name} key={s?._id}>{s?.staff_registration?.first_name}</SelectItem>
                                                         ))}
                                                     </SelectContent>

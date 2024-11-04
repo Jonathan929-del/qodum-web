@@ -1,28 +1,16 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
-import {fetchCastes, fetchCastesNames} from '@/lib/actions/admission/globalMasters/caste.actions';
-import {fetchStreams, fetchStreamsNames} from '@/lib/actions/admission/globalMasters/stream.actions';
 import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions';
-import {fetchBankLedgers} from '@/lib/actions/accounts/accounts/bankLedger.actions';
-import {fetchSubjects, fetchSubjectsNames} from '@/lib/actions/admission/globalMasters/subject.actions';
-import {fetchReligions, fetchReligionsNames} from '@/lib/actions/admission/globalMasters/religion.actions';
-import {fetchCategories, fetchCategoriesNames} from '@/lib/actions/admission/globalMasters/category.actions';
-import {fetchProfessions, fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
-import {fetchBoards} from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
-import {fetchBloodGroups, fetchBloodGroupsNames} from '@/lib/actions/admission/globalMasters/bloodGroup.actions';
-import {fetchDesignations, fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
-import {fetchGeneralLedgers} from '@/lib/actions/accounts/accounts/generalLedger.actions';
-import {fetchNationalities, fetchNationalitiesNames} from '@/lib/actions/admission/globalMasters/nationality.actions';
-import {fetchClasses, fetchClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
+import {fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
-import {fetchOptionalSubjects, fetchOptionalSubjectsNames} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
+import {fetchAdmissionStates} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
-import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -267,66 +255,6 @@ const page = () => {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
 
 
-    // Subjects
-    const [subjects, setSubjects] = useState([{}]);
-
-
-    // Optional subjects
-    const [optionalSubjects, setOptionalSubjects] = useState([{}]);
-
-
-    // Classes
-    const [classes, setClasses] = useState([{}]);
-
-
-    // Boards
-    const [boards, setBoards] = useState([{}]);
-
-
-    // Streams
-    const [streams, setStreams] = useState([{}]);
-
-
-    // Religions
-    const [religions, setReligions] = useState([{}]);
-
-
-    // Categories
-    const [categories, setCategories] = useState([{}]);
-
-
-    // Bank Ledgers
-    const [bankLedgers, setBankLedgers] = useState([{}]);
-
-
-    // Admission Accounts
-    const [admissionAccounts, setAdmissionAccounts] = useState([{}]);
-
-
-    // Blood groups
-    const [bloodGroups, setBloodGroups] = useState([{}]);
-
-
-    // Casts
-    const [casts, setCasts] = useState([{}]);
-
-
-    // Nationalities
-    const [nationalities, setNationlaities] = useState([{}]);
-
-
-    // Designations
-    const [designations, setDesignations] = useState([{}]);
-
-
-    // Professions
-    const [professions, setProfessions] = useState([{}]);
-
-
-    // Staff
-    const [staff, setStaff] = useState([{}]);
-
-
     // Previous schools details
     const [previousSchoolsDetails, setPreviousSchoolsDetails] = useState([{
         class:'',
@@ -344,42 +272,16 @@ const page = () => {
     useEffect(() => {
         const fetcher = async () => {
             setIsLoading(true);
+
+
             const admissionStatesRes = await fetchAdmissionStates();
             const enquiriesRes = await fetchAdmissionEnquiries();
             const studentsRes = await fetchStudents();
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setStudents(studentsRes);
-            const classesRes = await fetchClassesNames();
-            const boardsRes = await fetchBoards();
-            const streamsRes = await fetchStreamsNames();
-            const subjectsRes = await fetchSubjectsNames();
-            const optionalSubjectsRes = await fetchOptionalSubjectsNames();
-            const religionsRes = await fetchReligionsNames();
-            const categoriesRes = await fetchCategoriesNames();
-            const bankLedgerRes = await fetchBankLedgers();
-            const admissionAccountRes = await fetchGeneralLedgers();
-            const bloodGroupsRes = await fetchBloodGroupsNames();
-            const castsRes = await fetchCastesNames();
-            const nationalitiesRes = await fetchNationalitiesNames();
-            const designationsRes = await fetchDesignationsNames();
-            const professionsRes = await fetchProfessionsNames();
-            const staffRes = await fetchStaffNames();
-            setClasses(classesRes);
-            setBoards(boardsRes);
-            setStreams(streamsRes);
-            setSubjects(subjectsRes);
-            setOptionalSubjects(optionalSubjectsRes);
-            setReligions(religionsRes);
-            setCategories(categoriesRes);
-            setBankLedgers(bankLedgerRes);
-            setAdmissionAccounts(admissionAccountRes);
-            setBloodGroups(bloodGroupsRes);
-            setCasts(castsRes);
-            setNationlaities(nationalitiesRes);
-            setDesignations(designationsRes);
-            setProfessions(professionsRes);
-            setStaff(staffRes);
             setAdmissionStates(admissionStatesRes ? admissionStatesRes : admissionStates);
+
+
             setIsLoading(false);
         };
         fetcher();
@@ -420,23 +322,8 @@ const page = () => {
                         setValuesFromEnquiry={setValuesFromEnquiry}
                         selectedSubjects={selectedSubjects}
                         setSelectedSubjects={setSelectedSubjects}
-                        subjects={subjects}
-                        optionalSubjects={optionalSubjects}
-                        classes={classes}
-                        boards={boards}
-                        streams={streams}
-                        religions={religions}
-                        categories={categories}
-                        bankLedgers={bankLedgers}
-                        admissionAccounts={admissionAccounts}
-                        bloodGroups={bloodGroups}
-                        casts={casts}
-                        nationalities={nationalities}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
-                        designations={designations}
-                        professions={professions}
-                        staff={staff}
                     />
                 ) : (
                     <p className='text-xs text-red-500'>Admission is Closed!</p>
