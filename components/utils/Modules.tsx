@@ -43,7 +43,7 @@ const Modules = () => {
 
 
                         <div className='flex flex-col gap-[6px] mt-10'>
-                            <h4 className='w-full text-center text-xl font-bold'>{module.title}</h4>
+                            <h4 className='w-full text-center text-xl font-bold'>{module?.title?.toUpperCase()}</h4>
                             {
                                 module.sections.map((section:any) => (
                                     <div className='flex flex-row pb-[6px] border-b-[0.5px] border-[#ccc]'>

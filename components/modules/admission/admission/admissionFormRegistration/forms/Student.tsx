@@ -28,6 +28,7 @@ import { fetchTransportMediumsNames } from '@/lib/actions/fees/transport/transpo
 import { fetchNationalitiesNames } from '@/lib/actions/admission/globalMasters/nationality.actions';
 import { fetchBankLedgers } from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import { fetchAccountGroups } from '@/lib/actions/accounts/accounts/accountGroup.actions';
+import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
 
 
 
@@ -316,6 +317,18 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     //     // @ts-ignore
     //     form.setValue('student.board', boards.filter((b:any) => b.is_default)[0]?.board);
     // }, [boards]);
+    useEffect(() => {
+        const fetcher = async () => {
+            setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
+            const res = await fetchGeneralLedgers();
+            setAdmissionAccountsState({isLoading:false, items:res});
+
+            setBankLedgersState({...bankLedgersState, isLoading:true});
+            const bankLedgersRes = await fetchBankLedgers();
+            setBankLedgersState({isLoading:false, items:bankLedgersRes});          
+        };
+        fetcher();
+    }, []);
     useEffect(() => {
         const numberGenerator = async () => {
             try {
@@ -627,11 +640,11 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             {...field}
                                             value={field?.value}
                                             onValueChange={field?.onChange}
-                                            onOpenChange={async () => {
-                                                setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
-                                                const res = await fetchAccountGroups();
-                                                setAdmissionAccountsState({isLoading:false, items:res});
-                                            }}
+                                            // onOpenChange={async () => {
+                                            //     setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
+                                            //     const res = await fetchGeneralLedgers();
+                                            //     setAdmissionAccountsState({isLoading:false, items:res});
+                                            // }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -641,10 +654,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 {addmisionAccountsState.items?.length < 1 ? (
                                                         <p>No accounts yet</p>
                                                     ) : // @ts-ignore
-                                                    !addmisionAccountsState.items[0]?.group_name ? (
+                                                    !addmisionAccountsState.items[0]?.account_name ? (
                                                         <LoadingIcon />
                                                     ) : addmisionAccountsState.items.map((ledger:any) => (
-                                                        <SelectItem value={ledger.group_name} key={ledger._id}>{ledger.group_name}</SelectItem>
+                                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
                                                     ))
                                                 }
                                             </SelectContent>
@@ -671,11 +684,11 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             {...field}
                                             value={field?.value}
                                             onValueChange={field?.onChange}
-                                            onOpenChange={async () => {
-                                                setBankLedgersState({...bankLedgersState, isLoading:true});
-                                                const res = await fetchBankLedgers();
-                                                setBankLedgersState({isLoading:false, items:res});
-                                            }}
+                                            // onOpenChange={async () => {
+                                            //     setBankLedgersState({...bankLedgersState, isLoading:true});
+                                            //     const res = await fetchBankLedgers();
+                                            //     setBankLedgersState({isLoading:false, items:res});
+                                            // }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
