@@ -19,6 +19,7 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {createEnquiry, deleteEnquiry, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
+import { fetchEnquiryNoSettings } from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
 
 
 
@@ -185,24 +186,29 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
         const fetcher = async () => {
             const res = await fetchClasses();
             setClasses(res);
+            const numberData = await fetchEnquiryNoSettings();
+            console.log(numberData);
+            if(numberData.length > 0 && updateEnquiry.id === ''){
+                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
+                form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            }else{
+                form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+            };
         };
         fetcher();
-        // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${Number(localStorage.getItem('start_from')) + enquiries.length}${localStorage.getItem('suffix')}`;
-        if(updateEnquiry.id !== ''){
-            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-        }else{
-            form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
-        };
     }, []);
     useEffect(() => {
-        // @ts-ignore
-        const number = `${localStorage.getItem('prefix')}${localStorage.getItem('lead_zero')?.substring(0, localStorage.getItem('lead_zero').length - 1)}${Number(localStorage.getItem('start_from')) + enquiries.length}${localStorage.getItem('suffix')}`;
-        if(updateEnquiry.id !== ''){
-            form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-        }else{
-            form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' && localStorage.getItem('lead_zero') ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+        const fetcher = async () => {
+            const numberData = await fetchEnquiryNoSettings();
+            console.log(numberData);
+            if(numberData.length > 0 && updateEnquiry.id === ''){
+                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
+                form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+            }else{
+                form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+            };
         };
+        fetcher();
     }, [enquiries, updateEnquiry]);
     useEffect(() => {
         if(enquiryDate){

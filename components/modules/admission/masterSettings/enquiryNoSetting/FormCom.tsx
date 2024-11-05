@@ -55,12 +55,6 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
             start_from:updateEnquiryNoSetting.id === '' ? '' : updateEnquiryNoSetting.start_from,
             lead_zero:updateEnquiryNoSetting.id === '' ? 0 : updateEnquiryNoSetting.lead_zero,
             suffix:updateEnquiryNoSetting.id === '' ? '' : updateEnquiryNoSetting.suffix
-            // session:updateEnquiryNoSetting.id === '' ? '' : updateEnquiryNoSetting.session,
-            // enquiry_no_setting_should_be:updateEnquiryNoSetting.id === '' ? localStorage.getItem('enquiry_no_setting_should_be') || 'Automatic' : updateEnquiryNoSetting.enquiry_no_setting_should_be,
-            // prefix:updateEnquiryNoSetting.id === '' ? localStorage.getItem('prefix') || '' : updateEnquiryNoSetting.prefix,
-            // start_from:updateEnquiryNoSetting.id === '' ? localStorage.getItem('start_from') || 0 : updateEnquiryNoSetting.start_from,
-            // lead_zero:updateEnquiryNoSetting.id === '' ? localStorage.getItem('lead_zero') || 0 : updateEnquiryNoSetting.lead_zero,
-            // suffix:updateEnquiryNoSetting.id === '' ? localStorage.getItem('suffix') || '' : updateEnquiryNoSetting.suffix
         }
     });
 
@@ -73,11 +67,8 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
             toast({title:"Can't edit enquiry number setting while in use", variant:'alert'});
             return;
         };
+
         localStorage.setItem('enquiry_no_setting_should_be', form.getValues().enquiry_no_setting_should_be);
-        localStorage.setItem('prefix', form.getValues().prefix);
-        localStorage.setItem('start_from', form.getValues().start_from);
-        localStorage.setItem('lead_zero', form.getValues().lead_zero);
-        localStorage.setItem('suffix', form.getValues().suffix);
 
         // Create enquiry no setting
         if(updateEnquiryNoSetting.id === ''){
@@ -132,27 +123,6 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
         });
 
     };
-
-
-    // // Modify handler
-    // const modifyHandler = async () => {
-    //     try {
-
-    //         if(!isEnquiryNoEditable){
-    //             toast({title:"Can't edit enquiry number setting while in use", variant:'alert'});
-    //             return;
-    //         };
-    //         localStorage.setItem('enquiry_no_setting_should_be', form.getValues().enquiry_no_setting_should_be);
-    //         localStorage.setItem('prefix', form.getValues().prefix);
-    //         localStorage.setItem('start_from', form.getValues().start_from);
-    //         localStorage.setItem('lead_zero', form.getValues().lead_zero);
-    //         localStorage.setItem('suffix', form.getValues().suffix);
-    //         toast({title:'Setting Saved Successfully!'});
-
-    //     } catch (err:any) {
-    //         console.log(err);
-    //     }
-    // };
 
 
     // Use effects
