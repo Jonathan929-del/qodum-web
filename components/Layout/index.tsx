@@ -21,6 +21,10 @@ import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/
 // Main function
 const index = ({children}:any) => {
 
+    // Setting moment local to english
+    moment.locale('en-gb');
+
+
     // User
     const {user, logout} = useContext(AuthContext);
 
