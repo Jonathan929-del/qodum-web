@@ -13,7 +13,7 @@ const EnquiryNoSettingSchema = new mongoose.Schema(
         prefix:{type:String, required:true},
         start_from:{type:Number, required:true},
         lead_zero:{type:String, required:true},
-        suffix:{type:String, required:true}
+        suffix:{type:String}
     },
     {
         timestamps:true
