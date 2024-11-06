@@ -48,7 +48,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
 
     // Numbers
-    const [numbers, setNumbers] = useState(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+    const [numbers, setNumbers] = useState(['Prospectus No.', 'Registration No.', 'Admission No.']);
 
 
     // Editable numbers
@@ -207,7 +207,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setNumbers(viewNumbers);
         };
         if(!isAllClasses){
-            setNumbers(['Registration No. (Online)', 'Prospectus No.', 'Registration No.', 'Admission No.']);
+            setNumbers(['Prospectus No.', 'Registration No.', 'Admission No.']);
         };
     }, [isAllClasses, admissions]);
 

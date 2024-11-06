@@ -12,9 +12,6 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 // Main Function
 const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects, setPreviousSchoolsDetails}:any) => {
 
-    // Enqruiries
-    // const [enquiries, setEnquiries] = useState([]);
-
     // Select handler
     const selectHandler = (student:any) => {
         setValuesFromEnquiry({
@@ -235,6 +232,10 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                             Father Name
                             <ChevronsUpDown size={12}/>
                         </li>
+                        <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[0.5px] border-[#ccc]'>
+                            Is Online
+                            <ChevronsUpDown size={12}/>
+                        </li>
                         <li className='basis-[15%] flex flex-row items-center justify-between px-2'>
                             Paid Amount
                             <ChevronsUpDown size={12}/>
@@ -252,7 +253,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                                 <LoadingIcon />
                             ) : students.map((student:any) => (
                                 <CommandItem
-                                    value={`${students.indexOf(student) + 1} ${student?.student?.reg_no} ${student?.student?.name} ${student?.parents?.father?.father_name}`}
+                                    value={`${students.indexOf(student) + 1} ${student?.student?.reg_no} ${student?.student?.name} ${student?.parents?.father?.father_name} ${student?.student?.is_online ? 'True' : 'False'}`}
                                     className='w-full min-w-[1300px] flex flex-row text-[10px] bg-[#E2E4FF] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md'
                                 >
                                     <li className='basis-[10%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>{students.indexOf(student) + 1}</li>
@@ -269,7 +270,8 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>True</li>
                                     <li className='basis-[20%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.name}</li>
                                     <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.parents?.father?.father_name}</li>
-                                    <li className='basis-[15%] flex flex-row items-center px-2'>700</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2 border-r-[0.5px] border-[#ccc]'>{student?.student?.is_online ? 'True' : 'False'}</li>
+                                    <li className='basis-[15%] flex flex-row items-center px-2'>{student?.student?.amount}</li>
                                 </CommandItem>
                             ))
                         }

@@ -200,7 +200,7 @@ export const getEditableNumbers = async () => {
 
         // Fetching students count
         const studentsCount = await Student.countDocuments();
-        studentsCount < 1 && editableNumbers.push('Registration No. (Online)', 'Registration No.');
+        studentsCount < 1 && editableNumbers.push('Registration No.');
 
 
         // Fetching admitted students count
