@@ -63,8 +63,8 @@ const uploadSchoolLogoFile = async (file:any, school_name:any) => {
 
 
 
-// Image
-export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) => {
+// Upload school logo
+export const uploadSchoolLogo = async ({data, school_name}:{data:any, school_name:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -72,7 +72,7 @@ export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) 
             throw new Error('No file was sent');
         };
         const buffer = Buffer.from(await file.arrayBuffer());
-        const res = await uploadFile(buffer, reg_no);
+        const res = await uploadSchoolLogoFile(buffer, school_name);
 
         // Return
         return res;
@@ -85,8 +85,8 @@ export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) 
 
 
 
-// Upload school logo
-export const uploadSchoolLogo = async ({data, school_name}:{data:any, school_name:any}) => {
+// Image
+export const uploadStudentImage = async ({data, reg_no}:{data:any, reg_no:any}) => {
     try {
         const formData = await data;
         const file = formData.get('file');
@@ -94,7 +94,7 @@ export const uploadSchoolLogo = async ({data, school_name}:{data:any, school_nam
             throw new Error('No file was sent');
         };
         const buffer = Buffer.from(await file.arrayBuffer());
-        const res = await uploadSchoolLogoFile(buffer, school_name);
+        const res = await uploadFile(buffer, reg_no);
 
         // Return
         return res;

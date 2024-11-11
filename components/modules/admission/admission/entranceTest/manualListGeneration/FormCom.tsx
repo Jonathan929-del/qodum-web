@@ -43,6 +43,10 @@ function FormCom() {
     const {toast} = useToast();
 
 
+    // Is update loading
+    const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+
+
     // Date states
     const [date, setDate] = useState(moment());
     const [admissionDate, setAdmissionDate] = useState(moment());
@@ -81,8 +85,11 @@ function FormCom() {
 
 
     // Submit handler
-    const onSubmit = async (values: z.infer<typeof ManualListGenerationValidation>) => {
+    const onSubmit = async () => {
         try {
+
+            // Setting is update loading to true
+            setIsUpdateLoading(true);
 
 
             // No students validation
@@ -92,7 +99,8 @@ function FormCom() {
             };
 
             // Applying for admission
-            await applyStudentForAdmission({reg_nos:selectedStudents});
+            const res = await applyStudentForAdmission({reg_nos:selectedStudents});
+            console.log(res);
 
             // Reseting
             form.reset({
@@ -110,6 +118,10 @@ function FormCom() {
             setAdmissionDate(moment());
             setAdmissionDateTo(moment());
             toast({title:'Updated Successfully!'});
+
+
+            // Setting is update loading to false
+            setIsUpdateLoading(false);
 
         } catch (err: any) {
             console.log(err);
@@ -162,7 +174,6 @@ function FormCom() {
                 {...form}
             >
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
                     className='w-full flex flex-col items-center px-2 pt-6 sm:px-4'
                 >
 
@@ -360,8 +371,11 @@ function FormCom() {
 
 
                         {/* Buttons */}
-                        {permissions.modify && (
+                        {permissions.modify && isUpdateLoading ? (
+                            <LoadingIcon />
+                        ) : (
                             <Button
+                                onClick={onSubmit}
                                 type='submit'
                                 className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
                                         hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'

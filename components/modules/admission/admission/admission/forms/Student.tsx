@@ -1429,6 +1429,109 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             form.setValue('student.doj', doj._d);
         };
     }, [doj]);
+    useEffect(() => {
+        if(updateStudent?.student?.name !== ''){
+            const fetcher = async () => {
+
+                // Classes
+                setClassesState({...classesState, isLoading:true});
+                const classesRes = await fetchClassesNames();
+                setClassesState({isLoading:false, items:classesRes});
+
+
+                // Sections
+                setSectionsState({...sectionsState, isLoading:true});
+                const sectionsRes = await fetchSectionsNames();
+                setSectionsState({isLoading:false, items:sectionsRes});
+
+
+                // Boards
+                setBoardsState({...boardsState, isLoading:true});
+                const boardsRes = await fetchBoards();
+                setBoardsState({isLoading:false, items:boardsRes});
+
+
+                // Streams
+                setStreamsState({...streamsState, isLoading:true});
+                const streamsRes = await fetchStreamsNames();
+                setStreamsState({isLoading:false, items:streamsRes});
+
+
+                // Subjects
+                setSubjectsState({...subjectsState, isLoading:true});
+                const subjectsRes = await fetchSubjectsNames();
+                setSubjectsState({isLoading:false, items:subjectsRes});
+
+
+                // Optional subjects
+                setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+                setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
+
+
+                // Religions
+                setReligionsState({...religionsState, isLoading:true});
+                const religionsRes = await fetchReligionsNames();
+                setReligionsState({isLoading:false, items:religionsRes});
+
+
+                // Blood groups
+                setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                const bloodGroupsRes = await fetchBloodGroupsNames();
+                setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
+
+
+                // Casts
+                setCastesState({...castesState, isLoading:true});
+                const castsRes = await fetchCastesNames();
+                setCastesState({isLoading:false, items:castsRes});
+
+
+                // Categories
+                setCategoriesState({...categoriesState, isLoading:true});
+                const categoriesRes = await fetchCategoriesNames();
+                setCategoriesState({isLoading:false, items:categoriesRes});
+
+
+                // Transports
+                setTransportsState({...transportState, isLoading:true});
+                const transportsRes = await fetchTransportMediumsNames();
+                setTransportsState({isLoading:false, items:transportsRes});
+
+
+                // Nationalities
+                setNationalitiesState({...nationalitiesState, isLoading:true});
+                const nationalitiesRes = await fetchNationalitiesNames();
+                setNationalitiesState({isLoading:false, items:nationalitiesRes});
+
+
+                // Parishes
+                setParishesState({...parishesState, isLoading:true});
+                const parishesRes = await fetchParishesNames();
+                setParishesState({isLoading:false, items:parishesRes});
+
+
+                // Cadet types
+                setCadetTypesState({...cadetTypesState, isLoading:true});
+                const cadetTypesRes = await fetchCadetTypesNames();
+                setCadetTypesState({isLoading:false, items:cadetTypesRes});
+
+
+                // Clubs
+                setClubsState({...clubsState, isLoading:true});
+                const clubsRes = await fetchClubsNames();
+                setClubsState({isLoading:false, items:clubsRes});
+
+
+                // Houses
+                setHousesState({...housesState, isLoading:true});
+                const housesRes = await fetchHousesNames();
+                setHousesState({isLoading:false, items:housesRes});
+
+            };
+            fetcher();
+        };
+    }, [updateStudent]);
 
     return (
         <div className='flex flex-col'>

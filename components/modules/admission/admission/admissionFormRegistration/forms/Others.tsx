@@ -30,7 +30,7 @@ const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) =>
     const [classes, setClases] = useState([{}]);
 
 
-    // Use effect
+    // Use effects
     useEffect(() => {
         const fetcher = async () => {
             const sessionsRes = await fetchAcademicYears();
@@ -41,6 +41,14 @@ const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) =>
         fetcher();
     }, []);
     useEffect(() => {}, [form.getValues().others.student_staff_relation.staff_ward]);
+    useEffect(() => {
+        const fetcher = async () => {
+            setStaffState({...staffState, isLoading:true});
+            const res = await fetchStaffNames();
+            setStaffState({isLoading:false, items:res});
+        };
+        fetcher();
+    }, [])
 
 
     return (
@@ -371,11 +379,6 @@ const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) =>
                                                     {...field}
                                                     value={field.value}
                                                     onValueChange={field.onChange}
-                                                    onOpenChange={async () => {
-                                                        setStaffState({...staffState, isLoading:true});
-                                                        const res = await fetchStaffNames();
-                                                        setStaffState({isLoading:false, items:res});
-                                                    }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder='Please Select' className='text-[11px]' />

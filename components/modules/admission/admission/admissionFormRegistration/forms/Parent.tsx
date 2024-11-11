@@ -43,6 +43,23 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
             form.setValue('parents.mother.anniversary_date', anniversaryDate._d);
         };
     }, [anniversaryDate]);
+    useEffect(() => {
+        const fetcher = async () => {
+
+            // Designations
+            setDesignationsState({...designationsState, isLoading:true});
+            const designationsRes = await fetchDesignationsNames();
+            setDesignationsState({isLoading:false, items:designationsRes});
+
+
+            // Professions
+            setProfessionsState({...professionsState, isLoading:true});
+            const professionsRes = await fetchProfessionsNames();
+            setProfessionsState({isLoading:false, items:professionsRes});
+
+        };
+        fetcher();
+    }, []);
 
     return (
         <div className='flex flex-row justify-between gap-2'>
@@ -126,11 +143,6 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
-                                            onOpenChange={async () => {
-                                                setProfessionsState({...professionsState, isLoading:true});
-                                                const res = await fetchProfessionsNames();
-                                                setProfessionsState({isLoading:false, items:res});
-                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
@@ -168,11 +180,6 @@ const Parent = ({form, fatherDob, setFatherDob, motherDob, setMotherDob, anniver
                                             {...field}
                                             value={field.value}
                                             onValueChange={field.onChange}
-                                            onOpenChange={async () => {
-                                                setDesignationsState({...designationsState, isLoading:true});
-                                                const res = await fetchDesignationsNames();
-                                                setDesignationsState({isLoading:false, items:res});
-                                            }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                 <SelectValue placeholder='Please Select' className='text-[11px]' />
