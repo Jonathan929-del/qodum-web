@@ -187,7 +187,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             const res = await fetchClasses();
             setClasses(res);
             const numberData = await fetchEnquiryNoSettings();
-            console.log(numberData);
             if(numberData.length > 0 && updateEnquiry.id === ''){
                 const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
                 form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
@@ -200,7 +199,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     useEffect(() => {
         const fetcher = async () => {
             const numberData = await fetchEnquiryNoSettings();
-            console.log(numberData);
             if(numberData.length > 0 && updateEnquiry.id === ''){
                 const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
                 form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
@@ -246,7 +244,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
 
                     {/* Enquiry No. */}
-                    {enquiries.length < 1 ? (
+                    {enquiries.length < 1 ? form.getValues().enquiry_no !== '' ? (
                         <FormField
                             control={form.control}
                             name='enquiry_no'
@@ -266,7 +264,9 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                 </FormItem>
                             )}
                         />                        
-                    ) : enquiries[0]?.enquiry_no ? (
+                    ) : (
+                        <LoadingIcon />
+                    ) : form.getValues().enquiry_no !== '' ? (
                         <FormField
                             control={form.control}
                             name='enquiry_no'

@@ -18,7 +18,7 @@ const page = () => {
 
 
     // Enquiries
-    const [enquiries, setEnquiries] = useState([{}]);
+    const [enquiries, setEnquiries] = useState([]);
 
 
     // Update enquiry
