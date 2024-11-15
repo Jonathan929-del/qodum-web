@@ -253,3 +253,28 @@ export const fetchEnquiryByEnquiryNo = async ({enquiry_no}:{enquiry_no:String}) 
         throw new Error(`Error fetching enquiry: ${err}`);
     };
 };
+
+
+
+
+
+// Fetch enquiries count
+export const fetchEnquiriesCount = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const enquiries = await Enquiry.countDocuments({session:activeSession?.year_name});
+        return enquiries;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching enquiries: ${err}`);
+    };
+};

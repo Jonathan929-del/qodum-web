@@ -18,7 +18,7 @@ import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.v
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {createEnquiry, deleteEnquiry, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
+import {createEnquiry, deleteEnquiry, fetchEnquiriesCount, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
 import { fetchEnquiryNoSettings } from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
 
 
@@ -26,7 +26,7 @@ import { fetchEnquiryNoSettings } from '@/lib/actions/admission/masterSettings/e
 
 
 // Main function
-const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:any) => {
+const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, isLoadingEnquiries}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -184,11 +184,14 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             setEnquiryDate(moment(updateEnquiry.enquiry_date));
         };
         const fetcher = async () => {
-            const res = await fetchClasses();
-            setClasses(res);
-            const numberData = await fetchEnquiryNoSettings();
+            const [classesRes, enquiriesCount, numberData] = await Promise.all([
+                fetchClasses(),
+                fetchEnquiriesCount(),
+                fetchEnquiryNoSettings()
+            ]);
+            setClasses(classesRes);
             if(numberData.length > 0 && updateEnquiry.id === ''){
-                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
+                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
                 form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
             }else{
                 form.setValue('enquiry_no', updateEnquiry.enquiry_no);
@@ -198,9 +201,12 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
     }, []);
     useEffect(() => {
         const fetcher = async () => {
-            const numberData = await fetchEnquiryNoSettings();
+            const [enquiriesCount, numberData] = await Promise.all([
+                fetchEnquiriesCount(),
+                fetchEnquiryNoSettings()
+            ]);
             if(numberData.length > 0 && updateEnquiry.id === ''){
-                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiries.length}${numberData[0].suffix}`;
+                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
                 form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
             }else{
                 form.setValue('enquiry_no', updateEnquiry.enquiry_no);

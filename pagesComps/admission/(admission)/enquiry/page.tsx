@@ -12,6 +12,9 @@ import {fetchEnquiries} from '@/lib/actions/admission/admission/enquiry.actions'
 // Main function
 const page = () => {
 
+    // Is loading enquiries
+    const [isLoadingEnquiries, setIsLoadingEnquiries] = useState(true);
+
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
@@ -41,13 +44,14 @@ const page = () => {
     
     // Use effect
     useEffect(() => {
+        setIsLoadingEnquiries(true);
         const fetcher = async () => {
             const res = await fetchEnquiries();
             setEnquiries(res);
+            setIsLoadingEnquiries(false);
         };
         fetcher();
     }, [isViewOpened, updateEnquiry]);
-
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-10 bg-white overflow-hidden'>
@@ -65,6 +69,7 @@ const page = () => {
                         enquiries={enquiries}
                         updateEnquiry={updateEnquiry}
                         setUpdateEnquiry={setUpdateEnquiry}
+                        isLoadingEnquiries={isLoadingEnquiries}
                     />
                 )
             }
