@@ -15,7 +15,7 @@ import {fetchClassNumbers } from '@/lib/actions/admission/masterSettings/admissi
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStationaryDetails} from '@/lib/actions/admission/globalMasters/stationaryDetails.actions';
-import { fetchClassesNames } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import { fetchOpenAdmissionClassesNames } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import { fetchBoards } from '@/lib/actions/fees/globalMasters/defineSchool/board.actions';
 import { fetchStreamsNames } from '@/lib/actions/admission/globalMasters/stream.actions';
 import { fetchSubjectsNames } from '@/lib/actions/admission/globalMasters/subject.actions';
@@ -330,7 +330,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                 // Classes
                 setClassesState({...classesState, isLoading:true});
-                const classesRes = await fetchClassesNames();
+                const classesRes = await fetchOpenAdmissionClassesNames();
                 setClassesState({isLoading:false, items:classesRes});
 
 
@@ -875,7 +875,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 onValueChange={field?.onChange}
                                                 onOpenChange={async () => {
                                                     setClassesState({...classesState, isLoading:true});
-                                                    const classesRes = await fetchClassesNames();
+                                                    const classesRes = await fetchOpenAdmissionClassesNames();
                                                     setClassesState({isLoading:false, items:classesRes});
                                                 }}
                                             >

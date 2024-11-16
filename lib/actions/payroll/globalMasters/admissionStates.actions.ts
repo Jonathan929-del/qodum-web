@@ -22,7 +22,7 @@ export const createAdmissionStates = async () => {
 
 
         // Creating states
-        const state = await AdmissionState.create({session:activeSession?.year_name, is_staff_admission_opened:false, is_students_admission_opened:false});
+        const state = await AdmissionState.create({session:activeSession?.year_name, is_staff_admission_opened:false});
         state.save();
 
 
@@ -84,38 +84,6 @@ export const toggleStaffAdmissionState = async () => {
         await AdmissionState.findOneAndUpdate(
             {session:activeSession?.year_name},
             [{$set:{is_staff_admission_opened:{$eq:[false, '$is_staff_admission_opened']}}}]
-        );
-
-
-        // Return
-        return 'Updated';
-
-    } catch (err:any) {
-        console.log(`Error toggling staff admission state: ${err.message}`);
-    };
-};
-
-
-
-
-
-// Toggle students admission state
-export const toggleStudentsAdmissionState = async () => {
-    try {
-    
-        // Database connection
-        connectToDb('accounts');
-
-
-        // Fetching active session naeme
-        const activeSession = await AcademicYear.findOne({is_active:1});
-        if(!activeSession) return 0;
-
-
-        // Toggling staff admission state
-        await AdmissionState.findOneAndUpdate(
-            {session:activeSession?.year_name},
-            [{$set:{is_students_admission_opened:{$eq:[false, '$is_students_admission_opened']}}}]
         );
 
 

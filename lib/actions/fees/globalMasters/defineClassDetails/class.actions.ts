@@ -3,7 +3,6 @@
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
-import { revalidatePath } from 'next/cache';
 
 
 
@@ -45,10 +44,10 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
             });
 
             // New class
-            const newClass = await Class.create({class_name, wing_name, school, order});
+            const newClass = await Class.create({class_name, wing_name, school, order, is_admission_opened:true});
             newClass.save();
         }else{
-            const newClass = await Class.create({class_name, wing_name, school, order});
+            const newClass = await Class.create({class_name, wing_name, school, order, is_admission_opened:true});
             newClass.save();
         };
 
@@ -95,7 +94,7 @@ export const fetchClassesNames = async () => {
 
 
         // Fetching
-        const classes = await Class.find({}, {class_name:1}).sort({order:1});
+        const classes = await Class.find({}, {class_name:1, is_admission_opened:1}).sort({order:1});
         return classes;
 
     } catch (err:any) {
@@ -313,5 +312,52 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
 
     } catch (err) {
         throw new Error(`Error updating class heads: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch open admission classes names
+export const fetchOpenAdmissionClassesNames = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        const classes = await Class.find({is_admission_opened:true}, {class_name:1}).sort({order:1});
+        return classes;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching classes: ${err}`);
+    };
+};
+
+
+
+
+
+// Update classes admission states
+export const updateClassesAdmissionStates = async ({classes_states}:{classes_states:any}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching
+        classes_states.map(async (c:any) => {
+            await Class.findOneAndUpdate({class_name:c.class_name}, {is_admission_opened:c.is_admission_opened});
+        });
+
+
+        // Return
+        return 'Classes asmission states updated';
+
+    } catch (err:any) {
+        throw new Error(`Error updating classes admission states: ${err}`);
     };
 };

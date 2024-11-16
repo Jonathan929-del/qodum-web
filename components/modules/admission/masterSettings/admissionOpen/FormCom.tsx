@@ -1,12 +1,15 @@
 // Imports
 import {AuthContext} from '@/context/AuthContext';
+import {Textarea} from '@/components/ui/textarea';
+import {Checkbox} from '@/components/ui/checkbox';
 import {useToast} from '@/components/ui/use-toast';
+import {Check, ChevronDown, X} from 'lucide-react';
 import {useContext, useEffect, useState} from 'react';
-import { createAdmissionStates, fetchAdmissionStates, toggleStudentsAdmissionState } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { createGuidelines, fetchGuidline, modifyGuidelines } from '@/lib/actions/admission/masterSettings/admissionGuidelines.actions';
+import {Select, SelectContent, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {createAdmissionStates, fetchAdmissionStates} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import {fetchClassesNames, updateClassesAdmissionStates} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {createGuidelines, fetchGuidline, modifyGuidelines} from '@/lib/actions/admission/masterSettings/admissionGuidelines.actions';
 
 
 
@@ -33,8 +36,8 @@ function FormCom() {
     const [guideLines, setGuideLines] = useState('');
 
 
-    // Years Guidelines
-    const [yearsGuidelines, setYearsGuidelines] = useState({});
+    // Classes
+    const [classes, setClasses] = useState([{}]);
 
 
     // Is loading
@@ -56,10 +59,8 @@ function FormCom() {
     // Change admission state
     const changeAdmissionState = async () => {
         setIsLoading(true);
-        await toggleStudentsAdmissionState().then(async () => {
-            const statesRes = await fetchAdmissionStates();
-            setAdmissionStates(statesRes);
-        });
+        await updateClassesAdmissionStates({classes_states:classes});
+        toast({title:'Updated successfully'});
         setIsLoading(false);
     };
 
@@ -98,6 +99,8 @@ function FormCom() {
         setIsLoading(true);
         const fetcher = async () => {
             const statesRes = await fetchAdmissionStates();
+            const classesRes = await fetchClassesNames();
+            setClasses(classesRes);
             if(!statesRes){
                 await createAdmissionStates().then(async () => {
                     const statesRes = await fetchAdmissionStates(); 
@@ -123,17 +126,91 @@ function FormCom() {
             {permissions.modify && (
                 <>
 
-                    {/* Button */}
-                    <span
-                        className='flex items-center justify-center min-w-[200px] py-2 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                        onClick={changeAdmissionState}
-                    >
-                        {isLoading ? (
-                            <LoadingIcon />
-                        ) : `${admissionStates.is_students_admission_opened ? 'Close' : 'Open'} Students Admission`
-                    }
-                    </span>
+                    <div className='w-full flex flex-row items-end justify-center gap-6'>
+
+                        {/* Class */}
+                        <div className='flex-1'>
+                            <p className='text-xs text-[#726E71]'>Allow Admission For:</p>
+                            <Select
+                                disabled={!permissions.read_only}
+                            >
+                                <SelectTrigger className='w-full h-8 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder='Classes' className='text-xs' />
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            onClick={() => setClasses(classes.map((c:any) => {
+                                                return{
+                                                    ...c,
+                                                    is_admission_opened:true
+                                                };
+                                            }))}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12} />
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setClasses(classes.map((c:any) => {
+                                                return{
+                                                    ...c,
+                                                    is_admission_opened:false
+                                                };
+                                            }))}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12} />
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className=''>
+                                        {classes.length < 1 ? (
+                                            <p className='text-xs text-hash-color'>No classes yet</p>
+                                        ) : // @ts-ignore
+                                        !classes[0]?.class_name ? (
+                                            <LoadingIcon />
+                                        ) : classes.map((c:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color'
+                                                    checked={c?.is_admission_opened}
+                                                    // @ts-ignore
+                                                    onClick={() => {
+                                                        if(c?.is_admission_opened){
+                                                            c.is_admission_opened = false;
+                                                            setClasses([...classes]);
+                                                        }else{
+                                                            c.is_admission_opened = true;
+                                                            setClasses([...classes]);
+                                                        };
+                                                    }}
+                                                />
+                                                <p className='pl-[2px] text-xs'>{c.class_name}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+
+                        </div>
+
+
+                        {/* Button */}
+                        <span
+                            className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                    hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                            onClick={changeAdmissionState}
+                        >
+                            {isLoading ? (
+                                <LoadingIcon />
+                            ) : 'Update'
+                            // ) : `${admissionStates.is_students_admission_opened ? 'Close' : 'Open'} Students Admission`
+                        }
+                        </span>
+
+                    </div>
 
 
                     {/* Enter Admission Guide Lines */}

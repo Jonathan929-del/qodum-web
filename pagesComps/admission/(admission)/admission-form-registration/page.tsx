@@ -3,13 +3,9 @@
 import {useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
-import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
-import {fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
-import {fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
-import {fetchAdmissionStates} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
 
 
@@ -21,10 +17,6 @@ const page = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState('');
-
-
-    // Admission states
-    const [admissionStates, setAdmissionStates] = useState({is_students_admission_opened:false, is_staff_admission_opened:false});
 
 
     // Is loading
@@ -274,12 +266,10 @@ const page = () => {
             setIsLoading(true);
 
 
-            const admissionStatesRes = await fetchAdmissionStates();
             const enquiriesRes = await fetchAdmissionEnquiries();
             const studentsRes = await fetchStudents();
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setStudents(studentsRes);
-            setAdmissionStates(admissionStatesRes ? admissionStatesRes : admissionStates);
 
 
             setIsLoading(false);
@@ -292,7 +282,7 @@ const page = () => {
             {
                 isLoading ? (
                     <LoadingIcon />
-                ) : admissionStates.is_students_admission_opened ?
+                ) :
                 isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}
@@ -325,8 +315,6 @@ const page = () => {
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
                     />
-                ) : (
-                    <p className='text-xs text-red-500'>Admission is Closed!</p>
                 )
             }
         </div>

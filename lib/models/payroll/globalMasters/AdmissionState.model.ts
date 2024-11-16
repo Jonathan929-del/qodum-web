@@ -9,8 +9,7 @@ import mongoose from 'mongoose';
 const AdmissionStateSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
-        is_staff_admission_opened:{type:Boolean},
-        is_students_admission_opened:{type:Boolean}
+        is_staff_admission_opened:{type:Boolean}
     },
     {
         timestamps:true
