@@ -44,10 +44,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     const [isLoadingSearchedStudents, setIsLoadingSearchedStudents] = useState(false);
 
 
-    // Is loading student data
-    const [isLoadingStudentData, setIsLoadingStudentData] = useState(false);
-
-
     // Search
     const [search, setSearch] = useState('');
 
@@ -1334,10 +1330,105 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
-                // Boards
-                setBoardsState({...boardsState, isLoading:true});
-                const boardsRes = await fetchBoards();
-                setBoardsState({isLoading:false, items:boardsRes});
+
+            // Setting loading states to true
+            setClassesState({...classesState, isLoading:true});
+            setSectionsState({...sectionsState, isLoading:true});
+            setBoardsState({...boardsState, isLoading:true});
+            setStreamsState({...streamsState, isLoading:true});
+            setSubjectsState({...subjectsState, isLoading:true});
+            setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+            setReligionsState({...religionsState, isLoading:true});
+            setBloodGroupsState({...bloodGroupsState, isLoading:true});
+            setCastesState({...castesState, isLoading:true});
+            setCategoriesState({...categoriesState, isLoading:true});
+            setTransportsState({...transportState, isLoading:true});
+            setNationalitiesState({...nationalitiesState, isLoading:true});
+            setParishesState({...parishesState, isLoading:true});
+            setCadetTypesState({...cadetTypesState, isLoading:true});
+            setClubsState({...clubsState, isLoading:true});
+            setHousesState({...housesState, isLoading:true});
+            
+
+            // Classes
+            const classesRes = await fetchClassesNames();
+            setClassesState({isLoading:false, items:classesRes});
+
+
+            // Sections
+            const sectionsRes = await fetchSectionsNames();
+            setSectionsState({isLoading:false, items:sectionsRes});
+
+
+            // Boards
+            const boardsRes = await fetchBoards();
+            setBoardsState({isLoading:false, items:boardsRes});
+
+
+            // Streams
+            const streamsRes = await fetchStreamsNames();
+            setStreamsState({isLoading:false, items:streamsRes});
+
+
+            // Subjects
+            const subjectsRes = await fetchSubjectsNames();
+            setSubjectsState({isLoading:false, items:subjectsRes});
+
+
+            // Optional subjects
+            const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+            setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
+
+
+            // Religions
+            const religionsRes = await fetchReligionsNames();
+            setReligionsState({isLoading:false, items:religionsRes});
+
+
+            // Blood groups
+            const bloodGroupsRes = await fetchBloodGroupsNames();
+            setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
+
+
+            // Casts
+            const castsRes = await fetchCastesNames();
+            setCastesState({isLoading:false, items:castsRes});
+
+
+            // Categories
+            const categoriesRes = await fetchCategoriesNames();
+            setCategoriesState({isLoading:false, items:categoriesRes});
+
+
+            // Transports
+            const transportsRes = await fetchTransportMediumsNames();
+            setTransportsState({isLoading:false, items:transportsRes});
+
+
+            // Nationalities
+            const nationalitiesRes = await fetchNationalitiesNames();
+            setNationalitiesState({isLoading:false, items:nationalitiesRes});
+
+
+            // Parishes
+            const parishesRes = await fetchParishesNames();
+            setParishesState({isLoading:false, items:parishesRes});
+
+
+            // Cadet types
+            const cadetTypesRes = await fetchCadetTypesNames();
+            setCadetTypesState({isLoading:false, items:cadetTypesRes});
+
+
+            // Clubs
+            const clubsRes = await fetchClubsNames();
+            setClubsState({isLoading:false, items:clubsRes});
+
+
+            // Houses
+            const housesRes = await fetchHousesNames();
+            setHousesState({isLoading:false, items:housesRes});
+
         };
         fetcher();
     }, []);
@@ -1444,107 +1535,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     }, [doj]);
     useEffect(() => {
         if(updateStudent?.student?.name !== ''){
-            setIsLoadingStudentData(true);
             const fetcher = async () => {
 
-                // Setting loading states to true
-                setClassesState({...classesState, isLoading:true});
-                setSectionsState({...sectionsState, isLoading:true});
-                setBoardsState({...boardsState, isLoading:true});
-                setStreamsState({...streamsState, isLoading:true});
-                setSubjectsState({...subjectsState, isLoading:true});
-                setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-                setReligionsState({...religionsState, isLoading:true});
-                setBloodGroupsState({...bloodGroupsState, isLoading:true});
-                setCastesState({...castesState, isLoading:true});
-                setCategoriesState({...categoriesState, isLoading:true});
-                setTransportsState({...transportState, isLoading:true});
-                setNationalitiesState({...nationalitiesState, isLoading:true});
-                setParishesState({...parishesState, isLoading:true});
-                setCadetTypesState({...cadetTypesState, isLoading:true});
-                setClubsState({...clubsState, isLoading:true});
-                setHousesState({...housesState, isLoading:true});
-                
 
-                // Classes
-                const classesRes = await fetchClassesNames();
-                setClassesState({isLoading:false, items:classesRes});
-
-
-                // Sections
-                const sectionsRes = await fetchSectionsNames();
-                setSectionsState({isLoading:false, items:sectionsRes});
-
-
-                // Boards
-                const boardsRes = await fetchBoards();
-                setBoardsState({isLoading:false, items:boardsRes});
-
-
-                // Streams
-                const streamsRes = await fetchStreamsNames();
-                setStreamsState({isLoading:false, items:streamsRes});
-
-
-                // Subjects
-                const subjectsRes = await fetchSubjectsNames();
-                setSubjectsState({isLoading:false, items:subjectsRes});
-
-
-                // Optional subjects
-                const optionalSubjectsRes = await fetchOptionalSubjectsNames();
-                setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
-
-
-                // Religions
-                const religionsRes = await fetchReligionsNames();
-                setReligionsState({isLoading:false, items:religionsRes});
-
-
-                // Blood groups
-                const bloodGroupsRes = await fetchBloodGroupsNames();
-                setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
-
-
-                // Casts
-                const castsRes = await fetchCastesNames();
-                setCastesState({isLoading:false, items:castsRes});
-
-
-                // Categories
-                const categoriesRes = await fetchCategoriesNames();
-                setCategoriesState({isLoading:false, items:categoriesRes});
-
-
-                // Transports
-                const transportsRes = await fetchTransportMediumsNames();
-                setTransportsState({isLoading:false, items:transportsRes});
-
-
-                // Nationalities
-                const nationalitiesRes = await fetchNationalitiesNames();
-                setNationalitiesState({isLoading:false, items:nationalitiesRes});
-
-
-                // Parishes
-                const parishesRes = await fetchParishesNames();
-                setParishesState({isLoading:false, items:parishesRes});
-
-
-                // Cadet types
-                const cadetTypesRes = await fetchCadetTypesNames();
-                setCadetTypesState({isLoading:false, items:cadetTypesRes});
-
-
-                // Clubs
-                const clubsRes = await fetchClubsNames();
-                setClubsState({isLoading:false, items:clubsRes});
-
-
-                // Houses
-                const housesRes = await fetchHousesNames();
-                setHousesState({isLoading:false, items:housesRes});
-                setIsLoadingStudentData(false);
 
             };
             fetcher();

@@ -315,93 +315,89 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     useEffect(() => {
         const fetcher = async () => {
 
-            // Admission accounts
+            // Setting loading states to true
             setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
+            setBankLedgersState({...bankLedgersState, isLoading:true});
+            setBoardsState({...boardsState, isLoading:true});
+            setClassesState({...classesState, isLoading:true});
+            setStreamsState({...streamsState, isLoading:true});
+            setSubjectsState({...subjectsState, isLoading:true});
+            setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+            setReligionsState({...religionsState, isLoading:true});
+            setBloodGroupsState({...bloodGroupsState, isLoading:true});
+            setCastesState({...castesState, isLoading:true});
+            setCategoriesState({...categoriesState, isLoading:true});
+            setTransportsState({...transportState, isLoading:true});
+            setNationalitiesState({...nationalitiesState, isLoading:true});
+
+
+            // Admission accounts
             const res = await fetchGeneralLedgers();
             setAdmissionAccountsState({isLoading:false, items:res});
 
 
             // Bank ledgers
-            setBankLedgersState({...bankLedgersState, isLoading:true});
             const bankLedgersRes = await fetchBankLedgers();
             setBankLedgersState({isLoading:false, items:bankLedgersRes});
 
 
             // Boards
-            setBoardsState({...boardsState, isLoading:true});
             const boardsRes = await fetchBoards();
             setBoardsState({isLoading:false, items:boardsRes});
+
+
+            // Classes
+            const classesRes = await fetchOpenAdmissionClassesNames();
+            setClassesState({isLoading:false, items:classesRes});
+
+
+            // Streams
+            const streamsRes = await fetchStreamsNames();
+            setStreamsState({isLoading:false, items:streamsRes});
+
+
+            // Subjects
+            const subjectsRes = await fetchSubjectsNames();
+            setSubjectsState({isLoading:false, items:subjectsRes});
+
+
+            // Optional subjects
+            const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+            setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
+
+
+            // Religions
+            const religionsRes = await fetchReligionsNames();
+            setReligionsState({isLoading:false, items:religionsRes});
+
+
+            // Blood groups
+            const bloodGroupsRes = await fetchBloodGroupsNames();
+            setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
+
+
+            // Casts
+            const castsRes = await fetchCastesNames();
+            setCastesState({isLoading:false, items:castsRes});
+
+
+            // Categories
+            const categoriesRes = await fetchCategoriesNames();
+            setCategoriesState({isLoading:false, items:categoriesRes});
+
+
+            // Transports
+            const transportsRes = await fetchTransportMediumsNames();
+            setTransportsState({isLoading:false, items:transportsRes});
+
+
+            // Nationalities
+            const nationalitiesRes = await fetchNationalitiesNames();
+            setNationalitiesState({isLoading:false, items:nationalitiesRes});
 
         };
         fetcher();
     }, []);
-    useEffect(() => {
-        if(updateStudent?.student?.name !== ''){
-            const fetcher = async () => {
-
-                // Classes
-                setClassesState({...classesState, isLoading:true});
-                const classesRes = await fetchOpenAdmissionClassesNames();
-                setClassesState({isLoading:false, items:classesRes});
-
-
-                // Streams
-                setStreamsState({...streamsState, isLoading:true});
-                const streamsRes = await fetchStreamsNames();
-                setStreamsState({isLoading:false, items:streamsRes});
-
-
-                // Subjects
-                setSubjectsState({...subjectsState, isLoading:true});
-                const subjectsRes = await fetchSubjectsNames();
-                setSubjectsState({isLoading:false, items:subjectsRes});
-
-
-                // Optional subjects
-                setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-                const optionalSubjectsRes = await fetchOptionalSubjectsNames();
-                setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
-
-
-                // Religions
-                setReligionsState({...religionsState, isLoading:true});
-                const religionsRes = await fetchReligionsNames();
-                setReligionsState({isLoading:false, items:religionsRes});
-
-
-                // Blood groups
-                setBloodGroupsState({...bloodGroupsState, isLoading:true});
-                const bloodGroupsRes = await fetchBloodGroupsNames();
-                setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
-
-
-                // Casts
-                setCastesState({...castesState, isLoading:true});
-                const castsRes = await fetchCastesNames();
-                setCastesState({isLoading:false, items:castsRes});
-
-
-                // Categories
-                setCategoriesState({...categoriesState, isLoading:true});
-                const categoriesRes = await fetchCategoriesNames();
-                setCategoriesState({isLoading:false, items:categoriesRes});
-
-
-                // Transports
-                setTransportsState({...transportState, isLoading:true});
-                const transportsRes = await fetchTransportMediumsNames();
-                setTransportsState({isLoading:false, items:transportsRes});
-
-
-                // Nationalities
-                setNationalitiesState({...nationalitiesState, isLoading:true});
-                const nationalitiesRes = await fetchNationalitiesNames();
-                setNationalitiesState({isLoading:false, items:nationalitiesRes});
-
-            };
-            fetcher();
-        };
-    }, [updateStudent]);
     useEffect(() => {
         const numberGenerator = async () => {
             try {
@@ -706,78 +702,86 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 {/* Admission Account */}
                 <div className='w-full flex flex-col items-center sm:flex-row'>
                     <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Admission Account</FormLabel>
-                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                        <FormField
-                            control={form?.control}
-                            name='student.admission_account'
-                            render={({ field }) => (
-                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                    <FormControl>
-                                        <Select
-                                            {...field}
-                                            value={field?.value}
-                                            onValueChange={field?.onChange}
-                                        >
-                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                <ChevronDown className="h-4 w-4 opacity-50" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {addmisionAccountsState.items?.length < 1 ? (
-                                                        <p>No accounts yet</p>
-                                                    ) : // @ts-ignore
-                                                    !addmisionAccountsState.items[0]?.account_name ? (
-                                                        <LoadingIcon />
-                                                    ) : addmisionAccountsState.items.map((ledger:any) => (
-                                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
-                                                    ))
-                                                }
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                    {addmisionAccountsState.isLoading ? (
+                        <LoadingIcon />
+                    ) : (
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                            <FormField
+                                control={form?.control}
+                                name='student.admission_account'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field?.value}
+                                                onValueChange={field?.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {addmisionAccountsState.items?.length < 1 ? (
+                                                            <p>No accounts yet</p>
+                                                        ) : // @ts-ignore
+                                                        !addmisionAccountsState.items[0]?.account_name ? (
+                                                            <LoadingIcon />
+                                                        ) : addmisionAccountsState.items.map((ledger:any) => (
+                                                            <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                                        ))
+                                                    }
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    )}
                 </div>
 
 
                 {/* Post Account */}
                 <div className='w-full flex flex-col items-center sm:flex-row'>
                     <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Post Account</FormLabel>
-                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                        <FormField
-                            control={form?.control}
-                            name='student.post_account'
-                            render={({ field }) => (
-                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                    <FormControl>
-                                        <Select
-                                            {...field}
-                                            value={field?.value}
-                                            onValueChange={field?.onChange}
-                                        >
-                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                <ChevronDown className="h-4 w-4 opacity-50" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {bankLedgersState.items.length < 1 ? (
-                                                        <p>No bank ledgers yet</p>
-                                                    ) : // @ts-ignore
-                                                    !bankLedgersState.items[0].account_name ? (
-                                                        <LoadingIcon />
-                                                    ) : bankLedgersState.items.map((ledger:any) => (
-                                                        <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
-                                                    ))
-                                                }
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                    {bankLedgersState.isLoading ? (
+                        <LoadingIcon />
+                    ) : (
+                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                            <FormField
+                                control={form?.control}
+                                name='student.post_account'
+                                render={({ field }) => (
+                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                        <FormControl>
+                                            <Select
+                                                {...field}
+                                                value={field?.value}
+                                                onValueChange={field?.onChange}
+                                            >
+                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {bankLedgersState.items.length < 1 ? (
+                                                            <p>No bank ledgers yet</p>
+                                                        ) : // @ts-ignore
+                                                        !bankLedgersState.items[0].account_name ? (
+                                                            <LoadingIcon />
+                                                        ) : bankLedgersState.items.map((ledger:any) => (
+                                                            <SelectItem value={ledger.account_name} key={ledger._id}>{ledger.account_name}</SelectItem>
+                                                        ))
+                                                    }
+                                                </SelectContent>
+                                            </Select>
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -871,241 +875,261 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     {/* Class */}
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Class</FormLabel>
-                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form?.control}
-                                name='student.class'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setClassesState({...classesState, isLoading:true});
-                                                    const classesRes = await fetchOpenAdmissionClassesNames();
-                                                    setClassesState({isLoading:false, items:classesRes});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {classesState.items?.length < 1 ? (
-                                                        <p>No classes</p>
-                                                        // @ts-ignore
-                                                    ) : !classesState.items[0]?.class_name ? (
-                                                        <LoadingIcon />
-                                                    ) : classesState.items?.map((item:any) => (
-                                                        <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {classesState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField
+                                    control={form?.control}
+                                    name='student.class'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setClassesState({...classesState, isLoading:true});
+                                                        // const classesRes = await fetchOpenAdmissionClassesNames();
+                                                        // setClassesState({isLoading:false, items:classesRes});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {classesState.items?.length < 1 ? (
+                                                            <p>No classes</p>
+                                                            // @ts-ignore
+                                                        ) : !classesState.items[0]?.class_name ? (
+                                                            <LoadingIcon />
+                                                        ) : classesState.items?.map((item:any) => (
+                                                            <SelectItem value={item?.class_name} key={item?._id}>{item?.class_name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
 
 
                     {/* Board */}
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Board</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField 
-                                control={form?.control}
-                                name='student.board'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setBoardsState({...boardsState, isLoading:true});
-                                                    const res = await fetchBoards();
-                                                    setBoardsState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {boardsState.items?.length < 1 ? (
-                                                        <p>No boards</p>
-                                                        // @ts-ignore
-                                                    ) : !boardsState.items[0]?.board ? (
-                                                        <LoadingIcon />
-                                                    ) : boardsState.items?.map((item:any) => (
-                                                        <SelectItem value={item?.board} key={item?._id}>{item?.board}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {boardsState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField 
+                                    control={form?.control}
+                                    name='student.board'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setBoardsState({...boardsState, isLoading:true});
+                                                        // const res = await fetchBoards();
+                                                        // setBoardsState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {boardsState.items?.length < 1 ? (
+                                                            <p>No boards</p>
+                                                            // @ts-ignore
+                                                        ) : !boardsState.items[0]?.board ? (
+                                                            <LoadingIcon />
+                                                        ) : boardsState.items?.map((item:any) => (
+                                                            <SelectItem value={item?.board} key={item?._id}>{item?.board}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
 
 
                     {/* Stream */}
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Stream</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form?.control}
-                                name='student.stream'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setStreamsState({...streamsState, isLoading:true});
-                                                    const res = await fetchStreamsNames();
-                                                    setStreamsState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {streamsState.items?.length < 1 ? (
-                                                        <p>No streams</p>
-                                                        // @ts-ignore
-                                                    ) : !streamsState.items[0]?.stream_name ? (
-                                                        <LoadingIcon />
-                                                    ) : streamsState.items?.map((item:any) => (
-                                                        <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {streamsState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField
+                                    control={form?.control}
+                                    name='student.stream'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setStreamsState({...streamsState, isLoading:true});
+                                                        // const res = await fetchStreamsNames();
+                                                        // setStreamsState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {streamsState.items?.length < 1 ? (
+                                                            <p>No streams</p>
+                                                            // @ts-ignore
+                                                        ) : !streamsState.items[0]?.stream_name ? (
+                                                            <LoadingIcon />
+                                                        ) : streamsState.items?.map((item:any) => (
+                                                            <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
 
 
                     {/* Subjects */}
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Subjects</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
-                                <FormControl>
-                                    <Select
-                                        onOpenChange={async () => {
-                                            setSubjectsState({...subjectsState, isLoading:true});
-                                            const res = await fetchSubjectsNames();
-                                            setSubjectsState({isLoading:false, items:res});
-                                        }}
-                                    >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                            <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
-                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {subjectsState.items.length < 1 ? (
-                                                <p>No subjects</p>
-                                            ) : // @ts-ignore
-                                            !subjectsState.items[0]?.subject_name ? (
-                                                <LoadingIcon />
-                                            ) : (
-                                                <>
-                                                    <div className='flex flex-row'>
-                                                        <div
-                                                            // @ts-ignore
-                                                            onClick={() => setSelectedSubjects(subjectsState.items.map((s:any) => s.subject_name))}
-                                                            className='group flex flex-row items-center justify-center cursor-pointer'
-                                                        >
-                                                            <Check size={12}/>
-                                                            <p className='text-xs group-hover:underline'>All</p>
+                        {subjectsState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                    <FormControl>
+                                        <Select
+                                            onOpenChange={async () => {
+                                                setSubjectsState({...subjectsState, isLoading:true});
+                                                const res = await fetchSubjectsNames();
+                                                setSubjectsState({isLoading:false, items:res});
+                                            }}
+                                        >
+                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
+                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {subjectsState.items.length < 1 ? (
+                                                    <p>No subjects</p>
+                                                ) : // @ts-ignore
+                                                !subjectsState.items[0]?.subject_name ? (
+                                                    <LoadingIcon />
+                                                ) : (
+                                                    <>
+                                                        <div className='flex flex-row'>
+                                                            <div
+                                                                // @ts-ignore
+                                                                onClick={() => setSelectedSubjects(subjectsState.items.map((s:any) => s.subject_name))}
+                                                                className='group flex flex-row items-center justify-center cursor-pointer'
+                                                            >
+                                                                <Check size={12}/>
+                                                                <p className='text-xs group-hover:underline'>All</p>
+                                                            </div>
+                                                            <div
+                                                                onClick={() => setSelectedSubjects([])}
+                                                                className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                                            >
+                                                                <X size={12}/>
+                                                                <p className='text-xs group-hover:underline'>Clear</p>
+                                                            </div>
                                                         </div>
-                                                        <div
-                                                            onClick={() => setSelectedSubjects([])}
-                                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
-                                                        >
-                                                            <X size={12}/>
-                                                            <p className='text-xs group-hover:underline'>Clear</p>
-                                                        </div>
-                                                    </div>
-                                                    <ul className='mt-2'>
-                                                        {subjectsState.items.map((subject:any) => (
-                                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
-                                                                <Checkbox
-                                                                    className='rounded-[3px] text-hash-color font-semibold'
-                                                                    checked={selectedSubjects?.map((s:any) => s).includes(subject.subject_name)}
-                                                                    // @ts-ignore
-                                                                    onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
-                                                                />
-                                                                <div className='w-full flex flex-row'>
-                                                                    <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
-                                                                    {subject.is_university && <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
-                                                                </div>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </>
-                                            )}
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
-                            </FormItem>
-                        </div>
+                                                        <ul className='mt-2'>
+                                                            {subjectsState.items.map((subject:any) => (
+                                                                <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
+                                                                    <Checkbox
+                                                                        className='rounded-[3px] text-hash-color font-semibold'
+                                                                        checked={selectedSubjects?.map((s:any) => s).includes(subject.subject_name)}
+                                                                        // @ts-ignore
+                                                                        onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
+                                                                    />
+                                                                    <div className='w-full flex flex-row'>
+                                                                        <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
+                                                                        {subject.is_university && <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
+                                                                    </div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </>
+                                                )}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                </FormItem>
+                            </div>
+                        )}
                     </div>
 
 
                     {/* Optional Subject */}
                     <div className='w-full flex flex-col items-center'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Optional Subject</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField 
-                                control={form?.control}
-                                name='student.optional_subject'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-                                                    const res = await fetchOptionalSubjectsNames();
-                                                    setOptionalSubjectsState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {optionalSubjectsState.items?.length < 1 ? (
-                                                        <p>No optional subjects</p>
-                                                        // @ts-ignore
-                                                    ) : !optionalSubjectsState.items[0]?.subject_name ? (
-                                                        <LoadingIcon />
-                                                    ) : optionalSubjectsState.items?.map((item:any) => (
-                                                        <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {optionalSubjectsState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField 
+                                    control={form?.control}
+                                    name='student.optional_subject'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-0 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                                                        // const res = await fetchOptionalSubjectsNames();
+                                                        // setOptionalSubjectsState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {optionalSubjectsState.items?.length < 1 ? (
+                                                            <p>No optional subjects</p>
+                                                            // @ts-ignore
+                                                        ) : !optionalSubjectsState.items[0]?.subject_name ? (
+                                                            <LoadingIcon />
+                                                        ) : optionalSubjectsState.items?.map((item:any) => (
+                                                            <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -1525,170 +1549,186 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         {/* Religion */}
                         <div className='w-full flex flex-col items-center sm:flex-row'>
                             <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Religion</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                <FormField
-                                    control={form?.control}
-                                    name='student.religion'
-                                    render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field?.value}
-                                                    onValueChange={field?.onChange}
-                                                    onOpenChange={async () => {
-                                                        setReligionsState({...religionsState, isLoading:true});
-                                                        const res = await fetchReligionsNames();
-                                                        setReligionsState({isLoading:false, items:res});
-                                                    }}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {religionsState.items?.length < 1 ? (
-                                                            <p>No religions</p>
-                                                            // @ts-ignore
-                                                        ) : !religionsState.items[0]?.religion_name ? (
-                                                            <LoadingIcon />
-                                                        ) : religionsState.items?.map((item:any) => (
-                                                            <SelectItem value={item?.religion_name} key={item?._id}>{item?.religion_name}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                            {religionsState.isLoading ? (
+                                <LoadingIcon />
+                            ) : (
+                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='student.religion'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            // setReligionsState({...religionsState, isLoading:true});
+                                                            // const res = await fetchReligionsNames();
+                                                            // setReligionsState({isLoading:false, items:res});
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {religionsState.items?.length < 1 ? (
+                                                                <p>No religions</p>
+                                                                // @ts-ignore
+                                                            ) : !religionsState.items[0]?.religion_name ? (
+                                                                <LoadingIcon />
+                                                            ) : religionsState.items?.map((item:any) => (
+                                                                <SelectItem value={item?.religion_name} key={item?._id}>{item?.religion_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
                         </div>
                         {/* Blood Group */}
                         <div className='w-full flex flex-col items-center sm:flex-row'>
                             <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Blood Group</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                <FormField
-                                    control={form?.control}
-                                    name='student.blood_group'
-                                    render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field?.value}
-                                                    onValueChange={field?.onChange}
-                                                    onOpenChange={async () => {
-                                                        setBloodGroupsState({...bloodGroupsState, isLoading:true});
-                                                        const res = await fetchBloodGroupsNames();
-                                                        setBloodGroupsState({isLoading:false, items:res});
-                                                    }}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {bloodGroupsState.items.length < 1 ? (
-                                                                <p>No blood groups</p>
-                                                            ) : // @ts-ignore
-                                                            !bloodGroupsState.items[0].blood_group ? (
-                                                                <LoadingIcon />
-                                                            ) : bloodGroupsState.items.map((ledger:any) => (
-                                                                <SelectItem value={ledger.blood_group} key={ledger._id}>{ledger.blood_group}</SelectItem>
-                                                            ))
-                                                        }
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                            {bloodGroupsState.isLoading ? (
+                                <LoadingIcon />
+                            ) : (
+                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='student.blood_group'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            // setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                                                            // const res = await fetchBloodGroupsNames();
+                                                            // setBloodGroupsState({isLoading:false, items:res});
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {bloodGroupsState.items.length < 1 ? (
+                                                                    <p>No blood groups</p>
+                                                                ) : // @ts-ignore
+                                                                !bloodGroupsState.items[0].blood_group ? (
+                                                                    <LoadingIcon />
+                                                                ) : bloodGroupsState.items.map((ledger:any) => (
+                                                                    <SelectItem value={ledger.blood_group} key={ledger._id}>{ledger.blood_group}</SelectItem>
+                                                                ))
+                                                            }
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className='flex flex-col gap-2 lg:flex-row'>
                         {/* Caste */}
                         <div className='w-full flex flex-col items-center sm:flex-row'>
                             <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Caste</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                <FormField
-                                    control={form?.control}
-                                    name='student.caste'
-                                    render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field?.value}
-                                                    onValueChange={field?.onChange}
-                                                    onOpenChange={async () => {
-                                                        setCastesState({...castesState, isLoading:true});
-                                                        const res = await fetchCastesNames();
-                                                        setCastesState({isLoading:false, items:res});
-                                                    }}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {castesState.items.length < 1 ? (
-                                                                <p>No casts</p>
-                                                            ) : // @ts-ignore
-                                                            !castesState.items[0].caste_name ? (
-                                                                <LoadingIcon />
-                                                            ) : castesState.items.map((ledger:any) => (
-                                                                <SelectItem value={ledger.caste_name} key={ledger._id}>{ledger.caste_name}</SelectItem>
-                                                            ))
-                                                        }
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                            {castesState.isLoading ? (
+                                <LoadingIcon />
+                            ) : (
+                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='student.caste'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            // setCastesState({...castesState, isLoading:true});
+                                                            // const res = await fetchCastesNames();
+                                                            // setCastesState({isLoading:false, items:res});
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {castesState.items.length < 1 ? (
+                                                                    <p>No casts</p>
+                                                                ) : // @ts-ignore
+                                                                !castesState.items[0].caste_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : castesState.items.map((ledger:any) => (
+                                                                    <SelectItem value={ledger.caste_name} key={ledger._id}>{ledger.caste_name}</SelectItem>
+                                                                ))
+                                                            }
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
                         </div>
                         {/* Category */}
                         <div className='w-full flex flex-col items-center sm:flex-row'>
                             <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Category</FormLabel>
-                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                                <FormField
-                                    control={form?.control}
-                                    name='student.category'
-                                    render={({ field }) => (
-                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                            <FormControl>
-                                                <Select
-                                                    {...field}
-                                                    value={field?.value}
-                                                    onValueChange={field?.onChange}
-                                                    onOpenChange={async () => {
-                                                        setCategoriesState({...categoriesState, isLoading:true});
-                                                        const res = await fetchCategoriesNames();
-                                                        setCategoriesState({isLoading:false, items:res});
-                                                    }}
-                                                >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                        <ChevronDown className="h-4 w-4 opacity-50" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {categoriesState.items?.length < 1 ? (
-                                                            <p>No categories</p>
-                                                            // @ts-ignore
-                                                        ) : !categoriesState.items[0]?.category_name ? (
-                                                            <LoadingIcon />
-                                                        ) : categoriesState.items?.map((item:any) => (
-                                                            <SelectItem value={item?.category_name} key={item?._id}>{item?.category_name}</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                            {categoriesState.isLoading ? (
+                                <LoadingIcon />
+                            ) : (
+                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                    <FormField
+                                        control={form?.control}
+                                        name='student.category'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                                <FormControl>
+                                                    <Select
+                                                        {...field}
+                                                        value={field?.value}
+                                                        onValueChange={field?.onChange}
+                                                        onOpenChange={async () => {
+                                                            // setCategoriesState({...categoriesState, isLoading:true});
+                                                            // const res = await fetchCategoriesNames();
+                                                            // setCategoriesState({isLoading:false, items:res});
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <ChevronDown className="h-4 w-4 opacity-50" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {categoriesState.items?.length < 1 ? (
+                                                                <p>No categories</p>
+                                                                // @ts-ignore
+                                                            ) : !categoriesState.items[0]?.category_name ? (
+                                                                <LoadingIcon />
+                                                            ) : categoriesState.items?.map((item:any) => (
+                                                                <SelectItem value={item?.category_name} key={item?._id}>{item?.category_name}</SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -1754,85 +1794,93 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     {/* Transport */}
                     <div className='w-full flex flex-col items-center sm:flex-row'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Transport</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form?.control}
-                                name='student.transport'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setTransportsState({...transportState, isLoading:true});
-                                                    const res = await fetchTransportMediumsNames();
-                                                    setTransportsState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {transportState.items.length < 1 ? (
-                                                        <p className='text-xs text-hash-color'>No transport mediums</p>
-                                                    ) : // @ts-ignore
-                                                    !transportState.items[0].transport_medium ? (
-                                                        <LoadingIcon />
-                                                    ) : transportState.items.map((t:any) => (
-                                                        <SelectItem value={t.transport_medium} id={t._id}>{t.transport_medium}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {transportState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField
+                                    control={form?.control}
+                                    name='student.transport'
+                                    render={({ field }) => (
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setTransportsState({...transportState, isLoading:true});
+                                                        // const res = await fetchTransportMediumsNames();
+                                                        // setTransportsState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {transportState.items.length < 1 ? (
+                                                            <p className='text-xs text-hash-color'>No transport mediums</p>
+                                                        ) : // @ts-ignore
+                                                        !transportState.items[0].transport_medium ? (
+                                                            <LoadingIcon />
+                                                        ) : transportState.items.map((t:any) => (
+                                                            <SelectItem value={t.transport_medium} id={t._id}>{t.transport_medium}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
                     {/* Nationality */}
                     <div className='w-full flex flex-col items-center sm:flex-row'>
                         <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%] sm:text-end'>Nationality</FormLabel>
-                        <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
-                            <FormField
-                                control={form?.control}
-                                name='student.nationality'
-                                render={({ field }) => (
-                                    <FormItem className='relative flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                {...field}
-                                                value={field?.value}
-                                                onValueChange={field?.onChange}
-                                                onOpenChange={async () => {
-                                                    setNationalitiesState({...nationalitiesState, isLoading:true});
-                                                    const res = await fetchNationalitiesNames();
-                                                    setNationalitiesState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {nationalitiesState.items?.length < 1 ? (
-                                                        <p>No nationalities</p>
-                                                        // @ts-ignore
-                                                    ) : !nationalitiesState.items[0]?.name ? (
-                                                        <LoadingIcon />
-                                                    ) : nationalitiesState.items?.map((item:any) => (
-                                                        <SelectItem value={item?.name} key={item?._id}>{item?.name}</SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                        <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
+                        {nationalitiesState.isLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <div className='w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
+                                <FormField
+                                    control={form?.control}
+                                    name='student.nationality'
+                                    render={({ field }) => (
+                                        <FormItem className='relative flex-1 flex flex-col items-start justify-center mt-2 sm:flex-row sm:items-center sm:gap-2 sm:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    {...field}
+                                                    value={field?.value}
+                                                    onValueChange={field?.onChange}
+                                                    onOpenChange={async () => {
+                                                        // setNationalitiesState({...nationalitiesState, isLoading:true});
+                                                        // const res = await fetchNationalitiesNames();
+                                                        // setNationalitiesState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {nationalitiesState.items?.length < 1 ? (
+                                                            <p>No nationalities</p>
+                                                            // @ts-ignore
+                                                        ) : !nationalitiesState.items[0]?.name ? (
+                                                            <LoadingIcon />
+                                                        ) : nationalitiesState.items?.map((item:any) => (
+                                                            <SelectItem value={item?.name} key={item?._id}>{item?.name}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
