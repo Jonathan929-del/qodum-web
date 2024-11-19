@@ -49,7 +49,7 @@ function FormCom() {
 
 
     // Admission states
-    const [admissionStates, setAdmissionStates] = useState({is_staff_admission_opened:false, is_students_admission_opened:false});
+    const [admissionStates, setAdmissionStates] = useState({is_staff_admission_opened:false});
 
 
     // Toast
@@ -206,7 +206,6 @@ function FormCom() {
                             {isLoading ? (
                                 <LoadingIcon />
                             ) : 'Update'
-                            // ) : `${admissionStates.is_students_admission_opened ? 'Close' : 'Open'} Students Admission`
                         }
                         </span>
 
@@ -214,33 +213,31 @@ function FormCom() {
 
 
                     {/* Enter Admission Guide Lines */}
-                    {admissionStates.is_students_admission_opened && (
-                        <div className='w-full flex flex-col items-start gap-4'>
-                            <div className='w-full flex flex-col items-start justify-center'>
-                                <p className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] sm:basis-[35%]'>Enter Admission Guide Lines</p>
-                                <div className='w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
-                                    <Textarea
-                                        rows={4}
-                                        value={guideLines}
-                                        onChange={(e:any) => setGuideLines(e.target.value)}
-                                        className='flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                    />
-                                </div>
+                    <div className='w-full flex flex-col items-start gap-4'>
+                        <div className='w-full flex flex-col items-start justify-center'>
+                            <p className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] sm:basis-[35%]'>Enter Admission Guide Lines</p>
+                            <div className='w-full flex flex-col items-start gap-4 sm:basis-[65%]'>
+                                <Textarea
+                                    rows={4}
+                                    value={guideLines}
+                                    onChange={(e:any) => setGuideLines(e.target.value)}
+                                    className='flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                />
                             </div>
-
-                            {isGuidlineLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <span
-                                    className='flex items-center justify-center min-w-[150px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
-                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                                    onClick={guidelineSaveHandler}
-                                >
-                                    Save
-                                </span>
-                            )}
                         </div>
-                    )}
+
+                        {isGuidlineLoading ? (
+                            <LoadingIcon />
+                        ) : (
+                            <span
+                                className='flex items-center justify-center min-w-[150px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                onClick={guidelineSaveHandler}
+                            >
+                                Save
+                            </span>
+                        )}
+                    </div>
 
                 </>
             )}

@@ -429,7 +429,7 @@ const page = () => {
             setStaff(staffRes);
         };
         fetcher();
-    }, []);
+    }, [isViewOpened]);
 
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>

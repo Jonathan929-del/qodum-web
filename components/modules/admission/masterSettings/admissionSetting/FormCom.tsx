@@ -193,7 +193,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setClasses(classesRes);
             setEditableNumbers(editableNumbersRes);
             // @ts-ignore
-            form.setValue('board', boardsRes.filter((b:any) => b.is_default)[0]?.board);
+            form.setValue('board', boardsRes.find((b:any) => b.is_default)?.board);
         };
         fetcher();
     }, []);
@@ -210,6 +210,10 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
             setNumbers(['Prospectus No.', 'Registration No.', 'Admission No.']);
         };
     }, [isAllClasses, admissions]);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('board', boards.find((b:any) => b.is_default)?.board);
+    }, [boards]);
 
     return (
         <Form

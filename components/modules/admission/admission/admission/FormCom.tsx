@@ -1396,6 +1396,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     }, []);
     useEffect(() => {
         if(updateStudent.id !== ''){
+
             // Student
             form.setValue('student.section', updateStudent.student.section);
             form.setValue('student.adm_no', updateStudent.student.adm_no);
@@ -1456,7 +1457,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.sibling', updateStudent.student.sibling);
             form.setValue('student.transport', updateStudent.student.transport);
             form.setValue('student.nationality', updateStudent.student.nationality);
-
 
 
 
@@ -1706,10 +1706,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
         }
     }, [valuesFromRegister]);
-    // useEffect(() => {
-    //     // @ts-ignore
-    //     form.setValue('student.board', boards.find((b:any) => b.is_default)?.board || '');
-    // }, []);
     useEffect(() => {}, [form.watch('others')]);
 
     return (

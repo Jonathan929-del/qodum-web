@@ -314,13 +314,24 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
+
+            // Admission accounts
             setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
             const res = await fetchGeneralLedgers();
             setAdmissionAccountsState({isLoading:false, items:res});
 
+
+            // Bank ledgers
             setBankLedgersState({...bankLedgersState, isLoading:true});
             const bankLedgersRes = await fetchBankLedgers();
-            setBankLedgersState({isLoading:false, items:bankLedgersRes});          
+            setBankLedgersState({isLoading:false, items:bankLedgersRes});
+
+
+            // Boards
+            setBoardsState({...boardsState, isLoading:true});
+            const boardsRes = await fetchBoards();
+            setBoardsState({isLoading:false, items:boardsRes});
+
         };
         fetcher();
     }, []);
@@ -332,12 +343,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 setClassesState({...classesState, isLoading:true});
                 const classesRes = await fetchOpenAdmissionClassesNames();
                 setClassesState({isLoading:false, items:classesRes});
-
-
-                // Boards
-                setBoardsState({...boardsState, isLoading:true});
-                const boardsRes = await fetchBoards();
-                setBoardsState({isLoading:false, items:boardsRes});
 
 
                 // Streams
@@ -503,6 +508,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             form.setValue('student.dob', dob._d);
         };
     }, [dob]);
+    useEffect(() => {
+        // @ts-ignore
+        form.setValue('student.board', boardsState.items?.find((b:any) => b.is_default)?.board);
+    }, [boardsState]);
 
     return (
         <div className='flex flex-row'>

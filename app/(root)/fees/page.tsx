@@ -60,6 +60,7 @@ import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
 import FeeDefaulterList from '@/pagesComps/fees/(transaction report)/(defaulter reports)/fee-defaulter-list/page';
 import StudentDetails from '@/pagesComps/fees/(reports)/student-details/page';
+import DefineSMSTemplate from '@/pagesComps/fees/(global masters)/define-sms-template/page';
 // import { setMomentDefaultYear } from '@/lib/utils';
 // import { fetchActiveAcademicYear } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
@@ -256,6 +257,9 @@ const Home = () => {
     };
     if(openedPages.includes('Student Details')){
       openedPagesArray.push({name:'Student Details', component:<StudentDetails />});
+    };
+    if(openedPages.includes('Define SMS Template')){
+      openedPagesArray.push({name:'Define SMS Template', component:<DefineSMSTemplate />});
     };
 
     setOpenedPagesComponents(openedPagesArray);
