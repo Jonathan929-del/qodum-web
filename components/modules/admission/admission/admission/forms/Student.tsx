@@ -1334,7 +1334,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         const fetcher = async () => {
 
             // Fetching data
-            const dropdownData = localStorage.getItem('dropdownData') ? JSON.parse(localStorage.getItem('dropdownData')) : [];
+            const dropdownData = localStorage.getItem('admissionDropdownData') ? JSON.parse(localStorage.getItem('admissionDropdownData')) : [];
             if(dropdownData.length === 0){
 
                 // Admission states
@@ -1506,7 +1506,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         data:housesRes
                     }
                 ];
-                localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                localStorage.setItem('admissionDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
             }else{
 
@@ -1759,7 +1759,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             data:housesRes
                         }
                     ];
-                    localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                    localStorage.setItem('admissionDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
                 };
 

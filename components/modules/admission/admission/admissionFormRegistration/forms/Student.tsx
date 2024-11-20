@@ -318,7 +318,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         const fetcher = async () => {
 
             // Fetching data
-            const dropdownData = localStorage.getItem('dropdownData') ? JSON.parse(localStorage.getItem('dropdownData')) : [];
+            const dropdownData = localStorage.getItem('admissionFormRegistrationDropdownData') ? JSON.parse(localStorage.getItem('admissionFormRegistrationDropdownData')) : [];
             if(dropdownData.length === 0){
 
                 // Admission states
@@ -460,7 +460,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         data:nationalitiesRes
                     }
                 ];
-                localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                localStorage.setItem('admissionFormRegistrationDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
             }else{
 
@@ -671,7 +671,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             data:nationalitiesRes
                         }
                     ];
-                    localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                    localStorage.setItem('admissionFormRegistrationDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
                 };
 
