@@ -344,6 +344,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             // Boards
             const boardsRes = await fetchBoards();
             setBoardsState({isLoading:false, items:boardsRes});
+            // @ts-ignore
+            form.setValue('student.board', boardsRes?.find((b:any) => b.is_default)?.board);
 
 
             // Classes

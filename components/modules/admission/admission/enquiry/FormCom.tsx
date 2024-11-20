@@ -15,11 +15,11 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.validation';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {createEnquiry, deleteEnquiry, fetchEnquiriesCount, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
 import { fetchEnquiryNoSettings } from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
+import {fetchOpenAdmissionClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {createEnquiry, deleteEnquiry, fetchEnquiriesCount, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
 
 
 
@@ -185,7 +185,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
         };
         const fetcher = async () => {
             const [classesRes, enquiriesCount, numberData] = await Promise.all([
-                fetchClasses(),
+                fetchOpenAdmissionClassesNames(),
                 fetchEnquiriesCount(),
                 fetchEnquiryNoSettings()
             ]);
