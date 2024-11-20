@@ -10,9 +10,9 @@ const AdmissionStateSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
         is_staff_admission_opened:{type:Boolean},
-        classes_last_updated_at:{type:Date, default:new Date()},
         admission_accounts_last_updated_at:{type:Date, default:new Date()},
         post_accounts_last_updated_at:{type:Date, default:new Date()},
+        classes_last_updated_at:{type:Date, default:new Date()},
         boards_last_updated_at:{type:Date, default:new Date()},
         streams_last_updated_at:{type:Date, default:new Date()},
         subjects_last_updated_at:{type:Date, default:new Date()},

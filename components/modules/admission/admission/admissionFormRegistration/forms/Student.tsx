@@ -460,7 +460,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         data:nationalitiesRes
                     }
                 ];
-                localStorage.setItem('dropdownData', JSON.stringify(newDropdownData));
+                localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
             }else{
 
@@ -671,7 +671,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             data:nationalitiesRes
                         }
                     ];
-                    localStorage.setItem('dropdownData', JSON.stringify(newDropdownData));
+                    localStorage.setItem('dropdownData', JSON.stringify([...dropdownData, newDropdownData]));
 
                 };
 
