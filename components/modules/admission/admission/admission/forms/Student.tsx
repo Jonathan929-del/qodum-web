@@ -1553,9 +1553,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     <Select
                                         onValueChange={(v:any) => setSelectedClass(v)}
                                         onOpenChange={async () => {
-                                            setClassesState({...classesState, isLoading:true});
-                                            const classesRes = await fetchClassesNames();
-                                            setClassesState({isLoading:false, items:classesRes});
+                                            // setClassesState({...classesState, isLoading:true});
+                                            // const classesRes = await fetchClassesNames();
+                                            // setClassesState({isLoading:false, items:classesRes});
                                         }}
                                     >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -1586,9 +1586,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     <Select
                                         onValueChange={(v:any) => setSelectedSection(v)}
                                         onOpenChange={async () => {
-                                            setSectionsState({...sectionsState, isLoading:true});
-                                            const classesRes = await fetchSectionsNames();
-                                            setSectionsState({isLoading:false, items:classesRes});
+                                            // setSectionsState({...sectionsState, isLoading:true});
+                                            // const classesRes = await fetchSectionsNames();
+                                            // setSectionsState({isLoading:false, items:classesRes});
                                         }}
                                     >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -1675,9 +1675,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
                                                     onOpenChange={async () => {
-                                                        setClassesState({...classesState, isLoading:true});
-                                                        const classesRes = await fetchClassesNames();
-                                                        setClassesState({isLoading:false, items:classesRes});
+                                                        // setClassesState({...classesState, isLoading:true});
+                                                        // const classesRes = await fetchClassesNames();
+                                                        // setClassesState({isLoading:false, items:classesRes});
                                                     }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -1727,9 +1727,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
                                                     onOpenChange={async () => {
-                                                        setSectionsState({...sectionsState, isLoading:true});
-                                                        const res = await fetchSectionsNames();
-                                                        setSectionsState({isLoading:false, items:res});
+                                                        // setSectionsState({...sectionsState, isLoading:true});
+                                                        // const res = await fetchSectionsNames();
+                                                        // setSectionsState({isLoading:false, items:res});
                                                     }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -1783,9 +1783,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
                                                     onOpenChange={async () => {
-                                                        setBoardsState({...boardsState, isLoading:true});
-                                                        const res = await fetchBoards();
-                                                        setBoardsState({isLoading:false, items:res});
+                                                        // setBoardsState({...boardsState, isLoading:true});
+                                                        // const res = await fetchBoards();
+                                                        // setBoardsState({isLoading:false, items:res});
                                                     }}
                                                 >
                                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2140,9 +2140,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
                                                             onOpenChange={async () => {
-                                                                setClassesState({...classesState, isLoading:true});
-                                                                const res = await fetchClassesNames();
-                                                                setClassesState({isLoading:false, items:res});
+                                                                // setClassesState({...classesState, isLoading:true});
+                                                                // const res = await fetchClassesNames();
+                                                                // setClassesState({isLoading:false, items:res});
                                                             }}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2434,9 +2434,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
                                                             onOpenChange={async () => {
-                                                                setReligionsState({...religionsState, isLoading:true});
-                                                                const res = await fetchReligionsNames();
-                                                                setReligionsState({isLoading:false, items:res});
+                                                                // setReligionsState({...religionsState, isLoading:true});
+                                                                // const res = await fetchReligionsNames();
+                                                                // setReligionsState({isLoading:false, items:res});
                                                             }}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2482,9 +2482,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 value={field?.value}
                                                                 onValueChange={field?.onChange}
                                                                 onOpenChange={async () => {
-                                                                    setParishesState({...parishesState, isLoading:true});
-                                                                    const res = await fetchParishesNames();
-                                                                    setParishesState({isLoading:false, items:res});
+                                                                    // setParishesState({...parishesState, isLoading:true});
+                                                                    // const res = await fetchParishesNames();
+                                                                    // setParishesState({isLoading:false, items:res});
                                                                 }}
                                                             >
                                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2530,9 +2530,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
                                                             onOpenChange={async () => {
-                                                                setCategoriesState({...categoriesState, isLoading:true});
-                                                                const res = await fetchCategoriesNames();
-                                                                setCategoriesState({isLoading:false, items:res});
+                                                                // setCategoriesState({...categoriesState, isLoading:true});
+                                                                // const res = await fetchCategoriesNames();
+                                                                // setCategoriesState({isLoading:false, items:res});
                                                             }}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2575,9 +2575,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             value={field?.value}
                                                             onValueChange={field?.onChange}
                                                             onOpenChange={async () => {
-                                                                setCastesState({...castesState, isLoading:true});
-                                                                const res = await fetchCastesNames();
-                                                                setCastesState({isLoading:false, items:res});
+                                                                // setCastesState({...castesState, isLoading:true});
+                                                                // const res = await fetchCastesNames();
+                                                                // setCastesState({isLoading:false, items:res});
                                                             }}
                                                         >
                                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2628,9 +2628,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setBloodGroupsState({...bloodGroupsState, isLoading:true});
-                                                            const res = await fetchBloodGroupsNames();
-                                                            setBloodGroupsState({isLoading:false, items:res});
+                                                            // setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                                                            // const res = await fetchBloodGroupsNames();
+                                                            // setBloodGroupsState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2675,9 +2675,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setCadetTypesState({...cadetTypesState, isLoading:true});
-                                                            const res = await fetchCadetTypesNames();
-                                                            setCadetTypesState({isLoading:false, items:res});
+                                                            // setCadetTypesState({...cadetTypesState, isLoading:true});
+                                                            // const res = await fetchCadetTypesNames();
+                                                            // setCadetTypesState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2722,9 +2722,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setClubsState({...clubsState, isLoading:true});
-                                                            const res = await fetchClubsNames();
-                                                            setClubsState({isLoading:false, items:res});
+                                                            // setClubsState({...clubsState, isLoading:true});
+                                                            // const res = await fetchClubsNames();
+                                                            // setClubsState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2774,9 +2774,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setStreamsState({...streamsState, isLoading:true});
-                                                            const res = await fetchStreamsNames();
-                                                            setStreamsState({isLoading:false, items:res});
+                                                            // setStreamsState({...streamsState, isLoading:true});
+                                                            // const res = await fetchStreamsNames();
+                                                            // setStreamsState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2814,9 +2814,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         <FormControl>
                                             <Select
                                                 onOpenChange={async () => {
-                                                    setSubjectsState({...subjectsState, isLoading:true});
-                                                    const res = await fetchSubjectsNames();
-                                                    setSubjectsState({isLoading:false, items:res});
+                                                    // setSubjectsState({...subjectsState, isLoading:true});
+                                                    // const res = await fetchSubjectsNames();
+                                                    // setSubjectsState({isLoading:false, items:res});
                                                 }}
                                             >
                                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2893,9 +2893,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-                                                            const res = await fetchOptionalSubjectsNames();
-                                                            setOptionalSubjectsState({isLoading:false, items:res});
+                                                            // setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                                                            // const res = await fetchOptionalSubjectsNames();
+                                                            // setOptionalSubjectsState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -2940,9 +2940,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setHousesState({...housesState, isLoading:true});
-                                                            const res = await fetchHousesNames();
-                                                            setHousesState({isLoading:false, items:res});
+                                                            // setHousesState({...housesState, isLoading:true});
+                                                            // const res = await fetchHousesNames();
+                                                            // setHousesState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -3254,9 +3254,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setTransportsState({...transportState, isLoading:true});
-                                                            const res = await fetchTransportMediumsNames();
-                                                            setTransportsState({isLoading:false, items:res});
+                                                            // setTransportsState({...transportState, isLoading:true});
+                                                            // const res = await fetchTransportMediumsNames();
+                                                            // setTransportsState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
@@ -3299,9 +3299,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         value={field?.value}
                                                         onValueChange={field?.onChange}
                                                         onOpenChange={async () => {
-                                                            setNationalitiesState({...nationalitiesState, isLoading:true});
-                                                            const res = await fetchNationalitiesNames();
-                                                            setNationalitiesState({isLoading:false, items:res});
+                                                            // setNationalitiesState({...nationalitiesState, isLoading:true});
+                                                            // const res = await fetchNationalitiesNames();
+                                                            // setNationalitiesState({isLoading:false, items:res});
                                                         }}
                                                     >
                                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>

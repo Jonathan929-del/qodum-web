@@ -1027,9 +1027,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     <FormControl>
                                         <Select
                                             onOpenChange={async () => {
-                                                setSubjectsState({...subjectsState, isLoading:true});
-                                                const res = await fetchSubjectsNames();
-                                                setSubjectsState({isLoading:false, items:res});
+                                                // setSubjectsState({...subjectsState, isLoading:true});
+                                                // const res = await fetchSubjectsNames();
+                                                // setSubjectsState({isLoading:false, items:res});
                                             }}
                                         >
                                             <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
