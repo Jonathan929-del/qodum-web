@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Caste from '@/lib/models/admission/globalMasters/Caste.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createCaste = async ({caste_name}:CreateCasteProps) => {
         // Creating new caste
         const newCaste = await Caste.create({session:activeSession?.year_name, caste_name});
         newCaste.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'casts_last_updated_at'});
 
 
         // Return
@@ -126,6 +131,10 @@ export const modifyCaste = async ({id, caste_name}:ModifyCasteProps) => {
         const updatedCaste = await Caste.findByIdAndUpdate(id, {caste_name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'casts_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -147,6 +156,13 @@ export const deleteCaste = async ({id}:{id:String}) => {
 
         // Deleting caste
         await Caste.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'casts_last_updated_at'});
+
+
+        // Return
         return 'Caste Deleted';
 
     } catch (err) {

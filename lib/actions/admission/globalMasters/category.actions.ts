@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Category from '@/lib/models/admission/globalMasters/Category.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -45,6 +46,10 @@ export const createCategory = async ({category_name, is_default}:CreateCategoryP
         }else{
             newCategory.save();
         };
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'categories_last_updated_at'});
 
 
         // Return
@@ -141,11 +146,15 @@ export const modifyCategory = async ({id, category_name, is_default}:ModifyCateg
                 } catch (err:any) {
                     console.log(`Error updating other categories: ${err.message}`);
                 }
-            });;
+            });
+            // Update last updated at date
+            await modifyAdmissionStates({property:'categories_last_updated_at'});
             return 'Updated';
         }else{
             // Update category with setting other categories is default to false
             await Category.findByIdAndUpdate(id, {category_name, is_default}, {new:true});
+            // Update last updated at date
+            await modifyAdmissionStates({property:'categories_last_updated_at'});
             return 'Updated';
         };
 
@@ -169,6 +178,13 @@ export const deleteCategory = async ({id}:{id:String}) => {
 
         // Deleting category
         await Category.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'categories_last_updated_at'});
+
+
+        // Return
         return 'Category Deleted';
 
     } catch (err) {

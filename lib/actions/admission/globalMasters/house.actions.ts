@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import House from '@/lib/models/admission/globalMasters/House.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -36,6 +37,10 @@ export const createHouse = async ({house_name}:CreateHouseProps) => {
         // Creating new house
         const newHouse = await House.create({session:activeSession?.year_name, house_name});
         newHouse.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'houses_last_updated_at'});
 
 
         // Return
@@ -127,6 +132,10 @@ export const modifyHouse = async ({id, house_name}:ModifyHouseProps) => {
         await House.findByIdAndUpdate(id, {house_name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'houses_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -148,6 +157,13 @@ export const deleteHouse = async ({id}:{id:String}) => {
 
         // Deleting house
         await House.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'houses_last_updated_at'});
+
+
+        // Return
         return 'House deleted';
 
     } catch (err) {

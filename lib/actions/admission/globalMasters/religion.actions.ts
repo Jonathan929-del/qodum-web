@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Religion from '@/lib/models/admission/globalMasters/Religion.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createReligion = async ({religion_name}:CreateReligionProps) => {
         // Creating new religion
         const newReligion = await Religion.create({session:activeSession?.year_name, religion_name});
         newReligion.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'religions_last_updated_at'});
 
 
         // Return
@@ -125,6 +130,10 @@ export const modifyReligion = async ({id, religion_name}:ModifyReligionProps) =>
         await Religion.findByIdAndUpdate(id, {religion_name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'religions_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -146,6 +155,13 @@ export const deleteReligion = async ({id}:{id:String}) => {
 
         // Deleting religion
         await Religion.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'religions_last_updated_at'});
+
+
+        // Return
         return 'Religion Deleted';
 
     } catch (err) {

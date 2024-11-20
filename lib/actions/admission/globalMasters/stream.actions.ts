@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Stream from '@/lib/models/admission/globalMasters/Stream.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -15,7 +16,6 @@ interface CreateStreamProps{
 // Create stream
 export const createStream = async ({stream_name}:CreateStreamProps) => {
     try {
-
     
         // Database connection
         connectToDb('accounts');
@@ -36,6 +36,10 @@ export const createStream = async ({stream_name}:CreateStreamProps) => {
         // Creating new stream
         const newStream = await Stream.create({session:activeSession?.year_name, stream_name});
         newStream.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'streams_last_updated_at'});
 
 
         // Return
@@ -127,6 +131,10 @@ export const modifyStream = async ({id, stream_name}:ModifyStreamProps) => {
         await Stream.findByIdAndUpdate(id, {stream_name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'streams_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -148,6 +156,13 @@ export const deleteStream = async ({id}:{id:String}) => {
 
         // Deleting stream
         await Stream.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'streams_last_updated_at'});
+
+
+        // Return
         return 'Stream deleted';
 
     } catch (err) {

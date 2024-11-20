@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import OptionalSubject from '@/lib/models/admission/globalMasters/OptionalSubject.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -36,6 +37,10 @@ export const createOptionalSubject = async ({subject_name}:CreateOptionalSubject
         // Creating new optional subject
         const newOptionalSubject = await OptionalSubject.create({session:activeSession?.year_name, subject_name});
         newOptionalSubject.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'optional_subjects_last_updated_at'});
 
 
         // Return
@@ -127,6 +132,10 @@ export const modifyOptionalSubject = async ({id, subject_name}:ModifySubjectProp
         await OptionalSubject.findByIdAndUpdate(id, {subject_name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'optional_subjects_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -148,6 +157,13 @@ export const deleteOptionalSubject = async ({id}:{id:String}) => {
 
         // Deleting subject
         await OptionalSubject.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'optional_subjects_last_updated_at'});
+
+
+        // Return
         return 'Optional subject deleted';
 
     } catch (err) {

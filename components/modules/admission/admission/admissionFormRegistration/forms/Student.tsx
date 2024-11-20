@@ -28,6 +28,8 @@ import { fetchTransportMediumsNames } from '@/lib/actions/fees/transport/transpo
 import { fetchNationalitiesNames } from '@/lib/actions/admission/globalMasters/nationality.actions';
 import { fetchBankLedgers } from '@/lib/actions/accounts/accounts/bankLedger.actions';
 import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
+import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import { deepEqual } from '@/lib/utils';
 
 
 
@@ -315,88 +317,366 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     useEffect(() => {
         const fetcher = async () => {
 
-            // Setting loading states to true
-            setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
-            setBankLedgersState({...bankLedgersState, isLoading:true});
-            setBoardsState({...boardsState, isLoading:true});
-            setClassesState({...classesState, isLoading:true});
-            setStreamsState({...streamsState, isLoading:true});
-            setSubjectsState({...subjectsState, isLoading:true});
-            setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-            setReligionsState({...religionsState, isLoading:true});
-            setBloodGroupsState({...bloodGroupsState, isLoading:true});
-            setCastesState({...castesState, isLoading:true});
-            setCategoriesState({...categoriesState, isLoading:true});
-            setTransportsState({...transportState, isLoading:true});
-            setNationalitiesState({...nationalitiesState, isLoading:true});
+            // Fetching data
+            const dropdownData = localStorage.getItem('dropdownData') ? JSON.parse(localStorage.getItem('dropdownData')) : [];
+            if(dropdownData.length === 0){
+
+                // Admission states
+                const admissionStates = await fetchAdmissionStates();
 
 
-            // Admission accounts
-            const res = await fetchGeneralLedgers();
-            setAdmissionAccountsState({isLoading:false, items:res});
+                // Admission accounts
+                setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
+                const admissionAccountsRes = await fetchGeneralLedgers();
+                setAdmissionAccountsState({isLoading:false, items:admissionAccountsRes});
+                
+                
+                // Bank ledgers
+                setBankLedgersState({...bankLedgersState, isLoading:true});
+                const bankLedgersRes = await fetchBankLedgers();
+                setBankLedgersState({isLoading:false, items:bankLedgersRes});
+                
+                
+                // Boards
+                setBoardsState({...boardsState, isLoading:true});
+                const boardsRes = await fetchBoards();
+                setBoardsState({isLoading:false, items:boardsRes});
+                // @ts-ignore
+                form.setValue('student.board', boardsRes?.find((b:any) => b.is_default)?.board);
+                
+                
+                // Classes
+                setClassesState({...classesState, isLoading:true});
+                const classesRes = await fetchOpenAdmissionClassesNames();
+                setClassesState({isLoading:false, items:classesRes});
+                
+                
+                // Streams
+                setStreamsState({...streamsState, isLoading:true});
+                const streamsRes = await fetchStreamsNames();
+                setStreamsState({isLoading:false, items:streamsRes});
+                
+                
+                // Subjects
+                setSubjectsState({...subjectsState, isLoading:true});
+                const subjectsRes = await fetchSubjectsNames();
+                setSubjectsState({isLoading:false, items:subjectsRes});
+                
+                
+                // Optional subjects
+                setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+                setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
+                
+                
+                // Religions
+                setReligionsState({...religionsState, isLoading:true});
+                const religionsRes = await fetchReligionsNames();
+                setReligionsState({isLoading:false, items:religionsRes});
+                
+                
+                // Blood groups
+                setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                const bloodGroupsRes = await fetchBloodGroupsNames();
+                setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
+                
+                
+                // Casts
+                setCastesState({...castesState, isLoading:true});
+                const castsRes = await fetchCastesNames();
+                setCastesState({isLoading:false, items:castsRes});
+                
+
+                // Categories
+                setCategoriesState({...categoriesState, isLoading:true});
+                const categoriesRes = await fetchCategoriesNames();
+                setCategoriesState({isLoading:false, items:categoriesRes});
+                
+
+                // Transports
+                setTransportsState({...transportState, isLoading:true});
+                const transportsRes = await fetchTransportMediumsNames();
+                setTransportsState({isLoading:false, items:transportsRes});
+                
+
+                // Nationalities
+                setNationalitiesState({...nationalitiesState, isLoading:true});
+                const nationalitiesRes = await fetchNationalitiesNames();
+                setNationalitiesState({isLoading:false, items:nationalitiesRes});
 
 
-            // Bank ledgers
-            const bankLedgersRes = await fetchBankLedgers();
-            setBankLedgersState({isLoading:false, items:bankLedgersRes});
+                // Creating new dropdown data and saving it to the local storage
+                const newDropdownData = [
+                    {
+                        admission_accounts_last_updated_at:new Date(admissionStates?.admission_accounts_last_updated_at),
+                        data:admissionAccountsRes
+                    },
+                    {
+                        post_accounts_last_updated_at:new Date(admissionStates?.post_accounts_last_updated_at),
+                        data:bankLedgersRes
+                    },
+                    {
+                        boards_last_updated_at:new Date(admissionStates?.boards_last_updated_at),
+                        data:boardsRes
+                    },
+                    {
+                        classes_last_updated_at:new Date(admissionStates?.classes_last_updated_at),
+                        data:classesRes
+                    },
+                    {
+                        streams_last_updated_at:new Date(admissionStates?.streams_last_updated_at),
+                        data:streamsRes
+                    },
+                    {
+                        subjects_last_updated_at:new Date(admissionStates?.subjects_last_updated_at),
+                        data:subjectsRes
+                    },
+                    {
+                        optional_subjects_last_updated_at:new Date(admissionStates?.optional_subjects_last_updated_at),
+                        data:optionalSubjectsRes
+                    },
+                    {
+                        religions_last_updated_at:new Date(admissionStates?.religions_last_updated_at),
+                        data:religionsRes
+                    },
+                    {
+                        blood_groups_last_updated_at:new Date(admissionStates?.blood_groups_last_updated_at),
+                        data:bloodGroupsRes
+                    },
+                    {
+                        casts_last_updated_at:new Date(admissionStates?.casts_last_updated_at),
+                        data:castsRes
+                    },
+                    {
+                        categories_last_updated_at:new Date(admissionStates?.categories_last_updated_at),
+                        data:categoriesRes
+                    },
+                    {
+                        transport_mediums_last_updated_at:new Date(admissionStates?.transport_mediums_last_updated_at),
+                        data:transportsRes
+                    },
+                    {
+                        nationalities_last_updated_at:new Date(admissionStates?.nationalities_last_updated_at),
+                        data:nationalitiesRes
+                    }
+                ];
+                localStorage.setItem('dropdownData', JSON.stringify(newDropdownData));
+
+            }else{
+
+                // Local storage values
+                const localStorageData = dropdownData.reduce((acc:any, item:any) => {const [key, value] = Object.entries(item)[0];acc[key] = value;return acc;}, {});
+                
+                
+                // Database values
+                const lastUpdatedDates = await fetchAdmissionStates();
+                const allDataBaseValues = Object.keys(lastUpdatedDates).filter(key => key.includes('last_updated_at')).reduce((acc, key) => {acc[key] = lastUpdatedDates[key];return acc}, {});
+                const dataBaseValues = Object.fromEntries(Object.entries(allDataBaseValues).filter(([key]) => localStorageData.hasOwnProperty(key)));
 
 
-            // Boards
-            const boardsRes = await fetchBoards();
-            setBoardsState({isLoading:false, items:boardsRes});
-            // @ts-ignore
-            form.setValue('student.board', boardsRes?.find((b:any) => b.is_default)?.board);
+                // Checking if the local storage is async with the databse
+                if(deepEqual(localStorageData, dataBaseValues)){
+
+                    // Admission accounts
+                    setAdmissionAccountsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('admission_accounts_last_updated_at')).data});
+                    
+                    
+                    // Bank ledgers
+                    setBankLedgersState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('post_accounts_last_updated_at')).data});
+                    
+                    
+                    // Boards
+                    setBoardsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('boards_last_updated_at')).data});
+                    // @ts-ignore
+                    form.setValue('student.board', dropdownData?.find((d:any) => Object.keys(d).includes('boards_last_updated_at')).data?.find((b:any) => b.is_default)?.board);
+                    
+                    
+                    // Classes
+                    setClassesState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('classes_last_updated_at')).data});
+                    
+                    
+                    // Streams
+                    setStreamsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('streams_last_updated_at')).data});
+                    
+                    
+                    // Subjects
+                    setSubjectsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('subjects_last_updated_at')).data});
+                    
+                    
+                    // Optional subjects
+                    setOptionalSubjectsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('optional_subjects_last_updated_at')).data});
+                    
+                    
+                    // Religions
+                    setReligionsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('religions_last_updated_at')).data});
+                    
+                    
+                    // Blood groups
+                    setBloodGroupsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('blood_groups_last_updated_at')).data});
+                    
+                    
+                    // Casts
+                    setCastesState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('casts_last_updated_at')).data});
+                    
+
+                    // Categories
+                    setCategoriesState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('categories_last_updated_at')).data});
+                    
+
+                    // Transports
+                    setTransportsState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('transport_mediums_last_updated_at')).data});
+                    
+
+                    // Nationalities
+                    setNationalitiesState({isLoading:false, items:dropdownData?.find((d:any) => Object.keys(d).includes('nationalities_last_updated_at')).data});
+
+                }else{
+
+                    // Admission states
+                    const admissionStates = await fetchAdmissionStates();
 
 
-            // Classes
-            const classesRes = await fetchOpenAdmissionClassesNames();
-            setClassesState({isLoading:false, items:classesRes});
+                    // Admission accounts
+                    setAdmissionAccountsState({...addmisionAccountsState, isLoading:true});
+                    const admissionAccountsRes = await fetchGeneralLedgers();
+                    setAdmissionAccountsState({isLoading:false, items:admissionAccountsRes});
+                    
+                    
+                    // Bank ledgers
+                    setBankLedgersState({...bankLedgersState, isLoading:true});
+                    const bankLedgersRes = await fetchBankLedgers();
+                    setBankLedgersState({isLoading:false, items:bankLedgersRes});
+                    
+                    
+                    // Boards
+                    setBoardsState({...boardsState, isLoading:true});
+                    const boardsRes = await fetchBoards();
+                    setBoardsState({isLoading:false, items:boardsRes});
+                    // @ts-ignore
+                    form.setValue('student.board', boardsRes?.find((b:any) => b.is_default)?.board);
+                    
+                    
+                    // Classes
+                    setClassesState({...classesState, isLoading:true});
+                    const classesRes = await fetchOpenAdmissionClassesNames();
+                    setClassesState({isLoading:false, items:classesRes});
+                    
+                    
+                    // Streams
+                    setStreamsState({...streamsState, isLoading:true});
+                    const streamsRes = await fetchStreamsNames();
+                    setStreamsState({isLoading:false, items:streamsRes});
+                    
+                    
+                    // Subjects
+                    setSubjectsState({...subjectsState, isLoading:true});
+                    const subjectsRes = await fetchSubjectsNames();
+                    setSubjectsState({isLoading:false, items:subjectsRes});
+                    
+                    
+                    // Optional subjects
+                    setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                    const optionalSubjectsRes = await fetchOptionalSubjectsNames();
+                    setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
+                    
+                    
+                    // Religions
+                    setReligionsState({...religionsState, isLoading:true});
+                    const religionsRes = await fetchReligionsNames();
+                    setReligionsState({isLoading:false, items:religionsRes});
+                    
+                    
+                    // Blood groups
+                    setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                    const bloodGroupsRes = await fetchBloodGroupsNames();
+                    setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
+                    
+                    
+                    // Casts
+                    setCastesState({...castesState, isLoading:true});
+                    const castsRes = await fetchCastesNames();
+                    setCastesState({isLoading:false, items:castsRes});
+                    
+
+                    // Categories
+                    setCategoriesState({...categoriesState, isLoading:true});
+                    const categoriesRes = await fetchCategoriesNames();
+                    setCategoriesState({isLoading:false, items:categoriesRes});
+                    
+
+                    // Transports
+                    setTransportsState({...transportState, isLoading:true});
+                    const transportsRes = await fetchTransportMediumsNames();
+                    setTransportsState({isLoading:false, items:transportsRes});
+                    
+
+                    // Nationalities
+                    setNationalitiesState({...nationalitiesState, isLoading:true});
+                    const nationalitiesRes = await fetchNationalitiesNames();
+                    setNationalitiesState({isLoading:false, items:nationalitiesRes});
 
 
-            // Streams
-            const streamsRes = await fetchStreamsNames();
-            setStreamsState({isLoading:false, items:streamsRes});
+                    // Creating new dropdown data and saving it to the local storage
+                    const newDropdownData = [
+                        {
+                            admission_accounts_last_updated_at:new Date(admissionStates?.admission_accounts_last_updated_at),
+                            data:admissionAccountsRes
+                        },
+                        {
+                            post_accounts_last_updated_at:new Date(admissionStates?.post_accounts_last_updated_at),
+                            data:bankLedgersRes
+                        },
+                        {
+                            boards_last_updated_at:new Date(admissionStates?.boards_last_updated_at),
+                            data:boardsRes
+                        },
+                        {
+                            classes_last_updated_at:new Date(admissionStates?.classes_last_updated_at),
+                            data:classesRes
+                        },
+                        {
+                            streams_last_updated_at:new Date(admissionStates?.streams_last_updated_at),
+                            data:streamsRes
+                        },
+                        {
+                            subjects_last_updated_at:new Date(admissionStates?.subjects_last_updated_at),
+                            data:subjectsRes
+                        },
+                        {
+                            optional_subjects_last_updated_at:new Date(admissionStates?.optional_subjects_last_updated_at),
+                            data:optionalSubjectsRes
+                        },
+                        {
+                            religions_last_updated_at:new Date(admissionStates?.religions_last_updated_at),
+                            data:religionsRes
+                        },
+                        {
+                            blood_groups_last_updated_at:new Date(admissionStates?.blood_groups_last_updated_at),
+                            data:bloodGroupsRes
+                        },
+                        {
+                            casts_last_updated_at:new Date(admissionStates?.casts_last_updated_at),
+                            data:castsRes
+                        },
+                        {
+                            categories_last_updated_at:new Date(admissionStates?.categories_last_updated_at),
+                            data:categoriesRes
+                        },
+                        {
+                            transport_mediums_last_updated_at:new Date(admissionStates?.transport_mediums_last_updated_at),
+                            data:transportsRes
+                        },
+                        {
+                            nationalities_last_updated_at:new Date(admissionStates?.nationalities_last_updated_at),
+                            data:nationalitiesRes
+                        }
+                    ];
+                    localStorage.setItem('dropdownData', JSON.stringify(newDropdownData));
 
+                };
 
-            // Subjects
-            const subjectsRes = await fetchSubjectsNames();
-            setSubjectsState({isLoading:false, items:subjectsRes});
-
-
-            // Optional subjects
-            const optionalSubjectsRes = await fetchOptionalSubjectsNames();
-            setOptionalSubjectsState({isLoading:false, items:optionalSubjectsRes});
-
-
-            // Religions
-            const religionsRes = await fetchReligionsNames();
-            setReligionsState({isLoading:false, items:religionsRes});
-
-
-            // Blood groups
-            const bloodGroupsRes = await fetchBloodGroupsNames();
-            setBloodGroupsState({isLoading:false, items:bloodGroupsRes});
-
-
-            // Casts
-            const castsRes = await fetchCastesNames();
-            setCastesState({isLoading:false, items:castsRes});
-
-
-            // Categories
-            const categoriesRes = await fetchCategoriesNames();
-            setCategoriesState({isLoading:false, items:categoriesRes});
-
-
-            // Transports
-            const transportsRes = await fetchTransportMediumsNames();
-            setTransportsState({isLoading:false, items:transportsRes});
-
-
-            // Nationalities
-            const nationalitiesRes = await fetchNationalitiesNames();
-            setNationalitiesState({isLoading:false, items:nationalitiesRes});
-
+            };
+            
         };
         fetcher();
     }, []);

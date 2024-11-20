@@ -94,3 +94,35 @@ export const toggleStaffAdmissionState = async () => {
         console.log(`Error toggling staff admission state: ${err.message}`);
     };
 };
+
+
+
+
+
+// Modify admissoin states
+export const modifyAdmissionStates = async ({property}:any) => {
+    try {
+    
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+        if(!activeSession) return 0;
+
+
+        // Updating
+        await AdmissionState.findOneAndUpdate(
+            {session:activeSession?.year_name},
+            {[property]:new Date()}
+        );
+
+
+        // Return
+        return 'Updated';
+
+    }catch(err:any){
+        console.log(`Error modifying admission states: ${err.message}`);
+    };
+};

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import GeneralLedger from '@/lib/models/accounts/accounts/GeneralLedger.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -55,6 +56,10 @@ export const createGeneralLedger = async ({account_name, group, account_type, op
             depreciation
         });
         newGeneralLedger.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'admission_accounts_last_updated_at'});
 
 
         // Return
@@ -129,6 +134,10 @@ export const modifyGeneralLedger = async ({id, account_name, group, account_type
         await GeneralLedger.findByIdAndUpdate(id, {account_name, group, account_type, opening_balance, opening_balance_type, assign_date, is_cash_book, is_fixed_asset, depreciation}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'admission_accounts_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -150,6 +159,13 @@ export const deleteGeneralLedger = async ({id}:{id:String}) => {
 
         // Deleting General Ledger
         await GeneralLedger.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'admission_accounts_last_updated_at'});
+
+
+        // Return
         return 'General Ledger Deleted';
 
     } catch (err) {

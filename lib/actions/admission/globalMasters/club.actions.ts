@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Club from '@/lib/models/admission/globalMasters/Club.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createClub = async ({name}:CreateClubProps) => {
         // Creating new club
         const newClub = await Club.create({session:activeSession?.year_name, name});
         newClub.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'clubs_last_updated_at'});
 
 
         // Return
@@ -132,6 +137,10 @@ export const modifyClub = async ({id, name}:ModifyClubProps) => {
         await Club.findByIdAndUpdate(id, {name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'clubs_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -154,6 +163,10 @@ export const deleteClub = async ({id}:{id:String}) => {
 
         // Deleting club
         await Club.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'clubs_last_updated_at'});
 
 
         // Return

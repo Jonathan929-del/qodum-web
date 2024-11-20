@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import StaffType from '@/lib/models/payroll/globalMasters/StaffType.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from './admissionStates.actions';
 
 
 
@@ -37,6 +38,10 @@ export const createStaffType = async ({staff_type, is_hourly_paid, show_on_ecare
         // Creating new staff type
         const newStaffType = await StaffType.create({session:activeSession?.year_name, staff_type, is_hourly_paid, show_on_ecare});
         newStaffType.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'staff_types_last_updated_at'});
 
 
         // Return
@@ -108,6 +113,10 @@ export const modifyStaffType = async ({id, staff_type, is_hourly_paid, show_on_e
         await StaffType.findByIdAndUpdate(id, {staff_type, is_hourly_paid, show_on_ecare}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'staff_types_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -130,6 +139,10 @@ export const deleteStaffType = async ({id}:{id:String}) => {
 
         // Deleting staff type
         await StaffType.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'staff_types_last_updated_at'});
 
 
         // Return

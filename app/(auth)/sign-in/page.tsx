@@ -11,6 +11,7 @@ import WelcomeImage from '@/public/assets/auth img.svg';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {Lock, LogIn, PersonStanding, User} from 'lucide-react';
 import {createUser, loginUser} from '@/lib/actions/users/manageUsers/user.actions';
+import { createAdmissionStates, fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -81,6 +82,13 @@ const SignIn = () => {
         //     is_active:true,
         //     enable_otp:true
         // });
+
+
+        // Create admission states
+        const existingAdmissionStates = await fetchAdmissionStates();
+        if(!existingAdmissionStates){
+            await createAdmissionStates();
+        };
 
 
         // Username and password validations

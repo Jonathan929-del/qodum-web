@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Profession from '@/lib/models/payroll/globalMasters/Profession.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from './admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createProfession = async ({profession}:CreateProfessionProps) => {
         // Creating new profession
         const newProfession = await Profession.create({session:activeSession?.year_name, profession});
         newProfession.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'professions_last_updated_at'});
 
 
         // Return
@@ -132,6 +137,10 @@ export const modifyProfession = async ({id, profession}:ModifyProfessionProps) =
         await Profession.findByIdAndUpdate(id, {profession}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'professions_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -154,6 +163,10 @@ export const deleteProfession = async ({id}:{id:String}) => {
 
         // Deleting profession
         await Profession.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'professions_last_updated_at'});
 
 
         // Return

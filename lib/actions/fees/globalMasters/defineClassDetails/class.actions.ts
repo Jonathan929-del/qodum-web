@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
+import { modifyAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -50,6 +51,10 @@ export const createClass = async ({class_name, wing_name, school, order}:CreateC
             const newClass = await Class.create({class_name, wing_name, school, order, is_admission_opened:true});
             newClass.save();
         };
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
 
 
         // Return
@@ -153,6 +158,8 @@ export const modifyClass = async ({id, class_name, wing_name, school, order}:Mod
         };
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
 
 
         // Return
@@ -182,6 +189,10 @@ export const modifyClassSections = async ({class_name, sections}:ModifyClassSect
 
         // Updating class
         await Class.findOneAndUpdate({class_name}, {sections}, {new:true});
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
 
 
         // Return
@@ -252,6 +263,10 @@ export const deleteClass = async ({id}:{id:String}) => {
         };
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
+
+
         // Return
         return 'Class Deleted';
 
@@ -308,6 +323,10 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
         };
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
+
+
         return 'Modified';
 
     } catch (err) {
@@ -352,6 +371,10 @@ export const updateClassesAdmissionStates = async ({classes_states}:{classes_sta
         classes_states.map(async (c:any) => {
             await Class.findOneAndUpdate({class_name:c.class_name}, {is_admission_opened:c.is_admission_opened});
         });
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'classes_last_updated_at'});
 
 
         // Return

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Section from '@/lib/models/fees/globalMasters/defineClassDetails/Section.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -88,6 +89,10 @@ export const createSection = async ({section_name, order_no}:CreateSectionProps)
         // Creating new section
         const newSection = await Section.create({session:activeSession?.year_name, section_name, order_no});
         newSection.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'sections_last_updated_at'});
 
 
         // Return
@@ -180,6 +185,10 @@ export const modifySection = async ({id, section_name, order_no}:ModifySectionPr
         await Section.findByIdAndUpdate(id, {section_name, order_no}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'sections_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -202,6 +211,13 @@ export const deleteSection = async ({id}:{id:String}) => {
 
         // Deleting section
         await Section.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'sections_last_updated_at'});
+
+
+        // Return
         return 'Section Deleted';
 
     } catch (err) {

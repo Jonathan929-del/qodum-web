@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Nationality from '@/lib/models/admission/globalMasters/Nationality.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createNationality = async ({name}:CreateNationalityProps) => {
         // Creating new nationality
         const newNationality = await Nationality.create({session:activeSession?.year_name, name});
         newNationality.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'nationalities_last_updated_at'});
 
 
         // Return
@@ -132,6 +137,10 @@ export const modifyNationality = async ({id, name}:ModifyNationalityProps) => {
         await Nationality.findByIdAndUpdate(id, {name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'nationalities_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -154,6 +163,10 @@ export const deleteNationality = async ({id}:{id:String}) => {
 
         // Deleting nationality
         await Nationality.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'nationalities_last_updated_at'});
 
 
         // Return

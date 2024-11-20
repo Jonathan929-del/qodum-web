@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import CadetType from '@/lib/models/admission/globalMasters/CadetType.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createCadetType = async ({name}:CreateCadetTypeProps) => {
         // Creating new cadet type
         const newCadetType = await CadetType.create({session:activeSession?.year_name, name});
         newCadetType.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'cadet_types_last_updated_at'});
 
 
         // Return
@@ -133,6 +138,10 @@ export const modifyCadetType = async ({id, name}:ModifyCadetTypeProps) => {
         await CadetType.findByIdAndUpdate(id, {name}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'cadet_types_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -155,6 +164,10 @@ export const deleteCadetType = async ({id}:{id:String}) => {
 
         // Deleting cadet type
         await CadetType.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'cadet_types_last_updated_at'});
 
 
         // Return

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import BankLedger from '@/lib/models/accounts/accounts/BankLedger.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -60,6 +61,10 @@ export const createBankLedger = async ({account_name, account_no, group, account
             assign_date
         });
         newBankLedger.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'post_accounts_last_updated_at'});
 
 
         // Return
@@ -137,6 +142,10 @@ export const modifyBankLedger = async ({id, account_name, account_no, group, acc
         const updatedBankLedger = await BankLedger.findByIdAndUpdate(id, {account_name, account_no, group, account_type, account_address, account_city, pin_code, email, mobile, opening_balance, opening_balance_type, assign_date}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'post_accounts_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -158,6 +167,13 @@ export const deleteBankLedger = async ({id}:{id:String}) => {
 
         // Deleting Bank Ledger
         await BankLedger.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'post_accounts_last_updated_at'});
+
+
+        // Return
         return 'Bank Ledger Deleted';
 
     } catch (err) {

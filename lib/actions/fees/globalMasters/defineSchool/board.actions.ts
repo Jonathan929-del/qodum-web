@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Board from '@/lib/models/fees/globalMasters/defineSchool/Board.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -45,6 +46,10 @@ export const createBoard = async ({board, is_default}:CreateBoardProps) => {
         }else{
             newBoard.save();
         };
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'boards_last_updated_at'});
 
 
         // Return
@@ -115,11 +120,15 @@ export const modifyBoard = async ({id, board, is_default}:ModifyBoardProps) => {
                 } catch (err:any) {
                     console.log(`Error updating other boards: ${err.message}`);
                 }
-            });;
+            });
+            // Update last updated at date
+            await modifyAdmissionStates({property:'boards_last_updated_at'});
             return 'Updated';
         }else{
             // Update board with setting other board is defailt to false
             await Board.findByIdAndUpdate(id, {board, is_default}, {new:true});
+            // Update last updated at date
+            await modifyAdmissionStates({property:'boards_last_updated_at'});
             return 'Updated';
         };
 
@@ -141,6 +150,13 @@ export const deleteBoard = async ({id}:{id:String}) => {
 
         // Deleting board
         await Board.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'boards_last_updated_at'});
+
+
+        // Return
         return 'Board Deleted';
 
     } catch (err) {

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import TransportMedium from '@/lib/models/fees/transport/TransportMedium.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -36,6 +37,10 @@ export const createTransportMedium = async ({transport_medium}:CreateTransportMe
         // Creating new transport medium
         const newTranportMedium = await TransportMedium.create({session:activeSession?.year_name, transport_medium});
         newTranportMedium.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'transport_mediums_last_updated_at'});
 
 
         // Return
@@ -127,6 +132,10 @@ export const modifyTransportMedium = async ({id, transport_medium}:ModifyTranspo
         await TransportMedium.findByIdAndUpdate(id, {transport_medium}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'transport_mediums_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -149,6 +158,13 @@ export const deleteTransportMedium = async ({id}:{id:String}) => {
 
         // Deleting transport medium
         await TransportMedium.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'transport_mediums_last_updated_at'});
+
+
+        // Return
         return 'Transport medium deleted';
 
     } catch (err) {

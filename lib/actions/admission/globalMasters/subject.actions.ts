@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import Subject from '@/lib/models/admission/globalMasters/Subject.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -37,6 +38,10 @@ export const createSubject = async ({subject_name, available_seats, is_universit
         // Creating new subject
         const newSubject = await Subject.create({session:activeSession?.year_name, subject_name, available_seats, is_university});
         newSubject.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'subjects_last_updated_at'});
 
 
         // Return
@@ -130,6 +135,10 @@ export const modifySubject = async ({id, subject_name, available_seats, is_unive
         await Subject.findByIdAndUpdate(id, {subject_name, available_seats, is_university}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'subjects_last_updated_at'});
+
+
         // Return
         return 'Updated';
 
@@ -152,6 +161,13 @@ export const deleteSubject = async ({id}:{id:String}) => {
 
         // Deleting subject
         await Subject.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'subjects_last_updated_at'});
+
+
+        // Return
         return 'Subject Deleted';
 
     } catch (err) {

@@ -3,6 +3,7 @@
 import {connectToDb} from '@/lib/mongoose';
 import BloodGroup from '@/lib/models/admission/globalMasters/BloodGroup.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import { modifyAdmissionStates } from '../../payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -35,6 +36,10 @@ export const createBloodGroup = async ({blood_group}:CreateBloodGroupProps) => {
         // Creating new blood group
         const newBloodGroup = await BloodGroup.create({session:activeSession?.year_name, blood_group});
         newBloodGroup.save();
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'blood_groups_last_updated_at'});
 
 
         // Return
@@ -125,6 +130,10 @@ export const modifyBloodGroup = async ({id, blood_group}:ModifyBloodGroupProps) 
         await BloodGroup.findByIdAndUpdate(id, {blood_group}, {new:true});
 
 
+        // Update last updated at date
+        await modifyAdmissionStates({property:'blood_groups_last_updated_at'});
+
+
         // Return
         return 'Modified';
 
@@ -146,6 +155,13 @@ export const deleteBloodGroup = async ({id}:{id:String}) => {
 
         // Deleting blood group
         await BloodGroup.findByIdAndDelete(id);
+
+
+        // Update last updated at date
+        await modifyAdmissionStates({property:'blood_groups_last_updated_at'});
+
+
+        // Return
         return 'Blood Group Deleted';
 
     } catch (err) {
