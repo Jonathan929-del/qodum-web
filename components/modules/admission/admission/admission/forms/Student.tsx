@@ -1506,7 +1506,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         data:housesRes
                     }
                 ];
-                localStorage.setItem('admissionDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                localStorage.setItem('admissionDropdownData', JSON.stringify(newDropdownData));
 
             }else{
 
@@ -1759,7 +1759,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             data:housesRes
                         }
                     ];
-                    localStorage.setItem('admissionDropdownData', JSON.stringify([...dropdownData, newDropdownData]));
+                    localStorage.setItem('admissionDropdownData', JSON.stringify(newDropdownData));
 
                 };
 
