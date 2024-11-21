@@ -227,6 +227,7 @@ const FormCom = ({}:any) => {
                             section: extractedData?.student?.section || '',
                             adm_no: extractedData?.student?.adm_no || '',
                             pen_no: extractedData?.student?.pen_no || '',
+                            par_id: extractedData?.student?.par_id || '',
                             roll_no: extractedData?.student?.roll_no || '',
                             bill_no: extractedData?.student?.bill_no || '',
                             is_university: extractedData?.student?.is_university || false,
@@ -254,6 +255,7 @@ const FormCom = ({}:any) => {
                             last_name: extractedData?.student?.last_name || '',
                             dob: convertToDate(extractedData?.student?.dob) || today,
                             place_of_birth: extractedData?.student?.place_of_birth || '',
+                            // @ts-ignore
                             gender: extractedData?.student?.gender === 1 ? 'Male' : 'Female' || '',
                             contact_person_name: extractedData?.student?.contact_person_name || '',
                             contact_person_mobile: extractedData?.student?.contact_person_mobile || 0,
@@ -405,6 +407,7 @@ const FormCom = ({}:any) => {
                         section:s.student.section,
                         adm_no:s.student.adm_no,
                         pen_no:s.student.pen_no,
+                        par_id:s.student.par_id,
                         roll_no:s.student.roll_no,
                         bill_no:s.student.bill_no,
                         is_university:s.student.is_university,
