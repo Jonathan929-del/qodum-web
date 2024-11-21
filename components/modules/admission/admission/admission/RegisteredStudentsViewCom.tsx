@@ -25,6 +25,7 @@ const RegisteredStudentsViewCom = ({setIsViewOpened, registeredStudents, setUpda
                 section:'',
                 adm_no:'',
                 pen_no:'',
+                par_id:'',
                 roll_no:'',
                 bill_no:'',
                 is_university:false,

@@ -180,6 +180,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                 section:student?.student?.section || '',
                 adm_no:student?.student?.adm_no || '',
                 pen_no:student?.student?.pen_no || '',
+                par_id:student?.student?.par_id || '',
                 roll_no:student?.student?.roll_no || '',
                 bill_no:student?.student?.bill_no || '',
                 is_university:student?.student?.is_university || false,

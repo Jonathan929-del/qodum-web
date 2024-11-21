@@ -108,6 +108,7 @@ interface CreateAdmittedStudentProps{
         section:String;
         adm_no:String;
         pen_no:String;
+        par_id:String;
         roll_no:String;
         bill_no:String;
         is_university:Boolean;
@@ -380,6 +381,7 @@ interface ModifyAdmittedStudentProps{
         section:String;
         adm_no:String;
         pen_no:String;
+        par_id:String;
         roll_no:String;
         bill_no:String;
         is_university:Boolean;

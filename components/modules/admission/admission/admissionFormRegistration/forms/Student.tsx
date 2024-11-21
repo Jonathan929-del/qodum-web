@@ -700,9 +700,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     substringValue = 6;
                 }
                 if(form.getValues().student.class !== '' && updateStudent.id === ''){
-                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
-                        ? await fetchClassNumbers({class_name:'All Classes'})
-                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    const admissionNumbers = await fetchClassNumbers({class_name:'All Classes'});
+                    // const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                    //     ? await fetchClassNumbers({class_name:'All Classes'})
+                    //     : await fetchClassNumbers({class_name:form.getValues().student.class});
                     // @ts-ignore
                     const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0]
                     const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];
@@ -727,9 +728,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     };
                 };
                 if(updateStudent.id !== '' && form.getValues().student.class !== updateStudent.student.class){
-                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
-                        ? await fetchClassNumbers({class_name:'All Classes'})
-                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    const admissionNumbers = await fetchClassNumbers({class_name:'All Classes'});
+                    // const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                    //     ? await fetchClassNumbers({class_name:'All Classes'})
+                    //     : await fetchClassNumbers({class_name:form.getValues().student.class});
                     // @ts-ignore
                     const registerEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Registration No.')[0]
                     const prospectusEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Prospectus No.')[0];

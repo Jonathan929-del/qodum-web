@@ -65,6 +65,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             section:updateStudent.student.section,
             adm_no:updateStudent.student.adm_no,
             pen_no:updateStudent.student.pen_no,
+            par_id:updateStudent.student.par_id,
             roll_no:updateStudent.student.roll_no,
             bill_no:updateStudent.student.bill_no,
             is_university:updateStudent.student.is_university,
@@ -244,6 +245,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 section:updateStudent.id === '' ? '' : updateStudent.student.section,
                 adm_no:updateStudent.id === '' ? '' : updateStudent.student.adm_no,
                 pen_no:updateStudent.id === '' ? '' : updateStudent.student.pen_no,
+                par_id:updateStudent.id === '' ? '' : updateStudent.student.par_id,
                 roll_no:updateStudent.id === '' ? '' : updateStudent.student.roll_no,
                 bill_no:updateStudent.id === '' ? '' : updateStudent.student.bill_no,
                 is_university:updateStudent.id === '' ? false : updateStudent.student.is_university,
@@ -436,6 +438,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     section:values.student.section,
                     adm_no:values.student.adm_no,
                     pen_no:values.student.pen_no,
+                    par_id:values.student.par_id,
                     roll_no:values.student.roll_no,
                     bill_no:values.student.bill_no,
                     is_university:values.student.is_university,
@@ -642,6 +645,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     section:values.student.section,
                     adm_no:values.student.adm_no,
                     pen_no:values.student.pen_no,
+                    par_id:values.student.par_id,
                     roll_no:values.student.roll_no,
                     bill_no:values.student.bill_no,
                     is_university:values.student.is_university,
@@ -985,6 +989,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 section:'',
                 adm_no:'',
                 pen_no:'',
+                par_id:'',
                 roll_no:'',
                 bill_no:'',
                 is_university:false,
@@ -1174,6 +1179,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 section:'',
                 adm_no:'',
                 pen_no:'',
+                par_id:'',
                 roll_no:'',
                 bill_no:'',
                 is_university:false,
@@ -1401,6 +1407,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('student.section', updateStudent.student.section);
             form.setValue('student.adm_no', updateStudent.student.adm_no);
             form.setValue('student.pen_no', updateStudent.student.pen_no);
+            form.setValue('student.par_id', updateStudent.student.par_id);
             form.setValue('student.roll_no', updateStudent.student.roll_no);
             form.setValue('student.bill_no', updateStudent.student.bill_no);
             form.setValue('student.is_university', updateStudent.student.is_university);

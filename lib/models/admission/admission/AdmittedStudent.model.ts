@@ -19,6 +19,7 @@ const AdmittedStudentSchema = new mongoose.Schema(
             section:{type:String},
             adm_no:{type:String},
             pen_no:{type:String},
+            par_id:{type:String},
             roll_no:{type:String},
             bill_no:{type:String},
             is_university:{type:Boolean},

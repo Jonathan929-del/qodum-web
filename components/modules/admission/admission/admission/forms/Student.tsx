@@ -149,6 +149,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     section:'',
                     adm_no:'',
                     pen_no:'',
+                    par_id:'',
                     roll_no:'',
                     bill_no:'',
                     is_university:false,
@@ -698,6 +699,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     section:student?.student?.section || '',
                     adm_no:student?.student?.adm_no || '',
                     pen_no:student?.student?.pen_no || '',
+                    par_id:student?.student?.par_id || '',
                     roll_no:student?.student?.roll_no || '',
                     bill_no:student?.student?.bill_no || '',
                     is_university:student?.student?.is_university || false,
@@ -1083,6 +1085,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 section:student?.student?.section || '',
                 adm_no:student?.student?.adm_no || '',
                 pen_no:student?.student?.pen_no || '',
+                par_id:student?.student?.par_id || '',
                 roll_no:student?.student?.roll_no || '',
                 bill_no:student?.student?.bill_no || '',
                 is_university:student?.student?.is_university || false,
@@ -1788,9 +1791,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     substringValue = 6;
                 };
                 if(form.getValues().student.class !== '' && updateStudent.id === ''){
-                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
-                        ? await fetchClassNumbers({class_name:'All Classes'})
-                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    const admissionNumbers = await fetchClassNumbers({class_name:'All Classes'});
+                    // const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                    //     ? await fetchClassNumbers({class_name:'All Classes'})
+                    //     : await fetchClassNumbers({class_name:form.getValues().student.class});
                     // @ts-ignore
                     const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
                     
@@ -1801,9 +1805,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     };
                 };
                 if(updateStudent.id !== '' && form.getValues().student.class !== updateStudent.student.class){
-                    const admissionNumbers = localStorage.getItem('all_classes') === 'true'
-                        ? await fetchClassNumbers({class_name:'All Classes'})
-                        : await fetchClassNumbers({class_name:form.getValues().student.class});
+                    const admissionNumbers = await fetchClassNumbers({class_name:'All Classes'});
+                    // const admissionNumbers = localStorage.getItem('all_classes') === 'true'
+                    //     ? await fetchClassNumbers({class_name:'All Classes'})
+                    //     : await fetchClassNumbers({class_name:form.getValues().student.class});
                     // @ts-ignore
                     const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
                     
@@ -1845,7 +1850,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         }
     }, [form.watch('student.class')]);
     useEffect(() => {
-        if(form.getValues().student.religion.trim() === 'Christianity' || form.getValues().student.religion.trim() === 'Christian'){
+        if(form.getValues().student.religion.toLowerCase().includes('christ')){
             setIsParish(true);
         }else{
             setIsParish(false);
@@ -2246,6 +2251,29 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
                                     <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* PAR ID */}
+                    <FormField
+                        control={form?.control}
+                        name='student.par_id'
+                        render={({ field }) => (
+                            <FormItem className='w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PAR ID</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input

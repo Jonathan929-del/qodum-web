@@ -13,6 +13,7 @@ export const AdmittedStudentValidation = z.object({
         section:z.string(),
         adm_no:z.string(),
         pen_no:z.string(),
+        par_id:z.string(),
         roll_no:z.string(),
         bill_no:z.string(),
         is_university:z.boolean(),
