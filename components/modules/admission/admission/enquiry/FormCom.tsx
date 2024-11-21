@@ -116,7 +116,8 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
             // Update
             await modifyEnquiry({
                 id:updateEnquiry.id,
-                enquiry_no:localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
+                enquiry_no:comparisonObject.enquiry_no,
+                // enquiry_no:localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? comparisonObject.enquiry_no : values.enquiry_no,
                 enquiry_date:values.enquiry_date,
                 visitor_name:values.visitor_name,
                 visitor_address:values.visitor_address,
@@ -192,7 +193,8 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
             setClasses(classesRes);
             if(numberData.length > 0 && updateEnquiry.id === ''){
                 const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
-                form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+                form.setValue('enquiry_no', number);
+                // form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
             }else{
                 form.setValue('enquiry_no', updateEnquiry.enquiry_no);
             };
@@ -207,7 +209,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
             ]);
             if(numberData.length > 0 && updateEnquiry.id === ''){
                 const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
-                form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
+                form.setValue('enquiry_no', number);
             }else{
                 form.setValue('enquiry_no', updateEnquiry.enquiry_no);
             };
@@ -261,7 +263,8 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
+                                                    disabled={true}
+                                                    // disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
                                                     className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>
@@ -283,7 +286,8 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
                                             <FormControl>
                                                 <Input
                                                     {...field}
-                                                    disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
+                                                    disabled={true}
+                                                    // disabled={localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? true : false}
                                                     className='flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>
