@@ -12,9 +12,6 @@ import {fetchEnquiries} from '@/lib/actions/admission/admission/enquiry.actions'
 // Main function
 const page = () => {
 
-    // Is loading enquiries
-    const [isLoadingEnquiries, setIsLoadingEnquiries] = useState(true);
-
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState(false);
@@ -44,11 +41,9 @@ const page = () => {
     
     // Use effect
     useEffect(() => {
-        setIsLoadingEnquiries(true);
         const fetcher = async () => {
             const res = await fetchEnquiries();
             setEnquiries(res);
-            setIsLoadingEnquiries(false);
         };
         fetcher();
     }, [isViewOpened, updateEnquiry]);
@@ -69,7 +64,6 @@ const page = () => {
                         enquiries={enquiries}
                         updateEnquiry={updateEnquiry}
                         setUpdateEnquiry={setUpdateEnquiry}
-                        isLoadingEnquiries={isLoadingEnquiries}
                     />
                 )
             }

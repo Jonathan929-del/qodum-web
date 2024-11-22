@@ -272,6 +272,9 @@ export const fetchEnquiriesCount = async () => {
 
         // Fetching
         const enquiries = await Enquiry.countDocuments({session:activeSession?.year_name});
+
+
+        // Return
         return enquiries;
 
     } catch (err:any) {

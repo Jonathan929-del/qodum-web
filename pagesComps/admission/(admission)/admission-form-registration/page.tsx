@@ -19,10 +19,6 @@ const page = () => {
     const [isViewOpened, setIsViewOpened] = useState('');
 
 
-    // Is loading
-    const [isLoading, setIsLoading] = useState(false);
-
-
     // Students
     const [students, setStudents] = useState([{}]);
 
@@ -263,16 +259,12 @@ const page = () => {
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            setIsLoading(true);
-
 
             const enquiriesRes = await fetchAdmissionEnquiries();
             const studentsRes = await fetchStudents();
             setAdmissionEnquiries(enquiriesRes.filter((e:any) => !studentsRes.map((s:any) => s.student?.enquiry_no).includes(e?.enquiry_no)));
             setStudents(studentsRes);
 
-
-            setIsLoading(false);
         };
         fetcher();
     }, [isViewOpened, updateStudent]);
@@ -280,9 +272,6 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                isLoading ? (
-                    <LoadingIcon />
-                ) :
                 isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}

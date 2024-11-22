@@ -81,6 +81,7 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
                 suffix:values.suffix
             });
             toast({title:'Added Successfully!'});
+            localStorage.setItem('enquiryNo', `${values.prefix}${values.lead_zero?.substring(0, values.lead_zero.length - 1)}${Number(values.start_from)}${values.suffix}`);
         }
         // Modify enquiry no setting
         else if(!deepEqual(comparisonObject, values)){
@@ -93,11 +94,13 @@ const FormCom = ({setIsViewOpened, enquiryNoSettings, updateEnquiryNoSetting, se
                 lead_zero:values.lead_zero,
                 suffix:values.suffix
             });
+            localStorage.setItem('enquiryNo', `${values.prefix}${values.lead_zero?.substring(0, values.lead_zero.length - 1)}${Number(values.start_from)}${values.suffix}`);
             toast({title:'Updated Successfully!'});
         }
         // Delete enquiry no setting
         else if(updateEnquiryNoSetting.isDeleteClicked){
             await deleteEnquiryNoSetting({id:updateEnquiryNoSetting.id});
+            localStorage.removeItem('enquiryNo');
             toast({title:'Deleted Successfully!'});
         };
 

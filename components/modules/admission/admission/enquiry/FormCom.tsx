@@ -17,7 +17,7 @@ import MyDatePicker from '@/components/utils/CustomDatePicker';
 import {EnquiryValidation} from '@/lib/validations/admission/admission/enquiry.validation';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import { fetchEnquiryNoSettings } from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
+import {fetchEnquiryNoSettings} from '@/lib/actions/admission/masterSettings/enquiryNoSetting.actions';
 import {fetchOpenAdmissionClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {createEnquiry, deleteEnquiry, fetchEnquiriesCount, modifyEnquiry} from '@/lib/actions/admission/admission/enquiry.actions';
 
@@ -26,7 +26,7 @@ import {createEnquiry, deleteEnquiry, fetchEnquiriesCount, modifyEnquiry} from '
 
 
 // Main function
-const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, isLoadingEnquiries}:any) => {
+const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -105,6 +105,34 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
                 toast({title:'Please create a session first', variant:'alert'});
                 return;
             };
+
+            // Updating local storage enquiry no.
+            const localStorageEnquiryNo = localStorage.getItem('enquiryNo') ? localStorage.getItem('enquiryNo') : null;
+            const newEnquiryNoGenerator = (str:any) => {
+                // Match validation
+                const match = str.match(/(0+\d+)(?!.*\d)/);
+                if(!match)throw new Error('No numeric part found to increment.');
+            
+
+                // Numeric part of the string
+                const fullMatch = match[0];
+                const numericPart = fullMatch.replace(/^0+/, '');
+
+
+                // Increment the numeric part
+                const incrementedNumber = String(parseInt(numericPart, 10) + 1);
+
+            
+                // Pad with zeros to match the original length of the fullMatch
+                const paddedNumber = incrementedNumber.padStart(fullMatch.length, '0');
+
+
+                // Return
+                return str.replace(fullMatch, paddedNumber);
+            };
+            console.log(newEnquiryNoGenerator(localStorageEnquiryNo));
+            localStorage.setItem('enquiryNo', newEnquiryNoGenerator(localStorageEnquiryNo));
+
             toast({title:'Added Successfully!'});
         }
         // Modify enquiry
@@ -185,34 +213,39 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry, i
             setEnquiryDate(moment(updateEnquiry.enquiry_date));
         };
         const fetcher = async () => {
-            const [classesRes, enquiriesCount, numberData] = await Promise.all([
-                fetchOpenAdmissionClassesNames(),
-                fetchEnquiriesCount(),
-                fetchEnquiryNoSettings()
-            ]);
+            const [classesRes] = await fetchOpenAdmissionClassesNames();
             setClasses(classesRes);
-            if(numberData.length > 0 && updateEnquiry.id === ''){
-                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
-                form.setValue('enquiry_no', number);
-                // form.setValue('enquiry_no', localStorage.getItem('enquiry_no_setting_should_be') === 'Automatic' ? number : updateEnquiry.id === '' ? '' : updateEnquiry.enquiry_no);
-            }else{
-                form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-            };
         };
         fetcher();
     }, []);
     useEffect(() => {
         const fetcher = async () => {
-            const [enquiriesCount, numberData] = await Promise.all([
-                fetchEnquiriesCount(),
-                fetchEnquiryNoSettings()
-            ]);
-            if(numberData.length > 0 && updateEnquiry.id === ''){
-                const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
-                form.setValue('enquiry_no', number);
+
+            // Local storage enquiry no.
+            const localStorageEnquiryNo = localStorage.getItem('enquiryNo') ? localStorage.getItem('enquiryNo') : null;
+
+
+            if(localStorageEnquiryNo){
+                if(updateEnquiry.id === ''){
+                    form.setValue('enquiry_no', localStorageEnquiryNo);
+                }else{
+                    form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+                };
             }else{
-                form.setValue('enquiry_no', updateEnquiry.enquiry_no);
-            };
+                const [enquiriesCount, numberData] = await Promise.all([
+                    fetchEnquiriesCount(),
+                    fetchEnquiryNoSettings()
+                ]);
+                if(numberData.length > 0 && updateEnquiry.id === ''){
+                    const number = `${numberData[0]?.prefix}${numberData[0].lead_zero?.substring(0, numberData[0].lead_zero.length - 1)}${Number(numberData[0].start_from) + enquiriesCount}${numberData[0].suffix}`;
+                    localStorage.setItem('enquiryNo', number);
+                    form.setValue('enquiry_no', number);
+                }else{
+                    form.setValue('enquiry_no', updateEnquiry.enquiry_no);
+                };
+            }
+
+
         };
         fetcher();
     }, [enquiries, updateEnquiry]);
