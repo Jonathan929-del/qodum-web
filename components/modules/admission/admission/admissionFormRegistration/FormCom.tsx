@@ -39,6 +39,14 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     const [anniversaryDate, setAnniversaryDate] = useState(moment());
 
 
+    // Paymodes
+    const [chequeDetails, setChequeDetails] = useState({});
+    const [ddDetails, setddDetails] = useState({});
+    const [neftDetails, setNeftDetails] = useState({});
+    const [swipedCardDetails, setSwipedCardDetails] = useState({});
+    const [upiDetails, setUpiDetails] = useState({});
+
+
     // Is Loading
     const [isLoading, setIsLoading] = useState(false);
 
@@ -742,6 +750,21 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     }
                 }
             });
+            const schools = await fetchGlobalSchoolDetails();
+            setPdfData({
+                school_logo:schools[0].logo,
+                school_name:schools[0].school_name,
+                school_address:schools[0].school_address,
+                school_website:schools[0].website,
+                school_contact_no:schools[0].school_no,
+                registration_no:values.student.reg_no,
+                received_from:values.student.name,
+                father_name:values.parents.father.father_name,
+                amount:values.student.amount,
+                payment_mode:values.student.payment_mode,
+                class_name:values.student.class
+            });
+            setIsReceiptOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Student
@@ -1278,36 +1301,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setMotherDob(moment(updateStudent.parents.mother.dob));
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
         };
-
-
-
-
-
-
-
-
-        // const asynFunc = async () => {
-        //     const schools = await fetchGlobalSchoolDetails();
-        //     setPdfData({
-        //         school_logo:schools[0].logo,
-        //         school_name:schools[0].school_name,
-        //         school_address:schools[0].school_address,
-        //         school_website:schools[0].website,
-        //         school_contact_no:schools[0].school_no,
-        //         receipt_no:'',
-        //         registration_no:1
-        //     });
-        //     setIsReceiptOpened(true);
-        // };
-        // asynFunc();
-
-
-
-
-
-
-
-
     }, []);
 
     return (
@@ -1386,6 +1379,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setDate={setDate}
                                     dob={dob}
                                     setDob={setDob}
+                                    chequeDetails={chequeDetails}
+                                    setChequeDetails={setChequeDetails}
+                                    ddDetails={ddDetails}
+                                    setddDetails={setddDetails}
+                                    neftDetails={neftDetails}
+                                    setNeftDetails={setNeftDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
