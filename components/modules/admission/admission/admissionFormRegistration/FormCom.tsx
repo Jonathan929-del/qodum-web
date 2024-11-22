@@ -18,6 +18,7 @@ import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StudentValidation} from '@/lib/validations/admission/admission/student.validation';
 import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admission/admission/student.actions';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -542,6 +543,21 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     }
                 }
             });
+            const schools = await fetchGlobalSchoolDetails();
+            setPdfData({
+                school_logo:schools[0].logo,
+                school_name:schools[0].school_name,
+                school_address:schools[0].school_address,
+                school_website:schools[0].website,
+                school_contact_no:schools[0].school_no,
+                registration_no:values.student.reg_no,
+                received_from:values.student.name,
+                father_name:values.parents.father.father_name,
+                amount:values.student.amount,
+                payment_mode:values.student.payment_mode,
+                class_name:values.student.class
+            });
+            setIsReceiptOpened(true);
             if(res === 0){
                 toast({title:'Please create a session first', variant:'alert'});
                 return;
@@ -1262,6 +1278,36 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setMotherDob(moment(updateStudent.parents.mother.dob));
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
         };
+
+
+
+
+
+
+
+
+        // const asynFunc = async () => {
+        //     const schools = await fetchGlobalSchoolDetails();
+        //     setPdfData({
+        //         school_logo:schools[0].logo,
+        //         school_name:schools[0].school_name,
+        //         school_address:schools[0].school_address,
+        //         school_website:schools[0].website,
+        //         school_contact_no:schools[0].school_no,
+        //         receipt_no:'',
+        //         registration_no:1
+        //     });
+        //     setIsReceiptOpened(true);
+        // };
+        // asynFunc();
+
+
+
+
+
+
+
+
     }, []);
 
     return (

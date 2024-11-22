@@ -2232,7 +2232,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
                                         <FormMessage className='mt-[-20px] text-[11px]' />

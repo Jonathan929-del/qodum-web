@@ -114,7 +114,7 @@ const StudentsList = ({students, selectedStudents, setSelectedStudents}: any) =>
                                         {student?.student?.name}
                                     </li>
                                     <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                        {student?.student?.father_name}
+                                        {student?.parents?.father?.father_name}
                                     </li>
                                     <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                         {student?.student?.contact_person_mobile}

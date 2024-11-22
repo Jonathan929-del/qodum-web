@@ -88,15 +88,16 @@ function FormCom() {
     const onSubmit = async () => {
         try {
 
-            // Setting is update loading to true
-            setIsUpdateLoading(true);
-
-
             // No students validation
             if(selectedStudents.length === 0){
                 toast({title:'Please select students', variant:'alert'});
                 return;
             };
+
+
+            // Setting is update loading to true
+            setIsUpdateLoading(true);
+
 
             // Applying for admission
             const res = await applyStudentForAdmission({reg_nos:selectedStudents});
@@ -374,14 +375,13 @@ function FormCom() {
                         {permissions.modify && isUpdateLoading ? (
                             <LoadingIcon />
                         ) : (
-                            <Button
-                                onClick={onSubmit}
-                                type='submit'
-                                className='min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                            <span
+                                className='flex items-center justify-center min-w-[100px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
                                         hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                onClick={onSubmit}
                             >
                                 Update
-                            </Button>
+                            </span>
                         )}
                     </div>
 
