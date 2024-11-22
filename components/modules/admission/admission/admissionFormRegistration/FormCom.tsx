@@ -24,7 +24,7 @@ import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admissi
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails, setPdfData, setIsReceiptOpened}:any) => {
 
     // Toast
     const {toast} = useToast();

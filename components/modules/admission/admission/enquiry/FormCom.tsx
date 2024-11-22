@@ -213,7 +213,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             setEnquiryDate(moment(updateEnquiry.enquiry_date));
         };
         const fetcher = async () => {
-            const [classesRes] = await fetchOpenAdmissionClassesNames();
+            const classesRes = await fetchOpenAdmissionClassesNames();
             setClasses(classesRes);
         };
         fetcher();
@@ -440,7 +440,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                     />
 
 
-                    {form.getValues().purpose_is_admission ? (
+                    {form.getValues()?.purpose_is_admission ? (
                         <>
                             {/* Student Name */}
                             <FormField
@@ -480,10 +480,10 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {
-                                                            classes.length < 1 ? (
+                                                            classes?.length < 1 ? (
                                                                 <p>No classes yet</p>
                                                             ) : // @ts-ignore
-                                                            !classes[0].class_name ? (
+                                                            !classes[0]?.class_name ? (
                                                                 <LoadingIcon />
                                                             ) : classes.map((item:any) => (
                                                                 <SelectItem value={item.class_name} key={item._id}>{item.class_name}</SelectItem>

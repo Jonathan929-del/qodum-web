@@ -1,9 +1,9 @@
 'use client';
 // Imports
 import {useEffect, useState} from 'react';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {fetchStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchAdmissionEnquiries} from '@/lib/actions/admission/admission/enquiry.actions';
+import Receipt from '@/components/modules/admission/admission/admissionFormRegistration/receipt';
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
@@ -17,6 +17,14 @@ const page = () => {
 
     // Is view component opened
     const [isViewOpened, setIsViewOpened] = useState('');
+
+
+    // Is receipt opened
+    const [isReceiptOpened, setIsReceiptOpened] = useState(false);
+
+
+    // Pdf data
+    const [pdfData, setPdfData] = useState({});
 
 
     // Students
@@ -272,7 +280,12 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                isViewOpened === 'admission' ? (
+                isReceiptOpened ? (
+                    <Receipt
+                        pdfData={pdfData}
+                        setIsReceiptOpened={setIsReceiptOpened}
+                    />
+                ) : isViewOpened === 'admission' ? (
                     <ViewCom
                         students={students}
                         setIsViewOpened={setIsViewOpened}
@@ -303,6 +316,8 @@ const page = () => {
                         setSelectedSubjects={setSelectedSubjects}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                        setPdfData={setPdfData}
+                        setIsReceiptOpened={setIsReceiptOpened}
                     />
                 )
             }
