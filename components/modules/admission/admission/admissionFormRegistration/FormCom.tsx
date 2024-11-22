@@ -1385,6 +1385,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setddDetails={setddDetails}
                                     neftDetails={neftDetails}
                                     setNeftDetails={setNeftDetails}
+                                    upiDetails={upiDetails}
+                                    setUpiDetails={setUpiDetails}
+                                    swipedCardDetails={swipedCardDetails}
+                                    setSwipedCardDetails={setSwipedCardDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>

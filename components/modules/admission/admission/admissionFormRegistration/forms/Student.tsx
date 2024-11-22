@@ -30,13 +30,19 @@ import { fetchBankLedgers } from '@/lib/actions/accounts/accounts/bankLedger.act
 import { fetchGeneralLedgers } from '@/lib/actions/accounts/accounts/generalLedger.actions';
 import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import { deepEqual } from '@/lib/utils';
+import ChequeDetails from '../paymodes/ChequeDetails';
+import DDDetails from '../paymodes/DDDetails';
+import NeftDetails from '../paymodes/NeftDetails';
+import UPIDetails from '../paymodes/UPIDetails';
+import PaymentGateway from '../paymodes/PaymentGateway';
+import SwipedCardDetaila from '../paymodes/SwipedCardDetails';
 
 
 
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, upiDetails, setUpiDetails, swipedCardDetails, setSwipedCardDetails}:any) => {
 
     // Search
     const [search, setSearch] = useState('');
@@ -113,7 +119,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     pros_no:'',
                     amount:0,
                     date:new Date(),
-                    payment_mode:localStorage.getItem('pay_mode') !== null ? localStorage.getItem('pay_mode') : '',
+                    payment_mode:localStorage.getItem('payment_mode') !== null ? localStorage.getItem('payment_mode') : '',
                     admission_account:localStorage.getItem('admission_account') !== null ? localStorage.getItem('admission_account') : '',
                     post_account:localStorage.getItem('post_account') !== null ? localStorage.getItem('post_account') : '',
                     // 2
@@ -792,6 +798,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         // @ts-ignore
         form.setValue('student.board', boardsState.items?.find((b:any) => b.is_default)?.board);
     }, [boardsState]);
+    useEffect(() => {}, [form.watch('student.payment_mode')])
 
     return (
         <div className='flex flex-row'>
@@ -1067,6 +1074,22 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                     )}
                 </div>
+
+
+                {/* Payment Modes */}
+                {(form.getValues().student.payment_mode === 'Cheque' || form.getValues().student.payment_mode === 'DD' || form.getValues().student.payment_mode === 'NEFT' || form.getValues().student.payment_mode === 'Swiped Card') && (
+                    <div className='mt-4'>
+                        <h3 className='text-hash-color text-[14px] mb-2'>Paymode Details:</h3>
+                        <div>
+                            {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
+                            {form.getValues().student.payment_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
+                            {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
+                            {/* {form.getValues().student.payment_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
+                            {form.getValues().student.payment_mode === 'Payment Gateway' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
+                            {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila swipedCardDetails={swipedCardDetails} setSwipedCardDetails={setSwipedCardDetails} />}
+                        </div>
+                    </div>
+                )}
             </div>
 
 
