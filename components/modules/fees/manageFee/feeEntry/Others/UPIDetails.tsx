@@ -171,7 +171,7 @@ const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, for
         };
     }, [totalPaidAmount]);
     useEffect(() => {
-        if(Number(currentOrder.amount) > 0 && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount) && !isCancelClicked){
+        if(Number(currentOrder?.amount) > 0 && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount) && !isCancelClicked){
             updatePayment();
         };
     }, [debouncedAmount]);
