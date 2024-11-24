@@ -78,7 +78,7 @@ const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, for
             const unique_request_number = Math.floor(Math.random() * 1000000000);
             const params = {
                 unique_request_number:JSON.stringify(unique_request_number),
-                amount:Number(totalPaidAmount),
+                amount:totalPaidAmount,
                 customer_name:selectedStudent.name,
                 customer_phone:JSON.stringify(selectedStudent.phone)
             };
@@ -97,7 +97,7 @@ const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, for
                 };
                 setCurrentOrder({
                     txnId:paymentUrlRes.data.order_id,
-                    amount:totalPaidAmount,
+                    amount:Number(totalPaidAmount),
                     student_name:selectedStudent.name,
                     payment_url:paymentUrlRes.data.payment_url,
                     adm_no:selectedStudent.admission_no,
