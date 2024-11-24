@@ -162,10 +162,28 @@ interface CreateStudentProps{
             check_id_applicable:String;
             separation_reason:String;
         }
-    }
+    };
+
+
+    // Siblings
+    siblings:any;
+
+
+    // Paymode details
+    paymode_details:{
+        cheque_no:String;
+        cheque_date:Date;
+        cheque_bank:String;
+        dd_no:String;
+        dd_date:Date;
+        dd_bank:String;
+        branch_name:String;
+        deposit_bank:String;
+        neft_name:String;
+    };
 };
 // Create student
-export const createStudent = async ({student, parents, others, guardian_details}:CreateStudentProps) => {
+export const createStudent = async ({student, parents, others, guardian_details, siblings, paymode_details}:CreateStudentProps) => {
     try {
 
 
@@ -235,7 +253,9 @@ export const createStudent = async ({student, parents, others, guardian_details}
             },
             parents,
             others,
-            guardian_details
+            guardian_details,
+            siblings,
+            paymode_details
         });
         newStudent.save().then(async () => {
             await Student.findOneAndUpdate({'student.reg_no':student.reg_no, session:activeSession?.year_name}, {'student.subjects':student.subjects});
@@ -441,10 +461,27 @@ interface ModifyStudentProps{
             check_id_applicable:String;
             separation_reason:String;
         }
-    }
+    };
+
+    // Siblings
+    siblings:any;
+
+
+    // Paymode details
+    paymode_details:{
+        cheque_no:String;
+        cheque_date:Date;
+        cheque_bank:String;
+        dd_no:String;
+        dd_date:Date;
+        dd_bank:String;
+        branch_name:String;
+        deposit_bank:String;
+        neft_name:String;
+    };
 }
 // Modify student
-export const modifyStudent = async ({id, student, parents, others, guardian_details}:ModifyStudentProps) => {
+export const modifyStudent = async ({id, student, parents, others, guardian_details, siblings, paymode_details}:ModifyStudentProps) => {
     try {
 
         // Db connection
@@ -462,7 +499,7 @@ export const modifyStudent = async ({id, student, parents, others, guardian_deta
 
 
         // Update student
-        await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details}, {new:true});
+        await Student.findByIdAndUpdate(id, {student, parents, others, guardian_details, siblings, paymode_details}, {new:true});
         
         
         // Subjects handling

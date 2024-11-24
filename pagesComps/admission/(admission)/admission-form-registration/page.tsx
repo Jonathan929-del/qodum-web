@@ -231,7 +231,25 @@ const page = () => {
                 check_id_applicable:'',
                 separation_reason:''
             }
+        },
+
+        // Siblings
+        siblings:[],
+
+
+        // Paymode details
+        paymode_details:{
+            cheque_no:'',
+            cheque_date:new Date(),
+            cheque_bank:'',
+            dd_no:'',
+            dd_date:new Date(),
+            dd_bank:'',
+            branch_name:'',
+            deposit_bank:'',
+            neft_name:''
         }
+
     });
 
 
@@ -264,6 +282,10 @@ const page = () => {
     }]);
 
 
+    // Siblings
+    const [siblings, setSiblings] = useState([{}]);
+
+
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
@@ -293,6 +315,7 @@ const page = () => {
                         setValuesFromEnquiry={setValuesFromEnquiry}
                         setSelectedSubjects={setSelectedSubjects}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                        setSiblings={setSiblings}
                     />
                 ) : isViewOpened === 'enquiry' ? (
                     <EnquiryViewCom
@@ -316,6 +339,8 @@ const page = () => {
                         setSelectedSubjects={setSelectedSubjects}
                         previousSchoolsDetails={previousSchoolsDetails}
                         setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                        siblings={siblings}
+                        setSiblings={setSiblings}
                         setPdfData={setPdfData}
                         setIsReceiptOpened={setIsReceiptOpened}
                     />

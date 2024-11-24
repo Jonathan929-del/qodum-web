@@ -3,17 +3,17 @@
 import moment from 'moment';
 import PrintButton from './PrintButton';
 import {Button} from '../../../../ui/button';
+import {AuthContext} from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 import {AlertDialogAction} from '@radix-ui/react-alert-dialog';
 import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from '@/components/ui/alert-dialog';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '@/context/AuthContext';
 
 
 
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails, setSiblings}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -207,7 +207,25 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     check_id_applicable:'',
                     separation_reason:''
                 }
+            },
+
+            // Siblings
+            siblings:[],
+
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:'',
+                cheque_date:new Date(),
+                cheque_bank:'',
+                dd_no:'',
+                dd_date:new Date(),
+                dd_bank:'',
+                branch_name:'',
+                deposit_bank:'',
+                neft_name:''
             }
+
         });
         // Reseting form
         form.reset({
@@ -374,7 +392,25 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                     check_id_applicable:'',
                     separation_reason:''
                 }
+            },
+
+            // Siblings
+            siblings:[],
+
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:'',
+                cheque_date:new Date(),
+                cheque_bank:'',
+                dd_no:'',
+                dd_date:new Date(),
+                dd_bank:'',
+                branch_name:'',
+                deposit_bank:'',
+                neft_name:''
             }
+
         });
         // Image
         setFile(null);
@@ -395,6 +431,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             percentage:'',
             result:''
         }]);
+        setSiblings([{}]);
     };
 
 

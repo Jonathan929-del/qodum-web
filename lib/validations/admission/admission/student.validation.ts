@@ -164,5 +164,24 @@ export const StudentValidation = z.object({
             check_id_applicable:z.string(),
             separation_reason:z.string(),
         })
+    }),
+
+
+    // Siblings
+    siblings:z.any(),
+
+
+    // Paymode details
+    paymode_details:z.object({
+        cheque_no:z.string(),
+        cheque_date:z.date(),
+        cheque_bank:z.string(),
+        dd_no:z.string(),
+        dd_date:z.date(),
+        dd_bank:z.string(),
+        branch_name:z.string(),
+        deposit_bank:z.string(),
+        neft_name:z.string()
     })
+
 });

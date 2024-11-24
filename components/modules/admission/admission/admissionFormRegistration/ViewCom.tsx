@@ -10,7 +10,7 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 
 
 // Main Function
-const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects, setPreviousSchoolsDetails}:any) => {
+const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnquiry, setSelectedSubjects, setPreviousSchoolsDetails, setSiblings}:any) => {
 
     // Select handler
     const selectHandler = (student:any) => {
@@ -177,11 +177,29 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromEnqu
                     check_id_applicable:student?.guardian_details?.if_single_parent?.check_id_applicable || '',
                     separation_reason:student?.guardian_details?.if_single_parent?.separation_reason || ''
                 }
+            },
+
+            // Siblings
+            siblings:student?.siblings || [],
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:student?.paymode_details?.cheque_no || '',
+                cheque_date:student?.paymode_details?.cheque_date || new Date(),
+                cheque_bank:student?.paymode_details?.cheque_bank || '',
+                dd_no:student?.paymode_details?.dd_no || '',
+                dd_date:student?.paymode_details?.dd_date || new Date(),
+                dd_bank:student?.paymode_details?.dd_bank || '',
+                branch_name:student?.paymode_details?.branch_name || '',
+                deposit_bank:student?.paymode_details?.deposit_bank || '',
+                neft_name:student?.paymode_details?.neft_name || ''
             }
+
         });
         setIsViewOpened('');
         setSelectedSubjects(student?.student?.subjects || []);
         setPreviousSchoolsDetails(student?.others?.previous_school_details || []);
+        setSiblings(student?.siblings || []);
     };
 
     return (

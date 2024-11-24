@@ -42,7 +42,7 @@ import SwipedCardDetaila from '../paymodes/SwipedCardDetails';
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, upiDetails, setUpiDetails, swipedCardDetails, setSwipedCardDetails}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob}:any) => {
 
     // Search
     const [search, setSearch] = useState('');
@@ -300,6 +300,22 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         check_id_applicable:'',
                         separation_reason:''
                     }
+                },
+
+                // Siblings
+                siblings:[],
+
+                // Paymode details
+                paymode_details:{
+                    cheque_no:'',
+                    cheque_date:new Date(),
+                    cheque_bank:'',
+                    dd_no:'',
+                    dd_date:new Date(),
+                    dd_bank:'',
+                    branch_name:'',
+                    deposit_bank:'',
+                    neft_name:''
                 }
             });
             setValuesFromEnquiry({
@@ -974,12 +990,11 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             <SelectContent>
                                                 <SelectItem value='Cash'>Cash</SelectItem>
                                                 <SelectItem value='Cheque'>Cheque</SelectItem>
-                                                <SelectItem value='Credit Card'>Credit Card</SelectItem>
                                                 <SelectItem value='DD'>DD</SelectItem>
-                                                <SelectItem value='Debit Card'>Debit Card</SelectItem>
                                                 <SelectItem value='NEFT'>NEFT</SelectItem>
-                                                <SelectItem value='Net Banking'>Net Banking</SelectItem>
                                                 <SelectItem value='Swiped Card'>Swiped Card</SelectItem>
+                                                <SelectItem value='UPI'>UPI</SelectItem>
+                                                <SelectItem value='Online'>Online</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
@@ -988,6 +1003,22 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         />
                     </div>
                 </div>
+
+
+                {/* Payment Modes */}
+                {(form.getValues().student.payment_mode === 'Cheque' || form.getValues().student.payment_mode === 'DD' || form.getValues().student.payment_mode === 'NEFT' || form.getValues().student.payment_mode === 'Swiped Card') && (
+                    <div className=''>
+                        {/* <h3 className='text-hash-color text-[14px] mb-2'>Paymode Details:</h3> */}
+                        <div>
+                            {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails form={form}/>}
+                            {form.getValues().student.payment_mode === 'DD' && <DDDetails form={form}/>}
+                            {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails form={form}/>}
+                            {/* {form.getValues().student.payment_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
+                            {form.getValues().student.payment_mode === 'Online' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
+                            {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila form={form}/>}
+                        </div>
+                    </div>
+                )}
 
 
                 {/* Admission Account */}
@@ -1075,21 +1106,6 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     )}
                 </div>
 
-
-                {/* Payment Modes */}
-                {(form.getValues().student.payment_mode === 'Cheque' || form.getValues().student.payment_mode === 'DD' || form.getValues().student.payment_mode === 'NEFT' || form.getValues().student.payment_mode === 'Swiped Card') && (
-                    <div className='mt-4'>
-                        <h3 className='text-hash-color text-[14px] mb-2'>Paymode Details:</h3>
-                        <div>
-                            {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
-                            {form.getValues().student.payment_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
-                            {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
-                            {/* {form.getValues().student.payment_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
-                            {form.getValues().student.payment_mode === 'Payment Gateway' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
-                            {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila swipedCardDetails={swipedCardDetails} setSwipedCardDetails={setSwipedCardDetails} />}
-                        </div>
-                    </div>
-                )}
             </div>
 
 

@@ -46,10 +46,11 @@ const PDF = ({pdfData}:any) => {
                             src={pdfData?.school_logo || ''}
                         />
                     </View>
-                    <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'flex-end'}}>
+                    <View style={{flexBasis:'70%', display:'flex', flexDirection:'column', alignItems:'flex-end'}}>
                         <Text style={{fontWeight:400, fontSize:22}}>{pdfData?.school_name || ''}</Text>
                         <Text style={{marginTop:2, fontSize:12}}>{pdfData?.school_address || ''}</Text>
-                        <Text style={{marginTop:2, fontSize:12}}>Website:{pdfData?.school_website || ''} | Contact:{pdfData?.school_contact_no || ''}</Text>
+                        <Text style={{marginTop:2, fontSize:11}}>Affiliation No.: {pdfData?.school_affiliation_no || ''} | School Code: {pdfData?.school_no || ''}</Text>
+                        <Text style={{marginTop:2, fontSize:11}}>Website: {pdfData?.school_website || ''} | Contact: {pdfData?.school_contact_no || ''}</Text>
                     </View>
                 </View>
 

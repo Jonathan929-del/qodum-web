@@ -18,14 +18,15 @@ import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StudentValidation} from '@/lib/validations/admission/admission/student.validation';
 import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admission/admission/student.actions';
-import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
+import Siblings from './forms/Siblings';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails, setPdfData, setIsReceiptOpened}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails, siblings, setSiblings, setPdfData, setIsReceiptOpened}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -37,14 +38,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     const [fatherDob, setFatherDob] = useState(moment());
     const [motherDob, setMotherDob] = useState(moment());
     const [anniversaryDate, setAnniversaryDate] = useState(moment());
-
-
-    // Paymodes
-    const [chequeDetails, setChequeDetails] = useState({});
-    const [ddDetails, setddDetails] = useState({});
-    const [neftDetails, setNeftDetails] = useState({});
-    const [swipedCardDetails, setSwipedCardDetails] = useState({});
-    const [upiDetails, setUpiDetails] = useState({});
 
 
     // Is Loading
@@ -216,6 +209,22 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 check_id_applicable:updateStudent.guardian_details.if_single_parent.check_id_applicable,
                 separation_reason:updateStudent.guardian_details.if_single_parent.separation_reason
             }
+        },
+
+        // Siblings
+        siblings:updateStudent.sibling,
+
+        // Paymode details
+        paymode_details:{
+            cheque_no:updateStudent.paymode_details.cheque_no,
+            cheque_date:updateStudent.paymode_details.cheque_date,
+            cheque_bank:updateStudent.paymode_details.cheque_bank,
+            dd_no:updateStudent.paymode_details.dd_no,
+            dd_date:updateStudent.paymode_details.dd_date,
+            dd_bank:updateStudent.paymode_details.dd_bank,
+            branch_name:updateStudent.paymode_details.branch_name,
+            deposit_bank:updateStudent.paymode_details.deposit_bank,
+            neft_name:updateStudent.paymode_details.neft_name
         }
     };
 
@@ -377,6 +386,22 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.check_id_applicable,
                     separation_reason:updateStudent.id === '' ? '' : updateStudent.guardian_details.if_single_parent.separation_reason
                 }
+            },
+
+            // Siblings
+            siblings:updateStudent.id === '' ? [] : updateStudent.siblings,
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:updateStudent.id === '' ? '' : updateStudent.paymode_details.cheque_no,
+                cheque_date:updateStudent.id === '' ? new Date() : updateStudent.paymode_details.cheque_date,
+                cheque_bank:updateStudent.id === '' ? '' : updateStudent.paymode_details.cheque_bank,
+                dd_no:updateStudent.id === '' ? '' : updateStudent.paymode_details.dd_no,
+                dd_date:updateStudent.id === '' ? new Date() : updateStudent.paymode_details.dd_date,
+                dd_bank:updateStudent.id === '' ? '' :updateStudent.paymode_details.dd_bank,
+                branch_name:updateStudent.id === '' ? '' : updateStudent.paymode_details.branch_name,
+                deposit_bank:updateStudent.id === '' ? '' : updateStudent.paymode_details.deposit_bank,
+                neft_name:updateStudent.id === '' ? '' : updateStudent.paymode_details.neft_name
             }
         }
     });
@@ -549,6 +574,22 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
+                },
+
+                // Siblings
+                siblings,
+
+                // Paymode details
+                paymode_details:{
+                    cheque_no:values.paymode_details.cheque_no,
+                    cheque_date:values.paymode_details.cheque_date,
+                    cheque_bank:values.paymode_details.cheque_bank,
+                    dd_no:values.paymode_details.dd_no,
+                    dd_date:values.paymode_details.dd_date,
+                    dd_bank:values.paymode_details.dd_bank,
+                    branch_name:values.paymode_details.branch_name,
+                    deposit_bank:values.paymode_details.deposit_bank,
+                    neft_name:values.paymode_details.neft_name
                 }
             });
             const schools = await fetchGlobalSchoolDetails();
@@ -556,8 +597,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 school_logo:schools[0].logo,
                 school_name:schools[0].school_name,
                 school_address:schools[0].school_address,
+                school_affiliation_no:schools[0].affiliation_no,
+                school_no:schools[0].school_no,
                 school_website:schools[0].website,
-                school_contact_no:schools[0].school_no,
+                school_contact_no:schools[0].mobile,
                 registration_no:values.student.reg_no,
                 received_from:values.student.name,
                 father_name:values.parents.father.father_name,
@@ -583,6 +626,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             || moment(values.parents.mother.dob).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.dob).format('DD-MM-YYYY')
             || moment(values.parents.mother.anniversary_date).format('DD-MM-YYYY') !== moment(comparisonObject.parents.mother.anniversary_date).format('DD-MM-YYYY')
             || JSON.stringify(values.others.previous_school_details) !== JSON.stringify(previousSchoolsDetails)
+            || JSON.stringify(values.siblings) !== JSON.stringify(siblings)
         ){
             if(comparisonObject.student.reg_no !== values.student.reg_no && students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                 toast({title:'Register no. already exists', variant:'error'});
@@ -748,6 +792,22 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                         check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
                         separation_reason:values.guardian_details.if_single_parent.separation_reason
                     }
+                },
+
+                // Siblings
+                siblings,
+
+                // Paymode details
+                paymode_details:{
+                    cheque_no:values.paymode_details.cheque_no,
+                    cheque_date:values.paymode_details.cheque_date,
+                    cheque_bank:values.paymode_details.cheque_bank,
+                    dd_no:values.paymode_details.dd_no,
+                    dd_date:values.paymode_details.dd_date,
+                    dd_bank:values.paymode_details.dd_bank,
+                    branch_name:values.paymode_details.branch_name,
+                    deposit_bank:values.paymode_details.deposit_bank,
+                    neft_name:values.paymode_details.neft_name
                 }
             });
             const schools = await fetchGlobalSchoolDetails();
@@ -755,8 +815,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 school_logo:schools[0].logo,
                 school_name:schools[0].school_name,
                 school_address:schools[0].school_address,
+                school_affiliation_no:schools[0].affiliation_no,
+                school_no:schools[0].school_no,
                 school_website:schools[0].website,
-                school_contact_no:schools[0].school_no,
+                school_contact_no:schools[0].mobile,
                 registration_no:values.student.reg_no,
                 received_from:values.student.name,
                 father_name:values.parents.father.father_name,
@@ -950,6 +1012,23 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:'',
                     separation_reason:''
                 }
+            },
+
+            // Siblings
+            siblings:[],
+
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:'',
+                cheque_date:new Date(),
+                cheque_bank:'',
+                dd_no:'',
+                dd_date:new Date(),
+                dd_bank:'',
+                branch_name:'',
+                deposit_bank:'',
+                neft_name:'',
             }
         });
         // Reseting form
@@ -1117,7 +1196,25 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     check_id_applicable:'',
                     separation_reason:''
                 }
+            },
+
+            // Siblings
+            siblings:[],
+
+
+            // Paymode details
+            paymode_details:{
+                cheque_no:'',
+                cheque_date:new Date(),
+                cheque_bank:'',
+                dd_no:'',
+                dd_date:new Date(),
+                dd_bank:'',
+                branch_name:'',
+                deposit_bank:'',
+                neft_name:'',
             }
+
         });
         // Image
         setFile(null);
@@ -1139,6 +1236,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             percentage:'',
             result:''
         }]);
+        setSiblings([{}]);
     };
 
 
@@ -1280,6 +1378,28 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             form.setValue('guardian_details.if_single_parent.correspondence_to', updateStudent.guardian_details.if_single_parent.correspondence_to);
             form.setValue('guardian_details.if_single_parent.check_id_applicable', updateStudent.guardian_details.if_single_parent.check_id_applicable);
             form.setValue('guardian_details.if_single_parent.separation_reason', updateStudent.guardian_details.if_single_parent.separation_reason);
+
+
+
+
+
+            // Siblings
+            form.setValue('siblings', updateStudent.siblings);
+
+
+
+
+
+            // Paymode details
+            form.setValue('paymode_details.cheque_no', updateStudent.paymode_details.cheque_no);
+            form.setValue('paymode_details.cheque_date', updateStudent.paymode_details.cheque_date);
+            form.setValue('paymode_details.cheque_bank', updateStudent.paymode_details.cheque_bank);
+            form.setValue('paymode_details.dd_no', updateStudent.paymode_details.dd_no);
+            form.setValue('paymode_details.dd_date', updateStudent.paymode_details.dd_date);
+            form.setValue('paymode_details.dd_bank', updateStudent.paymode_details.dd_bank);
+            form.setValue('paymode_details.branch_name', updateStudent.paymode_details.branch_name);
+            form.setValue('paymode_details.deposit_bank', updateStudent.paymode_details.deposit_bank);
+            form.setValue('paymode_details.neft_name', updateStudent.paymode_details.neft_name);
         }
     }, [updateStudent]);
     useEffect(() => {
@@ -1356,6 +1476,17 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                         Guardian
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
                                     </TabsTrigger>
+                                    {/* Siblings */}
+                                    {form.getValues().student.sibling && (
+                                        <TabsTrigger
+                                            value='siblings'
+                                            onClick={() => setSelectedTab('siblings')}
+                                            className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'siblings' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        >
+                                            Siblings
+                                            <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                        </TabsTrigger>
+                                    )}
                                 </TabsList>
                             </div>
 
@@ -1379,16 +1510,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setDate={setDate}
                                     dob={dob}
                                     setDob={setDob}
-                                    chequeDetails={chequeDetails}
-                                    setChequeDetails={setChequeDetails}
-                                    ddDetails={ddDetails}
-                                    setddDetails={setddDetails}
-                                    neftDetails={neftDetails}
-                                    setNeftDetails={setNeftDetails}
-                                    upiDetails={upiDetails}
-                                    setUpiDetails={setUpiDetails}
-                                    swipedCardDetails={swipedCardDetails}
-                                    setSwipedCardDetails={setSwipedCardDetails}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -1413,12 +1534,19 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                             <TabsContent value='guardian'>
                                 <Guardian form={form}/>
                             </TabsContent>
+                            <TabsContent value='siblings'>
+                                <Siblings
+                                    form={form}
+                                    siblings={siblings}
+                                    setSiblings={setSiblings}
+                                />
+                            </TabsContent>
                         </Tabs>
 
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails} setSiblings={setSiblings}/>
                         </div>
                     </form>
                 )}

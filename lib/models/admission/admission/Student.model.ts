@@ -168,6 +168,24 @@ const StudentSchema = new mongoose.Schema(
                 check_id_applicable:{type:String},
                 separation_reason:{type:String}
             }
+        },
+
+
+        // Siblings
+        siblings:{type:Array},
+
+
+        // Paymode details
+        paymode_details:{
+            cheque_no:{type:String},
+            cheque_date:{type:Date},
+            cheque_bank:{type:String},
+            dd_no:{type:String},
+            dd_date:{type:Date},
+            dd_bank:{type:String},
+            branch_name:{type:String},
+            deposit_bank:{type:String},
+            neft_name:{type:String}
         }
 
     },
