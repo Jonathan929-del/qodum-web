@@ -10,7 +10,7 @@ import {Chart as ChartJs, CategoryScale, LinearScale, PointElement, LineElement,
 
 
 // Main function
-const TransactionHistoryOfLast30Days = ({paymentsRes, totalNumberGenerator}) => {
+const TransactionHistoryOfLast30Days = ({paymentsRes, totalNumberGenerator, registrationFees}) => {
 
 
     // Registering
@@ -82,9 +82,15 @@ const TransactionHistoryOfLast30Days = ({paymentsRes, totalNumberGenerator}) => 
     useEffect(() => {
         const fetcher = async () => {
             const paymentsArray = last30Days.map((d:any) => {
-                return totalNumberGenerator(paymentsRes.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                }));
+                return totalNumberGenerator([
+                    
+                    ...paymentsRes.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
+                    }),
+
+                    ...registrationFees.filter((f:any) => moment(f.createdAt).format('D-MMM') === d).map((f:any) => Number(f?.student?.amount))
+            
+                ]);
             });
             setPayments(paymentsArray);
         };

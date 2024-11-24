@@ -2,13 +2,14 @@
 import moment from 'moment';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
+import { any } from 'zod';
 
 
 
 
 
 // Main Function
-const RecentTransactionsCard = ({payments, students}:any) => {
+const RecentTransactionsCard = ({payments, students, registrationFees}:any) => {
 
 
     // New payments
@@ -17,12 +18,26 @@ const RecentTransactionsCard = ({payments, students}:any) => {
 
     // Use effect
     useEffect(() => {
-        setNewPayments(payments.map((p:any) => {
-            return {
-                ...p,
-                image:students.filter((s:any) => s.student.name === p.student)[0]?.student?.image
-            };
-        }));
+        setNewPayments([
+                ...payments.map((p:any) => {
+                    return{
+                        ...p,
+                        image:students.filter((s:any) => s.student.name === p.student)[0]?.student?.image
+                    };
+                }),
+                ...registrationFees.map((f:any) => {
+                    return{
+                        student:f?.student?.name,
+                        image:f?.student?.image,
+                        class_name:f?.student?.class,
+                        section:f?.student?.section,
+                        paid_amount:f?.student?.amount,
+                        paymode:f?.student?.payment_mode,
+                        received_date:f?.createdAt,
+                    };
+                })
+            ]
+        );
     }, []);
 
 
@@ -34,7 +49,8 @@ const RecentTransactionsCard = ({payments, students}:any) => {
             </div>
             <div className='h-[400px] overflow-y-scroll flex flex-col gap-4 custom-sidebar-scrollbar'>
 
-                {newPayments.map((p:any) => (
+                { // @ts-ignore
+                newPayments?.sort((a:any, b:any) => new Date(b.received_date) - new Date(a.received_date)).map((p:any) => (
                     <div className='flex flex-row'>
                         {p.image === '' ? (
                             <div className='h-[50px] w-[50px] flex items-center justify-center rounded-full border-[0.5px] border-[#ccc] text-[10px] text-hash-color'>

@@ -9,6 +9,7 @@ import PaymodeSummaryCard from '@/components/dashboards/feesDashboard/PaymodeSum
 import EstimatedCollection from '@/components/dashboards/feesDashboard/EstimatedCollection';
 import DefaulterStatistics from '@/components/dashboards/feesDashboard/DefaulterStastistics';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchStudentsRegistrationFees} from '@/lib/actions/admission/admission/student.actions';
 import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
 import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
 import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
@@ -48,6 +49,10 @@ const page = () => {
     const [defaulterStudentsData, setDefaulterStudentsData] = useState<any>({});
 
 
+    // Registration fees
+    const [registrationFees, setRegistrationFees] = useState([{}]);
+
+
     // Total number generator
     const totalNumberGenerator = (array:any) => {
         let sum = 0;
@@ -66,6 +71,7 @@ const page = () => {
             const paymentsRes = await fetchPayments();
             const classesRes = await fetchClasses();
             const defaulterStudentsDataRes = await feesDashboardDefaulterStudentsData();
+            const studentsRegistrationFeesRes = await fetchStudentsRegistrationFees();
 
             // Setting
             setStudents(studentsRes);
@@ -75,6 +81,7 @@ const page = () => {
             setPayments(paymentsRes);
             setClasses(classesRes);
             setDefaulterStudentsData(defaulterStudentsDataRes);
+            setRegistrationFees(studentsRegistrationFeesRes);
 
 
             // Loading done
@@ -98,6 +105,7 @@ const page = () => {
                         girls={girls}
                         academicYear={academicYear}
                         totalNumberGenerator={totalNumberGenerator}
+                        registrationFees={registrationFees}
                     />
         
         
@@ -105,6 +113,7 @@ const page = () => {
                     <PaymodeSummaryCard
                         totalNumberGenerator={totalNumberGenerator}
                         payments={payments}
+                        registrationFees={registrationFees}
                     />
         
         
@@ -113,6 +122,7 @@ const page = () => {
                         <TransactionHistoryOfLast30Days
                             paymentsRes={payments}
                             totalNumberGenerator={totalNumberGenerator}
+                            registrationFees={registrationFees}
                         />
                     </div>
         
@@ -123,12 +133,14 @@ const page = () => {
                             <EstimatedCollection
                                 students={students}
                                 totalNumberGenerator={totalNumberGenerator}
+                                registrationFees={registrationFees}
                             />
                         </div>
                         <div className='w-full xl:w-1/3'>
                             <RecentTransactionsCard
                                 payments={payments}
                                 students={students}
+                                registrationFees={registrationFees}
                             />
                         </div>
                     </div>
@@ -138,6 +150,7 @@ const page = () => {
                     <CollectionSummary
                         payments={payments}
                         classes={classes}
+                        registrationFees={registrationFees}
                         totalNumberGenerator={totalNumberGenerator}
                     />
         

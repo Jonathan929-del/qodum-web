@@ -748,3 +748,31 @@ export const fetchStudentsOnlineAndOfflineRegistrations = async () => {
         throw new Error(`Error fetching students online and offline counts: ${err}`);
     };
 };
+
+
+
+
+
+// Fetch students registration fees
+export const fetchStudentsRegistrationFees = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students count
+        const studentsAmounts = await Student.find({session:activeSession?.year_name}, {'createdAt':1, 'student.name':1, 'student.class':1, 'student.section':1, 'student.image':1, 'student.amount':1, 'student.payment_mode':1});
+
+
+        // Return
+        return studentsAmounts;
+        
+    }catch (err){
+        throw new Error(`Error fetching students registration fees: ${err}`);
+    };
+};

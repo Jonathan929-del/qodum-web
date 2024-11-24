@@ -14,7 +14,7 @@ import moment from 'moment';
 
 
 // Main function
-const CollectionSummary = ({payments, classes, totalNumberGenerator}) => {
+const CollectionSummary = ({payments, classes, totalNumberGenerator, registrationFees}) => {
 
 
     // Registering
@@ -128,36 +128,76 @@ const CollectionSummary = ({payments, classes, totalNumberGenerator}) => {
 
         switch (selectedTab) {
             case "Today's":
-                setCollectionSummary(totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM')).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                })));
-                setValues(classes.map((c:any) => totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM') && p.class_name === c.class_name).map((p:any) => {
-                    return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                })) / 1000));
+                setCollectionSummary(totalNumberGenerator([
+
+                        ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM')).map((p:any) => {
+                            return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
+                        }),
+
+                        ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === moment(new Date()).format('D-MMM')).map((f:any) => {
+                            return Number(f?.student?.amount);
+                        })
+
+                ]));
+                setValues(classes.map((c:any) => totalNumberGenerator([
+
+                    ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM') && p.class_name === c.class_name).map((p:any) => {
+                        return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
+                    }),
+
+                    ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === moment(new Date()).format('D-MMM') && f?.student?.class === c.class_name).map((f:any) => {
+                        return Number(f?.student?.amount);
+                    })
+
+                ]) / 1000));
                 break;
             case "Last 7 Days":
-                setCollectionSummary(totalNumberGenerator(last7Days.map((d:any) => {
-                    return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
+                setCollectionSummary(totalNumberGenerator(last7Days.map((d:any) => {return totalNumberGenerator([
+
+                    ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
                         return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                    }));
-                })));
-                setValues(classes.map((c:any) => totalNumberGenerator(last7Days.map((d:any) => {
-                    return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
+                    }),
+
+                    ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === d).map((f:any) => {
+                        return Number(f?.student?.amount);
+                    })
+
+                ]);})));
+                setValues(classes.map((c:any) => totalNumberGenerator(last7Days.map((d:any) => {return totalNumberGenerator([
+
+                    ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
                         return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                    }));
-                })) / 1000));
+                    }),
+
+                    ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === d && f?.student?.class === c.class_name).map((f:any) => {
+                        return Number(f?.student?.amount);
+                    })
+
+                ]);})) / 1000));
                 break;
             case "Last 30 Days":
-                setCollectionSummary(totalNumberGenerator(last30Days.map((d:any) => {
-                    return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
+                setCollectionSummary(totalNumberGenerator(last30Days.map((d:any) => {return totalNumberGenerator([
+
+                    ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d).map((p:any) => {
                         return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                    }));
-                })));
-                setValues(classes.map((c:any) => totalNumberGenerator(last30Days.map((d:any) => {
-                    return totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
+                    }),
+
+                    ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === d).map((f:any) => {
+                        return Number(f?.student?.amount);
+                    })
+
+                ]);})));
+                setValues(classes.map((c:any) => totalNumberGenerator(last30Days.map((d:any) => {return totalNumberGenerator([
+                        
+                    ...payments.filter((p:any) => moment(p.received_date).format('D-MMM') === d && p.class_name === c.class_name).map((p:any) => {
                         return totalNumberGenerator(p.paid_heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.paid_amount)))));
-                    }));
-                })) / 1000));
+                    }),
+
+                    ...registrationFees?.filter((f:any) => moment(f?.createdAt).format('D-MMM') === d && f?.student?.class === c.class_name).map((f:any) => {
+                        return Number(f?.student?.amount);
+                    })
+
+                ]);})) / 1000));
                 break;
             default:
                 setCollectionSummary(totalNumberGenerator(payments.filter((p:any) => moment(p.received_date).format('D-MMM') === moment(new Date()).format('D-MMM')).map((p:any) => {
