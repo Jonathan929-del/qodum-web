@@ -216,15 +216,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
         // Paymode details
         paymode_details:{
-            cheque_no:updateStudent.paymode_details.cheque_no,
-            cheque_date:updateStudent.paymode_details.cheque_date,
-            cheque_bank:updateStudent.paymode_details.cheque_bank,
-            dd_no:updateStudent.paymode_details.dd_no,
-            dd_date:updateStudent.paymode_details.dd_date,
-            dd_bank:updateStudent.paymode_details.dd_bank,
-            branch_name:updateStudent.paymode_details.branch_name,
-            deposit_bank:updateStudent.paymode_details.deposit_bank,
-            neft_name:updateStudent.paymode_details.neft_name
+            cheque_no:updateStudent.paymode_details?.cheque_no,
+            cheque_date:updateStudent.paymode_details?.cheque_date,
+            cheque_bank:updateStudent.paymode_details?.cheque_bank,
+            dd_no:updateStudent.paymode_details?.dd_no,
+            dd_date:updateStudent.paymode_details?.dd_date,
+            dd_bank:updateStudent.paymode_details?.dd_bank,
+            branch_name:updateStudent.paymode_details?.branch_name,
+            deposit_bank:updateStudent.paymode_details?.deposit_bank,
+            neft_name:updateStudent.paymode_details?.neft_name
         }
     };
 
@@ -799,15 +799,15 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                 // Paymode details
                 paymode_details:{
-                    cheque_no:values.paymode_details.cheque_no,
-                    cheque_date:values.paymode_details.cheque_date,
-                    cheque_bank:values.paymode_details.cheque_bank,
-                    dd_no:values.paymode_details.dd_no,
-                    dd_date:values.paymode_details.dd_date,
-                    dd_bank:values.paymode_details.dd_bank,
-                    branch_name:values.paymode_details.branch_name,
-                    deposit_bank:values.paymode_details.deposit_bank,
-                    neft_name:values.paymode_details.neft_name
+                    cheque_no:values?.paymode_details?.cheque_no,
+                    cheque_date:values?.paymode_details?.cheque_date,
+                    cheque_bank:values?.paymode_details?.cheque_bank,
+                    dd_no:values?.paymode_details?.dd_no,
+                    dd_date:values?.paymode_details?.dd_date,
+                    dd_bank:values?.paymode_details?.dd_bank,
+                    branch_name:values?.paymode_details?.branch_name,
+                    deposit_bank:values?.paymode_details?.deposit_bank,
+                    neft_name:values?.paymode_details?.neft_name
                 }
             });
             const schools = await fetchGlobalSchoolDetails();
