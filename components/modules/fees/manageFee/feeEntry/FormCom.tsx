@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {createPayment} from '@/lib/actions/fees/manageFee/payment.actions';
+import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
@@ -18,7 +18,7 @@ import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/a
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence, paymentsReceiptNo, setPaymentReceiptNo, allPayments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence, paymentsReceiptNo, setPaymentReceiptNo, allPayments, setPayments, setAllPayments}: any) => {
 
     // Toast
     const {toast} = useToast();
@@ -97,6 +97,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             : student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
         const filteredInstallments = installments?.filter((item:any, pos:any) => installments.indexOf(item) == pos);
         const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
+        const paymentsRes = await fetchStudentPayments({student:student?.student?.name});
+        setPayments(paymentsRes);
+        const allPaymentsRes = await fetchPayments();
+        setAllPayments(allPaymentsRes);
         setInstallments(sortedInstallments);
         setSelectedInstallments([sortedInstallments[0]]);
         setIsViewOpened(false);

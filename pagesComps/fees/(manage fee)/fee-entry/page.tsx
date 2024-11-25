@@ -453,6 +453,8 @@ const page = () => {
                     paymentsReceiptNo={paymentsReceiptNo}
                     setPaymentReceiptNo={setPaymentReceiptNo}
                     allPayments={allPayments}
+                    setPayments={setPayments}
+                    setAllPayments={setAllPayments}
                 />
             )}
         </div>

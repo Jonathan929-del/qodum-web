@@ -64,6 +64,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                     last_rec_amount:Number(paymentAmount.value) - (Number(paymentAmount.paid_amount) + Number(paymentAmount.conc_amount))
                 };
             }));
+            console.log(deletedHeadsAmounts);
 
             // Return
             return{
@@ -91,17 +92,18 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
             ...affectedHeads,
             ...unAffectedHeads
         ];
+        // console.log(newHeads);
 
 
         // Modifying
-        await ModifyStudentAffiliatedHeads({
-            id:selectedStudent.id,
-            affiliated_heads:{
-                group_name:selectedStudent.affiliated_heads.group_name,
-                heads:newHeads
-            }
-        });
-        await cancelPayment({receipt_no:p.receipt_no});
+        // await ModifyStudentAffiliatedHeads({
+        //     id:selectedStudent.id,
+        //     affiliated_heads:{
+        //         group_name:selectedStudent.affiliated_heads.group_name,
+        //         heads:newHeads
+        //     }
+        // });
+        // await cancelPayment({receipt_no:p.receipt_no});
         toast({title:'Canceled Successffuly!'});
 
 

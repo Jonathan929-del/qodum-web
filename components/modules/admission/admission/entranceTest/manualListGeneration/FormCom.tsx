@@ -95,6 +95,13 @@ function FormCom() {
             };
 
 
+            // Selected merit validation
+            if(form.getValues().merit_list === ''){
+                toast({title:'Please select merit list', variant:'alert'});
+                return;
+            };
+
+
             // Setting is update loading to true
             setIsUpdateLoading(true);
 
