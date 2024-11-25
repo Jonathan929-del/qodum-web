@@ -112,7 +112,7 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
 
 
         // Return
-        return paymentRes;
+        return JSON.parse(JSON.stringify(paymentRes));
 
     } catch (err:any) {
         console.log(`Error creating payment: ${err.message}`);
@@ -140,7 +140,7 @@ export const fetchPayments = async () => {
 
 
         // Return
-        return payments;
+        return JSON.parse(JSON.stringify(payments));
 
 
     } catch (err:any) {
@@ -169,8 +169,7 @@ export const fetchStudentPayments = async ({student}:{student:String}) => {
 
 
         // Return
-        return payments;
-
+        return JSON.parse(JSON.stringify(payments));
 
     } catch (err:any) {
         console.log(`Error fetching payments: ${err.message}`);
@@ -198,7 +197,7 @@ export const fetchPaymentByReceiptNo = async ({receipt_no}:{receipt_no:String}) 
 
 
         // Return
-        return payment;
+        return JSON.parse(JSON.stringify(payment));
 
 
     } catch (err:any) {
@@ -227,7 +226,7 @@ export const deletePaymentByReceiptNo = async ({receipt_no}:{receipt_no:String})
 
 
         // Return
-        return payment;
+        return JSON.parse(JSON.stringify(payment));
 
 
     } catch (err:any) {
@@ -303,7 +302,7 @@ export const dailyFeeCollectionFilter = async ({school, wing, classes, board, en
 
 
         // Return
-        return filteredPayments;
+        return JSON.parse(JSON.stringify(filteredPayments));
 
 
     } catch (err:any) {
@@ -382,7 +381,7 @@ export const receiptWiseFeeTypeCollectionFilter = async ({school, wing, classes,
 
 
         // Return
-        return filteredPayments;
+        return JSON.parse(JSON.stringify(filteredPayments));
 
 
     } catch (err:any) {
@@ -438,8 +437,7 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
 
 
         // Return
-        return payments;
-
+        return JSON.parse(JSON.stringify(payments));
 
     } catch (err:any) {
         console.log(`Error fetching payments: ${err.message}`);
