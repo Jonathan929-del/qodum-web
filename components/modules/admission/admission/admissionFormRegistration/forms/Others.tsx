@@ -658,7 +658,8 @@ const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) =>
                                 <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] sm:basis-[35%]'>Percentage</FormLabel>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
-                                        value={school.percentage}
+                                        disabled
+                                        value={school.obtain_marks / school.total_marks * 100}
                                         onChange={(e:any) => {
                                             previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].percentage = e.target.value;
                                             setPreviousSchoolsDetails([...previousSchoolsDetails]);

@@ -14,6 +14,7 @@ import {ParishValidation} from '@/lib/validations/admission/globalMasters/parish
 import {Check, ChevronDown, X} from 'lucide-react';
 import {Select, SelectContent, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Checkbox} from '@/components/ui/checkbox';
+import { useState } from 'react';
 
 
 
@@ -43,9 +44,17 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
         }
     });
 
+
+    // Is religions error
+    const [isReligionsError, setIsReligionsError] = useState(false);
+
     
     // Submit handler
     const onSubmit = async (values: z.infer<typeof ParishValidation>) => {
+        if(selectedReligions.length === 0){
+            setIsReligionsError(true);
+            return;
+        };
         // Create parish
         if (updateParish.id === '') {
             if (parishes.map((parish: any) => parish.parish).includes(values.parish)) {
@@ -136,7 +145,7 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
 
 
                     {/* Religions */}
-                    <div className='w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center mt-2'>
+                    <div className='relative w-full h-8 flex flex-col items-start justify-center sm:flex-row sm:items-center mt-2'>
                         <p className='basis-auto pr-2 text-xs text-end text-[#726E71] sm:basis-[30%]'>Select Religion</p>
                         <div className='relative h-full w-full flex flex-col items-start gap-4 sm:basis-[70%]'>
 
@@ -149,14 +158,14 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
                                     <div className='flex flex-row'>
                                         <div
                                             // @ts-ignore
-                                            onClick={() => setSelectedReligions(religions)}
+                                            onClick={() => {setSelectedReligions(religions);setIsReligionsError(false);}}
                                             className='group flex flex-row items-center justify-center cursor-pointer'
                                         >
                                             <Check size={12} />
                                             <p className='text-xs group-hover:underline'>All</p>
                                         </div>
                                         <div
-                                            onClick={() => setSelectedReligions([])}
+                                            onClick={() => {setSelectedReligions([]);setIsReligionsError(false);}}
                                             className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
                                         >
                                             <X size={12} />
@@ -170,7 +179,15 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
                                                     className='rounded-[2px] font-semibold'
                                                     checked={selectedReligions?.map((r: any) => r).includes(religion)}
                                                     // @ts-ignore
-                                                    onClick={() => selectedReligions?.includes(religion) ? setSelectedReligions(selectedReligions?.filter((r: any) => r !== religion)) : setSelectedReligions([...selectedReligions, religion])}
+                                                    onClick={() => {
+                                                        if(selectedReligions?.includes(religion)){
+                                                            setSelectedReligions(selectedReligions?.filter((r: any) => r !== religion));
+                                                            setIsReligionsError(false);
+                                                        }else{
+                                                            setSelectedReligions([...selectedReligions, religion]);
+                                                            setIsReligionsError(false);
+                                                        }
+                                                    }}
                                                 />
                                                 <p className='text-xs font-semibold'>{religion}</p>
                                             </li>
@@ -180,6 +197,7 @@ const FormCom = ({ setIsViewOpened, parishes, updateParish, religions, setUpdate
                             </Select>
 
                         </div>
+                        {isReligionsError && (<p className='absolute top-[100%] left-[30%] text-xs text-red-500'>Please select at least one religion</p>)}
                     </div>
 
 

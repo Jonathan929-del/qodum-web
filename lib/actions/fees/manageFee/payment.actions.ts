@@ -409,8 +409,7 @@ export const cancelPayment = async ({receipt_no}:{receipt_no:String}) => {
 
 
         // Return
-        return payment;
-
+        return JSON.parse(JSON.stringify(payment));
 
     } catch (err:any) {
         console.log(`Error canceling payment: ${err.message}`);

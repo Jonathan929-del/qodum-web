@@ -11,7 +11,12 @@ import {Document, Page, View, Text, PDFViewer, StyleSheet, Font, Image, pdf} fro
 const PDF = ({pdfData}:any) => {
 
     // Font
-    Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
+    Font.register({
+        family:'ABZ',
+        fonts:[
+            {src:'/fonts/ABZ/ABeeZee-Regular.ttf'}
+        ]
+    });
 
 
     // Numbers to words
@@ -30,7 +35,8 @@ const PDF = ({pdfData}:any) => {
     const styles = StyleSheet.create({
         body: {
             paddingHorizontal:10,
-            height:'100%'
+            height:'100%',
+            fontFamily:'ABZ'
         }
     });
 
@@ -73,7 +79,7 @@ const PDF = ({pdfData}:any) => {
                         {/* Receipt No. */}
                         <View style={{flex:1, display:'flex', flexDirection:'row', gap:10}}>
                             <Text style={{fontSize:11}}>Receipt No.:</Text>
-                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}></Text>
+                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{pdfData.receipt_no}</Text>
                         </View>
 
                         {/* Registration No. */}

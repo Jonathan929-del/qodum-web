@@ -225,7 +225,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
             const localStorageEnquiryNo = localStorage.getItem('enquiryNo') ? localStorage.getItem('enquiryNo') : null;
 
 
-            if(localStorageEnquiryNo){
+            if(false){
                 if(updateEnquiry.id === ''){
                     form.setValue('enquiry_no', localStorageEnquiryNo);
                 }else{
@@ -248,7 +248,7 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
 
         };
         fetcher();
-    }, [enquiries, updateEnquiry]);
+    }, [updateEnquiry]);
     useEffect(() => {
         if(enquiryDate){
             // @ts-ignore

@@ -12,14 +12,20 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
 
     // Font
-    Font.register({family:'FamilyName', fontStyle:'normal', fontWeight:'normal', fonts:[]});
+    Font.register({
+        family:'ABZ',
+        fonts:[
+            {src:'/fonts/ABZ/ABeeZee-Regular.ttf'}
+        ]
+    });
 
 
     // Styles
     const styles = StyleSheet.create({
         body: {
             paddingHorizontal:10,
-            height:'100%'
+            height:'100%',
+            fontFamily:'ABZ',
         }
     });
 
@@ -49,7 +55,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                             src={receiptPaymentData.logo}
                         />
                     </View>
-                    <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center'}}>
+                    <View style={{flex:1, display:'flex', flexDirection:'column', alignItems:'flex-end'}}>
                         <Text style={{fontWeight:400, fontSize:16}}>{receiptPaymentData.school_name}</Text>
                         <Text style={{marginTop:4}}>{receiptPaymentData.school_address}</Text>
                         <Text style={{marginTop:2}}>Website:{receiptPaymentData.website} | Contact:{receiptPaymentData.school_no}</Text>

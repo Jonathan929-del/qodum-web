@@ -78,7 +78,7 @@ const UPIDetails = ({selectedStudent, totalPaidAmount, setIsQrCodeGenerated, for
             const unique_request_number = Math.floor(Math.random() * 1000000000);
             const params = {
                 unique_request_number:JSON.stringify(unique_request_number),
-                amount:totalPaidAmount,
+                amount:Number(totalPaidAmount),
                 customer_name:selectedStudent.name,
                 customer_phone:JSON.stringify(selectedStudent.phone)
             };
