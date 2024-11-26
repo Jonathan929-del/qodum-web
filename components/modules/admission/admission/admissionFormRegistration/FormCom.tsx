@@ -1277,7 +1277,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             };
         });
 
-
     };
 
 

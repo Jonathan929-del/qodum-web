@@ -18,6 +18,12 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
             {src:'/fonts/ABZ/ABeeZee-Regular.ttf'}
         ]
     });
+    Font.register({
+        family:'Roboto-Bold',
+        fonts:[
+            {src:'/fonts/Roboto/Roboto-Bold.ttf'}
+        ]
+    });
 
 
     // Styles
@@ -25,7 +31,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
         body: {
             paddingHorizontal:10,
             height:'100%',
-            fontFamily:'ABZ',
+            fontFamily:'ABZ'
         }
     });
 
@@ -72,11 +78,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Receipt No.:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.receipt_no}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.receipt_no}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Date:</Text>
-                            <Text style={{marginLeft:4}}>{moment(receiptPaymentData.received_date).format('D-MMM-yy')}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{moment(receiptPaymentData.received_date).format('D-MMM-yy')}</Text>
                         </View>
                     </View>
 
@@ -84,11 +90,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Ref No.:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.ref_no}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.ref_no}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Class:</Text>
-                            <Text style={{marginLeft:4}}>{receiptPaymentData.class_name}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.class_name}</Text>
                         </View>
                     </View>
 
@@ -96,11 +102,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Adm No.:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.adm_no}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.adm_no}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Installment:</Text>
-                            <Text style={{marginLeft:4}}>{receiptPaymentData.installments.map((i:any) => ` ${i}`)}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.installments.map((i:any) => ` ${i}`)}</Text>
                         </View>
                     </View>
 
@@ -108,11 +114,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Name:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.student}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.student}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Paymode:</Text>
-                            <Text style={{marginLeft:4}}>{receiptPaymentData.paymode}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.paymode}</Text>
                         </View>
                     </View>
 
@@ -120,11 +126,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Father Name:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.father_name}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.father_name}</Text>
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Fee Type:</Text>
-                            <Text style={{marginLeft:4}}>{receiptPaymentData.fee_type}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.fee_type}</Text>
                         </View>
                     </View>
 
@@ -132,7 +138,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                         <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Board:</Text>
-                            <Text style={{marginLeft:4, fontSize:10}}>{receiptPaymentData.board}</Text>
+                            <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.board}</Text>
                         </View>
                     </View>
                 </View>
@@ -187,12 +193,12 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         {/* Amount */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Amount (in words): </Text>
-                            <Text>{numberToWords(totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))} ONLY</Text>
+                            <Text style={{fontFamily:'Roboto-Bold'}}>{numberToWords(totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.paid_amount))))))} ONLY</Text>
                         </View>
                         {/* Total Paid */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2, backgroundColor:'#F3F8FB'}}>
                             <Text>Total Paid: </Text>
-                            <Text>{totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}</Text>
+                            <Text style={{fontFamily:'Roboto-Bold'}}>{totalNumberGenerator(receiptPaymentData.paid_heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => receiptPaymentData.installments.includes(a.name)).map((a:any) => Number(a.paid_amount)))))}</Text>
                         </View>
                     </View>
                     <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginTop:4}}>
@@ -203,7 +209,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         {/* Total Paid */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', minWidth:200, paddingLeft:4, paddingVertical:2, backgroundColor:'#F3F8FB'}}>
                             <Text>Advance/Dues:</Text>
-                            <Text>{receiptPaymentData.advance_dues_number}</Text>
+                            <Text style={{fontFamily:'Roboto-Bold'}}>{receiptPaymentData.advance_dues_number}</Text>
                         </View>
                     </View>
                     <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-start', marginTop:4, gap:4}}>
