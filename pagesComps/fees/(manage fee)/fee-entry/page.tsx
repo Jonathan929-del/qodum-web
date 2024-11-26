@@ -155,9 +155,6 @@ const page = () => {
 
             // Pending pending payments
             const pendingPayments = localStorage.getItem('payments') ? JSON.parse(localStorage.getItem('payments')) : [];
-
-
-            // Checking payments status
             pendingPayments.map(async (p:any) => {
                 const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
                     ? await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId})

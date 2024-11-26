@@ -426,7 +426,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                     </li>
                 </ul>
                 {/* Values */}
-                {studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments')?.map((h:any, index:number) => (
+                {studentHeads?.filter((h:any) => selectedPayment?.installments?.includes(h.installment) || h.installment === 'All installments')?.map((h:any, index:number) => (
                     <ul
                         key={index}
                         className={`w-full min-w-[750px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] sm:text-xs md:text-md ${Math.floor((paymentHeads.indexOf(h) + 1) / 2) * 2 !== paymentHeads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}

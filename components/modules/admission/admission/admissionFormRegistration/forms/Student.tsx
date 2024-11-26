@@ -42,7 +42,7 @@ import SwipedCardDetaila from '../paymodes/SwipedCardDetails';
 
 
 // Main function
-const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob}:any) => {
+const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, updateStudent, imageSrc, setImageSrc, setIsLoading, setValuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, date, setDate, dob, setDob, setIsQrCodeGenerated}:any) => {
 
     // Search
     const [search, setSearch] = useState('');
@@ -814,7 +814,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
         // @ts-ignore
         form.setValue('student.board', boardsState.items?.find((b:any) => b.is_default)?.board);
     }, [boardsState]);
-    useEffect(() => {}, [form.watch('student.payment_mode')])
+    useEffect(() => {}, [form.watch('student.payment_mode')]);
 
     return (
         <div className='flex flex-row'>
@@ -1006,19 +1006,12 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
                 {/* Payment Modes */}
-                {(form.getValues().student.payment_mode === 'Cheque' || form.getValues().student.payment_mode === 'DD' || form.getValues().student.payment_mode === 'NEFT' || form.getValues().student.payment_mode === 'Swiped Card') && (
-                    <div className=''>
-                        {/* <h3 className='text-hash-color text-[14px] mb-2'>Paymode Details:</h3> */}
-                        <div>
-                            {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails form={form}/>}
-                            {form.getValues().student.payment_mode === 'DD' && <DDDetails form={form}/>}
-                            {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails form={form}/>}
-                            {/* {form.getValues().student.payment_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
-                            {form.getValues().student.payment_mode === 'Online' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
-                            {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila form={form}/>}
-                        </div>
-                    </div>
-                )}
+                {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails form={form}/>}
+                {form.getValues().student.payment_mode === 'DD' && <DDDetails form={form}/>}
+                {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails form={form}/>}
+                {form.getValues().student.payment_mode === 'UPI' && <UPIDetails setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} />}
+                {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila form={form}/>}
+                {/* {form.getValues().student.payment_mode === 'Online' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
 
 
                 {/* Admission Account */}

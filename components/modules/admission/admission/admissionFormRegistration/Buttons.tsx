@@ -13,7 +13,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails, setSiblings}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails, setSiblings, isQrCodeGenerated}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -432,6 +432,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
             result:''
         }]);
         setSiblings([{}]);
+        isQrCodeGenerated && localStorage.removeItem('registrationPayment');
     };
 
 

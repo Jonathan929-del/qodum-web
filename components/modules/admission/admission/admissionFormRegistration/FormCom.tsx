@@ -20,6 +20,7 @@ import {StudentValidation} from '@/lib/validations/admission/admission/student.v
 import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admission/admission/student.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import Siblings from './forms/Siblings';
+import axios from 'axios';
 
 
 
@@ -38,6 +39,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     const [fatherDob, setFatherDob] = useState(moment());
     const [motherDob, setMotherDob] = useState(moment());
     const [anniversaryDate, setAnniversaryDate] = useState(moment());
+
+
+    // Is QR code generated
+    const [isQrCodeGenerated, setIsQrCodeGenerated] = useState(false);
 
 
     // Is Loading
@@ -407,10 +412,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     });
 
 
-    // Submit handler
-    const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
-
-        setIsLoading(true);
+    // Saving data
+    const savingData = async (values:any) => {
         // Create Student
         if(updateStudent.id === ''){
             if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
@@ -1221,7 +1224,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         // Image
         setFile(null);
         setImageSrc('');
-        setIsLoading(false);
         setSelectedSubjects([]);
         setDate(moment());
         setDob(moment());
@@ -1232,6 +1234,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             class:'',
             school_name:'',
             board:'',
+            
             passing_year:'',
             total_marks:'',
             obtain_marks:'',
@@ -1239,6 +1242,42 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             result:''
         }]);
         setSiblings([{}]);
+        setIsLoading(false);
+    };
+
+
+    // Submit handler
+    const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
+
+        // Pending pending payments
+        setIsLoading(true);
+        const pendingPayments = localStorage.getItem('registrationPayment') ? JSON.parse(localStorage.getItem('registrationPayment')) : [];
+        if(pendingPayments.length === 0){
+            savingData(values);
+        };
+        pendingPayments.map(async (p:any) => {
+            const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
+                ? await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId})
+                : await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/check-easy-pay`, {merchant_txn:p.txnId});
+            if(paymentStatus.data.status === 'cancelled'){
+                const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
+                localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
+                setIsLoading(false);
+            };
+            if(paymentStatus.data.status === 'completed'){
+                savingData(values);
+                // Removing the payment id from local storage
+                const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
+                localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
+
+            }else{
+                toast({title:'Please make the pending payment', variant:'alert'});
+                setIsLoading(false);
+                return;
+            };
+        });
+
+
     };
 
 
@@ -1423,6 +1462,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             setMotherDob(moment(updateStudent.parents.mother.dob));
             setAnniversaryDate(moment(updateStudent.parents.mother.anniversary_date));
         };
+        if(localStorage.getItem('admissionPayment')){
+            setIsQrCodeGenerated(true);
+        };
     }, []);
 
     return (
@@ -1512,6 +1554,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                                     setDate={setDate}
                                     dob={dob}
                                     setDob={setDob}
+                                    setIsQrCodeGenerated={setIsQrCodeGenerated}
                                 />
                             </TabsContent>
                             <TabsContent value='parent'>
@@ -1548,7 +1591,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
                         {/* Buttons */}
                         <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails} setSiblings={setSiblings}/>
+                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails} setSiblings={setSiblings} isQrCodeGenerated={isQrCodeGenerated}/>
                         </div>
                     </form>
                 )}

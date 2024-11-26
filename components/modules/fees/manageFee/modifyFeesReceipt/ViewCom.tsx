@@ -97,7 +97,7 @@ const ViewCom = ({setIsViewOpened, payments, setSelectedStudent, setSelectedPaym
                                     No payments
                                 </p>
                             ):
-                            !payments[0]?.receipt_no ? (
+                            !payments[0]?.actual_amount ? (
                                 <LoadingIcon />
                             ) : payments.map((p:any) => (
                                 <CommandItem
