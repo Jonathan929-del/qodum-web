@@ -412,212 +412,246 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     });
 
 
-    // Saving data
-    const savingData = async (values:any) => {
+    // Submit handler
+    const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
+
+        // Set is loading to true
+        setIsLoading(true);
+
+
         // Create Student
         if(updateStudent.id === ''){
-            if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
-                toast({title:'Register no. already exists', variant:'error'});
-                return;
-            };
-            if(file){
-                const formData = new FormData();
-                formData.append('file', file);
-                await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]});
-            };
-            const res = await createStudent({
-                // Student
-                student:{
-                    // 1
-                    is_online:values.student.is_online,
-                    image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]}` : '',
-                    enquiry_no:values.student.enquiry_no,
-                    reg_no:values.student.reg_no,
-                    pros_no:values.student.pros_no,
+
+            const createStudent = async (values:any) => {
+                if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
+                    toast({title:'Register no. already exists', variant:'error'});
+                    return;
+                };
+                if(file){
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]});
+                };
+                const res = await createStudent({
+                    // Student
+                    student:{
+                        // 1
+                        is_online:values.student.is_online,
+                        image:file !== null ? `https://qodum.s3.amazonaws.com/students/${values.student.name + values.student.reg_no.split('/')[values.student.reg_no.split('/').length - 1]}` : '',
+                        enquiry_no:values.student.enquiry_no,
+                        reg_no:values.student.reg_no,
+                        pros_no:values.student.pros_no,
+                        amount:values.student.amount,
+                        date:values.student.date,
+                        payment_mode:values.student.payment_mode,
+                        admission_account:values.student.admission_account,
+                        post_account:values.student.post_account,
+                        // 2
+                        class:values.student.class,
+                        board:values.student.board,
+                        stream:values.student.stream,
+                        subjects:selectedSubjects,
+                        optional_subject:values.student.optional_subject,
+                        name:values.student.name,
+                        middle_name:values.student.middle_name,
+                        last_name:values.student.last_name,
+                        dob:values.student.dob,
+                        place_of_birth:values.student.place_of_birth,
+                        gender:values.student.gender,
+                        contact_person_name:values.student.contact_person_name,
+                        contact_person_mobile:values.student.contact_person_mobile,
+                        contact_person_email:values.student.contact_person_email,
+                        secondary_contact_no:values.student.secondary_contact_no,
+                        h_no_and_streets:values.student.h_no_and_streets,
+                        email:values.student.email,
+                        city:values.student.city,
+                        mobile:values.student.mobile,
+                        state:values.student.state,
+                        pin_code:values.student.pin_code,
+                        aadhar_card_no:values.student.aadhar_card_no,
+                        religion:values.student.religion,
+                        blood_group:values.student.blood_group,
+                        caste:values.student.caste,
+                        category:values.student.category,
+                        is_ews:values.student.is_ews,
+                        sibling:values.student.sibling,
+                        transport:values.student.transport,
+                        nationality:values.student.nationality
+                    },
+    
+                    // Parents
+                    parents:{
+                        // Father
+                        father:{
+                            father_name:values.parents.father.father_name,
+                            middle_name:values.parents.father.middle_name,
+                            last_name:values.parents.father.last_name,
+                            profession:values.parents.father.profession,
+                            designation:values.parents.father.designation,
+                            residence_address:values.parents.father.residence_address,
+                            office_address:values.parents.father.office_address,
+                            email:values.parents.father.email,
+                            alternate_email:values.parents.father.alternate_email,
+                            dob:values.parents.father.dob,
+                            mobile:values.parents.father.mobile,
+                            phone:values.parents.father.phone,
+                            company_name:values.parents.father.company_name,
+                            business_details:values.parents.father.business_details,
+                            qualification:values.parents.father.qualification,
+                            service_in:values.parents.father.service_in,
+                            office_phone:values.parents.father.office_phone,
+                            office_mobile:values.parents.father.office_mobile,
+                            office_extension:values.parents.father.office_extension,
+                            office_email:values.parents.father.office_email,
+                            office_website:values.parents.father.office_website,
+                            annual_income:values.parents.father.annual_income,
+                            parent_status:values.parents.father.parent_status
+                        },
+                        // Mother
+                        mother:{
+                            mother_name:values.parents.mother.mother_name,
+                            middle_name:values.parents.mother.middle_name,
+                            last_name:values.parents.mother.last_name,
+                            profession:values.parents.mother.profession,
+                            designation:values.parents.mother.designation,
+                            residence_address:values.parents.mother.residence_address,
+                            office_address:values.parents.mother.office_address,
+                            email:values.parents.mother.email,
+                            alternate_email:values.parents.mother.alternate_email,
+                            dob:values.parents.mother.dob,
+                            mobile:values.parents.mother.mobile,
+                            phone:values.parents.mother.phone,
+                            company_name:values.parents.mother.company_name,
+                            business_details:values.parents.mother.business_details,
+                            qualification:values.parents.mother.qualification,
+                            service_in:values.parents.mother.service_in,
+                            office_phone:values.parents.mother.office_phone,
+                            office_mobile:values.parents.mother.office_mobile,
+                            office_extension:values.parents.mother.office_extension,
+                            office_email:values.parents.mother.office_email,
+                            office_website:values.parents.mother.office_website,
+                            annual_income:values.parents.mother.annual_income,
+                            anniversary_date:values.parents.mother.anniversary_date
+                        }
+                    },
+    
+                    // Other details
+                    others:{
+                        // 1
+                        student_other_details:{
+                            medical_history:values.others.student_other_details.medical_history,
+                            descriptions:values.others.student_other_details.descriptions,
+                            allergies:values.others.student_other_details.allergies,
+                            allergies_causes:values.others.student_other_details.allergies_causes,
+                            family_doctor_name:values.others.student_other_details.family_doctor_name,
+                            family_doctor_phone:values.others.student_other_details.family_doctor_phone,
+                            family_doctor_address:values.others.student_other_details.family_doctor_address,
+                            distance_from_home:values.others.student_other_details.distance_from_home,
+                            no_of_living_year:values.others.student_other_details.no_of_living_year,
+                            only_child:values.others.student_other_details.only_child,
+                            general_description:values.others.student_other_details.general_description,
+                        },
+                        // 2
+                        student_staff_relation:{
+                            staff_ward:values.others.student_staff_relation.staff_ward,
+                            staff_name:values.others.student_staff_relation.staff_name
+                        },
+                        // 3
+                        is_alumni:{
+                            is_alumni:values.others.is_alumni.is_alumni,
+                            academic_session:values.others.is_alumni.academic_session,
+                            class_name:values.others.is_alumni.class_name,
+                            admission_number:values.others.is_alumni.admission_number
+                        },
+                        // 4
+                        previous_school_details:previousSchoolsDetails
+                    },
+    
+                    // Guardian details
+                    guardian_details:{
+                        // 1
+                        guardian_name:values.guardian_details.guardian_name,
+                        profession:values.guardian_details.profession,
+                        designation:values.guardian_details.designation,
+                        company_name:values.guardian_details.company_name,
+                        business_details:values.guardian_details.business_details,
+                        qualification:values.guardian_details.qualification,
+                        // 2
+                        if_single_parent:{
+                            student_lives_with:values.guardian_details.if_single_parent.student_lives_with,
+                            legal_custody_of_the_child:values.guardian_details.if_single_parent.legal_custody_of_the_child,
+                            correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
+                            check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
+                            separation_reason:values.guardian_details.if_single_parent.separation_reason
+                        }
+                    },
+    
+                    // Siblings
+                    siblings,
+    
+                    // Paymode details
+                    paymode_details:{
+                        cheque_no:values.paymode_details.cheque_no,
+                        cheque_date:values.paymode_details.cheque_date,
+                        cheque_bank:values.paymode_details.cheque_bank,
+                        dd_no:values.paymode_details.dd_no,
+                        dd_date:values.paymode_details.dd_date,
+                        dd_bank:values.paymode_details.dd_bank,
+                        branch_name:values.paymode_details.branch_name,
+                        deposit_bank:values.paymode_details.deposit_bank,
+                        neft_name:values.paymode_details.neft_name
+                    }
+                });
+                const schools = await fetchGlobalSchoolDetails();
+                setPdfData({
+                    school_logo:schools[0].logo,
+                    school_name:schools[0].school_name,
+                    school_address:schools[0].school_address,
+                    school_affiliation_no:schools[0].affiliation_no,
+                    school_no:schools[0].school_no,
+                    school_website:schools[0].website,
+                    school_contact_no:schools[0].mobile,
+                    registration_no:values.student.reg_no,
+                    receipt_no:students.length,
+                    received_from:values.student.name,
+                    father_name:values.parents.father.father_name,
                     amount:values.student.amount,
-                    date:values.student.date,
                     payment_mode:values.student.payment_mode,
-                    admission_account:values.student.admission_account,
-                    post_account:values.student.post_account,
-                    // 2
-                    class:values.student.class,
-                    board:values.student.board,
-                    stream:values.student.stream,
-                    subjects:selectedSubjects,
-                    optional_subject:values.student.optional_subject,
-                    name:values.student.name,
-                    middle_name:values.student.middle_name,
-                    last_name:values.student.last_name,
-                    dob:values.student.dob,
-                    place_of_birth:values.student.place_of_birth,
-                    gender:values.student.gender,
-                    contact_person_name:values.student.contact_person_name,
-                    contact_person_mobile:values.student.contact_person_mobile,
-                    contact_person_email:values.student.contact_person_email,
-                    secondary_contact_no:values.student.secondary_contact_no,
-                    h_no_and_streets:values.student.h_no_and_streets,
-                    email:values.student.email,
-                    city:values.student.city,
-                    mobile:values.student.mobile,
-                    state:values.student.state,
-                    pin_code:values.student.pin_code,
-                    aadhar_card_no:values.student.aadhar_card_no,
-                    religion:values.student.religion,
-                    blood_group:values.student.blood_group,
-                    caste:values.student.caste,
-                    category:values.student.category,
-                    is_ews:values.student.is_ews,
-                    sibling:values.student.sibling,
-                    transport:values.student.transport,
-                    nationality:values.student.nationality
-                },
-
-                // Parents
-                parents:{
-                    // Father
-                    father:{
-                        father_name:values.parents.father.father_name,
-                        middle_name:values.parents.father.middle_name,
-                        last_name:values.parents.father.last_name,
-                        profession:values.parents.father.profession,
-                        designation:values.parents.father.designation,
-                        residence_address:values.parents.father.residence_address,
-                        office_address:values.parents.father.office_address,
-                        email:values.parents.father.email,
-                        alternate_email:values.parents.father.alternate_email,
-                        dob:values.parents.father.dob,
-                        mobile:values.parents.father.mobile,
-                        phone:values.parents.father.phone,
-                        company_name:values.parents.father.company_name,
-                        business_details:values.parents.father.business_details,
-                        qualification:values.parents.father.qualification,
-                        service_in:values.parents.father.service_in,
-                        office_phone:values.parents.father.office_phone,
-                        office_mobile:values.parents.father.office_mobile,
-                        office_extension:values.parents.father.office_extension,
-                        office_email:values.parents.father.office_email,
-                        office_website:values.parents.father.office_website,
-                        annual_income:values.parents.father.annual_income,
-                        parent_status:values.parents.father.parent_status
-                    },
-                    // Mother
-                    mother:{
-                        mother_name:values.parents.mother.mother_name,
-                        middle_name:values.parents.mother.middle_name,
-                        last_name:values.parents.mother.last_name,
-                        profession:values.parents.mother.profession,
-                        designation:values.parents.mother.designation,
-                        residence_address:values.parents.mother.residence_address,
-                        office_address:values.parents.mother.office_address,
-                        email:values.parents.mother.email,
-                        alternate_email:values.parents.mother.alternate_email,
-                        dob:values.parents.mother.dob,
-                        mobile:values.parents.mother.mobile,
-                        phone:values.parents.mother.phone,
-                        company_name:values.parents.mother.company_name,
-                        business_details:values.parents.mother.business_details,
-                        qualification:values.parents.mother.qualification,
-                        service_in:values.parents.mother.service_in,
-                        office_phone:values.parents.mother.office_phone,
-                        office_mobile:values.parents.mother.office_mobile,
-                        office_extension:values.parents.mother.office_extension,
-                        office_email:values.parents.mother.office_email,
-                        office_website:values.parents.mother.office_website,
-                        annual_income:values.parents.mother.annual_income,
-                        anniversary_date:values.parents.mother.anniversary_date
-                    }
-                },
-
-                // Other details
-                others:{
-                    // 1
-                    student_other_details:{
-                        medical_history:values.others.student_other_details.medical_history,
-                        descriptions:values.others.student_other_details.descriptions,
-                        allergies:values.others.student_other_details.allergies,
-                        allergies_causes:values.others.student_other_details.allergies_causes,
-                        family_doctor_name:values.others.student_other_details.family_doctor_name,
-                        family_doctor_phone:values.others.student_other_details.family_doctor_phone,
-                        family_doctor_address:values.others.student_other_details.family_doctor_address,
-                        distance_from_home:values.others.student_other_details.distance_from_home,
-                        no_of_living_year:values.others.student_other_details.no_of_living_year,
-                        only_child:values.others.student_other_details.only_child,
-                        general_description:values.others.student_other_details.general_description,
-                    },
-                    // 2
-                    student_staff_relation:{
-                        staff_ward:values.others.student_staff_relation.staff_ward,
-                        staff_name:values.others.student_staff_relation.staff_name
-                    },
-                    // 3
-                    is_alumni:{
-                        is_alumni:values.others.is_alumni.is_alumni,
-                        academic_session:values.others.is_alumni.academic_session,
-                        class_name:values.others.is_alumni.class_name,
-                        admission_number:values.others.is_alumni.admission_number
-                    },
-                    // 4
-                    previous_school_details:previousSchoolsDetails
-                },
-
-                // Guardian details
-                guardian_details:{
-                    // 1
-                    guardian_name:values.guardian_details.guardian_name,
-                    profession:values.guardian_details.profession,
-                    designation:values.guardian_details.designation,
-                    company_name:values.guardian_details.company_name,
-                    business_details:values.guardian_details.business_details,
-                    qualification:values.guardian_details.qualification,
-                    // 2
-                    if_single_parent:{
-                        student_lives_with:values.guardian_details.if_single_parent.student_lives_with,
-                        legal_custody_of_the_child:values.guardian_details.if_single_parent.legal_custody_of_the_child,
-                        correspondence_to:values.guardian_details.if_single_parent.correspondence_to,
-                        check_id_applicable:values.guardian_details.if_single_parent.check_id_applicable,
-                        separation_reason:values.guardian_details.if_single_parent.separation_reason
-                    }
-                },
-
-                // Siblings
-                siblings,
-
-                // Paymode details
-                paymode_details:{
-                    cheque_no:values.paymode_details.cheque_no,
-                    cheque_date:values.paymode_details.cheque_date,
-                    cheque_bank:values.paymode_details.cheque_bank,
-                    dd_no:values.paymode_details.dd_no,
-                    dd_date:values.paymode_details.dd_date,
-                    dd_bank:values.paymode_details.dd_bank,
-                    branch_name:values.paymode_details.branch_name,
-                    deposit_bank:values.paymode_details.deposit_bank,
-                    neft_name:values.paymode_details.neft_name
-                }
-            });
-            const schools = await fetchGlobalSchoolDetails();
-            setPdfData({
-                school_logo:schools[0].logo,
-                school_name:schools[0].school_name,
-                school_address:schools[0].school_address,
-                school_affiliation_no:schools[0].affiliation_no,
-                school_no:schools[0].school_no,
-                school_website:schools[0].website,
-                school_contact_no:schools[0].mobile,
-                registration_no:values.student.reg_no,
-                receipt_no:students.length,
-                received_from:values.student.name,
-                father_name:values.parents.father.father_name,
-                amount:values.student.amount,
-                payment_mode:values.student.payment_mode,
-                class_name:values.student.class
-            });
-            setIsReceiptOpened(true);
-            if(res === 0){
-                toast({title:'Please create a session first', variant:'alert'});
-                return;
+                    class_name:values.student.class
+                });
+                setIsReceiptOpened(true);
+                // @ts-ignore
+                if(res === 0){
+                    toast({title:'Please create a session first', variant:'alert'});
+                    return;
+                };
+                toast({title:'Added Successfully!'});
             };
-            toast({title:'Added Successfully!'});
+            const pendingPayments = localStorage.getItem('registrationPayment') ? JSON.parse(localStorage.getItem('registrationPayment')) : [];
+            if(pendingPayments.length === 0){
+                createStudent(values);
+            };
+            pendingPayments.map(async (p:any) => {
+                const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
+                    ? await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId})
+                    : await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/check-easy-pay`, {merchant_txn:p.txnId});
+                if(paymentStatus.data.status === 'cancelled'){
+                    const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
+                    localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
+                    setIsLoading(false);
+                };
+                if(paymentStatus.data.status === 'completed'){
+                    createStudent(values);
+                    // Removing the payment id from local storage
+                    const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
+                    localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
+    
+                }else{
+                    toast({title:'Please make the pending payment', variant:'alert'});
+                    setIsLoading(false);
+                    return;
+                };
+            });
         }
         // Modify Student
         else if(
@@ -1243,40 +1277,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         }]);
         setSiblings([{}]);
         setIsLoading(false);
-    };
-
-
-    // Submit handler
-    const onSubmit = async (values:z.infer<typeof StudentValidation>) => {
-
-        // Pending pending payments
-        setIsLoading(true);
-        const pendingPayments = localStorage.getItem('registrationPayment') ? JSON.parse(localStorage.getItem('registrationPayment')) : [];
-        if(pendingPayments.length === 0){
-            savingData(values);
-        };
-        pendingPayments.map(async (p:any) => {
-            const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
-                ? await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect-status`, {orderId:p.txnId})
-                : await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/check-easy-pay`, {merchant_txn:p.txnId});
-            if(paymentStatus.data.status === 'cancelled'){
-                const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
-                localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
-                setIsLoading(false);
-            };
-            if(paymentStatus.data.status === 'completed'){
-                savingData(values);
-                // Removing the payment id from local storage
-                const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
-                localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
-
-            }else{
-                toast({title:'Please make the pending payment', variant:'alert'});
-                setIsLoading(false);
-                return;
-            };
-        });
-
     };
 
 

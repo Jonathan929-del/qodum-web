@@ -9,7 +9,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 // Main function
-const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
+const UPIDetails = ({setIsQrCodeGenerated, form, updateStudent}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -61,7 +61,7 @@ const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
 
     // Create payment
     const createPayment = async () => {
-        if(form.getValues().student.name !== ''){
+        if(form.getValues().student.name !== '' && form.getValues().student.reg_no !== '' && form.getValues().student.amount !== '' && Number(form.getValues().student.amount) !== 0 && form.getValues().student.mobile && updateStudent.id === ''){
 
             // Setting is loading to true
             setIsLoading(true);
@@ -91,8 +91,9 @@ const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
                 unique_request_number:JSON.stringify(unique_request_number),
                 amount:Number(form.getValues().student.amount),
                 customer_name:form.getValues().student.name,
-                customer_phone:isValidMobile(JSON.stringify(form.getValues().student.mobile)) ? JSON.stringify(form.getValues().student.mobile) : '9876543215'
+                customer_phone:isValidMobile(JSON.stringify(form.getValues().student.mobile)) ? JSON.stringify(form.getValues().student.mobile) : '9792853741'
             };
+            console.log(params);
             const paymentUrlRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/payment/insta-collect`, params);
 
             // Setting QR code and validations
@@ -100,12 +101,6 @@ const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
                 setError(paymentUrlRes?.data?.message);
             }else{
                 setQRImage(paymentUrlRes.data.payment_url);
-                let advanceDuesNumber;
-                if(form.getValues().dues > 0){
-                    advanceDuesNumber = - form.getValues().dues;
-                }else if (form.getValues().advance_amt > 0){
-                    advanceDuesNumber = form.getValues().advance_amt;
-                };
                 setCurrentOrder({
                     txnId:paymentUrlRes.data.order_id,
                     amount:Number(form.getValues().student.amount),
@@ -162,23 +157,14 @@ const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
             createPayment();
         };
         setCurrentOrder(localStorage.getItem('registrationPayment') && JSON.parse(localStorage.getItem('registrationPayment')).length > 0 ? JSON.parse(localStorage.getItem('registrationPayment')).find((p:any) => p.adm_no === form.getValues().student.reg_no) : {});
-        const handler = setTimeout(() => {
-            setDebouncedAmount(form.getValues().student.amount);
-        }, 1000);
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [form.getValues().student.amount, form.getValues().student.name, form.getValues().student.mobile, form.getValues().student.reg_no]);
-    useEffect(() => {
-        if(Number(currentOrder.amount) > 0 && debouncedAmount && Number(debouncedAmount) !== Number(currentOrder.amount) && !isCancelClicked){
-            updatePayment();
-        };
-    }, [debouncedAmount]);
-    
+    }, []);
 
     return (
         <div className='flex items-center justify-center'>
-            {form.getValues().student.name !== '' ?
+            {updateStudent.id !== ''
+            ?
+                ''
+            : form.getValues().student.name !== '' ?
                 isLoading ? (
                 <LoadingIcon />
             ) : error ? (
@@ -193,7 +179,22 @@ const UPIDetails = ({setIsQrCodeGenerated, form}:any) => {
                     >
                         Cancel
                     </span>
+                    {
+                        currentOrder?.adm_no !== form.getValues().student.reg_no ||
+                        Number(currentOrder?.amount) !== Number(form.getValues().student.amount) ||
+                        currentOrder?.student_name !== form.getValues().student.name && (
+                            <span
+                                className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                onClick={updatePayment}
+                            >
+                                Update
+                            </span>
+                        )
+                    }
                 </div>
+            ) : form.getValues().student.mobile === 0 ? (
+                <p className='text-[11px] text-red-500'>Please enter student mobile no.</p>
             ) : (
                 <span
                 className='flex items-center justify-center px-1 h-6 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white cursor-pointer

@@ -1009,7 +1009,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 {form.getValues().student.payment_mode === 'Cheque' && <ChequeDetails form={form}/>}
                 {form.getValues().student.payment_mode === 'DD' && <DDDetails form={form}/>}
                 {form.getValues().student.payment_mode === 'NEFT' && <NeftDetails form={form}/>}
-                {form.getValues().student.payment_mode === 'UPI' && <UPIDetails setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} />}
+                {form.getValues().student.payment_mode === 'UPI' && <UPIDetails setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} updateStudent={updateStudent}/>}
                 {form.getValues().student.payment_mode === 'Swiped Card' && <SwipedCardDetaila form={form}/>}
                 {/* {form.getValues().student.payment_mode === 'Online' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>} */}
 
