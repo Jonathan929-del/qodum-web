@@ -79,6 +79,7 @@ const FormCom = () => {
 
     // Fetcher
     const fetcher = async () => {
+        setIsLoading(true);
         const installmentsRes = await fetchInstallments();
         const classesRes = await fetchClasses();
         setInstallments(installmentsRes);
@@ -94,6 +95,7 @@ const FormCom = () => {
                 :
                     false
         ));
+        setIsLoading(false);
     };
 
 
@@ -374,17 +376,22 @@ const FormCom = () => {
                                 </span>
                             )}
 
-                            <Button
-                                type='submit'
-                                className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
-                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
-                            >
-                                {permissions.add && isLoading ? (
+                            {
+                                isLoading ? (
                                     <LoadingIcon />
-                                ) : (
-                                    'Save'
-                                )}
-                            </Button>
+                                ) : isStudentsLoading ? 
+                                (
+                                    <LoadingIcon />
+                                ) : permissions.add && (
+                                    <Button
+                                        type='submit'
+                                        className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-full border-white
+                                        hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color sm:text-[16px] sm:px-4'
+                                    >
+                                        Save
+                                    </Button>
+                                )
+                            }
                         </div>
 
                     </div>

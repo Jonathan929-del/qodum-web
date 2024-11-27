@@ -369,7 +369,24 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         setInstallments([]);
         setSelectedInstallments([]);
         setConcessionReason('');
-        setPaymentReceiptNo('');
+
+        // Setting new receipt no.
+        const newReceiptNoGenerator = (str:any) => {
+            const input = String(str);        
+            const match = input.match(/(0*\d+)(?!.*\d)/);
+            if (!match) {
+                if (/^\d+$/.test(input)) {
+                    return String(parseInt(input, 10) + 1);
+                }
+                throw new Error('No numeric part found to increment.');
+            };
+            const fullMatch = match[0];
+            const numericPart = fullMatch.replace(/^0+/, '');        
+            const incrementedNumber = String(parseInt(numericPart, 10) + 1);        
+            const paddedNumber = incrementedNumber.padStart(fullMatch.length, '0');
+            return input.replace(fullMatch, paddedNumber);
+        };
+        setPaymentReceiptNo(newReceiptNoGenerator(paymentsReceiptNo));
 
 
         // Fetching student again

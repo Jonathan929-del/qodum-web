@@ -212,10 +212,12 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                             <Text style={{fontFamily:'Roboto-Bold'}}>{receiptPaymentData.advance_dues_number}</Text>
                         </View>
                     </View>
-                    <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-start', marginTop:4, gap:4}}>
-                        <Text style={{color:'#CF896E'}}>Remark:</Text>
-                        <Text style={{backgroundColor:'#FFFF00', padding:2, fontSize:14}}>{receiptPaymentData.remarks}</Text>
-                    </View>
+                    {receiptPaymentData.remarks && (
+                        <View style={{display:'flex', alignItems:'center', flexDirection:'row', justifyContent:'flex-start', marginTop:4, gap:4}}>
+                            <Text style={{color:'#CF896E'}}>Remark:</Text>
+                            <Text style={{backgroundColor:'#FFFF00', padding:2, fontSize:14}}>{receiptPaymentData.remarks}</Text>
+                        </View>
+                    )}
                 </View>
 
             </Page>
