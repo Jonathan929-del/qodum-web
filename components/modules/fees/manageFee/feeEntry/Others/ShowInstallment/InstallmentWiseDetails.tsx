@@ -103,13 +103,13 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                     <li className='basis-[15%] flex items-center justify-center'>
                         Actual Amt.
                     </li>
-                    <li className='basis-[15%] flex items-center justify-center'>
+                    <li className='basis-[12.5%] flex items-center justify-center'>
                         Concession Amt.
                     </li>
                     <li className='basis-[10%] flex items-center justify-center'>
                         Paid Amt.
                     </li>
-                    <li className='basis-[10%] flex items-center justify-center'>
+                    <li className='basis-[12.5%] flex items-center justify-center'>
                         Received Date
                     </li>
                     <li className='basis-[15%] flex items-center justify-center'>
@@ -145,14 +145,14 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.actual_amount}
                         </li>
-                        <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
+                        <li className='basis-[12.5%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             0
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.paid_amount}
                         </li>
-                        <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {moment(p.received_date).format('D-MMM-yy')}
+                        <li className='basis-[12.5%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM')}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             Not verified
@@ -170,7 +170,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
 
             {/* Show payment */}
             {showPayment?.receipt_no && (
-                <div className='w-[70%] flex flex-col border-[0.5px] border-[#ccc] rounded-[2px]'>
+                <div className='w-[90%] flex flex-col border-[0.5px] border-[#ccc] rounded-[2px]'>
                     <h2 className='w-full bg-[#EDF1F5] font-semibold text-center text-xs py-2 px-2 rounded-[2px] border-b-[0.5px] border-[#ccc]'>Receipt Details</h2>
                     <ul className='flex flex-row text-[11px] font-semibold border-b-[0.5px] border-[#ccc]'>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
@@ -183,13 +183,13 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                             User Name:-
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            Name
+                            superadmin
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             Transaction Date:-
                         </li>
                         <li className='basis-[20%] flex items-center justify-center'>
-                            {moment(showPayment.received_date).format('D-MMM-yy')}
+                            {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM')}
                         </li>
                     </ul>
                     {showPayment.concession_reason !== '' && (
@@ -240,7 +240,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                                 {Number(h.amounts.filter((a:any) => showPayment.installments.includes(a.name))[0].last_rec_amount) + Number(h.amounts.filter((a:any) => showPayment.installments.includes(a.name))[0].paid_amount)}
                             </li>
                             <li className='basis-[20%] flex items-center justify-center'>
-                                {moment(showPayment.received_date).format('D-MMM-yy')}
+                                {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM')}
                             </li>
                         </ul>
                     ))}

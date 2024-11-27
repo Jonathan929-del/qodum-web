@@ -12,6 +12,7 @@ import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/
 import {FeeEntryValidation} from '@/lib/validations/fees/manageFee/feeEntry.validation';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {ModifyStudentAffiliatedHeads, fetchStudentByAdmNo} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchFeeEntrySettings } from '@/lib/actions/fees/masterSettings/feeEntrySetting.actions';
 
 
 
@@ -103,6 +104,32 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         setAllPayments(allPaymentsRes);
         setInstallments(sortedInstallments);
         setSelectedInstallments([sortedInstallments[0]]);
+        // Creating receipt no
+        const res = await fetchPayments();
+        setAllPayments(res);
+        const feeEntrySettings = await fetchFeeEntrySettings();
+        const number = feeEntrySettings[0];
+        let substringValue;
+        if(res.length < 9){
+            substringValue = 0;
+        }else if(res.length >= 9){
+            substringValue = 1;
+        }else if(res.length >= 99){
+            substringValue = 2;
+        }else if(res.length >= 999){
+            substringValue = 3;
+        }else if(res.length >= 9999){
+            substringValue = 4;
+        }else if(res.length >= 99999){
+            substringValue = 5;
+        }else if(res.length >= 999999){
+            substringValue = 6;
+        };
+        if(number){
+            setPaymentReceiptNo(`${number?.prefix || ''}${number?.lead_zero?.substring(substringValue, number?.lead_zero?.length - 1) || ''}${res.length + 1}${number?.suffix || ''}`);
+        }else{
+            setPaymentReceiptNo(String(Math.floor(Math.random() * 1000000)));
+        };
         setIsViewOpened(false);
         form.reset({
             received_date:new Date(),

@@ -60,7 +60,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             Cleared
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {moment(p.received_date).format('D-MMM-yy')}
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(p?.received_date).format('HH:MM')}
                         </li>
                     </ul>
                 )) : (
@@ -113,7 +113,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             {p?.paymode_details?.cheque_no}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {moment(p?.paymode_details?.cheque_date).format('D-MMM-yy')}
+                            {moment(p?.paymode_details?.cheque_date).format('D-MMM-yy')} at {moment(p?.paymode_details?.cheque_date).format('HH:MM')}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.paid_amount}
@@ -125,7 +125,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             Cleared
                         </li>
                         <li className='basis-[10%] flex items-center justify-center'>
-                            {moment(p.received_date).format('D-MMM-yy')}
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(p?.received_date).format('HH:MM')}
                         </li>
                     </ul>
                 )) : (
@@ -178,7 +178,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             {p?.paymode_details?.cheque_no}
                         </li>
                         <li className='basis-[15%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {moment(p?.paymode_details?.dd_date).format('D-MMM-yy')}
+                            {moment(p?.paymode_details?.dd_date).format('D-MMM-yy')} at {moment(p?.paymode_details?.dd_date).format('HH:MM')}
                         </li>
                         <li className='basis-[10%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
                             {p.paid_amount}
@@ -190,7 +190,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             Cleared
                         </li>
                         <li className='basis-[10%] flex items-center justify-center'>
-                            {moment(p.received_date).format('D-MMM-yy')}
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(p?.received_date).format('HH:MM')}
                         </li>
                     </ul>
                 )) : (
@@ -243,7 +243,7 @@ const PaymodeWiseDetails = ({payments}:any) => {
                             Cleared
                         </li>
                         <li className='basis-[20%] flex items-center justify-center border-r-[0.5px] border-[#ccc]'>
-                            {moment(p.received_date).format('D-MMM-yy')}
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(p?.received_date).format('HH:MM')}
                         </li>
                     </ul>
                 )) : (

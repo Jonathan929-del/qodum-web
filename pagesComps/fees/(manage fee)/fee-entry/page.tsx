@@ -14,6 +14,7 @@ import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails
 import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import {fetchAdmittedStudents, fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { fetchFeeEntrySettings } from '@/lib/actions/fees/masterSettings/feeEntrySetting.actions';
 
 
 
@@ -131,6 +132,8 @@ const page = () => {
             // Creating receipt no
             const res = await fetchPayments();
             setAllPayments(res);
+            const feeEntrySettings = await fetchFeeEntrySettings();
+            const number = feeEntrySettings[0];
             let substringValue;
             if(res.length < 9){
                 substringValue = 0;
@@ -147,10 +150,12 @@ const page = () => {
             }else if(res.length >= 999999){
                 substringValue = 6;
             };
-            const prefix = localStorage.getItem('receipt_prefix') ? localStorage.getItem('receipt_prefix') : '';
-            const leadZero = localStorage.getItem('receipt_lead_zero') ? localStorage.getItem('receipt_lead_zero') : '';
-            const suffix = localStorage.getItem('receipt_suffix') ? localStorage.getItem('receipt_suffix') : '';
-            setPaymentReceiptNo(`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`);
+            if(number){
+                console.log(number);
+                setPaymentReceiptNo(`${number?.prefix || ''}${number?.lead_zero?.substring(substringValue, number?.lead_zero?.length - 1) || ''}${res.length + 1}${number?.suffix || ''}`);
+            }else{
+                setPaymentReceiptNo(String(Math.floor(Math.random() * 1000000)));
+            };
 
 
             // Pending pending payments
@@ -312,7 +317,7 @@ const page = () => {
                     const paymentRes = await createPayment({
                         // Others
                         student:student?.student?.name,
-                        receipt_no:`${prefix}${leadZero.substring(substringValue, leadZero?.length - 1)}${res.length + 1}${suffix}`,
+                        receipt_no:number ? `${number?.prefix || ''}${number?.lead_zero.substring(substringValue, number?.lead_zero?.length - 1)}${res.length + 1}${number?.suffix || ''}` : String(Math.floor(Math.random() * 1000000)),
                         ref_no:p.txnId,
                         installments:p.installments,
                         received_date:p.received_date,
