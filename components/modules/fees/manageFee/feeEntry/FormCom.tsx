@@ -463,6 +463,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                     onSubmit={form.handleSubmit(onSubmit)}
                     className='relative h-full w-full flex flex-row gap-4 justify-center items-center py-4'
                 >
+
                         {/* Left Side */}
                         <LeftSide
                             selectedStudent={selectedStudent}

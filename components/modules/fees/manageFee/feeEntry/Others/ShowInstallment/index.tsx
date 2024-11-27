@@ -13,10 +13,8 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 // Main function
 const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
-
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('installment');
-
 
     return (
         <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center z-10' style={{backgroundColor:'rgba(0, 0, 0, 0.5)'}}>

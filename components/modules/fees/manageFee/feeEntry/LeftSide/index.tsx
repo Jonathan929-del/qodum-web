@@ -72,6 +72,7 @@ const index = ({selectedStudent}:any) => {
                 <p className='text-hash-color'>Vehicle Name:</p>
                 <p>{selectedStudent?.vehicle_name || ''}</p>
             </div>
+
         </div>
     );
 };

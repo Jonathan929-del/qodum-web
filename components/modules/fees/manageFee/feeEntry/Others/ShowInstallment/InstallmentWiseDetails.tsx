@@ -2,8 +2,6 @@
 import moment from 'moment';
 import {useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-
 
 
 
@@ -11,7 +9,6 @@ import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defin
 
 // Main function
 const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installments, setIsShowInstallment, setSelectedInstallments, payments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
-
 
     // Show payment
     const [showPayment, setShowPayment] = useState<any>({});
@@ -36,7 +33,6 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
         setSelectedInstallments([i]);
         setIsShowInstallment(false);
     };
-
 
     return (
         <div className='w-full flex flex-col gap-6 px-4'>

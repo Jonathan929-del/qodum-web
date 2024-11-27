@@ -11,14 +11,12 @@ import moment from 'moment';
 // Main function
 const EntryMode = ({form, selectedStudent, totalNumberGenerator, installments, setSelectedInstallments, payments, showButtonClick, allPayments, setReceiptPaymentData, setIsReceiptOpened}:any) => {
 
-
     // Toast
     const {toast} = useToast();
 
 
     // Is show installment
     const [isShowInstallment, setIsShowInstallment] = useState(false);
-
 
     return (
         <div className='flex flex-col gap-2 p-2 lg:flex-row lg:justify-between bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc]'>
