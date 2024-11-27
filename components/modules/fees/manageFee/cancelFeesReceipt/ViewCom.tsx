@@ -13,7 +13,6 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 // Main Function
 const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
 
-
     // Select handler
     const selectHandler = async (student:any) => {
         const payments = await fetchStudentCanceledPayments({student:student.student.name});
@@ -36,7 +35,6 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
         });
         setIsViewOpened(false);
     };
-
 
     return (
         <Command className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>

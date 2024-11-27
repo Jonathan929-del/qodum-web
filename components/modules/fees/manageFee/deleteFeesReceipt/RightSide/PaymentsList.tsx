@@ -64,9 +64,18 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                         name:a.name,
                         value:Number(a.value),
                         conc_amount:Number(a.conc_amount),
-                        last_rec_amount:Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))),
-                        payable_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount)))))),
-                        paid_amount:Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))))
+                        last_rec_amount:
+                            p.paid_heads?.find((ph:any) => ph.head_name === h.head_name)?.amounts?.find((pa:any) => pa.name === a.name)
+                                ? Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount)))))
+                                : Number(a.last_rec_amount),
+                        payable_amount:
+                            p.paid_heads?.find((ph:any) => ph.head_name === h.head_name)?.amounts?.find((pa:any) => pa.name === a.name)
+                                ? Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))))
+                                : Number(a.payable_amount),
+                        paid_amount:
+                            p.paid_heads?.find((ph:any) => ph.head_name === h.head_name)?.amounts?.find((pa:any) => pa.name === a.name)
+                                ? Number(a.value) - (Number(a.last_rec_amount === 0 ? a.value : a.last_rec_amount) - totalNumberGenerator(p.paid_heads.filter((head:any) => head.head_name === h.head_name).map((head:any) => totalNumberGenerator(head.amounts.filter((amount:any) => amount.name === a.name).map((amount:any) => Number(amount.paid_amount))))))
+                                : Number(a.payable_amount)
                     };
                 }).concat(...h.amounts.filter((a:any) => !paymentsAmounts.includes(a.name)))
             }

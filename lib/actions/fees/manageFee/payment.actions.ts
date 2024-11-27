@@ -401,6 +401,7 @@ export const cancelPayment = async ({receipt_no}:{receipt_no:String}) => {
 
         // Database connection
         connectToDb('accounts');
+        console.log(receipt_no);
 
     
         // Payments
