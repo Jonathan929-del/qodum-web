@@ -40,11 +40,12 @@ interface CreateAdmittedStudentProps{
         student_status:String;
         bank_name:String;
         fee_group:String;
-        cheque_no:String;
-        cheque_date:Date;
-        cheque_bank:String;
-        branch_name:String;
-        deposit_bank:String;
+
+        cheque_no:any;
+        cheque_date:any;
+        cheque_bank:any;
+        branch_name:any;
+        deposit_bank:any;
     
 
         // Amounts
@@ -99,6 +100,7 @@ export const createPayment = async ({cheque_no, deposit_bank, cheque_date, chequ
             fee_group,
             session:activeSession?.year_name,
             is_canceled:false,
+
             cheque_no,
             cheque_date,
             cheque_bank,
