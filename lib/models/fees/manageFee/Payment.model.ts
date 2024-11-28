@@ -46,6 +46,12 @@ const PaymentSchema = new mongoose.Schema(
         is_canceled:{type:Boolean},
 
 
+        // Payment mode details
+        cheque_no:{type:String},
+        cheque_date:{type:Date},
+        cheque_bank:{type:String},
+        branch_name:{type:String},
+        deposit_bank:{type:String},
 
 
         // Amounts

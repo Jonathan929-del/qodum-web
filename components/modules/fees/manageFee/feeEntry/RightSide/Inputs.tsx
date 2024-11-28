@@ -62,7 +62,12 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 break;
         };
     }, [form.watch('entry_mode'), form.getValues().entry_mode]);
-    useEffect(() => {}, [form.watch('pay_mode')]);
+    useEffect(() => {
+        setChequeDetails({});
+        setddDetails({});
+        setNeftDetails({});
+        setSwipedCardDetails({});
+    }, [form.watch('pay_mode')]);
     useEffect(() => {
         const fetcher = async () => {
             const bankLedgersRes = await fetchBankLedgers();
@@ -316,7 +321,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 {form.getValues().pay_mode === 'Cheque' && <ChequeDetails chequeDetails={chequeDetails} setChequeDetails={setChequeDetails}/>}
                 {form.getValues().pay_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
                 {form.getValues().pay_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
-                {form.getValues().pay_mode === 'UPI' && <UPIDetails upiDetails={upiDetails} setUpiDetails={setUpiDetails} selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
+                {form.getValues().pay_mode === 'UPI' && <UPIDetails selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
                 {form.getValues().pay_mode === 'Payment Gateway' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
                 {form.getValues().pay_mode === 'Swiped Card' && <SwipedCardDetaila swipedCardDetails={swipedCardDetails} setSwipedCardDetails={setSwipedCardDetails} />}
             </div>

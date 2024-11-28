@@ -327,6 +327,17 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             student_status:selectedStudent.student_status,
             bank_name:values.bank_name,
             fee_group:selectedStudent.affiliated_heads.group_name,
+            // @ts-ignore
+            cheque_no:chequeDetails?.cheque_no || ddDetails?.dd_no || '',
+            // @ts-ignore
+            cheque_date:chequeDetails?.cheque_date || ddDetails?.dd_date || new Date(),
+            // @ts-ignore
+            cheque_bank:chequeDetails?.cheque_bank || ddDetails?.dd_bank || '',
+            // @ts-ignore
+            branch_name:chequeDetails?.branch_name || ddDetails?.branch_name || '',
+            // @ts-ignore
+            deposit_bank:chequeDetails?.deposit_bank || ddDetails?.deposit_bank || '',
+
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
             concession_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.conc_amount))))),

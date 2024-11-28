@@ -664,11 +664,11 @@ const FormCom = () => {
             </div>
             {/* Row Two */}
             <div className='flex flex-row justify-between mt-2 gap-10'>
-                {/* Refuse fee receipt number */}
+                {/* Reuse fee receipt number */}
                 <div className='basis-[33.3%] flex flex-row max-w-[500px]'>
                     <div className='flex flex-col'>
-                        <p className='text-sm font-bold'>Refuse fee receipt number</p>
-                        <p className='text-xs text-hash-color'>Allows the user to refuse cancelled fee receipt for a particular student of a particular installment(s)</p>
+                        <p className='text-sm font-bold'>Reuse fee receipt number</p>
+                        <p className='text-xs text-hash-color'>Allows the user to reuse cancelled fee receipt for a particular student of a particular installment(s)</p>
                     </div>
                     <FormField
                         control={form.control}

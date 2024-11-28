@@ -16,6 +16,10 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
     // Selected tab
     const [selectedTab, setSelectedTab] = useState('installment');
 
+
+    // Un cacancelled payments
+    const unCancelledPayments = payments.filter((p:any) => !p.is_canceled);
+
     return (
         <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center z-10' style={{backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
             <div className='w-[80%] h-[80%] flex flex-col pb-6 bg-white border-[0.5px] border-[#ccc] rounded-[8px] overflow-scroll custom-sidebar-scrollbar'>
@@ -54,14 +58,14 @@ const index = ({setIsShowInstallment, selectedStudent, totalNumberGenerator, ins
                             installments={installments}
                             setIsShowInstallment={setIsShowInstallment}
                             setSelectedInstallments={setSelectedInstallments}
-                            payments={payments}
+                            payments={unCancelledPayments}
                             setIsReceiptOpened={setIsReceiptOpened}
                             setReceiptPaymentData={setReceiptPaymentData}
                         />
                     </TabsContent>
                     <TabsContent value='paymode'>
                         <PaymodeWiseDetails
-                            payments={payments}
+                            payments={unCancelledPayments}
                         />
                     </TabsContent>
                 </Tabs>
