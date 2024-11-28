@@ -26,23 +26,23 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
     // Cheuqe details
-    const [chequeDetails, setChequeDetails] = useState({});
+    const [chequeDetails, setChequeDetails] = useState<any>({});
 
 
     // DD details
-    const [ddDetails, setddDetails] = useState({});
+    const [ddDetails, setddDetails] = useState<any>({});
 
 
     // Neft details
-    const [neftDetails, setNeftDetails] = useState({});
+    const [neftDetails, setNeftDetails] = useState<any>({});
 
 
     // Swiped Card details
-    const [swipedCardDetails, setSwipedCardDetails] = useState({});
+    const [swipedCardDetails, setSwipedCardDetails] = useState<any>({});
 
 
     // UPI details
-    const [upiDetails, setUpiDetails] = useState({});
+    const [upiDetails, setUpiDetails] = useState<any>({});
 
 
     // Concession reason
@@ -327,15 +327,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             student_status:selectedStudent.student_status,
             bank_name:values.bank_name,
             fee_group:selectedStudent.affiliated_heads.group_name,
-            // @ts-ignore
             cheque_no:chequeDetails?.cheque_no || ddDetails?.dd_no || '',
-            // @ts-ignore
             cheque_date:chequeDetails?.cheque_date || ddDetails?.dd_date || new Date(),
-            // @ts-ignore
             cheque_bank:chequeDetails?.cheque_bank || ddDetails?.dd_bank || '',
-            // @ts-ignore
             branch_name:chequeDetails?.branch_name || ddDetails?.branch_name || '',
-            // @ts-ignore
             deposit_bank:chequeDetails?.deposit_bank || ddDetails?.deposit_bank || '',
 
             // Amounts
