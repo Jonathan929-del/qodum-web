@@ -327,11 +327,11 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             student_status:selectedStudent.student_status,
             bank_name:values.bank_name,
             fee_group:selectedStudent.affiliated_heads.group_name,
-            cheque_no:chequeDetails?.cheque_no || ddDetails?.dd_no || '',
-            cheque_date:chequeDetails?.cheque_date || ddDetails?.dd_date || new Date(),
-            cheque_bank:chequeDetails?.cheque_bank || ddDetails?.dd_bank || '',
-            branch_name:chequeDetails?.branch_name || ddDetails?.branch_name || '',
-            deposit_bank:chequeDetails?.deposit_bank || ddDetails?.deposit_bank || '',
+            cheque_no:String(chequeDetails?.cheque_no) || String(ddDetails?.dd_no) || '',
+            cheque_date:new Date(chequeDetails?.cheque_date) || new Date(ddDetails?.dd_date) || new Date(),
+            cheque_bank:String(chequeDetails?.cheque_bank) || String(ddDetails?.dd_bank) || '',
+            branch_name:String(chequeDetails?.branch_name) || String(ddDetails?.branch_name) || '',
+            deposit_bank:String(chequeDetails?.deposit_bank) || String(ddDetails?.deposit_bank) || '',
 
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
