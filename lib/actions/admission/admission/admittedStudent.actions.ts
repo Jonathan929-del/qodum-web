@@ -1074,6 +1074,7 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
                             }
                         })
         };
+        // console.log('********************************************************************************************************************************************************************************************', submitTransporFee);
 
 
         // Updating
