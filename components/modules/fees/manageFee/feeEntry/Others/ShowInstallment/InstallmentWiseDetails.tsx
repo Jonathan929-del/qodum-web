@@ -152,7 +152,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                             {p.paid_amount}
                         </li>
                         <li className='basis-[12.5%] flex items-center justify-start pl-2 border-r-[0.5px] border-[#ccc]'>
-                            {moment(p.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM A')}
+                            {moment(p.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:mm A')}
                         </li>
                         <li className='basis-[15%] flex items-center justify-start pl-2 border-r-[0.5px] border-[#ccc]'>
                             Not verified
@@ -189,7 +189,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                             Transaction Date:-
                         </li>
                         <li className='basis-[20%] flex items-center justify-start pl-2'>
-                            {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM A')}
+                            {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:mm A')}
                         </li>
                     </ul>
                     {showPayment.concession_reason !== '' && (
@@ -240,7 +240,7 @@ const InstallmentWiseDetails = ({selectedStudent, totalNumberGenerator, installm
                                 {Number(h.amounts.filter((a:any) => showPayment.installments.includes(a.name))[0].last_rec_amount) + Number(h.amounts.filter((a:any) => showPayment.installments.includes(a.name))[0].paid_amount)}
                             </li>
                             <li className='basis-[20%] flex items-center justify-start pl-2'>
-                                {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:MM A')}
+                                {moment(showPayment.received_date).format('D-MMM-yy')} at {moment(showPayment.received_date).format('HH:mm A')}
                             </li>
                         </ul>
                     ))}

@@ -72,6 +72,7 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                     return h.installment === 'All installments' && amounts?.filter((a:any) => selectedInstallment === a.name).length > 0;
                 };
             })
+            ?.filter((h:any) => h?.amounts?.filter((a:any) => a.name === selectedInstallment && Number(a?.last_rec_amount ? a?.last_rec_amount : 0) === 0).length > 0)
             ?.map((h:any) => {
                 return{
                     ...h,
@@ -125,7 +126,7 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                     <LoadingIcon />
                 ) : heads?.length < 1 ? (
                         <p className='pl-2 text-[11px] text-hash-color font-semibold'>No Fees</p>
-                    ) : selectedInstallment !== '' && heads.map((h:any) => (
+                    ) : selectedInstallment !== '' && heads?.map((h:any) => (
                         <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                             <li className='basis-[19.5%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px]'>
                                 {h.head_name}

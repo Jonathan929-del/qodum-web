@@ -17,7 +17,6 @@ import {AssignConcessionValidation} from '@/lib/validations/fees/feeMaster/defin
 // Main function
 const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, showButtonClick, heads, setHeads, totalNumberGenerator, isLoadingHeads}: any) => {
 
-
     // Toast
     const {toast} = useToast();
 
@@ -43,12 +42,12 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
             return {
                 ...studentHead,
                 amounts:selectedStudent?.affiliated_heads?.heads?.map((h:any) => h?.amounts?.map((a:any) => {
-                    const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                     return {
-                        name:a.name,
-                        value:Number(a.value),
-                        conc_amount:conc_amount,
-                        conc_type:a.conc_type
+                        // name:a.name,
+                        // value:Number(a.value),
+                        // conc_amount:conc_amount,
+                        // conc_type:a.conc_type
+                        ...a
                     };
                 }))[selectedStudent.affiliated_heads.heads.indexOf(studentHead)]
             };
@@ -80,6 +79,7 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
                                                         :
                                                             0;
                                                     return {
+                                                        ...a,
                                                         name:a.name,
                                                         value:Number(a.value),
                                                         conc_amount:conc_amount,
@@ -95,6 +95,7 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
                                                             .map((a:any) => {
                                                                 const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                                                 return {
+                                                                    ...a,
                                                                     name:a.name,
                                                                     value:Number(a.value),
                                                                     conc_amount:conc_amount,
@@ -109,7 +110,7 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
                         .filter((h:any) => h?.amounts?.length !== 0)
         };
 
-    
+
         // Updating student
         await ModifyStudentAffiliatedHeads({
             id:selectedStudent.id,
@@ -163,7 +164,6 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
         // Loading end
         setIsLoading(false);
     };
-
 
     return (
         <div className='w-[100%] max-w-[1200px] flex flex-col items-center px-4 overflow-y-scroll custom-sidebar-scrollbar lg:min-h-[100%]'>

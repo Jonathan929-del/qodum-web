@@ -151,7 +151,6 @@ const page = () => {
                 substringValue = 6;
             };
             if(number){
-                console.log(number);
                 setPaymentReceiptNo(`${number?.prefix || ''}${number?.lead_zero?.substring(substringValue, number?.lead_zero?.length - 1) || ''}${res.length + 1}${number?.suffix || ''}`);
             }else{
                 setPaymentReceiptNo(String(Math.floor(Math.random() * 1000000)));

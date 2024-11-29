@@ -32,7 +32,7 @@ const Inputs = ({form, showButtonClick, selectedStudent}:any) => {
 
 
     // Installments
-    const [installments, setInstallments] = useState<any>([{}]);
+    const [installments, setInstallments] = useState<any>([]);
 
 
     // Use effects
@@ -40,13 +40,20 @@ const Inputs = ({form, showButtonClick, selectedStudent}:any) => {
         const fetcher = async () => {
             const feeTypesRes = await fetchTypes();
             const concessionTypesRes = await fetchConcessionsTypes();
-            const installmentsRes = await fetchInstallments();
             setFeeTypes(feeTypesRes);
             setConcessionTypes(concessionTypesRes);
-            setInstallments(installmentsRes);
+
+
+            // Insallments
+            const singleInstallments = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
+            const allInstallments = selectedStudent?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1).length > 0
+                ? selectedStudent?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length > 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name).concat(singleInstallments))[0]
+                : selectedStudent?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);
+            setInstallments(allInstallments.filter((name:any, index:any, self:any) => self.indexOf(name) === index));
+
         };
         fetcher();
-    }, []);
+    }, [selectedStudent]);
 
 
     return (
@@ -138,10 +145,10 @@ const Inputs = ({form, showButtonClick, selectedStudent}:any) => {
                                         <SelectContent>
                                             {installments.length === 0 ? (
                                                 <p className='text-xs text-hash-color'>No installments</p>
-                                            ) : !installments[0].name ? (
+                                            ) : !installments[0] ? (
                                                 <LoadingIcon />
                                             ) : installments.map((t:any) => (
-                                                <SelectItem value={t.name} key={t._id}>{t.name}</SelectItem>
+                                                <SelectItem value={t} key={t._id}>{t}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>

@@ -82,7 +82,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Date:</Text>
-                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{moment(receiptPaymentData.received_date).format('D-MMM-yy')} at {moment(receiptPaymentData?.received_date).format('HH:MM A')}</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{moment(receiptPaymentData.received_date).format('D-MMM-yy')} at {moment(receiptPaymentData?.received_date).format('HH:mm A')}</Text>
                         </View>
                     </View>
 
@@ -119,9 +119,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Paymode:</Text>
                             <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>
-                                {receiptPaymentData.paymode}
-                                {`(${receiptPaymentData?.cheque_no})` || `(${receiptPaymentData?.dd_no})` || ''}
-                                {`(${receiptPaymentData?.cheque_bank})` || `(${receiptPaymentData?.dd_bank})` || ''}
+                                {receiptPaymentData.paymode} {receiptPaymentData?.cheque_no && `(${receiptPaymentData?.cheque_no})`} {receiptPaymentData?.cheque_bank && `(${receiptPaymentData?.cheque_bank})`}
                             </Text>
                         </View>
                     </View>
