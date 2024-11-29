@@ -114,7 +114,6 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
             // Assigning student transport details
             if(selectedStudents[0].name !== ''){
                 selectedStudents.map(async (s:any) => {
-                    // console.log(s);
                     await ModifyStudentsTransportDetails({
                         adm_no:s.adm_no,
                         transport_details:{
@@ -149,7 +148,7 @@ const FormCom = ({classes, sections, students, setStudents}:any) => {
 
     // Use effect
     useEffect(() => {
-        if(form.getValues().class_name !== '' || form.getValues().section_name !== ''){
+        if(form.getValues().class_name !== '' && form.getValues().section_name !== ''){
             setIsStudentsLoading(true);
             fetcher();
         };

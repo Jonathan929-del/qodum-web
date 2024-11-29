@@ -41,11 +41,11 @@ interface CreateAdmittedStudentProps{
         bank_name:String;
         fee_group:String;
 
-        // cheque_no:any;
-        // cheque_date:any;
-        // cheque_bank:any;
-        // branch_name:any;
-        // deposit_bank:any;
+        cheque_no:String;
+        cheque_date:Date;
+        cheque_bank:String;
+        branch_name:String;
+        deposit_bank:String;
     
 
         // Amounts
@@ -56,8 +56,8 @@ interface CreateAdmittedStudentProps{
         concession_reason:String;
 };
 // Create payment
-// export const createPayment = async ({cheque_no, deposit_bank, cheque_date, cheque_bank, branch_name, student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, section, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
-export const createPayment = async ({student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, section, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
+export const createPayment = async ({cheque_no, deposit_bank, cheque_date, cheque_bank, branch_name, student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, section, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
+// export const createPayment = async ({student, receipt_no, ref_no, installments, received_date, remarks, paymode, paymode_details, fee_type, advance_dues_number, class_name, section, board, adm_no, father_name, school_name, school_address, website, school_no, affiliation_no, logo, wing_name, entry_mode, is_new, is_active, student_status, bank_name, fee_group, actual_amount, concession_amount, paid_amount, paid_heads, concession_reason}:CreateAdmittedStudentProps) => {
     try {
 
         // Database connection
@@ -102,11 +102,11 @@ export const createPayment = async ({student, receipt_no, ref_no, installments, 
             session:activeSession?.year_name,
             is_canceled:false,
 
-            // cheque_no,
-            // cheque_date,
-            // cheque_bank,
-            // branch_name,
-            // deposit_bank,
+            cheque_no,
+            cheque_date,
+            cheque_bank,
+            branch_name,
+            deposit_bank,
 
             // Amounts
             actual_amount,

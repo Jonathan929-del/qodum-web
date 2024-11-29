@@ -348,6 +348,15 @@ const page = () => {
                         actual_amount:totalNumberGenerator(getPaidHeads(studentHeadsCopy, updatedHeads).map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value))))),
                         concession_amount:totalNumberGenerator(getPaidHeads(studentHeadsCopy, updatedHeads).map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.conc_amount))))),
                         paid_amount:p.amount,
+
+
+                        // Paymode details
+                        cheque_no:'',
+                        cheque_date:new Date(),
+                        cheque_bank:'',
+                        branch_name:'',
+                        deposit_bank:'',
+
             
                         paid_heads:getPaidHeads(studentHeadsCopy, updatedHeads),
                         concession_reason:''

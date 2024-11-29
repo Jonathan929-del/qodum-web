@@ -26,11 +26,23 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
 
 
     // Cheuqe details
-    const [chequeDetails, setChequeDetails] = useState<any>({});
+    const [chequeDetails, setChequeDetails] = useState<any>({
+        cheque_no:'',
+        cheque_date:new Date(),
+        cheque_bank:'',
+        branch_name:'',
+        deposit_bank:''
+    });
 
 
     // DD details
-    const [ddDetails, setddDetails] = useState<any>({});
+    const [ddDetails, setddDetails] = useState<any>({
+        dd_no:'',
+        dd_date:new Date(),
+        dd_bank:'',
+        branch_name:'',
+        deposit_bank:''
+    });
 
 
     // Neft details
@@ -327,11 +339,15 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             student_status:selectedStudent.student_status,
             bank_name:values.bank_name,
             fee_group:selectedStudent.affiliated_heads.group_name,
-            // cheque_no:String(chequeDetails?.cheque_no) || String(ddDetails?.dd_no) || '',
-            // cheque_date:new Date(chequeDetails?.cheque_date) || new Date(ddDetails?.dd_date) || new Date(),
-            // cheque_bank:String(chequeDetails?.cheque_bank) || String(ddDetails?.dd_bank) || '',
-            // branch_name:String(chequeDetails?.branch_name) || String(ddDetails?.branch_name) || '',
-            // deposit_bank:String(chequeDetails?.deposit_bank) || String(ddDetails?.deposit_bank) || '',
+
+
+            // Paymode details
+            cheque_no:String(chequeDetails?.cheque_no) || String(ddDetails?.dd_no) || '',
+            cheque_date:new Date(chequeDetails?.cheque_date) || new Date(ddDetails?.dd_date) || new Date(),
+            cheque_bank:String(chequeDetails?.cheque_bank) || String(ddDetails?.dd_bank) || '',
+            branch_name:String(chequeDetails?.branch_name) || String(ddDetails?.branch_name) || '',
+            deposit_bank:String(chequeDetails?.deposit_bank) || String(ddDetails?.deposit_bank) || '',
+
 
             // Amounts
             actual_amount:totalNumberGenerator(paidHeads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value))))),
@@ -345,8 +361,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
             toast({title:'Please create a session first', variant:'alert'});
             return;
         };
-
-        // Fee receipt
         if(localStorage.getItem('print_fee_receipt_after_save') ? localStorage.getItem('print_fee_receipt_after_save') === 'true' : false){
             setReceiptPaymentData({
                 ...res,
@@ -475,6 +489,8 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
         const sortedInstallments = allInstallments?.filter((i:any) => filteredInstallments?.includes(i.name)).map((i:any) => i.name);
         setInstallments(sortedInstallments);
         setSelectedInstallments([sortedInstallments[0]]);
+        const allPaymentsRes = await fetchPayments();
+        setAllPayments(allPaymentsRes);
 
     
         // Loading end

@@ -118,7 +118,11 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
                         </View>
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Paymode:</Text>
-                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.paymode} ({receiptPaymentData?.cheque_no || receiptPaymentData?.dd_no || ''}) ({receiptPaymentData?.cheque_bank || receiptPaymentData?.dd_bank || ''})</Text>
+                            <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>
+                                {receiptPaymentData.paymode}
+                                {`(${receiptPaymentData?.cheque_no})` || `(${receiptPaymentData?.dd_no})` || ''}
+                                {`(${receiptPaymentData?.cheque_bank})` || `(${receiptPaymentData?.dd_bank})` || ''}
+                            </Text>
                         </View>
                     </View>
 

@@ -748,11 +748,12 @@ export const fetchStudentsByClassAndSectionTransport = async ({class_name, secti
         let students;
 
 
-        if(section || section !== ''){
-            students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
-        }else{
-            students = await AdmittedStudent.find({'student.class':class_name, session:activeSession?.year_name});
-        };
+        students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
+        // if(section || section !== ''){
+        //     students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
+        // }else{
+        //     students = await AdmittedStudent.find({'student.class':class_name, session:activeSession?.year_name});
+        // };
 
 
         // Return
@@ -1074,7 +1075,6 @@ export const ModifyStudentsTransportDetails = async ({adm_no, transport_details}
                             }
                         })
         };
-        // console.log('********************************************************************************************************************************************************************************************', submitTransporFee);
 
 
         // Updating
