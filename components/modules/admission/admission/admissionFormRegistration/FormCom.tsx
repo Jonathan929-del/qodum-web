@@ -217,7 +217,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         },
 
         // Siblings
-        siblings:updateStudent.sibling,
+        siblings:updateStudent?.siblings,
 
         // Paymode details
         paymode_details:{
@@ -630,7 +630,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             const pendingPayments = localStorage.getItem('registrationPayment') ? JSON.parse(localStorage.getItem('registrationPayment')) : [];
             if(pendingPayments.length === 0){
                 createStudentFunc(values);
-                return;                
             };
             pendingPayments.map(async (p:any) => {
                 const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
