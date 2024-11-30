@@ -422,7 +422,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         // Create Student
         if(updateStudent.id === ''){
 
-            const createStudent = async (values:any) => {
+            const createStudentFunc = async (values:any) => {
                 if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                     toast({title:'Register no. already exists', variant:'error'});
                     return;
@@ -629,7 +629,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             };
             const pendingPayments = localStorage.getItem('registrationPayment') ? JSON.parse(localStorage.getItem('registrationPayment')) : [];
             if(pendingPayments.length === 0){
-                createStudent(values);
+                createStudentFunc(values);
+                return;                
             };
             pendingPayments.map(async (p:any) => {
                 const paymentStatus = JSON.stringify(p?.txnId)?.toLowerCase().includes('order')
@@ -641,6 +642,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     setIsLoading(false);
                 };
                 if(paymentStatus.data.status === 'completed'){
+                    // @ts-ignore
                     createStudent(values);
                     // Removing the payment id from local storage
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
