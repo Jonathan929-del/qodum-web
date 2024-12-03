@@ -63,6 +63,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                     const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                     const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                                     return {
+                                        ...a,
                                         name:a.name,
                                         value:Number(a.value),
                                         conc_amount:conc_amount,
@@ -99,10 +100,11 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                 heads:student.affiliated_heads.heads.map((h:any) => {
                     return {
                         ...h,
-                        amounts:h.amounts.map((a:any) => {
+                        amounts:h?.amounts?.map((a:any) => {
                             const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                             const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
+                                ...a,
                                 name:a.name,
                                 value:Number(a.value),
                                 conc_amount:conc_amount,

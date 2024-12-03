@@ -75,8 +75,8 @@ const page = () => {
 
             // Setting
             setStudents(studentsRes);
-            setBoys(studentsRes.filter((s:any) => s.student.gender === 'Male').length);
-            setGirls(studentsRes.filter((s:any) => s.student.gender === 'Female').length);
+            setBoys(studentsRes?.filter((s:any) => s.student.gender === 'Male').length);
+            setGirls(studentsRes?.filter((s:any) => s.student.gender === 'Female').length);
             setAcademicYear(activeAcademicYearRes.year_name);
             setPayments(paymentsRes);
             setClasses(classesRes);

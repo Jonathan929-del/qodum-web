@@ -284,9 +284,10 @@ interface ModifyClassHeadsProps{
     group_name:String;
     installment:String;
     classes:any;
+    group_type:String;
 };
 // Modify Class heads
-export const modifyClassHeads = async ({group_name, installment, classes}:ModifyClassHeadsProps) => {
+export const modifyClassHeads = async ({group_name, installment, classes, group_type}:ModifyClassHeadsProps) => {
     try {
 
         // Db connection
@@ -301,7 +302,12 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
                 try {
                     const theClass = await Class.findOne({class_name:c});
                     if(theClass?.affiliated_heads?.group_name !== group_name){
-                        await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                        if(group_type === 'Special'){
+                            await Class.updateMany({class_name:c}, {affiliated_special_heads:{group_name:group_name, heads:selectedHeads}});
+                        }else{
+                            // await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                            await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:group_name, heads:selectedHeads}});
+                        };
                     };
                 } catch (err:any) {
                     console.log(err);
@@ -314,7 +320,12 @@ export const modifyClassHeads = async ({group_name, installment, classes}:Modify
                 try {
                     const theClass = await Class.findOne({class_name:c});
                     if(theClass?.affiliated_heads?.group_name !== group_name){
-                        await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                        if(group_type === 'Special'){
+                            await Class.updateMany({class_name:c}, {affiliated_special_heads:{group_name:group_name, heads:selectedHeads}});
+                        }else{
+                            // await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
+                            await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:group_name, heads:selectedHeads}});
+                        };
                     };
                 } catch (err:any) {
                     console.log(err);

@@ -89,7 +89,7 @@ export const createGroup = async ({name, is_special}:CreateGroupProps) => {
         // Creating new group
         const newGroup = await Group.create({
             session:activeSession?.year_name,
-            name,
+            name:name?.trim(),
             is_special
         });
         newGroup.save();
@@ -426,18 +426,23 @@ interface assignMultipleGroupsToStudentsProps{
     group_name:String;
     installment:String;
     students:any;
+    group_type:String;
 };
 // Assign multiple groups to students
-export const assignMultipleGroupsToStudents = async ({group_name, installment, students}:assignMultipleGroupsToStudentsProps) => {
+export const assignMultipleGroupsToStudents = async ({group_name, installment, students, group_type}:assignMultipleGroupsToStudentsProps) => {
     try {
 
         // Fetching active session naeme
         const activeSession = await AcademicYear.findOne({is_active:1});
 
 
-        const filteredStudents = students
-            .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (').length < 2 || !s?.affiliated_heads?.group_name)
-            .filter((s:any) => s?.affiliated_heads?.group_name?.split(' (')[0] !== group_name);
+        const filteredStudents =
+            group_type === 'Classes'
+                ? students.filter((s:any) => !s?.affiliated_heads?.group_name || s?.affiliated_heads?.group_name?.split(' (')[0]?.replace(/\)$/, '') !== group_name)
+                : students.filter((s:any) => {
+                    const groups = s?.affiliated_heads?.group_name?.split(' (').map((i:any) => i.replace(/\)$/, ''));
+                    return !groups?.includes(group_name);
+                });
 
 
         if(installment === 'All installments'){
@@ -448,10 +453,10 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
                 try {
                     const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no, session:activeSession?.year_name});
                     if(!student.affiliated_heads.group_name){
-                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {affiliated_heads:{group_name:group_type === 'Classes' ? group_name : `(${group_name})`, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {'affiliated_heads.group_name':group_type === 'Classes' ? `${group_name} ${student.affiliated_heads.group_name}` : `${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {
@@ -465,10 +470,10 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
                 try {
                     const student = await AdmittedStudent.findOne({'student.adm_no':s.student.adm_no, session:activeSession?.year_name});
                     if(!student.affiliated_heads.group_name){
-                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {affiliated_heads:{group_name, heads:selectedHeads}});
+                        await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {affiliated_heads:{group_name:group_type === 'Classes' ? group_name : `(${group_name})`, heads:selectedHeads}});
                     }else{
                         selectedHeads.map(async (h:any) => {
-                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {'affiliated_heads.group_name':`${student.affiliated_heads.group_name}  (${group_name})`, $push:{'affiliated_heads.heads':h}});
+                            await AdmittedStudent.updateMany({'student.adm_no':s.student.adm_no, session:activeSession?.year_name}, {'affiliated_heads.group_name':group_type === 'Classes' ? `${group_name} ${student.affiliated_heads.group_name}` : `${student.affiliated_heads.group_name} (${group_name})`,  $push:{'affiliated_heads.heads':h}});
                         });
                     }
                 } catch (err:any) {

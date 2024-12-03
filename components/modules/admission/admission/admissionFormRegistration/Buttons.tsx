@@ -13,7 +13,7 @@ import {AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, A
 
 
 // Main Function
-const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails, setSiblings, isQrCodeGenerated}:any) => {
+const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, onSubmit, form, setFile, setImageSrc, setValuesFromEnquiry, setSelectedSubjects, setDate, setDob, setFatherDob, setMotherDob, setAnniversaryDate, setPreviousSchoolsDetails, setSiblings, isQrCodeGenerated, setPdfData, setIsReceiptOpened}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -539,7 +539,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
 
             {/* Print button */}
             {permissions.print && (
-                <PrintButton students={students}/>
+                <PrintButton students={students} setPdfData={setPdfData} updateStudent={updateStudent} setIsReceiptOpened={setIsReceiptOpened}/>
             )}
 
 

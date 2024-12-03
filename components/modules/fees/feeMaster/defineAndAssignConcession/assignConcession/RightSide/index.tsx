@@ -45,7 +45,6 @@ const index = ({form, selectedStudent, setSelectedStudent, heads, setHeads, setI
             <HeadsArea
                 form={form}
                 selectedStudent={selectedStudent}
-                setSelectedStudent={setSelectedStudent}
                 heads={heads}
                 setHeads={setHeads}
                 totalNumberGenerator={totalNumberGenerator}

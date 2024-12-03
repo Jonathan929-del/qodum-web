@@ -19,7 +19,7 @@ import { fetchFeeEntrySettings } from '@/lib/actions/fees/masterSettings/feeEntr
 
 
 // Main function
-const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, headsSequence, paymentsReceiptNo, setPaymentReceiptNo, allPayments, setPayments, setAllPayments}: any) => {
+const FormCom = ({installments, classes, sections, setIsViewOpened, students, selectedStudent, setSelectedStudent, setIsLoading, selectedInstallments, setSelectedInstallments, setInstallments, payments, heads, setHeads, totalNumberGenerator, allInstallments, isLoadingHeads, setIsReceiptOpened, setReceiptPaymentData, setIsLoadingHeads, paymentsReceiptNo, setPaymentReceiptNo, allPayments, setPayments, setAllPayments}: any) => {
 
     // Toast
     const {toast} = useToast();
@@ -88,7 +88,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 heads:student.affiliated_heads.heads.map((h:any) => {
                     return {
                         ...h,
-                        amounts:h.amounts.map((a:any) => {
+                        amounts:h?.amounts?.map((a:any) => {
                             const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                             const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
@@ -570,7 +570,6 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                             setIsReceiptOpened={setIsReceiptOpened}
                             setReceiptPaymentData={setReceiptPaymentData}
                             setPaymentReceiptNo={setPaymentReceiptNo}
-                            headsSequence={headsSequence}
                         />
 
                 </form>

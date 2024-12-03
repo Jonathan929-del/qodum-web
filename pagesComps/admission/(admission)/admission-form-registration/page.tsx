@@ -7,6 +7,7 @@ import Receipt from '@/components/modules/admission/admission/admissionFormRegis
 import FormCom from '@/components/modules/admission/admission/admissionFormRegistration/FormCom';
 import ViewCom from '@/components/modules/admission/admission/admissionFormRegistration/ViewCom';
 import EnquiryViewCom from '@/components/modules/admission/admission/admissionFormRegistration/EnquiryViewCom';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -21,6 +22,10 @@ const page = () => {
 
     // Is receipt opened
     const [isReceiptOpened, setIsReceiptOpened] = useState(false);
+
+
+    // Is Loading
+    const [isLoading, setIsLoading] = useState(false);
 
 
     // Pdf data
@@ -302,7 +307,9 @@ const page = () => {
     return (
         <div className='h-full flex flex-col items-center justify-start pt-2 bg-white overflow-hidden'>
             {
-                isReceiptOpened ? (
+                isLoading ? (
+                    <LoadingIcon />
+                ) : isReceiptOpened ? (
                     <Receipt
                         pdfData={pdfData}
                         setIsReceiptOpened={setIsReceiptOpened}
@@ -343,6 +350,8 @@ const page = () => {
                         setSiblings={setSiblings}
                         setPdfData={setPdfData}
                         setIsReceiptOpened={setIsReceiptOpened}
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                     />
                 )
             }

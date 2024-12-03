@@ -17,6 +17,10 @@ const ClassSchema = new mongoose.Schema(
             group_name:{type:String},
             heads:{type:Array}
         },
+        affiliated_special_heads:{
+            group_name:{type:String},
+            heads:{type:Array}
+        },
         is_admission_opened:{type:Boolean}
     },
     {

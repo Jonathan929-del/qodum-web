@@ -77,14 +77,20 @@ const PDF = ({pdfData}:any) => {
                     <View style={{width:'100%', display:'flex', flexDirection:'row', alignItems:'center', gap:10}}>
 
                         {/* Receipt No. */}
-                        <View style={{flex:1, display:'flex', flexDirection:'row', gap:10}}>
+                        <View style={{width:'20%', display:'flex', flexDirection:'row', gap:10}}>
                             <Text style={{fontSize:11}}>Receipt No.:</Text>
                             <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{pdfData.receipt_no}</Text>
                         </View>
 
+                        {/* prospectus No. */}
+                        <View style={{width:'40%', flex:1, display:'flex', flexDirection:'row', gap:10}}>
+                            <Text style={{fontSize:11}}>Prospectus No.:</Text>
+                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{pdfData?.prospectus_no || ''}</Text>
+                        </View>
+
                         {/* Registration No. */}
-                        <View style={{flex:1, display:'flex', flexDirection:'row', gap:10}}>
-                            <Text style={{fontSize:11}}>Prospectus / Registration No.:</Text>
+                        <View style={{width:'40%', flex:1, display:'flex', flexDirection:'row', gap:10}}>
+                            <Text style={{fontSize:11}}>Registration No.:</Text>
                             <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{pdfData?.registration_no || ''}</Text>
                         </View>
 
@@ -144,13 +150,13 @@ const PDF = ({pdfData}:any) => {
                         {/* No. */}
                         <View style={{width:'20%', display:'flex', flexDirection:'row', gap:10}}>
                             <Text style={{fontSize:11}}>No.:</Text>
-                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}></Text>
+                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{pdfData.cheque_no}</Text>
                         </View>
 
                         {/* Dated */}
                         <View style={{width:'20%', display:'flex', flexDirection:'row', gap:10}}>
                             <Text style={{fontSize:11}}>Dated:</Text>
-                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}></Text>
+                            <Text style={{flex:1, fontSize:12, paddingLeft:4, borderBottom:1, borderBottomWidth:1}}>{moment(pdfData?.cheque_date).format('D-MM-YYYY')}</Text>
                         </View>
 
                     </View>

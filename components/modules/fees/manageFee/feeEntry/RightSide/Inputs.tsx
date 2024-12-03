@@ -84,7 +84,6 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
         };
     }, [selectedDate]);
 
-
     return (
         <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
             <div className='flex-1 flex flex-col gap-3'>
@@ -246,7 +245,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                     <SelectValue
                                         className='text-[11px]'
-                                        placeholder={selectedInstallments.length < 1 ? 'Please Select' : selectedInstallments.length === 1 ? '1 installment selected' : `${selectedInstallments.length} installments selected`}
+                                        placeholder={(selectedInstallments.length === 0 || !selectedInstallments[0]) ? 'Please Select' : selectedInstallments.length === 1 ? '1 installment selected' : `${selectedInstallments.length} installments selected`}
                                     />
                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                 </SelectTrigger>

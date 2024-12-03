@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import * as z from 'zod';
+import axios from 'axios';
 import moment from 'moment';
 import Buttons from './Buttons';
 import Other from './forms/Others';
@@ -9,25 +10,23 @@ import {deepEqual} from '@/lib/utils';
 import Student from './forms/Student';
 import Guardian from './forms/Guardian';
 import {useForm} from 'react-hook-form';
+import Siblings from './forms/Siblings';
 import {useEffect, useState} from 'react';
 import {Form} from '@/components/ui/form';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
-import LoadingIcon from '@/components/utils/LoadingIcon';
 import {uploadStudentImage} from '@/lib/actions/image.actions';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {StudentValidation} from '@/lib/validations/admission/admission/student.validation';
 import {createStudent, deleteStudent, modifyStudent} from '@/lib/actions/admission/admission/student.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import Siblings from './forms/Siblings';
-import axios from 'axios';
 
 
 
 
 
 // Main function
-const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails, siblings, setSiblings, setPdfData, setIsReceiptOpened}:any) => {
+const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, setValuesFromEnquiry, valuesFromEnquiry, admissionEnquiries, selectedSubjects, setSelectedSubjects, previousSchoolsDetails, setPreviousSchoolsDetails, siblings, setSiblings, setPdfData, setIsReceiptOpened, setIsLoading}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -43,10 +42,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
 
     // Is QR code generated
     const [isQrCodeGenerated, setIsQrCodeGenerated] = useState(false);
-
-
-    // Is Loading
-    const [isLoading, setIsLoading] = useState(false);
 
 
     // Selected tab
@@ -423,6 +418,8 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
         if(updateStudent.id === ''){
 
             const createStudentFunc = async (values:any) => {
+                setIsReceiptOpened(true);
+                setIsLoading(true);
                 if(students.map((student:any) => student.student.reg_no).includes(values.student.reg_no)){
                     toast({title:'Register no. already exists', variant:'error'});
                     return;
@@ -612,14 +609,16 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     school_website:schools[0].website,
                     school_contact_no:schools[0].mobile,
                     registration_no:values.student.reg_no,
+                    prospectus_no:values.student.pros_no,
                     receipt_no:students.length,
                     received_from:values.student.name,
                     father_name:values.parents.father.father_name,
                     amount:values.student.amount,
                     payment_mode:values.student.payment_mode,
+                    cheque_no:values.paymode_details.cheque_no,
+                    cheque_date:values.paymode_details.dd_date,
                     class_name:values.student.class
                 });
-                setIsReceiptOpened(true);
                 // @ts-ignore
                 if(res === 0){
                     toast({title:'Please create a session first', variant:'alert'});
@@ -638,7 +637,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 if(paymentStatus.data.status === 'cancelled'){
                     const newPendingPayments = pendingPayments.filter((pp:any) => pp.txnId !== p.txnId);
                     localStorage.setItem('registrationPayment', JSON.stringify(newPendingPayments));
-                    setIsLoading(false);
                 };
                 if(paymentStatus.data.status === 'completed'){
                     // @ts-ignore
@@ -649,10 +647,9 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     
                 }else{
                     toast({title:'Please make the pending payment', variant:'alert'});
-                    setIsLoading(false);
-                    return;
                 };
             });
+
         }
         // Modify Student
         else if(
@@ -849,24 +846,6 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     neft_name:values?.paymode_details?.neft_name
                 }
             });
-            const schools = await fetchGlobalSchoolDetails();
-            setPdfData({
-                school_logo:schools[0].logo,
-                school_name:schools[0].school_name,
-                school_address:schools[0].school_address,
-                school_affiliation_no:schools[0].affiliation_no,
-                school_no:schools[0].school_no,
-                school_website:schools[0].website,
-                school_contact_no:schools[0].mobile,
-                receipt_no:students.length,
-                registration_no:values.student.reg_no,
-                received_from:values.student.name,
-                father_name:values.parents.father.father_name,
-                amount:values.student.amount,
-                payment_mode:values.student.payment_mode,
-                class_name:values.student.class
-            });
-            setIsReceiptOpened(true);
             toast({title:'Updated Successfully!'});
         }
         // Delete Student
@@ -1276,8 +1255,10 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             percentage:'',
             result:''
         }]);
+        setPdfData({});
         setSiblings([{}]);
         setIsLoading(false);
+
     };
 
 
@@ -1472,129 +1453,125 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             <Form
                 {...form}
             >
-                {isLoading ? (
-                    <LoadingIcon />
-                ) : (
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='w-full h-full flex flex-col items-center px-2 sm:px-4'
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className='w-full h-full flex flex-col items-center px-2 sm:px-4'
+                >
+
+
+                    {/* Tabs */}
+                    <Tabs
+                        defaultValue='student'
+                        className='w-full h-[85%] border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
                     >
-
-
-                        {/* Tabs */}
-                        <Tabs
-                            defaultValue='student'
-                            className='w-full h-[85%] border-[0.5px] border-[#ccc] rounded-[5px] overflow-scroll custom-sidebar-scrollbar'
-                        >
-                            <div className='flex justify-center w-full p-[2px]'>
-                                <TabsList className='bg-[#F3F3F3] rounded-full'>
+                        <div className='flex justify-center w-full p-[2px]'>
+                            <TabsList className='bg-[#F3F3F3] rounded-full'>
+                                <TabsTrigger
+                                    value='student'
+                                    onClick={() => setSelectedTab('student')}
+                                    className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                >
+                                    Student
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value='parent'
+                                    onClick={() => setSelectedTab('parent')}
+                                    className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                >
+                                    Parent
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value='other'
+                                    onClick={() => setSelectedTab('other')}
+                                    className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                >
+                                    Other
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value='guardian'
+                                    onClick={() => setSelectedTab('guardian')}
+                                    className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                >
+                                    Guardian
+                                    <p className='hidden ml-[4px] lg:inline'>Details</p>
+                                </TabsTrigger>
+                                {/* Siblings */}
+                                {form.getValues().student.sibling && (
                                     <TabsTrigger
-                                        value='student'
-                                        onClick={() => setSelectedTab('student')}
-                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'student' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
+                                        value='siblings'
+                                        onClick={() => setSelectedTab('siblings')}
+                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'siblings' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
                                     >
-                                        Student
+                                        Siblings
                                         <p className='hidden ml-[4px] lg:inline'>Details</p>
                                     </TabsTrigger>
-                                    <TabsTrigger
-                                        value='parent'
-                                        onClick={() => setSelectedTab('parent')}
-                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'parent' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
-                                    >
-                                        Parent
-                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value='other'
-                                        onClick={() => setSelectedTab('other')}
-                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'other' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
-                                    >
-                                        Other
-                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value='guardian'
-                                        onClick={() => setSelectedTab('guardian')}
-                                        className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'guardian' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
-                                    >
-                                        Guardian
-                                        <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                    </TabsTrigger>
-                                    {/* Siblings */}
-                                    {form.getValues().student.sibling && (
-                                        <TabsTrigger
-                                            value='siblings'
-                                            onClick={() => setSelectedTab('siblings')}
-                                            className={`px-[8px] h-8 transition rounded-full hover:opacity-90 sm:px-4 hover:bg-[#3D67B0] hover:text-white ${selectedTab === 'siblings' ? 'bg-[#3D67B0] text-white' : 'bg-transparent text-black'}`}
-                                        >
-                                            Siblings
-                                            <p className='hidden ml-[4px] lg:inline'>Details</p>
-                                        </TabsTrigger>
-                                    )}
-                                </TabsList>
-                            </div>
-
-
-                            <TabsContent value='student' className='w-full px-2'>
-                                <Student
-                                    form={form}
-                                    setFile={setFile}
-                                    students={students}
-                                    admissionEnquiries={admissionEnquiries}
-                                    imageSrc={imageSrc}
-                                    setImageSrc={setImageSrc}
-                                    setIsViewOpened={setIsViewOpened}
-                                    setUpdateStudent={setUpdateStudent}
-                                    updateStudent={updateStudent}
-                                    setIsLoading={setIsLoading}
-                                    setValuesFromEnquiry={setValuesFromEnquiry}
-                                    selectedSubjects={selectedSubjects}
-                                    setSelectedSubjects={setSelectedSubjects}
-                                    date={date}
-                                    setDate={setDate}
-                                    dob={dob}
-                                    setDob={setDob}
-                                    setIsQrCodeGenerated={setIsQrCodeGenerated}
-                                />
-                            </TabsContent>
-                            <TabsContent value='parent'>
-                                <Parent
-                                    form={form}
-                                    fatherDob={fatherDob}
-                                    setFatherDob={setFatherDob}
-                                    motherDob={motherDob}
-                                    setMotherDob={setMotherDob}
-                                    anniversaryDate={anniversaryDate}
-                                    setAnniversaryDate={setAnniversaryDate}
-                                />
-                            </TabsContent>
-                            <TabsContent value='other'>
-                                <Other
-                                    form={form}
-                                    updateStudent={updateStudent}
-                                    previousSchoolsDetails={previousSchoolsDetails}
-                                    setPreviousSchoolsDetails={setPreviousSchoolsDetails}
-                                />
-                            </TabsContent>
-                            <TabsContent value='guardian'>
-                                <Guardian form={form}/>
-                            </TabsContent>
-                            <TabsContent value='siblings'>
-                                <Siblings
-                                    form={form}
-                                    siblings={siblings}
-                                    setSiblings={setSiblings}
-                                />
-                            </TabsContent>
-                        </Tabs>
-
-
-                        {/* Buttons */}
-                        <div className='sm:px-10'>
-                            <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails} setSiblings={setSiblings} isQrCodeGenerated={isQrCodeGenerated}/>
+                                )}
+                            </TabsList>
                         </div>
-                    </form>
-                )}
+
+
+                        <TabsContent value='student' className='w-full px-2'>
+                            <Student
+                                form={form}
+                                setFile={setFile}
+                                students={students}
+                                admissionEnquiries={admissionEnquiries}
+                                imageSrc={imageSrc}
+                                setImageSrc={setImageSrc}
+                                setIsViewOpened={setIsViewOpened}
+                                setUpdateStudent={setUpdateStudent}
+                                updateStudent={updateStudent}
+                                setIsLoading={setIsLoading}
+                                setValuesFromEnquiry={setValuesFromEnquiry}
+                                selectedSubjects={selectedSubjects}
+                                setSelectedSubjects={setSelectedSubjects}
+                                date={date}
+                                setDate={setDate}
+                                dob={dob}
+                                setDob={setDob}
+                                setIsQrCodeGenerated={setIsQrCodeGenerated}
+                            />
+                        </TabsContent>
+                        <TabsContent value='parent'>
+                            <Parent
+                                form={form}
+                                fatherDob={fatherDob}
+                                setFatherDob={setFatherDob}
+                                motherDob={motherDob}
+                                setMotherDob={setMotherDob}
+                                anniversaryDate={anniversaryDate}
+                                setAnniversaryDate={setAnniversaryDate}
+                            />
+                        </TabsContent>
+                        <TabsContent value='other'>
+                            <Other
+                                form={form}
+                                updateStudent={updateStudent}
+                                previousSchoolsDetails={previousSchoolsDetails}
+                                setPreviousSchoolsDetails={setPreviousSchoolsDetails}
+                            />
+                        </TabsContent>
+                        <TabsContent value='guardian'>
+                            <Guardian form={form}/>
+                        </TabsContent>
+                        <TabsContent value='siblings'>
+                            <Siblings
+                                form={form}
+                                siblings={siblings}
+                                setSiblings={setSiblings}
+                            />
+                        </TabsContent>
+                    </Tabs>
+
+
+                    {/* Buttons */}
+                    <div className='sm:px-10'>
+                        <Buttons setIsViewOpened={setIsViewOpened} students={students} updateStudent={updateStudent} setUpdateStudent={setUpdateStudent} onSubmit={onSubmit} form={form} setFile={setFile} setImageSrc={setImageSrc} setValuesFromEnquiry={setValuesFromEnquiry} setSelectedSubjects={setSelectedSubjects} setDate={setDate} setDob={setDob} setFatherDob={setFatherDob} setMotherDob={setMotherDob} setAnniversaryDate={setAnniversaryDate} setPreviousSchoolsDetails={setPreviousSchoolsDetails} setSiblings={setSiblings} isQrCodeGenerated={isQrCodeGenerated} setPdfData={setPdfData} setIsReceiptOpened={setIsReceiptOpened}/>
+                    </div>
+                </form>
             </Form>
         </div>
     );

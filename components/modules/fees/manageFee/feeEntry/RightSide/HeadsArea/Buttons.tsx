@@ -341,7 +341,7 @@ const Buttons = ({form, selectedStudent, setSelectedStudent, setSelectedInstallm
             {/* Buttons */}
             <div className='h-full flex flex-row items-end gap-2'>
                 {/* Save */}
-                {permissions.add && isConcession ? (
+                {permissions.add && isConcession && !heads.find((h:any) => h?.amounts?.filter((a:any) => a.is_concession_page).length > 0) ? (
                     <AlertDialog>
                         <AlertDialogTrigger>
                             <span className='flex items-center justify-center px-3 h-6 text-xs text-white bg-[#73E9AF] rounded-[4px] hover:bg-[#8be0b7] cursor-pointer'>

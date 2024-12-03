@@ -8,7 +8,7 @@ import HeadsList from './HeadsList';
 
 
 // Main function
-const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, headsSequence, isQrCodeGenerated, permissions}:any) => {
+const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, totalNumberGenerator, setConcessionReason, totalPaidAmount, setTotalPaidAmount, isLoadingHeads, setInstallments, setPaymentReceiptNo, installments, isQrCodeGenerated, permissions}:any) => {
 
     // Is concession
     const [isConcession, setIsConcession] = useState(false);
@@ -26,7 +26,6 @@ const index = ({form, onSubmit, selectedStudent, setSelectedStudent, selectedIns
                 totalNumberGenerator={totalNumberGenerator}
                 setIsConcession={setIsConcession}
                 isLoadingHeads={isLoadingHeads}
-                headsSequence={headsSequence}
             />
 
             <Buttons

@@ -49,10 +49,6 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
     const admissionSearchClick = async () => {
         if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
             const student = await fetchStudentByAdmNo({adm_no:search});
-            const orderMap = headsSequence.reduce((map:any, item:any, index:any) => {
-                map[item.name] = index;
-                return map;
-            }, {});
             setSelectedStudent({
                 id:student?._id || '',
                 image:student?.student?.image || '',
@@ -93,9 +89,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
                                 };
                             })
                         };
-                    }).sort((a, b) => {
-                        return orderMap[a.head_name] - orderMap[b.head_name];
-                    }) || []
+                    })|| []
                 }
             });
             // const singleInstallments = student?.affiliated_heads?.heads?.filter((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount))).length === 1)?.map((h:any) => h.amounts?.filter((a:any) => Number(a.value) !== (Number(a.last_rec_amount) + Number(a.conc_amount)))?.map((a:any) => a.name)[0]);

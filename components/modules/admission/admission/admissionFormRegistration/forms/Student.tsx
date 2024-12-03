@@ -329,7 +329,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
             });
         }else{
             setIsViewOpened('enquiry');
-        }
+        };
         setSearch('');
         setIsLoading(false);
     };

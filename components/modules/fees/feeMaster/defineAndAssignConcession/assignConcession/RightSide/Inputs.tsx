@@ -56,6 +56,12 @@ const Inputs = ({form, showButtonClick, selectedStudent}:any) => {
     }, [selectedStudent]);
 
 
+    // Use effect
+    useEffect(() => {
+        form.setValue('installment', installments[0]);
+    }, [installments]);
+
+
     return (
         <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc]'>
             <div className='flex flex-row items-center gap-2'>

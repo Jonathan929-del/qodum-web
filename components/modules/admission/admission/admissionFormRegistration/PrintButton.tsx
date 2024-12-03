@@ -2,13 +2,14 @@
 import {ChevronDown, Download} from 'lucide-react';
 import {ExcelFile, ExcelSheet} from 'react-xlsx-wrapper';
 import {Select, SelectContent, SelectTrigger} from '@/components/ui/select';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
 
 
 // Main Function
-const PrintButton = ({students}:any) => {
+const PrintButton = ({students, setPdfData, updateStudent, setIsReceiptOpened}:any) => {
 
 
     // Students Array
@@ -38,6 +39,28 @@ const PrintButton = ({students}:any) => {
         }
     ];
 
+
+    // Registration receipt handler
+    const registrationReceiptHandler = async () => {
+        const schools = await fetchGlobalSchoolDetails();
+        setPdfData({
+            school_logo:schools[0].logo,
+            school_name:schools[0].school_name,
+            school_address:schools[0].school_address,
+            school_affiliation_no:schools[0].affiliation_no,
+            school_no:schools[0].school_no,
+            school_website:schools[0].website,
+            school_contact_no:schools[0].mobile,
+            registration_no:updateStudent.student.reg_no,
+            receipt_no:students.length,
+            received_from:updateStudent.student.name,
+            father_name:updateStudent.parents.father.father_name,
+            amount:updateStudent.student.amount,
+            payment_mode:updateStudent.student.payment_mode,
+            class_name:updateStudent.student.class
+        });
+        setIsReceiptOpened(true);
+    };
 
     return (
         <div>
@@ -74,6 +97,19 @@ const PrintButton = ({students}:any) => {
                             .pdf
                             <Download size={16} className='text-hash-color ml-2'/>
                         </span>
+
+
+
+                        {/* Registration Receipt */}
+                        {updateStudent.id !== '' && (
+                            <span
+                                onClick={registrationReceiptHandler}
+                                className='pl-2 flex w-full cursor-pointer items-center rounded-[5px] py-1.5 pr-2 text-xs outline-none hover:bg-[#ccc] transition focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
+                            >
+                                Registration Receipt
+                                <Download size={16} className='text-hash-color ml-2'/>
+                            </span>
+                        )}
 
                 </SelectContent>
             </Select>

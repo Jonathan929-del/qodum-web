@@ -637,7 +637,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 await uploadStudentImage({data:formData, reg_no:values.student.name + values.student.adm_no.split('/')[values.student.adm_no.split('/').length - 1]});
             };
             // Update
-            await modifyAdmittedStudent({
+            const updateRes = await modifyAdmittedStudent({
                 id:updateStudent.id,
                 // Student
                 student:{
@@ -813,6 +813,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Documents
                 documents:selectedDocuments.filter((d:any) => d.document_name !== '')
             });
+            // if(updateRes === 1){
+            //     toast({title:'Student has current paid fees in their class', variant:'alert'});
+            //     setIsLoading(false);
+            //     return;
+            // }else{
+            // };
             toast({title:'Updated Successfully!'});
         }
         // Delete Student

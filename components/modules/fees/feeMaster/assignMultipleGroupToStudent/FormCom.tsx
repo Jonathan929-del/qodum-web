@@ -62,7 +62,7 @@ const FormCom = () => {
 
 
     // Selected students
-    const [selectedStudents, setSelectedStudents] = useState([{}]);
+    const [selectedStudents, setSelectedStudents] = useState<any>([{}]);
 
 
     // Installments
@@ -85,15 +85,27 @@ const FormCom = () => {
         setInstallments(installmentsRes);
         setClasses(classesRes);
         setSelectedClasses(classesRes.filter((c:any) =>
-            c?.affiliated_heads?.group_name
+            form.getValues().group_type === 'Classes'
                 ?
-                    c?.affiliated_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
-                        ? true
-                        : c?.affiliated_heads?.group_name?.split('(')[1]?.trim()
-                            ? c?.affiliated_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
-                            : false
+                    c?.affiliated_heads?.group_name
+                        ?
+                            c?.affiliated_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
+                                ? true
+                                : c?.affiliated_heads?.group_name?.split('(')[1]?.trim()
+                                    ? c?.affiliated_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
+                                    : false
+                        :
+                            false
                 :
-                    false
+                    c?.affiliated_special_heads?.group_name
+                        ?
+                            c?.affiliated_special_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
+                                ? true
+                                : c?.affiliated_special_heads?.group_name?.split('(')[1]?.trim()
+                                    ? c?.affiliated_special_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
+                                    : false
+                        :
+                            false
         ));
         setIsLoading(false);
     };
@@ -120,19 +132,41 @@ const FormCom = () => {
 
     
             // Assigning
-            await assignMultipleGroupsToStudents({
-                group_name:values.fees_group,
-                installment:values.fees_installment,
-                students:selectedStudents
-            });
+            if(values.group_type === 'Classes'){
+                await assignMultipleGroupsToStudents({
+                    group_name:values.fees_group,
+                    installment:values.fees_installment,
+                    students:selectedStudents,
+                    group_type:values.group_type
+                });
+            }else{
+                await assignMultipleGroupsToStudents({
+                    group_name:values.fees_group,
+                    installment:values.fees_installment,
+                    students:selectedStudents,
+                    group_type:values.group_type
+                });
+            }
 
 
             // Assigning to classes
-            await modifyClassHeads({
-                group_name:values.fees_group,
-                installment:values.fees_installment,
-                classes:selectedClasses.map((c:any) => c.class_name)
-            });
+            if(values.group_type === 'Classes'){
+                await modifyClassHeads({
+                    group_name:values.fees_group,
+                    installment:values.fees_installment,
+                    classes:selectedClasses.map((c:any) => c.class_name),
+                    group_type:values.group_type
+                });
+            }else{
+                if(!students[0]?.student?.name){
+                    await modifyClassHeads({
+                        group_name:values.fees_group,
+                        installment:values.fees_installment,
+                        classes:selectedClasses.map((c:any) => c.class_name),
+                        group_type:values.group_type
+                    });
+                };
+            };
 
 
             // Toast

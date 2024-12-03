@@ -17,6 +17,14 @@ import VehicleDetails from '@/lib/models/fees/transport/VehicleDetails.model';
 
 
 
+// Total number generator
+const totalNumberGenerator = (array:any) => {
+    let sum = 0;
+    for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+    return sum;
+};
+
+
 // Is session transfered
 export const isStudentsSesssionTransfered = async () => {
     try {
@@ -324,7 +332,7 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:theClass.affiliated_heads.group_name, heads:theClass.affiliated_heads.heads}});
+            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:`${theClass.affiliated_heads.group_name}${student.is_new ? theClass.affiliated_special_heads.group_name ? `(${theClass.affiliated_special_heads.group_name})` : '' : ''}`, heads:theClass.affiliated_heads.heads.concat(student.is_new ? theClass.affiliated_special_heads.heads : [])}});
         });
 
 
@@ -570,8 +578,19 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         if(existingStudent.student.adm_no !== student.adm_no && students.map(student => student.student.adm_no).includes(student.adm_no)){throw new Error('Admission no. already exists')};
 
 
+        // Fee groups check
+        // const theStudent = await AdmittedStudent.findById(id);
+        // const studentPaidFees = totalNumberGenerator(theStudent?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a?.last_rec_amount || 0)))));
+        // const groups = theStudent?.affiliated_heads?.group_name?.split(' (').map((i:any) => i.replace(/\)$/, ''));
+        // if(groups.includes(student?.class)){
+
+        // }else{
+            
+        // };
+        
+        
         // Update student
-        await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
+        await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, 'affiliated_heads.group_name':''}, {new:true});
         
         
         // Subjects handling
@@ -745,15 +764,7 @@ export const fetchStudentsByClassAndSectionTransport = async ({class_name, secti
 
 
         // Students
-        let students;
-
-
-        students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
-        // if(section || section !== ''){
-        //     students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
-        // }else{
-        //     students = await AdmittedStudent.find({'student.class':class_name, session:activeSession?.year_name});
-        // };
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
 
 
         // Return
@@ -1136,13 +1147,13 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
         const pastDueDateInstallments = installmentsRes?.filter((i:any) => {
             const installmentDueDate = moment(`${i.due_date.day}-${i.due_date.month}-${i.due_date.year}`);
             return installmentDueDate.isBetween(from_date, till_date, null, '[]');
-        }).map((i:any) => i.name).filter((i:any) => installments.map((item:any) => item.name).includes(i));
+        }).map((i:any) => i.name)?.filter((i:any) => installments.map((item:any) => item.name).includes(i));
 
 
         // Students filter
         const filteredStudnets = students
             // Installments filter
-            ?.filter((s:any) => s.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => a.name)).flat().filter((i:any) => pastDueDateInstallments.includes(i)).length > 0)
+            ?.filter((s:any) => s.affiliated_heads.heads.map((h:any) => h.amounts.map((a:any) => a.name))?.flat()?.filter((i:any) => pastDueDateInstallments.includes(i)).length > 0)
             // Schools filter
             ?.filter((s:any) => school === 'All Schools' ? s : s)
             // Wing filter
@@ -1158,7 +1169,7 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
             // Fee type filter
             ?.filter((s:any) => fee_type === 'All fee types' ? s : s.affiliated_heads.heads.map((h:any) => h.type_name).includes(fee_type))
             // Heads filter
-            ?.filter((s:any) => s.affiliated_heads.heads.filter((h:any) => heads.map((head:any) => head.name).includes(h.head_name)).length > 0)
+            ?.filter((s:any) => s.affiliated_heads.heads?.filter((h:any) => heads.map((head:any) => head.name).includes(h.head_name)).length > 0)
 
 
         // Return
@@ -1467,19 +1478,11 @@ export const feesDashboardDefaulterStudentsData = async () => {
 
 
         // Classes number of defaulters
-        const classesNumberOfDefaulters = classesNames.map((c:any) => defaulterStudents.filter((s:any) => s.student.class === c).length);
-
-
-        // Total number generator
-        const totalNumberGenerator = (array:any) => {
-            let sum = 0;
-            for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
-            return sum;
-        };
+        const classesNumberOfDefaulters = classesNames.map((c:any) => defaulterStudents?.filter((s:any) => s.student.class === c).length);
 
 
         // Defaulter amount
-        const defaulterAmount = totalNumberGenerator(defaulterStudents.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => installmentsOverdues.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.last_rec_amount + a.conc_amount))))))));
+        const defaulterAmount = totalNumberGenerator(defaulterStudents.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => installmentsOverdues.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.last_rec_amount + a.conc_amount))))))));
 
 
         // Return

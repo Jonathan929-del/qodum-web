@@ -6,7 +6,6 @@ import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import ViewCom from '@/components/modules/fees/manageFee/feeEntry/ViewCom';
 import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
-import {fetchHeadsSequence} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
@@ -87,10 +86,6 @@ const page = () => {
 
     // Heads
     const [heads, setHeads] = useState<any>([]);
-
-
-    // Heads sequence
-    const [headsSequence, setHeadsSequence] = useState([]);
 
 
     // All installments
@@ -397,12 +392,10 @@ const page = () => {
         const sectionsRes = await fetchSections();
         const studentsRes = await fetchAdmittedStudents();
         const installmentsRes = await fetchInstallments();
-        const headsSequenceRes = await fetchHeadsSequence();
         setClasses(classesRes);
         setSections(sectionsRes);
         setStudents(studentsRes);
         setAllInstallments(installmentsRes);
-        setHeadsSequence(headsSequenceRes);
     };
 
 
@@ -459,7 +452,6 @@ const page = () => {
                     setIsReceiptOpened={setIsReceiptOpened}
                     setReceiptPaymentData={setReceiptPaymentData}
                     setIsLoadingHeads={setIsLoadingHeads}
-                    headsSequence={headsSequence}
                     paymentsReceiptNo={paymentsReceiptNo}
                     setPaymentReceiptNo={setPaymentReceiptNo}
                     allPayments={allPayments}

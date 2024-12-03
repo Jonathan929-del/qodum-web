@@ -11,7 +11,7 @@ import { AuthContext } from '@/context/AuthContext';
 
 
 // Main function
-const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo, headsSequence}:any) => {
+const index = ({installments, form, onSubmit, selectedStudent, setSelectedStudent, selectedInstallments, setSelectedInstallments, heads, setHeads, setIsViewOpened, setInstallments, students, sections, classes, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, totalNumberGenerator, payments, setConcessionReason, showButtonClick, allInstallments, allPayments, isLoadingHeads, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, setReceiptPaymentData, setIsReceiptOpened, setPaymentReceiptNo}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -55,7 +55,6 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                         setIsViewOpened={setIsViewOpened}
                         setSelectedInstallments={setSelectedInstallments}
                         setInstallments={setInstallments}
-                        headsSequence={headsSequence}
                     />
                 )}
 
@@ -129,7 +128,6 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                 paymentsReceiptNo={paymentsReceiptNo}
                 setInstallments={setInstallments}
                 setPaymentReceiptNo={setPaymentReceiptNo}
-                headsSequence={headsSequence}
                 isQrCodeGenerated={isQrCodeGenerated}
                 permissions={permissions}
             />

@@ -12,13 +12,8 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 // Main function
 const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator, isLoadingHeads}:any) => {
 
-
     // Toast
     const {toast} = useToast();
-
-
-    // Selected installment
-    const selectedInstallment = form.getValues().installment;
 
 
     // Conc amount change hadler
@@ -26,18 +21,18 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
 
         // Setting number
         if(h.is_percent){
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.conc_amount = v);
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.payable_amount = Number(a.value) - (Number(a.value) * (Number(v) / 100)));
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.value) * (Number(v) / 100)))
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.conc_amount = v);
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.payable_amount = Number(a.value) - (Number(a.value) * (Number(v) / 100)));
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.value) * (Number(v) / 100)))
         }else{
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.conc_amount = v);
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.payable_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
-            heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.conc_amount = v);
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.payable_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
+            heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.paid_amount = Number(a.value) - (Number(a.conc_amount || 0) + Number(a.last_rec_amount || 0)));
         };
         setHeads([...heads]);
 
         // Validations
-        heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => {
+        heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => {
             // Negative number
             if(Number(v) < 0){
                 toast({title:'Please enter a number greater than zero ', variant:'alert'});
@@ -66,22 +61,27 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
             // Amounts filter
             ?.filter((h:any) => {
                 if(h?.amounts?.length === 1){
-                    return selectedInstallment === h.installment;
+                    return form.getValues().installment === h.installment;
                 }else{
                     const amounts = h.amounts;
-                    return h.installment === 'All installments' && amounts?.filter((a:any) => selectedInstallment === a.name).length > 0;
+                    return h.installment === 'All installments' && amounts?.filter((a:any) => form.getValues().installment === a.name).length > 0;
                 };
             })
-            ?.filter((h:any) => h?.amounts?.filter((a:any) => a.name === selectedInstallment && Number(a?.last_rec_amount ? a?.last_rec_amount : 0) === 0).length > 0)
+            ?.filter((h:any) => h?.amounts?.filter((a:any) => a.name === form.getValues().installment && Number(a?.last_rec_amount ? a?.last_rec_amount : 0) === 0).length > 0)
             ?.map((h:any) => {
                 return{
                     ...h,
-                    is_percent:false
+                    is_percent:h?.amounts?.find((a:any) => a.name === form.getValues().installment)?.is_percent,
+                    amounts:h?.amounts?.map((a:any) => {
+                        return{
+                            ...a,
+                            conc_amount:a?.is_percent ? Number(a?.conc_amount || 0) / Number(a?.value || 0) * 100 : Number(a?.conc_amount || 0)
+                        }
+                    })
                 };
             });
         setHeads(assignedHeads);
     }, [selectedStudent, form.watch('fees_type'), form.watch('installment')]);
-
 
     return selectedStudent.affiliated_heads?.heads?.length === 0 ? (
         <div className='h-full w-full flex items-center justify-center'/>
@@ -126,21 +126,21 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                     <LoadingIcon />
                 ) : heads?.length < 1 ? (
                         <p className='pl-2 text-[11px] text-hash-color font-semibold'>No Fees</p>
-                    ) : selectedInstallment !== '' && heads?.map((h:any) => (
+                    ) : form.getValues().installment !== '' && heads?.map((h:any) => (
                         <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
                             <li className='basis-[19.5%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px]'>
                                 {h.head_name}
                             </li>
                             <li className='basis-[10%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
-                                {selectedInstallment}
+                                {form.getValues().installment}
                             </li>
                             <li className='basis-[10%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
-                                {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => Number(a.value)))}
+                                {totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.value)))}
                             </li>
                             <li className='basis-[12.5%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] p-2'>
                                 <Input
                                     type='number'
-                                    value={heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.conc_amount)[0]}
+                                    value={heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.conc_amount)[0]}
                                     onChange={(e:any) => concAmountChangeHandler(h, e.target.value)}
                                     className='h-7 w-full flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                 />
@@ -152,18 +152,18 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                                     onClick={() => {
                                         heads[heads.indexOf(h)].is_percent = !heads[heads.indexOf(h)].is_percent;
                                         setHeads([...heads]);
-                                        concAmountChangeHandler(h, heads[heads.indexOf(h)].amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.conc_amount)[0]);
+                                        concAmountChangeHandler(h, heads[heads.indexOf(h)].amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.conc_amount)[0]);
                                     }}
                                 />
                             </li>
                             <li className='basis-[11.5%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] px-2 py-[2px]'>
-                                {totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => Number(a.payable_amount)))}
+                                {totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.payable_amount)))}
                             </li>
                             <li className='basis-[12.5%] h-full flex items-center justify-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                 {h.type_name}
                             </li>
                             <li className='basis-[12.5%] h-full flex items-center justify-center text-hash-color text-[11px] py-2'>
-                                {h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => a.conc_type)}
+                                {h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => a.conc_type)}
                             </li>
                         </ul>
                     ))
@@ -179,16 +179,16 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                             Total
                         </li>
                         <li className='basis-[10%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
-                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => Number(a.value)))))}
+                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.value)))))}
                         </li>
                         <li className='basis-[12.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
-                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => Number(a.conc_amount)))))}
+                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.conc_amount)))))}
                         </li>
                         <li className='basis-[11.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                             
                         </li>
                         <li className='basis-[11.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
-                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedInstallment === a.name).map((a:any) => Number(a.payable_amount)))))}
+                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.payable_amount)))))}
                         </li>
                         <li className='basis-[12.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2 text-white'>
                             

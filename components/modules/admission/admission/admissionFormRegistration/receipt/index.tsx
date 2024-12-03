@@ -2,6 +2,7 @@
 // Improts
 import {X} from 'lucide-react';
 import PdfView from './PdfView';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 
 
 
@@ -19,9 +20,13 @@ const index = ({setIsReceiptOpened, pdfData}:any) => {
         </div>
 
 
-        <PdfView
-            pdfData={pdfData}
-        />
+        {pdfData.received_from ? (
+            <PdfView
+                pdfData={pdfData}
+            />
+        ) : (
+            <LoadingIcon />
+        )}
 
         </div>
     );

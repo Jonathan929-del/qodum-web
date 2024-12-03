@@ -659,7 +659,7 @@ const Other = ({form, previousSchoolsDetails, setPreviousSchoolsDetails}:any) =>
                                 <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 sm:basis-[65%]'>
                                     <Input
                                         disabled
-                                        value={school.obtain_marks / school.total_marks * 100}
+                                        value={school.obtain_marks && school.total_marks && Number(school.obtain_marks / school.total_marks * 100).toFixed(2)}
                                         onChange={(e:any) => {
                                             previousSchoolsDetails[previousSchoolsDetails.indexOf(school)].percentage = e.target.value;
                                             setPreviousSchoolsDetails([...previousSchoolsDetails]);

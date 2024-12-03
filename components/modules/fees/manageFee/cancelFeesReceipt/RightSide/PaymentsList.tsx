@@ -107,7 +107,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
             id:selectedStudent.id,
             affiliated_heads:{
                 group_name:selectedStudent.affiliated_heads.group_name,
-                heads:newHeads
+                heads:newHeads.sort((a:any, b:any) => selectedStudent.affiliated_heads.heads.indexOf(a) - selectedStudent.affiliated_heads.heads.indexOf(b))
             }
         });
         await cancelPayment({receipt_no:p.receipt_no});

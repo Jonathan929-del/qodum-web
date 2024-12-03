@@ -43,79 +43,106 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
                 ...studentHead,
                 amounts:selectedStudent?.affiliated_heads?.heads?.map((h:any) => h?.amounts?.map((a:any) => {
                     return {
-                        // name:a.name,
-                        // value:Number(a.value),
-                        // conc_amount:conc_amount,
-                        // conc_type:a.conc_type
                         ...a
                     };
                 }))[selectedStudent.affiliated_heads.heads.indexOf(studentHead)]
             };
         });
 
-    
-        // New student
-        const newHeads = {
-                group_name:selectedStudent.affiliated_heads.group_name,
-                heads:
-                    selectedStudent.affiliated_heads.heads
-                        .filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name))
-                        .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0))
-                        .map((studentHead:any) => {
-                            return {
-                                ...studentHead,
-                                amounts:
+
+
+        // New heads
+        const newHeads =
+            selectedStudent.affiliated_heads.heads
+            .filter((studentHead:any) => heads.map((head:any) => head.head_name).includes(studentHead.head_name))
+            .filter((studentHead:any) => studentHead.amounts.map((a:any) => Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount) + Number(a.paid_amount)) !== 0))
+            .map((studentHead:any) => {
+                return {
+                    ...studentHead,
+                    amounts:
+                        heads
+                            .filter((h:any) => h.head_name === studentHead.head_name)
+                            .map((h:any) =>
+                                h.amounts
+                                    .filter((a:any) => form.getValues().installment === a.name)
+                                    .map((a:any) => {
+                                        const conc_amount = a.conc_amount
+                                            ?
+                                                h.is_percent
+                                                    ? Number(a.value) * (Number(a.conc_amount) / 100)
+                                                    : Number(a.conc_amount)
+                                            :
+                                                0;
+                                        return {
+                                            ...a,
+                                            name:a.name,
+                                            value:Number(a.value),
+                                            conc_amount:conc_amount,
+                                            conc_type:values.concession_type,
+                                            is_percent:h.is_percent,
+                                            is_concession_page:true
+                                        };
+                                    })
+                            )[0].concat(
                                     heads
-                                        .filter((h:any) => h.head_name === studentHead.head_name)
-                                        .map((h:any) =>
+                                        ?.filter((h:any) => h.head_name === studentHead.head_name)
+                                        ?.map((h:any) =>
                                             h.amounts
-                                                .filter((a:any) => form.getValues().installment === a.name)
-                                                .map((a:any) => {
-                                                    const conc_amount = a.conc_amount
-                                                        ?
-                                                            h.is_percent
-                                                                ? Number(a.value) * (Number(a.conc_amount) / 100)
-                                                                : Number(a.conc_amount)
-                                                        :
-                                                            0;
+                                                ?.filter((a:any) => form.getValues().installment !== a.name)
+                                                ?.map((a:any) => {
+                                                    const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                                     return {
                                                         ...a,
                                                         name:a.name,
                                                         value:Number(a.value),
                                                         conc_amount:conc_amount,
-                                                        conc_type:values.concession_type
+                                                        conc_type:a.conc_type,
+                                                        is_percent:h.is_percent,
+                                                        is_concession_page:true
                                                     };
                                                 })
-                                        )[0].concat(
-                                                heads
-                                                    .filter((h:any) => h.head_name === studentHead.head_name)
-                                                    .map((h:any) =>
-                                                        h.amounts
-                                                            .filter((a:any) => form.getValues().installment !== a.name)
-                                                            .map((a:any) => {
-                                                                const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
-                                                                return {
-                                                                    ...a,
-                                                                    name:a.name,
-                                                                    value:Number(a.value),
-                                                                    conc_amount:conc_amount,
-                                                                    conc_type:a.conc_type
-                                                                };
-                                                            })
-                                                    )[0]
-                                            )
-                            };
-                        })
-                        .concat(unChangedHeads)
-                        .filter((h:any) => h?.amounts?.length !== 0)
+                                        )[0]
+                                )
+                };
+            })
+            .concat(unChangedHeads)
+            .filter((h:any) => h?.amounts?.length !== 0)
+            .sort((a:any, b:any) => selectedStudent.affiliated_heads.heads.indexOf(a) - selectedStudent.affiliated_heads.heads.indexOf(b));
+
+
+    
+        // Copy to other installments heads
+        const copyToOtherInstallmentsHeads = newHeads.map((h:any) => {
+            const currentInstallmentsAmount = h?.amounts?.find((a:any) => a.name === form.getValues().installment);
+            return h.installment !== 'All installments'
+                ? h
+                : {
+                    ...h,
+                    amounts:h?.amounts?.map((a:any) => {
+                        return{
+                            ...currentInstallmentsAmount,
+                            name:a.name
+                        }
+                    })
+                }
+        });
+
+
+        // New student
+        const newAffiliatedHeads = {
+            group_name:selectedStudent.affiliated_heads.group_name,
+            heads:form.getValues().copy_to_other_installments ? copyToOtherInstallmentsHeads : newHeads
         };
 
 
         // Updating student
         await ModifyStudentAffiliatedHeads({
             id:selectedStudent.id,
-            affiliated_heads:newHeads,
+            affiliated_heads:newAffiliatedHeads,
         });
+
+
+
 
 
         // Toast
@@ -140,13 +167,14 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
             class:student.student.class,
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
-                heads:student.affiliated_heads.heads.map((h:any) => {
+                heads:student?.affiliated_heads?.heads?.map((h:any) => {
                     return {
                         ...h,
-                        amounts:h.amounts.map((a:any) => {
+                        amounts:h?.amounts?.map((a:any) => {
                             const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                             const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
+                                ...a,
                                 name:a.name,
                                 value:Number(a.value),
                                 conc_amount:conc_amount,
