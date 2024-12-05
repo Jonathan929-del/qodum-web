@@ -2,19 +2,23 @@
 import {Input} from '@/components/ui/input';
 import {ChevronsUpDown} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
-import {modifyPaymentPaidHeads} from '@/lib/actions/fees/manageFee/payment.actions';
-import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchStudentPayments, modifyPaymentPaidHeads} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import { useRef, useState } from 'react';
 
 
 
 
 
 // Main Function
-const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, selectedPayment, setSelectedPayment, permissions}:any) => {
-
+const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, selectedPayment, setSelectedPayment, permissions, setPayments}:any) => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // Ref for the input element
+    const refs = useRef([]);
 
 
     // Payment heads
@@ -48,7 +52,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
 
 
     // Amount change handler
-    const amountChangeHandler = (head:any, v:any) => {
+    const amountChangeHandler = async (head:any, v:any) => {
 
         // Head amounts filtering
         const h = {
@@ -63,7 +67,30 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         // loop
         if(inputValue > totalNumberGenerator(values)){
             toast({title:'To be paid amount should not be greater than Actual amount', variant:'alert'});
-            h.amounts.map((a:any) => a.to_be_paid_amount = Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount)));
+
+            const resetNumber =
+                totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount))))) === 0
+                    ?   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                            -
+                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+                            -
+                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount === 0
+                        ? 0
+                        :   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                                -
+                            h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+                                -
+                            h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
+
+                    :   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                            -
+                        paymentHeads.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0))))
+                            -
+                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount;
+            refs.current[studentHeads.indexOf(head)].value = resetNumber;
+            
+            h.amounts.map((a:any) => a.to_be_paid_amount = resetNumber);
+
         }else{
             if(inputValue <= values[0]){
                 // First amount
@@ -387,7 +414,6 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         setSelectedPayment({});
     };
 
-
     return (
         <div className='w-full h-[90%] flex flex-col items-center rounded-[4px] border-[0.5px] border-[#ccc]'>
 
@@ -447,7 +473,8 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                             {totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                         </li>
                         <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                            <Input
+                            <input
+                                ref={(el:any) => (refs.current[index] = el)}
                                 defaultValue={totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                                 onChange={(e:any) => amountChangeHandler(studentHeads.filter((af:any) => af.head_name === h.head_name)[0], e.target.value)}
                                 className='flex flex-row items-center h-[80%] text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'

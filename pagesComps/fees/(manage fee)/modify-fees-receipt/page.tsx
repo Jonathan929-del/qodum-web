@@ -14,7 +14,6 @@ import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails
 // Main function
 const page = () => {
 
-
     // Is loading
     const [isLoading, setIsLoading] = useState(false);
 
@@ -76,7 +75,6 @@ const page = () => {
         };
         fetcher();
     }, []);
-
 
     return (
         <div className='h-full flex flex-col items-center justify-start bg-white'>

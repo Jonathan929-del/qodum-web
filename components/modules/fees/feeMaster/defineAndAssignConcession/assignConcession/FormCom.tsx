@@ -69,7 +69,7 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
                                         const conc_amount = a.conc_amount
                                             ?
                                                 h.is_percent
-                                                    ? Number(a.value) * (Number(a.conc_amount) / 100)
+                                                    ? Math.round(Number(a.value) * (Number(a.conc_amount) / 100))
                                                     : Number(a.conc_amount)
                                             :
                                                 0;

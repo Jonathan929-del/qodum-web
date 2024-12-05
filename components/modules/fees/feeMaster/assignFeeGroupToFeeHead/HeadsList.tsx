@@ -77,7 +77,8 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                     installment:head.pay_schedule === 'installment' ? 'All installments' : '',
                                                     account:'',
                                                     post_account:'',
-                                                    fee_type:head.type
+                                                    fee_type:head.type,
+                                                    priority_no:head.priority_no
                                                 };
                                             }));
                                         };
@@ -115,7 +116,8 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                             installment:head.installment,
                                             account:v,
                                             post_account:head.post_account,
-                                            fee_type:head.fee_type
+                                            fee_type:head.fee_type,
+                                            priority_no:head.priority_no
                                         };
                                     }));
                                 }}
@@ -150,7 +152,8 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                             installment:head.installment,
                                             account:head.account,
                                             post_account:v,
-                                            fee_type:head.fee_type
+                                            fee_type:head.fee_type,
+                                            priority_no:head.priority_no
                                         };
                                     }));
                                 }}
@@ -220,7 +223,8 @@ const HeadsList = ({heads, form, selectedHeads, setSelectedHeads, selectedAccoun
                                                             installment:head.pay_schedule === 'installment' ? 'All installments' : '',
                                                             account:'',
                                                             post_account:'',
-                                                            fee_type:head.type
+                                                            fee_type:head.type,
+                                                            priority_no:head.priority_no
                                                         }]);
                                                     };
                                                 }}

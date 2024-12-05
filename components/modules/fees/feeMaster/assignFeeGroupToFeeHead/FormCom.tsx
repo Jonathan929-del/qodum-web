@@ -64,6 +64,7 @@ const FormCom = ({groups}: any) => {
 
     // Selected heads
     const [selectedHeads, setSelectedHeads] = useState<any>([]);
+    console.log(selectedHeads);
 
 
     // Selected account ledger
@@ -87,7 +88,8 @@ const FormCom = ({groups}: any) => {
                     installment:head.installment,
                     account:head.account,
                     post_account:head.post_account,
-                    fee_type:head.fee_type
+                    fee_type:head.fee_type,
+                    priority_no:head.priority_no
                 }
             })
         }

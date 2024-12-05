@@ -182,7 +182,7 @@ const HeadsList = ({selectedStudent, form, heads, setHeads, totalNumberGenerator
                             {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.value)))))}
                         </li>
                         <li className='basis-[12.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
-                            {totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.conc_amount)))))}
+                            {Math.round(totalNumberGenerator(heads.map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => form.getValues().installment === a.name).map((a:any) => Number(a.conc_amount))))))}
                         </li>
                         <li className='basis-[11.5%] h-full flex items-center justify-center border-r-[0.5px] border-[#ccc] text-[11px] font-semibold py-2'>
                             

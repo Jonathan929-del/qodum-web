@@ -73,6 +73,7 @@ const index = ({sections, classes, totalNumberGenerator, setIsViewOpened, setSel
                 selectedPayment={selectedPayment}
                 setSelectedPayment={setSelectedPayment}
                 permissions={permissions}
+                setPayments={setPayments}
             />
 
 
