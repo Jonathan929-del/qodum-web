@@ -118,11 +118,11 @@ const StudentsList = ({students, classes, sections, isLoading, selectedStudents,
                                 <li className='basis-[5%] flex flex-row items-center justify-center px-2 border-r-[.5px] border-[#ccc]'>
                                     <Checkbox
                                         className='text-hash-color rounded-[2px]'
-                                        checked={selectedStudents.includes(student)}
+                                        checked={selectedStudents?.map((s:any) => s?.student?.name).includes(student?.student?.name)}
                                         onClick={() => {
-                                            selectedStudents.includes(student)
+                                            selectedStudents?.map((s:any) => s?.student?.name).includes(student?.student?.name)
                                                 ?
-                                                    setSelectedStudents(selectedStudents.filter((s:any) => s !== student))
+                                                    setSelectedStudents(selectedStudents?.filter((s:any) => s?.student?.name !== student?.student?.name))
                                                 :
                                                     setSelectedStudents([...selectedStudents, student]);
                                         }}
@@ -144,7 +144,12 @@ const StudentsList = ({students, classes, sections, isLoading, selectedStudents,
                                     {student?.student?.class}
                                 </li>
                                 <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(v:any) => {
+                                            // selectedStudents[selectedStudents.indexOf(student)]?.student?.class = v;
+                                            setSelectedStudents([...selectedStudents]);
+                                        }}
+                                    >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />

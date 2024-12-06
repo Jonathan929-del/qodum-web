@@ -64,7 +64,6 @@ const FormCom = ({groups}: any) => {
 
     // Selected heads
     const [selectedHeads, setSelectedHeads] = useState<any>([]);
-    console.log(selectedHeads);
 
 
     // Selected account ledger
@@ -120,7 +119,7 @@ const FormCom = ({groups}: any) => {
 
         await assignFeeGroupToFeeHead({
             group_name:values.group_name,
-            affiliated_heads:selectedHeads
+            affiliated_heads:selectedHeads?.sort((a:any, b:any) => a.priority_no - b.priority_no)
         });
         toast({title:'Saved Successfully!'});
         form.reset({

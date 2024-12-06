@@ -107,7 +107,7 @@ const FormCom = ({classes, sections, setIsViewOpened, students, selectedStudent,
             })
             .concat(unChangedHeads)
             .filter((h:any) => h?.amounts?.length !== 0)
-            .sort((a:any, b:any) => selectedStudent.affiliated_heads.heads.indexOf(a) - selectedStudent.affiliated_heads.heads.indexOf(b));
+            .sort((a:any, b:any) => a.priority_no - b.priority_no);
 
 
     

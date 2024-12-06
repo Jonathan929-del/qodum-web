@@ -48,10 +48,11 @@ function FormCom() {
 
     // Students
     const [students, setStudents] = useState<any>([]);
-
-
+    
+    
     // Selected students
     const [selectedStudents, setSelectedStudents] = useState<any>([]);
+    console.log(selectedStudents);
 
 
     // CLasses
@@ -84,7 +85,7 @@ function FormCom() {
 
 
             // Modifying
-            students.map(async (s:any) => {
+            selectedStudents.map(async (s:any) => {
                 await modifyAdmittedStudent({
                     id:s._id,
                     student:s.student,

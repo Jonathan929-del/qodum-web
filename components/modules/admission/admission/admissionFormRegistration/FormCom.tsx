@@ -610,7 +610,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                     school_contact_no:schools[0].mobile,
                     registration_no:values.student.reg_no,
                     prospectus_no:values.student.pros_no,
-                    receipt_no:students.length,
+                    receipt_no:students.length + 1,
                     received_from:values.student.name,
                     father_name:values.parents.father.father_name,
                     amount:values.student.amount,

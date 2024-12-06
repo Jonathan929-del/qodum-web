@@ -813,13 +813,13 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
                 // Documents
                 documents:selectedDocuments.filter((d:any) => d.document_name !== '')
             });
-            // if(updateRes === 1){
-            //     toast({title:'Student has current paid fees in their class', variant:'alert'});
-            //     setIsLoading(false);
-            //     return;
-            // }else{
-            // };
-            toast({title:'Updated Successfully!'});
+            if(updateRes === 1){
+                toast({title:'Student has current paid fees in their class', variant:'alert'});
+                setIsLoading(false);
+                return;
+            }else{
+                toast({title:'Updated Successfully!'});
+            };
         }
         // Delete Student
         else if(updateStudent.isDeleteClicked){

@@ -383,14 +383,14 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
             id:selectedStudent.id,
             affiliated_heads:{
                 group_name:selectedStudent.affiliated_heads.group_name,
-                heads:arrangedHeads
+                heads:arrangedHeads.sort((a:any, b:any) => a.priority_no - b.priority_no)
             }
         });
         await modifyPaymentPaidHeads({
             receipt_no:selectedPayment.receipt_no,
             actual_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.value))))),
             paid_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.paid_amount))))),
-            paid_heads:newPaymentHeads
+            paid_heads:newPaymentHeads.sort((a:any, b:any) => a.priority_no - b.priority_no)
         });
         toast({title:'Updated Successffuly!'});
 

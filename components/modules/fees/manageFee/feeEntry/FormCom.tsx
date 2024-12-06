@@ -269,6 +269,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                         })
                         .concat(unChangedHeads)
                         .filter((h:any) => h?.amounts?.length !== 0)
+                        .sort((a:any, b:any) => a.priority_no - b.priority_no)
         };
 
     
@@ -291,7 +292,7 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
                 ...h,
                 amounts:h.amounts.filter((a:any) => selectedInstallments.includes(a.name))
             };
-        });
+        }).sort((a:any, b:any) => a.priority_no - b.priority_no);
         let paymodeDetails;
         switch (values.pay_mode) {
             case 'Cheque':

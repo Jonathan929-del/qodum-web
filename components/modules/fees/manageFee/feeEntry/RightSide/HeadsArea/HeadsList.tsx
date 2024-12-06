@@ -368,7 +368,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                     return h;
                 }
             });
-        setHeads(assignedHeads)
+        setHeads(assignedHeads)?.sort((a:any, b:any) => a.priority_no - b.priority_no);
         form.setValue('total_paid_amount', totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h?.amounts?.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.value) - (Number(a.conc_amount) + Number(a.last_rec_amount)))))));
         setTotalPaidAmount(totalNumberGenerator(assignedHeads.map((h:any) => totalNumberGenerator(h?.amounts?.filter((a:any) => selectedInstallments.includes(a.name)).map((a:any) => Number(a.paid_amount))))));
     }, [selectedInstallments, selectedStudent, form.watch('fee_type'), form.watch('received_date')]);

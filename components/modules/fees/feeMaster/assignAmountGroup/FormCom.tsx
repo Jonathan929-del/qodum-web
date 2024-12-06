@@ -80,7 +80,7 @@ const FormCom = ({groups, installments, setIsLoading}: any) => {
         await assignAmountGroup({
             group_name:values.group_name,
             installment:values.installment,
-            affiliated_heads:heads
+            affiliated_heads:heads?.sort((a:any, b:any) => a.priority_no - b.priority_no)
         });
         toast({title:'Saved Successfully!'});
         setHeads([]);
