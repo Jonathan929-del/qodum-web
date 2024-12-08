@@ -4,9 +4,18 @@ import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 
 
 
+
+
+// Total number generator
+const totalNumberGenerator = (array:any) => {
+    let sum = 0;
+    for (let i = 0; i < array?.length; i++ ) {sum += array[i];};
+    return sum;
+};
 
 
 // Is session transfered
@@ -436,6 +445,21 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
         const activeSession = await AcademicYear.findOne({is_active:1});
 
 
+        // Updating existing group students fee heads
+        const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
+        if(group_type === 'Classes'){
+            students?.filter((s:any) => s?.affiliated_heads?.group_name?.includes(group_name)).map(async (s:any) => {
+                const theClass = await Class.findOne({class_name:s?.student?.class});
+                await AdmittedStudent.findOneAndUpdate({'student.name':s?.student?.name}, {'affiliated_heads.heads':theClass?.affiliated_special_heads?.heads.concat(group.affiliated_heads.filter((head:any) => head.fee_type === 'regular')).sort((a:any, b:any) => a.priority_no - b.priority_no)});
+            });
+        }else{
+            students?.filter((s:any) => s?.affiliated_heads?.group_name?.includes(group_name)).map(async (s:any) => {
+                const theClass = await Class.findOne({class_name:s?.student?.class});
+                await AdmittedStudent.findOneAndUpdate({'student.name':s?.student?.name}, {'affiliated_heads.heads':theClass?.affiliated_heads?.heads.concat(group.affiliated_heads.filter((head:any) => head.fee_type === 'regular')).sort((a:any, b:any) => a.priority_no - b.priority_no)});
+            });
+        };
+
+
         const filteredStudents =
             group_type === 'Classes'
                 ? students.filter((s:any) => !s?.affiliated_heads?.group_name || s?.affiliated_heads?.group_name?.split(' (')[0]?.replace(/\)$/, '') !== group_name)
@@ -447,7 +471,6 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
 
         if(installment === 'All installments'){
             // Fetching
-            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.fee_type === 'regular');
             filteredStudents.map(async (s:any) => {
                 try {
@@ -464,7 +487,6 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
                 }
             });
         }else{
-            const group = await Group.findOne({name:group_name, session:activeSession?.year_name});
             const selectedHeads = group.affiliated_heads.filter((head:any) => head.installment === installment && head.fee_type === 'regular' || head.installment === 'All installments' && head.fee_type === 'regular');
             filteredStudents.map(async (s:any) => {
                 try {
@@ -484,5 +506,39 @@ export const assignMultipleGroupsToStudents = async ({group_name, installment, s
 
     } catch (err) {
         throw new Error(`Error assigning groups: ${err}`);
+    }
+};
+
+
+
+
+
+// Is group has payments
+export const isGroupHasPayments = async ({group_name}) => {
+    try {
+        
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+
+        // Group name reg ex
+        // @ts-ignore
+        const groupNameRegex = new RegExp(group_name, 'i');
+
+    
+        // Checking
+        const students = await AdmittedStudent.find({'affiliated_heads.group_name':{$regex:groupNameRegex}, session:activeSession?.year_name});
+        if(students.length > 0){
+            const studentsPaidFees = totalNumberGenerator(students?.map((s:any) => totalNumberGenerator(s?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a?.last_rec_amount || 0)))))));
+            return studentsPaidFees > 0;
+        };
+        return false;
+
+    } catch (err) {
+        throw new Error(`Error checking group payments: ${err}`);
     }
 };

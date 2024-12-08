@@ -12,14 +12,13 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
-import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchClasses, modifyClassFeeData} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {fetchStudentsByClasses} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {modifyClassHeads} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {assignMultipleGroupsToStudents, fetchGroupsByTypes} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import {AssignMultipleGroupToStudentValidation} from '@/lib/validations/fees/feeMaster/assignMultipleGroupToStudent.validation';
-import { isGroupRelatedToStudent } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
+import {assignMultipleGroupsToStudents, fetchGroupsByTypes, isGroupHasPayments} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -62,8 +61,14 @@ const FormCom = () => {
     const [selectedClasses, setSelectedClasses] = useState<any>([]);
 
 
+    // All selected classes
+    const [allSelectedClasses, setAllSelectedClasses] = useState<any>([]);
+
+
     // Selected students
     const [selectedStudents, setSelectedStudents] = useState<any>([{}]);
+    console.log('All selected classes', allSelectedClasses);
+    console.log('Selected classes', selectedClasses);
 
 
     // Installments
@@ -86,6 +91,29 @@ const FormCom = () => {
         setInstallments(installmentsRes);
         setClasses(classesRes);
         setSelectedClasses(classesRes.filter((c:any) =>
+            form.getValues().group_type === 'Classes'
+                ?
+                    c?.affiliated_heads?.group_name
+                        ?
+                            c?.affiliated_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
+                                ? true
+                                : c?.affiliated_heads?.group_name?.split('(')[1]?.trim()
+                                    ? c?.affiliated_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
+                                    : false
+                        :
+                            false
+                :
+                    c?.affiliated_special_heads?.group_name
+                        ?
+                            c?.affiliated_special_heads?.group_name?.split('(')[0]?.trim() === form.getValues().fees_group
+                                ? true
+                                : c?.affiliated_special_heads?.group_name?.split('(')[1]?.trim()
+                                    ? c?.affiliated_special_heads?.group_name?.split('(')[1]?.trim()?.split(')')[0] === form.getValues().fees_group
+                                    : false
+                        :
+                            false
+        ));
+        setAllSelectedClasses(classesRes.filter((c:any) =>
             form.getValues().group_type === 'Classes'
                 ?
                     c?.affiliated_heads?.group_name
@@ -133,7 +161,7 @@ const FormCom = () => {
 
 
             // Checking if group is assigned to students
-            const isGroupAssignedToStudents = await isGroupRelatedToStudent({group_name:values.fees_group});
+            const isGroupAssignedToStudents = await isGroupHasPayments({group_name:values.fees_group});
             if(isGroupAssignedToStudents){
                 toast({title:'Fee group is assigned to students', variant:'alert'});
                 setIsLoading(false);
@@ -160,7 +188,13 @@ const FormCom = () => {
 
 
             // Assigning to classes
+            const unCheckedClasses = allSelectedClasses?.filter((c:any) => !selectedClasses.includes(c));
             if(values.group_type === 'Classes'){
+                if(unCheckedClasses.length > 0){
+                    unCheckedClasses?.map(async (c:any) => {
+                        await modifyClassFeeData({class_name:c.class_name, group_name:values.fees_group, affiliated_heads:{group_name:'', heads:[]}, affiliated_special_heads:''});
+                    });
+                };
                 await modifyClassHeads({
                     group_name:values.fees_group,
                     installment:values.fees_installment,
@@ -168,6 +202,11 @@ const FormCom = () => {
                     group_type:values.group_type
                 });
             }else{
+                if(unCheckedClasses.length > 0){
+                    unCheckedClasses?.map(async (c:any) => {
+                        await modifyClassFeeData({class_name:c.class_name, group_name:values.fees_group, affiliated_heads:'', affiliated_special_heads:{group_name:'', heads:[]}});
+                    });
+                };
                 if(!students[0]?.student?.name){
                     await modifyClassHeads({
                         group_name:values.fees_group,

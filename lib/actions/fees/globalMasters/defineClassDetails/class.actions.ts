@@ -4,6 +4,7 @@ import {connectToDb} from '@/lib/mongoose';
 import Group from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeGroup.model';
 import Class from '@/lib/models/fees/globalMasters/defineClassDetails/Class.model';
 import { modifyAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.model';
 
 
 
@@ -305,7 +306,6 @@ export const modifyClassHeads = async ({group_name, installment, classes, group_
                         if(group_type === 'Special'){
                             await Class.updateMany({class_name:c}, {affiliated_special_heads:{group_name:group_name, heads:selectedHeads}});
                         }else{
-                            // await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:theClass?.affiliated_heads?.group_name ? `${theClass?.affiliated_heads?.group_name} (${group_name})` : group_name, heads:theClass?.affiliated_heads?.heads?.length > 0 ? theClass?.affiliated_heads?.heads?.concat(selectedHeads) : selectedHeads}});
                             await Class.updateMany({class_name:c}, {affiliated_heads:{group_name:group_name, heads:selectedHeads}});
                         };
                     };
@@ -393,5 +393,55 @@ export const updateClassesAdmissionStates = async ({classes_states}:{classes_sta
 
     } catch (err:any) {
         throw new Error(`Error updating classes admission states: ${err}`);
+    };
+};
+
+
+
+
+
+// Modify class fee data
+export const modifyClassFeeData = async ({class_name, group_name, affiliated_heads, affiliated_special_heads}) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Class
+        const theClass = await Class.findOne({class_name});
+
+
+        // Students
+        const students = await AdmittedStudent.find({'student.class':class_name});
+        
+        
+        // Modifying class
+        if(affiliated_heads !== '' && affiliated_special_heads !== ''){
+            await Class.findOneAndUpdate({class_name}, {affiliated_heads, affiliated_special_heads});
+        }
+        if(affiliated_heads !== ''){
+            if(students?.length > 0){
+                students?.map(async (s:any) => {
+                    await AdmittedStudent.findOneAndUpdate({'student.name':s?.student?.name}, {affiliated_heads:{group_name:s?.affiliated_heads?.group_name?.replace(group_name, '')?.trim(), heads:s?.affiliated_heads?.heads?.filter((h:any) => !theClass?.affiliated_heads?.heads?.map((ch:any) => ch.head_name).includes(h.head_name))}});
+                });
+            };
+            await Class.findOneAndUpdate({class_name}, {affiliated_heads});
+        };
+        if(affiliated_special_heads !== ''){
+            if(students?.length > 0){
+                students?.map(async (s:any) => {
+                    await AdmittedStudent.findOneAndUpdate({'student.name':s?.student?.name}, {affiliated_heads:{group_name:s?.affiliated_heads?.group_name?.replace(`(${group_name})`, '')?.trim(), heads:s?.affiliated_heads?.heads?.filter((h:any) => !theClass?.affiliated_special_heads?.heads?.map((ch:any) => ch.head_name).includes(h.head_name))}});
+                });
+            };
+            await Class.findOneAndUpdate({class_name}, {affiliated_special_heads});
+        };
+
+
+        // Return
+        return 'Updated'
+
+    } catch (err) {
+        throw new Error(`Error updating class: ${err}`);
     };
 };
