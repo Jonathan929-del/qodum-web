@@ -57,36 +57,36 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         // Head amounts filtering
         const h = {
             ...head,
-            amounts:head.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))
+            amounts:head?.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))
         };
 
         // Values
         const inputValue = Number(v);
-        const values = h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => (Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount))) + totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0))))));
+        const values = h?.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => (Number(a.value) - (Number(a.last_rec_amount) + Number(a.conc_amount))) + totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0))))));
 
         // loop
         if(inputValue > totalNumberGenerator(values)){
             toast({title:'To be paid amount should not be greater than Actual amount', variant:'alert'});
 
             const resetNumber =
-                totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount))))) === 0
-                    ?   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount))))) === 0
+                    ?   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
                             -
-                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+                        h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
                             -
-                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount === 0
+                        h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount === 0
                         ? 0
-                        :   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                        :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
                                 -
-                            h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+                            h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
                                 -
-                            h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
+                            h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
 
-                    :   h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                    :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
                             -
-                        paymentHeads.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0))))
+                        paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0))))
                             -
-                        h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount;
+                        h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount;
             refs.current[studentHeads.indexOf(head)].value = resetNumber;
             
             h.amounts.map((a:any) => a.to_be_paid_amount = resetNumber);
@@ -314,8 +314,8 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         const newStudentHeads = studentHeads.map((h:any) => {
             return{
                 ...h,
-                amounts:h.amounts.filter((a:any) => selectedPayment.installments.includes(a.name)).map((a:any) => {
-                    const paid_amount = totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((amount:any) => selectedPayment?.installments?.map((i:any) => i).includes(amount.name)).map((amount:any) => Number(amount.paid_amount || 0)))));
+                amounts:h.amounts?.filter((a:any) => selectedPayment.installments.includes(a.name)).map((a:any) => {
+                    const paid_amount = totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((amount:any) => selectedPayment?.installments?.map((i:any) => i).includes(amount.name)).map((amount:any) => Number(amount.paid_amount || 0)))));
                     return {
                         name:a.name,
                         value:Number(a.value),
@@ -324,7 +324,7 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                         payable_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.payable_amount,
                         paid_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.paid_amount
                     };
-                }).concat(h.amounts.filter((a:any) => !selectedPayment.installments.includes(a.name)))
+                }).concat(h.amounts?.filter((a:any) => !selectedPayment.installments.includes(a.name)))
             }
         });
 
@@ -337,11 +337,11 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
 
 
         // Newly paid heads
-        const newlyPaidHeads = studentHeads.filter((h:any) => h.amounts.filter((a:any) => a.to_be_paid_amount).length > 0 && !paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)).map((h:any) => {
+        const newlyPaidHeads = studentHeads?.filter((h:any) => h.amounts?.filter((a:any) => a.to_be_paid_amount).length > 0 && !paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)).map((h:any) => {
             return{
                 ...h,
-                amounts:h.amounts.filter((a:any) => selectedPayment.installments.includes(a.name)).map((a:any) => {
-                    const paid_amount = totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((amount:any) => selectedPayment?.installments?.map((i:any) => i).includes(amount.name)).map((amount:any) => Number(amount.paid_amount || 0)))));
+                amounts:h.amounts?.filter((a:any) => selectedPayment.installments.includes(a.name)).map((a:any) => {
+                    const paid_amount = totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((amount:any) => selectedPayment?.installments?.map((i:any) => i).includes(amount.name)).map((amount:any) => Number(amount.paid_amount || 0)))));
                     return {
                         name:a.name,
                         value:Number(a.value),
@@ -362,15 +362,15 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                 amounts:ph.amounts.map((amount:any) => {
                     return{
                         ...amount,
-                        paid_amount:totalNumberGenerator(studentHeads.filter((h:any) => paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)).filter((h:any) => h.head_name === ph.head_name).map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === amount.name).map((a:any) => Number(
+                        paid_amount:totalNumberGenerator(studentHeads?.filter((h:any) => paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name))?.filter((h:any) => h.head_name === ph.head_name).map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => a.name === amount.name).map((a:any) => Number(
                             a.to_be_paid_amount !== undefined ? a.to_be_paid_amount
                             :
-                            totalNumberGenerator(ph.amounts.filter((a:any) => a.name === amount.name).map((a:any) => Number(a.paid_amount)))
+                            totalNumberGenerator(ph.amounts?.filter((a:any) => a.name === amount.name).map((a:any) => Number(a.paid_amount)))
                         ))))),
-                        payable_amount:totalNumberGenerator(studentHeads.filter((h:any) => paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name)).filter((h:any) => h.head_name === ph.head_name).map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => a.name === amount.name).map((a:any) => Number(
+                        payable_amount:totalNumberGenerator(studentHeads?.filter((h:any) => paymentHeads.map((ph:any) => ph.head_name).includes(h.head_name))?.filter((h:any) => h.head_name === ph.head_name).map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => a.name === amount.name).map((a:any) => Number(
                             a.to_be_paid_amount !== undefined ? a.to_be_paid_amount
                             :
-                            totalNumberGenerator(ph.amounts.filter((a:any) => a.name === amount.name).map((a:any) => Number(a.paid_amount)))
+                            totalNumberGenerator(ph.amounts?.filter((a:any) => a.name === amount.name).map((a:any) => Number(a.paid_amount)))
                         )))))
                     };
                 })
@@ -388,8 +388,8 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
         });
         await modifyPaymentPaidHeads({
             receipt_no:selectedPayment.receipt_no,
-            actual_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.value))))),
-            paid_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.paid_amount))))),
+            actual_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.value))))),
+            paid_amount:totalNumberGenerator(newPaymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((amount:any) => Number(amount.paid_amount))))),
             paid_heads:newPaymentHeads.sort((a:any, b:any) => a.priority_no - b.priority_no)
         });
         toast({title:'Updated Successffuly!'});
@@ -461,22 +461,22 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                             {h.head_name}
                         </li>
                         <li className='basis-[12.5%] flex-grow flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                            {totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.value)))}
+                            {totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.value)))}
                         </li>
                         <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                            {totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.conc_amount) || 0))}
+                            {totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.conc_amount) || 0))}
                         </li>
                         <li className='basis-[13.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                            {totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount) || 0)) - totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
+                            {totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount) || 0)) - totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                         </li>
                         <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                            {totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
+                            {totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                         </li>
                         <li className='basis-[15%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                             <input
                                 ref={(el:any) => (refs.current[index] = el)}
-                                defaultValue={totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
-                                onChange={(e:any) => amountChangeHandler(studentHeads.filter((af:any) => af.head_name === h.head_name)[0], e.target.value)}
+                                defaultValue={totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
+                                onChange={(e:any) => amountChangeHandler(studentHeads?.filter((af:any) => af.head_name === h.head_name)[0], e.target.value)}
                                 className='flex flex-row items-center h-[80%] text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                             />
                         </li>
@@ -493,21 +493,21 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                                 Total
                             </li>
                             <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.value)))))}
+                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.value)))))}
                             </li>
                             <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.conc_amount || 0)))))}
+                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.conc_amount || 0)))))}
                             </li>
                             <li className='basis-[13.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                            {totalNumberGenerator(studentHeads.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount) || 0)))) - totalNumberGenerator(paymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
+                            {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount) || 0)))) - totalNumberGenerator(paymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                             </li>
                             <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                                {totalNumberGenerator(paymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
+                                {totalNumberGenerator(paymentHeads.map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))}
                             </li>
                             <li className='basis-[15%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.to_be_paid_amount !== undefined
+                                {totalNumberGenerator(studentHeads?.filter((h:any) => selectedPayment.installments.includes(h.installment) || h.installment === 'All installments').map((h:any) => totalNumberGenerator(h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.to_be_paid_amount !== undefined
                                     ? a.to_be_paid_amount
-                                    : totalNumberGenerator(paymentHeads.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))
+                                    : totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === h.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))
                                 )))))}
                             </li>
                             <li className='basis-[12.5%] flex flex-row items-center justify-between px-2'>
