@@ -31,7 +31,7 @@ const Modules = () => {
         <section className='w-full grid grid-cols-1 grid-rows-3 items-center rounded-[9px] mt-8 px-4 pb-2 gap-2 gap-y-8 lg:grid-cols-3 sm:grid-cols-2'>
             {
                 modules.filter((module:any) => permittedModules.includes(module.title)).map((module:any) => (
-                    <div className={`relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA] border-b-[2px] transition hover:border-[#2CABE3]`} key={module.title}>
+                    <div className={`relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA] border-b-[2px] transition hover:border-[#2CABE3] hover:translate-y-[-10px]`} key={module.title}>
 
                         <div className='absolute top-[-30px] left-[38%] flex items-center justify-center w-[85px] h-[85px] rounded-full border-4 border-[#ecedf0] bg-white'>
                             <Image

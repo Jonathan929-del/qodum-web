@@ -67,8 +67,6 @@ const FormCom = () => {
 
     // Selected students
     const [selectedStudents, setSelectedStudents] = useState<any>([{}]);
-    console.log('All selected classes', allSelectedClasses);
-    console.log('Selected classes', selectedClasses);
 
 
     // Installments
