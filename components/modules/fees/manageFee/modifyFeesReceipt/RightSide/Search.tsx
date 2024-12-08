@@ -65,10 +65,10 @@ const Search = ({classes, sections, setIsViewOpened, setSelectedStudent, setPaym
                 class:student?.student?.class || '',
                 affiliated_heads:{
                     group_name:student.affiliated_heads.group_name,
-                    heads:student.affiliated_heads.heads.map((h:any) => {
+                    heads:student.affiliated_heads?.heads?.map((h:any) => {
                         return {
                             ...h,
-                            amounts:h.amounts.map((a:any) => {
+                            amounts:h?.amounts?.map((a:any) => {
                                 const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                                 const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                                 return {
@@ -113,10 +113,10 @@ const Search = ({classes, sections, setIsViewOpened, setSelectedStudent, setPaym
             class:student?.student?.class || '',
             affiliated_heads:{
                 group_name:student.affiliated_heads.group_name,
-                heads:student.affiliated_heads.heads.map((h:any) => {
+                heads:student.affiliated_heads?.heads?.map((h:any) => {
                     return {
                         ...h,
-                        amounts:h.amounts.map((a:any) => {
+                        amounts:h?.amounts?.map((a:any) => {
                             const conc_amount = a.conc_amount ? Number(a.conc_amount) : 0;
                             const last_rec_amount = a.last_rec_amount ? Number(a.last_rec_amount) : 0;
                             return {
@@ -150,7 +150,7 @@ const Search = ({classes, sections, setIsViewOpened, setSelectedStudent, setPaym
                 <LoadingIcon />
             ) : searchStudents.length < 1 ? (
                 <p className=' text-xs pl-2 text-hash-color'>No students found</p>
-            ) : searchStudents.map(((s:any) => (
+            ) : searchStudents?.map(((s:any) => (
                 <div
                     onClick={() => studentSearchClick(s)}
                     className='flex flex-row gap-4 cursor-pointer transition hover:bg-[#E4E4E4]'
