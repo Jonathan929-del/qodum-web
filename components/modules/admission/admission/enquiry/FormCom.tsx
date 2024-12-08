@@ -130,7 +130,6 @@ const FormCom = ({setIsViewOpened, enquiries, updateEnquiry, setUpdateEnquiry}:a
                 // Return
                 return str.replace(fullMatch, paddedNumber);
             };
-            console.log(newEnquiryNoGenerator(localStorageEnquiryNo));
             localStorage.setItem('enquiryNo', newEnquiryNoGenerator(localStorageEnquiryNo));
 
             toast({title:'Added Successfully!'});

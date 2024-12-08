@@ -19,6 +19,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {assignMultipleGroupsToStudents, fetchGroupsByTypes} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 import {AssignMultipleGroupToStudentValidation} from '@/lib/validations/fees/feeMaster/assignMultipleGroupToStudent.validation';
+import { isGroupRelatedToStudent } from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 
 
 
@@ -129,6 +130,15 @@ const FormCom = () => {
 
             // Set is loading to true
             setIsLoading(true);
+
+
+            // Checking if group is assigned to students
+            const isGroupAssignedToStudents = await isGroupRelatedToStudent({group_name:values.fees_group});
+            if(isGroupAssignedToStudents){
+                toast({title:'Fee group is assigned to students', variant:'alert'});
+                setIsLoading(false);
+                return;  
+            };
 
     
             // Assigning

@@ -6,6 +6,8 @@ import DropdownMenuCom from '../../utils/DropdownMenuCom';
 import {Select, SelectContent, SelectItem, SelectTrigger} from '@/components/ui/select';
 import {Scan, Grid3X3, Search, Globe, CalendarDays, Flag, Bell, ArrowLeft, Check, Shrink, LogOut} from 'lucide-react';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
   
 
 
@@ -16,6 +18,10 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
 
     // User
     const {user, logout} = useContext(AuthContext);
+
+
+    // School link
+    const [schoolLink, setSchoolLink] = useState('');
 
 
     // Full screen page handler
@@ -33,6 +39,11 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
 
     // Use effects
     useEffect(() => {
+        const fetcher = async () => {
+            const schoolRes = await fetchGlobalSchoolDetails();
+            setSchoolLink(schoolRes[0].website);
+        };
+        fetcher();
         function onFullscreenChange() {
           setIsFullscreen(Boolean(document.fullscreenElement));
         };
@@ -117,12 +128,16 @@ const Topbar = ({isSidebarOpened, setIsSidebarOpened, settingActiveAcademicYear,
                     </div>
                 </div>
                 <div className='flex flex-row justify-between gap-3'>
-                    <div className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'>
+                    <a
+                        href={schoolLink || ''}
+                        target='_blank'
+                        className='flex justify-center items-center border-2 border-[#ccc] w-8 h-8 rounded-full cursor-pointer hover:scale-105 transition-transform'
+                    >
                         <Globe
                             size={18}
                             className='text-hash-color'
                         />
-                    </div>
+                    </a>
 
 
                     {/* Selecting active academic session */}

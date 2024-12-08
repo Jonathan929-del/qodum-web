@@ -220,7 +220,7 @@ const EnquiryViewCom = ({setIsViewOpened, enquiries, setValuesFromEnquiry, setUp
             mobile_no:enquiry.mobile_no,
             student_name:enquiry.student_name,
             class_name:enquiry.class_name,
-            contact_person:enquiry.contact_person
+            contact_person:enquiry.visitor_name
         });
         setIsViewOpened('');
         setSelectedSubjects([]);
