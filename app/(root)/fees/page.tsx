@@ -1,6 +1,7 @@
 'use client';
 // Imports
 import {Suspense} from 'react';
+import LoadingIcon from '@/components/utils/LoadingIcon';
 import Fees from '@/components/Layout/pagesComponents/Fees';
 
 
@@ -10,7 +11,7 @@ import Fees from '@/components/Layout/pagesComponents/Fees';
 // Main function
 const Home = () => {
   return(
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingIcon />}>
       <Fees />
     </Suspense>
   );
