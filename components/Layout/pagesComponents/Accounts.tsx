@@ -36,6 +36,11 @@ const Home = () => {
   const {user} = useContext(AuthContext);
 
 
+  // Params page
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page');
+
+
   // Setting moment local to english
   moment.locale('en-gb');
 
@@ -114,8 +119,6 @@ const Home = () => {
 
   }, [openedPages]);
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const page = searchParams.get('page');
     if(page){
       setOpenedPages([...openedPages, page]);
       setCurrentPage(page);
