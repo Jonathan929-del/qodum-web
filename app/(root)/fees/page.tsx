@@ -3,7 +3,7 @@
 import moment from 'moment';
 import {redirect, useSearchParams} from 'next/navigation';
 import {AuthContext} from '@/context/AuthContext';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState, Suspense} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
 
 import Dashboard from '@/pagesComps/fees/page';
@@ -283,13 +283,15 @@ const Home = () => {
   }, []);
 
   return(
-    <div className='relative h-full w-full'>
-      {openedPagesComponents?.map((component:any) => (
-        <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
-          {component.component}
-        </div>
-      ))}
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className='relative h-full w-full'>
+        {openedPagesComponents?.map((component:any) => (
+          <div className={`absolute w-full h-full ${component.name === currentPage ? 'z-10' : 'z-0'}`}>
+            {component.component}
+          </div>
+        ))}
+      </div>
+    </Suspense>
   );
 };
 
