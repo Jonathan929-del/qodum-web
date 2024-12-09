@@ -25,11 +25,6 @@ const Home = () => {
   moment.locale('en-gb');
 
 
-  // Opened page
-  const searchParams = useSearchParams();
-  const page = searchParams.get('page');
-
-
   // Current page
   const {currentPage, setCurrentPage, openedPages, setOpenedPages} = useContext(GlobalStateContext);
   
@@ -76,11 +71,13 @@ const Home = () => {
 
   }, [openedPages]);
   useEffect(() => {
+    const searchParams = useSearchParams();
+    const page = searchParams.get('page');
     if(page){
       setOpenedPages([...openedPages, page]);
       setCurrentPage(page);
     };
-  }, [page]);
+  }, []);
 
   return(
     <div className='relative h-full w-full overflow-hidden'>
