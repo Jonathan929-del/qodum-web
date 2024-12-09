@@ -77,6 +77,9 @@ const Home = () => {
   moment.locale('en-gb');
 
 
+  const searchParams = useSearchParams();
+
+
   // Current page
   const {currentPage, setCurrentPage, openedPages, setOpenedPages} = useContext(GlobalStateContext);
   
@@ -272,7 +275,6 @@ const Home = () => {
 
   }, [openedPages]);
   useEffect(() => {
-    const searchParams = useSearchParams();
     const page = searchParams.get('page');
     if(page){
       setOpenedPages([...openedPages, page]);

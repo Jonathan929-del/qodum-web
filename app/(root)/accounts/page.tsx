@@ -114,7 +114,6 @@ const Home = () => {
 
   }, [openedPages]);
   useEffect(() => {
-    // Opened page
     const searchParams = useSearchParams();
     const page = searchParams.get('page');
     if(page){
