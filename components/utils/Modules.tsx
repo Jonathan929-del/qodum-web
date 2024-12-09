@@ -54,7 +54,7 @@ const Modules = () => {
                             }
                         </div>
                         <Link
-                            href={`/${module.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '')}`}
+                            href={`/${module.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '')}?message=${encodeURIComponent('Data')}`}
                             target='_blank'
                             className='w-full flex items-center justify-center mb-4'
                         >

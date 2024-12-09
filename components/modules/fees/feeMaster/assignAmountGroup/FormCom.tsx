@@ -4,17 +4,16 @@ import * as z from 'zod';
 import HeadsList from './HeadsList';
 import {useForm} from 'react-hook-form';
 import {ChevronDown} from 'lucide-react';
-import {useContext, useEffect, useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {useToast} from '@/components/ui/use-toast';
 import {zodResolver} from '@hookform/resolvers/zod';
 import { AuthContext } from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {isGroupRelatedToStudent} from '@/lib/actions/fees/feeMaster/feeMaster/head.actions';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {AssignAmountGroupValidation} from '@/lib/validations/fees/feeMaster/assignAmountGroup.validation';
-import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeadsByName} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
+import {assignAmountGroup, fetchGroupHeadWithInstallment, fetchRegularGroupHeadsByName, isGroupHasPayments} from '@/lib/actions/fees/feeMaster/feeMaster/group.actions';
 
 
 
@@ -69,7 +68,7 @@ const FormCom = ({groups, installments, setIsLoading}: any) => {
 
         // Checking for students paid amounts
         setIsLoading(true);
-        const isGroupAffiliatedToStudent = await isGroupRelatedToStudent({group_name:values.group_name});
+        const isGroupAffiliatedToStudent = await isGroupHasPayments({group_name:values.group_name});
         if(isGroupAffiliatedToStudent){
             toast({title:'Fee group is assigned to students', variant:'alert'});
             setIsLoading(false);

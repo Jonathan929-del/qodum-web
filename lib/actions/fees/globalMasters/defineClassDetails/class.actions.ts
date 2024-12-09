@@ -302,7 +302,7 @@ export const modifyClassHeads = async ({group_name, installment, classes, group_
             classes.map(async (c:any) => {
                 try {
                     const theClass = await Class.findOne({class_name:c});
-                    if(theClass?.affiliated_heads?.group_name !== group_name){
+                    if(theClass?.affiliated_heads?.group_name !== group_name || theClass?.affiliated_special_heads?.group_name !== group_name){
                         if(group_type === 'Special'){
                             await Class.updateMany({class_name:c}, {affiliated_special_heads:{group_name:group_name, heads:selectedHeads}});
                         }else{
@@ -319,7 +319,7 @@ export const modifyClassHeads = async ({group_name, installment, classes, group_
             classes.map(async (c:any) => {
                 try {
                     const theClass = await Class.findOne({class_name:c});
-                    if(theClass?.affiliated_heads?.group_name !== group_name){
+                    if(theClass?.affiliated_heads?.group_name !== group_name || theClass?.affiliated_special_heads?.group_name !== group_name){
                         if(group_type === 'Special'){
                             await Class.updateMany({class_name:c}, {affiliated_special_heads:{group_name:group_name, heads:selectedHeads}});
                         }else{
