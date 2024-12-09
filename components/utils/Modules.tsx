@@ -31,7 +31,8 @@ const Modules = () => {
         <section className='w-full grid grid-cols-1 grid-rows-3 items-center rounded-[9px] mt-8 px-4 pb-2 gap-2 gap-y-8 lg:grid-cols-3 sm:grid-cols-2'>
             {
                 modules.filter((module:any) => permittedModules.includes(module.title)).map((module:any) => (
-                    <div className={`relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA] border-b-[2px] transition hover:border-[#2CABE3] hover:translate-y-[-10px]`} key={module.title}>
+                    // <div className={`relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA] border-b-[2px] transition hover:border-[#2CABE3] hover:translate-y-[-10px]`} key={module.title}>
+                    <div className='relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA]' key={module.title}>
 
                         <div className='absolute top-[-30px] left-[38%] flex items-center justify-center w-[85px] h-[85px] rounded-full border-4 border-[#ecedf0] bg-white'>
                             <Image
@@ -46,15 +47,20 @@ const Modules = () => {
                             <h4 className='w-full text-center text-xl font-bold'>{module?.title?.toUpperCase()}</h4>
                             {
                                 module.sections.map((section:any) => (
-                                    <div className='flex flex-row pb-[6px] border-b-[0.5px] border-[#ccc]'>
-                                        <ArrowRight className='w-[20px] h-[20px] p-[2px] rounded-full text-white font-thin bg-[#2CABE3]'/>
-                                        <p className='text-sm ml-2 text-[#292929]'>{section}</p>
-                                    </div>
+                                    <Link
+                                        key={section}
+                                        target='_blank'
+                                        href={`/${module.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '')}?page=${encodeURIComponent(section)}`}
+                                        className='group flex flex-row pb-[6px] border-b-[0.5px] border-[#ccc] cursor-pointer'
+                                    >
+                                        <ArrowRight className='w-[20px] h-[20px] p-[2px] rounded-full text-white font-thin bg-[#2CABE3] transition group-hover:translate-x-[6px]'/>
+                                        <p className='text-sm ml-2 text-[#292929] group-hover:text-[#2CABE3]'>{section}</p>
+                                    </Link>
                                 ))
                             }
                         </div>
                         <Link
-                            href={`/${module.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '')}?message=${encodeURIComponent('Data')}`}
+                            href={`/${module.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '')}`}
                             target='_blank'
                             className='w-full flex items-center justify-center mb-4'
                         >

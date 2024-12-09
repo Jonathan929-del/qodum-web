@@ -1,7 +1,7 @@
 'use client';
 // Imports
 import moment from 'moment';
-import {redirect} from 'next/navigation';
+import {redirect, useSearchParams} from 'next/navigation';
 import {AuthContext} from '@/context/AuthContext';
 import {useContext, useEffect, useState} from 'react';
 import {GlobalStateContext} from '@/context/GlobalStateContext';
@@ -67,12 +67,17 @@ const Home = () => {
   const {user} = useContext(AuthContext);
 
 
+  // Opened page
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page');
+
+
   // Setting moment local to english
   moment.locale('en-gb');
 
 
   // Current page
-  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  const {currentPage, setCurrentPage, openedPages, setOpenedPages} = useContext(GlobalStateContext);
   
   
   // Opened pages components
@@ -248,6 +253,12 @@ const Home = () => {
     setOpenedPagesComponents(openedPagesArray);
 
   }, [openedPages]);
+  useEffect(() => {
+    if(page){
+      setOpenedPages([...openedPages, page]);
+      setCurrentPage(page);
+    };
+  }, [page]);
 
   return(
     <div className='relative h-full w-full overflow-hidden'>

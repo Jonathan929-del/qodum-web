@@ -12,6 +12,7 @@ import ChangeAcademic from '@/components/modules/shared/ChangeAcademic/index';
 import CreateUser from '@/pagesComps/users/manageUsers/create-user/page';
 import UserPermission from '@/pagesComps/users/manageUsers/user-permission/page';
 import FeeTypeAssignToUser from '@/pagesComps/users/manageUsers/fee-type-assign-to-user/page';
+import { useSearchParams } from 'next/navigation';
 
 
 
@@ -24,8 +25,13 @@ const Home = () => {
   moment.locale('en-gb');
 
 
+  // Opened page
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page');
+
+
   // Current page
-  const {currentPage, setCurrentPage, openedPages} = useContext(GlobalStateContext);
+  const {currentPage, setCurrentPage, openedPages, setOpenedPages} = useContext(GlobalStateContext);
   
   
   // Opened pages components
@@ -69,6 +75,12 @@ const Home = () => {
     setOpenedPagesComponents(openedPagesArray);
 
   }, [openedPages]);
+  useEffect(() => {
+    if(page){
+      setOpenedPages([...openedPages, page]);
+      setCurrentPage(page);
+    };
+  }, [page]);
 
   return(
     <div className='relative h-full w-full overflow-hidden'>
