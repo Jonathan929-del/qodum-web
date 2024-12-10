@@ -368,6 +368,31 @@ export const fetchAdmittedStudents = async () => {
 
 
         // Fetching
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true});
+        return students;
+
+    } catch (err:any) {
+        throw new Error(`Error fetching admitted students: ${err}`);
+    };
+};
+
+
+
+
+
+// Fetch all admitted students
+export const fetchAllAdmittedStudents = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
         const students = await AdmittedStudent.find({session:activeSession?.year_name});
         return students;
 
@@ -695,7 +720,7 @@ export const siblingsSearch = async ({class_name, section, adm_no}:{class_name:S
 
 
         // Fetching student
-        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, 'student.adm_no':adm_no, session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, 'student.adm_no':adm_no, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Returing
@@ -755,7 +780,7 @@ export const fetchStudentsByClassAndSection = async ({class_name, section}:{clas
 
 
         // Fetching student
-        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Return
@@ -783,7 +808,7 @@ export const fetchStudentsByClassAndSectionTransport = async ({class_name, secti
 
 
         // Students
-        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({'student.class':class_name, 'student.section':section, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Return
@@ -873,10 +898,10 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile,
         if(!containsAnyLetters(mobile)){
 
             // Mobile number
-            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession?.year_name});
+            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession?.year_name, 'student.is_active':true});
 
             // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name});
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true});
 
             // All res
             const allRes = mobileRes.concat(admNoRes);
@@ -905,13 +930,13 @@ export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile,
         }else{
 
             // Name res
-            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession?.year_name});
+            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession?.year_name, 'student.is_active':true});
 
             // // Father's name res
-            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession?.year_name});
+            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession?.year_name, 'student.is_active':true});
 
             // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name});
+            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true});
 
 
             const allRes = nameRes.concat(fatherNameRes, admNoRes);
@@ -965,7 +990,7 @@ export const fetchStudentsByClasses = async ({classes}:{classes:string[]}) => {
 
 
         // Fetching students
-        const students = await AdmittedStudent.find({'student.class':{$in:classes}, session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({'student.class':{$in:classes}, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Return
@@ -1026,15 +1051,15 @@ export const fetchStudentsCountByClassAndSection = async ({class_name, section}:
 
 
         // Class res
-        const classRes = await AdmittedStudent.countDocuments({'student.class':class_name, session:activeSession?.year_name});
+        const classRes = await AdmittedStudent.countDocuments({'student.class':class_name, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Section res
-        const sectionRes = await AdmittedStudent.countDocuments({'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name});
+        const sectionRes = await AdmittedStudent.countDocuments({'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // All res
-        const allRes = await AdmittedStudent.countDocuments({'student.class':class_name, 'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name});
+        const allRes = await AdmittedStudent.countDocuments({'student.class':class_name, 'student.section':section === '' ? 'empty' : section, session:activeSession?.year_name, 'student.is_active':true});
 
 
         // All res
@@ -1158,7 +1183,7 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Installments
@@ -1336,7 +1361,7 @@ export const classWiseStudentStrengthFilter = async ({date_of_adm, class_name, i
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Filtered students
@@ -1377,15 +1402,15 @@ export const studentsAndGendersCounts = async () => {
 
 
         // All students count
-        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name});
+        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Boys count
-        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Male'});
+        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Male', 'student.is_active':true});
 
 
         // Girls count
-        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Female'});
+        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Female', 'student.is_active':true});
 
 
         // Return
@@ -1418,23 +1443,23 @@ export const newStudentsAndGendersCounts = async () => {
 
 
         // All students count
-        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true});
+        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true});
 
 
         // Boys count
-        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.gender':'Male'});
+        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Male'});
 
 
         // Girls count
-        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.gender':'Female'});
+        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Female'});
 
 
         // Previous year boys
-        const previousYearBoys = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.gender':'Male'});
+        const previousYearBoys = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Male'});
 
 
         // Previous year girls
-        const previousYearGirls = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.gender':'Female'});
+        const previousYearGirls = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Female'});
 
 
         // Return
@@ -1481,7 +1506,7 @@ export const feesDashboardDefaulterStudentsData = async () => {
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession?.year_name});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Defaulter students
@@ -1535,23 +1560,23 @@ export const admissionDashboardStudentsReligionsData = async () => {
 
 
         // All students
-        const allStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name});
+        const allStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_active':true});
 
 
         // Hindu students
-        const hinduStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Hinduism'});
+        const hinduStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Hinduism', 'student.is_active':true});
 
 
         // Christian students
-        const christianStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Christianity'});
+        const christianStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Christianity', 'student.is_active':true});
 
 
         // Muslim students
-        const muslimStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Islam'});
+        const muslimStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Islam', 'student.is_active':true});
 
 
         // Jewish students
-        const jewishStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Judaism'});
+        const jewishStudents = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.religion':'Judaism', 'student.is_active':true});
 
 
         // Return
@@ -1565,5 +1590,33 @@ export const admissionDashboardStudentsReligionsData = async () => {
         
     }catch (err){
         throw new Error(`Error fetching admission dashboard students religions data: ${err}`);
+    };
+};
+
+
+
+
+
+// All students count
+export const fetchAllStudentsCount = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // All students
+        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name});
+
+
+        // Return
+        return allStudentsCount;
+        
+    }catch (err){
+        throw new Error(`Error fetching all students count: ${err}`);
     };
 };

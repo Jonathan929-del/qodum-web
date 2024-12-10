@@ -651,7 +651,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
 
 
                         {/* Delete button */}
-                        {permissions.delete && (
+                        {/* {permissions.delete && (
                             <AlertDialog>
                                 <AlertDialogTrigger
                                     className='px-[8px] h-8 text-xs text-white bg-gradient-to-r from-[#ba2b2b] to-[#b95e5e] rounded-full transition border-[1px] border-white
@@ -679,7 +679,7 @@ const Buttons = ({setIsViewOpened, students, updateStudent, setUpdateStudent, on
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
-                        )}
+                        )} */}
                     </>
                 )
             }

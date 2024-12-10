@@ -419,6 +419,12 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
     // Submit handler
     const onSubmit = async (values:z.infer<typeof AdmittedStudentValidation>) => {
         setIsLoading(true);
+        // Checking if de-activation reason exists
+        if(!values.student.is_active && values.student.reason === ''){
+            toast({title:"Please enter student's de-activation reason", variant:'alert'});
+            setIsLoading(false);
+            return;
+        };
         // Create Student
         if(updateStudent.id === ''){
             if(students.map((student:any) => student.student.adm_no).includes(values.student.adm_no)){
@@ -608,6 +614,7 @@ const FormCom = ({setIsViewOpened, students, updateStudent, setUpdateStudent, se
             });
             if(res === 0){
                 toast({title:'Please create a session first', variant:'alert'});
+                setIsLoading(false);
                 return;
             };
             toast({title:'Added Successfully!'});

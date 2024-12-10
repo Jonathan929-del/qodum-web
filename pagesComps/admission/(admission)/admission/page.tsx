@@ -7,7 +7,7 @@ import {fetchStaffNames} from '@/lib/actions/payroll/globalMasters/staff.actions
 import {fetchManualListStudents} from '@/lib/actions/admission/admission/student.actions';
 import {fetchProfessionsNames} from '@/lib/actions/payroll/globalMasters/profession.actions';
 import {fetchDesignationsNames} from '@/lib/actions/payroll/globalMasters/designation.actions';
-import {fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchAllAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import RegisteredStudentsViewCom from '@/components/modules/admission/admission/admission/RegisteredStudentsViewCom';
 
 
@@ -418,7 +418,7 @@ const page = () => {
     // Use effects
     useEffect(() => {
         const fetcher = async () => {
-            const studentsRes = await fetchAdmittedStudents();
+            const studentsRes = await fetchAllAdmittedStudents();
             const registeredStudentsRes = await fetchManualListStudents();
             setStudents(studentsRes);
             setRegisteredStudents(registeredStudentsRes.filter((s:any) => !studentsRes.map((student) => student?.student?.name).includes(s?.student?.name)));

@@ -30,7 +30,7 @@ import {fetchNationalitiesNames} from '@/lib/actions/admission/globalMasters/nat
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchOptionalSubjectsNames} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {fetchClass, fetchClassesNames, fetchOpenAdmissionClassesNames} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchAllStudentsCount, fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import { fetchSectionsNames } from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import { fetchAdmissionStates } from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 import { deepEqual } from '@/lib/utils';
@@ -1774,20 +1774,21 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
     useEffect(() => {
         const numberGenerator = async () => {
             try {
+                const allStudentsCount = await fetchAllStudentsCount();
                 let substringValue;
-                if(students?.length < 9){
+                if(allStudentsCount < 9){
                     substringValue = 0;
-                }else if(students?.length >= 9){
+                }else if(allStudentsCount >= 9){
                     substringValue = 1;
-                }else if(students?.length >= 99){
+                }else if(allStudentsCount >= 99){
                     substringValue = 2;
-                }else if(students?.length >= 999){
+                }else if(allStudentsCount >= 999){
                     substringValue = 3;
-                }else if(students?.length >= 9999){
+                }else if(allStudentsCount >= 9999){
                     substringValue = 4;
-                }else if(students?.length >= 99999){
+                }else if(allStudentsCount >= 99999){
                     substringValue = 5;
-                }else if(students?.length >= 999999){
+                }else if(allStudentsCount >= 999999){
                     substringValue = 6;
                 };
                 if(form.getValues().student.class !== '' && updateStudent.id === ''){
@@ -1799,7 +1800,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
                     
                     if(admissionEntity && admissionEntity?.should_be === 'Automatic'){
-                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${students?.length + 1}${admissionEntity?.suffix}`);
+                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${allStudentsCount + 1}${admissionEntity?.suffix}`);
                     }else{
                         form.setValue('student.adm_no', '');
                     };
@@ -1813,7 +1814,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     const admissionEntity = admissionNumbers.filter((item:any) => item.setting_type === 'Admission No.')[0];
                     
                     if(admissionEntity && admissionEntity?.should_be === 'Automatic'){
-                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${students?.length + 1}${admissionEntity?.suffix}`);
+                        form.setValue('student.adm_no', `${admissionEntity?.prefix}${admissionEntity?.lead_zero.substring(substringValue, admissionEntity?.lead_zero?.length - 1)}${allStudentsCount + 1}${admissionEntity?.suffix}`);
                     }else{
                         form.setValue('student.adm_no', '');
                     };
