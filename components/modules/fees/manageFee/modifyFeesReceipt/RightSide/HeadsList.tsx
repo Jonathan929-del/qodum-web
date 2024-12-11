@@ -75,18 +75,41 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                         h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
                             -
                         h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount === 0
-                        ? 0
-                        :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
-                                -
-                            h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
-                                -
-                            h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
+                            ? 0
+                            :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+                                    -
+                                h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+                                    -
+                                h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
 
                     :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
                             -
-                        paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0))))
+                        (
+                            totalNumberGenerator(studentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0)))))
+                                -
+                            totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount || 0)))))
+                        )
                             -
                         h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount;
+            // const resetNumber =
+            //     totalNumberGenerator(paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.paid_amount))))) === 0
+            //         ?   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+            //                 -
+            //             h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+            //                 -
+            //             h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount === 0
+            //                 ? 0
+            //                 :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+            //                         -
+            //                     h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].last_rec_amount
+            //                         -
+            //                     h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount
+
+            //         :   h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].value
+            //                 -
+            //             paymentHeads?.filter((ph:any) => ph.head_name === head.head_name).map((ph:any) => totalNumberGenerator(ph.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name)).map((a:any) => Number(a.last_rec_amount || 0))))
+            //                 -
+            //             h.amounts?.filter((a:any) => selectedPayment?.installments?.map((i:any) => i).includes(a.name))[0].conc_amount;
             refs.current[studentHeads.indexOf(head)].value = resetNumber;
             
             h.amounts.map((a:any) => a.to_be_paid_amount = resetNumber);
@@ -320,7 +343,8 @@ const HeadsList = ({selectedStudent, totalNumberGenerator, setSelectedStudent, s
                         name:a.name,
                         value:Number(a.value),
                         conc_amount:Number(a.conc_amount),
-                        last_rec_amount:a.to_be_paid_amount !== undefined ? (Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount) : a.last_rec_amount,
+                        last_rec_amount:a.to_be_paid_amount !== undefined ? (Number(a.last_rec_amount)) + (Number(a.to_be_paid_amount) - paid_amount) : a.last_rec_amount,
+                        // last_rec_amount:a.to_be_paid_amount !== undefined ? (Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount) : a.last_rec_amount,
                         payable_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.payable_amount,
                         paid_amount:a.to_be_paid_amount !== undefined ? Number(a.value) - ((Number(a.last_rec_amount) + Number(a.conc_amount)) + (Number(a.to_be_paid_amount) - paid_amount)) : a.paid_amount
                     };
