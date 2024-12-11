@@ -178,7 +178,7 @@ export const fetchStudentPayments = async ({student}:{student:String}) => {
 
     
         // Payments
-        const payments = await Payment.find({student, session:activeSession?.year_name});
+        const payments = await Payment.find({student, session:activeSession?.year_name, is_canceled:false});
 
 
         // Return
