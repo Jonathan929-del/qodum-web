@@ -161,7 +161,7 @@ const FormCom = () => {
             // Checking if group is assigned to students
             const isGroupAssignedToStudents = await isGroupHasPayments({group_name:values.fees_group});
             if(isGroupAssignedToStudents){
-                toast({title:'Fee group is assigned to students', variant:'alert'});
+                toast({title:"Fee group has existing payments", variant:'alert'});
                 setIsLoading(false);
                 return;  
             };
@@ -217,7 +217,7 @@ const FormCom = () => {
 
 
             // Toast
-            toast({title:'Assigned Successfully!'});
+            toast({title:'Updated Successfully!'});
 
             // Reseting
             form.reset({

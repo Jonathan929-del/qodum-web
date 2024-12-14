@@ -10,7 +10,6 @@ import {Document, Page, View, Text, PDFViewer, StyleSheet, Font, Image} from '@r
 // Pdf file
 const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
-
     // Font
     Font.register({
         family:'ABZ',
@@ -46,7 +45,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
         if (n < 1000) return num[~~(n/100)] +" hundred" + (n%100 == 0? "": " " + numberToWords(n%100));
         return numberToWords(~~(n/1000)) + " thousand" + (n%1000 != 0? " " + numberToWords(n%1000): "");
     };
-
+    console.log(receiptPaymentData);
 
     return(
         <Document>
@@ -88,10 +87,10 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
                     {/* Row two */}
                     <View style={{width:'100%', margin:'4px auto', display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-                        <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
+                        {/* <View style={{flex:2, display:'flex', flexDirection:'row', alignItems:'center'}}>
                             <Text>Ref No.:</Text>
                             <Text style={{marginLeft:4, fontSize:10, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.ref_no}</Text>
-                        </View>
+                        </View> */}
                         <View style={{flex:1, display:'flex', flexDirection:'row', alignItems:'center', alignSelf:'flex-start'}}>
                             <Text>Class:</Text>
                             <Text style={{marginLeft:4, fontFamily:'Roboto-Bold'}}>{receiptPaymentData.class_name}</Text>

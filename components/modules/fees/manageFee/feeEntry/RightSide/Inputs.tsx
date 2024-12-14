@@ -86,7 +86,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
 
     return (
         <div className='flex flex-col gap-2 p-4 bg-[#F7F7F7] rounded-[4px] border-[0.5px] border-[#ccc] lg:flex-row'>
-            <div className='flex-1 flex flex-col gap-3'>
+            <div className='flex-1 flex flex-col gap-1'>
+
                 <div className='flex flex-col gap-2 lg:flex-row'>
 
                     {/* Entry Mode */}
@@ -95,8 +96,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='entry_mode'
                         render={({field}) => (
                             <FormItem className='basis-[33.3%] min-w-[125px]'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Entry Mode</FormLabel>
+                                <div className='flex flex-row items-center'>
+                                    <FormLabel className='basis-[60%] text-start text-[11px] text-[#726E71]'>Entry Mode</FormLabel>
                                     <Select
                                         {...field}
                                         value={field.value}
@@ -116,8 +117,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                             </FormItem>
                         )}
                     />
-                    <div className='flex flex-col basis-[33.3%] min-w-[125px]'>
-                        <p className='text-xs text-hash-color'>Received Date</p>
+                    <div className='flex flex-row items-center basis-[33.3%] min-w-[125px]'>
+                        <p className='basis-[70%] text-xs text-hash-color'>Received Date</p>
                         <CustomDatePicker
                             selectedDate={selectedDate}
                             setSelectedDate={setSelectedDate}
@@ -129,8 +130,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='pay_mode'
                         render={({field}) => (
                             <FormItem className='basis-[33.3%]'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Pay Mode</FormLabel>
+                                <div className='flex flex-row items-center'>
+                                    <FormLabel className='basis-[50%] text-start text-[11px] text-[#726E71]'>Pay Mode</FormLabel>
                                     <Select
                                         {...field}
                                         value={field.value}
@@ -151,6 +152,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         )}
                     />
                 </div>
+
                 <div className='flex flex-row items-center gap-2'>
                     {/* Fees Type */}
                     <FormField
@@ -158,8 +160,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='fee_type'
                         render={({field}) => (
                             <FormItem className='basis-[33.3%] min-w-[125px]'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Fees Type</FormLabel>
+                                <div className='flex flex-row items-center'>
+                                    <FormLabel className='basis-[50%] text-start text-[11px] text-[#726E71]'>Fees Type</FormLabel>
                                     <Select
                                         {...field}
                                         value={field.value}
@@ -190,8 +192,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='receipt_no'
                         render={({field}) => (
                             <FormItem className='basis-[33.3%]'>
-                                <div className='relative flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
+                                <div className='relative flex flex-row items-center'>
+                                    <FormLabel className='basis-[60%] text-start text-[11px] text-[#726E71]'>Receipt No.</FormLabel>
                                     <FormControl>
                                         <Input
                                             value={paymentsReceiptNo}
@@ -210,8 +212,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='bank_name'
                         render={({field}) => (
                             <FormItem className='basis-[33.3%]'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Bank Name</FormLabel>
+                                <div className='flex flex-row items-center'>
+                                    <FormLabel className='basis-[100%] text-start text-[11px] text-[#726E71]'>Bank Name</FormLabel>
                                     <Select
                                         {...field}
                                         value={field.value}
@@ -236,11 +238,12 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         )}
                     />
                 </div>
+
                 <div className='flex flex-col gap-2 lg:flex-row'>
                     {/* Installment */}
                     <FormItem className='basis-[33.3%] min-w-[125px]'>
-                        <div className='flex flex-col'>
-                            <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Installment</FormLabel>
+                        <div className='flex flex-row items-center gap-1'>
+                            <FormLabel className='basis-[50%] text-start text-[11px] text-[#726E71]'>Installment</FormLabel>
                             <Select>
                                 <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                     <SelectValue
@@ -298,8 +301,8 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                         name='remarks'
                         render={({field}) => (
                             <FormItem className='basis-[66.6%]'>
-                                <div className='flex flex-col'>
-                                    <FormLabel className='w-full text-start text-[11px] text-[#726E71]'>Remarks</FormLabel>
+                                <div className='flex flex-row items-center'>
+                                    <FormLabel className='basis-[20%] text-start text-[11px] text-[#726E71]'>Remarks</FormLabel>
                                     <FormControl>
                                         <Input
                                             value={field.value}

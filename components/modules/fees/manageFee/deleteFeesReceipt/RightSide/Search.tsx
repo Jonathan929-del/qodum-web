@@ -6,7 +6,7 @@ import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
 import LoadingIcon from '@/components/utils/LoadingIcon';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchAllStudentPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchStudentByAdmNo, fetchStudentsByAllData} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
@@ -46,7 +46,8 @@ const Search = ({classes, sections, students, setIsViewOpened, setSelectedStuden
     const admissionSearchClick = async () => {
         if(students?.map((s:any) => s?.student?.adm_no)?.includes(search)){
             const student = await fetchStudentByAdmNo({adm_no:search});
-            const payments = await fetchStudentPayments({student:student.student.name});
+            const payments = await fetchAllStudentPayments({student:student.student.name});
+            console.log(payments);
             setSelectedStudent({
                 id:student._id,
                 image:student.student.image,
@@ -73,7 +74,7 @@ const Search = ({classes, sections, students, setIsViewOpened, setSelectedStuden
 
     // Student search click
     const studentSearchClick = async (student:any) => {
-        const payments = await fetchStudentPayments({student:student.student.name});
+        const payments = await fetchAllStudentPayments({student:student.student.name});
         setSelectedStudent({
             id:student._id,
             image:student.student.image,

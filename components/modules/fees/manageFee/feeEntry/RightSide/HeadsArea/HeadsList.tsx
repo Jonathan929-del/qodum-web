@@ -423,7 +423,7 @@ const HeadsList = ({selectedStudent, selectedInstallments, setTotalPaidAmount, f
                                 <p className='pl-2 text-[11px] text-hash-color font-semibold'>No Fees</p>
                             ) : selectedInstallments.length > 0 && heads.filter((h:any) => selectedInstallments.includes(h.installment) || h.installment === 'All installments').map((h:any) => (
                                 <ul className={`flex flex-row items-center justify-between border-[0.5px] border-t-[0px] border-[#ccc] ${Math.floor((heads.indexOf(h) + 1) / 2) * 2 !== heads.indexOf(h) + 1 ? 'bg-[#F3F8FB]' : 'bg-white'}`}>
-                                    <li className='basis-[19.5%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
+                                    <li className='basis-[19.5%] text-start pl-2 text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>
                                         {h.head_name}
                                     </li>
                                     <li className='basis-[10%] text-center text-hash-color border-r-[0.5px] border-[#ccc] text-[11px] py-2'>

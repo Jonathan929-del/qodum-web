@@ -2,7 +2,7 @@
 import {Button} from '@/components/ui/button';
 import {ChevronsUpDown, X} from 'lucide-react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchAllStudentPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/components/ui/command';
 
@@ -16,7 +16,7 @@ const ViewCom = ({setIsViewOpened, students, setSelectedStudent}:any) => {
 
     // Select handler
     const selectHandler = async (student:any) => {
-        const payments = await fetchStudentPayments({student:student.student.name});
+        const payments = await fetchAllStudentPayments({student:student.student.name});
         setSelectedStudent({
             id:student._id,
             image:student.student.image,

@@ -149,6 +149,10 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                         Name
                         <ChevronsUpDown size={12} />
                     </li>
+                    <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
+                        Delete
+                        <ChevronsUpDown size={12} />
+                    </li>
                     <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
                         Mobile
                         <ChevronsUpDown size={12} />
@@ -163,10 +167,6 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                     </li>
                     <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
                         DD No.
-                        <ChevronsUpDown size={12} />
-                    </li>
-                    <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                        Delete
                         <ChevronsUpDown size={12} />
                     </li>
                     <li className='basis-[7.5%] flex flex-row items-center justify-between px-2'>
@@ -198,18 +198,6 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                                 </li>
                                 <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     {p.student}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                                    {/* {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))} */}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paid_amount}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paymode === 'Cheque' && p?.paymode_details?.cheque_no}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paymode === 'DD' && p?.paymode_details?.cheque_no}
                                 </li>
                                 <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
 
@@ -252,6 +240,18 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
 
 
 
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                                    {/* {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))} */}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paid_amount}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paymode === 'Cheque' && p?.paymode_details?.cheque_no}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paymode === 'DD' && p?.paymode_details?.cheque_no}
                                 </li>
                                 <li className='basis-[7.5%] flex-grow flex flex-row items-center justify-center px-2 py-[2px]]'>
                                     

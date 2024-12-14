@@ -28,6 +28,10 @@ const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent
     });
 
 
+    // Is error
+    const [isError, setIsError] = useState(false);
+
+
     // Date
     const [date, setDate] = useState(moment());
 
@@ -75,6 +79,7 @@ const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent
                         onChange={(e:any) => setConcessionReason(e.target.value)}
                         className='h-7 flex flex-row items-center text-[11px] pl-2 bg-[#fff] border-[0.5px] border-[#E4E4E4]'
                     />
+                    {isError && <span className='text-[#f00]'>Please enter reason</span>}
                 </div>
             </div>
 
@@ -86,6 +91,7 @@ const index = ({sections, classes, setIsViewOpened, students, setSelectedStudent
                 concessionReason={concessionReason}
                 setConcessionReason={setConcessionReason}
                 permissions={permissions}
+                setIsError={setIsError}
             />
 
 

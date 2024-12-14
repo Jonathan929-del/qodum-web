@@ -12,7 +12,7 @@ import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, Al
 
 
 // Main Function
-const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason, permissions}:any) => {
+const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, setConcessionReason, permissions, setIsError}:any) => {
 
     // Toast
     const {toast} = useToast();
@@ -130,6 +130,7 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
             payments:[]
         });
         setConcessionReason('');
+        setIsError(false);
     };
 
     return (
@@ -156,6 +157,10 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                         Name
                         <ChevronsUpDown size={12} />
                     </li>
+                    <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
+                        Cancel Receipt
+                        <ChevronsUpDown size={12} />
+                    </li>
                     <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
                         Mobile
                         <ChevronsUpDown size={12} />
@@ -170,10 +175,6 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                     </li>
                     <li className='basis-[10%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
                         DD No.
-                        <ChevronsUpDown size={12} />
-                    </li>
-                    <li className='basis-[12.5%] flex flex-row items-center justify-between px-2 border-r-[.5px] border-[#ccc]'>
-                        Cancel Receipt
                         <ChevronsUpDown size={12} />
                     </li>
                     <li className='basis-[7.5%] flex flex-row items-center justify-between px-2'>
@@ -206,25 +207,13 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                                 <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     {p.student}
                                 </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
-                                    {/* {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))} */}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paid_amount}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paymode === 'Cheque' && p?.paymode_details?.cheque_no}
-                                </li>
-                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
-                                    {p.paymode === 'DD' && p?.paymode_details?.cheque_no}
-                                </li>
                                 <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
 
 
                                     {
                                         concessionReason === '' ? (
                                             <span
-                                                onClick={() => toast({title:'Please enter reason', variant:'error'})}
+                                                onClick={() => setIsError(true)}
                                                 className='flex items-center justify-center px-[2px] w-full h-6 text-[11px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF] cursor-pointer
                                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                                             >
@@ -259,6 +248,18 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
 
 
 
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 py-[2px] border-r-[.5px] border-[#ccc]'>
+                                    {/* {totalNumberGenerator(h.amounts.map((a:any) => Number(a.last_rec_amount) || 0))} */}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paid_amount}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paymode === 'Cheque' && p?.paymode_details?.cheque_no}
+                                </li>
+                                <li className='basis-[10%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
+                                    {p.paymode === 'DD' && p?.paymode_details?.cheque_no}
                                 </li>
                                 <li className='basis-[7.5%] flex-grow flex flex-row items-center justify-center px-2 py-[2px]]'>
                                     

@@ -463,6 +463,35 @@ export const fetchStudentCanceledPayments = async ({student}:{student:String}) =
 
 
 
+// Fetch all student payments
+export const fetchAllStudentPayments = async ({student}:{student:String}) => {
+    try {
+
+        // Database connection
+        connectToDb('accounts');
+
+
+        // Fetching active session naeme
+        const activeSession = await AcademicYear.findOne({is_active:1});
+
+    
+        // Payments
+        const payments = await Payment.find({student, session:activeSession?.year_name});
+
+
+        // Return
+        return JSON.parse(JSON.stringify(payments));
+
+    } catch (err:any) {
+        console.log(`Error fetching payments: ${err.message}`);
+    };
+};
+
+
+
+
+
+
 // Modify payment paid heads
 export const modifyPaymentPaidHeads = async ({receipt_no, actual_amount, paid_amount, paid_heads}:{receipt_no:String, paid_amount:Number, actual_amount:Number, paid_heads:any}) => {
     try {
