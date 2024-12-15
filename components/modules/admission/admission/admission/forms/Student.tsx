@@ -1981,7 +1981,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 </div>
             </div>
             <div className='flex flex-row mt-4'>
-                <div className='basis-[30%] flex flex-col gap-2 border-r-[0.5px] border-t-[0.5px] border-[#ccc] rounded-[5px] pr-[4px]'>
+                <div className='basis-[30%] flex flex-col gap-2 border-[0.5px] border-[#ccc] pr-[4px] rounded-[5px]'>
 
 
 
@@ -1999,7 +1999,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Class */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Class</FormLabel>
+                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Class</FormLabel>
                         {classesState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2051,7 +2051,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Section */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Section</FormLabel>
+                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Section</FormLabel>
                         {sectionsState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2107,7 +2107,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Board */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Board</FormLabel>
+                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Board</FormLabel>
                         {boardsState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2159,7 +2159,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2182,7 +2182,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Middle Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Middle Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2205,7 +2205,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Last Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Last Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2228,7 +2228,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Adm. No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Adm. No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2251,7 +2251,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2274,7 +2274,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>PAR ID</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PAR ID</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2297,7 +2297,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Roll No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Roll No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2320,7 +2320,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Bill No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Bill No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2369,7 +2369,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             render={({ field }) => (
                                 <FormItem className='w-full mt-2 lg:mt-0'>
                                     <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Re Admission No.</FormLabel>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Re Admission No.</FormLabel>
                                         <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                             <FormControl>
                                                 <Input
@@ -2437,7 +2437,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.dob'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-white lg:basis-[35%]'>DOB</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOB</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={dob}
@@ -2455,7 +2455,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.doa'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-white lg:basis-[35%]'>DOA</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOA</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={doa}
@@ -2473,7 +2473,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.doj'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-white lg:basis-[35%]'>DOJ</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOJ</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={doj}
@@ -2487,7 +2487,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex-1 flex flex-col gap-2 mt-2 lg:flex-row lg:mt-0'>
                             {/* Admitted Class */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Admitted Class</FormLabel>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Admitted Class</FormLabel>
                                 {classesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2539,7 +2539,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={({ field }) => (
                                         <FormItem>
                                             <div className='w-full flex flex-col items-start justify-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-white lg:basis-[35%]'>Place Of Birth</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Place Of Birth</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
@@ -2562,7 +2562,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={() => (
                                         <FormItem>
                                             <div className='w-full flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Gender</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Gender</FormLabel>
                                                 <div className='h-full w-full flex flex-col gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                     <RadioGroup
@@ -2602,7 +2602,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>H. No. and Streets</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>H. No. and Streets</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2623,7 +2623,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full my-2 lg:my-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Locality</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Locality</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2646,7 +2646,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>City</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>City</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2667,7 +2667,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Mobile</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Mobile</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2690,7 +2690,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>State</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>State</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2711,7 +2711,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>PIN Code</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PIN Code</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2734,7 +2734,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full my-2 lg:my-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>What's App No</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2755,7 +2755,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Email</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Email</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -2781,7 +2781,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Religion */}
                             <div className='w-[50%] flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Religion</FormLabel>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Religion</FormLabel>
                                 {religionsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2829,7 +2829,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             {/* Parish */}
                             {isParish && (
                                 <div className='w-[50%] flex flex-col items-center lg:flex-row'>
-                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Parish</FormLabel>
+                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
                                     {parishesState.isLoading ? (
                                         <LoadingIcon />
                                     ) : (
@@ -2877,7 +2877,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Category */}
                             <div className='w-full flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Category</FormLabel>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Category</FormLabel>
                                 {categoriesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2922,7 +2922,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             </div>
                             {/* Caste */}
                             <div className='w-full flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%] lg:text-end'>Caste</FormLabel>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Caste</FormLabel>
                                 {castesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2975,7 +2975,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
                         {/* Blood Group */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Blood Group</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
                             {bloodGroupsState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3022,7 +3022,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                         {/* Cadet Type */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-white lg:basis-[35%]'>Cadet Type</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
                             {cadetTypesState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3069,7 +3069,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                         {/* Club */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-white lg:basis-[35%]'>Club</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Club</FormLabel>
                             {clubsState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3121,7 +3121,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
                         {/* Stream */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Stream</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Stream</FormLabel>
                             {streamsState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3168,7 +3168,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                         {/* Subjects */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Subjects</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Subjects</FormLabel>
                             {subjectsState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3240,7 +3240,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                         {/* Optional Subject */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Optional Subject</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Optional Subject</FormLabel>
                             {optionalSubjectsState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3287,7 +3287,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                         {/* House */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>House</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>House</FormLabel>
                             {housesState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3448,7 +3448,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={({ field }) => (
                                         <FormItem className='flex-1 my-2 lg:my-0'>
                                             <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Dis. Disc.</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
@@ -3579,7 +3579,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='flex-1 mb-2 lg:mb-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-white lg:basis-[35%]'>Reason</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Reason</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
@@ -3603,7 +3603,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
                         {/* Transport */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Transport</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Transport</FormLabel>
                             {transportState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3648,7 +3648,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                         {/* Nationality */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Nationality</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Nationality</FormLabel>
                             {nationalitiesState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3694,7 +3694,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                         {/* Student Status */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-white lg:basis-[35%]'>Student Status</FormLabel>
+                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Student Status</FormLabel>
                             <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                                 <FormField
                                     control={form?.control}
