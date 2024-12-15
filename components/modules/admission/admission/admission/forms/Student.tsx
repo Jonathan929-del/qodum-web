@@ -2972,364 +2972,366 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
 
-                    <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
-                        {/* Blood Group */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
-                            {bloodGroupsState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.blood_group'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setBloodGroupsState({...bloodGroupsState, isLoading:true});
-                                                            // const res = await fetchBloodGroupsNames();
-                                                            // setBloodGroupsState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {bloodGroupsState.items.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No blood groups</p>
-                                                            ) : // @ts-ignore
-                                                            !bloodGroupsState.items[0].blood_group ? (
-                                                                <LoadingIcon />
-                                                            ) : bloodGroupsState.items.map((i:any) => (
-                                                                <SelectItem value={i.blood_group} key={i._id}>{i.blood_group}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-
-                        {/* Cadet Type */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
-                            {cadetTypesState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.cadet_type'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setCadetTypesState({...cadetTypesState, isLoading:true});
-                                                            // const res = await fetchCadetTypesNames();
-                                                            // setCadetTypesState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {cadetTypesState.items.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No cadet types</p>
-                                                            ) : // @ts-ignore
-                                                            !cadetTypesState.items[0].name ? (
-                                                                <LoadingIcon />
-                                                            ) : cadetTypesState.items.map((i:any) => (
-                                                                <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-
-                        {/* Club */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Club</FormLabel>
-                            {clubsState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.club'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setClubsState({...clubsState, isLoading:true});
-                                                            // const res = await fetchClubsNames();
-                                                            // setClubsState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {clubsState.items.length < 1 ? (
-                                                                <p className='text-xs text-hash-color'>No clubs</p>
-                                                            ) : // @ts-ignore
-                                                            !clubsState.items[0].name ? (
-                                                                <LoadingIcon />
-                                                            ) : clubsState.items.map((i:any) => (
-                                                                <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
-                        {/* Stream */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Stream</FormLabel>
-                            {streamsState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.stream'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setStreamsState({...streamsState, isLoading:true});
-                                                            // const res = await fetchStreamsNames();
-                                                            // setStreamsState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {streamsState.items?.length < 1 ? (
-                                                                <p>No streams</p>
-                                                                // @ts-ignore
-                                                            ) : !streamsState.items[0]?.stream_name ? (
-                                                                <LoadingIcon />
-                                                            ) : streamsState.items?.map((item:any) => (
-                                                                <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-
-                        {/* Subjects */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Subjects</FormLabel>
-                            {subjectsState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
-                                        <FormControl>
-                                            <Select
-                                                onOpenChange={async () => {
-                                                    // setSubjectsState({...subjectsState, isLoading:true});
-                                                    // const res = await fetchSubjectsNames();
-                                                    // setSubjectsState({isLoading:false, items:res});
-                                                }}
-                                            >
-                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                    <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
-                                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {subjectsState.items.length < 1 ? (
-                                                        <p>No subjects</p>
-                                                    ) : // @ts-ignore
-                                                    !subjectsState.items[0]?.subject_name ? (
-                                                        <LoadingIcon />
-                                                    ) : (
-                                                        <>
-                                                            <div className='flex flex-row'>
-                                                                <div
-                                                                    // @ts-ignore
-                                                                    onClick={() => setSelectedSubjects(subjectsState.items.map((s:any) => s.subject_name))}
-                                                                    className='group flex flex-row items-center justify-center cursor-pointer'
-                                                                >
-                                                                    <Check size={12}/>
-                                                                    <p className='text-xs group-hover:underline'>All</p>
-                                                                </div>
-                                                                <div
-                                                                    onClick={() => setSelectedSubjects([])}
-                                                                    className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
-                                                                >
-                                                                    <X size={12}/>
-                                                                    <p className='text-xs group-hover:underline'>Clear</p>
-                                                                </div>
-                                                            </div>
-                                                            <ul className='mt-2'>
-                                                                {subjectsState.items.map((subject:any) => (
-                                                                    <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
-                                                                        <Checkbox
-                                                                            className='rounded-[3px] text-hash-color font-semibold'
-                                                                            checked={selectedSubjects?.map((s:any) => s).includes(subject.subject_name)}
-                                                                            // @ts-ignore
-                                                                            onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
-                                                                        />
-                                                                        <div className='w-full flex flex-row'>
-                                                                            <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
-                                                                            {subject.is_university && <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
-                                                                        </div>
-                                                                    </li>
+                    <div className='flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
+                        <div className='flex flex-col gap-2 p-2 ml-2 lg:flex-row'>
+                            {/* Blood Group */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
+                                {bloodGroupsState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.blood_group'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setBloodGroupsState({...bloodGroupsState, isLoading:true});
+                                                                // const res = await fetchBloodGroupsNames();
+                                                                // setBloodGroupsState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {bloodGroupsState.items.length < 1 ? (
+                                                                    <p className='text-xs text-hash-color'>No blood groups</p>
+                                                                ) : // @ts-ignore
+                                                                !bloodGroupsState.items[0].blood_group ? (
+                                                                    <LoadingIcon />
+                                                                ) : bloodGroupsState.items.map((i:any) => (
+                                                                    <SelectItem value={i.blood_group} key={i._id}>{i.blood_group}</SelectItem>
                                                                 ))}
-                                                            </ul>
-                                                        </>
-                                                    )}
-                                                </SelectContent>
-                                            </Select>
-                                        </FormControl>
-                                    </FormItem>
-                                </div>
-                            )}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* Cadet Type */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
+                                {cadetTypesState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.cadet_type'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setCadetTypesState({...cadetTypesState, isLoading:true});
+                                                                // const res = await fetchCadetTypesNames();
+                                                                // setCadetTypesState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {cadetTypesState.items.length < 1 ? (
+                                                                    <p className='text-xs text-hash-color'>No cadet types</p>
+                                                                ) : // @ts-ignore
+                                                                !cadetTypesState.items[0].name ? (
+                                                                    <LoadingIcon />
+                                                                ) : cadetTypesState.items.map((i:any) => (
+                                                                    <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* Club */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Club</FormLabel>
+                                {clubsState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.club'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setClubsState({...clubsState, isLoading:true});
+                                                                // const res = await fetchClubsNames();
+                                                                // setClubsState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {clubsState.items.length < 1 ? (
+                                                                    <p className='text-xs text-hash-color'>No clubs</p>
+                                                                ) : // @ts-ignore
+                                                                !clubsState.items[0].name ? (
+                                                                    <LoadingIcon />
+                                                                ) : clubsState.items.map((i:any) => (
+                                                                    <SelectItem value={i.name} key={i._id}>{i.name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
 
-                        {/* Optional Subject */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Optional Subject</FormLabel>
-                            {optionalSubjectsState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField 
-                                        control={form?.control}
-                                        name='student.optional_subject'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
-                                                            // const res = await fetchOptionalSubjectsNames();
-                                                            // setOptionalSubjectsState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {optionalSubjectsState.items?.length < 1 ? (
-                                                                <p>No optional subjects</p>
-                                                                // @ts-ignore
-                                                            ) : !optionalSubjectsState.items[0]?.subject_name ? (
-                                                                <LoadingIcon />
-                                                            ) : optionalSubjectsState.items?.map((item:any) => (
-                                                                <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
-                        </div>
 
 
-                        {/* House */}
-                        <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>House</FormLabel>
-                            {housesState.isLoading ? (
-                                <LoadingIcon />
-                            ) : (
-                                <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
-                                    <FormField
-                                        control={form?.control}
-                                        name='student.house'
-                                        render={({ field }) => (
-                                            <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
-                                                <FormControl>
-                                                    <Select
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onValueChange={field?.onChange}
-                                                        onOpenChange={async () => {
-                                                            // setHousesState({...housesState, isLoading:true});
-                                                            // const res = await fetchHousesNames();
-                                                            // setHousesState({isLoading:false, items:res});
-                                                        }}
-                                                    >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
-                                                            <ChevronDown className="h-4 w-4 opacity-50" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {housesState.items?.length < 1 ? (
-                                                                <p>No houses</p>
-                                                                // @ts-ignore
-                                                            ) : !housesState.items[0]?.house_name ? (
-                                                                <LoadingIcon />
-                                                            ) : housesState.items?.map((item:any) => (
-                                                                <SelectItem value={item?.house_name} key={item?._id}>{item?.house_name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            )}
+
+                        <div className='flex flex-col gap-4 p-2 ml-2 lg:flex-row'>
+                            {/* Stream */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Stream</FormLabel>
+                                {streamsState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.stream'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setStreamsState({...streamsState, isLoading:true});
+                                                                // const res = await fetchStreamsNames();
+                                                                // setStreamsState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {streamsState.items?.length < 1 ? (
+                                                                    <p>No streams</p>
+                                                                    // @ts-ignore
+                                                                ) : !streamsState.items[0]?.stream_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : streamsState.items?.map((item:any) => (
+                                                                    <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* Subjects */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Subjects</FormLabel>
+                                {subjectsState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
+                                            <FormControl>
+                                                <Select
+                                                    onOpenChange={async () => {
+                                                        // setSubjectsState({...subjectsState, isLoading:true});
+                                                        // const res = await fetchSubjectsNames();
+                                                        // setSubjectsState({isLoading:false, items:res});
+                                                    }}
+                                                >
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {subjectsState.items.length < 1 ? (
+                                                            <p>No subjects</p>
+                                                        ) : // @ts-ignore
+                                                        !subjectsState.items[0]?.subject_name ? (
+                                                            <LoadingIcon />
+                                                        ) : (
+                                                            <>
+                                                                <div className='flex flex-row'>
+                                                                    <div
+                                                                        // @ts-ignore
+                                                                        onClick={() => setSelectedSubjects(subjectsState.items.map((s:any) => s.subject_name))}
+                                                                        className='group flex flex-row items-center justify-center cursor-pointer'
+                                                                    >
+                                                                        <Check size={12}/>
+                                                                        <p className='text-xs group-hover:underline'>All</p>
+                                                                    </div>
+                                                                    <div
+                                                                        onClick={() => setSelectedSubjects([])}
+                                                                        className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                                                    >
+                                                                        <X size={12}/>
+                                                                        <p className='text-xs group-hover:underline'>Clear</p>
+                                                                    </div>
+                                                                </div>
+                                                                <ul className='mt-2'>
+                                                                    {subjectsState.items.map((subject:any) => (
+                                                                        <li className='flex flex-row items-center space-x-[2px] mt-[2px]' key={subject._id}>
+                                                                            <Checkbox
+                                                                                className='rounded-[3px] text-hash-color font-semibold'
+                                                                                checked={selectedSubjects?.map((s:any) => s).includes(subject.subject_name)}
+                                                                                // @ts-ignore
+                                                                                onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
+                                                                            />
+                                                                            <div className='w-full flex flex-row'>
+                                                                                <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
+                                                                                {subject.is_university && <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
+                                                                            </div>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </>
+                                                        )}
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* Optional Subject */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Optional Subject</FormLabel>
+                                {optionalSubjectsState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField 
+                                            control={form?.control}
+                                            name='student.optional_subject'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-0 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setOptionalSubjectsState({...optionalSubjectsState, isLoading:true});
+                                                                // const res = await fetchOptionalSubjectsNames();
+                                                                // setOptionalSubjectsState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {optionalSubjectsState.items?.length < 1 ? (
+                                                                    <p>No optional subjects</p>
+                                                                    // @ts-ignore
+                                                                ) : !optionalSubjectsState.items[0]?.subject_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : optionalSubjectsState.items?.map((item:any) => (
+                                                                    <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+
+                            {/* House */}
+                            <div className='w-full flex flex-col items-center'>
+                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>House</FormLabel>
+                                {housesState.isLoading ? (
+                                    <LoadingIcon />
+                                ) : (
+                                    <div className='relative w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
+                                        <FormField
+                                            control={form?.control}
+                                            name='student.house'
+                                            render={({ field }) => (
+                                                <FormItem className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                                    <FormControl>
+                                                        <Select
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onValueChange={field?.onChange}
+                                                            onOpenChange={async () => {
+                                                                // setHousesState({...housesState, isLoading:true});
+                                                                // const res = await fetchHousesNames();
+                                                                // setHousesState({isLoading:false, items:res});
+                                                            }}
+                                                        >
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <ChevronDown className="h-4 w-4 opacity-50" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {housesState.items?.length < 1 ? (
+                                                                    <p>No houses</p>
+                                                                    // @ts-ignore
+                                                                ) : !housesState.items[0]?.house_name ? (
+                                                                    <LoadingIcon />
+                                                                ) : housesState.items?.map((item:any) => (
+                                                                    <SelectItem value={item?.house_name} key={item?._id}>{item?.house_name}</SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -3337,118 +3339,247 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
 
 
-                    <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 xl:flex-row'>
-                        <div className='flex-1 flex flex-row justify-between'>
-                            {/* Is Minority */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_minority'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex items-center justify-start space-x-2'>
-                                                    <Label htmlFor='is_minority' className='text-[10px] text-hash-color'>
-                                                        Is Minority
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_minority'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Is EWS */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_ews'
-                                render={({field}) => (
-                                        <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center justify-start space-x-2'>
-                                                    <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
-                                                        Is EWS
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_ews'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Is RTE */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_rte'
-                                render={({field}) => (
-                                        <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center justify-start space-x-2'>
-                                                    <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
-                                                        Is RTE
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_ews'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        <div className='flex-1 flex flex-row gap-4'>
-                            {/* Is Disability */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_disability'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex items-center justify-start space-x-2'>
-                                                    <Label htmlFor='is_disability' className='text-[10px] text-hash-color'>
-                                                        Is Disability
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_disability'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Dis. Disc. */}
-                            {form.getValues().student.is_disability && (
+                    <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2'>
+                        <div className='flex flex-col gap-4 p-2 ml-2 xl:flex-row'>
+                            <div className='flex-1 flex flex-row justify-between'>
+                                {/* Is Minority */}
                                 <FormField
                                     control={form?.control}
-                                    name='student.dis_disc'
+                                    name='student.is_minority'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex items-center justify-start space-x-2'>
+                                                        <Label htmlFor='is_minority' className='text-[10px] text-hash-color'>
+                                                            Is Minority
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_minority'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Is EWS */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_ews'
+                                    render={({field}) => (
+                                            <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-start space-x-2'>
+                                                        <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
+                                                            Is EWS
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_ews'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Is RTE */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_rte'
+                                    render={({field}) => (
+                                            <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-start space-x-2'>
+                                                        <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
+                                                            Is RTE
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_ews'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            <div className='flex-1 flex flex-row gap-4'>
+                                {/* Is Disability */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_disability'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex items-center justify-start space-x-2'>
+                                                        <Label htmlFor='is_disability' className='text-[10px] text-hash-color'>
+                                                            Is Disability
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_disability'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Dis. Disc. */}
+                                {form.getValues().student.is_disability && (
+                                    <FormField
+                                        control={form?.control}
+                                        name='student.dis_disc'
+                                        render={({ field }) => (
+                                            <FormItem className='flex-1 my-2 lg:my-0'>
+                                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
+                                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                                        <FormControl>
+                                                            <Input
+                                                                {...field}
+                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    </div>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                )}
+                            </div>
+                        </div>
+
+
+                        <div className='flex flex-col gap-4 p-2 ml-2 xl:flex-row'>
+                            <div className='flex-1 flex flex-row justify-between'>
+                                {/* Is New */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_new'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center space-x-2'>
+                                                        <Label htmlFor='is_new' className='text-[10px] text-hash-color'>
+                                                            Is New
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_new'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Sibling */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.sibling'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
+                                                        <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
+                                                            Sibling
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_ews'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Is Ony Child */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_only_child'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
+                                                        <Label htmlFor='is_only_child' className='text-[10px] text-hash-color'>
+                                                            Is Ony Child
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_only_child'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className='flex-1 flex flex-row gap-4'>
+                                {/* Is Active */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.is_active'
+                                    render={({field}) => (
+                                        <FormItem className='flex flex-row lg:gap-2'>
+                                                <FormControl>
+                                                    <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
+                                                        <Label htmlFor='is_active' className='text-[10px] text-hash-color'>
+                                                            Is Active
+                                                        </Label>
+                                                        <Switch
+                                                            id='is_active'
+                                                            {...field}
+                                                            value={field?.value}
+                                                            onCheckedChange={field?.onChange}
+                                                            checked={field?.value}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+
+                                {/* Reason */}
+                                <FormField
+                                    control={form?.control}
+                                    name='student.reason'
                                     render={({ field }) => (
-                                        <FormItem className='flex-1 my-2 lg:my-0'>
+                                        <FormItem className='flex-1 mb-2 lg:mb-0'>
                                             <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Reason</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
@@ -3462,137 +3593,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         </FormItem>
                                     )}
                                 />
-                            )}
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 xl:flex-row'>
-                        <div className='flex-1 flex flex-row justify-between'>
-                            {/* Is New */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_new'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center space-x-2'>
-                                                    <Label htmlFor='is_new' className='text-[10px] text-hash-color'>
-                                                        Is New
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_new'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Sibling */}
-                            <FormField
-                                control={form?.control}
-                                name='student.sibling'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
-                                                    <Label htmlFor='is_ews' className='text-[10px] text-hash-color'>
-                                                        Sibling
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_ews'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Is Ony Child */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_only_child'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row items-start justify-between lg:items-center lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
-                                                    <Label htmlFor='is_only_child' className='text-[10px] text-hash-color'>
-                                                        Is Ony Child
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_only_child'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className='flex-1 flex flex-row gap-4'>
-                            {/* Is Active */}
-                            <FormField
-                                control={form?.control}
-                                name='student.is_active'
-                                render={({field}) => (
-                                    <FormItem className='flex flex-row lg:gap-2'>
-                                            <FormControl>
-                                                <div className='flex-1 flex items-center justify-start space-x-2 lg:justify-end'>
-                                                    <Label htmlFor='is_active' className='text-[10px] text-hash-color'>
-                                                        Is Active
-                                                    </Label>
-                                                    <Switch
-                                                        id='is_active'
-                                                        {...field}
-                                                        value={field?.value}
-                                                        onCheckedChange={field?.onChange}
-                                                        checked={field?.value}
-                                                    />
-                                                </div>
-                                            </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-
-                            {/* Reason */}
-                            <FormField
-                                control={form?.control}
-                                name='student.reason'
-                                render={({ field }) => (
-                                    <FormItem className='flex-1 mb-2 lg:mb-0'>
-                                        <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Reason</FormLabel>
-                                            <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                                <FormControl>
-                                                    <Input
-                                                        {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                                    />
-                                                </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
-                                            </div>
-                                        </div>
-                                    </FormItem>
-                                )}
-                            />
+                            </div>
                         </div>
                     </div>
 

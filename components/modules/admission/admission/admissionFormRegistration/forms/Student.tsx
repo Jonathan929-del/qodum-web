@@ -818,7 +818,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
     return (
         <div className='flex flex-row'>
-            <div className='basis-[30%] flex flex-col gap-2 border-r-[0.5px] border-[#ccc] pr-[4px]'>
+            <div className='basis-[30%] flex flex-col gap-2 border-[0.5px] border-[#ccc] rounded-[5px] p-2'>
 
 
                 {/* Is online */}
