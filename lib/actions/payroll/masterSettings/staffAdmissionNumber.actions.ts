@@ -170,7 +170,7 @@ export const getEditableNumbers = async () => {
 
         // Fetching students count
         const staffCount = await Staff.countDocuments();
-        staffCount < 1 && editableNumbers.push('Employment Number');
+        staffCount < 1 && editableNumbers.push('Employment Code');
 
 
         // Return

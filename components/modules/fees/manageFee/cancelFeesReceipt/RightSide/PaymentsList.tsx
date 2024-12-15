@@ -3,8 +3,8 @@ import moment from 'moment';
 import {ChevronsUpDown} from 'lucide-react';
 import {useToast} from '@/components/ui/use-toast';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {cancelPayment} from '@/lib/actions/fees/manageFee/payment.actions';
-import {ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {cancelPayment, fetchStudentCanceledPayments} from '@/lib/actions/fees/manageFee/payment.actions';
+import {fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
 
 
@@ -115,22 +115,27 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
 
 
         // Reseting
-        setSelectedStudent({
-            id:'',
-            image:'',
-            name:'',
-            address:'',
-            father_name:'',
-            mother_name:'',
-            contact_no:'',
-            admission_no:'',
-            bill_no:'',
-            class:'',
-            fee_group:'',
-            payments:[]
-        });
         setConcessionReason('');
         setIsError(false);
+        const student = await fetchStudentByAdmNo({adm_no:selectedStudent.admission_no});
+        const payments = await fetchStudentCanceledPayments({student:student.student.name});
+        setSelectedStudent({
+            id:student._id,
+            image:student.student.image,
+            name:student.student.name,
+            address:student.student.h_no_and_streets,
+            father_name:student.parents.father.father_name,
+            mother_name:student.parents.mother.mother_name,
+            contact_no:student.student.contact_person_mobile,
+            admission_no:student.student.adm_no,
+            bill_no:student.student.bill_no,
+            class:student.student.class,
+            payments,
+            affiliated_heads:{
+                group_name:student.affiliated_heads.group_name,
+                heads:student.affiliated_heads.heads
+            }
+        });
     };
 
     return (

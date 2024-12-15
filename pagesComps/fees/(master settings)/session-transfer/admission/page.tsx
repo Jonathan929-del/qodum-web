@@ -371,7 +371,7 @@ const page = () => {
 
                     {/* Button */}
                     <span
-                        className='flex items-center justify-center px-10 h-8 text-md text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                        className='flex items-center justify-center w-[100px] h-8 text-md text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                 hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                         onClick={() => {
                             if(selectedValues.length > 0){

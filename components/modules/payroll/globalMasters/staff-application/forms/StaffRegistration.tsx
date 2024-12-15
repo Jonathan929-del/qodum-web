@@ -78,7 +78,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
             staff_registration:{
                 post:s.staff_registration.post,
                 reg_no:s.staff_registration.reg_no,
-                employee_code:s.staff_registration.employee_code,
                 approved_teacher:s.staff_registration.approved_teacher,
                 teacher_id:s.staff_registration.teacher_id,
                 cbse_code:s.staff_registration.cbse_code,
@@ -313,29 +312,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                                         <FormControl>
                                             <Input
                                                 disabled
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='absolute left-[35%] top-[90%] text-[11px]'/>
-                                    </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Employee Code */}
-                    <FormField
-                        control={form?.control}
-                        name='staff_registration.employee_code'
-                        render={({ field }) => (
-                            <FormItem className='relative w-full mt-2 lg:mt-0'>
-                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Employee Code</FormLabel>
-                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                        <FormControl>
-                                            <Input
                                                 {...field}
                                                 className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] remove-arrow'
                                             />
@@ -782,51 +758,6 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                     />
 
 
-                    {/* Permanent Address */}
-                    <FormField
-                        control={form?.control}
-                        name='staff_registration.permenant_address'
-                        render={({ field }) => (
-                            <FormItem className='w-full mt-2 lg:mt-0'>
-                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Permanent Address</FormLabel>
-                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
-                                    </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
-
-                    {/* Current Address */}
-                    <FormField
-                        control={form?.control}
-                        name='staff_registration.current_address'
-                        render={({ field }) => (
-                            <FormItem className='w-full mt-2 lg:mt-0'>
-                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Current Address</FormLabel>
-                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
-                                            />
-                                        </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
-                                    </div>
-                                </div>
-                            </FormItem>
-                        )}
-                    />
-
                 </div>
 
                 {/* Right side */}
@@ -1248,6 +1179,52 @@ const StaffRegistration = ({form, setIsViewOpened, setUpdateStaff, setFile, upda
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
                                     <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Aadhar Card No.</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* Permanent Address */}
+                    <FormField
+                        control={form?.control}
+                        name='staff_registration.permenant_address'
+                        render={({ field }) => (
+                            <FormItem className='w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Permanent Address</FormLabel>
+                                    <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                            />
+                                        </FormControl>
+                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+
+
+                    {/* Current Address */}
+                    <FormField
+                        control={form?.control}
+                        name='staff_registration.current_address'
+                        render={({ field }) => (
+                            <FormItem className='w-full mt-2 lg:mt-0'>
+                                <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Current Address</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input

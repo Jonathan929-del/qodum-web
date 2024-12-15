@@ -32,7 +32,6 @@ const ViewCom = ({setIsViewOpened, staff, setUpdateStaff, setSelectedDocuments, 
             staff_registration:{
                 post:s.staff_registration.post,
                 reg_no:s.staff_registration.reg_no,
-                employee_code:s.staff_registration.employee_code,
                 approved_teacher:s.staff_registration.approved_teacher,
                 teacher_id:s.staff_registration.teacher_id,
                 cbse_code:s.staff_registration.cbse_code,

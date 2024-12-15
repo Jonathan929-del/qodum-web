@@ -14,7 +14,6 @@ interface CreateStaffApplicationProps{
     staff_registration:{
         post:String;
         reg_no:String;
-        employee_code:String;
         approved_teacher:String;
         teacher_id:String;
         cbse_code:String;
@@ -135,7 +134,6 @@ interface ModifyStaffApplicationProps{
     staff_registration:{
         post:String;
         reg_no:String;
-        employee_code:String;
         approved_teacher:String;
         teacher_id:String;
         cbse_code:String;

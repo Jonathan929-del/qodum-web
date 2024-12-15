@@ -989,7 +989,7 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 }else if(staff?.length >= 999999){
                     substringValue = 6;
                 };
-                const admissionNumber = await fetchStaffAdmissionNumberByName({name:'Employment Number'});
+                const admissionNumber = await fetchStaffAdmissionNumberByName({name:'Employment Code'});
                 form.setValue('staff_registration.reg_no', admissionNumber ? `${admissionNumber?.prefix}${admissionNumber?.lead_zero.substring(substringValue, admissionNumber?.lead_zero?.length - 1)}${staff?.length + 1}${admissionNumber?.suffix}` : '');
             };
             createRegNo();

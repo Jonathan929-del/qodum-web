@@ -20,7 +20,6 @@ const StaffApplicationSchema = new mongoose.Schema(
         staff_registration:{
             post:{type:String, required:true},
             reg_no:{type:String, required:true, unique:true},
-            employee_code:{type:String, required:true, unique:true},
             approved_teacher:{type:String},
             teacher_id:{type:String},
             cbse_code:{type:String},

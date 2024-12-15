@@ -27,7 +27,7 @@ const index = ({selectedStudent}:any) => {
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Name:</p>
                 <p className='text-[14px]'>{selectedStudent.name}</p>
-                {selectedStudent.is_new && <span className='px-[2px] text-[11px] text-[#4CA7DE] rounded-[4px] border-[0.5px] border-[#4CA7DE]'>New</span>}
+                {selectedStudent.is_new && <span className="px-[4px] text-[11px] text-[#FF0000] rounded-[4px] border-[0.5px] border-[#FF0000] animate-pulseRed">New</span>}
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Address:</p>

@@ -12,7 +12,6 @@ export const StaffApplicationValidation = z.object({
     staff_registration:z.object({
         post:z.string().nonempty({message:'Please select a post'}),
         reg_no:z.string().nonempty({message:'Please enter registration no'}),
-        employee_code:z.string().nonempty({message:'Please enter employee code'}),
         approved_teacher:z.string(),
         teacher_id:z.string(),
         cbse_code:z.string(),

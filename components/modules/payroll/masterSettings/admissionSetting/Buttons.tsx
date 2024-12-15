@@ -60,7 +60,7 @@ const Buttons = ({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
     // Use effect
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Admission Setting');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Payroll')?.permissions?.find((pp:any) => pp.sub_menu === 'Admission Settings');
         setPermissions(grantedPermissions);
     }, [user]);
 

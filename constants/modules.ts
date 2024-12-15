@@ -916,6 +916,7 @@ const modules = [
                     {
                         subPageName:'Human Resources',
                         threads:[
+                            'Admission Settings',
                             'Current Job Opening',
                             'Admission Open',
                             'Candidate Registration',
@@ -939,9 +940,6 @@ const modules = [
                     },
                     {
                         subPageName:'Change Academic'
-                    },
-                    {
-                        subPageName:'Admission Settings'
                     },
                     {
                         subPageName:'Report Layout Setting'

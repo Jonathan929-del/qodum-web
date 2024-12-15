@@ -68,7 +68,6 @@ const page = () => {
         staff_registration:{
             post:'',
             reg_no:'',
-            employee_code:'',
             approved_teacher:'',
             teacher_id:'',
             cbse_code:'',

@@ -70,7 +70,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
         staff_registration:{
             post:updateStaff.staff_registration.post,
             reg_no:updateStaff.staff_registration.reg_no,
-            employee_code:updateStaff.staff_registration.employee_code,
             approved_teacher:updateStaff.staff_registration.approved_teacher,
             teacher_id:updateStaff.staff_registration.teacher_id,
             cbse_code:updateStaff.staff_registration.cbse_code,
@@ -127,7 +126,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_registration:{
                 post:updateStaff.id === '' ? '' : updateStaff.staff_registration.post,
                 reg_no:updateStaff.id === '' ? '' : updateStaff.staff_registration.reg_no,
-                employee_code:updateStaff.id === '' ? '' : updateStaff.staff_registration.employee_code,
                 approved_teacher:updateStaff.id === '' ? '' : updateStaff.staff_registration.approved_teacher,
                 teacher_id:updateStaff.id === '' ? '' : updateStaff.staff_registration.teacher_id,
                 cbse_code:updateStaff.id === '' ? '' : updateStaff.staff_registration.cbse_code,
@@ -209,7 +207,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_registration:{
                     post:values.staff_registration.post,
                     reg_no:values.staff_registration.reg_no,
-                    employee_code:values.staff_registration.employee_code,
                     approved_teacher:values.staff_registration.approved_teacher,
                     teacher_id:values.staff_registration.teacher_id,
                     cbse_code:values.staff_registration.cbse_code,
@@ -307,7 +304,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
                 staff_registration:{
                     post:values.staff_registration.post,
                     reg_no:values.staff_registration.reg_no,
-                    employee_code:values.staff_registration.employee_code,
                     approved_teacher:values.staff_registration.approved_teacher,
                     teacher_id:values.staff_registration.teacher_id,
                     cbse_code:values.staff_registration.cbse_code,
@@ -381,7 +377,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_registration:{
                 post:'',
                 reg_no:'',
-                employee_code:'',
                 approved_teacher:'',
                 teacher_id:'',
                 cbse_code:'',
@@ -434,7 +429,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             staff_registration:{
                 post:'',
                 reg_no:'',
-                employee_code:'',
                 approved_teacher:'',
                 teacher_id:'',
                 cbse_code:'',
@@ -536,7 +530,6 @@ const FormCom = ({setIsViewOpened, staff, updateStaff, setUpdateStaff, setSelect
             // Staff registration
             form.setValue('staff_registration.post', updateStaff.staff_registration.post);
             form.setValue('staff_registration.reg_no', updateStaff.staff_registration.reg_no);
-            form.setValue('staff_registration.employee_code', updateStaff.staff_registration.employee_code);
             form.setValue('staff_registration.approved_teacher', updateStaff.staff_registration.approved_teacher);
             form.setValue('staff_registration.teacher_id', updateStaff.staff_registration.teacher_id);
             form.setValue('staff_registration.cbse_code', updateStaff.staff_registration.cbse_code);

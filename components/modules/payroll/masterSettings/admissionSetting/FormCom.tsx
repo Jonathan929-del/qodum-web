@@ -27,7 +27,7 @@ function FormCom({setIsViewOpened, admissions, updateAdmission, setUpdateAdmissi
 
 
     // Numbers
-    const [numbers, setNumbers] = useState(['Employment Number', 'Applicant Reg. No.']);
+    const [numbers, setNumbers] = useState(['Employment Code', 'Applicant Reg. No.']);
 
 
     // Editable numbers

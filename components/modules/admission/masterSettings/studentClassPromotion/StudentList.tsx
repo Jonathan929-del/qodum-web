@@ -10,7 +10,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 
 
 // Main Function
-const StudentsList = ({students, classes, sections, isLoading, selectedStudents, setSelectedStudents}: any) => {
+const StudentsList = ({students, classes, sections, isLoading, selectedStudents, setSelectedStudents, setStudents}: any) => {
     return (
         <Command
             className='w-[100%] max-h-[90%] mt-4 flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'
@@ -146,18 +146,31 @@ const StudentsList = ({students, classes, sections, isLoading, selectedStudents,
                                 <li className='basis-[10%] flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
                                     <Select
                                         onValueChange={(v:any) => {
-                                            // selectedStudents[selectedStudents.indexOf(student)]?.student?.class = v;
-                                            setSelectedStudents([...selectedStudents]);
+                                            setStudents((prevStudents:any) =>
+                                                prevStudents.map((s:any) =>
+                                                    s?.student?.name === student?.student?.name
+                                                        ? {...s, student:{...s.student, new_class:v}}
+                                                        : s
+                                                )
+                                            );
+                                            setSelectedStudents((prevStudents:any) =>
+                                                prevStudents.map((s:any) =>
+                                                    s?.student?.name === student?.student?.name
+                                                        ? {...s, student:{...s.student, new_class:v}}
+                                                        : s
+                                                )
+                                            );
                                         }}
+                                        value={student?.student?.new_class}
                                     >
                                         <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                             <SelectValue placeholder='Please Select' className='text-[11px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {classes.length === 0 ? (
+                                            {classes?.filter((c:any) => c.class_name !== student?.student?.class)?.length === 0 ? (
                                                 <p className='text-xs text-hash-color'>No classes</p>
-                                            ) : classes.map((c:any) => (
+                                            ) : classes?.filter((c:any) => c.class_name !== student?.student?.class)?.map((c:any) => (
                                                 <SelectItem value={c.class_name} key={c._id}>{c.class_name}</SelectItem>
                                             ))}
                                         </SelectContent>
