@@ -23,7 +23,7 @@ import PaymentGateway from '../Others/PaymentGateway';
 
 
 // Main function
-const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated}:any) => {
+const Inputs = ({installments, form, selectedInstallments, setSelectedInstallments, chequeDetails, setChequeDetails, ddDetails, setddDetails, neftDetails, setNeftDetails, paymentsReceiptNo, swipedCardDetails, setSwipedCardDetails, upiDetails, setUpiDetails, selectedStudent, totalPaidAmount, setIsQrCodeGenerated, onSubmit}:any) => {
 
     // User
     const {user} = useContext(AuthContext);
@@ -324,7 +324,7 @@ const Inputs = ({installments, form, selectedInstallments, setSelectedInstallmen
                 {form.getValues().pay_mode === 'DD' && <DDDetails ddDetails={ddDetails} setddDetails={setddDetails}/>}
                 {form.getValues().pay_mode === 'NEFT' && <NeftDetails neftDetails={neftDetails} setNeftDetails={setNeftDetails}/>}
                 {form.getValues().pay_mode === 'UPI' && <UPIDetails selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
-                {form.getValues().pay_mode === 'Payment Gateway' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments}/>}
+                {form.getValues().pay_mode === 'Payment Gateway' && <PaymentGateway selectedStudent={selectedStudent} totalPaidAmount={totalPaidAmount} setIsQrCodeGenerated={setIsQrCodeGenerated} form={form} selectedInstallments={selectedInstallments} onSubmit={onSubmit}/>}
                 {form.getValues().pay_mode === 'Swiped Card' && <SwipedCardDetaila swipedCardDetails={swipedCardDetails} setSwipedCardDetails={setSwipedCardDetails} />}
             </div>
         </div>

@@ -1,10 +1,10 @@
 // Imports
 import Inputs from './Inputs';
 import Search from './Search';
-import {useContext, useEffect, useState} from 'react';
 import EntryMode from './EntryMode';
 import HeadsArea from './HeadsArea';
-import { AuthContext } from '@/context/AuthContext';
+import {AuthContext} from '@/context/AuthContext';
+import {useContext, useEffect, useState} from 'react';
 
 
 
@@ -62,7 +62,6 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
 
 
 
-
                 {/* Inputs */}
                 <Inputs
                     form={form}
@@ -84,6 +83,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
                     setSwipedCardDetails={setSwipedCardDetails}
                     totalPaidAmount={totalPaidAmount}
                     setIsQrCodeGenerated={setIsQrCodeGenerated}
+                    onSubmit={onSubmit}
                 />
 
 
