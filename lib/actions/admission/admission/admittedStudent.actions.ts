@@ -332,7 +332,24 @@ export const createAdmittedStudent = async ({student, parents, others, guardian_
             }
         });
         newStudent.save().then(async () => {
-            await AdmittedStudent.findOneAndUpdate({'student.adm_no':student.adm_no}, {'student.subjects':student.subjects, documents, affiliated_heads:{group_name:`${theClass.affiliated_heads.group_name} ${student.is_new ? theClass.affiliated_special_heads.group_name ? `(${theClass.affiliated_special_heads.group_name})` : '' : ''}`, heads:theClass.affiliated_heads.heads.concat(student.is_new ? theClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)}});
+            await AdmittedStudent.findOneAndUpdate(
+                {'student.adm_no':student.adm_no},
+                {
+                    'student.subjects':student.subjects,
+                    documents,
+                    affiliated_heads:{
+                        group_name:
+                            theClass.affiliated_heads.group_name
+                                ? !student.is_new
+                                    ? theClass.affiliated_heads.group_name
+                                    : theClass.affiliated_special_heads.group_name
+                                        ? `${theClass.affiliated_heads.group_name} (${theClass.affiliated_special_heads.group_name})`
+                                        : theClass.affiliated_heads.group_name
+                                : '',
+                        heads:theClass.affiliated_heads.heads.concat(student.is_new ? theClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)
+                    }
+                }
+            );
         });
 
 
@@ -611,10 +628,10 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
         const studentPaidFees = totalNumberGenerator(theStudent?.affiliated_heads?.heads?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a?.last_rec_amount || 0)))));
         if(theStudent?.affiliated_heads?.group_name){
             if(isNewClassFeeGroupSame){
-                if(student.is_new && theStudent?.is_new){
+                if(student.is_new && theStudent?.student?.is_new){
                     await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
                 }else{
-                    if(!theStudent?.is_new && student.is_new){
+                    if(!theStudent?.student?.is_new && student.is_new){
                         await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:`${newClass.affiliated_heads.group_name} (${newClass.affiliated_special_heads.group_name})`, heads:theStudent.affiliated_heads.heads.concat(newClass.affiliated_special_heads.heads).sort((a:any, b:any) => a.priority_no - b.priority_no)}}, {new:true});
                     }else{
                         const studentPaidFeesInNewHeads = totalNumberGenerator(theStudent?.affiliated_heads?.heads?.filter((h:any) => newClass?.affiliated_special_heads?.heads?.map((nh:any) => nh.head_name).includes(h?.head_name))?.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a?.last_rec_amount || 0)))));
@@ -629,11 +646,15 @@ export const modifyAdmittedStudent = async ({id, student, parents, others, guard
                 if(studentPaidFees > 0){
                     return 1;
                 }else{
-                    await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:`${newClass?.affiliated_heads?.group_name || ''} ${student.is_new ? newClass.affiliated_special_heads.group_name ? `(${newClass.affiliated_special_heads.group_name})` : '' : ''}`, heads:newClass.affiliated_heads.heads.concat(student.is_new ? newClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)}}, {new:true});
+                    await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:newClass?.affiliated_heads?.group_name ? `${newClass?.affiliated_heads?.group_name || ''} ${student.is_new ? newClass.affiliated_special_heads.group_name ? `(${newClass.affiliated_special_heads.group_name})` : '' : ''}` : '', heads:newClass.affiliated_heads.heads.concat(student.is_new ? newClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)}}, {new:true});
                 };
             };
         }else{
-            await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:`${newClass.affiliated_heads.group_name || ''} ${student.is_new ? newClass.affiliated_special_heads.group_name ? `(${newClass.affiliated_special_heads.group_name})` : '' : ''}`, heads:newClass.affiliated_heads.heads.concat(student.is_new ? newClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)}}, {new:true});
+            if(newClass?.affiliated_heads?.group_name){
+                await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents, affiliated_heads:{group_name:`${newClass.affiliated_heads.group_name || ''} ${student.is_new ? newClass.affiliated_special_heads.group_name ? `(${newClass.affiliated_special_heads.group_name})` : '' : ''}`, heads:newClass.affiliated_heads.heads.concat(student.is_new ? newClass.affiliated_special_heads.heads : []).sort((a:any, b:any) => a.priority_no - b.priority_no)}}, {new:true});
+            }else{
+                await AdmittedStudent.findByIdAndUpdate(id, {student, parents, others, guardian_details, documents}, {new:true});
+            };
         };
         
         

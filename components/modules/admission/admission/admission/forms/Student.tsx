@@ -1823,7 +1823,9 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                 console.log(err);
             }
         };
-        numberGenerator();
+        if(updateStudent.id === ''){
+            numberGenerator();
+        };
     }, [form.watch('student.class')]);
     useEffect(() => {
         if(search !== ''){
