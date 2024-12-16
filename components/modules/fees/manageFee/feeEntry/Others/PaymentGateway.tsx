@@ -68,6 +68,7 @@ const PaymentGateway = ({selectedStudent, totalPaidAmount, form, onSubmit}:any) 
             setAccessKey('');
         };
     }, [paymentResponse]);
+    console.log(process.env.NEXT_PUBLIC_EASEBUZZ_TEST_ACCESS_KEY);
     
     return (
         <div className='flex items-center justify-center'>
