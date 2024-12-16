@@ -82,7 +82,7 @@ const PaymentGateway = ({selectedStudent, totalPaidAmount, form, onSubmit}:any) 
             ) : (
                 <PaymentButton
                     accessKey={accessKey}
-                    publicKey={process.env.EASEBUZZ_ACCESS_KEY}
+                    publicKey={process.env.EASEBUZZ_TEST_ACCESS_KEY}
                     setPaymentResponse={setPaymentResponse}
                 />
             )}
