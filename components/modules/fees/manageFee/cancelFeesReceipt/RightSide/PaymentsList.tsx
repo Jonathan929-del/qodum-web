@@ -6,6 +6,7 @@ import LoadingIcon from '@/components/utils/LoadingIcon';
 import {cancelPayment, fetchStudentCanceledPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent} from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 
 
 
@@ -215,16 +216,46 @@ const PaymentsList = ({selectedStudent, setSelectedStudent, concessionReason, se
                                 <li className='basis-[12.5%] flex-grow flex flex-row items-center px-2 border-r-[.5px] border-[#ccc]'>
 
 
-                                    {
+                                    {   permissions?.add &&
                                         concessionReason === '' ? (
-                                            <span
-                                                onClick={() => setIsError(true)}
-                                                className='flex items-center justify-center px-[2px] w-full h-6 text-[11px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF] cursor-pointer
-                                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                                            >
-                                                Cancel Receipt
-                                            </span>
-                                        ) : permissions?.add && (
+                                            <>
+                                                {/* // <span
+                                                //     onClick={() => setIsError(true)}
+                                                //     className='flex items-center justify-center px-[2px] w-full h-6 text-[11px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF] cursor-pointer
+                                                //     hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                                // >
+                                                //     Cancel Receipt
+                                                // </span> */}
+
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger className='w-full'>
+                                                        <span
+                                                            className='flex items-center justify-center px-[2px] w-full h-6 text-[11px] text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[0.5px] rounded-full border-[#E2E4FF] cursor-pointer
+                                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                                        >
+                                                            Cancel Receipt
+                                                        </span>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent className='sm:max-w-[425px]'>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Cancel Reason</AlertDialogTitle>
+                                                        </AlertDialogHeader>
+                                                            <Input
+                                                                placeholder='Enter reason'
+                                                                // onChange={(e:any) => setConcessionReason(e.target.value)}
+                                                            />
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                onClick={() => cancelReceiptHandler(p)}
+                                                            >
+                                                                Submit
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </>
+                                        ) : (
                                             <AlertDialog>
                                                 <AlertDialogTrigger className='w-full'>
                                                     <span

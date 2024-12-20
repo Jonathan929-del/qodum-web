@@ -26,52 +26,52 @@ const index = ({selectedStudent}:any) => {
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Name:</p>
-                <p className='text-[14px]'>{selectedStudent.name}</p>
+                <p>{selectedStudent.name}</p>
                 {selectedStudent.is_new && <span className="px-[4px] text-[11px] text-[#FF0000] rounded-[4px] border-[0.5px] border-[#FF0000] animate-pulseRed">New</span>}
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Address:</p>
-                <p className='text-[14px]'>{selectedStudent.address}</p>
+                <p>{selectedStudent.address}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Father Name:</p>
-                <p className='text-[14px]'>{selectedStudent.father_name}</p>
+                <p>{selectedStudent.father_name}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Mother Name:</p>
-                <p className='text-[14px]'>{selectedStudent.mother_name}</p>
+                <p>{selectedStudent.mother_name}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Contact No.:</p>
-                <p className='text-[14px]'>{selectedStudent.contact_no}</p>
+                <p>{selectedStudent.contact_no}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Admission No.:</p>
-                <p className='text-[14px]'>{selectedStudent.admission_no}</p>
+                <p>{selectedStudent.admission_no}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Bill No.:</p>
-                <p className='text-[14px]'>{selectedStudent.bill_no}</p>
+                <p>{selectedStudent.bill_no}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Class:</p>
-                <p className='text-[14px]'>{selectedStudent.class} - {selectedStudent.section}</p>
+                <p>{selectedStudent.class} - {selectedStudent.section}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Fees Group:</p>
-                <p className='text-[14px]'>{selectedStudent?.affiliated_heads.group_name}</p>
+                <p>{selectedStudent?.affiliated_heads.group_name}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Route Name:</p>
-                <p className='text-[14px]'>{selectedStudent?.route_name || ''}</p>
+                <p>{selectedStudent?.route_name || ''}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px] border-b-[0.5px] border-[#ccc]'>
                 <p>Stop Name:</p>
-                <p className='text-[14px]'>{selectedStudent?.stop_name || ''}</p>
+                <p>{selectedStudent?.stop_name || ''}</p>
             </div>
             <div className='flex flex-row items-center gap-[4px] pb-[2px]'>
                 <p>Vehicle Name:</p>
-                <p className='text-[14px]'>{selectedStudent?.vehicle_name || ''}</p>
+                <p>{selectedStudent?.vehicle_name || ''}</p>
             </div>
 
         </div>

@@ -45,7 +45,6 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
         if (n < 1000) return num[~~(n/100)] +" hundred" + (n%100 == 0? "": " " + numberToWords(n%100));
         return numberToWords(~~(n/1000)) + " thousand" + (n%1000 != 0? " " + numberToWords(n%1000): "");
     };
-    console.log(receiptPaymentData);
 
     return(
         <Document>
