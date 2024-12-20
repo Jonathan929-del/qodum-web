@@ -12,6 +12,7 @@ import AdmittedStudent from '@/lib/models/admission/admission/AdmittedStudent.mo
 import Installment from '@/lib/models/fees/feeMaster/defineFeeMaster/FeeInstallment.model';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
 import VehicleDetails from '@/lib/models/fees/transport/VehicleDetails.model';
+import Student from '@/lib/models/admission/admission/Student.model';
 
 
 
@@ -1265,11 +1266,9 @@ interface StudentDetailsFilterProps{
     is_sibling:any;
     streams:any;
     optional_subjects:any;
-    professions:any;
-    designations:any;
 };
 // Student details filter
-export const studentDetailsFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects, professions, designations}:StudentDetailsFilterProps) => {
+export const studentDetailsFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects}:StudentDetailsFilterProps) => {
     try {
 
         // Db connection
@@ -1344,10 +1343,6 @@ export const studentDetailsFilter = async ({school, classes, genders, religions,
             .filter((s:any) => streams.includes(s.student.stream))
             // Optional subject filter
             .filter((s:any) => optional_subjects.includes(s.student.optional_subject))
-            // Profession filter
-            .filter((s:any) => professions.includes(s.parents.father.profession))
-            // Designations filter
-            .filter((s:any) => designations.includes(s.parents.father.designation))
 
 
         // Return
@@ -1639,5 +1634,191 @@ export const fetchAllStudentsCount = async () => {
         
     }catch (err){
         throw new Error(`Error fetching all students count: ${err}`);
+    };
+};
+
+
+
+
+
+// Registration report filter props
+interface RegistrationReportFilterProps{
+    session:String;
+    date_from:Date;
+    date_to:Date;
+    class_name:String;
+    user:String;
+    mode:String;
+};
+// Registration report filter
+export const registrationReportFilter = async ({session, date_from, date_to, class_name, user, mode}:RegistrationReportFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        const students = await Student.find({session});
+
+
+        // Filtered students
+        const filteredStudents = students
+            // Dates filter
+            .filter((s:any) => moment(s?.student?.date).format('DD-MM-YYYY') >= moment(date_from).format('DD-MM-YYYY') && moment(s?.student?.date).format('DD-MM-YYYY') <= moment(date_to).format('DD-MM-YYYY'))
+            // Class filter
+            .filter((s:any) => class_name === 'All Classes' ? s : s?.student?.class === class_name)
+            // User filter
+            .filter((s:any) => s)
+            // Mode filter
+            .filter((s:any) => mode === 'Both' ? s : mode === 'Online' ? s?.student?.is_online : !s?.student?.is_online)
+
+
+        // Return
+        return filteredStudents;
+        
+    }catch (err){
+        throw new Error(`Error filtering student details: ${err}`);  
+    };
+};
+
+
+
+
+
+// Admission report filter props
+interface AdmissionReportFilterProps{
+    school:String;
+    classes:any;
+    genders:any;
+    religions:any;
+    categories:any;
+    seniorities:any;
+    activities:any;
+    statuses:any;
+    is_ews:any;
+    transports:any;
+    is_sibling:any;
+    streams:any;
+    optional_subjects:any;
+};
+// Admission report filter
+export const AdmissionReportFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects}:AdmissionReportFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Students
+        const students = await AdmittedStudent.find({session:activeSession?.year_name});
+
+
+        // Filtered students
+        const filteredStudents = students
+            // Schools filter
+            .filter((s:any) => school === 'All schools' ? s : s)
+            // Classes filter
+            .filter((s:any) => classes.includes(s.student.class))
+            // Genders filter
+            .filter((s:any) => genders.includes(s.student.gender))
+            // Religions filter
+            .filter((s:any) => religions.includes(s.student.religion))
+            // Categories filter
+            .filter((s:any) => categories.includes(s.student.category))
+            // Is new filter
+            .filter((s:any) => {
+                if(seniorities.includes('New') && seniorities.includes('Old')){
+                    return s;
+                }else if(seniorities.includes('New')){
+                    return s.student.is_new;
+                }else{
+                    return !s.student.is_new;
+                };
+            })
+            // Is active filter
+            .filter((s:any) => {
+                if(activities.includes('Yes') && activities.includes('No')){
+                    return s;
+                }else if(activities.includes('Yes')){
+                    return s.student.is_active;
+                }else{
+                    return !s.student.is_active;
+                };
+            })
+            // Status filter
+            .filter((s:any) => statuses.includes(s.student.student_status))
+            // Is ews filter
+            .filter((s:any) => {
+                if(is_ews.includes('Yes') && is_ews.includes('No')){
+                    return s;
+                }else if(is_ews.includes('Yes')){
+                    return s.student.is_ews;
+                }else{
+                    return !s.student.is_ews;
+                };
+            })
+            // Transport filter
+            .filter((s:any) => s)
+            // Is sibling filter
+            .filter((s:any) => {
+                if(is_sibling.includes('Yes') && is_sibling.includes('No')){
+                    return s;
+                }else if(is_sibling.includes('Yes')){
+                    return s.student.is_sibling;
+                }else{
+                    return !s.student.is_sibling;
+                };
+            })
+            // Streams filter
+            .filter((s:any) => streams.includes(s.student.stream))
+            // Optional subject filter
+            .filter((s:any) => optional_subjects.includes(s.student.optional_subject))
+
+
+        // Return
+        return filteredStudents;
+        
+    }catch (err){
+        throw new Error(`Error filtering student details: ${err}`);  
+    };
+};
+
+
+
+
+
+// Merit List report filter props
+interface MeritListReportFilterProps{
+    session:String;
+    class_name:String;
+};
+// Merit List report filter
+export const meritListReportFilter = async ({session, class_name}:MeritListReportFilterProps) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Students
+        const students = await Student.find({session, 'student.is_up_for_admission':true});
+
+
+        // Filtered students
+        const filteredStudents = students
+            // Class filter
+            .filter((s:any) => class_name === 'All Classes' ? s : s?.student?.class === class_name)
+
+
+        // Return
+        return filteredStudents;
+        
+    }catch (err){
+        throw new Error(`Error filtering student details: ${err}`);  
     };
 };

@@ -13,8 +13,6 @@ import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/
 import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optionalSubject.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import { fetchDesignations } from '@/lib/actions/payroll/globalMasters/designation.actions';
-import { fetchProfessions } from '@/lib/actions/payroll/globalMasters/profession.actions';
 import { AuthContext } from '@/context/AuthContext';
 
 
@@ -109,16 +107,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     // Optional subjects
     const [optionalSubjects, setOptionalSubjects] = useState([{}]);
     const [selectedOptionalSubjects, setSelectedOptionalSubjects] = useState([{}]);
-
-
-    // Designations
-    const [designations, setDesignations] = useState([]);
-    const [selectedDesignations, setSelectedDesignations] = useState([]);
-
-
-    // Professions
-    const [professions, setProfessions] = useState([]);
-    const [selectedProfessions, setSelectedProfessions] = useState([]);
 
 
 
@@ -302,9 +290,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             transports:selectedTransports,
             is_sibling:selectedIsSibling,
             streams:selectedStreams.map((s:any) => s.stream_name),
-            optional_subjects:selectedOptionalSubjects.map((s:any) => s.subject_name),
-            professions:selectedProfessions,
-            designations:selectedDesignations
+            optional_subjects:selectedOptionalSubjects.map((s:any) => s.subject_name)
         });
         setPdfData({
             students:res,
@@ -325,8 +311,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             const categoriesRes = await fetchCategories();
             const streamsRes = await fetchStreams();
             const optionalSubjectsRes = await fetchOptionalSubjects();
-            const designationsRes = await fetchDesignations();
-            const professionsRes = await fetchProfessions();
             setSchools(schoolsRes);
             setClasses(classesRes);
             setSelectedClasses(classesRes);
@@ -338,10 +322,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setSelectedStreams(streamsRes);
             setOptionalSubjects(optionalSubjectsRes);
             setSelectedOptionalSubjects(optionalSubjectsRes);
-            setDesignations(designationsRes);
-            setSelectedDesignations(designationsRes);
-            setProfessions(professionsRes);
-            setSelectedProfessions(professionsRes);
             setCheckedDetails(localStorage.getItem('selectedDetails') === null ? [] : localStorage.getItem('selectedDetails')?.split('-'));
             setIsLoadingData(false);
         };
@@ -997,107 +977,6 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                         </div>
                     </div>
 
-
-                    {/* Profession */}
-                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
-                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Profession</p>
-                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
-                            <Select>
-                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                    <SelectValue placeholder={selectedProfessions?.length === 0 ? 'Select Profession(s)' : selectedProfessions?.length === 1 ? '1 profession selected' : `${selectedProfessions?.length} professions selected`} className='text-xs'/>
-                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <div className='flex flex-row'>
-                                        <div
-                                            // @ts-ignore
-                                            onClick={() => setSelectedProfessions(professions)}
-                                            className='group flex flex-row items-center justify-center cursor-pointer'
-                                        >
-                                            <Check size={12}/>
-                                            <p className='text-xs group-hover:underline'>All</p>
-                                        </div>
-                                        <div
-                                            onClick={() => setSelectedProfessions([])}
-                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
-                                        >
-                                            <X size={12}/>
-                                            <p className='text-xs group-hover:underline'>Clear</p>
-                                        </div>
-                                    </div>
-                                    <ul className='mt-2'>
-                                        {professions.length < 1 ? (
-                                            <p className='text-xs text-hash-color'>No professions</p>
-                                        ) : // @ts-ignore
-                                        !professions[0].profession ? (
-                                            <LoadingIcon />
-                                        ) : professions.map((i:any) => (
-                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
-                                                <Checkbox
-                                                    className='rounded-[2px] text-hash-color font-semibold'
-                                                    checked={selectedProfessions?.map((item:any) => item.profession).includes(i.profession)}
-                                                    // @ts-ignore
-                                                    onClick={() => selectedProfessions?.includes(i) ? setSelectedProfessions(selectedProfessions?.filter((item:any) => item !== i)) : setSelectedProfessions([...selectedProfessions, i])}
-                                                />
-                                                <p className='text-xs font-semibold'>{i.profession}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-
-
-                    {/* Designation */}
-                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
-                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Designation</p>
-                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
-                            <Select>
-                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                    <SelectValue placeholder={selectedDesignations?.length === 0 ? 'Select Designatoin(s)' : selectedDesignations?.length === 1 ? '1 designation selected' : `${selectedDesignations?.length} designations selected`} className='text-xs'/>
-                                    <ChevronDown className="h-4 w-4 opacity-50" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <div className='flex flex-row'>
-                                        <div
-                                            // @ts-ignore
-                                            onClick={() => setSelectedDesignations(designations)}
-                                            className='group flex flex-row items-center justify-center cursor-pointer'
-                                        >
-                                            <Check size={12}/>
-                                            <p className='text-xs group-hover:underline'>All</p>
-                                        </div>
-                                        <div
-                                            onClick={() => setSelectedDesignations([])}
-                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
-                                        >
-                                            <X size={12}/>
-                                            <p className='text-xs group-hover:underline'>Clear</p>
-                                        </div>
-                                    </div>
-                                    <ul className='mt-2'>
-                                        {designations.length < 1 ? (
-                                            <p className='text-xs text-hash-color'>No designations</p>
-                                        ) : // @ts-ignore
-                                        !designations[0].designation ? (
-                                            <LoadingIcon />
-                                        ) : designations.map((i:any) => (
-                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
-                                                <Checkbox
-                                                    className='rounded-[2px] text-hash-color font-semibold'
-                                                    checked={selectedDesignations?.map((item:any) => item.designation).includes(i.designation)}
-                                                    // @ts-ignore
-                                                    onClick={() => selectedDesignations?.includes(i) ? setSelectedDesignations(selectedDesignations?.filter((item:any) => item !== i)) : setSelectedDesignations([...selectedDesignations, i])}
-                                                />
-                                                <p className='text-xs font-semibold'>{i.designation}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
                 </div>
 
 

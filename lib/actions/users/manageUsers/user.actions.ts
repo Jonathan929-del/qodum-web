@@ -137,6 +137,8 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
                     { sr_no: 82, main_menu: 'Master Settings', sub_menu: 'Assign Computer No to Student', add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 83, main_menu: 'Admission', sub_menu: 'Enquiry Follow Up', add: false, modify: false, delete: false, print: false, read_only: false },
                     { sr_no: 84, main_menu: 'Master Settings', sub_menu: 'Admission Open', add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 85, main_menu: 'Reports', sub_menu: 'Registration Report', add: false, modify: false, delete: false, print: false, read_only: false },
+                    { sr_no: 86, main_menu: 'Reports', sub_menu: 'Admission Report', add: false, modify: false, delete: false, print: false, read_only: false },
                 ]
             },
 

@@ -55,6 +55,9 @@ import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/sessio
 import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
 import AdmissionOpen from '@/pagesComps/admission/(masterSettings)/admission-open/page';
+import RegistrationReport from '@/pagesComps/admission/(reports)/registration-report/page';
+import AdmissionReport from '@/pagesComps/admission/(reports)/admission-report/page';
+import MeritListReport from '@/pagesComps/admission/(reports)/merit-list-report/page';
 
 
 
@@ -239,6 +242,15 @@ const Home = () => {
     };
     if(openedPages.includes('Admission Open')){
       openedPagesArray.push({name:'Admission Open', component:<AdmissionOpen />});
+    };
+    if(openedPages.includes('Registration Report')){
+      openedPagesArray.push({name:'Registration Report', component:<RegistrationReport />});
+    };
+    if(openedPages.includes('Admission Report')){
+      openedPagesArray.push({name:'Admission Report', component:<AdmissionReport />});
+    };
+    if(openedPages.includes('Merit List Report')){
+      openedPagesArray.push({name:'Merit List Report', component:<MeritListReport />});
     };
 
 

@@ -232,6 +232,12 @@ const modules = [
                         subPageName:'Merit Criteria Print'
                     },
                     {
+                        subPageName:'Registration Report'
+                    },
+                    {
+                        subPageName:'Admission Report'
+                    },
+                    {
                         subPageName:'Merit List Report'
                     },
                     {

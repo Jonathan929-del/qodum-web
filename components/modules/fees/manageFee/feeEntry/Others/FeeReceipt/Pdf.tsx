@@ -48,7 +48,7 @@ const PDF = ({receiptPaymentData, totalNumberGenerator}:any) => {
 
     return(
         <Document>
-            <Page  style={styles.body}>
+            <Page style={styles.body}>
 
 
                 {/* Top data */}
