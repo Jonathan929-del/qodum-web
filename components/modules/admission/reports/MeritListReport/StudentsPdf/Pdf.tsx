@@ -64,7 +64,7 @@ const PDF = ({pdfData}:any) => {
 
                 {/* Title */}
                 <View style={{display:'flex', flexDirection:'row', gap:6, fontSize:12, paddingHorizontal:10, marginHorizontal:5, paddingVertical:5, marginVertical:5, borderWidth:1, borderColor:'#ccc'}}>
-                    <Text>Registration Report</Text>
+                    <Text>Merit List Report</Text>
                 </View>
 
 
@@ -170,7 +170,7 @@ const PDF = ({pdfData}:any) => {
                 {/* Footer */}
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:50, fontSize:11, paddingHorizontal:10, marginHorizontal:5, paddingVertical:5, marginVertical:5, borderTopWidth:1, borderTopColor:'#ccc'}}>
                     <Text>Academic Year: {activeAcademicYear}</Text>
-                    <Text>Registrations Report printed on {moment(new Date()).format('DD-MMM-YYYY')} at {moment(new Date()).format('hh:mm A')}</Text>
+                    <Text>Merit List Report printed on {moment(new Date()).format('DD-MMM-YYYY')} at {moment(new Date()).format('hh:mm A')}</Text>
                     <Text>Page 1 of 1</Text>
                 </View>
             </Page>

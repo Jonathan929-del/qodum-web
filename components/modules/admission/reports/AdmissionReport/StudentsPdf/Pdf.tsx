@@ -64,7 +64,7 @@ const PDF = ({pdfData}:any) => {
 
                 {/* Title */}
                 <View style={{display:'flex', flexDirection:'row', gap:6, fontSize:12, paddingHorizontal:10, marginHorizontal:5, paddingVertical:5, marginVertical:5, borderWidth:1, borderColor:'#ccc'}}>
-                    <Text>Registration Report</Text>
+                    <Text>Admission Report</Text>
                 </View>
 
 
@@ -85,7 +85,7 @@ const PDF = ({pdfData}:any) => {
                                 <Text>SN</Text>
                             </View>
                             <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Reg No.</Text>
+                                <Text>Adm. No.</Text>
                             </View>
                             <View style={{width:80, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                 <Text>Date</Text>
@@ -96,17 +96,17 @@ const PDF = ({pdfData}:any) => {
                             <View style={{width:120, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                 <Text>Name</Text>
                             </View>
+                            <View style={{width:120, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                <Text>Father Name</Text>
+                            </View>
                             <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                 <Text>Contact</Text>
                             </View>
-                            <View style={{width:90, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Receipt No.</Text>
-                            </View>
                             <View style={{width:60, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Amount</Text>
+                                <Text>Is New</Text>
                             </View>
-                            <View style={{width:60, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>Mode</Text>
+                            <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                <Text>Transport</Text>
                             </View>
                         </View>
 
@@ -119,7 +119,7 @@ const PDF = ({pdfData}:any) => {
                                 </View>
                                 <View style={{width:100, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        {s.student.reg_no}
+                                        {s.student.adm_no}
                                     </Text>
                                 </View>
                                 <View style={{width:80, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
@@ -137,24 +137,24 @@ const PDF = ({pdfData}:any) => {
                                         {s.student.name}
                                     </Text>
                                 </View>
+                                <View style={{width:120, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                    <Text>
+                                        {s?.parents?.father?.father_name}
+                                    </Text>
+                                </View>
                                 <View style={{width:100, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                     <Text>
                                         {s.student.mobile}
                                     </Text>
                                 </View>
-                                <View style={{width:90, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>
-                                        -
-                                    </Text>
-                                </View>
                                 <View style={{width:60, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        {s.student.amount}
+                                        {s.student.is_new ? 'YES' : 'NO'}
                                     </Text>
                                 </View>
-                                <View style={{width:60, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                <View style={{width:100, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        {s.student.is_online ? 'Online' : 'Offile'}
+                                        {s.student.transport}
                                     </Text>
                                 </View>
                             </View>
@@ -178,7 +178,7 @@ const PDF = ({pdfData}:any) => {
                 {/* Footer */}
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', gap:50, fontSize:11, paddingHorizontal:10, marginHorizontal:5, paddingVertical:5, marginVertical:5, borderTopWidth:1, borderTopColor:'#ccc'}}>
                     <Text>Academic Year: {activeAcademicYear}</Text>
-                    <Text>Registrations Report printed on {moment(new Date()).format('DD-MMM-YYYY')} at {moment(new Date()).format('hh:mm A')}</Text>
+                    <Text>Admission Report printed on {moment(new Date()).format('DD-MMM-YYYY')} at {moment(new Date()).format('hh:mm A')}</Text>
                     <Text>Page 1 of 1</Text>
                 </View>
             </Page>

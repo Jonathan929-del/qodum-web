@@ -1,16 +1,17 @@
 // Improts
+import moment from 'moment';
 import {AuthContext} from '@/context/AuthContext';
 import {useState, useEffect, useContext} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import {ChevronRight, ChevronLeft, ChevronDown, Check, X,} from 'lucide-react';
-import { fetchAcademicYearsNames } from '@/lib/actions/accounts/masterSettings/changeAcademic.actions';
-import { fetchAcademicYears } from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import { fetchClasses } from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
-import { fetchUsers } from '@/lib/actions/users/manageUsers/user.actions';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import moment from 'moment';
 import MyDatePicker from '@/components/utils/CustomDatePicker';
-import { registrationReportFilter } from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {ChevronRight, ChevronLeft, ChevronDown} from 'lucide-react';
+import {fetchStreams} from '@/lib/actions/admission/globalMasters/stream.actions';
+import {fetchSubjects} from '@/lib/actions/admission/globalMasters/subject.actions';
+import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {AdmissionReportFilter} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 
 
@@ -43,18 +44,24 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     const [sessionError, setSessionError] = useState(false);
 
 
+    // Schools
+    const [schools, setSchools] = useState<any>([{}]);
+    const [selectedSchool, setSelectedSchool] = useState('All Schools');
+
+
     // Classes
     const [classes, setClasses] = useState<any>([{}]);
     const [selectedClass, setSelectedClass] = useState('All Classes');
 
 
-    // Users
-    const [users, setUsers] = useState<any>([{}]);
-    const [selectedUser, setSelectedUser] = useState('All Users');
+    // Streams
+    const [streams, setStreams] = useState<any>([{}]);
+    const [selectedStream, setSelectedStream] = useState('All Streams');
 
 
-    // Selected Mode
-    const [selectedMode, setSelectedMode] = useState('Both');
+    // Subjects
+    const [subjects, setSubjects] = useState<any>([{}]);
+    const [selectedSubject, setSelectedSubject] = useState('All Subjects');
 
 
     // Date from
@@ -76,15 +83,15 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
         setIsLoading(true);
         // Student details filter
-        const res = await registrationReportFilter({
+        const res = await AdmissionReportFilter({
             session:selectedSession,
-            date_from:new Date(dateFrom._d),
-            date_to:new Date(dateTo._d),
+            school:selectedSchool,
             class_name:selectedClass,
-            user:selectedUser,
-            mode:selectedMode
+            stream:selectedStream,
+            subject:selectedSubject,
+            date_from:new Date(dateFrom._d),
+            date_to:new Date(dateTo._d)
         });
-        console.log(res);
         setPdfData({
             students:res
         });
@@ -98,17 +105,21 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
         const fetcher = async () => {
             setIsLoadingData(true);
             const sessionsRes = await fetchAcademicYears();
+            const schoolsRes = await fetchGlobalSchoolDetails();
             const classesRes = await fetchClasses();
-            const usersRes = await fetchUsers();
+            const streamsRes = await fetchStreams();
+            const subjectsRes = await fetchSubjects();
             setSesssions(sessionsRes);
+            setSchools(schoolsRes)
             setClasses(classesRes);
-            setUsers(usersRes);
+            setStreams(streamsRes);
+            setSubjects(subjectsRes);
             setIsLoadingData(false);
         };
         fetcher();
     }, []);
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Registration Report');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Admission Report');
         setPermissions(grantedPermissions);
     }, [user]);
 
@@ -164,26 +175,32 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                     </div>
 
 
-                    {/* Date From */}
-                    <div className='relative w-full h-7 pb-[8px] flex flex-row items-center justify-center mt-2'>
-                        <p className='basis-[35%] pr-[4px] text-start text-[11px] text-[#726E71]'>Date From</p>
-                        <div className='w-full'>
-                            <MyDatePicker
-                                selectedDate={dateFrom}
-                                setSelectedDate={setDateFrom}
-                            />
-                        </div>
-                    </div>
-
-
-                    {/* Date To */}
-                    <div className='relative w-full h-7 pb-[8px] flex flex-row items-center justify-center mt-2'>
-                        <p className='basis-[35%] pr-[4px] text-start text-[11px] text-[#726E71]'>Date To</p>
-                        <div className='w-full'>
-                            <MyDatePicker
-                                selectedDate={dateTo}
-                                setSelectedDate={setDateTo}
-                            />
+                    {/* School */}
+                    <div className='w-full flex flex-row items-center gap-2'>
+                        <p className='basis-[30%] text-xs text-hash-color'>School</p>
+                        <div className='relative w-full h-full flex flex-row items-center justify-between gap-2'>
+                            <div className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
+                                <Select
+                                    value={selectedSchool}
+                                    onValueChange={(v:any) => setSelectedSchool(v)}
+                                >
+                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                        <SelectValue placeholder='Please select' className='text-[11px]' />
+                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value='All Schools'>All Schools</SelectItem>
+                                        {schools?.length < 1 ? (
+                                            <p>No schools</p>
+                                            // @ts-ignore
+                                        ) : !schools[0]?.school_name ? (
+                                            <LoadingIcon />
+                                        ) : schools?.map((item:any) => (
+                                            <SelectItem value={item?.school_name} key={item?._id}>{item?.school_name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
                     </div>
 
@@ -218,28 +235,28 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                     </div>
 
 
-                    {/* User */}
+                    {/* Stream */}
                     <div className='w-full flex flex-row items-center gap-2'>
-                        <p className='basis-[30%] text-xs text-hash-color'>User</p>
+                        <p className='basis-[30%] text-xs text-hash-color'>Stream</p>
                         <div className='relative w-full h-full flex flex-row items-center justify-between gap-2'>
                             <div className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
                                 <Select
-                                    value={selectedUser}
-                                    onValueChange={(v:any) => setSelectedUser(v)}
+                                    value={selectedStream}
+                                    onValueChange={(v:any) => setSelectedStream(v)}
                                 >
                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                         <SelectValue placeholder='Please select' className='text-[11px]' />
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value='All Users'>All Users</SelectItem>
-                                        {users?.length < 1 ? (
-                                            <p>No users</p>
+                                        <SelectItem value='All Streams'>All Streams</SelectItem>
+                                        {streams?.length < 1 ? (
+                                            <p>No streams</p>
                                             // @ts-ignore
-                                        ) : !users[0]?.name ? (
+                                        ) : !streams[0]?.stream_name ? (
                                             <LoadingIcon />
-                                        ) : users?.map((item:any) => (
-                                            <SelectItem value={item?.name} key={item?._id}>{item?.name}</SelectItem>
+                                        ) : streams?.map((item:any) => (
+                                            <SelectItem value={item?.stream_name} key={item?._id}>{item?.stream_name}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
@@ -248,26 +265,56 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                     </div>
 
 
-                    {/* Mode */}
+                    {/* Subject */}
                     <div className='w-full flex flex-row items-center gap-2'>
-                        <p className='basis-[30%] text-xs text-hash-color'>Mode</p>
+                        <p className='basis-[30%] text-xs text-hash-color'>Subject</p>
                         <div className='relative w-full h-full flex flex-row items-center justify-between gap-2'>
                             <div className='flex-1 flex flex-col items-start justify-center mt-2 lg:flex-row lg:items-center lg:gap-2 lg:mt-0'>
                                 <Select
-                                    value={selectedMode}
-                                    onValueChange={(v:any) => setSelectedMode(v)}
+                                    value={selectedSubject}
+                                    onValueChange={(v:any) => setSelectedSubject(v)}
                                 >
                                     <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                         <SelectValue placeholder='Please select' className='text-[11px]' />
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value='Both'>Both</SelectItem>
-                                        <SelectItem value='Online'>Online</SelectItem>
-                                        <SelectItem value='Offline'>Offline</SelectItem>
+                                        <SelectItem value='All Subjects'>All Subjects</SelectItem>
+                                        {subjects?.length < 1 ? (
+                                            <p>No subjects</p>
+                                            // @ts-ignore
+                                        ) : !subjects[0]?.subject_name ? (
+                                            <LoadingIcon />
+                                        ) : subjects?.map((item:any) => (
+                                            <SelectItem value={item?.subject_name} key={item?._id}>{item?.subject_name}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </div>
+                    </div>
+
+
+                    {/* Date From */}
+                    <div className='relative w-full h-7 pb-[8px] flex flex-row items-center justify-center mt-2'>
+                        <p className='basis-[35%] pr-[4px] text-start text-[11px] text-[#726E71]'>Date From</p>
+                        <div className='w-full'>
+                            <MyDatePicker
+                                selectedDate={dateFrom}
+                                setSelectedDate={setDateFrom}
+                            />
+                        </div>
+                    </div>
+
+
+                    {/* Date To */}
+                    <div className='relative w-full h-7 pb-[8px] flex flex-row items-center justify-center mt-2'>
+                        <p className='basis-[35%] pr-[4px] text-start text-[11px] text-[#726E71]'>Date To</p>
+                        <div className='w-full'>
+                            <MyDatePicker
+                                selectedDate={dateTo}
+                                setSelectedDate={setDateTo}
+                            />
                         </div>
                     </div>
 
