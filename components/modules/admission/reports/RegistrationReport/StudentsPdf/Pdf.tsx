@@ -144,7 +144,7 @@ const PDF = ({pdfData}:any) => {
                                 </View>
                                 <View style={{width:90, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        -
+                                        {s.student.reg_no[s.student.reg_no.length - 1]}
                                     </Text>
                                 </View>
                                 <View style={{width:60, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>

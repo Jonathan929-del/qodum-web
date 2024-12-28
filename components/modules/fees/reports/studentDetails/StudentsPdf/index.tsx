@@ -13,7 +13,7 @@ const index = ({pdfData}:any) => {
             <div className='h-full w-full overflow-x-scroll custom-sidebar-scrollbar'>
                 <div
                     className='h-full'
-                    style={{minWidth:'100%', width:700 + pdfData.fields.length * 150}}
+                    style={{minWidth:'100%', width:300 + pdfData.fields.length * 120}}
                 >
                     <PdfView
                         pdfData={pdfData}

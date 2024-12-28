@@ -46,6 +46,7 @@ const DropdownMenuCom = () => {
                     <Link
                         href={`/${module.title.toLowerCase().replace(/\s+/g,"-")}`}
                         onClick={() => setOpenedPages([])}
+                        target='_blank'
                     >
                         <DropdownMenuItem className='h-full w-full py-0 px-0 cursor-pointer'>
                             <div

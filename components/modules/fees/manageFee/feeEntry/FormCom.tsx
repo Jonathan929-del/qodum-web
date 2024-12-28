@@ -512,6 +512,10 @@ const FormCom = ({installments, classes, sections, setIsViewOpened, students, se
     // Use effect
     useEffect(() => {
         form.setValue('bank_name', selectedStudent?.affiliated_heads?.heads[0]?.post_account || '');
+        const pendingPayments = localStorage.getItem('payments') ? JSON.parse(localStorage.getItem('payments')) : [];
+        if(pendingPayments.length > 0 && selectedStudent?.name !== ''){
+            form.setValue('pay_mode', 'UPI');
+        };
     }, [selectedStudent]);
 
     return (

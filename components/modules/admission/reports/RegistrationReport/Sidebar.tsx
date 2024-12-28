@@ -103,6 +103,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setClasses(classesRes);
             setUsers(usersRes);
             setIsLoadingData(false);
+            setSelectedSession(sessionsRes?.find((s:any) => s?.is_active)?.year_name);
         };
         fetcher();
     }, []);

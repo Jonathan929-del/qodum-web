@@ -115,6 +115,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setStreams(streamsRes);
             setSubjects(subjectsRes);
             setIsLoadingData(false);
+            setSelectedSession(sessionsRes?.find((s:any) => s?.is_active)?.year_name);
         };
         fetcher();
     }, []);
