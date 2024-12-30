@@ -152,7 +152,7 @@ const Details = ({setIsDraggableOpened, checkedDetails, setCheckedDetails}:any) 
 
 
     return (
-        <Draggable defaultPosition={{x:200, y:100}}>
+        <Draggable defaultPosition={{x:300, y:50}}>
             <div className='absolute w-[800px] h-[400px] z-10 flex flex-col items-center pb-6 bg-white border-[0.5px] border-[#ccc] overflow-scroll custom-sidebar-scrollbar'>
 
                 {/* Header */}

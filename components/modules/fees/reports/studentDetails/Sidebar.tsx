@@ -14,6 +14,7 @@ import {fetchOptionalSubjects} from '@/lib/actions/admission/globalMasters/optio
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import { AuthContext } from '@/context/AuthContext';
+import { fetchSections } from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 
 
 
@@ -52,6 +53,11 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     // Classes
     const [classes, setClasses] = useState([{}]);
     const [selectedClasses, setSelectedClasses] = useState([{}]);
+
+
+    // Sections
+    const [sections, setSections] = useState([{}]);
+    const [selectedSections, setSelectedSections] = useState([{}]);
 
 
     // Genders
@@ -280,6 +286,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
         const res = await studentDetailsFilter({
             school:selectedSchool,
             classes:selectedClasses.map((c:any) => c.class_name),
+            sections:selectedSections.map((c:any) => c.section_name),
             genders:selectedGenders,
             religions:selectedReligions.map((r:any) => r.religion_name),
             categories:selectedCategories.map((c:any) => c.category_name),
@@ -307,6 +314,7 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setIsLoadingData(true);
             const schoolsRes = await fetchGlobalSchoolDetails();
             const classesRes = await fetchClasses();
+            const sectionsRes = await fetchSections();
             const religionsRes = await fetchReligions();
             const categoriesRes = await fetchCategories();
             const streamsRes = await fetchStreams();
@@ -314,6 +322,8 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
             setSchools(schoolsRes);
             setClasses(classesRes);
             setSelectedClasses(classesRes);
+            setSections(sectionsRes);
+            setSelectedSections(sectionsRes);
             setReligions(religionsRes);
             setSelectedReligions(religionsRes);
             setCategories(categoriesRes);
@@ -443,6 +453,57 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                                     onClick={() => selectedClasses?.includes(i) ? setSelectedClasses(selectedClasses?.filter((item:any) => item !== i)) : setSelectedClasses([...selectedClasses, i])}
                                                 />
                                                 <p className='text-xs font-semibold'>{i.class_name}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+
+
+                    {/* Section */}
+                    <div className='w-full h-6 flex flex-row items-center justify-center gap-2 mt-2'>
+                        <p className='basis-[30%] text-xs text-end text-[#726E71]'>Section</p>
+                        <div className='relative h-full basis-[70%] flex flex-col items-start gap-4'>
+                            <Select>
+                                <SelectTrigger className='w-full h-6 flex flex-row items-center text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                    <SelectValue placeholder={selectedSections?.length === 0 ? 'Select section(s)' : selectedSections?.length === 1 ? '1 section selected' : `${selectedSections?.length} sections selected`} className='text-xs'/>
+                                    <ChevronDown className="h-4 w-4 opacity-50" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <div className='flex flex-row'>
+                                        <div
+                                            // @ts-ignore
+                                            onClick={() => setSelectedSections(sections)}
+                                            className='group flex flex-row items-center justify-center cursor-pointer'
+                                        >
+                                            <Check size={12}/>
+                                            <p className='text-xs group-hover:underline'>All</p>
+                                        </div>
+                                        <div
+                                            onClick={() => setSelectedSections([])}
+                                            className='group flex flex-row items-center justify-center ml-2 cursor-pointer'
+                                        >
+                                            <X size={12}/>
+                                            <p className='text-xs group-hover:underline'>Clear</p>
+                                        </div>
+                                    </div>
+                                    <ul className='mt-2'>
+                                        {sections.length < 1 ? (
+                                            <p className='text-xs text-hash-color'>No sections</p>
+                                        ) : // @ts-ignore
+                                        !sections[0].section_name ? (
+                                            <LoadingIcon />
+                                        ) : sections.map((i:any) => (
+                                            <li className='flex flex-row items-center space-x-[2px] mt-[2px]'>
+                                                <Checkbox
+                                                    className='rounded-[2px] text-hash-color font-semibold'
+                                                    checked={selectedSections?.map((item:any) => item.section_name).includes(i.section_name)}
+                                                    // @ts-ignore
+                                                    onClick={() => selectedSections?.includes(i) ? setSelectedSections(selectedSections?.filter((item:any) => item !== i)) : setSelectedSections([...selectedSections, i])}
+                                                />
+                                                <p className='text-xs font-semibold'>{i.section_name}</p>
                                             </li>
                                         ))}
                                     </ul>

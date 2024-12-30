@@ -2,7 +2,7 @@
 // Imports
 import moment from 'moment';
 import {useEffect, useState} from 'react';
-import {Document, Page, View, Text, PDFViewer, Image} from '@react-pdf/renderer';
+import {Document, Page, View, Text, PDFViewer, Image, Font} from '@react-pdf/renderer';
 import {fetchAcademicYears} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
@@ -13,8 +13,16 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 // Pdf file
 const PDF = ({pdfData}:any) => {
 
+    // Font
+    Font.register({
+        family:'ABZ',
+        fonts:[
+            {src:'/fonts/ABZ/ABeeZee-Regular.ttf'}
+        ]
+    });
 
-    // School date
+
+    // School data
     const [schoolData, setSchoolData] = useState({
         logo:'',
         school_name:'',
@@ -41,10 +49,10 @@ const PDF = ({pdfData}:any) => {
         fetcher();
     }, []);
 
-
     return(
         <Document>
-            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:1000, height:300 + pdfData.fields.length * 120}} orientation='landscape'>
+            {/* <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:1000, height:300 + pdfData.fields.length * 120}} orientation='landscape'> */}
+            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0, fontFamily:'ABZ'}} orientation={pdfData.fields.length <= 7 ? 'portrait' : 'landscape'}>
 
                 {/* School data */}
                 <View style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', gap:100, paddingVertical:10, paddingHorizontal:50, borderBottomWidth:0.5, borderBottomColor:'#ccc'}}>
@@ -81,11 +89,11 @@ const PDF = ({pdfData}:any) => {
                         {/* Headers */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
                             <View style={{width:30, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text>SN</Text>
+                                <Text style={{fontSize:7}}>SN</Text>
                             </View>
                             {pdfData.fields.map((f:any) => (
-                                <View style={{width:120, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{f}</Text>
+                                <View style={{width:70, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                    <Text style={{fontSize:7}}>{f}</Text>
                                 </View>
                             ))}
                         </View>
@@ -95,11 +103,11 @@ const PDF = ({pdfData}:any) => {
                         {pdfData.students.map((s:any) => (
                             <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000', backgroundColor:Math.floor((pdfData.students.indexOf(s) + 1) / 2) * 2 !== pdfData.students.indexOf(s) + 1 ? '#F3F8FB' : '#fff'}}>
                                 <View style={{width:30, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text>{pdfData.students.indexOf(s) + 1}</Text>
+                                    <Text style={{fontSize:7}}>{pdfData.students.indexOf(s) + 1}</Text>
                                 </View>
                                 {pdfData.fields.map((f:any) => (
-                                    <View style={{width:120, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text>
+                                    <View style={{width:70, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text style={{fontSize:7}}>
                                             {f === 'Class Name' && s.student.class}
                                             {f === 'Roll No.' && s.student.roll_no}
                                             {f === 'Bill No.' && s.student.bill_no}

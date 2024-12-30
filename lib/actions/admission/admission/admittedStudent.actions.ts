@@ -1255,6 +1255,7 @@ export const FeeDefaulterListFilter = async ({school, wing, class_name, section,
 interface StudentDetailsFilterProps{
     school:String;
     classes:any;
+    sections:any;
     genders:any;
     religions:any;
     categories:any;
@@ -1268,7 +1269,7 @@ interface StudentDetailsFilterProps{
     optional_subjects:any;
 };
 // Student details filter
-export const studentDetailsFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects}:StudentDetailsFilterProps) => {
+export const studentDetailsFilter = async ({school, classes, genders, religions, categories, seniorities, activities, statuses, is_ews, transports, is_sibling, streams, optional_subjects, sections}:StudentDetailsFilterProps) => {
     try {
 
         // Db connection
@@ -1289,6 +1290,8 @@ export const studentDetailsFilter = async ({school, classes, genders, religions,
             .filter((s:any) => school === 'All schools' ? s : s)
             // Classes filter
             .filter((s:any) => classes.includes(s.student.class))
+            // Sections filter
+            .filter((s:any) => sections.includes(s.student.section))
             // Genders filter
             .filter((s:any) => genders.includes(s.student.gender))
             // Religions filter

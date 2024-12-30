@@ -13,8 +13,16 @@ import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineS
 // Pdf file
 const PDF = ({pdfData}:any) => {
 
+    // Font
+    // Font.register({
+    //     family:'ABZ',
+    //     fonts:[
+    //         {src:'/fonts/ABZ/ABeeZee-Regular.ttf'}
+    //     ]
+    // });
 
-    // School date
+
+    // School data
     const [schoolData, setSchoolData] = useState({
         logo:'',
         school_name:'',
@@ -22,7 +30,7 @@ const PDF = ({pdfData}:any) => {
     });
 
 
-    // Active academic year
+    // Active academic Year
     const [activeAcademicYear, setActiveAcademicYear] = useState('');
 
 
@@ -57,7 +65,7 @@ const PDF = ({pdfData}:any) => {
 
     return(
         <Document>
-            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2}} orientation='portrait'>
+            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, fontFamily:'ABZ'}} orientation={uniquePaymentsHeadsNames.length > 3 ? 'landscape' : 'portrait'}>
 
                 {/* School data */}
                 <View style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'space-between', paddingVertical:10, paddingHorizontal:50, borderBottomWidth:0.5, borderBottomColor:'#ccc'}}>
@@ -88,84 +96,84 @@ const PDF = ({pdfData}:any) => {
                     {pdfData.payments?.length > 0 && (
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff',}}>
                             <View style={{width:50, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                <Text>SN</Text>
+                                <Text>Sn.</Text>
                             </View>
                             {pdfData.show_collection === 'With Head (One line data)' && (
                                 <>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. NO.</Text>
+                                        <Text>Rcpt. No.</Text>
                                     </View>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. DATE.</Text>
+                                        <Text>Rcpt. Date.</Text>
                                     </View>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>ADM. NO.</Text>
+                                        <Text>Adm. No.</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>NAME</Text>
+                                        <Text>Name</Text>
                                     </View>
                                     <View style={{width:50, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>CLASS</Text>
+                                        <Text>Class</Text>
                                     </View>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>INSTALLMENT</Text>
+                                        <Text>Installment</Text>
                                     </View>
                                 </>                            
                             )}
                             {pdfData.show_collection === 'Without Head (One line data)' && (
                                 <>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. NO.</Text>
+                                        <Text>Rcpt. No.</Text>
                                     </View>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. DATE.</Text>
+                                        <Text>Rcpt. Date.</Text>
                                     </View>
                                     <View style={{width:75, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>ADM. NO.</Text>
+                                        <Text>Adm. No.</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>NAME</Text>
+                                        <Text>Name</Text>
                                     </View>
                                     <View style={{width:80, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>CLASS</Text>
+                                        <Text>Class</Text>
                                     </View>
                                 </>                            
                             )}
                             {pdfData.show_collection === 'Head Wise' && (
                                 <>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. NO.</Text>
-                                        <Text>RCPT. DATE</Text>
-                                        <Text>STATUS</Text>
+                                        <Text>Rcpt. No.</Text>
+                                        <Text>Rcpt</Text>
+                                        <Text>Status</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>ADM. NO.</Text>
-                                        <Text>NAME</Text>
-                                        <Text>CLASS</Text>
+                                        <Text>Adm. No.</Text>
+                                        <Text>Name</Text>
+                                        <Text>Class</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>YEAR</Text>
-                                        <Text>INSTALLMENT</Text>
-                                        <Text>USER</Text>
+                                        <Text>Year</Text>
+                                        <Text>Installment</Text>
+                                        <Text>User</Text>
                                     </View>
                                 </>
                             )}
                             {pdfData.show_collection === 'Without Head (Total Amount)' && (
                                 <>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>RCPT. NO.</Text>
-                                        <Text>RCPT. DATE</Text>
-                                        <Text>STATUS</Text>
+                                        <Text>Rcpt. No.</Text>
+                                        <Text>Rcpt. Date</Text>
+                                        <Text>Status</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>ADM. NO.</Text>
-                                        <Text>NAME</Text>
-                                        <Text>CLASS</Text>
+                                        <Text>Adm. No.</Text>
+                                        <Text>Name</Text>
+                                        <Text>Class</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                        <Text>YEAR</Text>
-                                        <Text>INSTALLMENT</Text>
-                                        <Text>USER</Text>
+                                        <Text>Year</Text>
+                                        <Text>Installment</Text>
+                                        <Text>User</Text>
                                     </View>
                                 </>
                             )}
@@ -248,7 +256,7 @@ const PDF = ({pdfData}:any) => {
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.receipt_no}</Text>
                                         <Text>{moment(p.received_date).format('DD-MMM-YYYY')}</Text>
-                                        <Text>Ok</Text>
+                                        <Text>{p?.is_canceled ? 'Canceled' : 'Ok'}</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.adm_no}</Text>
@@ -258,7 +266,7 @@ const PDF = ({pdfData}:any) => {
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.session || '-'}</Text>
                                         <Text>{p.installments.map((i:any) => i + ' ')}</Text>
-                                        <Text>USER</Text>
+                                        <Text>superadmin</Text>
                                     </View>
                                 </>
                             )}
@@ -267,7 +275,7 @@ const PDF = ({pdfData}:any) => {
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.receipt_no}</Text>
                                         <Text>{moment(p.received_date).format('DD-MMM-YYYY')}</Text>
-                                        <Text>Ok</Text>
+                                        <Text>{p?.is_canceled ? 'Canceled' : 'Ok'}</Text>
                                     </View>
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.adm_no}</Text>
@@ -277,18 +285,18 @@ const PDF = ({pdfData}:any) => {
                                     <View style={{width:100, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                         <Text>{p.session || '-'}</Text>
                                         <Text>{p.installments.map((i:any) => i + ' ')}</Text>
-                                        <Text>USER</Text>
+                                        <Text>superadmin</Text>
                                     </View>
                                 </>
                             )}
                             {pdfData.show_collection === 'Head Wise' && uniquePaymentsHeadsNames?.map((h:any) => (
                                 <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                    <Text>{totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))}</Text>
+                                    <Text>{totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.Name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))}</Text>
                                 </View>
                             ))}
                             {pdfData.show_collection === 'With Head (One line data)' && uniquePaymentsHeadsNames?.map((h:any) => (
                                 <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
-                                    <Text>{totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))}</Text>
+                                    <Text>{totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.Name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))}</Text>
                                 </View>
                             ))}
                             <View style={{width:50, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
@@ -379,14 +387,14 @@ const PDF = ({pdfData}:any) => {
                             {pdfData.show_collection === 'Head Wise' && uniquePaymentsHeadsNames?.map((h:any) => (
                                 <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        {totalNumberGenerator(pdfData.payments.map((p:any) => totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))))}
+                                        {totalNumberGenerator(pdfData.payments.map((p:any) => totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.Name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))))}
                                     </Text>
                                 </View>
                             ))}
                             {pdfData.show_collection === 'With Head (One line data)' && uniquePaymentsHeadsNames?.map((h:any) => (
                                 <View style={{width:75, height:'100%', display:'flex', alignItems:'flex-start', justifyContent:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:0.5, borderRightColor:'#ccc'}}>
                                     <Text>
-                                        {totalNumberGenerator(pdfData.payments.map((p:any) => totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))))}
+                                        {totalNumberGenerator(pdfData.payments.map((p:any) => totalNumberGenerator(p.paid_heads?.filter((ph:any) => ph.head_name === h)[0]?.amounts?.filter((a:any) => p.installments.includes(a.Name))?.map((a:any) => a.paid_amount === a.value ? 0 : Number(a.paid_amount)))))}
                                     </Text>
                                 </View>
                             ))}
