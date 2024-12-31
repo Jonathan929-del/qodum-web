@@ -37,7 +37,7 @@ const index = ({installments, form, onSubmit, selectedStudent, setSelectedStuden
 
     // Use effect
     useEffect(() => {
-        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Define SMS Template');
+        const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Fee Entry');
         setPermissions(grantedPermissions);
     }, [user]);
 
