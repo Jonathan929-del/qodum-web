@@ -21,6 +21,8 @@ export const SchoolGlobalValidation = z.object({
     website:z.string(),
     prefix:z.string().nonempty({message:'Prefix required'}),
     iso_details:z.string(),
+    principal_signature:z.string(),
+    accountant_signature:z.string(),
     school_no:z.string(),
     affiliation_to:z.string(),
     affiliation_no:z.string(),

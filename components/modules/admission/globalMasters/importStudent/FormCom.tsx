@@ -644,13 +644,22 @@ const FormCom = ({}:any) => {
                             {permissions.add && isLoading ? (
                                 <LoadingIcon />
                             ) : (
-                                <span
-                                    onClick={handleUpload}
-                                    className='flex items-center justify-center px-4 h-8 max-w-[200px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
-                                            hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
-                                >
-                                    Save
-                                </span>
+                                <div className='flex flex-col gap-4 underline'>
+                                    <span
+                                        onClick={handleUpload}
+                                        className='flex items-center justify-center px-4 h-8 max-w-[200px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                                hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
+                                    >
+                                        Save
+                                    </span>
+                                    <a
+                                        href='/files/import-student-sample.xlsx'
+                                        download='import-student-sample.xlsx'
+                                        className='text-xs text-main-color'
+                                    >
+                                        Download excel file sample
+                                    </a>
+                                </div>
                             )}
                         </div>
 
@@ -663,7 +672,7 @@ const FormCom = ({}:any) => {
                                 className='text-xs'
                             />
                             <span
-                                className='flex items-center justify-center px-4 h-8 max-w-[200px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
+                                className='flex items-center justify-center px-4 mb-9 h-8 max-w-[200px] text-xs text-white bg-gradient-to-r from-[#3D67B0] to-[#4CA7DE] transition border-[1px] rounded-[4px] border-white cursor-pointer
                                         hover:border-main-color hover:from-[#e7f0f7] hover:to-[#e7f0f7] hover:text-main-color'
                             >
                                 Save

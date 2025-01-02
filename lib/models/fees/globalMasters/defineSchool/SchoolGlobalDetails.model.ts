@@ -22,6 +22,8 @@ const SchoolGlobalDetailsSchema = new mongoose.Schema(
             website:{type:String},
             prefix:{type:String, required:true},
             iso_details:{type:String},
+            principal_signature:{type:String},
+            accountant_signature:{type:String},
             school_no:{type:String},
             affiliation_to:{type:String},
             affiliation_no:{type:String},

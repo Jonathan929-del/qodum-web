@@ -49,6 +49,8 @@ const page = () => {
         website:'',
         prefix:'',
         iso_details:'',
+        principal_signature:'',
+        accountant_signature:'',
         school_no:'',
         affiliation_to:'',
         affiliation_no:'',

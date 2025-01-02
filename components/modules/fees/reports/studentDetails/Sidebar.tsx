@@ -15,6 +15,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 import { AuthContext } from '@/context/AuthContext';
 import { fetchSections } from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
+import { useToast } from '@/components/ui/use-toast';
 
 
 
@@ -39,6 +40,10 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
 
     // Is draggable opened
     const [isDraggableOpened, setIsDraggableOpened] = useState(false);
+
+
+    // Toast
+    const {toast} = useToast();
 
 
     // Is loading data
@@ -339,11 +344,31 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
     }, []);
     useEffect(() => {
         setFilteredStudentDetails(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
-        setSelectedStudentDetails(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)));
         setFilteredParentsDetails(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
-        setSelectedParentsDetails(checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d)));
         setFilteredGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
-        setSelectedGuardianDetails(checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d)));
+
+
+        // Setting selected fields
+        setSelectedStudentDetails(checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)).slice(0, 10));
+        setSelectedParentsDetails(
+            checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d))
+            .slice(0, 10 - checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)).slice(0, 10).length)
+        );
+        setSelectedGuardianDetails(
+            checkedDetails.filter((d:any) => guardianDetails.map((sd:any) => sd).includes(d))
+            .slice(
+                0,
+                10
+                -
+                (
+                    checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)).slice(0, 10).length
+                    +
+                    checkedDetails.filter((d:any) => parentDetails.map((sd:any) => sd).includes(d))
+                    .slice(0, 10 - checkedDetails.filter((d:any) => studentDetails.map((sd:any) => sd).includes(d)).slice(0, 10).length).length
+                )
+            )
+        );
+
     }, [isDraggableOpened]);
     useEffect(() => {
         const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Fees')?.permissions?.find((pp:any) => pp.sub_menu === 'Student Details');
@@ -1061,7 +1086,13 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                     <div className='flex flex-row'>
                                         <div
                                             // @ts-ignore
-                                            onClick={() => setSelectedStudentDetails(filteredStudentDetails)}
+                                            onClick={() => {
+                                                if(filteredStudentDetails.length + selectedParentsDetails.length + selectedGuardianDetails.length > 10){
+                                                    toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                }else{
+                                                    setSelectedStudentDetails(filteredStudentDetails);
+                                                };
+                                            }}
                                             className='group flex flex-row items-center justify-center cursor-pointer'
                                         >
                                             <Check size={12}/>
@@ -1082,7 +1113,17 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                                     className='rounded-[2px] text-hash-color font-semibold'
                                                     checked={selectedStudentDetails.includes(i)}
                                                     // @ts-ignore
-                                                    onClick={() => selectedStudentDetails?.includes(i) ? setSelectedStudentDetails(selectedStudentDetails?.filter((item:any) => item !== i)) : setSelectedStudentDetails([...selectedStudentDetails, i])}
+                                                    onClick={() => {
+                                                        if(selectedStudentDetails?.includes(i)){
+                                                            setSelectedStudentDetails(selectedStudentDetails?.filter((item:any) => item !== i))
+                                                        }else{
+                                                            if(selectedStudentDetails.length + selectedParentsDetails.length + selectedGuardianDetails.length === 10){
+                                                                toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                            }else{
+                                                                setSelectedStudentDetails([...selectedStudentDetails, i])
+                                                            };
+                                                        };
+                                                    }}
                                                 />
                                                 <p className='text-xs font-semibold'>{i}</p>
                                             </li>
@@ -1107,7 +1148,13 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                     <div className='flex flex-row'>
                                         <div
                                             // @ts-ignore
-                                            onClick={() => setSelectedParentsDetails(filteredParentsDetails)}
+                                            onClick={() => {
+                                                if(filteredParentsDetails.length + selectedStudentDetails.length + selectedGuardianDetails.length > 10){
+                                                    toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                }else{
+                                                    setSelectedParentsDetails(filteredParentsDetails);
+                                                };
+                                            }}
                                             className='group flex flex-row items-center justify-center cursor-pointer'
                                         >
                                             <Check size={12}/>
@@ -1128,7 +1175,17 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                                     className='rounded-[2px] text-hash-color font-semibold'
                                                     checked={selectedParentsDetails.includes(i)}
                                                     // @ts-ignore
-                                                    onClick={() => selectedParentsDetails?.includes(i) ? setSelectedParentsDetails(selectedParentsDetails?.filter((item:any) => item !== i)) : setSelectedParentsDetails([...selectedParentsDetails, i])}
+                                                    onClick={() => {
+                                                        if(selectedParentsDetails?.includes(i)){
+                                                            setSelectedParentsDetails(selectedParentsDetails?.filter((item:any) => item !== i));
+                                                        }else{
+                                                            if(selectedStudentDetails.length + selectedParentsDetails.length + selectedGuardianDetails.length === 10){
+                                                                toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                            }else{
+                                                                setSelectedParentsDetails([...selectedParentsDetails, i]);
+                                                            };
+                                                        };
+                                                    }}
                                                 />
                                                 <p className='text-xs font-semibold'>{i}</p>
                                             </li>
@@ -1153,7 +1210,13 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                     <div className='flex flex-row'>
                                         <div
                                             // @ts-ignore
-                                            onClick={() => setSelectedGuardianDetails(filteredGuardianDetails)}
+                                            onClick={() => {
+                                                if(filteredGuardianDetails.length + selectedStudentDetails.length + selectedParentsDetails.length > 10){
+                                                    toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                }else{
+                                                    setSelectedGuardianDetails(filteredGuardianDetails)
+                                                };
+                                            }}
                                             className='group flex flex-row items-center justify-center cursor-pointer'
                                         >
                                             <Check size={12}/>
@@ -1174,7 +1237,17 @@ const Sidebar = ({isOpened, setIsOpened, setIsShowClicked, setIsLoading, setPdfD
                                                     className='rounded-[2px] text-hash-color font-semibold'
                                                     checked={selectedGuardianDetails.includes(i)}
                                                     // @ts-ignore
-                                                    onClick={() => selectedGuardianDetails?.includes(i) ? setSelectedGuardianDetails(selectedGuardianDetails?.filter((item:any) => item !== i)) : setSelectedGuardianDetails([...selectedGuardianDetails, i])}
+                                                    onClick={() => {
+                                                        if(selectedGuardianDetails?.includes(i)){
+                                                            setSelectedGuardianDetails(selectedGuardianDetails?.filter((item:any) => item !== i));
+                                                        }else{
+                                                            if(selectedStudentDetails.length + selectedParentsDetails.length + selectedGuardianDetails.length === 10){
+                                                                toast({title:'Please select a maximum of 10 fields', variant:'alert'});
+                                                            }else{
+                                                                setSelectedGuardianDetails([...selectedGuardianDetails, i]);
+                                                            };
+                                                        };
+                                                    }}
                                                 />
                                                 <p className='text-xs font-semibold'>{i}</p>
                                             </li>

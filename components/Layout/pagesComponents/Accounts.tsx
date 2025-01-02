@@ -22,6 +22,7 @@ import FeeSessionTransfer from '@/pagesComps/fees/(master settings)/session-tran
 import DefineNarrationMaster from '@/pagesComps/accounts/(global masters)/define-narration-master/page';
 import PayrollSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/payroll/page';
 import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/session-transfer/admission/page';
+import { updateUserPermissions } from '@/lib/actions/users/manageUsers/user.actions';
 // import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
@@ -33,7 +34,7 @@ import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/sessio
 const Home = () => {
 
   // Login user check
-  const {user} = useContext(AuthContext);
+  const {user, login, logout} = useContext(AuthContext);
 
 
   // Params page
@@ -115,7 +116,20 @@ const Home = () => {
     // };
     // fetcher();
 
-    setOpenedPagesComponents(openedPagesArray)
+    setOpenedPagesComponents(openedPagesArray);
+
+
+    // Checking user permissions
+    const asyncFunc = async () => {
+      localStorage.removeItem('payments');
+      const loginUserRes = await updateUserPermissions({user_name:user.user_name});
+      if(loginUserRes.success){
+        login(loginUserRes.user);
+      }else{
+        logout();
+      };
+    };
+    asyncFunc();
 
   }, [openedPages]);
   useEffect(() => {

@@ -61,6 +61,7 @@ import AdmissionSessionTransfer from '@/pagesComps/fees/(master settings)/sessio
 import FeeDefaulterList from '@/pagesComps/fees/(transaction report)/(defaulter reports)/fee-defaulter-list/page';
 import StudentDetails from '@/pagesComps/fees/(reports)/student-details/page';
 import DefineSMSTemplate from '@/pagesComps/fees/(global masters)/define-sms-template/page';
+import { updateUserPermissions } from '@/lib/actions/users/manageUsers/user.actions';
 
 
 
@@ -70,7 +71,7 @@ import DefineSMSTemplate from '@/pagesComps/fees/(global masters)/define-sms-tem
 const Home = () => {
 
   // Login user check
-  const {user} = useContext(AuthContext);
+  const {user, login, logout} = useContext(AuthContext);
 
 
   // Setting moment local to english
@@ -264,6 +265,19 @@ const Home = () => {
     };
 
     setOpenedPagesComponents(openedPagesArray);
+
+
+    // Checking user permissions
+    const asyncFunc = async () => {
+      localStorage.removeItem('payments');
+      const loginUserRes = await updateUserPermissions({user_name:user.user_name});
+      if(loginUserRes.success){
+        login(loginUserRes.user);
+      }else{
+        logout();
+      };
+    };
+    asyncFunc();
 
 
     // // Setting active year in moment

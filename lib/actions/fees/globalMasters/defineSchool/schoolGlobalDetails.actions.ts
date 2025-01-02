@@ -23,6 +23,8 @@ interface CreateGlobalSchoolDetailsProps{
     website:String,
     prefix:String,
     iso_details:String,
+    principal_signature:String;
+    accountant_signature:String;
     school_no:String,
     affiliation_to:String,
     affiliation_no:String,
@@ -57,6 +59,8 @@ export const createGlobalSchoolDetails = async ({
     website,
     prefix,
     iso_details,
+    principal_signature,
+    accountant_signature,
     school_no,
     affiliation_to,
     affiliation_no,
@@ -98,6 +102,8 @@ export const createGlobalSchoolDetails = async ({
             website,
             prefix,
             iso_details,
+            principal_signature,
+            accountant_signature,
             school_no,
             affiliation_to,
             affiliation_no,
@@ -177,6 +183,8 @@ interface ModifyGlobalSchoolDetailsProps{
     website:String,
     prefix:String,
     iso_details:String,
+    principal_signature:String;
+    accountant_signature:String;
     school_no:String,
     affiliation_to:String,
     affiliation_no:String,
@@ -212,6 +220,8 @@ export const modifyGlobalSchoolDetails = async ({
     website,
     prefix,
     iso_details,
+    principal_signature,
+    accountant_signature,
     school_no,
     affiliation_to,
     affiliation_no,
@@ -254,6 +264,8 @@ export const modifyGlobalSchoolDetails = async ({
                 website,
                 prefix,
                 iso_details,
+                principal_signature,
+                accountant_signature,
                 school_no,
                 affiliation_to,
                 affiliation_no,

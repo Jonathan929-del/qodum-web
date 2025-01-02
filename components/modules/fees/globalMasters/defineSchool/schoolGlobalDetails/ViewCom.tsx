@@ -30,6 +30,8 @@ const ViewCom = ({setIsViewOpened, schoolsDetails, setUpdateSchoolDetails}:any) 
             website:schoolD.website,
             prefix:schoolD.prefix,
             iso_details:schoolD.iso_details,
+            principal_signature:schoolD.principal_signature,
+            accountant_signature:schoolD.accountant_signature,
             school_no:schoolD.school_no,
             affiliation_to:schoolD.affiliation_to,
             affiliation_no:schoolD.affiliation_no,

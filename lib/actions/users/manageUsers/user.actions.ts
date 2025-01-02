@@ -788,6 +788,34 @@ export const fetchUsers = async () => {
 
 
 
+// Fetch user by id
+// export const fetchUserById = async ({id}:{id:string}) => {
+//     try {
+
+//         // Db connection
+//         connectToDb('accounts');
+
+
+//         // Acive session
+//         const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+//         // Fetching
+//         const user = await User.findById(id);
+
+
+//         // Return
+//         return JSON.parse(JSON.stringify(user));
+
+//     } catch (err:any) {
+//         throw new Error(`Error fetching user: ${err}`);
+//     };
+// };
+
+
+
+
+
 // Modify user props
 interface ModifyUserProps{
     id:String;
@@ -951,6 +979,44 @@ export const loginUser = async ({user_name, password}:any) => {
 
     }catch(err){
         throw new Error(`Error with user login: ${err}`);  
+    };
+};
+
+
+
+
+
+// Update user permissions
+export const updateUserPermissions = async ({user_name}:any) => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Validations
+        const user = await User.findOne({user_name});
+        if(!user){
+            return {success:false, message:'User not found'};
+        };
+        // const match = bcrypt.compareSync(password, user.password);
+        // if(!match){
+        //     return {success:false, message:'Wrong password'};
+        // };
+
+
+        // loging user
+        const token = signToken(JSON.parse(JSON.stringify(user)));
+        return({
+            success:true,
+            user:JSON.parse(JSON.stringify({
+                ...user._doc,
+                token
+            }))
+        });
+
+    }catch(err){
+        throw new Error(`Error updating user permissions: ${err}`);  
     };
 };
 

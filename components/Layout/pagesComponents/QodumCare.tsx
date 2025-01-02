@@ -10,6 +10,7 @@ import {GlobalStateContext} from '@/context/GlobalStateContext';
 import SendSMS from '@/pagesComps/admission/(admission)/send-sms/page';
 import Notice from '@/pagesComps/admission/(admission)/send-sms/notice/index';
 import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice';
+import { updateUserPermissions } from '@/lib/actions/users/manageUsers/user.actions';
 
 
 
@@ -19,7 +20,7 @@ import ClassNotice from '@/pagesComps/admission/(admission)/send-sms/classNotice
 const Home = () => {
 
   // Login user check
-  const {user} = useContext(AuthContext);
+  const {user, login, logout} = useContext(AuthContext);
 
 
   // Params page
@@ -65,6 +66,19 @@ const Home = () => {
     };
 
     setOpenedPagesComponents(openedPagesArray);
+
+
+    // Checking user permissions
+    const asyncFunc = async () => {
+      localStorage.removeItem('payments');
+      const loginUserRes = await updateUserPermissions({user_name:user.user_name});
+      if(loginUserRes.success){
+        login(loginUserRes.user);
+      }else{
+        logout();
+      };
+    };
+    asyncFunc();
 
   }, [openedPages]);
   useEffect(() => {

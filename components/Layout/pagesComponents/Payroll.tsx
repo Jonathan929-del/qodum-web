@@ -20,6 +20,7 @@ import DefineDocumentType from '@/pagesComps/payroll/globalMasters/define-docume
 import ShortlistedCandidate from '@/pagesComps/payroll/globalMasters/shortlisted-candidate/page';
 import CurrentJobOpening from '@/pagesComps/payroll/globalMasters/current-job-opening/page';
 import AdmissionSettings from '@/pagesComps/payroll/masterSettings/admission-setting/page';
+import { updateUserPermissions } from '@/lib/actions/users/manageUsers/user.actions';
 
 
 
@@ -29,7 +30,7 @@ import AdmissionSettings from '@/pagesComps/payroll/masterSettings/admission-set
 const Home = () => {
 
   // Login user check
-  const {user} = useContext(AuthContext);
+  const {user, login, logout} = useContext(AuthContext);
 
 
   // Params page
@@ -108,6 +109,20 @@ const Home = () => {
     //   setMomentDefaultYear(activeYearRes.year_name.split('-')[0]);
     // };
     // fetcher();
+
+
+
+    // Checking user permissions
+    const asyncFunc = async () => {
+      localStorage.removeItem('payments');
+      const loginUserRes = await updateUserPermissions({user_name:user.user_name});
+      if(loginUserRes.success){
+        login(loginUserRes.user);
+      }else{
+        logout();
+      };
+    };
+    asyncFunc();
 
 
     setOpenedPagesComponents(openedPagesArray);

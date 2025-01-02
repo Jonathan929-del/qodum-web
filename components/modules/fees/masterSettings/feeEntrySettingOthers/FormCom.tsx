@@ -1399,7 +1399,7 @@ const FormCom = () => {
                     <div className='flex flex-col h-full overflow-y-scroll custom-sidebar-scrollbar'>
                         {dropdowns}
                         <div className='flex flex-col mt-4'>
-                            <h2 className='w-full mb-8 text-center text-xl font-bold underline'>Enable/Disable Options On Fees Entry Form</h2>
+                            <h2 className='w-full mb-8 text-center text-l font-bold underline'>Enable/Disable Options On Fees Entry Form</h2>
                             {pageOne}
                             {pageTwo}
                             {pageThree}

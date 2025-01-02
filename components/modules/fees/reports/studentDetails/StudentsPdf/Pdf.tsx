@@ -52,7 +52,7 @@ const PDF = ({pdfData}:any) => {
     return(
         <Document>
             {/* <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0}} size={{width:1000, height:300 + pdfData.fields.length * 120}} orientation='landscape'> */}
-            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0, fontFamily:'ABZ'}} orientation={pdfData.fields.length <= 7 ? 'portrait' : 'landscape'}>
+            <Page style={{width:'100%', display:'flex', flexDirection:'column', gap:2, margin:0, fontFamily:'ABZ'}} orientation={pdfData.fields.length <= 6 ? 'portrait' : 'landscape'}>
 
                 {/* School data */}
                 <View style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', gap:100, paddingVertical:10, paddingHorizontal:50, borderBottomWidth:0.5, borderBottomColor:'#ccc'}}>
@@ -83,17 +83,17 @@ const PDF = ({pdfData}:any) => {
 
 
                 {pdfData.students?.length > 0 ? (
-                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:20, fontSize:11, borderWidth:0.75, borderColor:'#ccc'}}>
+                    <View style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'flex-start', marginHorizontal:5, marginLeft:5, fontSize:11, borderWidth:0.75, borderColor:'#ccc'}}>
 
 
                         {/* Headers */}
                         <View style={{display:'flex', flexDirection:'row', alignItems:'center', backgroundColor:'#435680', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#fff'}}>
                             <View style={{width:30, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                <Text style={{fontSize:7}}>SN</Text>
+                                <Text style={{fontSize:8}}>SN</Text>
                             </View>
                             {pdfData.fields.map((f:any) => (
-                                <View style={{width:70, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text style={{fontSize:7}}>{f}</Text>
+                                <View style={{width:80, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                    <Text style={{fontSize:8}}>{f}</Text>
                                 </View>
                             ))}
                         </View>
@@ -103,11 +103,11 @@ const PDF = ({pdfData}:any) => {
                         {pdfData.students.map((s:any) => (
                             <View style={{display:'flex', flexDirection:'row', alignItems:'center', borderBottomWidth:0.5, paddingLeft:5, borderBottomColor:'#ccc', color:'#000', backgroundColor:Math.floor((pdfData.students.indexOf(s) + 1) / 2) * 2 !== pdfData.students.indexOf(s) + 1 ? '#F3F8FB' : '#fff'}}>
                                 <View style={{width:30, display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:5, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                    <Text style={{fontSize:7}}>{pdfData.students.indexOf(s) + 1}</Text>
+                                    <Text style={{fontSize:8}}>{pdfData.students.indexOf(s) + 1}</Text>
                                 </View>
                                 {pdfData.fields.map((f:any) => (
-                                    <View style={{width:70, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
-                                        <Text style={{fontSize:7}}>
+                                    <View style={{width:80, height:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', justifyContent:'center', textAlign:'center', paddingVertical:2, paddingLeft:2, borderRightWidth:1, borderRightColor:'#ccc'}}>
+                                        <Text style={{fontSize:8}}>
                                             {f === 'Class Name' && s.student.class}
                                             {f === 'Roll No.' && s.student.roll_no}
                                             {f === 'Bill No.' && s.student.bill_no}

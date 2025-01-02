@@ -66,6 +66,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
         website:updateSchoolDetails.website,
         prefix:updateSchoolDetails.prefix,
         iso_details:updateSchoolDetails.iso_details,
+        principal_signature:updateSchoolDetails.principal_signature,
+        accountant_signature:updateSchoolDetails.accountant_signature,
         school_no:updateSchoolDetails.school_no,
         affiliation_to:updateSchoolDetails.affiliation_to,
         affiliation_no:updateSchoolDetails.affiliation_no,
@@ -104,6 +106,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             website:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.website,
             prefix:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.prefix,
             iso_details:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.iso_details,
+            principal_signature:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.principal_signature,
+            accountant_signature:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.accountant_signature,
             school_no:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.school_no,
             affiliation_to:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.affiliation_to,
             affiliation_no:updateSchoolDetails.id === '' ? '' : updateSchoolDetails.affiliation_no,
@@ -150,6 +154,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 website:values.website,
                 prefix:values.prefix,
                 iso_details:values.iso_details,
+                principal_signature:values.principal_signature,
+                accountant_signature:values.accountant_signature,
                 school_no:values.school_no,
                 affiliation_to:values.affiliation_to,
                 affiliation_no:values.affiliation_no,
@@ -193,6 +199,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                 website:values.website,
                 prefix:values.prefix,
                 iso_details:values.iso_details,
+                principal_signature:values.principal_signature,
+                accountant_signature:values.accountant_signature,
                 school_no:values.school_no,
                 affiliation_to:values.affiliation_to,
                 affiliation_no:values.affiliation_no,
@@ -237,6 +245,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             website:'',
             prefix:'',
             iso_details:'',
+            principal_signature:'',
+            accountant_signature:'',
             school_no:'',
             affiliation_to:'',
             affiliation_no:'',
@@ -272,6 +282,8 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
             website:'',
             prefix:'',
             iso_details:'',
+            principal_signature:'',
+            accountant_signature:'',
             school_no:'',
             affiliation_to:'',
             affiliation_no:'',
@@ -314,7 +326,7 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
                     <div className='w-full flex flex-col mt-2 sm:flex-row sm:gap-20'>
 
-                        <div className='flex-1 flex flex-col'>
+                        <div className='flex-1 flex flex-col gap-2'>
 
 
                             {/* Radios */}
@@ -572,9 +584,86 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
                                     </FormItem>
                                 )}
                             />
+
+                            {/* Principal Signature */}
+                            <FormField
+                                control={form.control}
+                                name='principal_signature'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Principal Signature</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Accountant Signature */}
+                            <FormField
+                                control={form.control}
+                                name='accountant_signature'
+                                render={({field}) => (
+                                    <FormItem>
+                                        <div className='h-6 flex flex-row mt-[4px] sm:flex-row sm:items-center sm:gap-2'>
+                                            <FormLabel className='basis-[30%] h-full flex justify-start items-center text-[10px] text-[#726E71] lg:text-xs sm:justify-end sm:basis-[35%]'>Accountant Signature</FormLabel>
+                                            <div className='basis-[70%] h-full sm:basis-[65%]'>
+                                                <FormControl>
+                                                    <Input
+                                                        {...field}
+                                                        className='flex flex-row items-center h-full text-xs pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] resize-none'
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+                            {/* Logo */}
+                            <div className='w-full mt-2 flex items-center justify-center'>
+                                <div className='w-[75px] h-[75px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-full transition hover:opacity-90'>
+                                    <label
+                                        // @ts-ignore
+                                        for='image'
+                                        className='flex items-center justify-center h-full w-full cursor-pointer text-xs font-semibold'
+                                    >
+                                        {imageSrc !== '' ? (
+                                            <img
+                                                alt="Student's image"
+                                                src={imageSrc}
+                                                className='w-full h-full rounded-full'
+                                            />
+                                        ) : updateSchoolDetails.logo ? (
+                                            <img
+                                                alt="Student's image"
+                                                src={updateSchoolDetails.logo}
+                                                className='w-full h-full rounded-full'
+                                            />
+                                        ) : (
+                                            <p className='text-[11px]'>Select Logo</p>
+                                        )}
+                                    </label>
+                                    <input
+                                        type='file'
+                                        accept='image/*'
+                                        name='image'
+                                        id='image'
+                                        className='hidden'
+                                        onChange={(e:any) => {handleLogoOnChange(e)}}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         
-                        <div className='flex-1 flex flex-col'>
+                        <div className='flex-1 flex flex-col gap-2'>
 
                             {/* School Subheads */}
                             <RadioGroup className='hidden justify-end gap-[2px] sm:flex'>
@@ -915,42 +1004,6 @@ const FormCom = ({setIsViewOpened, schoolsDetails, updateSchoolDetails, setUpdat
 
                         </div>
 
-                    </div>
-
-
-                    {/* Logo */}
-                    <div className='w-full mt-2 flex items-center justify-center'>
-                        <div className='w-[125px] h-[125px] mb-2 flex items-center justify-center bg-[#ccc] cursor-pointer rounded-full transition hover:opacity-90'>
-                            <label
-                                // @ts-ignore
-                                for='image'
-                                className='flex items-center justify-center h-full w-full cursor-pointer text-xs font-semibold'
-                            >
-                                {imageSrc !== '' ? (
-                                    <img
-                                        alt="Student's image"
-                                        src={imageSrc}
-                                        className='w-full h-full rounded-full'
-                                    />
-                                ) : updateSchoolDetails.logo ? (
-                                    <img
-                                        alt="Student's image"
-                                        src={updateSchoolDetails.logo}
-                                        className='w-full h-full rounded-full'
-                                    />
-                                ) : (
-                                    <p>Select Logo</p>
-                                )}
-                            </label>
-                            <input
-                                type='file'
-                                accept='image/*'
-                                name='image'
-                                id='image'
-                                className='hidden'
-                                onChange={(e:any) => {handleLogoOnChange(e)}}
-                            />
-                        </div>
                     </div>
 
 
