@@ -35,7 +35,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
         // Fetching active session naeme
         const activeSession = await AcademicYear.findOne({is_active:1});
-        if(!activeSession) return 0;
+        // if(!activeSession) return 0;
 
 
         // // Checking if the user already exists
@@ -742,7 +742,7 @@ export const createUser = async ({name, user_name, password, is_reset_password, 
 
 
         // Creating new user
-        const newUser = await User.create({session:activeSession?.year_name, name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false, fee_types:[]});
+        const newUser = await User.create({session:activeSession?.year_name || '', name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false, fee_types:[]});
         // const newUser = await User.create({session:'2019', name, user_name, password:bcrypt.hashSync(password), is_reset_password, designation, email, employee, mobile, profile_picture, schools, is_active, enable_otp, permissions:permissionsArray, is_admin:false, fee_types:[]});
         newUser.save();
 
