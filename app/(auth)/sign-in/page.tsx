@@ -68,21 +68,20 @@ const SignIn = () => {
 
 
         // Create admin
-        const createUserRes = await createUser({
-            name:'superadmin',
-            user_name:'superadmin',
-            password:'Cmn1nf@ct',
-            is_reset_password:true,
-            designation:'Designataion',
-            email:'admin@admin.com',
-            employee:'',
-            mobile:1234567891,
-            profile_picture:'https://www.unitedagents.co.uk/sites/default/files/thumbnails/image/guybolton-photo-deadline.jpg',
-            schools:[''],
-            is_active:true,
-            enable_otp:true
-        });
-        console.log(createUserRes);
+        // const createUserRes = await createUser({
+        //     name:'superadmin',
+        //     user_name:'superadmin',
+        //     password:'Cmn1nf@ct',
+        //     is_reset_password:true,
+        //     designation:'Designataion',
+        //     email:'admin@admin.com',
+        //     employee:'',
+        //     mobile:1234567891,
+        //     profile_picture:'https://www.unitedagents.co.uk/sites/default/files/thumbnails/image/guybolton-photo-deadline.jpg',
+        //     schools:[''],
+        //     is_active:true,
+        //     enable_otp:true
+        // });
 
 
         // Create admission states

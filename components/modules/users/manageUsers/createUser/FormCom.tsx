@@ -104,10 +104,6 @@ const FormCom = ({setIsViewOpened, users, updateUser, setUpdateUser, staff, file
                 is_active:values.is_active,
                 enable_otp:values.enable_otp
             });
-            if(res === 0){
-                toast({title:'Please create a session first', variant:'alert'});
-                return;
-            };
             toast({title:'Added Successfully!'});
         }
         // Modify user
