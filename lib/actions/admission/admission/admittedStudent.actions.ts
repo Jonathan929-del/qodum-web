@@ -412,7 +412,7 @@ export const fetchAllAdmittedStudents = async () => {
 
         // Fetching
         const students = await AdmittedStudent.find({session:activeSession?.year_name});
-        return students;
+        return JSON.parse(JSON.stringify(students));
 
     } catch (err:any) {
         throw new Error(`Error fetching admitted students: ${err}`);

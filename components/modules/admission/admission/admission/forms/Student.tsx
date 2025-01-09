@@ -2234,6 +2234,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
+                                                disabled
                                                 {...field}
                                                 className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />

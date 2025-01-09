@@ -12,7 +12,6 @@ import {Command, CommandEmpty, CommandInput, CommandItem, CommandList} from '@/c
 // Main Function
 const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegister, setSelectedSubjects, setSelectedDocuments, setPreviousSchoolsDetails}:any) => {
 
-
     // Select handler
     const selectHandler = (student:any) => {
         setValuesFromRegister({
@@ -357,7 +356,6 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
         setPreviousSchoolsDetails(student.others.previous_school_details);
     };
 
-
     return (
         <Command className='w-[90%] max-h-[90%] flex flex-col items-center pb-2 gap-2 rounded-[8px] border-[0.5px] border-[#E8E8E8]'>
 
@@ -379,7 +377,7 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
 
 
                 {/* Account group */}
-                <div className='w-full flex flex-col h-[90%] overflow-scroll custom-sidebar-scrollbar'>
+                <div className='w-full flex flex-col h-[90%] overflow-y-scroll'>
                     {/* Headers */}
                     <ul className='w-full min-w-[1000px] flex flex-row text-[10px] border-b-[0.5px] border-[#ccc] text-hash-color cursor-pointer sm:text-xs md:text-md'>
                         <li className='basis-[10%] flex flex-row items-center justify-between px-2 py-[2px] border-r-[0.5px] border-[#ccc] sm:basis-[10%]'>
@@ -445,7 +443,6 @@ const ViewCom = ({setIsViewOpened, students, setUpdateStudent, setValuesFromRegi
                             ))
                         }
                     </CommandList>
-                    {students.length > 0 && <CommandEmpty>No results found</CommandEmpty>}  
                 </div>
 
 

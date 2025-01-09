@@ -584,6 +584,7 @@ const FormCom = ({}:any) => {
                     // Documents
                     documents:s.documents
                 });
+                console.log(res);
                 if(res === 0){
                     toast({title:'Please create a session first', variant:'alert'});
                     return;
