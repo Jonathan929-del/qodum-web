@@ -32,7 +32,7 @@ const Modules = () => {
             {
                 modules.filter((module:any) => permittedModules.includes(module.title)).map((module:any) => (
                     // <div className={`relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA] border-b-[2px] transition hover:border-[#2CABE3] hover:translate-y-[-10px]`} key={module.title}>
-                    <div className='relative w-[300px] flex flex-col rounded-[4px] p-4 bg-[#FAFAFA]' key={module.title}>
+                    <div className='relative w-[300px] h-[350px] flex flex-col justify-between rounded-[4px] p-4 bg-[#FAFAFA]' key={module.title}>
 
                         <div className='absolute top-[-30px] left-[38%] flex items-center justify-center w-[85px] h-[85px] rounded-full border-4 border-[#ecedf0] bg-white'>
                             <Image

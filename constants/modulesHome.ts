@@ -24,10 +24,9 @@ const modules:any = [
         icon:AdmissionImage,
         title:'Admission',
         sections:[
-            'TC Form',
-            'Student Details',
-            'Print Fee Receipt',
-            'Student Registration',
+            'Enquiry',
+            'Admission',
+            'Admission Report'
         ]
     },
 
@@ -38,9 +37,9 @@ const modules:any = [
         title:'Fees',
         sections:[
             'Fee Entry',
-            'Student Fee Entry',
             'Print Fee Receipt',
-            'Student Fee Details',
+            'Daily Collection Report',
+            'Assign Transport To Student',
         ]
     },
 
