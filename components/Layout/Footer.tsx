@@ -1,8 +1,9 @@
 // Imports
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useEffect, useState} from 'react';
 import {Globe, GraduationCap, PieChart} from 'lucide-react';
+import {fetchAdmissionStates} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -10,6 +11,20 @@ import {Globe, GraduationCap, PieChart} from 'lucide-react';
 
 // Main function
 const Footer = ({activeAcademicYearName, activeFinancialYear}:any) => {
+
+    // Logo
+    const [logo, setLogo] = useState('');
+
+
+    // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const admissionsStatesRes = await fetchAdmissionStates();
+            setLogo(admissionsStatesRes.logo);
+        };
+        fetcher();
+    }, []);
+
     return (
         <footer className='flex flex-col items-center justify-between w-full bg-[#F3F8FB] px-4 py-2 z-30 lg:flex-row lg:py-[2px]'>
 
@@ -45,9 +60,10 @@ const Footer = ({activeAcademicYearName, activeFinancialYear}:any) => {
             <div className='flex w-full justify-end lg:w-auto'>
                 <Image
                     alt='Logo'
-                    width={100}
-                    height={100}
-                    src='/assets/logo.png'
+                    width={150}
+                    height={150}
+                    // src='/assets/logo.png'
+                    src={logo}
                 />
             </div>
 

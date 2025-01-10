@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 const AdmissionStateSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
+        logo:{type:String},
         is_staff_admission_opened:{type:Boolean},
         admission_accounts_last_updated_at:{type:Date, default:new Date()},
         post_accounts_last_updated_at:{type:Date, default:new Date()},

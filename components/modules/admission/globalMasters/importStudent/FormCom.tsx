@@ -1,14 +1,16 @@
 'use client';
 // Imports
 import * as XLSX from 'xlsx';
-import {useContext, useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
+import {AuthContext} from '@/context/AuthContext';
 import {useToast} from '@/components/ui/use-toast';
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
-import {createAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {useContext, useEffect, useState} from 'react';
 import LoadingIcon from '@/components/utils/LoadingIcon';
-import { AuthContext } from '@/context/AuthContext';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {fetchWings} from '@/lib/actions/fees/globalMasters/defineClassDetails/wing.actions';
+import {fetchCategoriesNames} from '@/lib/actions/admission/globalMasters/category.actions';
+import {createAdmittedStudent} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -33,6 +35,14 @@ const FormCom = ({}:any) => {
 
     // Toast
     const {toast} = useToast();
+
+
+    // Wings
+    const [wings, setWings] = useState([]);
+
+
+    // Categories
+    const [categories, setCategories] = useState([]);
 
 
     // Upload method
@@ -129,6 +139,7 @@ const FormCom = ({}:any) => {
                 'Name':'student.name',
                 'ClassID':'student.class',
                 'SectionID':'student.section',
+                'WingsID':'student.wing',
                 'TransportType':'student.transport',
                 'Roll_No':'student.roll_no',
                 'StudentPEN':'student.pen_no',
@@ -182,17 +193,17 @@ const FormCom = ({}:any) => {
                             adm_no: item['student.adm_no'],
                             blood_group: item['student.blood_group'],
                             caste: item['student.caste'],
-                            category: item['student.category'],
+                            category: categories[item['student.category'] + 1],
                             class: item['student.class'],
                             doa: item['student.doa'],
                             dob: item['student.dob'],
                             doj: item['student.doj'],
-                            gender: item['student.gender'],
+                            gender: item['student.gender'] === 1 ? 'Male' : 'Female',
                             h_no_and_streets: item['student.h_no_and_streets'],
                             house: item['student.house'],
-                            is_active: item['student.is_active'],
-                            is_ews: item['student.is_ews'],
-                            is_new: item['student.is_new'],
+                            is_active: item['student.is_active'] === 1 ? true : false,
+                            is_ews: item['student.is_ews'] === 1 ? true : false,
+                            is_new: item['student.is_new'] === 1 ? true : false,
                             mobile: item['student.mobile'],
                             name: item['student.name'],
                             nationality: item['student.nationality'],
@@ -200,6 +211,7 @@ const FormCom = ({}:any) => {
                             religion: item['student.religion'],
                             roll_no: item['student.roll_no'],
                             section: item['student.section'],
+                            wing: wings[item['student.wing'] + 1],
                             sibling: item['student.sibling'],
                             student_status: item['student.student_status'],
                             transport: item['student.transport']
@@ -225,6 +237,7 @@ const FormCom = ({}:any) => {
                     return {
                         student: {
                             section: extractedData?.student?.section || '',
+                            wing: extractedData?.student?.wing || '',
                             adm_no: extractedData?.student?.adm_no || '',
                             pen_no: extractedData?.student?.pen_no || '',
                             par_id: extractedData?.student?.par_id || '',
@@ -396,200 +409,202 @@ const FormCom = ({}:any) => {
                 return studentModels;
             };
             const dataAsStudentModel = studentModelConverter(extractedData);
+            console.log(dataAsStudentModel);
 
 
             // Submitting data
-            dataAsStudentModel.map(async (s:any) => {
-                const res = await createAdmittedStudent({
-                    // Student
-                    student:{
-                        // Admission data
-                        section:s.student.section,
-                        adm_no:s.student.adm_no,
-                        pen_no:s.student.pen_no,
-                        par_id:s.student.par_id,
-                        roll_no:s.student.roll_no,
-                        bill_no:s.student.bill_no,
-                        is_university:s.student.is_university,
-                        re_adm_no:s.student.re_adm_no,
-                        is_minority:s.student.is_minority,
-                        is_disability:s.student.is_disability,
-                        dis_disc:s.student.dis_disc,
-                        is_new:s.student.is_new,
-                        is_active:s.student.is_active,
-                        reason:s.student.reason,
-                        is_only_child:s.student.is_only_child,
-                        student_status:s.student.student_status,
-                        house:s.student.house,
-                        doa:s.student.doa,
-                        doj:s.student.doj,
-                        admitted_class:s.student.admitted_class,
-                        // 1
-                        image:s.student.image,
-                        // 2
-                        stream:s.student.stream,
-                        subjects:s.student.subjects,
-                        optional_subject:s.student.optional_subject,
-                        class:s.student.class,
-                        board:s.student.board,
-                        name:s.student.name,
-                        middle_name:s.student.middle_name,
-                        last_name:s.student.last_name,
-                        dob:s.student.dob,
-                        place_of_birth:s.student.place_of_birth,
-                        gender:s.student.gender,
-                        contact_person_name:s.student.contact_person_name,
-                        contact_person_mobile:s.student.contact_person_mobile,
-                        contact_person_email:s.student.contact_person_email,
-                        secondary_contact_no:s.student.secondary_contact_no,
-                        h_no_and_streets:s.student.h_no_and_streets,
-                        locality:s.student.locality,
-                        email:s.student.email,
-                        city:s.student.city,
-                        mobile:s.student.mobile,
-                        state:s.student.state,
-                        pin_code:s.student.pin_code,
-                        aadhar_card_no:s.student.aadhar_card_no,
-                        whats_app_no:s.student.whats_app_no,
-                        religion:s.student.religion,
-                        parish:s.student.parish,
-                        caste:s.student.caste,
-                        category:s.student.category,
-                        blood_group:s.student.blood_group,
-                        cadet_type:s.student.cadet_type,
-                        club:s.student.club,
-                        is_ews:s.student.is_ews,
-                        is_rte:s.student.is_rte,
-                        sibling:s.student.sibling,
-                        transport:s.student.transport,
-                        nationality:s.student.nationality
-                    },
+            // dataAsStudentModel.map(async (s:any) => {
+            //     const res = await createAdmittedStudent({
+            //         // Student
+            //         student:{
+            //             // Admission data
+            //             section:s.student.section,
+            //             wing:s.student.wing,
+            //             adm_no:s.student.adm_no,
+            //             pen_no:s.student.pen_no,
+            //             par_id:s.student.par_id,
+            //             roll_no:s.student.roll_no,
+            //             bill_no:s.student.bill_no,
+            //             is_university:s.student.is_university,
+            //             re_adm_no:s.student.re_adm_no,
+            //             is_minority:s.student.is_minority,
+            //             is_disability:s.student.is_disability,
+            //             dis_disc:s.student.dis_disc,
+            //             is_new:s.student.is_new,
+            //             is_active:s.student.is_active,
+            //             reason:s.student.reason,
+            //             is_only_child:s.student.is_only_child,
+            //             student_status:s.student.student_status,
+            //             house:s.student.house,
+            //             doa:s.student.doa,
+            //             doj:s.student.doj,
+            //             admitted_class:s.student.admitted_class,
+            //             // 1
+            //             image:s.student.image,
+            //             // 2
+            //             stream:s.student.stream,
+            //             subjects:s.student.subjects,
+            //             optional_subject:s.student.optional_subject,
+            //             class:s.student.class,
+            //             board:s.student.board,
+            //             name:s.student.name,
+            //             middle_name:s.student.middle_name,
+            //             last_name:s.student.last_name,
+            //             dob:s.student.dob,
+            //             place_of_birth:s.student.place_of_birth,
+            //             gender:s.student.gender,
+            //             contact_person_name:s.student.contact_person_name,
+            //             contact_person_mobile:s.student.contact_person_mobile,
+            //             contact_person_email:s.student.contact_person_email,
+            //             secondary_contact_no:s.student.secondary_contact_no,
+            //             h_no_and_streets:s.student.h_no_and_streets,
+            //             locality:s.student.locality,
+            //             email:s.student.email,
+            //             city:s.student.city,
+            //             mobile:s.student.mobile,
+            //             state:s.student.state,
+            //             pin_code:s.student.pin_code,
+            //             aadhar_card_no:s.student.aadhar_card_no,
+            //             whats_app_no:s.student.whats_app_no,
+            //             religion:s.student.religion,
+            //             parish:s.student.parish,
+            //             caste:s.student.caste,
+            //             category:s.student.category,
+            //             blood_group:s.student.blood_group,
+            //             cadet_type:s.student.cadet_type,
+            //             club:s.student.club,
+            //             is_ews:s.student.is_ews,
+            //             is_rte:s.student.is_rte,
+            //             sibling:s.student.sibling,
+            //             transport:s.student.transport,
+            //             nationality:s.student.nationality
+            //         },
     
-                    // Parents
-                    parents:{
-                        // Father
-                        father:{
-                            father_name:s.parents.father.father_name,
-                            middle_name:s.parents.father.middle_name,
-                            last_name:s.parents.father.last_name,
-                            profession:s.parents.father.profession,
-                            designation:s.parents.father.designation,
-                            residence_address:s.parents.father.residence_address,
-                            office_address:s.parents.father.office_address,
-                            email:s.parents.father.email,
-                            alternate_email:s.parents.father.alternate_email,
-                            dob:s.parents.father.dob,
-                            mobile:s.parents.father.mobile,
-                            phone:s.parents.father.phone,
-                            company_name:s.parents.father.company_name,
-                            business_details:s.parents.father.business_details,
-                            qualification:s.parents.father.qualification,
-                            service_in:s.parents.father.service_in,
-                            office_phone:s.parents.father.office_phone,
-                            office_mobile:s.parents.father.office_mobile,
-                            office_extension:s.parents.father.office_extension,
-                            office_email:s.parents.father.office_email,
-                            office_website:s.parents.father.office_website,
-                            annual_income:s.parents.father.annual_income,
-                            parent_status:s.parents.father.parent_status
-                        },
-                        // Mother
-                        mother:{
-                            mother_name:s.parents.mother.mother_name,
-                            middle_name:s.parents.mother.middle_name,
-                            last_name:s.parents.mother.last_name,
-                            profession:s.parents.mother.profession,
-                            designation:s.parents.mother.designation,
-                            residence_address:s.parents.mother.residence_address,
-                            office_address:s.parents.mother.office_address,
-                            email:s.parents.mother.email,
-                            alternate_email:s.parents.mother.alternate_email,
-                            dob:s.parents.mother.dob,
-                            mobile:s.parents.mother.mobile,
-                            phone:s.parents.mother.phone,
-                            company_name:s.parents.mother.company_name,
-                            business_details:s.parents.mother.business_details,
-                            qualification:s.parents.mother.qualification,
-                            service_in:s.parents.mother.service_in,
-                            office_phone:s.parents.mother.office_phone,
-                            office_mobile:s.parents.mother.office_mobile,
-                            office_extension:s.parents.mother.office_extension,
-                            office_email:s.parents.mother.office_email,
-                            office_website:s.parents.mother.office_website,
-                            annual_income:s.parents.mother.annual_income,
-                            anniversary_date:s.parents.mother.anniversary_date
-                        }
-                    },
+            //         // Parents
+            //         parents:{
+            //             // Father
+            //             father:{
+            //                 father_name:s.parents.father.father_name,
+            //                 middle_name:s.parents.father.middle_name,
+            //                 last_name:s.parents.father.last_name,
+            //                 profession:s.parents.father.profession,
+            //                 designation:s.parents.father.designation,
+            //                 residence_address:s.parents.father.residence_address,
+            //                 office_address:s.parents.father.office_address,
+            //                 email:s.parents.father.email,
+            //                 alternate_email:s.parents.father.alternate_email,
+            //                 dob:s.parents.father.dob,
+            //                 mobile:s.parents.father.mobile,
+            //                 phone:s.parents.father.phone,
+            //                 company_name:s.parents.father.company_name,
+            //                 business_details:s.parents.father.business_details,
+            //                 qualification:s.parents.father.qualification,
+            //                 service_in:s.parents.father.service_in,
+            //                 office_phone:s.parents.father.office_phone,
+            //                 office_mobile:s.parents.father.office_mobile,
+            //                 office_extension:s.parents.father.office_extension,
+            //                 office_email:s.parents.father.office_email,
+            //                 office_website:s.parents.father.office_website,
+            //                 annual_income:s.parents.father.annual_income,
+            //                 parent_status:s.parents.father.parent_status
+            //             },
+            //             // Mother
+            //             mother:{
+            //                 mother_name:s.parents.mother.mother_name,
+            //                 middle_name:s.parents.mother.middle_name,
+            //                 last_name:s.parents.mother.last_name,
+            //                 profession:s.parents.mother.profession,
+            //                 designation:s.parents.mother.designation,
+            //                 residence_address:s.parents.mother.residence_address,
+            //                 office_address:s.parents.mother.office_address,
+            //                 email:s.parents.mother.email,
+            //                 alternate_email:s.parents.mother.alternate_email,
+            //                 dob:s.parents.mother.dob,
+            //                 mobile:s.parents.mother.mobile,
+            //                 phone:s.parents.mother.phone,
+            //                 company_name:s.parents.mother.company_name,
+            //                 business_details:s.parents.mother.business_details,
+            //                 qualification:s.parents.mother.qualification,
+            //                 service_in:s.parents.mother.service_in,
+            //                 office_phone:s.parents.mother.office_phone,
+            //                 office_mobile:s.parents.mother.office_mobile,
+            //                 office_extension:s.parents.mother.office_extension,
+            //                 office_email:s.parents.mother.office_email,
+            //                 office_website:s.parents.mother.office_website,
+            //                 annual_income:s.parents.mother.annual_income,
+            //                 anniversary_date:s.parents.mother.anniversary_date
+            //             }
+            //         },
     
-                    // Other details
-                    others:{
-                        // 1
-                        student_other_details:{
-                            medical_history:s.others.student_other_details.medical_history,
-                            descriptions:s.others.student_other_details.descriptions,
-                            allergies:s.others.student_other_details.allergies,
-                            allergies_causes:s.others.student_other_details.allergies_causes,
-                            family_doctor_name:s.others.student_other_details.family_doctor_name,
-                            family_doctor_phone:s.others.student_other_details.family_doctor_phone,
-                            family_doctor_address:s.others.student_other_details.family_doctor_address,
-                            distance_from_home:s.others.student_other_details.distance_from_home,
-                            no_of_living_year:s.others.student_other_details.no_of_living_year,
-                            only_child:s.others.student_other_details.only_child,
-                            general_description:s.others.student_other_details.general_description,
-                        },
-                        // 2
-                        student_staff_relation:{
-                            staff_ward:s.others.student_staff_relation.staff_ward,
-                            staff_name:s.others.student_staff_relation.staff_name
-                        },
-                        // 3
-                        is_alumni:{
-                            is_alumni:s.others.is_alumni.is_alumni,
-                            academic_session:s.others.is_alumni.academic_session,
-                            class_name:s.others.is_alumni.class_name,
-                            admission_number:s.others.is_alumni.admission_number
-                        },
-                        // 4
-                        previous_school_details:[
-                            {
-                                school_name:s.others.previous_school_details[0]?.school_name,
-                                board:s.others.previous_school_details[0]?.board,
-                                passing_year:s.others.previous_school_details[0]?.passing_year,
-                                total_marks:s.others.previous_school_details[0]?.total_marks,
-                                percentage:s.others.previous_school_details[0]?.percentage,
-                                result:s.others.previous_school_details[0]?.result
-                            }
-                        ]
-                    },
+            //         // Other details
+            //         others:{
+            //             // 1
+            //             student_other_details:{
+            //                 medical_history:s.others.student_other_details.medical_history,
+            //                 descriptions:s.others.student_other_details.descriptions,
+            //                 allergies:s.others.student_other_details.allergies,
+            //                 allergies_causes:s.others.student_other_details.allergies_causes,
+            //                 family_doctor_name:s.others.student_other_details.family_doctor_name,
+            //                 family_doctor_phone:s.others.student_other_details.family_doctor_phone,
+            //                 family_doctor_address:s.others.student_other_details.family_doctor_address,
+            //                 distance_from_home:s.others.student_other_details.distance_from_home,
+            //                 no_of_living_year:s.others.student_other_details.no_of_living_year,
+            //                 only_child:s.others.student_other_details.only_child,
+            //                 general_description:s.others.student_other_details.general_description,
+            //             },
+            //             // 2
+            //             student_staff_relation:{
+            //                 staff_ward:s.others.student_staff_relation.staff_ward,
+            //                 staff_name:s.others.student_staff_relation.staff_name
+            //             },
+            //             // 3
+            //             is_alumni:{
+            //                 is_alumni:s.others.is_alumni.is_alumni,
+            //                 academic_session:s.others.is_alumni.academic_session,
+            //                 class_name:s.others.is_alumni.class_name,
+            //                 admission_number:s.others.is_alumni.admission_number
+            //             },
+            //             // 4
+            //             previous_school_details:[
+            //                 {
+            //                     school_name:s.others.previous_school_details[0]?.school_name,
+            //                     board:s.others.previous_school_details[0]?.board,
+            //                     passing_year:s.others.previous_school_details[0]?.passing_year,
+            //                     total_marks:s.others.previous_school_details[0]?.total_marks,
+            //                     percentage:s.others.previous_school_details[0]?.percentage,
+            //                     result:s.others.previous_school_details[0]?.result
+            //                 }
+            //             ]
+            //         },
     
-                    // Guardian details
-                    guardian_details:{
-                        // 1
-                        guardian_name:s.guardian_details.guardian_name,
-                        profession:s.guardian_details.profession,
-                        designation:s.guardian_details.designation,
-                        company_name:s.guardian_details.company_name,
-                        business_details:s.guardian_details.business_details,
-                        qualification:s.guardian_details.qualification,
-                        // 2
-                        if_single_parent:{
-                            student_lives_with:s.guardian_details.if_single_parent.student_lives_with,
-                            legal_custody_of_the_child:s.guardian_details.if_single_parent.legal_custody_of_the_child,
-                            correspondence_to:s.guardian_details.if_single_parent.correspondence_to,
-                            check_id_applicable:s.guardian_details.if_single_parent.check_id_applicable,
-                            separation_reason:s.guardian_details.if_single_parent.separation_reason
-                        }
-                    },
+            //         // Guardian details
+            //         guardian_details:{
+            //             // 1
+            //             guardian_name:s.guardian_details.guardian_name,
+            //             profession:s.guardian_details.profession,
+            //             designation:s.guardian_details.designation,
+            //             company_name:s.guardian_details.company_name,
+            //             business_details:s.guardian_details.business_details,
+            //             qualification:s.guardian_details.qualification,
+            //             // 2
+            //             if_single_parent:{
+            //                 student_lives_with:s.guardian_details.if_single_parent.student_lives_with,
+            //                 legal_custody_of_the_child:s.guardian_details.if_single_parent.legal_custody_of_the_child,
+            //                 correspondence_to:s.guardian_details.if_single_parent.correspondence_to,
+            //                 check_id_applicable:s.guardian_details.if_single_parent.check_id_applicable,
+            //                 separation_reason:s.guardian_details.if_single_parent.separation_reason
+            //             }
+            //         },
     
-                    // Documents
-                    documents:s.documents
-                });
-                console.log(res);
-                if(res === 0){
-                    toast({title:'Please create a session first', variant:'alert'});
-                    return;
-                };
-            });
+            //         // Documents
+            //         documents:s.documents
+            //     });
+            //     console.log(res);
+            //     if(res === 0){
+            //         toast({title:'Please create a session first', variant:'alert'});
+            //         return;
+            //     };
+            // });
             toast({title:'File uploaded successfully'});
             setIsLoading(false);
 
@@ -601,6 +616,15 @@ const FormCom = ({}:any) => {
 
 
     // Use effect
+    useEffect(() => {
+        const fetcher = async () => {
+            const wingsRes = await fetchWings();
+            const categoriesRes = await fetchCategoriesNames();
+            setWings(wingsRes.map((w:any) => w.wing));
+            setCategories(categoriesRes);
+        };
+        fetcher();
+    }, []);
     useEffect(() => {
         const grantedPermissions = user?.permissions?.find((p:any) => p.name === 'Admission')?.permissions?.find((pp:any) => pp.sub_menu === 'Import Student');
         setPermissions(grantedPermissions);
