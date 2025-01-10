@@ -25,6 +25,7 @@ const modules:any = [
         title:'Admission',
         sections:[
             'Enquiry',
+            'Registration',
             'Admission',
             'Admission Report'
         ]

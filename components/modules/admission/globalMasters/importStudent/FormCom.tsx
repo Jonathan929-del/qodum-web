@@ -287,7 +287,7 @@ const FormCom = ({}:any) => {
                             parish: extractedData?.student?.parish || '',
                             caste: extractedData?.student?.caste || '',
                             // category: extractedData?.student?.category || '',
-                            category: categories[Number(extractedData?.student?.category) + 1].category_name || '',
+                            category: categories[Number(extractedData?.student?.category) + 1]?.category_name || '',
                             blood_group: extractedData?.student?.blood_group || '',
                             cadet_type: extractedData?.student?.cadet_type || '',
                             club: extractedData?.student?.club || '',

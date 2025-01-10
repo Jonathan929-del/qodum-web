@@ -1900,8 +1900,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             // setClassesState({isLoading:false, items:classesRes});
                                         }}
                                     >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                            <SelectValue placeholder='Select Class' className='text-[11px]' />
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectValue placeholder='Select Class' className='text-[12px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -1916,7 +1916,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
-                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                             </FormItem>
                         </div>
                     </div>
@@ -1933,8 +1933,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                             // setSectionsState({isLoading:false, items:classesRes});
                                         }}
                                     >
-                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                            <SelectValue placeholder='Select Section' className='text-[11px]' />
+                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                            <SelectValue placeholder='Select Section' className='text-[12px]' />
                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -1951,7 +1951,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
-                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                             </FormItem>
                         </div>
                     </div>
@@ -2001,7 +2001,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Class */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Class</FormLabel>
+                        <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Class</FormLabel>
                         {classesState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2022,10 +2022,10 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         // setClassesState({isLoading:false, items:classesRes});
                                                     }}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue
                                                             // @ts-ignore
-                                                            placeholder={'Please Select'} className='text-[11px]'
+                                                            placeholder={'Please Select'} className='text-[12px]'
                                                         />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
@@ -2041,7 +2041,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
-                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                         </FormItem>
                                     )}
                                 />
@@ -2053,7 +2053,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Section */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Section</FormLabel>
+                        <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Section</FormLabel>
                         {sectionsState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2074,8 +2074,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         // setSectionsState({isLoading:false, items:res});
                                                     }}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -2098,7 +2098,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
-                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                         </FormItem>
                                     )}
                                 />
@@ -2109,7 +2109,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                     {/* Board */}
                     <div className='w-full flex flex-col items-center lg:flex-row'>
-                        <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Board</FormLabel>
+                        <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Board</FormLabel>
                         {boardsState.isLoading ? (
                             <LoadingIcon />
                         ) : (
@@ -2130,8 +2130,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         // setBoardsState({isLoading:false, items:res});
                                                     }}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -2161,15 +2161,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2184,15 +2184,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Middle Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Middle Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2207,15 +2207,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Last Name</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Last Name</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2230,16 +2230,16 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Adm. No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Adm. No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
                                                 disabled
                                                 {...field}
-                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2254,7 +2254,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>UDISE/PEN No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2262,7 +2262,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2277,7 +2277,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PAR ID</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>PAR ID</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2285,7 +2285,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2300,7 +2300,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Roll No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Roll No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2308,7 +2308,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2323,7 +2323,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         render={({ field }) => (
                             <FormItem className='w-full mt-2 lg:mt-0'>
                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Bill No.</FormLabel>
+                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Bill No.</FormLabel>
                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                         <FormControl>
                                             <Input
@@ -2331,7 +2331,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                 className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                             />
                                         </FormControl>
-                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                     </div>
                                 </div>
                             </FormItem>
@@ -2347,7 +2347,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             <FormItem className='flex flex-row items-start justify-start lg:items-center lg:gap-2'>
                                     <FormControl>
                                         <div className='flex-1 flex items-center justify-center space-x-2'>
-                                            <Label htmlFor='is_university' className='text-[11px] text-hash-color'>
+                                            <Label htmlFor='is_university' className='text-[12px] text-hash-color'>
                                                 Is University
                                             </Label>
                                             <Switch
@@ -2372,7 +2372,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             render={({ field }) => (
                                 <FormItem className='w-full mt-2 lg:mt-0'>
                                     <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                        <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Re Admission No.</FormLabel>
+                                        <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Re Admission No.</FormLabel>
                                         <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                             <FormControl>
                                                 <Input
@@ -2380,7 +2380,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     className='h-full flex flex-row items-center text-[9px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                 />
                                             </FormControl>
-                                            <FormMessage className='mt-[-20px] text-[11px]' />
+                                            <FormMessage className='mt-[-20px] text-[12px]' />
                                         </div>
                                     </div>
                                 </FormItem>
@@ -2440,7 +2440,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.dob'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOB</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[12px] text-[#726E71] lg:basis-[35%]'>DOB</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={dob}
@@ -2458,7 +2458,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.doa'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOA</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[12px] text-[#726E71] lg:basis-[35%]'>DOA</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={doa}
@@ -2476,7 +2476,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 name='student.doj'
                                 render={() => (
                                     <FormItem className='relative w-full h-7 pb-[8px] flex flex-col items-start justify-center mt-2 lg:mt-0'>
-                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>DOJ</FormLabel>
+                                        <FormLabel className='basis-auto h-2 pr-[4px] text-start text-[12px] text-[#726E71] lg:basis-[35%]'>DOJ</FormLabel>
                                         <div className='w-full'>
                                             <MyDatePicker
                                                 selectedDate={doj}
@@ -2490,7 +2490,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex-1 flex flex-col gap-2 mt-2 lg:flex-row lg:mt-0'>
                             {/* Admitted Class */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Admitted Class</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Admitted Class</FormLabel>
                                 {classesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2511,8 +2511,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setClassesState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -2527,7 +2527,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             </SelectContent>
                                                         </Select>
                                                     </FormControl>
-                                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                    <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                                 </FormItem>
                                             )}
                                         />
@@ -2542,15 +2542,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={({ field }) => (
                                         <FormItem>
                                             <div className='w-full flex flex-col items-start justify-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-start text-[11px] text-[#726E71] lg:basis-[35%]'>Place Of Birth</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-start text-[12px] text-[#726E71] lg:basis-[35%]'>Place Of Birth</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
                                                             {...field}
-                                                            className='flex h-7 flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            className='flex h-7 flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                         />
                                                     </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    <FormMessage className='mt-[-20px] text-[12px]' />
                                                 </div>
                                             </div>
                                         </FormItem>
@@ -2565,7 +2565,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={() => (
                                         <FormItem>
                                             <div className='w-full flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Gender</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Gender</FormLabel>
                                                 <div className='h-full w-full flex flex-col gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                     <RadioGroup
@@ -2574,15 +2574,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     >
                                                         <div className='flex items-center space-x-[2px]'>
                                                             <RadioGroupItem value='Male' id='Male' onClick={() => form.setValue('student.gender', 'Male')}/>
-                                                            <Label htmlFor='Male' className='text-[11px] text-hash-color'>Male</Label>
+                                                            <Label htmlFor='Male' className='text-[12px] text-hash-color'>Male</Label>
                                                         </div>
                                                         <div className='flex items-center space-x-[2px]'>
                                                             <RadioGroupItem value='Female' id='Female' onClick={() => form.setValue('student.gender', 'Female')}/>
-                                                            <Label htmlFor='Female' className='text-[11px] text-hash-color'>Female</Label>
+                                                            <Label htmlFor='Female' className='text-[12px] text-hash-color'>Female</Label>
                                                         </div>
                                                     </RadioGroup>
                                                     </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    <FormMessage className='mt-[-20px] text-[12px]' />
                                                 </div>
                                             </div>
                                         </FormItem>
@@ -2605,15 +2605,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>H. No. and Streets</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>H. No. and Streets</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2626,15 +2626,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full my-2 lg:my-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Locality</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Locality</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2649,15 +2649,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>City</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>City</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2670,15 +2670,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Mobile</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Mobile</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2693,15 +2693,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>State</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>State</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2714,15 +2714,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>PIN Code</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>PIN Code</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2737,15 +2737,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full my-2 lg:my-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>What's App No</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2758,15 +2758,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                 render={({ field }) => (
                                     <FormItem className='w-full mt-2 lg:mt-0'>
                                         <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                            <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Email</FormLabel>
+                                            <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Email</FormLabel>
                                             <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                 <FormControl>
                                                     <Input
                                                         {...field}
-                                                        className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                        className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                     />
                                                 </FormControl>
-                                                <FormMessage className='mt-[-20px] text-[11px]' />
+                                                <FormMessage className='mt-[-20px] text-[12px]' />
                                             </div>
                                         </div>
                                     </FormItem>
@@ -2784,7 +2784,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Religion */}
                             <div className='w-[50%] flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Religion</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Religion</FormLabel>
                                 {religionsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2805,8 +2805,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setReligionsState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -2832,7 +2832,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             {/* Parish */}
                             {isParish && (
                                 <div className='w-[50%] flex flex-col items-center lg:flex-row'>
-                                    <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
+                                    <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Parish</FormLabel>
                                     {parishesState.isLoading ? (
                                         <LoadingIcon />
                                     ) : (
@@ -2853,8 +2853,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                     // setParishesState({isLoading:false, items:res});
                                                                 }}
                                                             >
-                                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                    <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                                <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                    <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                     <ChevronDown className="h-4 w-4 opacity-50" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
@@ -2880,7 +2880,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-2 lg:flex-row'>
                             {/* Category */}
                             <div className='w-full flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Category</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Category</FormLabel>
                                 {categoriesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2901,8 +2901,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setCategoriesState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -2925,7 +2925,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                             </div>
                             {/* Caste */}
                             <div className='w-full flex flex-col items-center lg:flex-row'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Caste</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%] lg:text-end'>Caste</FormLabel>
                                 {castesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -2946,8 +2946,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setCastesState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -2979,7 +2979,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-2 p-2 ml-2 lg:flex-row'>
                             {/* Blood Group */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Blood Group</FormLabel>
                                 {bloodGroupsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3000,8 +3000,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setBloodGroupsState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3026,7 +3026,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                             {/* Cadet Type */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Cadet Type</FormLabel>
                                 {cadetTypesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3047,8 +3047,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setCadetTypesState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3073,7 +3073,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                             {/* Club */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Club</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] pr-[4px] text-[#726E71] lg:basis-[35%]'>Club</FormLabel>
                                 {clubsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3094,8 +3094,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setClubsState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3125,7 +3125,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         <div className='flex flex-col gap-4 p-2 ml-2 lg:flex-row'>
                             {/* Stream */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Stream</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Stream</FormLabel>
                                 {streamsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3146,8 +3146,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setStreamsState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3172,7 +3172,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                             {/* Subjects */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Subjects</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Subjects</FormLabel>
                                 {subjectsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3186,7 +3186,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         // setSubjectsState({isLoading:false, items:res});
                                                     }}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
                                                         <SelectValue placeholder={selectedSubjects?.length < 1 ? 'Please Select' : selectedSubjects?.length === 1 ? '1 subject selected' : `${selectedSubjects?.length} subjects selected`} />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
@@ -3225,8 +3225,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                                 onClick={() => selectedSubjects?.includes(subject.subject_name) ? setSelectedSubjects(selectedSubjects?.filter((s:any) => s !== subject.subject_name)) : setSelectedSubjects([...selectedSubjects, subject.subject_name])}
                                                                             />
                                                                             <div className='w-full flex flex-row'>
-                                                                                <p className='basis-[70%] text-[11px]'>{subject.subject_name}</p>
-                                                                                {subject.is_university && <p className='basis-[30%] text-[11px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
+                                                                                <p className='basis-[70%] text-[12px]'>{subject.subject_name}</p>
+                                                                                {subject.is_university && <p className='basis-[30%] text-[12px] border-l-[0.5px] border-hash-color text-center'>{subject.available_seats}</p>}
                                                                             </div>
                                                                         </li>
                                                                     ))}
@@ -3244,7 +3244,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                             {/* Optional Subject */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Optional Subject</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Optional Subject</FormLabel>
                                 {optionalSubjectsState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3265,8 +3265,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setOptionalSubjectsState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3291,7 +3291,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
 
                             {/* House */}
                             <div className='w-full flex flex-col items-center'>
-                                <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>House</FormLabel>
+                                <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>House</FormLabel>
                                 {housesState.isLoading ? (
                                     <LoadingIcon />
                                 ) : (
@@ -3312,8 +3312,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                                 // setHousesState({isLoading:false, items:res});
                                                             }}
                                                         >
-                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                                <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                            <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                                <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                                 <ChevronDown className="h-4 w-4 opacity-50" />
                                                             </SelectTrigger>
                                                             <SelectContent>
@@ -3328,7 +3328,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             </SelectContent>
                                                         </Select>
                                                     </FormControl>
-                                                    <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                    <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                                 </FormItem>
                                             )}
                                         />
@@ -3454,15 +3454,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                         render={({ field }) => (
                                             <FormItem className='flex-1 my-2 lg:my-0'>
                                                 <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
+                                                    <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Dis. Disc.</FormLabel>
                                                     <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                         <FormControl>
                                                             <Input
                                                                 {...field}
-                                                                className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                                className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                             />
                                                         </FormControl>
-                                                        <FormMessage className='mt-[-20px] text-[11px]' />
+                                                        <FormMessage className='mt-[-20px] text-[12px]' />
                                                     </div>
                                                 </div>
                                             </FormItem>
@@ -3582,15 +3582,15 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                     render={({ field }) => (
                                         <FormItem className='flex-1 mb-2 lg:mb-0'>
                                             <div className='w-full h-7 flex flex-col items-start justify-center lg:flex-row lg:items-center'>
-                                                <FormLabel className='basis-auto pr-[4px] text-end text-[11px] text-[#726E71] lg:basis-[35%]'>Reason</FormLabel>
+                                                <FormLabel className='basis-auto pr-[4px] text-end text-[12px] text-[#726E71] lg:basis-[35%]'>Reason</FormLabel>
                                                 <div className='h-full w-full flex flex-col items-start gap-4 lg:basis-[65%]'>
                                                     <FormControl>
                                                         <Input
                                                             {...field}
-                                                            className='h-full flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
+                                                            className='h-full flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4]'
                                                         />
                                                     </FormControl>
-                                                    <FormMessage className='mt-[-20px] text-[11px]' />
+                                                    <FormMessage className='mt-[-20px] text-[12px]' />
                                                 </div>
                                             </div>
                                         </FormItem>
@@ -3607,7 +3607,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                     <div className='flex flex-col gap-4 border-[0.5px] border-[#ccc] rounded-[5px] p-2 ml-2 lg:flex-row'>
                         {/* Transport */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Transport</FormLabel>
+                            <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Transport</FormLabel>
                             {transportState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3628,8 +3628,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             // setTransportsState({isLoading:false, items:res});
                                                         }}
                                                     >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -3652,7 +3652,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                         {/* Nationality */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Nationality</FormLabel>
+                            <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Nationality</FormLabel>
                             {nationalitiesState.isLoading ? (
                                 <LoadingIcon />
                             ) : (
@@ -3673,8 +3673,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                             // setNationalitiesState({isLoading:false, items:res});
                                                         }}
                                                     >
-                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                            <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                        <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                            <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                             <ChevronDown className="h-4 w-4 opacity-50" />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -3689,7 +3689,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                         </SelectContent>
                                                     </Select>
                                                 </FormControl>
-                                                <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                                <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                             </FormItem>
                                         )}
                                     />
@@ -3698,7 +3698,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                         </div>
                         {/* Student Status */}
                         <div className='w-full flex flex-col items-center'>
-                            <FormLabel className='w-full h-2 text-[11px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Student Status</FormLabel>
+                            <FormLabel className='w-full h-2 text-[12px] text-start pr-[4px] text-[#726E71] lg:basis-[35%]'>Student Status</FormLabel>
                             <div className='w-full h-full flex flex-row items-center justify-between gap-2 lg:basis-[65%]'>
                                 <FormField
                                     control={form?.control}
@@ -3711,8 +3711,8 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     value={field?.value}
                                                     onValueChange={field?.onChange}
                                                 >
-                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[11px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
-                                                        <SelectValue placeholder='Please Select' className='text-[11px]' />
+                                                    <SelectTrigger className='w-full h-7 flex flex-row items-center text-[12px] pl-2 bg-[#FAFAFA] border-[0.5px] border-[#E4E4E4] rounded-none'>
+                                                        <SelectValue placeholder='Please Select' className='text-[12px]' />
                                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -3725,7 +3725,7 @@ const Student = ({students, form, setIsViewOpened, setUpdateStudent, setFile, up
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
-                                            <FormMessage className='absolute left-0 top-[60%] text-[11px]'/>
+                                            <FormMessage className='absolute left-0 top-[60%] text-[12px]'/>
                                         </FormItem>
                                     )}
                                 />

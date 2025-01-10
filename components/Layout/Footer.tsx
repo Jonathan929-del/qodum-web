@@ -58,13 +58,15 @@ const Footer = ({activeAcademicYearName, activeFinancialYear}:any) => {
 
 
             <div className='flex w-full justify-end lg:w-auto'>
-                <Image
-                    alt='Logo'
-                    width={150}
-                    height={150}
-                    // src='/assets/logo.png'
-                    src={logo}
-                />
+                {logo && (
+                    <Image
+                        alt='Logo'
+                        width={125}
+                        height={125}
+                        // src='/assets/logo.png'
+                        src={logo}
+                    />
+                )}
             </div>
 
 

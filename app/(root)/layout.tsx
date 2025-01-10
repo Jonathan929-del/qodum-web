@@ -20,10 +20,10 @@ const JS = Josefin_Sans({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700']
 });
-// const ABZ = ABeeZee({
-//   subsets: ['latin'],
-//   weight: ['400']
-// });
+const ABZ = ABeeZee({
+  subsets: ['latin'],
+  weight: ['400']
+});
 
 
 
@@ -33,8 +33,8 @@ const JS = Josefin_Sans({
 export default function RootLayout({children}:{children:React.ReactNode}) {
   return (
     <html lang='en'>
-      {/* <body className={`${ABZ.className}`}> */}
-      <body className={`${JS.className}`}>
+      <body className={`${ABZ.className}`}>
+      {/* <body className={`${JS.className}`}> */}
           <AuthProvider>
             <GlobalStateProvider>
               <Layout children={children} />
