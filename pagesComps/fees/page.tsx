@@ -13,7 +13,7 @@ import {fetchStudentsRegistrationFees} from '@/lib/actions/admission/admission/s
 import RecentTransactionsCard from '@/components/dashboards/feesDashboard/RecentTransactionsCard';
 import TransactionHistoryOfLast30Days from '@/components/dashboards/feesDashboard/TransactionHistoryOfLast30Days';
 import {fetchActiveAcademicYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
-import {feesDashboardDefaulterStudentsData, fetchAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {feesDashboardDefaulterStudentsData, fetchFeesDashboardAdmittedStudents} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -66,7 +66,7 @@ const page = () => {
         const fetcher = async () => {
 
             // Fetching
-            const studentsRes = await fetchAdmittedStudents();
+            const studentsRes = await fetchFeesDashboardAdmittedStudents();
             const activeAcademicYearRes = await fetchActiveAcademicYear();
             const paymentsRes = await fetchPayments();
             const classesRes = await fetchClasses();

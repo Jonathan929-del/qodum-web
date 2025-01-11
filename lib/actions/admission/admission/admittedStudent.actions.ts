@@ -398,6 +398,31 @@ export const fetchAdmittedStudents = async () => {
 
 
 
+// Fetch admission dashboard admitted students
+export const fetchFeesDashboardAdmittedStudents = async () => {
+    try {
+
+        // Db connection
+        connectToDb('accounts');
+
+
+        // Acive session
+        const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+        // Fetching
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.gender':1, 'affiliated_heads':1});
+        return JSON.parse(JSON.stringify(students));
+
+    } catch (err:any) {
+        throw new Error(`Error fetching admitted students: ${err}`);
+    };
+};
+
+
+
+
+
 // Fetch all admitted students
 export const fetchAllAdmittedStudents = async () => {
     try {
@@ -1525,7 +1550,7 @@ export const feesDashboardDefaulterStudentsData = async () => {
 
 
         // Students
-        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true});
+        const students = await AdmittedStudent.find({session:activeSession?.year_name, 'student.is_active':true}, {affiliated_heads:1});
 
 
         // Defaulter students
