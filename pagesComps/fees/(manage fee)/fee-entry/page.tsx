@@ -9,11 +9,11 @@ import FormCom from '@/components/modules/fees/manageFee/feeEntry/FormCom';
 import FeeReceipt from '@/components/modules/fees/manageFee/feeEntry/Others/FeeReceipt';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {fetchClasses} from '@/lib/actions/fees/globalMasters/defineClassDetails/class.actions';
+import {fetchFeeEntrySettings} from '@/lib/actions/fees/masterSettings/feeEntrySetting.actions';
 import {fetchSections} from '@/lib/actions/fees/globalMasters/defineClassDetails/section.actions';
 import {createPayment, fetchPayments, fetchStudentPayments} from '@/lib/actions/fees/manageFee/payment.actions';
 import {fetchGlobalSchoolDetails} from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
-import {fetchAdmittedStudents, fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
-import { fetchFeeEntrySettings } from '@/lib/actions/fees/masterSettings/feeEntrySetting.actions';
+import {fetchFeeEntryAdmittedStudents, fetchStudentByAdmNo, ModifyStudentAffiliatedHeads} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -390,7 +390,7 @@ const page = () => {
     const fetcher = async () => {
         const classesRes = await fetchClasses();
         const sectionsRes = await fetchSections();
-        const studentsRes = await fetchAdmittedStudents();
+        const studentsRes = await fetchFeeEntryAdmittedStudents();
         const installmentsRes = await fetchInstallments();
         setClasses(classesRes);
         setSections(sectionsRes);

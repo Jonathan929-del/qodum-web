@@ -152,7 +152,7 @@ export const fetchInstallments = async (pageNumber = 1, pageSize=20) => {
 
         // Fetching installments
         const installments = await Installment.find({session:activeSession?.year_name});
-        return installments;
+        return JSON.parse(JSON.stringify(installments));
 
     } catch (err:any) {
         throw new Error(`Error fetching installments: ${err}`);

@@ -7,7 +7,7 @@ import {FormControl, FormItem} from '@/components/ui/form';
 import {ChevronDown, Search as SearchIcon} from 'lucide-react';
 import {fetchInstallments} from '@/lib/actions/fees/feeMaster/feeMaster/installment.actions';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import {fetchStudentByAdmNo, fetchStudentsByAllData, fetchStudentsCountByClassAndSection} from '@/lib/actions/admission/admission/admittedStudent.actions';
+import {fetchStudentByAdmNo, fetchStudentsByAllDataFeeEntry, fetchStudentsCountByClassAndSection} from '@/lib/actions/admission/admission/admittedStudent.actions';
 
 
 
@@ -236,7 +236,7 @@ const Search = ({classes, sections, setIsViewOpened, students, setSelectedStuden
             setIsLoadingSearchedStudents(true);
             const searchFetcher = async () => {
                 // ts-ignore
-                const res = await fetchStudentsByAllData({name:search, father_name:search, adm_no:search, mobile:search, class_name:selectedClass, section_name:selectedSection});
+                const res = await fetchStudentsByAllDataFeeEntry({name:search, father_name:search, adm_no:search, mobile:search, class_name:selectedClass, section_name:selectedSection});
                 setSearchStudents(res);
                 setIsLoadingSearchedStudents(false);
             };
