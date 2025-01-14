@@ -11,8 +11,8 @@ import {PersonStanding, Hourglass, Briefcase} from 'lucide-react';
 const FeesCardsOne = ({students, boys, girls, academicYear, totalNumberGenerator, registrationFees}:any) => {
 
     // Revenues
-    const allRevenue = totalNumberGenerator([...students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value || 0)))))), ...registrationFees.map((f:any) => Number(f?.student?.amount))]);
-    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s.affiliated_heads.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value || 0) - Number(a.last_rec_amount || 0)))))));
+    const allRevenue = totalNumberGenerator([...students.map((s:any) => totalNumberGenerator(s?.affiliated_heads?.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value || 0)))))), ...registrationFees.map((f:any) => Number(f?.student?.amount))]);
+    const outstandingRevenue = totalNumberGenerator(students.map((s:any) => totalNumberGenerator(s?.affiliated_heads?.heads.map((h:any) => totalNumberGenerator(h?.amounts?.map((a:any) => Number(a.value || 0) - Number(a.last_rec_amount || 0)))))));
     const receivedRevenue = allRevenue - outstandingRevenue;
 
     return (

@@ -66,21 +66,25 @@ const page = () => {
         const fetcher = async () => {
 
             // Fetching
-            const studentsRes = await fetchFeesDashboardAdmittedStudents();
+            // const studentsRes = await fetchFeesDashboardAdmittedStudents();
             const activeAcademicYearRes = await fetchActiveAcademicYear();
             const paymentsRes = await fetchPayments();
             const classesRes = await fetchClasses();
-            const defaulterStudentsDataRes = await feesDashboardDefaulterStudentsData();
+            // const defaulterStudentsDataRes = await feesDashboardDefaulterStudentsData();
             const studentsRegistrationFeesRes = await fetchStudentsRegistrationFees();
 
             // Setting
-            setStudents(studentsRes);
-            setBoys(studentsRes?.filter((s:any) => s.student.gender === 'Male').length);
-            setGirls(studentsRes?.filter((s:any) => s.student.gender === 'Female').length);
+            // setStudents([{}]);
+            // setBoys(10);
+            // setGirls(11);
+            // setStudents(studentsRes);
+            // setBoys(studentsRes?.filter((s:any) => s.student.gender === 'Male').length);
+            // setGirls(studentsRes?.filter((s:any) => s.student.gender === 'Female').length);
             setAcademicYear(activeAcademicYearRes.year_name);
             setPayments(paymentsRes);
             setClasses(classesRes);
-            setDefaulterStudentsData(defaulterStudentsDataRes);
+            // setDefaulterStudentsData(defaulterStudentsDataRes);
+            // setDefaulterStudentsData([{}]);
             setRegistrationFees(studentsRegistrationFeesRes);
 
 

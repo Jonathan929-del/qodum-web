@@ -9,8 +9,12 @@ import mongoose from 'mongoose';
 const AdmissionStateSchema = new mongoose.Schema(
     {
         session:{type:String, required:true},
+
+        // Constants
         logo:{type:String},
         is_staff_admission_opened:{type:Boolean},
+
+        // Last updated at
         admission_accounts_last_updated_at:{type:Date, default:new Date()},
         post_accounts_last_updated_at:{type:Date, default:new Date()},
         classes_last_updated_at:{type:Date, default:new Date()},
@@ -31,7 +35,22 @@ const AdmissionStateSchema = new mongoose.Schema(
         perishes_last_updated_at:{type:Date, default:new Date()},
         cadet_types_last_updated_at:{type:Date, default:new Date()},
         clubs_last_updated_at:{type:Date, default:new Date()},
-        houses_last_updated_at:{type:Date, default:new Date()}
+        houses_last_updated_at:{type:Date, default:new Date()},
+
+        // Fees dashboard data
+        fees_dashboard_data:{
+            student_head_counts:{
+                total:{type:Number},
+                boys:{type:Number},
+                girls:{type:Number}
+            },
+            fee_revenue_summary:{
+                total:{type:Number},
+                outstanding_revenue:{type:Number},
+                total_received:{type:Number}
+            }
+        }
+
     },
     {
         timestamps:true
