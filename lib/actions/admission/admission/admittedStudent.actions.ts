@@ -941,104 +941,78 @@ interface fetchStudentsByAllDataProps{
 export const fetchStudentsByAllData = async ({name, father_name, adm_no, mobile, class_name, section_name}:fetchStudentsByAllDataProps) => {
     try {
 
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
-        // Regex
-        // @ts-ignore
-        const nameRegex = new RegExp(name, 'i');
-        // @ts-ignore
-        const fatherNameRegex = new RegExp(father_name, 'i');
-        // @ts-ignore
-        const admNoRegex = new RegExp(adm_no, 'i');
-
-
-        // Students
-        let students; 
-
-
-        // Values
-        const containsAnyLetters = (str:any) => {
-            return /[a-zA-Z]/.test(str);
+      // Connect to DB
+      connectToDb('accounts');
+  
+      // Get active session
+      const activeSession = await AcademicYear.findOne({ is_active: true });
+      if (!activeSession) throw new Error("No active session found.");
+  
+      // Base query
+      let query: any = { 
+        session: activeSession.year_name, 
+        'student.is_active': true 
+      };
+  
+      // Search conditions
+      let searchConditions: any[] = [];
+  
+      // If any of the search parameters are provided, add them to the search conditions
+      if (name || father_name || adm_no || mobile || class_name || section_name) {
+        // Handle name (partial match)
+        if (name) {
+          searchConditions.push({ 'student.name': { $regex: name, $options: 'i' } });
         }
-
-        if(!containsAnyLetters(mobile)){
-
-            // Mobile number
-            const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession?.year_name, 'student.is_active':true});
-
-            // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true});
-
-            // All res
-            const allRes = mobileRes.concat(admNoRes);
-            const uniqueBy = (a:any, key:any) => {
-                var seen:any = {};
-                return a.filter(function(item:any) {
-                    var k = key(item);
-                    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-                })
-            };
-            const filteredAllRes = uniqueBy(allRes, JSON.stringify);
-
-            if(class_name !== '' || section_name !== ''){
-                if(class_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.class === class_name);
-                };
-                if(section_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.section === section_name);
-                };
-                if(class_name !== '' && section_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
-                };
-            }else{
-                students = filteredAllRes;
-            };
-        }else{
-
-            // Name res
-            const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession?.year_name, 'student.is_active':true});
-
-            // // Father's name res
-            const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession?.year_name, 'student.is_active':true});
-
-            // Admission number res
-            const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true});
-
-
-            const allRes = nameRes.concat(fatherNameRes, admNoRes);
-            const uniqueBy = (a:any, key:any) => {
-                var seen:any = {};
-                return a.filter(function(item:any) {
-                    var k = key(item);
-                    return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-                })
-            };
-            const filteredAllRes = uniqueBy(allRes, JSON.stringify);
-
-            if(class_name !== '' || section_name !== ''){
-                if(class_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.class === class_name);
-                };
-                if(section_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.section === section_name);
-                };
-                if(class_name !== '' && section_name !== ''){
-                    students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
-                };
-            }else{
-                students = filteredAllRes;
-            };
+  
+        // Handle father's name (partial match)
+        if (father_name) {
+          searchConditions.push({ 'parents.father.father_name': { $regex: father_name, $options: 'i' } });
         }
-
-
-        // Return
-        return students;
+  
+        // Handle admission number (flexible partial match for numeric part)
+        if (adm_no) {
+          // Extract only the numeric part from the input
+          const numericPart = adm_no.replace(/\D/g, ''); // Removes all non-numeric characters
+  
+          // Match the numeric part anywhere in the `adm_no` field
+          searchConditions.push({
+            'student.adm_no': { 
+              $regex: numericPart, 
+              $options: 'i' 
+            }
+          });
+        }
+  
+        // Handle mobile (exact match, only if the input is a valid number)
+        if (mobile && !isNaN(Number(mobile))) {
+          searchConditions.push({ 'student.mobile': Number(mobile) });
+        }
+  
+        // Handle class name (partial match)
+        if (class_name) {
+          searchConditions.push({ 'student.class': { $regex: class_name, $options: 'i' } });
+        }
+  
+        // Handle section name (partial match)
+        if (section_name) {
+          searchConditions.push({ 'student.section': { $regex: section_name, $options: 'i' } });
+        }
+  
+        // Combine search conditions with $or
+        query['$or'] = searchConditions;
+      }
+  
+      // Fetch students
+      const students = await AdmittedStudent.find(query, {
+        'student.name': 1,
+        'student.class': 1,
+        'student.image': 1,
+        'student.adm_no': 1,
+        'parents.father.father_name': 1,
+        'affiliated_heads': 1,
+      }).lean();
+  
+      return students;
 
     } catch (err) {
         throw new Error(`Error fetching students: ${err}`);
@@ -1059,171 +1033,97 @@ interface fetchStudentsByAllDataFeeEntryProps{
     section_name:String;
 };
 // Fetch students by all data
-// export const fetchStudentsByAllDataFeeEntry = async ({name, father_name, adm_no, mobile, class_name, section_name}:fetchStudentsByAllDataFeeEntryProps) => {
-//     try {
-
-//         // Db connection
-//         connectToDb('accounts');
-
-
-//         // Acive session
-//         const activeSession = await AcademicYear.findOne({is_active:true});
-
-
-//         // Regex
-//         // @ts-ignore
-//         const nameRegex = new RegExp(name, 'i');
-//         // @ts-ignore
-//         const fatherNameRegex = new RegExp(father_name, 'i');
-//         // @ts-ignore
-//         const admNoRegex = new RegExp(adm_no, 'i');
-
-
-//         // Students
-//         let students; 
-
-
-//         // Values
-//         const containsAnyLetters = (str:any) => {
-//             return /[a-zA-Z]/.test(str);
-//         }
-
-//         if(!containsAnyLetters(mobile)){
-
-//             // Mobile number
-//             const mobileRes = await AdmittedStudent.find({'student.mobile':mobile, session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.class':1, 'student.image':1, 'student.adm_no':1, 'parents.father.father_name':1, 'affiliated_heads':1});
-
-//             // Admission number res
-//             const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.class':1, 'student.image':1, 'student.adm_no':1, 'parents.father.father_name':1, 'affiliated_heads':1});
-
-//             // All res
-//             const allRes = mobileRes.concat(admNoRes);
-//             const uniqueBy = (a:any, key:any) => {
-//                 var seen:any = {};
-//                 return a.filter(function(item:any) {
-//                     var k = key(item);
-//                     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-//                 })
-//             };
-//             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
-
-//             if(class_name !== '' || section_name !== ''){
-//                 if(class_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.class === class_name);
-//                 };
-//                 if(section_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.section === section_name);
-//                 };
-//                 if(class_name !== '' && section_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
-//                 };
-//             }else{
-//                 students = filteredAllRes;
-//             };
-//         }else{
-
-//             // Name res
-//             const nameRes = await AdmittedStudent.find({'student.name':{$regex:nameRegex}, session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.class':1, 'student.image':1, 'student.adm_no':1, 'parents.father.father_name':1, 'affiliated_heads':1});
-
-//             // // Father's name res
-//             const fatherNameRes = await AdmittedStudent.find({'parents.father.father_name':{$regex:fatherNameRegex}, session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.class':1, 'student.image':1, 'student.adm_no':1, 'parents.father.father_name':1, 'affiliated_heads':1});
-
-//             // Admission number res
-//             const admNoRes = await AdmittedStudent.find({'student.adm_no':{$regex:admNoRegex}, session:activeSession?.year_name, 'student.is_active':true}, {'student.name':1, 'student.class':1, 'student.image':1, 'student.adm_no':1, 'parents.father.father_name':1, 'affiliated_heads':1});
-
-
-//             const allRes = nameRes.concat(fatherNameRes, admNoRes);
-//             const uniqueBy = (a:any, key:any) => {
-//                 var seen:any = {};
-//                 return a.filter(function(item:any) {
-//                     var k = key(item);
-//                     return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-//                 })
-//             };
-//             const filteredAllRes = uniqueBy(allRes, JSON.stringify);
-
-//             if(class_name !== '' || section_name !== ''){
-//                 if(class_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.class === class_name);
-//                 };
-//                 if(section_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.section === section_name);
-//                 };
-//                 if(class_name !== '' && section_name !== ''){
-//                     students = filteredAllRes.filter((s:any) => s.student.class === class_name && s.student.section === section_name);
-//                 };
-//             }else{
-//                 students = filteredAllRes;
-//             };
-//         }
-
-
-//         // Return
-//         return JSON.parse(JSON.stringify(students));
-
-//     } catch (err) {
-//         throw new Error(`Error fetching students: ${err}`);
-//     };
-// };
 export const fetchStudentsByAllDataFeeEntry = async ({
     name,
     father_name,
     adm_no,
     mobile,
     class_name,
-    section_name
-}: fetchStudentsByAllDataFeeEntryProps) => {
+    section_name,
+  }: fetchStudentsByAllDataFeeEntryProps) => {
     try {
-        // Db connection
-        connectToDb('accounts');
-
-        // Active session
-        const activeSession = await AcademicYear.findOne({ is_active: true });
-        if (!activeSession) throw new Error("No active session found.");
-
-        // Query conditions
-        let query: any = { session: activeSession.year_name, 'student.is_active': true };
-
-        // Build search conditions dynamically
-        let searchConditions: any[] = [];
-
-        if (mobile && !/[a-zA-Z]/.test(String(mobile))) {
-            query['student.mobile'] = mobile;
-        } else {
-            // @ts-ignore
-            if (name) searchConditions.push({ 'student.name': { $regex: new RegExp(name, 'i') } });
-            // @ts-ignore
-            if (father_name) searchConditions.push({ 'parents.father.father_name': { $regex: new RegExp(father_name, 'i') } });
-            // @ts-ignore
-            if (adm_no) searchConditions.push({ 'student.adm_no': { $regex: new RegExp(adm_no, 'i') } });
-
-            if (searchConditions.length) {
-                query['$or'] = searchConditions;
-            }
+      // Connect to DB
+      connectToDb('accounts');
+  
+      // Get active session
+      const activeSession = await AcademicYear.findOne({ is_active: true });
+      if (!activeSession) throw new Error("No active session found.");
+  
+      // Base query
+      let query: any = { 
+        session: activeSession.year_name, 
+        'student.is_active': true 
+      };
+  
+      // Search conditions
+      let searchConditions: any[] = [];
+  
+      // If any of the search parameters are provided, add them to the search conditions
+      if (name || father_name || adm_no || mobile || class_name || section_name) {
+        // Handle name (partial match)
+        if (name) {
+          searchConditions.push({ 'student.name': { $regex: name, $options: 'i' } });
         }
-
-        if (class_name) query['student.class'] = class_name;
-        if (section_name) query['student.section'] = section_name;
-
-        // Fetch students
-        const students = await AdmittedStudent.find(query, {
-            'student.name': 1,
-            'student.class': 1,
-            'student.image': 1,
-            'student.adm_no': 1,
-            'parents.father.father_name': 1,
-            'affiliated_heads': 1
-        }).lean(); // `.lean()` improves performance by returning plain JavaScript objects
-
-        return students;
+  
+        // Handle father's name (partial match)
+        if (father_name) {
+          searchConditions.push({ 'parents.father.father_name': { $regex: father_name, $options: 'i' } });
+        }
+  
+        // Handle admission number (flexible partial match for numeric part)
+        if (adm_no) {
+          // Extract only the numeric part from the input
+          const numericPart = adm_no.replace(/\D/g, ''); // Removes all non-numeric characters
+  
+          // Match the numeric part anywhere in the `adm_no` field
+          searchConditions.push({
+            'student.adm_no': { 
+              $regex: numericPart, 
+              $options: 'i' 
+            }
+          });
+        }
+  
+        // Handle mobile (exact match, only if the input is a valid number)
+        if (mobile && !isNaN(Number(mobile))) {
+          searchConditions.push({ 'student.mobile': Number(mobile) });
+        }
+  
+        // Handle class name (partial match)
+        if (class_name) {
+          searchConditions.push({ 'student.class': { $regex: class_name, $options: 'i' } });
+        }
+  
+        // Handle section name (partial match)
+        if (section_name) {
+          searchConditions.push({ 'student.section': { $regex: section_name, $options: 'i' } });
+        }
+  
+        // Combine search conditions with $or
+        query['$or'] = searchConditions;
+      }
+  
+      // Fetch students
+      const students = await AdmittedStudent.find(query, {
+        'student.name': 1,
+        'student.class': 1,
+        'student.image': 1,
+        'student.adm_no': 1,
+        'parents.father.father_name': 1,
+        'affiliated_heads': 1,
+      }).lean();
+  
+      return students;
     } catch (err) {
-        throw new Error(`Error fetching students: ${err}`);
+      console.error("Error fetching students:", err);
+      throw new Error(`Error fetching students: ${err}`);
     }
-};
-
-
-
-
+  };
+  
+  
+  
+  
+  
 
 
 // Fetch student by classes
