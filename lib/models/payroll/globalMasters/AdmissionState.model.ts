@@ -48,6 +48,15 @@ const AdmissionStateSchema = new mongoose.Schema(
                 total:{type:Number},
                 outstanding_revenue:{type:Number},
                 total_received:{type:Number}
+            },
+            total_paymode_summary:{
+                cash:{type:Array},
+                qr:{type:Array},
+                dd:{type:Array},
+                cheque:{type:Array},
+                neft:{type:Array},
+                online:{type:Array},
+                swiped_card:{type:Array}
             }
         }
 
