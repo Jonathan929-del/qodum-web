@@ -60,20 +60,42 @@ const page = () => {
 
 
     // Use effect
+    // useEffect(() => {
+    //     const fetcher = async () => {
+    //         setIsLoading(true);
+    //         const studentsCountRes = await studentsAndGendersCounts();
+    //         const newStudentsCountRes = await newStudentsAndGendersCounts();
+    //         const studentsOnlineAndOfflineCountRes = await fetchStudentsOnlineAndOfflineRegistrations();
+    //         setStudentsCount(studentsCountRes);
+    //         setNewStudentsCount(newStudentsCountRes);
+    //         setStudentsOnlineAndOfflineCount(studentsOnlineAndOfflineCountRes);
+    //         setStudentsReligionsData(studentsReligionsData);
+    //         setIsLoading(false);
+    //     };
+    //     fetcher();
+    // }, []);
+    // Developer code
     useEffect(() => {
         const fetcher = async () => {
-            setIsLoading(true);
-            const studentsCountRes = await studentsAndGendersCounts();
-            const newStudentsCountRes = await newStudentsAndGendersCounts();
-            const studentsOnlineAndOfflineCountRes = await fetchStudentsOnlineAndOfflineRegistrations();
-            setStudentsCount(studentsCountRes);
-            setNewStudentsCount(newStudentsCountRes);
-            setStudentsOnlineAndOfflineCount(studentsOnlineAndOfflineCountRes);
-            setStudentsReligionsData(studentsReligionsData);
-            setIsLoading(false);
+          setIsLoading(true);
+          const [
+            studentsCountRes,
+            newStudentsCountRes,
+            studentsOnlineAndOfflineCountRes,
+          ] = await Promise.all([
+            studentsAndGendersCounts(),
+            newStudentsAndGendersCounts(),
+            fetchStudentsOnlineAndOfflineRegistrations(),
+          ]);
+          console.log("studentsCountRes ===== ", studentsCountRes);
+          setStudentsCount(studentsCountRes);
+          setNewStudentsCount(newStudentsCountRes);
+          setStudentsOnlineAndOfflineCount(studentsOnlineAndOfflineCountRes);
+          setStudentsReligionsData(studentsReligionsData);
+          setIsLoading(false);
         };
         fetcher();
-    }, []);
+      }, []);
 
     return (
         <section className='flex flex-col w-full px-4 gap-4'>

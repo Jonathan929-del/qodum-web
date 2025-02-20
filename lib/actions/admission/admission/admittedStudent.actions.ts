@@ -1536,40 +1536,77 @@ export const classWiseStudentStrengthFilter = async ({date_of_adm, class_name, i
 
 
 // Fetch students count and genders counts
+// export const studentsAndGendersCounts = async () => {
+//     try {
+
+//         // Db connection
+//         connectToDb('accounts');
+
+
+//         // Acive session
+//         const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+//         // All students count
+//         const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_active':true});
+
+
+//         // Boys count
+//         const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Male', 'student.is_active':true});
+
+
+//         // Girls count
+//         const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Female', 'student.is_active':true});
+
+
+//         // Return
+//         return {
+//             all_students_count:allStudentsCount,
+//             boys_count:boysCount,
+//             girls_count:girlsCount
+//         };
+        
+//     }catch (err){
+//         throw new Error(`Error fetching students and genders counts: ${err}`);
+//     };
+// };
+// Developer code
 export const studentsAndGendersCounts = async () => {
     try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
-        // All students count
-        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_active':true});
-
-
-        // Boys count
-        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Male', 'student.is_active':true});
-
-
-        // Girls count
-        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.gender':'Female', 'student.is_active':true});
-
-
-        // Return
-        return {
-            all_students_count:allStudentsCount,
-            boys_count:boysCount,
-            girls_count:girlsCount
-        };
-        
-    }catch (err){
-        throw new Error(`Error fetching students and genders counts: ${err}`);
-    };
-};
+      // Db connection
+      connectToDb("accounts");
+  
+      // Active session
+      const activeSession = await AcademicYear.findOne({ is_active: true });
+  
+      // Parallel execution of queries
+      const [allStudentsCount, boysCount, girlsCount] = await Promise.all([
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_active": true,
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.gender": "Male",
+          "student.is_active": true,
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.gender": "Female",
+          "student.is_active": true,
+        }),
+      ]);
+  
+      // Return
+      return {
+        all_students_count: allStudentsCount,
+        boys_count: boysCount,
+        girls_count: girlsCount,
+      };
+    } catch (err) {
+      throw new Error(`Error fetching students and genders counts: ${err}`);
+    }
+  };
 
 
 
@@ -1577,50 +1614,110 @@ export const studentsAndGendersCounts = async () => {
 
 
 // Fetch new students count and genders counts
+// export const newStudentsAndGendersCounts = async () => {
+//     try {
+
+//         // Db connection
+//         connectToDb('accounts');
+
+
+//         // Acive session
+//         const activeSession = await AcademicYear.findOne({is_active:true});
+
+
+//         // All students count
+//         const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true});
+
+
+//         // Boys count
+//         const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Male'});
+
+
+//         // Girls count
+//         const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Female'});
+
+
+//         // Previous year boys
+//         const previousYearBoys = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Male'});
+
+
+//         // Previous year girls
+//         const previousYearGirls = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Female'});
+
+
+//         // Return
+//         return {
+//             all_students_count:allStudentsCount,
+//             boys_count:boysCount,
+//             girls_count:girlsCount,
+//             previous_boys_count:previousYearBoys,
+//             previous_girls_count:previousYearGirls
+//         };
+        
+//     }catch (err){
+//         throw new Error(`Error fetching students and genders counts: ${err}`);
+//     };
+// };
+// Developer code
 export const newStudentsAndGendersCounts = async () => {
     try {
-
-        // Db connection
-        connectToDb('accounts');
-
-
-        // Acive session
-        const activeSession = await AcademicYear.findOne({is_active:true});
-
-
-        // All students count
-        const allStudentsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true});
-
-
-        // Boys count
-        const boysCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Male'});
-
-
-        // Girls count
-        const girlsCount = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':true, 'student.is_active':true, 'student.gender':'Female'});
-
-
-        // Previous year boys
-        const previousYearBoys = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Male'});
-
-
-        // Previous year girls
-        const previousYearGirls = await AdmittedStudent.countDocuments({session:activeSession?.year_name, 'student.is_new':false, 'student.is_active':true, 'student.gender':'Female'});
-
-
-        // Return
-        return {
-            all_students_count:allStudentsCount,
-            boys_count:boysCount,
-            girls_count:girlsCount,
-            previous_boys_count:previousYearBoys,
-            previous_girls_count:previousYearGirls
-        };
-        
-    }catch (err){
-        throw new Error(`Error fetching students and genders counts: ${err}`);
-    };
-};
+      // Db connection
+      connectToDb("accounts");
+  
+      // Active session
+      const activeSession = await AcademicYear.findOne({ is_active: true });
+  
+      // Parallel execution of queries
+      const [
+        allStudentsCount,
+        boysCount,
+        girlsCount,
+        previousYearBoys,
+        previousYearGirls,
+      ] = await Promise.all([
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_new": true,
+          "student.is_active": true,
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_new": true,
+          "student.is_active": true,
+          "student.gender": "Male",
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_new": true,
+          "student.is_active": true,
+          "student.gender": "Female",
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_new": false,
+          "student.is_active": true,
+          "student.gender": "Male",
+        }),
+        AdmittedStudent.countDocuments({
+          session: activeSession?.year_name,
+          "student.is_new": false,
+          "student.is_active": true,
+          "student.gender": "Female",
+        }),
+      ]);
+  
+      // Return
+      return {
+        all_students_count: allStudentsCount,
+        boys_count: boysCount,
+        girls_count: girlsCount,
+        previous_boys_count: previousYearBoys,
+        previous_girls_count: previousYearGirls,
+      };
+    } catch (err) {
+      throw new Error(`Error fetching students and genders counts: ${err}`);
+    }
+  };
 
 
 
