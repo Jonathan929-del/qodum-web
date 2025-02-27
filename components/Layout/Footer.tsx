@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Globe, GraduationCap, PieChart} from 'lucide-react';
-import {fetchAdmissionStates} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
+import {fetchAdmissionStates, fetchAdmissionStatesForDashboard} from '@/lib/actions/payroll/globalMasters/admissionStates.actions';
 
 
 
@@ -19,7 +19,8 @@ const Footer = ({activeAcademicYearName, activeFinancialYear}:any) => {
     // Use effect
     useEffect(() => {
         const fetcher = async () => {
-            const admissionsStatesRes = await fetchAdmissionStates();
+            const admissionsStatesRes = await fetchAdmissionStatesForDashboard();
+            console.log(admissionsStatesRes);
             setLogo(admissionsStatesRes.logo);
         };
         fetcher();
