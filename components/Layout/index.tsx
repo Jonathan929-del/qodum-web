@@ -12,7 +12,7 @@ import {AuthContext} from '@/context/AuthContext';
 import {useContext, useEffect, useState} from 'react';
 import {redirect, usePathname} from 'next/navigation';
 import {fetchActiveFinancialYear} from '@/lib/actions/accounts/globalMasters/defineSession/defineFinancialYear.actions';
-import {fetchAcademicYears, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
+import {fetchAcademicYearsForDashboard, modifyAcademicYearWithYearName} from '@/lib/actions/accounts/globalMasters/defineSession/defineAcademicYear.actions';
 
 
 
@@ -68,11 +68,11 @@ const index = ({children}:any) => {
     // Use effect
     useEffect(() => {
         const academicYearsFetcher = async () => {
-            const res = await fetchAcademicYears();
-            const activeFinancialYearRes = await fetchActiveFinancialYear();
-            setAcademicYears(res);
-            setActiveAcademicYearName(res.filter((year:any) => year.is_active)[0]?.year_name || '');
-            setActiveFinancialYear(activeFinancialYearRes.year_name);
+            const res = await fetchAcademicYearsForDashboard();
+            // const activeFinancialYearRes = await fetchActiveFinancialYear();
+            setAcademicYears(res.academicYears);
+            setActiveAcademicYearName(res.academicYears.filter((year:any) => year.is_active)[0]?.year_name || '');
+            setActiveFinancialYear(res.activeFinancialYear);
         };
         academicYearsFetcher();
     }, []);

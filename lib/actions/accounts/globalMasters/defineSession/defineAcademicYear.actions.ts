@@ -2,6 +2,7 @@
 // Imports
 import {connectToDb} from '@/lib/mongoose';
 import AcademicYear from '@/lib/models/accounts/globalMasters/defineSession/AcademicYear.model';
+import FinancialYear from '@/lib/models/accounts/globalMasters/defineSession/FinancialYear.model';
 
 
 
@@ -87,6 +88,37 @@ export const fetchAcademicYears = async () => {
         // Fetching
         const academicYears = await AcademicYear.find();
         return academicYears;
+
+
+
+    } catch (err:any) {
+        throw new Error(`Error fetching academic years: ${err}`);
+    }
+};
+
+
+
+
+
+// Fetch Academic Years
+export const fetchAcademicYearsForDashboard = async () => {
+    try {
+
+        // Db connection
+        await connectToDb('accounts');
+
+
+        // Active financial year
+        const financialYear = await FinancialYear.findOne({is_active:true});
+        const activeFinancialYear = {
+            ...financialYear._doc,
+            _id:financialYear._doc._id.toString()
+        };
+
+
+        // Fetching
+        const academicYears = await AcademicYear.find();
+        return {academicYears, activeFinancialYear};
 
 
 
