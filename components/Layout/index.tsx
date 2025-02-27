@@ -72,7 +72,7 @@ const index = ({children}:any) => {
             // const activeFinancialYearRes = await fetchActiveFinancialYear();
             setAcademicYears(res.academicYears);
             setActiveAcademicYearName(res.academicYears.filter((year:any) => year.is_active)[0]?.year_name || '');
-            setActiveFinancialYear(res.activeFinancialYear);
+            setActiveFinancialYear(res.activeFinancialYear.year_name);
         };
         academicYearsFetcher();
     }, []);
