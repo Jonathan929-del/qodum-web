@@ -97,7 +97,7 @@ export default function Header({ user }: { user: CurrentUser | null }) {
     const iconButtonClass = "flex h-9 w-9 items-center justify-center rounded-lg border border-[#E8EDF2] bg-white text-[#52627A] transition-all hover:bg-[#F2F9FD] hover:text-[#2CABE3] hover:border-[#DCECF7]";
 
     return (
-        <nav className='flex h-16 items-center justify-between bg-white border-b border-[#E8EDF2] px-4 lg:px-6'>
+        <nav className='flex h-16 items-center justify-between border-b border-[#DFE3EA] px-4 lg:px-6'>
             
             {/* Left Section: Mobile Menu, Search, and Desktop Toggles */}
             <div className='flex items-center gap-3'>

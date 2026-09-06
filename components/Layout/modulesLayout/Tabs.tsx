@@ -1,21 +1,21 @@
-// components/Layout/Pages/PagesList.tsx
 'use client';
-
-import { X, XSquare } from 'lucide-react';
+import { X } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTabsStore } from '@/store/tabStore';
 import { usePageStateStore } from '@/store/pageStateStore';
-import { getModuleRoot } from '@/components/utils/breadcrumb';
+import { getModuleRoot, getModuleSlug } from '@/components/utils/breadcrumb';
 
-const PagesList = () => {
+export default function Tabs() {
   const pathname = usePathname();
   const router = useRouter();
   const hasHydrated = useTabsStore((s) => s.hasHydrated);
-  const openTabs = useTabsStore((s) => s.openTabs);
+  const allOpenTabs = useTabsStore((s) => s.openTabs);
   const closeTab = useTabsStore((s) => s.closeTab);
   const closeAllTabs = useTabsStore((s) => s.closeAllTabs);
   const clearPage = usePageStateStore((s) => s.clearPage);
-  const clearAllPages = usePageStateStore((s) => s.clearAllPages);
+
+  const moduleSlug = getModuleSlug(pathname);
+  const openTabs = allOpenTabs.filter((t) => t.path.startsWith(`/${moduleSlug}/`));
 
   if (!hasHydrated || openTabs.length === 0) return null;
 
@@ -32,40 +32,51 @@ const PagesList = () => {
   };
 
   const handleCloseAll = () => {
-    closeAllTabs();
-    clearAllPages();
+    openTabs.forEach((t) => clearPage(t.path));
+    closeAllTabs(moduleSlug);
     router.push(getModuleRoot(pathname));
   };
 
   return (
     <div className='flex items-center justify-between px-4 bg-white border-b border-[#E5E8EF]'>
-      <div className='flex items-center gap-1 overflow-x-auto'>
+      <div className='flex items-center gap-2 overflow-x-auto no-scrollbar'>
         {openTabs.map((tab) => {
           const isActive = isWithinTab(tab.path);
           return (
             <div
               key={tab.path}
               onClick={() => router.push(tab.path)}
-              className={`flex items-center gap-2 px-3 py-2 text-sm cursor-pointer border-b-2 whitespace-nowrap ${
-                isActive ? 'border-blue-500 text-blue-600 font-medium' : 'border-transparent text-gray-500'
-              }`}
+              className={`
+                flex items-center gap-2 px-3 py-1.5 text-xs rounded-t-[6px] cursor-pointer whitespace-nowrap transition-all
+                ${
+                  isActive
+                    ? 'bg-[#F0F7FF] text-[#2CABE3] font-medium border border-[#DCECF7]'
+                    : 'bg-white text-[#52627A] border border-[#E5E8EF] hover:bg-[#F8FAFC]'
+                }
+              `}
             >
-              {tab.label}
-              <X size={14} onClick={(e) => handleClose(e, tab.path)} className='hover:text-red-500' />
+              <span>{tab.label}</span>
+              <X 
+                size={14} 
+                onClick={(e) => handleClose(e, tab.path)} 
+                className={`
+                  shrink-0 transition-colors 
+                  ${isActive ? 'text-[#2CABE3] hover:text-red-500' : 'text-[#8390A1] hover:text-red-500'}
+                `} 
+              />
             </div>
           );
         })}
       </div>
+      
       <button
         onClick={handleCloseAll}
         title='Close all tabs'
-        className='flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-red-500 shrink-0'
+        className='flex items-center gap-1.5 px-2 py-1.5 text-sm text-[#52627A] hover:text-red-500 hover:bg-[#F8FAFC] rounded-md transition-colors shrink-0'
       >
-        <XSquare size={14} />
+        <X size={14} />
         Close all
       </button>
     </div>
   );
 };
-
-export default PagesList;

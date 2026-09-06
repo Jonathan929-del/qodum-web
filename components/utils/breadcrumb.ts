@@ -1,17 +1,22 @@
-// lib/utils/breadcrumb.ts
 import modules from '@/constants/modules';
+
+export interface Crumb {
+  label: string;
+  href?: string;
+}
 
 export const slugify = (label: string) =>
   label.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-export interface Crumb {
-  label: string;
-  href?: string; // present only when the crumb is itself a real route
-}
 
 export const getModuleRoot = (pathname: string) => {
   const [moduleSlug] = pathname.split('/').filter(Boolean);
   return moduleSlug ? `/${moduleSlug}` : '/';
+};
+
+export const getModuleSlug = (pathname: string) => {
+  const [moduleSlug] = pathname.split('/').filter(Boolean);
+  return moduleSlug ?? '';
 };
 
 export const resolveBreadcrumb = (pathname: string): Crumb[] => {
@@ -23,12 +28,8 @@ export const resolveBreadcrumb = (pathname: string): Crumb[] => {
   if (!currentModule) return [];
 
   const moduleCrumb: Crumb = { label: currentModule.moduleName, href: `/${moduleSlug}` };
-  if (!leafSlug) return [moduleCrumb];
 
   for (const page of currentModule.pages ?? []) {
-    if (slugify(page.pageName) === leafSlug) {
-      return [moduleCrumb, { label: page.pageName }];
-    }
     for (const subPage of page.subPages ?? []) {
       if (slugify(subPage.subPageName) === leafSlug) {
         return [moduleCrumb, { label: page.pageName }, { label: subPage.subPageName }];
@@ -46,7 +47,6 @@ export const resolveBreadcrumb = (pathname: string): Crumb[] => {
     }
   }
 
-  // Leaf slug didn't match anything in the tree yet (e.g. still-unwired page)
   return [moduleCrumb];
 };
 

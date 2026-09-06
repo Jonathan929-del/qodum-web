@@ -24,7 +24,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 
   return (
     <html lang='en'>
-      <body className={`${ABZ.className} bg-[#F6F8FB] text-[#17233C]`}>
+      <body className={`${ABZ.className} text-[#17233C]`}>
         <AuthProvider>
           <GlobalStateProvider>
             {children}

@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer";
 import Breadcrumb from "@/components/layout/modulesLayout/Breadcrumb";
 import Header from "@/components/layout/modulesLayout/Header";
 import Sidebar from "@/components/layout/modulesLayout/Sidebar";
@@ -9,26 +10,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     const user = await getCurrentUser();
 
     return (
-        <main className='min-h-screen bg-[#ecedf0]'>
-            <div className='relative mx-auto max-w-[1600px] flex items-start'>
-                
-                <aside className='hidden lg:block shrink-0'>
-                    <div className='sticky top-4 h-[calc(100vh-2rem)] rounded-[14px] border border-[#dfe3ea] bg-white shadow-sm transition-all duration-300 ease-in-out'>
-                        <Sidebar user={user} />
-                    </div>
+        <main className='min-h-screen'>
+            <div className='relative mx-auto max-w-[1600px] flex'>                
+                <aside className='hidden lg:flex flex-col sticky top-0 h-screen shrink-0 border-r border-[#dfe3ea] bg-white transition-all duration-300 ease-in-out'>
+                    <Sidebar user={user} />
                 </aside>
 
-                <div className='min-w-0 flex-1'>
+                <div className='min-w-0 flex-1 flex flex-col'>
                     <Header user={user} />
 
-                    <main className='mt-4 md:mt-6'>
+                    <main className='flex-1 mt-4'>
                         <TabSync />
                         <Tabs />
-                        <Breadcrumb />
-                        <div className='rounded-[px] border border-[#dfe3ea] bg-white p-3 shadow-sm md:p-5 m-6'>
-                            {children}
+                        
+                        <div className='w-full h-full bg-[#fbfbfb] flex flex-col gap-4 p-4'>
+                            <Breadcrumb />
+                            
+                            <div className='rounded-[8px] border border-[#dfe3ea] bg-white p-3 shadow-sm md:p-5'>
+                                {children}
+                            </div>
                         </div>
                     </main>
+                    
+                    <Footer />
                 </div>
                 
             </div>

@@ -6,8 +6,6 @@ export default async function Page(){
     const user = await getCurrentUser();
 
     return(
-        <div>
-            <FormCom user={user}/>
-        </div>
+        <FormCom user={user}/>
     )
 }

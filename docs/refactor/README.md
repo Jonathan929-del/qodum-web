@@ -27,6 +27,9 @@ happening, what changed, how it was verified, and what it affects.
   session handling
 - [Architecture](./architecture.md) — findings about how the app is
   actually structured, independent of any single fix
+- [Routing & Tab State](./routing.md) — client-side page/tab management
+  replaced with real Next.js routes, Zustand-backed tabs, and per-page
+  state preservation
 
 ## Timeline
 
@@ -37,3 +40,6 @@ happening, what changed, how it was verified, and what it affects.
 | Aug 2026 | Dependencies | ESLint 8→9 (flat config) |
 | Aug 2026 | Dependencies | npm audit: 24 → 0 vulnerabilities |
 | Aug 2026 | Architecture | No server-side routing/data access found |
+| Aug 2026 | Authentication | token-based authentication with proxy.ts file |
+| Sep 2026 | Routing | Users module: real routes replace client-side tab state |
+| Sep 2026 | Routing | Create User Form/View split; per-tab state preservation via Zustand |

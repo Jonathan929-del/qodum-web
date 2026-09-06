@@ -1,4 +1,3 @@
-// store/tabsStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
@@ -13,7 +12,7 @@ interface TabsState {
   openTab: (tab: Tab) => void;
   closeTab: (path: string) => void;
   setHasHydrated: (state: boolean) => void;
-    closeAllTabs: () => void;
+  closeAllTabs: (moduleSlug: string) => void;
 }
 
 export const useTabsStore = create<TabsState>()(
@@ -30,7 +29,9 @@ export const useTabsStore = create<TabsState>()(
       closeTab: (path) =>
         set((s) => ({ openTabs: s.openTabs.filter((t) => t.path !== path) })),
       setHasHydrated: (state) => set({ hasHydrated: state }),
-      closeAllTabs: () => set({ openTabs: [] }),
+      closeAllTabs: (moduleSlug: string) =>   set((s) => ({
+        openTabs: s.openTabs.filter((t) => !t.path.startsWith(`/${moduleSlug}/`)),
+      })),
     }),
     {
       name: 'qodum-open-tabs',

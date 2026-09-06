@@ -1,4 +1,3 @@
-// store/pageStateStore.ts
 import { create } from 'zustand';
 import { usePathname } from 'next/navigation';
 
@@ -14,13 +13,13 @@ export const usePageStateStore = create<PageStateStore>((set) => ({
   setField: (path, field, value) =>
     set((s) => ({
       pages: { ...s.pages, [path]: { ...s.pages[path], [field]: value } },
-    })),
+  })),
   clearPage: (path) =>
     set((s) => {
       const { [path]: _, ...rest } = s.pages;
       return { pages: rest };
-    }),
-    clearAllPages: () => set({ pages: {} }),
+  }),
+  clearAllPages: () => set({ pages: {} }),
 }));
 
 

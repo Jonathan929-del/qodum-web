@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTabsStore } from '@/store/tabStore';
@@ -11,9 +10,9 @@ const TabSync = () => {
 
   useEffect(() => {
     const segments = pathname.split('/').filter(Boolean);
-    if (segments.length < 2) return; // module root — not a tab
+    if (segments.length < 2) return;
 
-    const tabPath = getTabPath(pathname); // always the 2-segment base — /users/create-user, never /view
+    const tabPath = getTabPath(pathname);
     const crumbs = resolveBreadcrumb(tabPath);
     const label = crumbs[crumbs.length - 1]?.label ?? tabPath;
     openTab({ path: tabPath, label });
