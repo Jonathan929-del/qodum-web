@@ -15,7 +15,7 @@ const TabSync = () => {
     const tabPath = getTabPath(pathname);
     const crumbs = resolveBreadcrumb(tabPath);
     const label = crumbs[crumbs.length - 1]?.label ?? tabPath;
-    openTab({ path: tabPath, label });
+    openTab({ path: tabPath, label, activePath: pathname });
   }, [pathname, openTab]);
 
   return null;

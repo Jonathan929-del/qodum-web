@@ -11,6 +11,8 @@ import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@
 import { useUsersList } from '@/lib/hooks/useUserModuleData';
 import { useFieldState, usePageStateStore } from '@/store/pageStateStore';
 import { getTabPath } from '@/components/utils/breadcrumb';
+import { emptyUser } from '@/constants/emptyUser';
+import { fromDbNumber } from '@/lib/utils';
 
 // Main Function
 const ViewCom = () => {
@@ -20,22 +22,22 @@ const ViewCom = () => {
 
   const { users } = useUsersList();
 const clearPage = usePageStateStore((s) => s.clearPage);
-const [, setEditingUser] = useFieldState('editingUser', null, tabPath);
+const [, setRecord] = useFieldState('record', emptyUser, tabPath);
 
   // Select handler
   const selectHandler = (u: any) => {
     clearPage(tabPath);
-    setEditingUser({
+    setRecord({
       id: u._id,
       isDeleteClicked: false,
       name: u.name,
       user_name: u.user_name,
-      password: u.password,
+      password: u.password ?? '',
       is_reset_password: u.is_reset_password,
       designation: u.designation,
       email: u.email,
       employee: u.employee,
-      mobile: u.mobile,
+      mobile: fromDbNumber(u.mobile),
       profile_picture: u.profile_picture,
       schools: u.schools,
       is_active: u.is_active,

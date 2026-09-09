@@ -11,7 +11,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
     return (
         <main className='min-h-screen'>
-            <div className='relative mx-auto max-w-[1600px] flex'>                
+            <div className='relative mx-auto flex'>                
                 <aside className='hidden lg:flex flex-col sticky top-0 h-screen shrink-0 border-r border-[#dfe3ea] bg-white transition-all duration-300 ease-in-out'>
                     <Sidebar user={user} />
                 </aside>

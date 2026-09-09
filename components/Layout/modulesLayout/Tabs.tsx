@@ -27,7 +27,7 @@ export default function Tabs() {
     clearPage(path);
     if (isWithinTab(path)) {
       const remaining = openTabs.filter((t) => t.path !== path);
-      router.push(remaining[remaining.length - 1]?.path ?? getModuleRoot(path));
+      router.push(remaining[remaining.length - 1]?.activePath ?? getModuleRoot(path));
     }
   };
 
@@ -45,7 +45,7 @@ export default function Tabs() {
           return (
             <div
               key={tab.path}
-              onClick={() => router.push(tab.path)}
+              onClick={() => router.push(tab.activePath)}
               className={`
                 flex items-center gap-2 px-3 py-1.5 text-xs rounded-t-[6px] cursor-pointer whitespace-nowrap transition-all
                 ${

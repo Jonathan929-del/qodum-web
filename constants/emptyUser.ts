@@ -8,7 +8,7 @@ export const emptyUser = {
   designation: '',
   email: '',
   employee: '',
-  mobile: 0,
+  mobile: '',
   profile_picture: '',
   schools: [],
   is_active: false,

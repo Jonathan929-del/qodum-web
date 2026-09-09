@@ -1,9 +1,8 @@
 // Imports
 import '../globals.css';
 import type {Metadata} from 'next';
-// @ts-ignore
+import {Toaster} from '@/components/ui/toaster';
 import {ABeeZee} from 'next/font/google';
-
 import {GlobalStateProvider} from '@/context/GlobalStateContext';
 import {AuthProvider} from '@/context/AuthContext';
 
@@ -28,6 +27,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         <AuthProvider>
           <GlobalStateProvider>
             {children}
+            <Toaster />
           </GlobalStateProvider>
         </AuthProvider>
       </body>

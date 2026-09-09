@@ -54,3 +54,18 @@ export const getTabPath = (pathname: string) => {
   const segments = pathname.split('/').filter(Boolean);
   return segments.length >= 2 ? `/${segments[0]}/${segments[1]}` : pathname;
 };
+
+export const resolvePermissionKey = (pathname: string) => {
+  const [moduleSlug, leafSlug] = pathname.split('/').filter(Boolean);
+  const currentModule = (modules as any[]).find((m) => slugify(m.moduleName) === moduleSlug);
+  if (!currentModule) return null;
+
+  for (const page of currentModule.pages ?? []) {
+    for (const subPage of page.subPages ?? []) {
+      const isMatch = slugify(subPage.subPageName) === leafSlug
+        || subPage.threads?.some((t: string) => slugify(t) === leafSlug);
+      if (isMatch) return { moduleName: currentModule.moduleName, subMenu: subPage.subPageName };
+    }
+  }
+  return null;
+};
