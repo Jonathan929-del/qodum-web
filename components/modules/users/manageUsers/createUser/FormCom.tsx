@@ -12,10 +12,12 @@ import { usePermission } from '@/lib/hooks/usePermission';
 import { useFieldState } from '@/store/pageStateStore';
 import { getTabPath } from '@/components/utils/breadcrumb';
 import { emptyUser } from '@/constants/emptyUser';
-import DynamicField, { FieldConfig } from '@/lib/hooks/DynamicFields';
-import CrudButtons from '@/lib/hooks/CrudButtons';
+import DynamicField, { FieldConfig } from '@/components/shared/crud/DynamicFields';
+import CrudButtons from '@/components/shared/crud/CrudButtons';
 import { CurrentUser } from '@/lib/auth/session';
 import { toDbNumber } from '@/lib/validations/shared/number';
+import PrintButton from '@/components/shared/crud/PrintButton';
+import moment from 'moment';
 
 export default function FormCom ({ user }: { user: CurrentUser | null }) {
 
@@ -157,7 +159,31 @@ export default function FormCom ({ user }: { user: CurrentUser | null }) {
 
           <div className='flex justify-center pt-5 border-t border-[#F0F0F0]'>
             {isLoading ? <LoadingIcon /> : (
-              <CrudButtons mode={mode} permissions={permissions} viewHref={`${tabPath}/view`} onSave={save} onDelete={remove} onCancel={cancel} />
+              <CrudButtons
+                mode={mode}
+                permissions={permissions}
+                viewHref={`${tabPath}/view`}
+                onSave={save}
+                onDelete={remove}
+                onCancel={cancel}
+                printSlot={
+                  <PrintButton
+                    data={users}
+                    title='Users List'
+                    filename='Users List'
+                    sheetName='Users'
+                    columns={[
+                      { title: 'User Name', width: 100, value: (u:any) => u?.user_name },
+                      { title: 'Email', width: 150, value: (u:any) => u?.email },
+                      { title: 'Name', width: 100, value: (u:any) => u?.name },
+                      { title: 'Mobile No.', width: 75, value: (u:any) => u?.mobile },
+                      { title: 'Active', width: 75, value: (u:any) => (u?.is_active ? 'True' : 'False') },
+                      { title: 'Created Date', width: 75, value: (u:any) => moment(u?.createdAt).format('D-MMM-yy') },
+                      { title: 'Modified Date', width: 100, value: (u:any) => moment(u?.updatedAt).format('D-MMM-yy') },
+                    ]}
+                  />
+                }  
+              />
             )}
           </div>
 
