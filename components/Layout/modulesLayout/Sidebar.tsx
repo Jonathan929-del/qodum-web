@@ -156,6 +156,7 @@ export default function Sidebar({ user }: { user?: any }) {
                 /* Expanded State View */
                 <div className="flex h-full flex-col animate-in fade-in duration-300">
                     <div className='shrink-0 border-b border-[#E8EDF2] bg-white px-3 py-3'>
+
                         {/* Collapse Toggle Button */}
                         <div className="flex justify-end mb-2">
                             <button 
@@ -167,7 +168,21 @@ export default function Sidebar({ user }: { user?: any }) {
                             </button>
                         </div>
 
-                        <Accordion type='single' collapsible defaultValue={currentModule.moduleName}>
+                        {/* Institution Logo */}
+                        <Link
+                            href="/"
+                            className='flex h-12 items-center justify-center rounded-[8px] border border-[#E7ECF1] bg-[#FAFBFC] px-3'
+                        >
+                            <Image
+                                alt='Logo'
+                                width={100}
+                                height={40}
+                                src="/assets/logo.png"
+                                className='h-auto max-h-[50px] w-auto object-contain'
+                            />
+                        </Link>
+
+                        <Accordion type='single' collapsible defaultValue={currentModule.moduleName} className='mt-4'>
                             <AccordionItem value={currentModule.moduleName} className='border-none'>
                                 <AccordionTrigger className='rounded-[11px] border border-[#DCECF7] bg-[#F2F9FD] px-3 py-3 text-[#2CABE3] transition hover:no-underline hover:bg-[#ECF7FC]'>
                                     <div className='flex items-center gap-3 flex-1'>

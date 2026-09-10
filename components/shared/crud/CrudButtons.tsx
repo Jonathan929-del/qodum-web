@@ -93,7 +93,7 @@ const CrudButtons = ({ mode, permissions, viewHref, onSave, onDelete, onCancel, 
       </Link>
     )}
 
-    {printSlot}
+    {permissions.read_only && permissions.print && printSlot}
 
     <span
       className='flex items-center px-[8px] h-8 text-xs text-black bg-gradient-to-r from-[#C7C8CA] to-[#EAEDF0] rounded-full transition border-[1px] border-white cursor-pointer hover:border-[#a3a3a3] hover:from-[#c8c9cb26] hover:to-[#c8c9cb26] hover:text-hash-color sm:text-[16px] sm:px-4'
