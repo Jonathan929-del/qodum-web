@@ -1,6 +1,5 @@
 export const emptyUser = {
   id: '',
-  isDeleteClicked: false,
   name: '',
   user_name: '',
   password: '',

@@ -93,6 +93,7 @@ export default function FormCom ({ user }: { user: CurrentUser | null }) {
       setImgSrc('');
     },
   });
+  console.log(mode);
 
 
   // Fields

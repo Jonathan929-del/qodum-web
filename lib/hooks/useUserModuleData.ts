@@ -4,8 +4,8 @@ import { fetchStaff } from '@/lib/actions/payroll/globalMasters/staff.actions';
 import { fetchGlobalSchoolDetails } from '@/lib/actions/fees/globalMasters/defineSchool/schoolGlobalDetails.actions';
 
 export const useUsersList = () => {
-  const { data, mutate } = useSWR('users-list', fetchUsers, { fallbackData: [] });
-  return { users: data ?? [], mutateUsers: mutate };
+  const { data, mutate, isLoading } = useSWR('users-list', fetchUsers, { fallbackData: [] });
+  return { users: data ?? [], mutateUsers: mutate, isLoadingUsers: isLoading };
 };
 
 export const useStaffList = () => {
