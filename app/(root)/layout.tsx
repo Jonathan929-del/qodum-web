@@ -5,6 +5,7 @@ import {Toaster} from '@/components/ui/toaster';
 import {ABeeZee} from 'next/font/google';
 import {GlobalStateProvider} from '@/context/GlobalStateContext';
 import {AuthProvider} from '@/context/AuthContext';
+import { prisma } from '@/lib/prisma';
 
 
 // Configs
@@ -20,7 +21,6 @@ const ABZ = ABeeZee({
 
 // Main function
 export default async function RootLayout({children}: {children: React.ReactNode}) {
-
   return (
     <html lang='en'>
       <body className={`${ABZ.className} text-[#17233C]`}>

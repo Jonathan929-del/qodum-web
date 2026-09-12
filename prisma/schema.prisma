@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id                String   @id @default(cuid())
+  name              String
+  user_name         String   @unique
+  password          String
+  is_reset_password Boolean  @default(false)
+  designation       String?
+  email             String?
+  employee          String?
+  mobile            Int?
+  profile_picture   String?
+  schools           String[]
+  is_active         Boolean  @default(false)
+  enable_otp        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}

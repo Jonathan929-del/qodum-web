@@ -43,3 +43,6 @@ happening, what changed, how it was verified, and what it affects.
 | Aug 2026 | Authentication | token-based authentication with proxy.ts file |
 | Sep 2026 | Routing | Users module: real routes replace client-side tab state |
 | Sep 2026 | Routing | Create User Form/View split; per-tab state preservation via Zustand |
+| Sep 2026 | Architecture | Shared CRUD layer (form/buttons/print/view) built and applied to Create User; pattern for remaining ~70 modules |
+| Sep 2026 | Architecture | react-xlsx-wrapper replaced with exceljs for print/export |
+| Sep 2026 | Architecture | Decision: migrate MongoDB → PostgreSQL (Prisma) |
