@@ -1,0 +1,14 @@
+model SmsTemplate {
+  id            Int      @id @default(autoincrement())
+  sms_type      String
+  sms_template  String
+  is_enable     Boolean?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

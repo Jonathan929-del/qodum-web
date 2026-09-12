@@ -1,0 +1,22 @@
+enum TransportTerm {
+  Monthly
+  Quarterly
+}
+
+model TransportGroup {
+  id               Int            @id @default(autoincrement())
+  distance_name    String
+  distance_amount  Float
+  distance_from    Int?
+  distance_to      Int?
+  transport_term   TransportTerm?
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  route_stop_months RouteStopMonth[]
+}

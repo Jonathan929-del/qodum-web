@@ -11,8 +11,8 @@ model StationaryDetails {
   academic_year   AcademicYear @relation(fields: [session], references: [id])
   account_name    Int
   general_ledger  GeneralLedger @relation(fields: [account_name], references: [id])
-  // school_name     Int
-  // school          SchoolGlobalDetails @relation(fields: [school_name], references: [id])
+  school_name     Int
+  school          School @relation(fields: [school_name], references: [id])
 
   // Children
 }

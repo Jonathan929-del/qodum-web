@@ -1,0 +1,21 @@
+enum FeeReceiptGenerateType {
+  GenerateSingleReceipt
+  GenerateSchoolWiseReceipt
+  GenerateFeeTypeWiseReceipt
+  GenerateSchoolWithFeeTypeWiseReceipt
+}
+
+model FeeEntrySetting {
+  id                Int                     @id @default(autoincrement())
+  prefix            String?
+  lead_zero         String?
+  receipt_no_start  String?
+  suffix            String?
+  generate_type     FeeReceiptGenerateType?
+  created_at        DateTime                @default(now())
+  updated_at        DateTime                @updatedAt
+
+  // Parents
+
+  // Children
+}

@@ -1,0 +1,13 @@
+model VehicleType {
+  id            Int      @id @default(autoincrement())
+  vehicle_name  String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  vehicle_details VehicleDetails[]
+}

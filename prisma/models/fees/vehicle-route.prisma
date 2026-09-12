@@ -1,0 +1,17 @@
+model VehicleRoute {
+  id                        Int      @id @default(autoincrement())
+  route_no                  String
+  route_description         String?
+  route_in_charge_name      String?
+  route_in_charge_mobile_no String?
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  route_stops      RouteStop[]
+  vehicle_details  VehicleDetails[]
+}

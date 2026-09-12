@@ -50,4 +50,17 @@ model AcademicYear {
     // Fees
     concessions Concession[]
     concession_types ConcessionType[]
+    classes Class[]
+    sections Section[]
+    wings Wing[]
+    boards Board[]
+    sms_templates SmsTemplate[]
+    route_stops     RouteStop[]
+    route_stop_months RouteStopMonth[]
+    transport_groups TransportGroup[]
+    transport_media TransportMedium[]
+    travel_masters TravelMaster[]
+    vehicle_details VehicleDetails[]
+    vehicle_routes VehicleRoute[]
+    vehicle_types VehicleType[]
 }

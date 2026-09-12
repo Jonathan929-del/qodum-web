@@ -18,12 +18,12 @@ model Admission {
   // Parents
   session       Int
   academic_year AcademicYear @relation(fields: [session], references: [id])
-//   school        Int
-//   school_ref    SchoolGlobalDetails @relation(fields: [school], references: [id])
-//   class_name    Int
-//   class         Class     @relation(fields: [class_name], references: [id])
-//   board         Int?
-//   board_ref     Board?    @relation(fields: [board], references: [id])
+  school        Int
+  school_ref    School @relation(fields: [school], references: [id])
+  class_name    Int
+  class         Class     @relation(fields: [class_name], references: [id])
+  board         Int?
+  board_ref     Board?    @relation(fields: [board], references: [id])
 
   // Children
 }

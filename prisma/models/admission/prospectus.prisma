@@ -31,10 +31,10 @@ model Prospectus {
     // Parents
     session       Int
     academic_year  AcademicYear   @relation(fields: [session], references: [id])
-    // class_name    Int
-    // class         Class          @relation(fields: [class_name], references: [id])
-    // board         Int?
-    // boardRef      Board?         @relation(fields: [board], references: [id])
+    class_name    Int
+    class         Class          @relation(fields: [class_name], references: [id])
+    board         Int?
+    boardRef      Board?         @relation(fields: [board], references: [id])
 
     // Children
 }

@@ -13,8 +13,8 @@ model Slot {
     // Parents
     session      Int
     academic_year AcademicYear @relation(fields: [session], references: [id])
-    //   class_name   Int
-    //   class        Class        @relation(fields: [class_name], references: [id])
+    class_name   Int
+    class        Class        @relation(fields: [class_name], references: [id])
 
     // Children
     // students — many-to-many to Student, deferred until Student model exists (join table, e.g. SlotStudent)

@@ -1,0 +1,17 @@
+model RouteStopMonth {
+  id                Int             @id @default(autoincrement())
+  month             Int             // 1-12
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  @@unique([route_stop_id, month])
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+  route_stop_id     Int
+  route_stop        RouteStop       @relation(fields: [route_stop_id], references: [id])
+  transport_group_id Int?
+  transport_group   TransportGroup? @relation(fields: [transport_group_id], references: [id])
+
+  // Children
+}

@@ -1,0 +1,26 @@
+model Class {
+    id                       Int      @id @default(autoincrement())
+    class_name               String
+    order                    Int
+    affiliated_heads         Json?
+    affiliated_special_heads Json?
+    is_admission_opened      Boolean?
+
+    created_at               DateTime @default(now())
+    updated_at               DateTime @updatedAt
+
+    // Parents
+    session       Int
+    academic_year AcademicYear @relation(fields: [session], references: [id])
+    wing_name Int
+    wing      Wing @relation(fields: [wing_name], references: [id])
+    school    Int
+    school_ref School @relation(fields: [school], references: [id])
+
+    // Children
+    sections Section[]
+    admissions Admission[]
+    slots Slot[]
+    prospectuses Prospectus[]
+    enquiries Enquiry[]
+}

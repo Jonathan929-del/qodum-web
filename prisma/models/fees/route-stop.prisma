@@ -1,0 +1,22 @@
+model RouteStop {
+  id             Int      @id @default(autoincrement())
+  stop_no        String
+  stop_name      String
+  morning_arrival_hour     String?
+  morning_arrival_minute   String?
+  morning_arrival_meridiem String?
+  afternoon_arrival_hour     String?
+  afternoon_arrival_minute   String?
+  afternoon_arrival_meridiem String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear  @relation(fields: [session], references: [id])
+  route_no      Int
+  vehicle_route VehicleRoute  @relation(fields: [route_no], references: [id])
+
+  // Children
+  months RouteStopMonth[]
+}

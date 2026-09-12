@@ -1,0 +1,45 @@
+model School {
+  id                    Int      @id @default(autoincrement())
+  logo                  String?
+  school_main           Boolean?
+  school_subheads       Boolean?
+  school_name           String
+  school_address        String
+  school_address_2      String?
+  school_short_name     String?
+  contact_no            String?
+  mobile                String?
+  email                 String?
+  support_email_id      String?
+  website               String?
+  prefix                String
+  iso_details           String?
+  principal_signature   String?
+  accountant_signature  String?
+  school_no             String?
+  affiliation_to        String?
+  affiliation_no        String?
+  udise_code            String?
+  pen                   String?
+  associates            String?
+  renew_up_to           String?
+  school_status         String?
+  working_days          String?
+  recess                String?
+  total_period           String?
+  academic_year         String?
+  financial_year        String?
+  facebook_link         String?
+  linkedin_link         String?
+  twitter_link          String?
+  instagram_link        String?
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  // Parents
+
+  // Children
+  classes             Class[]
+  admission_settings  Admission[]
+  stationary_details  StationaryDetails[]
+}

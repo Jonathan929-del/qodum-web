@@ -1,0 +1,37 @@
+enum VehicleOwner {
+  School
+  Vendor
+}
+
+model VehicleDetails {
+  id                  Int          @id @default(autoincrement())
+  vehicle_owner       VehicleOwner?
+  vehicle_name        String
+  vehicle_reg_no      String
+  driver_name         String?
+  attendent_name      String?
+  fule_type           String?
+  seating_capacity    Int?
+  reserved_seats      Int?
+  cctv                Boolean?
+  wifi                Boolean?
+  gps                 Boolean?
+  ac                  Boolean?
+  driver_mobile_no    String?
+  gps_no              String?
+  service_due_date    DateTime?
+  insurance_due_date  DateTime?
+  created_at          DateTime     @default(now())
+  updated_at          DateTime     @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear  @relation(fields: [session], references: [id])
+  vendor        Int?
+  travel_master TravelMaster? @relation(fields: [vendor], references: [id])
+  vehicle_type    Int
+  vehicle_type_ref VehicleType @relation(fields: [vehicle_type], references: [id])
+
+  // Children
+  routes VehicleRoute[]
+}

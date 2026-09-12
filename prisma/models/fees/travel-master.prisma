@@ -1,0 +1,15 @@
+model TravelMaster {
+  id                  Int      @id @default(autoincrement())
+  travel_agency_name  String
+  mobile_no           String
+  mail_id             String
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  vehicle_details VehicleDetails[]
+}
