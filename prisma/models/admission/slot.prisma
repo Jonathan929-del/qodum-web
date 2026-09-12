@@ -19,3 +19,5 @@ model Slot {
     // Children
     // students — many-to-many to Student, deferred until Student model exists (join table, e.g. SlotStudent)
 }
+
+// TODO

@@ -1,0 +1,18 @@
+model Job {
+  id                      Int      @id @default(autoincrement())
+  post                    String
+  salary                  String
+  experience              String
+  description             String
+  key_skill               String
+  last_date_of_submission DateTime
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  // applications — one-to-many to StaffApplication, deferred until that model is migrated
+}

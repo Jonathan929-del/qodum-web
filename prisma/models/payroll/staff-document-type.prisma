@@ -1,0 +1,13 @@
+model StaffDocumentType {
+  id            Int      @id @default(autoincrement())
+  document_type String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+  staff_documents StaffDocument[]
+}

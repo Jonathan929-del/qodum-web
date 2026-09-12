@@ -1,0 +1,14 @@
+model StaffType {
+  id             Int      @id @default(autoincrement())
+  staff_type     String
+  is_hourly_paid Boolean?
+  show_on_ecare  Boolean?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

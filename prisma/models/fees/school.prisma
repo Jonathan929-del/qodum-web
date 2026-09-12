@@ -27,7 +27,6 @@ model School {
   working_days          String?
   recess                String?
   total_period           String?
-  academic_year         String?
   financial_year        String?
   facebook_link         String?
   linkedin_link         String?
@@ -37,9 +36,12 @@ model School {
   updated_at            DateTime @updatedAt
 
   // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
 
   // Children
   classes             Class[]
   admission_settings  Admission[]
   stationary_details  StationaryDetails[]
+  users User[]
 }

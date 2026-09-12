@@ -51,8 +51,10 @@ model AcademicYear {
     concessions Concession[]
     concession_types ConcessionType[]
     classes Class[]
+    schools School[]
     sections Section[]
     wings Wing[]
+    fee_entry_settings FeeEntrySetting[]
     boards Board[]
     sms_templates SmsTemplate[]
     route_stops     RouteStop[]
@@ -63,4 +65,17 @@ model AcademicYear {
     vehicle_details VehicleDetails[]
     vehicle_routes VehicleRoute[]
     vehicle_types VehicleType[]
+
+    // Payroll
+    staff_admission_numbers StaffAdmissionNumber[]
+    staff_document_types StaffDocumentType[]
+    staff_documents      StaffDocument[]
+    departments Department[]
+    designations Designation[]
+    jobs Job[]
+    professions Profession[]
+    staff_types StaffType[]
+
+    // Users
+    users User[]
 }

@@ -16,6 +16,8 @@ model FeeEntrySetting {
   updated_at        DateTime                @updatedAt
 
   // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
 
   // Children
 }
