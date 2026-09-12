@@ -1,0 +1,14 @@
+model Subject {
+  id               Int      @id @default(autoincrement())
+  subject_name     String
+  available_seats  Int?
+  is_university    Boolean?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  // Parents
+  session          Int
+  academic_year    AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

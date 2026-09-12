@@ -1,0 +1,24 @@
+model Enquiry {
+    id                   Int       @id @default(autoincrement())
+    enquiry_no           String?
+    enquiry_date         DateTime?
+    visitor_name         String
+    visitor_address      String
+    mobile_no            String
+    purpose_is_admission Boolean?
+    student_name         String?
+    reason_to_visit      String?
+    contact_person       String?
+    reference_details    String?
+
+    created_at            DateTime  @default(now())
+    updated_at            DateTime  @updatedAt
+
+    // Parents
+    session      Int
+    academic_year AcademicYear @relation(fields: [session], references: [id])
+    //   class_name   Int
+    //   class        Class        @relation(fields: [class_name], references: [id])
+
+    // Children
+}

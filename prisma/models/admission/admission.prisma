@@ -1,0 +1,29 @@
+enum ShouldBe {
+  Automatic
+  Manual
+}
+
+model Admission {
+  id            Int       @id @default(autoincrement())
+  setting_type  String?
+  should_be     ShouldBe?
+  rec_no        Int?
+  prefix        String?
+  start_from    Int?
+  lead_zero     String?
+  suffix        String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+//   school        Int
+//   school_ref    SchoolGlobalDetails @relation(fields: [school], references: [id])
+//   class_name    Int
+//   class         Class     @relation(fields: [class_name], references: [id])
+//   board         Int?
+//   board_ref     Board?    @relation(fields: [board], references: [id])
+
+  // Children
+}

@@ -1,0 +1,16 @@
+model EnquiryNoSetting {
+  id                           Int      @id @default(autoincrement())
+  enquiry_no_setting_should_be ShouldBe
+  prefix                       String
+  start_from                   Int
+  lead_zero                    String
+  suffix                       String?
+  created_at                   DateTime @default(now())
+  updated_at                   DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

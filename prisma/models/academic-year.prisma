@@ -1,9 +1,53 @@
 model AcademicYear {
-  id        Int      @id @default(autoincrement())
-  yearName  String   @unique
-  startDate DateTime
-  endDate   DateTime
-  isActive  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    year_name  String   @unique
+    start_date DateTime
+    end_date   DateTime
+    is_active  Boolean  @default(false)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    // Parents
+
+    // ----------------- Children ------------------
+    // Account
+    account_groups AccountGroup[]
+    bank_ledgers BankLedger[]
+    general_ledgers GeneralLedger[]
+    party_ledgers PartyLedger[]
+    narration_masters NarrationMaster[]
+
+    // Admissions
+    merit_criteria MeritCriteria[]
+    slots Slot[]
+    enquiries Enquiry[]
+    prospectuses Prospectus[]
+    documents Document[]
+    document_types DocumentType[]
+    health_units HealthUnit[]
+    health_masters HealthMaster[]
+    terms Term[]
+    castes Caste[]
+    blood_groups BloodGroup[]
+    cadet_types CadetType[]
+    categories Category[]
+    clubs Club[]
+    houses House[]
+    nationalities Nationality[]
+    optional_subjects OptionalSubject[]
+    parishes Parish[]
+    religions Religion[]
+    remarks Remark[]
+    stationary_details StationaryDetails[]
+    streams Stream[]
+    subjects Subject[]
+    admissions Admission[]
+    admission_guidelines AdmissionGuideline[]
+    enquiry_no_settings EnquiryNoSetting[]
+    layouts Layout[]
+    
+    // Fees
+    concessions Concession[]
+    concession_types ConcessionType[]
 }

@@ -1,0 +1,14 @@
+model Document {
+  id            Int      @id @default(autoincrement())
+  document_name String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year  AcademicYear @relation(fields: [session], references: [id])
+  document_type Int
+  documenType  DocumentType @relation(fields: [document_type], references: [id])
+
+  // Children
+}

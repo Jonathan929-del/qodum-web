@@ -1,0 +1,21 @@
+model Slot {
+    id         Int      @id @default(autoincrement())
+    slot_name  String
+    slot_date  DateTime?
+    start_time String?
+    end_time   String?
+    applicant  Int?
+    alloted    Int?
+
+    created_at  DateTime @default(now())
+    updated_at  DateTime @updatedAt
+
+    // Parents
+    session      Int
+    academic_year AcademicYear @relation(fields: [session], references: [id])
+    //   class_name   Int
+    //   class        Class        @relation(fields: [class_name], references: [id])
+
+    // Children
+    // students — many-to-many to Student, deferred until Student model exists (join table, e.g. SlotStudent)
+}

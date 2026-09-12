@@ -1,0 +1,27 @@
+model PartyLedger {
+  id                   Int      @id @default(autoincrement())
+  account_name         String
+  account_no           Int
+  cin_no               String?
+  account_type         String
+  account_address      String?
+  account_city         String?
+  pin_code             String?
+  email                String?
+  mobile               String?
+  pan                  String?
+  gstin                String?
+  opening_balance      Float?
+  opening_balance_type BalanceType?
+  assign_date          DateTime?
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  // Parents
+  session      Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+  group        Int
+  account_group AccountGroup @relation(fields: [group], references: [id])
+
+  // Children
+}

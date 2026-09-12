@@ -1,0 +1,18 @@
+model StationaryDetails {
+  id              Int          @id @default(autoincrement())
+  stationary_name String
+  amount          Float
+  is_online       Boolean?
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+
+  // Parents
+  session         Int
+  academic_year   AcademicYear @relation(fields: [session], references: [id])
+  account_name    Int
+  general_ledger  GeneralLedger @relation(fields: [account_name], references: [id])
+  // school_name     Int
+  // school          SchoolGlobalDetails @relation(fields: [school_name], references: [id])
+
+  // Children
+}

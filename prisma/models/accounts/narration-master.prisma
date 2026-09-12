@@ -1,0 +1,22 @@
+enum VoucherType {
+  CashPaymentVoucher
+  CashReceiptVoucher
+  BankPaymentVoucher
+  BankReceiptVoucher
+  ContraVoucher
+  JournalVoucher
+}
+
+model NarrationMaster {
+  id           Int         @id @default(autoincrement())
+  narration    String
+  voucher_type VoucherType
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  // Parents
+  session      Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

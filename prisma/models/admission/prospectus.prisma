@@ -1,0 +1,40 @@
+model Prospectus {
+    id                   Int       @id @default(autoincrement())
+    reg_no               Int
+    date                 DateTime?
+    student_name         String
+    student_middle_name  String?
+    student_last_name    String?
+    reference            String?
+    date_of_birth        DateTime?
+    gender               String
+    father_name          String
+    father_middle_name   String?
+    father_last_name     String?
+    mother_name          String?
+    mother_middle_name   String?
+    mother_last_name     String?
+    con_person           String?
+    con_mobile           String
+    con_email            String?
+    h_no_and_streets     String?
+    state                String?
+    city                 String?
+    pin_code             String?
+    stationaries         String[]
+    is_online            Boolean?
+    pay_mode              Json?
+
+    created_at            DateTime  @default(now())
+    updated_at            DateTime  @updatedAt
+
+    // Parents
+    session       Int
+    academic_year  AcademicYear   @relation(fields: [session], references: [id])
+    // class_name    Int
+    // class         Class          @relation(fields: [class_name], references: [id])
+    // board         Int?
+    // boardRef      Board?         @relation(fields: [board], references: [id])
+
+    // Children
+}

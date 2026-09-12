@@ -1,0 +1,57 @@
+model Layout {
+  id Int @id @default(autoincrement())
+
+  // Report setting
+  report_name  String
+  report_title String
+
+  // Header and footer setting
+  is_header_enable      Boolean?
+  is_header_line_enable Boolean?
+  is_footer_enable      Boolean?
+  is_footer_line_enable Boolean?
+  is_logo_enable        Boolean?
+  is_row_no             Boolean?
+  is_group              Boolean?
+  is_sum                Boolean?
+
+  // Font size setting
+  font_size String
+  is_total  String?
+
+  // Page orientation and layout setting
+  page_orientation String?
+  page_layout      String?
+
+  // Height and width setting
+  page_width          Int
+  page_height         Int
+  footer_height       Int
+  header_height       Int
+  header_line_width   Int
+  logo_height         Int
+  column_width        Int
+  footer_line_height  Int
+  table_column_height Int
+
+  // Margin setting
+  page_margin_right      Int
+  page_margin_left       Int
+  page_margin_bottom     Int
+  page_margin_top        Int
+  logo_margin_left       Int
+  logo_margin_top        Int
+  table_margin_left      Int
+  table_margin_top       Int
+  footer_line_margin_top Int
+  header_line_margin_top Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

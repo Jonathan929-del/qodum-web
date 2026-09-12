@@ -1,0 +1,13 @@
+model Category {
+  id            Int      @id @default(autoincrement())
+  category_name String
+  is_default    Boolean?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Parents
+  session       Int
+  academic_year AcademicYear @relation(fields: [session], references: [id])
+
+  // Children
+}

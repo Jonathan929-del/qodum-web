@@ -1,0 +1,32 @@
+enum LedgerCategory {
+  Bank
+  Party
+  General
+}
+enum GroupType {
+  Assets
+  Liability
+  Trading
+  ProfitAndLoss
+}
+
+
+model AccountGroup {
+    id           Int          @id @default(autoincrement())
+    group_name   String
+    category     LedgerCategory
+    group_type   GroupType
+    group_no     Int
+
+    created_at    DateTime     @default(now())
+    updated_at    DateTime     @updatedAt
+
+    // Parents
+    session      Int
+    academic_year AcademicYear @relation(fields: [session], references: [id])
+
+    // Children
+    bank_ledgers BankLedger[]
+    general_ledgers GeneralLedger[]
+    party_ledgers PartyLedger[]
+}
